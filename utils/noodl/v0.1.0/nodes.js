@@ -20,9 +20,11 @@ import Form_v0_1_0 from '../../../react-nodes/organisms/Form/Form_v0.1.0'
 import Table_v0_1_0 from "../../../react-nodes/organisms/Table/Table_v0.1.0"
 import Table_v0_2_0 from "../../../react-nodes/organisms/Table/Table_v0.2.0"
 import ETable_v0_1_0 from "../../../react-nodes/organisms/ETable/ETable_v0.1.0"
+import ETable_v0_1_1 from "../../../react-nodes/organisms/ETable/ETable_v0.1.1"
 // molecules
 import Center_v0_1_0 from "../../../react-nodes/molecules/center/Center_v0.1.0"
 import Drawer_v0_1_0 from "../../../react-nodes/molecules/drawer/Drawer_v0.1.0"
+import Modal_v0_1_0 from "../../../react-nodes/molecules/Modal/Modal_v0.1.0"
 import Flex_v0_1_0 from "../../../react-nodes/molecules/flex/Flex_v0.1.0"
 import Grid_v0_1_0 from "../../../react-nodes/molecules/grid/Grid_v0.1.0"
 import Group_v0_1_0 from "../../../react-nodes/molecules/group/Group_v0.1.0"
@@ -43,6 +45,8 @@ import PopoverButton_v0_1_0 from "../../../react-nodes/elements/buttons/PopoverB
 import Avatar_v0_1_0 from "../../../react-nodes/elements/dataDisplay/Avatar/Avatar_v0.1.0"
 import Badge_v0_1_0 from "../../../react-nodes/elements/DataDisplay/Badge/Badge_v0.1.0"
 import Icon_v0_1_0 from "../../../react-nodes/elements/dataDisplay/Icon/Icon_v0.1.0"
+import QRCode_v0_1_0 from "../../../react-nodes/elements/dataDisplay/QRCode/QRCode_v0.1.0"
+import Image_v0_1_0 from "../../../react-nodes/elements/dataDisplay/Image/Image_v0.1.0"
 // feedback
 import Loader_v0_1_0 from "../../../react-nodes/elements/feedback/loader/Loader_v0.1.0"
 // inputs
@@ -71,10 +75,11 @@ const reactNodes = {
     AppShell: { allowChildren: true, versions: { '0.1.0': AppShell_v0_1_0, } },
     Form: { allowChildren: true, versions: { '0.1.0': Form_v0_1_0, } },
     Table: { versions: { '0.1.0': Table_v0_1_0, '0.2.0': Table_v0_2_0, } },
-    ETable: { versions: { '0.1.0': ETable_v0_1_0, } },
+    ETable: { versions: { '0.1.0': ETable_v0_1_0, '0.1.1': ETable_v0_1_1, } },
     // molecules    
     center: { allowChildren: true, versions: { '0.1.0': Center_v0_1_0, } },
     drawer: { allowChildren: true, versions: { '0.1.0': Drawer_v0_1_0, } },
+    Modal: { allowChildren: true, versions: { '0.1.0': Modal_v0_1_0, } },
     flex: { allowChildren: true, versions: { '0.1.0': Flex_v0_1_0, } },
     grid: { allowChildren: true, versions: { '0.1.0': Grid_v0_1_0, } },
     group: { allowChildren: true, versions: { '0.1.0': Group_v0_1_0, } },
@@ -95,6 +100,8 @@ const reactNodes = {
     avatar: { allowChildren: true, versions: { '0.1.0': Avatar_v0_1_0, } },
     Badge: { versions: { '0.1.0': Badge_v0_1_0, } },
     icon: { versions: { '0.1.0': Icon_v0_1_0, } },
+    QRCode: { versions: { '0.1.0': QRCode_v0_1_0, } },
+    Image: { versions: { '0.1.0': Image_v0_1_0, } },
     // feedback
     loader: { versions: { '0.1.0': Loader_v0_1_0, } },
     // inputs
@@ -129,6 +136,12 @@ const nodes = {
         name: 'create',
         portsDefinition: (v) => v && portsDefinition('create', v),
         nodeImport: async (v) => v && import('../../../nodes/data/create/create' + '_v' + v),
+        versions: ['0.1.0'],
+    },
+    mCreate: {
+        name: 'mCreate',
+        portsDefinition: (v) => v && portsDefinition('mCreate', v),
+        nodeImport: async (v) => v && import('../../../nodes/data/mCreate/mCreate' + '_v' + v),
         versions: ['0.1.0'],
     },
     update: {

@@ -37,7 +37,7 @@ const keys = {
                 }
             }
             : {},
-        options: props.options ? props.options[0] : Rolder?.classes[props.className].defaultOptions,
+        options: props.options ? props.options[0] : {}
     }]
 }
 export default keys

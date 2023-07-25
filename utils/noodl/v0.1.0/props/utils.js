@@ -38,6 +38,7 @@ export const enums = {
     selectableTypes: [{ value: 'singleRow', label: 'Single row' }, { value: 'multipleRows', label: 'Multiple rows' }, { value: 'singleCell', label: 'Single cell' }],
     badgeVariants: [{ value: 'light', label: 'Light' }, { value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' }],
     buttonTypes: [{ value: 'submit', label: 'Submit' }],
+    qrCodeLevels: [{ value: 'L', label: 'Lowest' }, { value: 'M', label: 'Medium' }, { value: 'Q', label: 'Quality' }, { value: 'H', label: 'Highest' }],
 }
 
 export const units = ['rem', '%', 'px']

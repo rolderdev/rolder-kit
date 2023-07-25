@@ -84,6 +84,7 @@ const sharedProps = {
     foundedData: { type: 'object', displayName: 'Founded data', group: groups.data },
     dateFormat: { type: 'string', displayName: 'Date format', group: groups.data, default: 'YYYY-MM-DD HH:mm' },
     createField: { type: 'string', displayName: 'Create field', group: groups.data },
+    createData: { type: 'object', displayName: 'Create data', group: groups.data, tooltip: "Example: { className: 'task', items: [{body: {...} }] }" },
     // table 
     tableData: { type: 'object', displayName: 'Table data', group: groups.data },
     columns: { type: 'array', displayName: 'Columns', group: 'Table' },
@@ -127,6 +128,7 @@ const sharedProps = {
     debounced: { type: 'boolean', displayName: 'Debounced', group: groups.params, default: false, tooltip: 'Delay typed string at output' },
     delay: { type: 'number', displayName: 'Delay (ms)', group: groups.params, default: 350 },
     buttonType: { type: { name: 'enum', enums: enums.buttonTypes }, displayName: 'Button type', group: groups.params, tooltip: '"Submit" to trigger form' },
+    qrCodeLevel: { type: { name: 'enum', enums: enums.qrCodeLevels }, displayName: 'QR code level', group: groups.params, default: 'L' },
     // signals
     show: { type: 'boolean', displayName: 'Show', group: groups.signals },
     // form
@@ -168,6 +170,8 @@ const sharedProps = {
     createdItem: { type: 'object', displayName: 'Created item', group: groups.data },
     doDelete: { type: 'signal', displayName: 'Delete', group: groups.signals },
     deleteItemId: { type: 'string', displayName: 'Delete item id', group: groups.data },
+    createdItems: { type: 'array', displayName: 'Created items', group: groups.data },
+    doViewImages: { type: 'signal', displayName: 'View images', group: groups.signals },
 }
 
 export default sharedProps

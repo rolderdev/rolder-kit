@@ -8,7 +8,7 @@ const {
   inputItems, searchEnabled, selectedItem, sendViewItem, sendEditItem, selectedItems, selectedPath, pathChanged, offsetScrollbars, badgeVariant, labelField,
   isDeleting, sendDeleted, formScheme, searchable, clearable, dateFormat, limitMinDate, daysOffset, createItem, isCreating, sendCreated, sendHided, debounced,
   delay, isUploading, sendUploaded, uploadedUrls, screenshot, sendScreenshot, creatable, doCreate, createValue, createdItem, buttonType, selectFirstItem,
-  resetSelected, doDelete,
+  resetSelected, doDelete, createData, createdItems, qrCodeLevel, doViewImages,
 } = sharedProps
 import groupedProps from "./grouped"
 const { sxBgColor, sxDimensions, margins, dimensions, paddings, font, auth, form, Table, ETable, AppShell, uploadFiles } = groupedProps
@@ -63,6 +63,12 @@ const props = {
     '0.1.0': {
       ins: { createItem },
       outs: { isCreating, sendCreated, createdItem },
+    }
+  },
+  mCreate: {
+    '0.1.0': {
+      ins: { createData },
+      outs: { isCreating, sendCreated, createdItems },
     }
   },
   update: {
@@ -138,6 +144,11 @@ const props = {
       ins: { ...margins, size: { ...sizeUnits }, iconName, stroke, color }
     }
   },
+  Image: {
+    '0.1.0': {
+      ins: { ...margins, src: {...value} }
+    }
+  },
   text: {
     '0.2.1': {
       ins: { ...margins, ...font, c: { ...color }, value },
@@ -188,9 +199,20 @@ const props = {
       outs: { sendHided }
     }
   },
+  Modal: {
+    '0.1.0': {
+      ins: { title, size: { ...sizeString }, show, withCloseButton },
+      outs: { sendHided }
+    }
+  },
   webCamera: {
     '0.1.0': {
       outs: { screenshot, sendScreenshot }
+    }
+  },
+  QRCode: {
+    '0.1.0': {
+      ins: { value, size: { ...sizeUnits }, level: qrCodeLevel }
     }
   },
   textInput: {
@@ -241,6 +263,10 @@ const props = {
     '0.1.0': {
       ins: { ...margins, ...ETable, ...sxDimensions, shadow, foundedData, searchEnabled },
       outs: { selectedItem, sendViewItem, sendEditItem, selectedItems },
+    },
+    '0.1.1': {
+      ins: { ...margins, ...ETable, ...sxDimensions, shadow, foundedData, searchEnabled },
+      outs: { selectedItem, sendViewItem, sendEditItem, selectedItems, doViewImages },
     },
   },
   AppShell: {

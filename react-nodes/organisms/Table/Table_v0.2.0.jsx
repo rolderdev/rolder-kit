@@ -3,8 +3,9 @@ import { useShallowEffect } from '@mantine/hooks'
 import { DataTable } from 'mantine-datatable'
 import { getValue } from '../../../utils/data/v.0.1.0/data'
 import { useState } from 'react'
+import Icons from '../../../libs/icons/Icons_v0.1.0'
 
-export default function Table_v0_2_0(props) {
+function Table(props) {
   const { className, tableData, columns, isLoading, selectable, selectableType, highlightSelectedRow, selectFirstItem, resetSelected } = props
 
   const [selectedId, setSelectedId] = useState('')
@@ -106,4 +107,14 @@ export default function Table_v0_2_0(props) {
       {...props}
     />
   )
+}
+
+export default function Table_v0_2_0(props) {
+  const { className, columns } = props
+  const [enabled, setEnabled] = useState(false)
+
+  useShallowEffect(() => {
+    if (className && columns) setEnabled(true)
+  }, [columns])
+  return enabled ? <Table {...props} /> : <></>
 }
