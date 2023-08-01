@@ -6,7 +6,7 @@ export default function Box_v0_1_0(props) {
   const { width, autoHeight, bottomOffset } = props
 
   const { height: viewPortHeight } = useViewportSize()
-  const [height, setHeight] = useState(undefined)
+  const [maxHeight, setHeight] = useState(undefined)
   useShallowEffect(() => {
     if (autoHeight) {
       if (viewPortHeight > 0) setHeight(viewPortHeight - bottomOffset)
@@ -14,7 +14,7 @@ export default function Box_v0_1_0(props) {
   }, [viewPortHeight])
 
   const sx = {
-    width, height,
+    width, maxHeight,
     ...props.sx?.[0]
   }
   return (

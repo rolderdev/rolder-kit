@@ -1,21 +1,41 @@
-import { NodeDefinitionInstance, ReactNode, defineModule } from '@noodl/noodl-sdk'
-import rNodes from '../utils/noodl/v0.2.0/reactNodes'
-import jsNodes from '../utils/noodl/v0.2.0/jsNodes'
-import { getReactNode, getJsNode } from '../utils/noodl/v0.2.0/getNode'
+import Cookies from 'js-cookie'; window.Cookies = Cookies
+import Ms from 'ms'; window.Ms = Ms
+import Clone from 'just-clone'; window.Clone = Clone
+import Mustache from 'mustache'; window.Mustache = Mustache
 
-import loadLibs from './loadLibs_v0.1.0'
-loadLibs()
+import Dayjs from 'dayjs'
+import 'dayjs/locale/ru'
+import isBetween from 'dayjs/plugin/isBetween'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import dayOfYear from 'dayjs/plugin/dayOfYear'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+import advancedFormat from 'dayjs/plugin/advancedFormat'
+import duration from 'dayjs/plugin/duration'
+import relativeTime from 'dayjs/plugin/relativeTime'
+Dayjs.extend(isBetween)
+Dayjs.extend(isSameOrAfter)
+Dayjs.extend(dayOfYear)
+Dayjs.extend(weekOfYear)
+Dayjs.extend(advancedFormat)
+Dayjs.extend(duration)
+Dayjs.extend(relativeTime)
+window.Dayjs = Dayjs
 
-const reactNodes: ReactNode[] = Object.keys(rNodes).map(nodeName => Object.keys(rNodes[nodeName]).map(version => getReactNode(nodeName, version))).flat()
-const nodes: NodeDefinitionInstance[] = Object.keys(jsNodes).map(nodeName => Object.keys(jsNodes[nodeName]).map(version => getJsNode(nodeName, version))).flat()
+import { setRefs } from '../utils/data/v0.2.0/data'
+window.SetRefs = setRefs
+
+// #########################################################
+import { defineModule } from '@noodl/noodl-sdk'
+import reactNodes from './nodes/v0.1.0/rNodes';
+import nodes from './nodes/v0.1.0/jsNodes';
 
 defineModule({
-    reactNodes,
     nodes,
+    reactNodes,
     settings: [
         { name: 'envVersion', type: 'string', displayName: 'Environment version', group: 'Connection', tooltip: "Examples: d2, s2, p3", },
         { name: 'project', type: 'string', displayName: 'Project name', group: 'Connection', tooltip: "Examples: rasko, tex" },
         { name: 'dbVersion', type: 'number', displayName: 'Database version', group: 'Connection', default: 1 },
-        { name: 'sessionTimeout', type: 'string', displayName: 'Session timeout', group: 'Auth', tooltip: "milliseconds lib format: 1m, 3d", default: '7d' },
+        { name: 'sessionTimeout', type: 'string', displayName: 'Session timeout', group: 'Auth', tooltip: "milliseconds lib format: 1m, 3d" },
     ]
 })

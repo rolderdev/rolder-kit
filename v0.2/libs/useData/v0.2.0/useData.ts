@@ -5,11 +5,8 @@ import mGet from "../../kuzzle/v.0.1.0/mGet"
 import search from "../../kuzzle/v.0.1.0/search"
 import keys from "./keys"
 
-const Rolder = window.Rolder
-const QueryClient = window.QueryClient
-
 function getQueryOptions({ queryKey: [{ command, dbClass, query }] }: { queryKey: { command: string, dbClass: string, query: any }[] }) {
-    const { dbClasses } = Rolder
+    const { dbClasses } = window.Rolder
     let queryOptions: { enabled?: boolean, staleTime?: number, cacheTime?: number } = { enabled: true }
 
     switch (command) {
@@ -50,7 +47,7 @@ const useData: any = {
         return useQuery({ queryKey, queryFn: search, ...queryOptions })
     },
     invalidate: (props: any) => {
-        QueryClient.invalidateQueries(keys.dbClass(props.className))
+        window.QueryClient.invalidateQueries(keys.dbClass(props.dbClass))
     },
 }
 

@@ -1,12 +1,10 @@
-import { dbVersion } from "../../../utils/data/v.0.1.0/data"
-
-const Rolder = window.Rolder
+import { dbVersion } from "../../../utils/data/v0.2.0/data"
 
 const keys = {
     all: () => [{ dbVersion: dbVersion() }],
     dbClass: (dbClass: string) => [{ ...keys.all()[0], dbClass }],
     command: (command: string, dbClass: string) => [{ ...keys.dbClass(dbClass)[0], command }],
-    fetch: (props) => [{
+    fetch: (props: { dbClass: string; query: { [x: string]: any }[]; sort: any[]; options: any[] }) => [{
         ...keys.command('fetch', props.dbClass)[0],
         query: props.query
             ? {
@@ -17,18 +15,22 @@ const keys = {
                 }
             }
             : {},
-        sort: props.sort ? props.sort[0] : Rolder?.dbClasses[props.dbClass].defaultSort,
-        options: props.options ? props.options[0] : Rolder?.dbClasses[props.dbClass].defaultOptions,
+        sort: props.sort ? props.sort[0] : window.Rolder?.dbClasses[props.dbClass].defaultSort,
+        options: props.options ? props.options[0] : window.Rolder?.dbClasses[props.dbClass].defaultOptions,
     }],
-    customFetch: (props) => [{
+    customFetch: (props: { dbClass: string; query: any[]; sort: any[]; options: any[]; }) => [{
         ...keys.command('customFetch', props.dbClass)[0],
         query: props.query ? props.query[0] : {},
-        sort: props.sort ? props.sort[0] : Rolder?.dbClasses[props.dbClass].defaultSort,
-        options: props.options ? props.options[0] : Rolder?.dbClasses[props.dbClass].defaultOptions,
+        sort: props.sort ? props.sort[0] : window.Rolder?.dbClasses[props.dbClass].defaultSort,
+        options: props.options ? props.options[0] : window.Rolder?.dbClasses[props.dbClass].defaultOptions,
     }],
-    get: (props) => [{ ...keys.command('get', props.dbClass)[0], id: props.id }],
-    mGet: (props) => [{ ...keys.command('mGet', props.dbClass)[0], ids: props.ids }],
-    search: (props) => [{
+    get: (props: { dbClass: string; itemId: string; }) => [{ ...keys.command('get', props.dbClass)[0], itemId: props.itemId }],
+    mGet: (props: { dbClass: string; itemsIds: string[]; }) => [{ ...keys.command('mGet', props.dbClass)[0], itemsIds: props.itemsIds }],
+    search: (props: {
+        dbClasss: string; query: {
+            searchString: any; fields: any;
+        }[]; options: any[];
+    }) => [{
         ...keys.command('search', props.dbClasss)[0],
         query: props.query[0].searchString
             ? {

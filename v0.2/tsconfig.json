@@ -20,10 +20,11 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "main",
-    "reactNodes/organisms/App/App_v0.3.0.tsx",
-    "types/react-env.d.ts",
-    "utils",
     "types",
+    "main",
+    "rNodes",
+    "jsNodes",
+    "libs",
+    "utils"
   ]
 }

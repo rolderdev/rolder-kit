@@ -1,49 +1,16 @@
-import { NodeInput, ReactNodeInput, Type } from "@noodl/noodl-sdk"
-import { ReactElement } from "react"
-
-type RNodeParams = {
-    [key: string]: {
-        Node: any,
-        allowChildren?: boolean
-        reqiereChildren?: boolean
-        inputs?: RNodeProps,
-        outputs?: RNodeProps,
-        portRules?: PortRules,
-        portsToCheck?: string[]
+declare global {
+    interface Window {
+        Rolder: RolderType
+        Noodl: any
+        Kuzzle: Kuzzle
+        QueryClient: any
+        Clone: any;
+        Dayjs: any;
+        Ms: any;
+        Cookies: any
+        Mustache: any
+        SetRefs: any
     }
-}
-
-type JsNodeParams = {
-    [key: string]: {
-        nodeImport: any,
-        inputs?: JsNodeProps,
-        outputs?: JsNodeProps
-    }
-}
-
-declare type RNodes = {
-    [key: string]: RNodeParams
-}
-
-declare type JsNodes = {
-    [key: string]: JsNodeParams
-}
-
-declare type RNodeProps = {
-    [key: string]: ReactNodeInput,
-} | undefined
-
-declare type JsNodeProps = {
-    [key: string]: NodeInput,
-} | undefined
-
-declare type PortRules = { condition: string, inputs: string[] }[]
-
-declare type NoodlEnum = {
-    [key: string]: {
-        label: string
-        value: string
-    }[]
 }
 
 declare type DbClass = {
@@ -71,20 +38,37 @@ declare type RolderType = {
     sessionTimeout: string
 }
 
-declare global {
-    interface Window {
-        Rolder: RolderType
-        Kuzzle: Kuzzle
-        Clone: any;
-        Dayjs: any;
-        Ms: any;
-        Noodl: any
-        SetRefs: any
-        QueryClient: any
+declare type JsNode = {
+    [key: string]: {
+        nodeImport: any
+        inputs?: any
+        outputs?: any
+        //inputsToCheck?: string[]
+        //inputRules?: { condition: string, inputs: string[] }[]
     }
 }
 
-declare module 'ms' {
-    var x: any;
-    export = x;
+declare type RNode = {
+    [key: string]: {
+        ReactComp: (props: any) => JSX.Element
+        allowChildren?: boolean
+        reqiereChildren?: boolean
+        inputs?: any
+        outputs?: any
+        inputsToCheck?: string[]
+        inputRules?: InputRule[]
+    }
+}
+
+declare type JsNodeProps = {
+    [key: string]: NodeInput,
+} | undefined
+
+declare type InputRule = { condition: string, inputs: string[] }
+
+declare type NoodlEnum = {
+    [key: string]: {
+        label: string
+        value: string
+    }[]
 }
