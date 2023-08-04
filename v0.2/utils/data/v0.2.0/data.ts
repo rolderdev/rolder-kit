@@ -22,14 +22,14 @@ export function convertForSelect(obj: { value: any; id: any; label: string | und
     } else return undefined
 }
 
-export function setRefs(refMap: { [x: string]: any }) {
+export function setRefs(refMap: { [x: string]: string[] }) {
     const Noodl = window.Noodl
-    const className = Object.keys(refMap)[0]
-    const classNames = refMap[className]
-    if (className && classNames.length) {
-        const items = Noodl.Objects[className]?.items
-        items.forEach((item: { [x: string]: any }) => {
-            classNames.forEach((c: string | number) => {
+    const dbClass = Object.keys(refMap)[0]
+    const dbClasses = refMap[dbClass]
+    if (dbClass && dbClasses.length) {
+        const items = Noodl.Objects[dbClass]?.items
+        items.forEach((item: any) => {
+            dbClasses.forEach((c: any) => {
                 const refItem = Noodl.Objects[item[c].id]
                 if (refItem) item[c] = refItem
             })
@@ -62,9 +62,9 @@ export const convertKuzzleResponses = (response: { hits: any[]; total: any }) =>
     response.hits.forEach((hit: { _source: any; _id: any; collection: string }) => {
         let result = hit._source
         result.id = hit._id
-        const className = hit.collection.split('_')[0]
-        if (results[className]) results[className].push(result)
-        else results[className] = [result]
+        const dbClass = hit.collection.split('_')[0]
+        if (results[dbClass]) results[dbClass].push(result)
+        else results[dbClass] = [result]
     })
     return results
 }

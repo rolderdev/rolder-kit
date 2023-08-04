@@ -43,10 +43,21 @@ const reactPorts = {
         selectedPath: { ...Data, ...string, displayName: 'Selected path' },
         value: { ...Data, ...string, displayName: 'Value' },
         searchString: { ...Data, ...string, displayName: 'Search string' },
-        inputItems: { ...Data, ...array, displayName: 'Input items', tooltip: "Example: [{ value: 'option-1', label: 'Option 1' }]" },
+        inputItems: { ...Data, ...array, displayName: 'Input items' },
+        items: { ...Data, ...array, displayName: 'Items' },
+        customItems: { ...Data, ...array, displayName: 'Custom items', tooltip: "Example: [{ value: 'option-1', label: 'Option 1' }]" },
         selectedValue: { ...Data, ...string, displayName: 'Selected value' },
         title: { ...Data, ...string, displayName: 'Title' },
         label: { ...Data, ...string, displayName: 'Label' },
+        sourceUrl: { ...Data, ...string, displayName: 'Source url' },
+        placeholder: { ...Data, ...string, displayName: 'Placeholder' },
+        createValue: { ...Data, ...string, displayName: 'Create value' },
+        inputString: { ...Data, ...string, displayName: 'Input string' },
+        screenshot: { ...Data, ...string, displayName: 'Screenshot' },
+        message: { ...Data, ...string, displayName: 'Message' },
+        uploadItems: { ...Data, ...array, displayName: 'Upload items', tooltip: "Example: [{name: ..., contentType: 'image/jpeg', data: base64}]" },
+        uploadFolder: { ...Data, ...string, displayName: 'Upload folder' },
+        uploadedUrls: { ...Data, ...array, displayName: 'Uploaded urls' },
     },
     Params: {
         useDataType: { ...General, type: { name: 'enum', enums: enums.useDataTypes }, displayName: 'Query type' },
@@ -71,13 +82,27 @@ const reactPorts = {
         offsetScrollbars: { ...Params, ...boolean, displayName: 'Offset scrollbars' },
         withCloseButton: { ...Params, ...boolean, displayName: 'With close button', default: false, tooltip: "Hides close button and title" },
         formScheme: { ...Params, ...array, displayName: 'Form scheme', tooltip: "Example: [{name: 'startDate', initialValue: new Date(), validate: isNotEmpty}]" },
-        buttonType: { type: { name: 'enum', enums: enums.buttonTypes }, displayName: 'Button type', tooltip: '"Submit" to trigger form' },
+        buttonType: { ...Params, type: { name: 'enum', enums: enums.buttonTypes }, displayName: 'Button type', tooltip: '"Submit" to trigger form' },
+        qrCodeLevel: { ...Params, type: { name: 'enum', enums: enums.qrCodeLevels }, displayName: 'QR code level', default: 'L' },
+        withAsterisk: { ...Params, ...boolean, displayName: 'With asterisk' },
+        dateFormat: { ...Params, ...string, displayName: 'Date format', default: 'YYYY-MM-DD HH:mm' },
+        limitMinDate: { ...Params, ...boolean, displayName: 'Limit minimal date', default: false },
+        daysOffset: { ...Params, ...number, displayName: 'Minimum days offset', default: 0, tooltip: 'Number of days to offset. Negative for past offset' },
+        labelField: { ...Params, ...string, displayName: 'Label field' },
+        searchable: { ...Params, ...boolean, displayName: 'Searchable' },
+        clearable: { ...Params, ...boolean, displayName: 'Clearable' },
+        creatable: { ...Params, ...boolean, displayName: 'Creatable' },
+        debounced: { ...Params, ...boolean, displayName: 'Debounced', default: false, tooltip: 'Delay typed string at output' },
+        delay: { ...Params, ...number, displayName: 'Delay (ms)', default: 350 },
+        autoClose: { ...Params, ...number, displayName: 'Autoclose (ms)' },
+        useCustomItems: { ...Params, ...boolean, displayName: 'Use custom items', default: false },
     },
     States: {
         enabled: { ...States, ...boolean, displayName: 'Enabled' },
         disabled: { ...States, ...boolean, displayName: 'Disabled' },
         loading: { ...States, ...boolean, displayName: 'Loading' },
         searchEnabled: { ...States, ...boolean, displayName: 'Search enabled' },
+        uploading: { ...States, ...boolean, displayName: 'Uploading' },
     },
     Signals: {
         inited: { ...Signals, ...signal, displayName: 'Inited' },
@@ -94,6 +119,9 @@ const reactPorts = {
         show: { ...Signals, ...boolean, displayName: 'Show' },
         hided: { ...Signals, ...signal, displayName: 'Hided' },
         submited: { ...Signals, ...signal, displayName: 'Submited' },
+        create: { ...Signals, ...signal, displayName: 'Create' },
+        screenshoted: { ...Signals, ...signal, displayName: 'Screenshot ready' },
+        uploaded: { ...Signals, ...signal, displayName: 'Uploaded' },
     },
     Style: {
         detectColorScheme: { ...Style, ...boolean, displayName: 'Autodetect color scheme', },
@@ -110,6 +138,7 @@ const reactPorts = {
         striped: { ...Style, ...boolean, displayName: 'Striped' },
         loaderVariant: { ...Style, type: { name: 'enum', enums: enums.loaderVariants }, displayName: 'Variant' },
         avatarVariant: { ...Style, type: { name: 'enum', enums: enums.avatarVariants }, displayName: 'Variant' },
+        badgeVariant: { ...Style, type: { name: 'enum', enums: enums.badgeVariants }, displayName: 'Variant', default: 'light' },
     },
     Margins: {
         m: { ...Margins, type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin' },
@@ -137,9 +166,11 @@ const reactPorts = {
         drawerPosition: { ...Layout, type: { name: 'enum', enums: enums.drawerPositions }, displayName: 'Position' },
         gutter: { ...Layout, type: { name: 'enum', enums: enums.sizes }, displayName: 'Gutter' },
         spans: { ...Layout, ...array, displayName: 'Spans', tooltip: "Example: [4,4,4] One row = 12. Can be number, auto, content" },
+        direction: { ...Layout, type: { name: 'enum', enums: enums.directions }, displayName: 'Direction', },
     },
     Dimensions: {
         w: { ...Dimensions, type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Width' },
+        maw: { ...Dimensions, type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Max width' },
         h: { ...Dimensions, type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Height' },
         size: { ...Dimensions, type: { name: 'enum', enums: enums.sizes }, displayName: 'Size' },
         sizeUnits: { ...Dimensions, type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Size' },
@@ -170,139 +201,6 @@ const reactPorts = {
         backgroundColor: { ...Sx, type: { name: 'enum', enums: enums.colors }, displayName: 'Background color' },
         colorShade: { ...Sx, type: { name: 'enum', enums: enums.colorShades }, displayName: 'Color shade', default: '6' },
     }
-
-    //classNames: { ...array, displayName: 'Classnames', tooltip: "Example: ['product', 'supplier']" },
-    /* sx: { ...array, displayName: 'Custom sx', group: 'Advanced Style', tooltip: "Example: [{ width: 100 }]" },
-    // general
-    
-    // dimensions
-    
-    
-    heightString: { ...string, displayName: 'Height (string)' },
-    
-    
-    
-    
-    
-    // font
-    
-    // layout
-    m: { type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin' },
-    mt: { type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin top' },
-    mr: { type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin right' },
-    mb: { type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin bottom' },
-    ml: { type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin left' },
-    
-    direction: { type: { name: 'enum', enums: enums.directions }, displayName: 'Direction', },
-    wrap: { type: { name: 'enum', enums: enums.wraps }, displayName: 'Wrap' },
-    
-    flexAlign: { type: { name: 'enum', enums: enums.flexAligns }, displayName: 'Align' },
-    
-    flexJustify: { type: { name: 'enum', enums: enums.flexJustifies }, displayName: 'Justify' },
-    spacing: { type: { name: 'enum', enums: enums.sizes }, displayName: 'Spacing' },
-    stackSpacing: { type: { name: 'enum', enums: enums.sizes }, displayName: 'Spacing' },
-    gap: { type: { name: 'enum', enums: enums.sizes }, displayName: 'Gap' },
-    
-    
-    
-    
-    
-    
-    // style
-    
-    
-    
-    
-    
-        
-    badgeVariant: { type: { name: 'enum', enums: enums.badgeVariants }, displayName: 'Variant', default: 'light' },
-    // data
-    isLoading: { ...boolean, displayName: 'Loading' },
-    
-    
-    
-    labelField: { ...string, displayName: 'Label field' },
-    placeholder: { ...string, displayName: 'Placeholder' },
-    message: { ...string, displayName: 'Message' },
-    
-    
-    
-    inputString: { ...string, displayName: 'Input string' },    
-    
-    
-    
-    
-    dateFormat: { ...string, displayName: 'Date format', default: 'YYYY-MM-DD HH:mm' },
-    createField: { ...string, displayName: 'Create field' },
-    
-    // table         
-    
-    
-    
-    
-    
-    
-
-    // etable
-    
-    
-    // appshell
-    
-    // params
-    autoClose: { ...number, displayName: 'Autoclose (ms)' },
-    
-    withAsterisk: { ...boolean, displayName: 'With asterisk' },    
-    
-    searchable: { ...boolean, displayName: 'Searchable' },
-    clearable: { ...boolean, displayName: 'Clearable' },
-    creatable: { ...boolean, displayName: 'Creatable' },
-    limitMinDate: { ...boolean, displayName: 'Limit minimal date', default: false },
-    daysOffset: { ...number, displayName: 'Minimum days offset', default: 0, tooltip: 'Number of days to offset. Negative for past offset' },
-    debounced: { ...boolean, displayName: 'Debounced', default: false, tooltip: 'Delay typed string at output' },
-    delay: { ...number, displayName: 'Delay (ms)', default: 350 },
-    
-    qrCodeLevel: { type: { name: 'enum', enums: enums.qrCodeLevels }, displayName: 'QR code level', default: 'L' },
-    // signals
-    
-    // form
-    
-    
-    // uploadFiles
-    filesData: { ...array, displayName: 'Files data', tooltip: "Example: [{name: ..., contentType: 'image/jpeg', data: base64}]" },
-    folder: { ...string, displayName: 'Folder' },
-    // outputs
-    sendInited: { ...signal, displayName: 'Inited' },
-    jwtValidationFailed: { ...signal, displayName: 'JWT validation failed' },
-    jwtValidationSucceed: { ...signal, displayName: 'JWT validation succeed' },
-    
-    sendLoaded: { ...signal, displayName: 'Loaded' },
-    
-    
-    
-    
-    
-    
-
-    isUpdating: { ...boolean, displayName: 'Updating' },
-    sendUpdated: { ...signal, displayName: 'Updated' },
-    
-    
-    isDeleting: { ...boolean, displayName: 'Deleting' },
-    sendDeleted: { ...signal, displayName: 'Deleted' },
-    
-    
-    isUploading: { ...boolean, displayName: 'Uploading' },
-    sendUploaded: { ...signal, displayName: 'Uploaded' },
-    uploadedUrls: { ...array, displayName: 'Uploaded urls' },
-    screenshot: { ...string, displayName: 'Screenshot' },
-    sendScreenshot: { ...signal, displayName: 'Screenshot ready' },
-    doCreate: { ...signal, displayName: 'Create' },
-    createValue: { ...string, displayName: 'Create value' },
-    
-    
-    deleteItemId: { ...string, displayName: 'Delete item id' },
-    
-     */
 }
 
 const jsPorts = {
@@ -313,10 +211,16 @@ const jsPorts = {
         createdItems: { ...Data, ...array, displayName: 'Created items' },
         updateItem: { ...Data, ...object, displayName: 'Update item', tooltip: "Example: { dbClass: 'task', id: 'task id', body: {...} }" },
         updatedItem: { ...Data, ...object, displayName: 'Updated item' },
+        updateItems: { ...Data, ...object, displayName: 'Update items', tooltip: "Example: { dbClass: 'task', items: [{id: 'id', body: {...} }] }" },
+        updatedItems: { ...Data, ...array, displayName: 'Updated items' },
+        deleteItems: { ...Data, ...array, displayName: 'Delete items', tooltip: "Example: { dbClass: 'task', itemsIds: ['id1'] }" },
+        createUserItem: { ...Data, ...object, displayName: 'Create user item', tooltip: "Example: {body: {content: {...}, credentials: {...}}}" },
+        createdUserItem: { ...Data, ...object, displayName: 'Created user item' },
     },
     States: {
         creating: { ...States, ...boolean, displayName: 'Creating' },
         updating: { ...States, ...boolean, displayName: 'Updating' },
+        deleting: { ...States, ...boolean, displayName: 'Deleting' },
     },
     Signals: {
         initBackend: { ...Signals, ...signal, displayName: 'initialize backend' },
@@ -324,6 +228,7 @@ const jsPorts = {
         jwtValidationSucceed: { ...Signals, ...signal, displayName: 'JWT validation succeed' },
         created: { ...Signals, ...signal, displayName: 'Created' },
         updated: { ...Signals, ...signal, displayName: 'Updated' },
+        deleted: { ...Signals, ...signal, displayName: 'Deleted' },
     }
 }
 

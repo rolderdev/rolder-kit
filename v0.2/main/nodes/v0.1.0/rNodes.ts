@@ -23,13 +23,25 @@ import UnstyledButtonNodes from "../../../rNodes/molecules/UnstyledButton/Unstyl
 // buttons
 import ActionIconNodes from "../../../rNodes/elements/buttons/ActionIcon/ActionIconNodes";
 import ButtonNodes from "../../../rNodes/elements/buttons/Button/ButtonNodes";
+import PopoverButtonNodes from "../../../rNodes/elements/buttons/PopoverButton/PopoverButtonNodes";
 // dataDisplay
 import AvatarNodes from "../../../rNodes/elements/dataDisplay/Avatar/AvatarNodes";
 import IconNodes from "../../../rNodes/elements/dataDisplay/Icon/Icon";
+import BadgeNodes from "../../../rNodes/elements/dataDisplay/Badge/BadgeNodes";
+import ImageNodes from "../../../rNodes/elements/dataDisplay/Image/ImageNodes";
+import QRCodeNodes from "../../../rNodes/elements/dataDisplay/QRCode/QRCodeNodes";
 // feedback
 import LoaderNodes from "../../../rNodes/elements/feedback/Loader/LoaderNodes";
 // inputs
 import SegmentedControlNodes from "../../../rNodes/elements/inputs/SegmentedControl/SegmentedControlNodes";
+import CheckboxGroupNodes from "../../../rNodes/elements/inputs/CheckboxGroup/CheckboxGroupNodes";
+import DateTimePickerNodes from "../../../rNodes/elements/inputs/DateTimePicker/DateTimePickerNodes";
+import MultiSelectNodes from "../../../rNodes/elements/inputs/MultiSelect/MultiSelectNodes";
+import SelectNodes from "../../../rNodes/elements/inputs/Select/SelectNodes";
+import TextareaNodes from "../../../rNodes/elements/inputs/Textarea/TextareaNodes";
+import TextInputNodes from "../../../rNodes/elements/inputs/TextInput/TextInputNodes";
+// miscellaneous
+import WebCameraNodes from "../../../rNodes/elements/miscellaneous/WebCamera/WebCameraNodes";
 // typography
 import TextNodes from "../../../rNodes/elements/typography/Text/TextNodes";
 
@@ -39,16 +51,19 @@ const reactNodes = [
     // organisms
     ...AppNodes, ...AuthNodes, ...AppShellNodes, ...TableNodes, ...ETableNodes, ...FormNodes,
     // molecules
-    ...StackNodes, ...GroupNodes, ...CenterNodes, ...ScrollAreaNodes, ...DrawerNodes, ...CarouselNodes, ...ModalNodes, ...GridNodes, ...PaperNodes, ...UnstyledButtonNodes,
+    ...StackNodes, ...GroupNodes, ...CenterNodes, ...ScrollAreaNodes, ...DrawerNodes, ...CarouselNodes, ...ModalNodes, ...GridNodes, ...PaperNodes,
+    ...UnstyledButtonNodes,
     // elements
     // buttons
-    ...ActionIconNodes, ...ButtonNodes,
+    ...ActionIconNodes, ...ButtonNodes, ...PopoverButtonNodes,
     // dataDisplay
-    ...AvatarNodes, ...IconNodes,
+    ...AvatarNodes, ...IconNodes, ...BadgeNodes, ...ImageNodes, ...QRCodeNodes,
     // feedback
     ...LoaderNodes,
     // inputs
-    ...SegmentedControlNodes,
+    ...SegmentedControlNodes, ...CheckboxGroupNodes, ...DateTimePickerNodes, ...MultiSelectNodes, ...SelectNodes, ...TextareaNodes, ...TextInputNodes,
+    // miscellaneous
+    ...WebCameraNodes,
     // typography
     ...TextNodes
 ]

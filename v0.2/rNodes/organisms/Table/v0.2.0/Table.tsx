@@ -14,14 +14,14 @@ export default function Table_v0_2_0(props: any) {
   // defaults
   useShallowEffect(() => {
     setSelectedId(selectFirstItem ? tableData[0]?.id : '')
-    props.selectedItem(selectFirstItem ? tableData[0] : '')
+    props.selectedItem(selectFirstItem ? tableData[0] : undefined)
   }, [tableData])
 
   // reset
   useShallowEffect(() => {
     if (resetSelected) {
       setSelectedId('')
-      props.selectedItem('')
+      props.selectedItem(undefined)
     }
   }, [resetSelected])
 
@@ -38,7 +38,8 @@ export default function Table_v0_2_0(props: any) {
         }
         switch (c.columnRender) {
           case 'avatar':
-            c.render = (record: any) => formatValue(record) ? <Avatar m={-6} color="red.4" variant="filled" radius="xl" >{formatValue(record)}</Avatar> : <></>
+            c.render = (record: any) => formatValue(record)
+              ? <Avatar m={-6} color="red.4" variant="filled" radius="xl" >{formatValue(record)}</Avatar> : <></>
             break
           case 'cycle':
             c.render = (record: any) => formatValue(record) ? <Box
@@ -58,7 +59,7 @@ export default function Table_v0_2_0(props: any) {
         }
       })
     }
-  }, [])
+  }, [columns])
 
   return (
     <DataTable

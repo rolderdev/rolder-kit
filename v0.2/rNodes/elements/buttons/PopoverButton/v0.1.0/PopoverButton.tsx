@@ -1,8 +1,8 @@
 import { Popover, Text, ActionIcon, Button, Group } from '@mantine/core'
 import { useState } from 'react'
-import Icons from '../../../../libs/icons/Icons_v0.1.0'
+import Icons from '../../../../../libs/icons/v0.1.0/Icons'
 
-export default function PopoverButton_v0_1_0(props) {
+export default function PopoverButton_v0_1_0(props: any) {
   const Icon = props.iconName && Icons(props.iconName)
   const Check = Icons('IconCheck')
 
@@ -22,7 +22,7 @@ export default function PopoverButton_v0_1_0(props) {
         <Group>
           <Text size="sm">Уверены?</Text>
           <ActionIcon variant="filled" color='blue' type="submit" onClick={() => {
-            props.sendClicked()
+            props.clicked()
             setOpened((o) => !o)
           }} >
             <Check />

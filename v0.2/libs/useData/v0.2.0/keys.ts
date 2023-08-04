@@ -27,11 +27,11 @@ const keys = {
     get: (props: { dbClass: string; itemId: string; }) => [{ ...keys.command('get', props.dbClass)[0], itemId: props.itemId }],
     mGet: (props: { dbClass: string; itemsIds: string[]; }) => [{ ...keys.command('mGet', props.dbClass)[0], itemsIds: props.itemsIds }],
     search: (props: {
-        dbClasss: string; query: {
+        dbClasses: string; query: {
             searchString: any; fields: any;
         }[]; options: any[];
     }) => [{
-        ...keys.command('search', props.dbClasss)[0],
+        ...keys.command('search', props.dbClasses)[0],
         query: props.query[0].searchString
             ? {
                 multi_match: {

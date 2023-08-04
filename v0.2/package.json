@@ -28,7 +28,8 @@
     "mustache": "4.2.0",
     "just-clone": "6.2.0",
     "@aws-sdk/client-s3": "3.379.1",
-    "qrcode.react": "3.1.0"
+    "qrcode.react": "3.1.0",
+    "lodash": "4.17.21"
   },
   "devDependencies": {
     "react": "18.2.0",
@@ -38,6 +39,7 @@
     "@types/react-dom": "18.2.7",
     "@types/js-cookie": "3.0.3",
     "@types/ms": "0.7.31",
-    "@types/mustache": "4.2.2"
+    "@types/mustache": "4.2.2",
+    "@types/lodash": "4.14.196"
   }
 }

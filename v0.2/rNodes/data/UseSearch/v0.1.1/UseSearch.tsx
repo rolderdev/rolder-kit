@@ -9,22 +9,22 @@ function UseSearch(props: any) {
   useShallowEffect(() => {
     if (fetchStatus === 'idle') {
       props.foundedData(data)
-      props.sendLoaded()
+      props.loaded()
     }
   }, [searchString, fetchStatus])
 
   useShallowEffect(() => {
-    props.isLoading(isFetching)
+    props.loading(isFetching)
   }, [isFetching])
   return <></>
 }
 
 export default function UseSearch_v0_1_1(props: any) {
-  const { enabled } = props
-  const [localEnabled, setEnabled] = useState(false)
+  const { searchString } = props
+  const [enabled, setEnabled] = useState(false)
 
   useShallowEffect(() => {
-    if (localEnabled) setEnabled(true)
-  }, [localEnabled])
+    if (searchString?.length) setEnabled(true)
+  }, [searchString])
   return enabled ? <UseSearch {...props} /> : <></>
 }

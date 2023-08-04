@@ -26,9 +26,6 @@ module.exports = {
 		'react-dom': 'ReactDOM'
 	},
 	builtins: {
-		react: {
-			runtime: 'classic'
-		},
 		copy: {
 			patterns: [
 				{

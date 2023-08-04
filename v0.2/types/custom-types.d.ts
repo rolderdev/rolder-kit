@@ -14,15 +14,14 @@ declare global {
 }
 
 declare type DbClass = {
-    [key: string]: {
-        version: number,
-        subscribe: boolean
-        defaultSort: {
-            ['asc' | 'desc']: string
-        },
-        defaultOptions: {
-            size: number
-        }
+    version: number,
+    subscribe: boolean
+    references: string[]
+    defaultSort: {
+        ['asc' | 'desc']: string
+    },
+    defaultOptions: {
+        size: number
     }
 }
 
