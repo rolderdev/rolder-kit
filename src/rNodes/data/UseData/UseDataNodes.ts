@@ -18,6 +18,7 @@ const nodeVersions: RNode = {
         inputsToCheck: ['dbClass', 'useDataType'],
         inputRules: [
             { condition: 'useDataType = fetch', inputs: ['query', 'sorts', 'options'] },
+            { condition: 'useDataType = customFetch', inputs: ['query', 'sorts', 'options'] },
             { condition: 'useDataType = get', inputs: ['itemId'] },
             { condition: 'useDataType = mGet', inputs: ['itemsIds'] },
         ]

@@ -4,6 +4,7 @@ import { MantineProvider } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
 import ErrorHandler from '../../../../libs/errorHandler/v0.1.0/ErrorHandler'
 import validateJwt from '../../../../libs/validateJwt/v0.1.0/validateJwt'
+import { KuzzleEventEmitter } from 'kuzzle-sdk'
 
 import { QueryClientProvider, QueryClient, QueryCache } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools/build/lib/index.prod.js'
@@ -26,6 +27,26 @@ export default function App_v0_3_0(props: any) {
 		if (debug > 1) console.log('Rolder:', window.Rolder)
 	}
 
+	// auth
+	if (window.Kuzzle) {
+		window.Kuzzle.on('disconnected', (...args: any) => {
+			if (debug > 1) {
+				console.log('Kuzzle event: disconnected', ...args)
+				console.time('reconnect')
+			}
+		});
+		window.Kuzzle.on('reconnected', () => {
+			validateJwt().then((jwtValid) => !jwtValid && props.jwtValidationFailed())
+			if (debug > 1) {
+				console.log('Kuzzle event: reconnected')
+				console.timeEnd('reconnect')
+			}
+		});
+		window.Kuzzle.on('tokenExpired', () => {
+			props.jwtValidationFailed()
+			if (debug > 1) console.log('Kuzzle event: tokenExpired')
+		})
+	}
 	useWindowEvent('focus', () => validateJwt().then((jwtValid) => !jwtValid && props.jwtValidationFailed()));
 
 	const { notificationsPosition, detectColorScheme, colorScheme: cs } = props

@@ -13,30 +13,21 @@ export default async function validateJwt() {
                 Kuzzle.auth.refreshToken({ expiresIn: sessionTimeout }).then((response: any) => {
                     const expiresAt = Dayjs(response.expiresAt).format('YYYY-MM-DD HH:mm:ss')
                     Cookies.set('jwt', response.jwt, { expires: 30 })
+                    Kuzzle.jwt = response.jwt
                     Cookies.set('jwtExpiresAt', expiresAt, { expires: 30 })
                     if (debug > 1) console.log('JWT refreshed', { expiresAt })
                 })
                 return true
-            } else {
-                if (debug > 1) console.log(result)
-                return false
-            }
+            } else return false
         })
     }
 
     if (Kuzzle) {
-        const cookieJwt = Cookies.get('jwt')        
+        const cookieJwt = Cookies.get('jwt')
         const jwtExpireDiff: number = Dayjs(Cookies.get('jwtExpiresAt')).diff(Dayjs())
         if (Kuzzle.authenticated) {
             if (cookieJwt && jwtExpireDiff > 1000) return checkToken(cookieJwt)
-            else {
-                if (debug > 1) console.log('JWT expired')
-                return false
-            }
         } else if (cookieJwt && jwtExpireDiff > 1000) return checkToken(cookieJwt)
-        else {
-            if (debug > 1) console.log('Not authenticated')
-            return false
-        }
+        else return false
     }
 }

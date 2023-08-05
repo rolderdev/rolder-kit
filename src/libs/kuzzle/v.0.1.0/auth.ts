@@ -13,8 +13,8 @@ const auth = {
             Kuzzle.auth.login('local', credentials, sessionTimeout)
                 .then((jwt: string) => {
                     const expiresAt = Dayjs().add(Ms(sessionTimeout), 'ms').format('YYYY-MM-DD HH:mm:ss')
-                    Cookies.set('jwt', jwt, { expires: 30 })
                     Cookies.set('jwtExpiresAt', expiresAt, { expires: 30 })
+                    new Promise(resolve => setTimeout(resolve, 1000)).then(() => Cookies.set('jwt', jwt, { expires: 30 }))
                     if (debug > 1) console.log('Authenticated:', {
                         username: credentials.username,
                         jwtExpiresAt: expiresAt
