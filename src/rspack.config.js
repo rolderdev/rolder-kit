@@ -9,7 +9,7 @@ const version = pJson.version
 const baseDir = '/Users/decard/Library/Application Support/Noodl/projects/'
 const projectDir = '3a8dc756-5891-4ec3-b88a-04fc6067392c'
 var outputPath = path.resolve(__dirname, baseDir + projectDir + '/noodl_modules/' + name + '_v' + version)
-//var outputPath = path.resolve(__dirname, `../dist/v${version}`)
+//var outputPath = path.resolve(__dirname, `../dist/rolder-kit_v${version}`)
 
 module.exports = {
 	context: __dirname,

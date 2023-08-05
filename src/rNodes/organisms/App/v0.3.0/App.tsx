@@ -26,10 +26,7 @@ export default function App_v0_3_0(props: any) {
 		if (debug > 1) console.log('Rolder:', window.Rolder)
 	}
 
-	useWindowEvent('focus', () => {
-		console.log('event')
-		//jwtRefresh().then((jwtValid) => !jwtValid && props.jwtValidationFailed())
-	});
+	useWindowEvent('focus', () => jwtRefresh().then((jwtValid) => !jwtValid && props.jwtValidationFailed()));
 
 	const { notificationsPosition, detectColorScheme, colorScheme: cs } = props
 	let colorScheme = useColorScheme()

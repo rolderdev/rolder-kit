@@ -1,9 +1,10 @@
+import Cookies from "js-cookie"
+import Ms from "ms"
+
 const auth = {
     login: (props: any) => {
         const Rolder = window.Rolder
         const Kuzzle = window.Kuzzle
-        const Cookies = window.Cookies
-        const Ms = window.Ms
 
         const { debug } = Rolder
         const { credentials, expiresIn } = props

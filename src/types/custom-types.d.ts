@@ -6,10 +6,7 @@ declare global {
         QueryClient: any
         Clone: any;
         Dayjs: any;
-        Ms: any;
-        Cookies: any
         Mustache: any
-        SetRefs: any
     }
 }
 

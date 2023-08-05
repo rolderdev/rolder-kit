@@ -1,8 +1,5 @@
-//import Cookies from 'js-cookie'; window.Cookies = Cookies
-//import Ms from 'ms'; window.Ms = Ms
 import Clone from 'just-clone'; window.Clone = Clone
 import Mustache from 'mustache'; window.Mustache = Mustache
-//import _ from 'lodash'; window._ = _
 
 import Dayjs from 'dayjs'
 import 'dayjs/locale/ru'
@@ -22,14 +19,10 @@ Dayjs.extend(duration)
 Dayjs.extend(relativeTime)
 window.Dayjs = Dayjs
 
-//import { setRefs } from '../utils/data/v0.3.0/data'
-//window.SetRefs = setRefs
-
+// #########################################################
 import { defineModule } from '@noodl/noodl-sdk'
 import reactNodes from './nodes/v0.1.0/rNodes';
 import nodes from './nodes/v0.1.0/jsNodes';
-
-// #########################################################
 
 defineModule({
     nodes,

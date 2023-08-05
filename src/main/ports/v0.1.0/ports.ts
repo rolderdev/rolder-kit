@@ -32,8 +32,6 @@ const reactPorts = {
     Data: {
         dbClass: { ...Data, ...string, displayName: 'Database class', },
         dbClasses: { ...Data, ...array, displayName: 'Database classes', },
-        setRefs: { ...Data, ...boolean, displayName: 'Set references', tooltip: "Fill data to reference, if exists at Noodl.Objects" },
-        refMap: { ...Data, ...array, displayName: 'Reference map', tooltip: "Example: [{product: ['supplier', 'warehouse']}]" },
         itemId: { ...Data, ...string, displayName: 'Item id' },
         itemsIds: { ...Data, ...array, displayName: 'Items ids', tooltip: "Example: ['id1', 'id2']" },
         tableData: { ...Data, ...object, displayName: 'Table data' },
