@@ -1,2 +1,0 @@
-(self.webpackChunkrolder_kit=self.webpackChunkrolder_kit||[]).push([["nodes_notification_notification_v0_1_0_js"],{173456:function(e,t,i){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),Object.defineProperty(t,"default",{enumerable:!0,get:function(){return o}});var n=i("388894");function o(e){n.notifications.show({title:e.inputs.title,message:e.inputs.message,color:e.inputs.color})}}}]);
-//# sourceMappingURL=nodes_notification_notification_v0_1_0_js.js.map

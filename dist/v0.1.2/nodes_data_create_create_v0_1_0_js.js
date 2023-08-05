@@ -1,2 +1,0 @@
-(self.webpackChunkrolder_kit=self.webpackChunkrolder_kit||[]).push([["nodes_data_create_create_v0_1_0_js"],{709149:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),Object.defineProperty(t,"default",{enumerable:!0,get:function(){return u}});var r=n.ir(n("184399"));async function u(e){e.setOutputs({isCreating:!0}),(0,r.default)(e.inputs.createItem).then(t=>{e.setOutputs({isCreating:!1,createdItem:t}),e.sendSignalOnOutput("sendCreated")})}}}]);
-//# sourceMappingURL=nodes_data_create_create_v0_1_0_js.js.map
