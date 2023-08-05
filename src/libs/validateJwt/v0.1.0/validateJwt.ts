@@ -1,5 +1,4 @@
 import Cookies from "js-cookie";
-import Ms from "ms"
 import Dayjs from "dayjs";
 
 export default async function validateJwt() {
@@ -9,25 +8,35 @@ export default async function validateJwt() {
 
     async function checkToken(cookieJwt: string) {
         return await Kuzzle.auth.checkToken(cookieJwt).then((result: any) => {
-            if (debug > 1) console.log('validateJwt result', { valid: result.valid, expiresAt: Dayjs(result.expiresAt).format('YYYY-MM-DD HH:mm') })
             if (result.valid) {
                 Kuzzle.jwt = cookieJwt
                 Kuzzle.auth.refreshToken({ expiresIn: sessionTimeout }).then((response: any) => {
+                    const expiresAt = Dayjs(response.expiresAt).format('YYYY-MM-DD HH:mm:ss')
                     Cookies.set('jwt', response.jwt, { expires: 30 })
-                    Cookies.set('jwtExpiresAt', <any>Date.now() + Ms(sessionTimeout), { expires: 30 })
+                    Cookies.set('jwtExpiresAt', expiresAt, { expires: 30 })
+                    if (debug > 1) console.log('JWT refreshed', { expiresAt })
                 })
                 return true
-            } else return false
+            } else {
+                if (debug > 1) console.log(result)
+                return false
+            }
         })
     }
 
     if (Kuzzle) {
-        const cookieJwt = Cookies.get('jwt')
-        const jwtExpireDiff: number = <any>Cookies.get('jwtExpiresAt') - Date.now()
+        const cookieJwt = Cookies.get('jwt')        
+        const jwtExpireDiff: number = Dayjs(Cookies.get('jwtExpiresAt')).diff(Dayjs())
         if (Kuzzle.authenticated) {
             if (cookieJwt && jwtExpireDiff > 1000) return checkToken(cookieJwt)
-            else return false
+            else {
+                if (debug > 1) console.log('JWT expired')
+                return false
+            }
         } else if (cookieJwt && jwtExpireDiff > 1000) return checkToken(cookieJwt)
-        else return false
+        else {
+            if (debug > 1) console.log('Not authenticated')
+            return false
+        }
     }
 }

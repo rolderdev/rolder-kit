@@ -3,7 +3,7 @@ import { useColorScheme, useWindowEvent } from '@mantine/hooks'
 import { MantineProvider } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
 import ErrorHandler from '../../../../libs/errorHandler/v0.1.0/ErrorHandler'
-import jwtRefresh from '../../../../libs/validateJwt/v0.1.0/validateJwt'
+import validateJwt from '../../../../libs/validateJwt/v0.1.0/validateJwt'
 
 import { QueryClientProvider, QueryClient, QueryCache } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools/build/lib/index.prod.js'
@@ -26,7 +26,7 @@ export default function App_v0_3_0(props: any) {
 		if (debug > 1) console.log('Rolder:', window.Rolder)
 	}
 
-	useWindowEvent('focus', () => jwtRefresh().then((jwtValid) => !jwtValid && props.jwtValidationFailed()));
+	useWindowEvent('focus', () => validateJwt().then((jwtValid) => !jwtValid && props.jwtValidationFailed()));
 
 	const { notificationsPosition, detectColorScheme, colorScheme: cs } = props
 	let colorScheme = useColorScheme()

@@ -1,19 +1,24 @@
 import Cookies from "js-cookie"
 import Ms from "ms"
+import Dayjs from "dayjs"
 
 const auth = {
     login: (props: any) => {
         const Rolder = window.Rolder
         const Kuzzle = window.Kuzzle
 
-        const { debug } = Rolder
-        const { credentials, expiresIn } = props
+        const { debug, sessionTimeout } = Rolder
+        const { credentials } = props
         return Kuzzle.connect().then(() =>
-            Kuzzle.auth.login('local', credentials, expiresIn)
+            Kuzzle.auth.login('local', credentials, sessionTimeout)
                 .then((jwt: string) => {
+                    const expiresAt = Dayjs().add(Ms(sessionTimeout), 'ms').format('YYYY-MM-DD HH:mm:ss')
                     Cookies.set('jwt', jwt, { expires: 30 })
-                    Cookies.set('jwtExpiresAt', Date.now() + Ms(expiresIn), { expires: 30 })
-                    if (debug > 1) console.log('Authenticated:', credentials.username)
+                    Cookies.set('jwtExpiresAt', expiresAt, { expires: 30 })
+                    if (debug > 1) console.log('Authenticated:', {
+                        username: credentials.username,
+                        jwtExpiresAt: expiresAt
+                    })
                     return { error: false }
                 })
                 .catch((error: any) => {

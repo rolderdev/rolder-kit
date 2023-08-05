@@ -1,7 +1,7 @@
 import { Text, UnstyledButton, Divider, Stack } from "@mantine/core"
 
-function HeaderItems(props) {
-  function Item(item) {
+function HeaderItems(props: any) {
+  function Item(item: any) {
     return (
       <UnstyledButton
         h='100%'
@@ -10,14 +10,14 @@ function HeaderItems(props) {
         <Stack justify="flex-end" spacing='none' h='100%'>
           <Stack justify="space-between" spacing='none' h='75%'>
             <Text>{item.label}</Text>
-            {item.path === props.selectedHeaderItem?.path && <Divider size="md" color='red' />}
+            {item.path === props.selectedHeaderItem?.path && <Divider size="md" color={item.color} />}
           </Stack>
         </Stack>
       </UnstyledButton>
     )
   }
 
-  const items = props.items.map((item) => Item(item))
+  const items = props.items.map((item: any) => Item(item))
   return items
 }
 

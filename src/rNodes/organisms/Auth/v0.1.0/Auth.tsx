@@ -6,11 +6,9 @@ import ErrorHandler from "../../../../libs/errorHandler/v0.1.0/ErrorHandler"
 import validateJwt from "../../../../libs/validateJwt/v0.1.0/validateJwt"
 
 export default function Auth_v0_1_0(props: any) {
-  const { sessionTimeout } = window.Rolder
-
   const loginHandler = (values: { login: string; password: string }) => {
     const { login: username, password } = values
-    auth.login({ credentials: { username, password }, expiresIn: sessionTimeout })
+    auth.login({ credentials: { username, password } })
       .then((response: { error: string; message: string }) => {
         if (response.error) ErrorHandler({ title: response.message })
         else {
