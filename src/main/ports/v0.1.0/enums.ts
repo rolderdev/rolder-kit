@@ -34,6 +34,19 @@ export const enums: NoodlEnum = {
     wraps: [{ value: 'wrap', label: 'Wrap' }, { value: 'nowrap', label: 'Nowrap' }, { value: 'wrap-reverse', label: 'Wrap reverse' }],
     positions: [{ value: 'left', label: 'Left' }, { value: 'center', label: 'Center' }, { value: 'right', label: 'Right' },
     { value: 'apart', label: 'Apart' }],
+    popoverPositions: [
+        { value: 'bottom', label: 'Bottom' }, { value: 'left', label: 'Left' }, { value: 'right', label: 'Right' }, { value: 'top', label: 'Top' },
+        { value: 'bottom-end', label: 'Bottom end' }, { value: 'bottom-start', label: 'Bottom start' },
+        { value: 'left-end', label: 'Left end' }, { value: 'left-start', label: 'Left start' },
+        { value: 'right-end', label: 'Right end' }, { value: 'right-start', label: 'Right start' },
+        { value: 'top-end', label: 'Top end' }, { value: 'top-start', label: 'Top start' },
+    ],
+    indicatorPositions: [
+        { value: 'bottom-end', label: 'Bottom end' }, { value: 'bottom-start', label: 'Bottom start' },
+        { value: 'top-end', label: 'Top end' }, { value: 'top-start', label: 'Top start' },
+        { value: 'bottom-center', label: 'Bottom center' }, { value: 'top-center', label: 'Top center' },
+        { value: 'middle-center', label: 'Middle center' }, { value: 'middle-end', label: 'Middle end' }, { value: 'middle-center', label: 'Middle center' },
+    ],
     colorShades: [
         { value: '0', label: '0' }, { value: '1', label: '1' }, { value: '2', label: '2' }, { value: '3', label: '3' }, { value: '4', label: '4' },
         { value: '5', label: '5' }, { value: '6', label: '6' }, { value: '7', label: '7' }, { value: '8', label: '8' }, { value: '9', label: '9' }
@@ -56,4 +69,6 @@ export const enums: NoodlEnum = {
         { value: 'L', label: 'Lowest' }, { value: 'M', label: 'Medium' }, { value: 'Q', label: 'Quality' },
         { value: 'H', label: 'Highest' }
     ],
+    datePickerTypes: [{ value: 'default', label: 'Default' }, { value: 'range', label: 'Range' },],
+    dropdownTypes: [{ value: 'popover', label: 'Popover' }, { value: 'modal', label: 'Modal' },],
 }

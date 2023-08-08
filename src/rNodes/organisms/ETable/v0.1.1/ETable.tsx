@@ -105,7 +105,7 @@ export default function ETable_v0_1_1(props: any) {
     const isLastColumn = currentTableScheme.level === tableScheme.length - 1
     const expandable = tableScheme[currentTableScheme.level + 1] && isFirstColumn
     let ml = -0.5
-    const expandWidth = 2.5
+    const expandWidth = currentTableScheme.selectable ? 0.5 : 2.5
     switch (currentTableScheme.level) {
       case 1:
         ml = 0.5
@@ -174,7 +174,7 @@ export default function ETable_v0_1_1(props: any) {
           color='dark'
           onClick={(e) => e.stopPropagation()}
           checked={selectedRecords.includes(row.id)}
-          onChange={(e) => {
+          onChange={() => {
             const sr = [...selectedRecords]
             if (sr.includes(row.id)) {
               setSelectedRecords(sr.filter(e => e !== row.id))

@@ -7,6 +7,9 @@ declare global {
         Clone: any;
         Dayjs: any;
         Mustache: any
+        FilterBy: {
+            values: Function
+        }
     }
 }
 

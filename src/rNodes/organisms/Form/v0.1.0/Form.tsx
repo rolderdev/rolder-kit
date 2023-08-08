@@ -23,7 +23,9 @@ export default function Form_v0_1_0(props: any) {
     if (formScheme) {
       const initialValues: any = {}
       formScheme.forEach((fs: any) => {
-        initialValues[fs.name] = fs.initialValue || ''
+        let initialValue: any = ''
+        if (Array.isArray(fs.initialValue)) initialValue = fs.initialValue || []
+        initialValues[fs.name] = fs.initialValue || initialValue
       })
 
       const validate: any = {}

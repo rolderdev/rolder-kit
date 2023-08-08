@@ -7,7 +7,7 @@ async function fetch({ queryKey: [{ dbVersion, dbClass, query, sort, options }] 
     const dbClassV = dbClassVersion(dbClass)
 
     if (debug > 0) console.time(dbClassV + ' fetch time')
-
+        
     return Kuzzle.connect().then(() =>
         Kuzzle.document.search(dbVersion, dbClassV, { query, sort }, { ...options })
             .then((response: { hits: any[]; fetched: any; total: any }) => {

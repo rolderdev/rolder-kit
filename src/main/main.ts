@@ -19,6 +19,8 @@ Dayjs.extend(duration)
 Dayjs.extend(relativeTime)
 window.Dayjs = Dayjs
 
+import filterBy from '../utils/data/v0.3.0/filterBy'; window.FilterBy = filterBy
+
 // #########################################################
 import { defineModule } from '@noodl/noodl-sdk'
 import reactNodes from './nodes/v0.1.0/rNodes';

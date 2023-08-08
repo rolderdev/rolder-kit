@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export function getValue(obj: any, nestedKey: string) {
     const Mustache = window.Mustache
     let value = ''
@@ -55,7 +57,6 @@ export function setRefs(dbClass: string) {
 
 export function setFoudedData(dbClasses: string[], foundedData: { [key: string]: any }) {
     const Noodl = window.Noodl
-    const _ = window._
     const { dbClasses: dbClassesDef } = window.Rolder
     if (dbClasses && foundedData) {
         let resultData: any = {}
@@ -71,7 +72,7 @@ export function setFoudedData(dbClasses: string[], foundedData: { [key: string]:
                 dbRefClasses = Object.keys(dbClassesDef).filter(d => dbClassesDef[d].references?.includes(dbClass))
                 dbRefClasses?.forEach(dbRefClass => {
                     resultData[dbRefClass] = _.unionBy(resultData[dbRefClass], Noodl.Objects[dbRefClass]?.items
-                        .filter((n: any) => foundedNItems.map((i: any) => i.id).includes(n[dbClass]?.id)), 'id')
+                        ?.filter((n: any) => foundedNItems.map((i: any) => i.id).includes(n[dbClass]?.id)), 'id')
                 })
             }
         })
