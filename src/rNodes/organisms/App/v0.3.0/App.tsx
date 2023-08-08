@@ -4,13 +4,17 @@ import { MantineProvider } from '@mantine/core'
 import { DatesProvider } from '@mantine/dates'
 import ErrorHandler from '../../../../libs/errorHandler/v0.1.0/ErrorHandler'
 import validateJwt from '../../../../libs/validateJwt/v0.1.0/validateJwt'
-import { KuzzleEventEmitter } from 'kuzzle-sdk'
+import pJson from '../../../../package.json'
 
 import { QueryClientProvider, QueryClient, QueryCache } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools/build/lib/index.prod.js'
 
 const queryClient = new QueryClient({
-	queryCache: new QueryCache({ onError: (error: any, query) => { if (query.state.data !== undefined) ErrorHandler({ title: 'Системная ошибка!', message: error.message }) }, }),
+	queryCache: new QueryCache({
+		onError: (error: any, query) => {
+			if (query.state.data !== undefined) ErrorHandler({ title: 'Системная ошибка!', message: error.message })
+		},
+	}),
 })
 window.QueryClient = queryClient
 
@@ -22,7 +26,10 @@ export default function App_v0_3_0(props: any) {
 
 	if (!window.Rolder?.inited) {
 		const { envVersion, project, dbVersion = 1, sessionTimeout = '7d', projectVersion } = Noodl.getProjectSettings()
-		window.Rolder = { inited: true, project, projectVersion, envVersion, dbVersion, dbClasses: props.dbClasses[0], debug, sessionTimeout }
+		window.Rolder = {
+			inited: true, project, projectVersion, envVersion, dbVersion, dbClasses: props.dbClasses[0], debug, sessionTimeout,
+			rolderKit: `v${pJson.version}`
+		}
 		props.inited()
 		if (debug > 1) console.log('Rolder:', window.Rolder)
 	}

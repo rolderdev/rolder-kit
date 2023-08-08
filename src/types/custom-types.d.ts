@@ -26,6 +26,7 @@ declare type DbClass = {
 }
 
 declare type RolderType = {
+    rolderKit: string
     inited: boolean
     authenticated?: boolean
     project: string
