@@ -4,7 +4,7 @@ import validateJwt from "../../../../libs/validateJwt/v0.1.0/validateJwt"
 
 export default async function initBackend_v0_2_0(noodleNode: NodeInstance) {
     const { project, envVersion, debug } = window.Rolder
-
+    
     if (debug > 1) console.time('Initialize performance')
     const Kuzzle = init({ project, envVersion })
     Kuzzle.connect().then(() => {

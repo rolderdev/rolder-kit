@@ -9,6 +9,7 @@ declare global {
         Mustache: any
         FilterBy: {
             values: Function
+            dateRanfe: Function
         }
     }
 }

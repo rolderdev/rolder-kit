@@ -1,8 +1,8 @@
 import { Badge, Avatar } from "@mantine/core"
-import Icons from "../../../../../libs/icons/v0.1.0/Icons"
+import icons from "../../../../../libs/icons/v0.2.0/icons"
 
 export default function Badge_v0_1_0(props: any) {
-  const Icon = props.iconName && Icons(props.iconName)
+  const Icon = props.iconName && icons(props.iconName)
   const avatar = (
     <Avatar size={24} mr={5}>
       <Icon size={props.iconSize} />

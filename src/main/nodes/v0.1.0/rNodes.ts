@@ -23,7 +23,7 @@ import UnstyledButtonNodes from "../../../rNodes/molecules/UnstyledButton/Unstyl
 // buttons
 import ActionIconNodes from "../../../rNodes/elements/buttons/ActionIcon/ActionIconNodes";
 import ButtonNodes from "../../../rNodes/elements/buttons/Button/ButtonNodes";
-import PopoverActionIconNodes from "../../../rNodes/elements/buttons/PopoverButton/PopoverActionIconNodes";
+import PopoverActionIconNodes from "../../../rNodes/elements/buttons/PopoverActionIcon/PopoverActionIconNodes";
 // dataDisplay
 import AvatarNodes from "../../../rNodes/elements/dataDisplay/Avatar/AvatarNodes";
 import IconNodes from "../../../rNodes/elements/dataDisplay/Icon/Icon";

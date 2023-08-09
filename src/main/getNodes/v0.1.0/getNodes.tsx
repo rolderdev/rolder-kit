@@ -15,7 +15,7 @@ export const getReactNodes = (nodeName: string, nodeVersions: any) => {
       getReactComponent() {
         return function (props: any) {
           const { reqiereChildren, inputsToCheck, inputs } = nodeVersions[nodeVersion]
-          
+
           if (reqiereChildren && !Array.isArray(props.children)) return <Text color='red'>{`Node ${nodeName} v${nodeVersion} reqieres at least 2 children`}</Text>
 
           const emptyProps: string[] | undefined = inputsToCheck?.filter((p: string) => !props[p])
@@ -41,9 +41,7 @@ export const getJsNodes = (nodeName: string, nodeVersions: any) => {
       inputs: inputs,
       outputs: outputs,
       signals: {
-        [nodeName]: function () {
-          nodeImport.then((node: any) => node.default(this))
-        }
+        [nodeName]: function () { nodeImport.then((node: any) => node.default(this)) }
       }
     })
   })

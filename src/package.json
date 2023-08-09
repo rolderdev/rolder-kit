@@ -1,7 +1,7 @@
 {
   "name": "rolder-kit",
   "private": true,
-  "version": "0.6.0",
+  "version": "0.6.1",
   "scripts": {
     "dev": "rspack serve",
     "build": "rspack build",
@@ -11,8 +11,8 @@
   "dependencies": {
     "@noodl/noodl-sdk": "0.5.4",
     "kuzzle-sdk": "7.10.8",
-    "@tanstack/react-query": "4.32.5",
-    "@tanstack/react-query-devtools": "4.32.5",
+    "@tanstack/react-query": "4.32.6",
+    "@tanstack/react-query-devtools": "4.32.6",
     "@mantine/core": "6.0.17",
     "@mantine/hooks": "6.0.17",
     "@mantine/form": "6.0.17",
@@ -21,7 +21,7 @@
     "@mantine/carousel": "6.0.17",
     "embla-carousel-react": "7.1.0",
     "@tabler/icons-react": "2.30.0",
-    "mantine-datatable": "2.9.6",
+    "mantine-datatable": "2.9.7",
     "react-webcam": "7.1.1",
     "js-cookie": "3.0.5",
     "dayjs": "1.11.9",
@@ -36,7 +36,7 @@
     "react": "18.2.0",
     "@rspack/cli": "0.2.4",
     "typescript": "5.1.6",
-    "@types/react": "18.2.17",
+    "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
     "@types/js-cookie": "3.0.3",
     "@types/ms": "0.7.31",
