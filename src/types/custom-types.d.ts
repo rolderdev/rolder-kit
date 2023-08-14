@@ -46,8 +46,6 @@ declare type JsNode = {
         nodeImport: any
         inputs?: any
         outputs?: any
-        //inputsToCheck?: string[]
-        //inputRules?: { condition: string, inputs: string[] }[]
     }
 }
 
@@ -70,8 +68,6 @@ declare type JsNodeProps = {
 declare type InputRule = { condition: string, inputs: string[] }
 
 declare type NoodlEnum = {
-    [key: string]: {
-        label: string
-        value: string
-    }[]
+    label: string
+    value: string
 }

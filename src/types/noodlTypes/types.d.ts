@@ -36,5 +36,5 @@ declare module '@noodl/noodl-sdk' {
         | 'query-sorting'
         | 'pages'
         | 'proplist'
-        | { name: Type; codeeditor?: TypeEditor; allowEditOnly?: boolean; }
+        | { name: Type; codeeditor?: TypeEditor; allowEditOnly?: boolean; enums?: NoodlEnum[], units?: string[], defaultUnit?: string }
 }

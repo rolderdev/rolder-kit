@@ -2,23 +2,25 @@ declare module '@noodl/noodl-sdk' {
     export type NodeInput =
         | Type
         | {
-              type: Type
-              displayName?: string
-              group?: string
-              default?: any
-              set?: (this: NodeInstance, value: unknown) => void
-          }
+            type: Type
+            displayName?: string
+            group?: string
+            default?: any
+            tooltip?: string
+            set?: (this: NodeInstance, value: unknown) => void
+        }
 
     export type NodeOutput =
         | Type
         | {
-              type: Type
-              displayName?: string
-              group?: string
-          }
+            type: Type
+            displayName?: string
+            group?: string
+        }
 
     export type NodeSignal = {
-        (this: NodeInstance): void
+        displayName: string,
+        signal: (this: NodeInstance) => void
     }
 
     export type NodeMethod = {

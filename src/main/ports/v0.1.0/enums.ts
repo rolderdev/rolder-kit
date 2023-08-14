@@ -1,4 +1,4 @@
-export const enums: NoodlEnum = {
+export const enums: {[key: string]: NoodlEnum[]} = {
     colorSchemes: [{ value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }],
     sizes: [
         { value: 'xs', label: 'xs' }, { value: 'sm', label: 'sm' }, { value: 'md', label: 'md' }, { value: 'lg', label: 'lg' },

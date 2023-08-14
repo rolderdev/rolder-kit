@@ -44,6 +44,7 @@ import TextareaNodes from "../../../rNodes/elements/inputs/Textarea/TextareaNode
 import TextInputNodes from "../../../rNodes/elements/inputs/TextInput/TextInputNodes";
 // miscellaneous
 import WebCameraNodes from "../../../rNodes/elements/miscellaneous/WebCamera/WebCameraNodes";
+import QRScannerNodes from "../../../rNodes/elements/miscellaneous/QRScanner/QRScannerNodes";
 // typography
 import TextNodes from "../../../rNodes/elements/typography/Text/TextNodes";
 
@@ -66,7 +67,7 @@ const reactNodes = [
     ...SegmentedControlNodes, ...CheckboxGroupNodes, ...DatePickerInputNodes, ...DateTimePickerNodes, ...MultiSelectNodes, ...SelectNodes,
     ...TextareaNodes, ...TextInputNodes,
     // miscellaneous
-    ...WebCameraNodes,
+    ...WebCameraNodes, ...QRScannerNodes,
     // typography
     ...TextNodes
 ]

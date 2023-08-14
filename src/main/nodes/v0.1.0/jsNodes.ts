@@ -12,7 +12,7 @@ import uploadWebCamShotsNodes from "../../../jsNodes/data/uploadFiles/uploadWebC
 
 const nodes = [
     ...initBackendNodes, ...subscribeNodes, ...createUserNodes, ...mDeleteUsersNodes, ...createNodes, ...mCreateNodes, ...updateNodes, ...mUpdateNodes,
-    ...mDeleteNodes, ...notificationNodes, ...uploadWebCamShotsNodes,
+    ...mDeleteNodes, ...notificationNodes, ...uploadWebCamShotsNodes
 ]
 
 export default nodes

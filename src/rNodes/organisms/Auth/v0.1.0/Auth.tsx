@@ -10,7 +10,7 @@ export default function Auth_v0_1_0(props: any) {
     const { login: username, password } = values
     auth.login({ credentials: { username, password } })
       .then((response: { error: string; message: string }) => {
-        if (response.error) ErrorHandler({ title: response.message })
+        if (response.error) ErrorHandler({ title: response.message, autoClose: 2000 })
         else {
           validateJwt()
           props.authenticated()

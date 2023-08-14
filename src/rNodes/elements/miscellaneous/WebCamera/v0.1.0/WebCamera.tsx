@@ -1,13 +1,17 @@
-import { useRef, useCallback } from 'react'
-import Webcam from "react-webcam"
-import { Button, Group } from '@mantine/core'
+import { useCallback, useRef, useState } from 'react';
+import { Button, Group } from '@mantine/core';
+import Webcam from "react-webcam";
 
 export default function WebCamera_v0_1_0(props: any) {
-  const webcamRef = useRef<any>()
-  const videoConstraints = {
-    facingMode: { exact: "environment" }
+  const [cameraId, setCameraId] = useState({});
+  const handleCameraId = () => {
+    navigator.mediaDevices.enumerateDevices().then(cameras => {
+      const cams = cameras.filter(({ kind }: { kind: string }) => kind === "videoinput")
+      setCameraId(cams[cams.length - 1].deviceId)
+    })
   }
 
+  const webcamRef = useRef<any>(null);
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot()
     props.screenshot(imageSrc)
@@ -19,11 +23,11 @@ export default function WebCamera_v0_1_0(props: any) {
       <Webcam
         ref={webcamRef}
         audio={false}
-        videoConstraints={videoConstraints}
-        screenshotFormat="image/jpeg"
-        {...props}
+        width='100%'
+        videoConstraints={{ deviceId: cameraId, facingMode: { ideal: 'enviroment' } }}
+        onUserMedia={handleCameraId}
       />
-      <Group position='center' >
+      {props.screenshotEnabled && <Group w='100%' h='100%' position='center' >
         <Button
           mt={-144}
           radius={80}
@@ -32,7 +36,7 @@ export default function WebCamera_v0_1_0(props: any) {
           size='xl'
           sx={(theme) => ({
             borderWidth: 6,
-            backgroundColor: theme.colors.red,
+            backgroundColor: theme.colors[props.buttonColor],
             opacity: 0.5,
             borderColor: '#fff',
             '&:active': {
@@ -41,7 +45,7 @@ export default function WebCamera_v0_1_0(props: any) {
           })}
           onClick={capture}
         />
-      </Group>
+      </Group>}
     </>
-  )
-}
+  );
+};

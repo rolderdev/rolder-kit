@@ -1,6 +1,8 @@
 
 declare module '@noodl/noodl-sdk' {
     export type NodeInstance = {
+        [x: string]: any;
+        _internal: any;
         id: string;
         context: any;
         model: any;

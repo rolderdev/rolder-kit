@@ -1,31 +1,27 @@
+import { NodeInput, Type } from "@noodl/noodl-sdk"
 import { enums } from "./enums"
 
 const units = ['rem', '%', 'px']
 // types
-const string = { type: 'string' }
-const number = { type: 'number' }
-const boolean = { type: 'boolean' }
-const array = { type: 'array' }
-const object = { type: 'object' }
-const signal = { type: 'signal' }
+const string: { type: Type } = { type: 'string' }
+const number: { type: Type } = { type: 'number' }
+const boolean: { type: Type } = { type: 'boolean' }
+const array: { type: Type } = { type: 'array' }
+const object: { type: Type } = { type: 'object' }
+const signal: { type: Type } = { type: 'signal' }
 // groups
-const General = { group: 'General' }
-const Data = { group: 'Data' }
-const Params = { group: 'Params' }
-const States = { group: 'States' }
-const Signals = { group: 'Signals' }
-const Style = { group: 'Style' }
-const Layout = { group: 'Layout' }
-const Margins = { group: 'Margins' }
-const Paddings = { group: 'Paddings' }
-const Dimensions = { group: 'Dimensions' }
-const ControlledDimensions = { group: 'ControlledDimensions' }
-const Icon = { group: 'Icon' }
-const Font = { group: 'Font' }
-const Form = { group: 'Form' }
-const Sx = { group: 'Sx' }
+const General = { group: 'General' }, Data = { group: 'Data' }, Params = { group: 'Params' }, States = { group: 'States' }
+const Signals = { group: 'Signals' }, Style = { group: 'Style' }, Layout = { group: 'Layout' }, Margins = { group: 'Margins' }
+const Paddings = { group: 'Paddings' }, Dimensions = { group: 'Dimensions' }, ControlledDimensions = { group: 'ControlledDimensions' }
+const Icon = { group: 'Icon' }, Font = { group: 'Font' }, Form = { group: 'Form' }, Sx = { group: 'Sx' }
 
-const reactPorts = {
+const reactPorts: {
+    ['General']: { [key: string]: NodeInput }, ['Data']: { [key: string]: NodeInput }, ['Params']: { [key: string]: NodeInput }
+    ['States']: { [key: string]: NodeInput }, ['Signals']: { [key: string]: NodeInput }, ['Style']: { [key: string]: NodeInput }
+    ['Layout']: { [key: string]: NodeInput }, ['Margins']: { [key: string]: NodeInput }, ['Paddings']: { [key: string]: NodeInput }
+    ['Dimensions']: { [key: string]: NodeInput }, ['ControlledDimensions']: { [key: string]: NodeInput }, ['Icon']: { [key: string]: NodeInput }
+    ['Font']: { [key: string]: NodeInput }, ['Form']: { [key: string]: NodeInput }, ['Sx']: { [key: string]: NodeInput }
+} = {
     General: {
 
     },
@@ -57,7 +53,8 @@ const reactPorts = {
         uploadFolder: { ...Data, ...string, displayName: 'Upload folder' },
         uploadedUrls: { ...Data, ...array, displayName: 'Uploaded urls' },
         selectedDate: { ...Data, ...array, displayName: 'Selected date' },
-        selectedDates: { ...Data, ...array, displayName: 'Selected dates' },        
+        selectedDates: { ...Data, ...array, displayName: 'Selected dates' },
+        qrString: { ...Data, ...string, displayName: 'QR string' },
     },
     Params: {
         useDataType: { ...General, type: { name: 'enum', enums: enums.useDataTypes }, displayName: 'Query type' },
@@ -96,11 +93,13 @@ const reactPorts = {
         creatable: { ...Params, ...boolean, displayName: 'Creatable' },
         debounced: { ...Params, ...boolean, displayName: 'Debounced', default: false, tooltip: 'Delay typed string at output' },
         delay: { ...Params, ...number, displayName: 'Delay (ms)', default: 350 },
-        autoClose: { ...Params, ...number, displayName: 'Autoclose (ms)' },
+        autoClose: { ...Params, ...number, displayName: 'Autoclose (ms)', default: 2000 },
         useCustomItems: { ...Params, ...boolean, displayName: 'Use custom items', default: false },
         withArrow: { ...Params, ...boolean, displayName: 'With arrow' },
         datePickerType: { ...Params, type: { name: 'enum', enums: enums.datePickerTypes }, displayName: 'Type', default: 'default' },
         inline: { ...Params, ...boolean, displayName: 'Inline' },
+        screenshotEnabled: { ...Params, ...boolean, displayName: 'Enable screenshot' },
+        maxScansPerSecond: { ...Params, ...number, displayName: 'Max scans per second', default: 25 },
     },
     States: {
         enabled: { ...States, ...boolean, displayName: 'Enabled' },
@@ -129,9 +128,10 @@ const reactPorts = {
         hide: { ...Signals, ...boolean, displayName: 'Hide' },
         submited: { ...Signals, ...signal, displayName: 'Submited' },
         create: { ...Signals, ...signal, displayName: 'Create' },
-        screenshoted: { ...Signals, ...signal, displayName: 'Screenshot ready' },
+        screenshoted: { ...Signals, ...signal, displayName: 'Screenshoted' },
         uploaded: { ...Signals, ...signal, displayName: 'Uploaded' },
         jwtValidationFailed: { ...Signals, ...signal, displayName: 'JWT validation failed' },
+        qrScanned: { ...Signals, ...signal, displayName: 'QR scanned' },
     },
     Style: {
         detectColorScheme: { ...Style, ...boolean, displayName: 'Autodetect color scheme', },
@@ -198,6 +198,8 @@ const reactPorts = {
     ControlledDimensions: {
         widthString: { ...ControlledDimensions, ...string, displayName: 'Width (string)' },
         heightString: { ...ControlledDimensions, ...string, displayName: 'Height (string)' },
+        widthNumber: { ...ControlledDimensions, ...number, displayName: 'Width (number)' },
+        heightNumber: { ...ControlledDimensions, ...number, displayName: 'Height (number)' },
     },
     Font: {
         fz: { ...Font, type: { name: 'enum', enums: enums.sizes }, displayName: 'Size' },
@@ -217,7 +219,7 @@ const reactPorts = {
     }
 }
 
-const jsPorts = {
+const jsPorts: { [key: string]: { [key: string]: NodeInput } } = {
     Data: {
         createItem: { ...Data, ...object, displayName: 'Create item', tooltip: "Example: {dbClass: 'task', body: {...}}" },
         createdItem: { ...Data, ...object, displayName: 'Created item' },
@@ -244,6 +246,8 @@ const jsPorts = {
         created: { ...Signals, ...signal, displayName: 'Created' },
         updated: { ...Signals, ...signal, displayName: 'Updated' },
         deleted: { ...Signals, ...signal, displayName: 'Deleted' },
+    },
+    Params: {
     }
 }
 

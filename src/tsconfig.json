@@ -26,5 +26,5 @@
     "jsNodes",
     "libs",
     "utils"
-  ]
+, "../recycle/webcam"  ]
 }
