@@ -87,6 +87,6 @@ declare module '@noodl/noodl-sdk' {
         /**
          * This is called once on startup
          */
-        setup?: () => void
+        setup?: (context: any, graphModel: any) => void
     }
 }

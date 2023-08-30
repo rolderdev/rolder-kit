@@ -7,7 +7,7 @@ const pJson = require('./package.json')
 const name = 'rolder-kit'
 const version = pJson.version
 const baseDir = '/Users/decard/Library/Application Support/Noodl/projects/'
-const projectDir = '3a8dc756-5891-4ec3-b88a-04fc6067392c'
+const projectDir = 'c09055b1-4710-4c0c-9ef3-6fc6c8446046'
 var outputPath = path.resolve(__dirname, baseDir + projectDir + '/noodl_modules/' + name + '_v' + version)
 //var outputPath = path.resolve(__dirname, `../dist/rolder-kit_v${version}`)
 

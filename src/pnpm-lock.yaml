@@ -56,6 +56,18 @@ dependencies:
   just-clone:
     specifier: 6.2.0
     version: 6.2.0
+  just-filter-object:
+    specifier: 3.2.0
+    version: 3.2.0
+  just-insert:
+    specifier: 3.2.0
+    version: 3.2.0
+  just-intersect:
+    specifier: 4.3.0
+    version: 4.3.0
+  just-is-empty:
+    specifier: 3.4.1
+    version: 3.4.1
   kuzzle-sdk:
     specifier: 7.10.8
     version: 7.10.8
@@ -63,11 +75,11 @@ dependencies:
     specifier: 4.17.21
     version: 4.17.21
   mantine-datatable:
-    specifier: 2.9.9
-    version: 2.9.9(@mantine/core@6.0.19)(@mantine/hooks@6.0.19)(react@18.2.0)
+    specifier: 2.9.11
+    version: 2.9.11(@mantine/core@6.0.19)(@mantine/hooks@6.0.19)(react@18.2.0)
   mantine-react-table:
-    specifier: 1.0.0
-    version: 1.0.0(@emotion/react@11.11.1)(@mantine/core@6.0.19)(@mantine/dates@6.0.19)(@mantine/hooks@6.0.19)(@tabler/icons-react@2.30.0)(react-dom@18.2.0)(react@18.2.0)
+    specifier: 1.1.2
+    version: 1.1.2(@emotion/react@11.11.1)(@mantine/core@6.0.19)(@mantine/dates@6.0.19)(@mantine/hooks@6.0.19)(@tabler/icons-react@2.30.0)(react-dom@18.2.0)(react@18.2.0)
   ms:
     specifier: 2.1.3
     version: 2.1.3
@@ -77,6 +89,9 @@ dependencies:
   qrcode.react:
     specifier: 3.1.0
     version: 3.1.0(react@18.2.0)
+  react-spinners:
+    specifier: 0.13.8
+    version: 0.13.8(react-dom@18.2.0)(react@18.2.0)
   react-webcam:
     specifier: 7.1.1
     version: 7.1.1(react-dom@18.2.0)(react@18.2.0)
@@ -3474,6 +3489,22 @@ packages:
     resolution: {integrity: sha512-1IynUYEc/HAwxhi3WDpIpxJbZpMCvvrrmZVqvj9EhpvbH8lls7HhdhiByjL7DkAaWlLIzpC0Xc/VPvy/UxLNjA==}
     dev: false
 
+  /just-filter-object@3.2.0:
+    resolution: {integrity: sha512-OeorYJxmp2zhy/0LxjS1UjbJ7XMY8M4gVa1RRKxnIVheCYmng2E2hE0lEbDGv4aRh/HI7FgNUXtOMnmNxpoXRQ==}
+    dev: false
+
+  /just-insert@3.2.0:
+    resolution: {integrity: sha512-M3E0zgm9kCPPNspm9asIGkYccZHotP0pJ6btlVebN4m46FPLE3dpAyUJWkhxLMYp9F3qq8uBNuw9JAeifrg+oA==}
+    dev: false
+
+  /just-intersect@4.3.0:
+    resolution: {integrity: sha512-XdAiJUmfM7VOoBUh7I4xo+0YYuzCPiV0Xf21oAmR+1j6a/P8KxJUCigZDblmURZmkIWffNziY2sbSaHrJbNcuA==}
+    dev: false
+
+  /just-is-empty@3.4.1:
+    resolution: {integrity: sha512-bweyqPPl3HReVyVzLJvCJn+cfXJKh6dy4kSLoW9YLqwFz+2vZbWLN38AOK7esEIVPQwY1W48HaNvOFZqYAjLpw==}
+    dev: false
+
   /klona@2.0.6:
     resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
     engines: {node: '>= 8'}
@@ -3531,8 +3562,8 @@ packages:
     dependencies:
       js-tokens: 4.0.0
 
-  /mantine-datatable@2.9.9(@mantine/core@6.0.19)(@mantine/hooks@6.0.19)(react@18.2.0):
-    resolution: {integrity: sha512-KkG/EtxtMh+MSLKkE2kD/eQqGO4JMJZwlP+0VEAMGXM+pT5NcPBjl/EvrbvqQYF0v0rfRBikx26xG550c9DxtA==}
+  /mantine-datatable@2.9.11(@mantine/core@6.0.19)(@mantine/hooks@6.0.19)(react@18.2.0):
+    resolution: {integrity: sha512-0gx8eStlPLI0Ve84c29ZlLBigUMu/bPRhekZql4Uh0DKv/XE6d8LXsFz3X3tcQt3/DVdkKRv2Xlb8FNERDJjew==}
     peerDependencies:
       '@mantine/core': '>=6 <=6.0.17 || >=6.0.19'
       '@mantine/hooks': '>=6 <=6.0.17 || >=6.0.19'
@@ -3543,8 +3574,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /mantine-react-table@1.0.0(@emotion/react@11.11.1)(@mantine/core@6.0.19)(@mantine/dates@6.0.19)(@mantine/hooks@6.0.19)(@tabler/icons-react@2.30.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-9WeIQ2N6lJdv5/9NykpxITEISbKJtt/kh32qHNfNZ1l4TpK9fQ0GbYEDGtI5hyuK79F6b29lsSDoPDrsXX+jiQ==}
+  /mantine-react-table@1.1.2(@emotion/react@11.11.1)(@mantine/core@6.0.19)(@mantine/dates@6.0.19)(@mantine/hooks@6.0.19)(@tabler/icons-react@2.30.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-IZGdqBEesrUW9wNODsFhRbZcIrQsvxNTU7Q5Tv4KLn+mV0YpKqYHC1jKu3jusUQbdXD1ZJf4cj2ZNnGOHbMOnA==}
     engines: {node: '>=14'}
     peerDependencies:
       '@emotion/react': '>=11'
@@ -3941,6 +3972,16 @@ packages:
       tslib: 2.6.1
       use-callback-ref: 1.3.0(@types/react@18.2.18)(react@18.2.0)
       use-sidecar: 1.1.2(@types/react@18.2.18)(react@18.2.0)
+    dev: false
+
+  /react-spinners@0.13.8(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-3e+k56lUkPj0vb5NDXPVFAOkPC//XyhKPJjvcGjyMNPWsBKpplfeyialP74G7H7+It7KzhtET+MvGqbKgAqpZA==}
+    peerDependencies:
+      react: ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-style-singleton@2.2.1(@types/react@18.2.18)(react@18.2.0):

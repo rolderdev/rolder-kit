@@ -10,6 +10,7 @@ declare global {
         Cookies: any
         Mustache: any
         SetRefs: any
+        FilterBy: any
     }
 }
 

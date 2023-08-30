@@ -52,10 +52,14 @@ declare module '@noodl/noodl-sdk' {
         allowChildren?: boolean
         noodlNodeAsProp?: boolean
 
+        initialize?: (this: NodeInstance & TDef) => void
+
         inputs?: {
             [key: string]: NodeInput
         }
-
+        _inputValues?: {
+            [key: string]: NodeInput
+        }
         inputProps?: {
             [key: string]: ReactNodeInput
         }
@@ -82,7 +86,10 @@ declare module '@noodl/noodl-sdk' {
             position?: boolean
             align?: boolean
         }
+        signals?: {
+            [key: string]: NodeSignal
+        }
     }
 
-    export type ReactNodeDefinition = {}
+    //export type ReactNodeDefinition = {}
 }

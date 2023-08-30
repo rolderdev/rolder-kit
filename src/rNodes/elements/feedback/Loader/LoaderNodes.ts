@@ -4,7 +4,7 @@ import { reactPorts } from "../../../../main/ports/v0.1.0/ports"
 import Loader_v0_1_0 from "./v0.1.0/Loader"
 
 const { size } = reactPorts.Dimensions
-const { color, loaderVariant: { ...variant } } = reactPorts.Style
+const { color, loaderVariant: { ...variant } }: any = reactPorts.Style
 
 const nodeName = 'Loader'
 const nodeVersions: RNode = {

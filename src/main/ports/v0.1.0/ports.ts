@@ -100,6 +100,7 @@ const reactPorts: {
         inline: { ...Params, ...boolean, displayName: 'Inline' },
         screenshotEnabled: { ...Params, ...boolean, displayName: 'Enable screenshot' },
         maxScansPerSecond: { ...Params, ...number, displayName: 'Max scans per second', default: 25 },
+        expanded: { ...Params, ...boolean, displayName: 'Expanded grouped rows', default: false },
     },
     States: {
         enabled: { ...States, ...boolean, displayName: 'Enabled' },
@@ -233,6 +234,7 @@ const jsPorts: { [key: string]: { [key: string]: NodeInput } } = {
         createUserItem: { ...Data, ...object, displayName: 'Create user item', tooltip: "Example: {body: {content: {...}, credentials: {...}}}" },
         createdUserItem: { ...Data, ...object, displayName: 'Created user item' },
         deleteUserIds: { ...Data, ...array, displayName: 'Delete user ids', tooltip: "Example: ['kuid1', 'kuid2']" },
+        filteredItems: { ...Data, ...array, displayName: 'Filtered items' },
     },
     States: {
         creating: { ...States, ...boolean, displayName: 'Creating' },
@@ -248,6 +250,9 @@ const jsPorts: { [key: string]: { [key: string]: NodeInput } } = {
         deleted: { ...Signals, ...signal, displayName: 'Deleted' },
     },
     Params: {
+        dbClass: { ...Params, ...string, displayName: 'Database class', },
+        refDbClass: { ...Params, ...string, displayName: 'Reference database class', },
+        reversedRef: { ...Params, ...boolean, displayName: 'Reversed reference', default: false },
     }
 }
 

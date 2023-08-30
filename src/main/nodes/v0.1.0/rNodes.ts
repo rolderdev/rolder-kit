@@ -6,6 +6,7 @@ import AppNodes from "../../../rNodes/organisms/App/AppNodes";
 import AuthNodes from "../../../rNodes/organisms/Auth/AuthNodes";
 import AppShellNodes from "../../../rNodes/organisms/AppShell/AppShellNodes";
 import TableNodes from "../../../rNodes/organisms/Table/TableNodes";
+import TableNode_v1 from "../../../rNodes/organisms/Table/v1/TableNode";
 import ETableNodes from "../../../rNodes/organisms/ETable/ETableNodes";
 import FormNodes from "../../../rNodes/organisms/Form/FormNodes";
 // molecules
@@ -42,17 +43,18 @@ import MultiSelectNodes from "../../../rNodes/elements/inputs/MultiSelect/MultiS
 import SelectNodes from "../../../rNodes/elements/inputs/Select/SelectNodes";
 import TextareaNodes from "../../../rNodes/elements/inputs/Textarea/TextareaNodes";
 import TextInputNodes from "../../../rNodes/elements/inputs/TextInput/TextInputNodes";
+import CheckboxNode_v0 from "../../../rNodes/elements/inputs/Checkbox/v0/CheckboxNode";
 // miscellaneous
 import WebCameraNodes from "../../../rNodes/elements/miscellaneous/WebCamera/WebCameraNodes";
 import QRScannerNodes from "../../../rNodes/elements/miscellaneous/QRScanner/QRScannerNodes";
 // typography
 import TextNodes from "../../../rNodes/elements/typography/Text/TextNodes";
 
-const reactNodes = [
+const reactNodes: any = [
     // data
     ...UseDataNodes, ...UseSearchNodes,
     // organisms
-    ...AppNodes, ...AuthNodes, ...AppShellNodes, ...TableNodes, ...ETableNodes, ...FormNodes,
+    ...AppNodes, ...AuthNodes, ...AppShellNodes, ...TableNodes, TableNode_v1, ...ETableNodes, ...FormNodes,
     // molecules
     ...StackNodes, ...GroupNodes, ...CenterNodes, ...ScrollAreaNodes, ...DrawerNodes, ...CarouselNodes, ...ModalNodes, ...GridNodes,
     ...PaperNodes, ...UnstyledButtonNodes,
@@ -64,7 +66,7 @@ const reactNodes = [
     // feedback
     ...LoaderNodes, ...IndicatorNodes,
     // inputs
-    ...SegmentedControlNodes, ...CheckboxGroupNodes, ...DatePickerInputNodes, ...DateTimePickerNodes, ...MultiSelectNodes, ...SelectNodes,
+    ...SegmentedControlNodes, ...CheckboxGroupNodes, CheckboxNode_v0, ...DatePickerInputNodes, ...DateTimePickerNodes, ...MultiSelectNodes, ...SelectNodes,
     ...TextareaNodes, ...TextInputNodes,
     // miscellaneous
     ...WebCameraNodes, ...QRScannerNodes,

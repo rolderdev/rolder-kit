@@ -1,5 +1,6 @@
 import Clone from 'just-clone'; window.Clone = Clone
 import Mustache from 'mustache'; window.Mustache = Mustache
+import Cookies from 'js-cookie'; window.Cookies = Cookies
 
 import Dayjs from 'dayjs'
 import 'dayjs/locale/ru'
@@ -19,7 +20,7 @@ Dayjs.extend(duration)
 Dayjs.extend(relativeTime)
 window.Dayjs = Dayjs
 
-import filterBy from '../utils/data/v0.3.0/filterBy'; window.FilterBy = filterBy
+import filterBy from '../utils/filterBy/v0.2.0/filterBy'; window.FilterBy = filterBy
 
 // #########################################################
 import { defineModule } from '@noodl/noodl-sdk'
@@ -34,6 +35,7 @@ defineModule({
         { name: 'project', type: 'string', displayName: 'Project name', group: 'Connection', tooltip: "Examples: rasko, tex" },
         { name: 'projectVersion', type: 'string', displayName: 'Project version', group: 'General' },
         { name: 'dbVersion', type: 'number', displayName: 'Database version', group: 'Connection', default: 1 },
-        { name: 'sessionTimeout', type: 'string', displayName: 'Session timeout', group: 'Auth', tooltip: "milliseconds lib format: 1m, 3d" },
+        { name: 'sessionTimeout', type: 'string', displayName: 'Session timeout', group: 'Auth', tooltip: "milliseconds lib format: 1m, 3d", default: '5d' },
+        { name: 'defaultDateFormat', type: 'string', displayName: 'Date format', group: 'Defaults', tooltip: "Dayjs format", default: 'YYYY-MM-DD' },
     ]
 })

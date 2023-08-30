@@ -4,8 +4,8 @@ import { reactPorts } from "../../../../main/ports/v0.1.0/ports"
 import DatePickerInput_v0_1_0 from "./v0.1.0/DatePickerInput"
 
 const { disabled } = reactPorts.States
-const { label, placeholder, selectedDates, selectedDate } = reactPorts.Data
-const { withAsterisk, dateFormat, limitMinDate, daysOffset, clearable, datePickerType: { ...type }, } = reactPorts.Params
+const { label, placeholder, selectedDates, selectedDate }: any = reactPorts.Data
+const { withAsterisk, dateFormat, limitMinDate, daysOffset, clearable, datePickerType: { ...type }, }: any = reactPorts.Params
 const { radius } = reactPorts.Style
 const { dropdownType } = reactPorts.Layout
 

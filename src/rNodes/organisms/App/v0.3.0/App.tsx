@@ -25,9 +25,13 @@ export default function App_v0_3_0(props: any) {
 	const debug = parseInt(urlParams.get('debug') || '0')
 
 	if (!window.Rolder?.inited) {
-		const { envVersion, project, dbVersion = 1, sessionTimeout = '7d', projectVersion } = Noodl.getProjectSettings()
+		const { envVersion, project, dbVersion = 1, sessionTimeout = '7d', projectVersion, defaultDateFormat = 'YYYY-MM-DD' } = Noodl.getProjectSettings()
 		window.Rolder = {
-			inited: true, project, projectVersion, envVersion, dbVersion, dbClasses: props.dbClasses[0], debug, sessionTimeout,
+			inited: true,
+			project, projectVersion, envVersion, dbVersion, dbClasses: props.dbClasses[0], debug, sessionTimeout,
+			defaults: {
+				dateFormat: defaultDateFormat
+			},
 			rolderKit: `v${pJson.version}`
 		}
 		props.inited()

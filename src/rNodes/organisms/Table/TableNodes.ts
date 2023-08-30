@@ -4,12 +4,11 @@ import { reactPorts } from "../../../main/ports/v0.1.0/ports"
 import Table_v0_2_0 from "./v0.2.0/Table"
 import Table_v0_3_0 from "./v0.3.0/Table"
 
-
-const { tableData, selectedItem, selectedItems } = reactPorts.Data
+const { tableData, selectedItem, selectedItems, items } = reactPorts.Data
 const { loading } = reactPorts.States
 const { selected, resetSelected, doDelete, resetSingleSelected, resetMultipleSelected } = reactPorts.Signals
 const { columns, noHeader, selectable, selectableType, highlightOnHover, highlightSelectedRow, selectFirstItem,
-    singleRowSelectable, multipleRowSelectable } = reactPorts.Params
+    singleRowSelectable, multipleRowSelectable, expanded } = reactPorts.Params
 const { verticalSpacing } = reactPorts.Layout
 const { w: { ...width }, h: { ...height } }: any = reactPorts.Dimensions
 const { widthString, heightString } = reactPorts.ControlledDimensions

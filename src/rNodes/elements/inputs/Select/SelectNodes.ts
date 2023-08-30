@@ -6,7 +6,7 @@ import Select_v0_3_0 from "./v0.3.0/Select"
 import Select_v0_4_0 from "./v0.4.0/Select"
 
 const { disabled } = reactPorts.States
-const { value, inputItems, label, placeholder, createValue, selectedItem, items, customItems } = reactPorts.Data
+const { value, inputItems, label, placeholder, createValue, selectedItem, items, customItems }: any = reactPorts.Data
 const { withAsterisk, labelField, searchable, clearable, creatable, useCustomItems } = reactPorts.Params
 const { selected, create } = reactPorts.Signals
 const { radius } = reactPorts.Style
@@ -39,14 +39,22 @@ const nodeVersions: RNode = {
         ReactComp: Select_v0_4_0,
         inputs: {
             ...reactPorts.Margins, ...reactPorts.Form, selectedInputItem: { ...selectedItem }, label, placeholder, disabled, items, customItems, radius, withAsterisk, labelField,
-            searchable, clearable, creatable, useCustomItems
+            searchable, clearable, creatable, useCustomItems,
         },
         outputs: { selected, create, createValue, selectedItem },
         inputRules: [
             { condition: "useForm = true", inputs: ["formField"] },
             { condition: "useCustomItems = true", inputs: ["customItems"] },
             { condition: "useCustomItems = false", inputs: ['items', 'labelField'] },
-        ]
+        ],
+        signals: {
+            resetSelected: {
+                displayName: 'Reset selected',
+                signal() {
+                    this.innerReactComponentRef && this.innerReactComponentRef.resetSelected();
+                }
+            }
+        }
     },
 }
 

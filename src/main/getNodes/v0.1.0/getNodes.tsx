@@ -41,7 +41,10 @@ export const getJsNodes = (nodeName: string, nodeVersions: any) => {
       inputs: inputs,
       outputs: outputs,
       signals: {
-        [nodeName]: function () { nodeImport.then((node: any) => node.default(this)) }
+        [nodeName]: {
+          displayName: nodeName,
+          signal: function () { nodeImport.then((node: any) => node.default(this)) }
+        }
       }
     })
   })

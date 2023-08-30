@@ -1,6 +1,7 @@
 import _ from 'lodash'
+import dayjs from 'dayjs'
 
-export function getValue(obj: any, nestedKey: string) {
+export function getValue(obj: any, nestedKey: string | undefined) {
     const Mustache = window.Mustache
     let value = ''
     if (obj && nestedKey) {
@@ -10,6 +11,18 @@ export function getValue(obj: any, nestedKey: string) {
             if (hasMustche.length > 1) value = Mustache.render(nestedKey, obj)
             else value = Mustache.render('{{{' + nestedKey + '}}}', obj)
             return value
+        } catch (error) {
+            return value
+        }
+    } else return value
+}
+export function getDate(obj: any, nestedKey: string | undefined, dateFormat: string | undefined) {
+    const Mustache = window.Mustache
+    const defaultDateFormat = window.Rolder.defaults.dateFormat
+    let value = ''
+    if (obj && nestedKey) {
+        try {
+            return dayjs(Mustache.render(`{{${nestedKey}}}`, obj)).format(dateFormat || defaultDateFormat)
         } catch (error) {
             return value
         }
