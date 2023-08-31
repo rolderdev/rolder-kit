@@ -22,6 +22,7 @@ export default function getBaseParams(props: {
         localization: MRT_Localization_RU,
         state: {
             isLoading: loading,
+            showSkeletons: loading,
             showLoadingOverlay: loading,
             showProgressBars: searching,
             pagination: { pageIndex: 0, pageSize: 3 },

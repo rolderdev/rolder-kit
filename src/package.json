@@ -1,7 +1,7 @@
 {
   "name": "rolder-kit",
   "private": true,
-  "version": "0.8.0",
+  "version": "0.9.0",
   "scripts": {
     "dev": "rspack serve",
     "build": "rspack build",
@@ -38,7 +38,8 @@
     "just-insert": "3.2.0",
     "just-filter-object": "3.2.0",
     "just-intersect": "4.3.0",
-    "just-is-empty": "3.4.1"
+    "just-is-empty": "3.4.1",
+    "just-flush": "2.3.0"
   },
   "devDependencies": {
     "@rspack/cli": "0.2.4",

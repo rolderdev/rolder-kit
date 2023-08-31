@@ -1,29 +1,15 @@
 import { useImperativeHandle, useRef, useState } from 'react'
 import { useShallowEffect } from '@mantine/hooks';
 import { NodeInstance } from '@noodl/noodl-sdk';
-import { getPorts, getGroupedPorts } from '../../../../main/ports/v0.2.0/ports';
+import { getPorts } from '../../../../main/ports/v0.2.0/ports';
 
-import Table_v1_0_1 from './v1.0.1/Table';
+import Form_v0_2_0 from './v0.2.0/Form';
 
 const compVersions: CompVersions = {
-  'v1.0.1': {
-    Comp: Table_v1_0_1,
-    inputs: [
-      ...getGroupedPorts({
-        type: 'input',
-        groupsNames: ['Table params', 'Table layout', 'Table style', 'Rows style'],
-        requiredInputs: ['columns'],
-      }),
-      ...getPorts({
-        type: 'input',
-        portsNames: ['items', 'loading', 'searching']
-      })
-    ],
-    outputs: [...getPorts({ type: 'output', portsNames: ['singleSelected', 'selectedItem', 'selectedItems', 'actionName'], })],
-    signals: getPorts({
-      type: 'input',
-      portsNames: ['expandAll', 'unExpandAll']
-    }),
+  'v0.2.0': {
+    Comp: Form_v0_2_0,
+    inputs: [...getPorts({ type: 'input', portsNames: ['formScheme'], requiredInputs: ['formScheme'] })],
+    outputs: [...getPorts({ type: 'output', portsNames: ['formHook', 'submited'] })],
   }
 }
 
@@ -43,10 +29,7 @@ function Comps(props: any, ref: any) {
         props: { ...compDef.props, ...localProps },
         Comp: compDef.Comp
       })
-    },
-    // custom signals redirections
-    expandAll() { localRef.current?.expandAll() },
-    unExpandAll() { localRef.current?.unExpandAll() }
+    }
   }))
 
   useShallowEffect(() => {

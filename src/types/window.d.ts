@@ -11,6 +11,7 @@ declare global {
         Mustache: any
         SetRefs: any
         FilterBy: any
+        FormValidators: any
     }
 }
 

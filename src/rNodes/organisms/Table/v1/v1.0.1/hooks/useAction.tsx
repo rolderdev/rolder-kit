@@ -5,7 +5,7 @@ import { Action } from "../types/Column";
 import { MRT_Row } from "mantine-react-table";
 import { getValue } from "../../../../../../utils/data/v0.3.0/data";
 
-export default function useActions(loacalProps: { noodlNode: NodeInstance, actionDef: Action, row?: MRT_Row<Item> }) {
+export default function useAction(loacalProps: { noodlNode: NodeInstance, actionDef: Action, row?: MRT_Row<Item> }) {
     const { noodlNode, actionDef: { name, type, disabledSource, props }, row } = loacalProps
     switch (type) {
         case 'ActionIcon': {

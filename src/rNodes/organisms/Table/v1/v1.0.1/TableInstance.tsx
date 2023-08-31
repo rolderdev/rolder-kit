@@ -21,15 +21,15 @@ export default function getTabelInctance(props: TableCompProps) {
     // multiSelection hook
     const {
         multiSelection, setMultiSelection, handleFiltered, setSelectionTableInstance, allSelectionHandler, allSelected, partialSelected
-    } = useSelections(noodlNode, items)
+    } = useSelections({ noodlNode, items })
 
     // single selection 
     const [singleRowSelection, setSingleRowSelection] = useState<MRT_RowSelectionState>({});
 
     // base params    
-    let resultColumns = prepColumns(columns, noodlNode)
-    const groupColumnDef = columns.find(i => i.groupShceme)
+    let resultColumns = prepColumns(columns)
     let tableParams = getBaseParams({ resultColumns, ...props })
+    const groupColumnDef = columns.find(i => i.groupShceme)
     // apply props    
     tableParams.mantineTableProps = mantineTableProps(props)
     tableParams.mantineLoadingOverlayProps = mantineLoadingOverlayProps(props)

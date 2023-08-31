@@ -2,8 +2,12 @@ import { useSetState, useShallowEffect } from "@mantine/hooks";
 import { NodeInstance } from "@noodl/noodl-sdk";
 import { MRT_RowSelectionState, MRT_TableInstance } from "mantine-react-table";
 import { useState } from "react";
+import isObjetEmpty from 'just-is-empty'
+import flush from 'just-flush'
 
-export default function useSelections(noodlNode: NodeInstance, items?: Item[]) {
+export default function useSelections(props: { noodlNode: NodeInstance, items?: Item[] }) {
+    const { noodlNode, items } = props
+
     const [multiSelection, setMultiSelection] = useSetState<MRT_RowSelectionState>({});
     const [filtered, setFiltered] = useState(false);
     const [selectionTableInstance, setSelectionTableInstance] = useState<MRT_TableInstance<Item>>();
@@ -28,8 +32,8 @@ export default function useSelections(noodlNode: NodeInstance, items?: Item[]) {
                 setPartialSelected(selectedCount > 0 && !(selectedCount === items?.length))
             } else {
                 const filteredItems = selectionTableInstance?.getFilteredRowModel().rows
-                const selectedCount = filteredItems?.filter(i => multiSelection[i.id]).length
-                setAllSelected(selectedCount === filteredItems?.length)
+                const selectedCount = filteredItems?.filter(i => multiSelection[i.id]).length || 0
+                setAllSelected(selectedCount > 0 && selectedCount === filteredItems?.length)
                 if (selectedCount) setPartialSelected(selectedCount > 0 && !(selectedCount === filteredItems?.length))
             }
         }
@@ -44,9 +48,11 @@ export default function useSelections(noodlNode: NodeInstance, items?: Item[]) {
     // run allPartialSelectionHandler on selection change
     // send selection on output
     useShallowEffect(() => {
-        allPartialSelectionHandler(filtered)
-        noodlNode.outputPropValues.selectedItems = items?.filter(i => multiSelection[i.id])
-        noodlNode.flagOutputDirty('selectedItems')
+        if (!isObjetEmpty(flush(multiSelection))) {
+            allPartialSelectionHandler(filtered)
+            noodlNode.outputPropValues.selectedItems = items?.filter(i => multiSelection[i.id])
+            noodlNode.flagOutputDirty('selectedItems')
+        }
     }, [multiSelection, filtered])
 
     return { multiSelection, setMultiSelection, handleFiltered, allSelected, partialSelected, setSelectionTableInstance, allSelectionHandler }

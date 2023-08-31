@@ -9,12 +9,14 @@ import TableNodes from "../../../rNodes/organisms/Table/TableNodes";
 import TableNode_v1 from "../../../rNodes/organisms/Table/v1/TableNode";
 import ETableNodes from "../../../rNodes/organisms/ETable/ETableNodes";
 import FormNodes from "../../../rNodes/organisms/Form/FormNodes";
+import FormNode_V0 from "../../../rNodes/organisms/Form/v0/FormNode";
 // molecules
 import StackNodes from "../../../rNodes/molecules/Stack/StackNodes";
 import GroupNodes from "../../../rNodes/molecules/Group/GroupNodes";
 import CenterNodes from "../../../rNodes/molecules/Center/CenterNodes";
 import ScrollAreaNodes from "../../../rNodes/molecules/ScrollArea/ScrollAreaNodes";
 import DrawerNodes from "../../../rNodes/molecules/Drawer/DrawerNodes";
+import DrawerNode_v0 from "../../../rNodes/molecules/Drawer/v0/DrawerNode";
 import CarouselNodes from "../../../rNodes/molecules/Carousel/CarouselNodes";
 import ModalNodes from "../../../rNodes/molecules/Modal/ModalNodes";
 import GridNodes from "../../../rNodes/molecules/Grid/GridNodes";
@@ -54,10 +56,10 @@ const reactNodes: any = [
     // data
     ...UseDataNodes, ...UseSearchNodes,
     // organisms
-    ...AppNodes, ...AuthNodes, ...AppShellNodes, ...TableNodes, TableNode_v1, ...ETableNodes, ...FormNodes,
+    ...AppNodes, ...AuthNodes, ...AppShellNodes, ...TableNodes, TableNode_v1, ...ETableNodes, ...FormNodes, FormNode_V0,
     // molecules
-    ...StackNodes, ...GroupNodes, ...CenterNodes, ...ScrollAreaNodes, ...DrawerNodes, ...CarouselNodes, ...ModalNodes, ...GridNodes,
-    ...PaperNodes, ...UnstyledButtonNodes,
+    ...StackNodes, ...GroupNodes, ...CenterNodes, ...ScrollAreaNodes, ...DrawerNodes, DrawerNode_v0, ...CarouselNodes, ...ModalNodes,
+    ...GridNodes, ...PaperNodes, ...UnstyledButtonNodes,
     // elements
     // buttons
     ...ActionIconNodes, ...ButtonNodes, ...PopoverActionIconNodes,
@@ -66,8 +68,8 @@ const reactNodes: any = [
     // feedback
     ...LoaderNodes, ...IndicatorNodes,
     // inputs
-    ...SegmentedControlNodes, ...CheckboxGroupNodes, CheckboxNode_v0, ...DatePickerInputNodes, ...DateTimePickerNodes, ...MultiSelectNodes, ...SelectNodes,
-    ...TextareaNodes, ...TextInputNodes,
+    ...SegmentedControlNodes, ...CheckboxGroupNodes, CheckboxNode_v0, ...DatePickerInputNodes, ...DateTimePickerNodes, ...MultiSelectNodes,
+    ...SelectNodes, ...TextareaNodes, ...TextInputNodes,
     // miscellaneous
     ...WebCameraNodes, ...QRScannerNodes,
     // typography

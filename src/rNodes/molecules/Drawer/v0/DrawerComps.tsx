@@ -1,28 +1,18 @@
 import { useImperativeHandle, useRef, useState } from 'react'
 import { useShallowEffect } from '@mantine/hooks';
 import { NodeInstance } from '@noodl/noodl-sdk';
-import { getPorts, getGroupedPorts } from '../../../../main/ports/v0.2.0/ports';
+import { getPorts } from '../../../../main/ports/v0.2.0/ports';
 
-import Table_v1_0_1 from './v1.0.1/Table';
+import Drawer_v0_2_0 from './v0.2.0/Drawer';
 
 const compVersions: CompVersions = {
-  'v1.0.1': {
-    Comp: Table_v1_0_1,
-    inputs: [
-      ...getGroupedPorts({
-        type: 'input',
-        groupsNames: ['Table params', 'Table layout', 'Table style', 'Rows style'],
-        requiredInputs: ['columns'],
-      }),
-      ...getPorts({
-        type: 'input',
-        portsNames: ['items', 'loading', 'searching']
-      })
-    ],
-    outputs: [...getPorts({ type: 'output', portsNames: ['singleSelected', 'selectedItem', 'selectedItems', 'actionName'], })],
+  'v0.2.0': {
+    Comp: Drawer_v0_2_0,
+    inputs: [...getPorts({ type: 'input', portsNames: ['drawerPosition', 'title', 'size', 'sizeUnits', 'withCloseButton', 'opacity'] })],
+    outputs: [...getPorts({ type: 'output', portsNames: ['hided'] })],
     signals: getPorts({
       type: 'input',
-      portsNames: ['expandAll', 'unExpandAll']
+      portsNames: ['open', 'close']
     }),
   }
 }
@@ -44,9 +34,8 @@ function Comps(props: any, ref: any) {
         Comp: compDef.Comp
       })
     },
-    // custom signals redirections
-    expandAll() { localRef.current?.expandAll() },
-    unExpandAll() { localRef.current?.unExpandAll() }
+    open() { localRef.current?.open() },
+    close() { localRef.current?.close() },
   }))
 
   useShallowEffect(() => {
@@ -67,7 +56,7 @@ function Comps(props: any, ref: any) {
         }
       })
       if (notReadyCount === 0) setCompReady(true)
-      else noodlNode.clearWarnings()
+      else if (noodlNode.clearWarning) noodlNode.clearWarning()
     }
   }, [compDef.props])
 

@@ -20,6 +20,9 @@ Dayjs.extend(duration)
 Dayjs.extend(relativeTime)
 window.Dayjs = Dayjs
 
+import { isNotEmpty, isEmail, isInRange, hasLength, matches, matchesField } from "@mantine/form";
+window.FormValidators = { isNotEmpty, isEmail, isInRange, hasLength, matches, matchesField }
+
 import filterBy from '../utils/filterBy/v0.2.0/filterBy'; window.FilterBy = filterBy
 
 // #########################################################

@@ -2,16 +2,9 @@ import { NodeInput, Type } from "@noodl/noodl-sdk"
 import { enums } from "./enums"
 
 const units = ['rem', '%', 'px']
-// types
-const string: { type: Type } = { type: 'string' }
-const number: { type: Type } = { type: 'number' }
-const boolean: { type: Type } = { type: 'boolean' }
-const array: { type: Type } = { type: 'array' }
-const object: { type: Type } = { type: 'object' }
-const signal: { type: Type } = { type: 'signal' }
+
 // groups
 const General = { group: 'General' }, Data = { group: 'Data' }, Params = { group: 'Params' }, States = { group: 'States' }
-const Signals = { group: 'Signals' }, Style = { group: 'Style' }, Layout = { group: 'Layout' }, Margins = { group: 'Margins' }
 const Paddings = { group: 'Paddings' }, Dimensions = { group: 'Dimensions' }, ControlledDimensions = { group: 'ControlledDimensions' }
 const Icon = { group: 'Icon' }, Font = { group: 'Font' }, Form = { group: 'Form' }, Sx = { group: 'Sx' }
 
@@ -40,7 +33,7 @@ const oldPorts: {
 
         customItems: { group: 'Data', type: 'array', displayName: 'Custom items', tooltip: "Example: [{ value: 'option-1', label: 'Option 1' }]" },
         selectedValue: { group: 'Data', type: 'string', displayName: 'Selected value' },
-        title: { group: 'Data', type: 'string', displayName: 'Title' },
+
 
         sourceUrl: { group: 'Data', type: 'string', displayName: 'Source url' },
         placeholder: { group: 'Data', type: 'string', displayName: 'Placeholder' },
@@ -78,27 +71,27 @@ const oldPorts: {
         tableScheme: { group: 'Params', type: 'array', displayName: 'Table scheme' },
         filterMaps: { group: 'Params', type: 'array', displayName: 'Filter maps' },
         offsetScrollbars: { group: 'Params', type: 'boolean', displayName: 'Offset scrollbars' },
-        withCloseButton: { group: 'Params', type: 'boolean', displayName: 'With close button', default: false, tooltip: "Hides close button and title" },
-        formScheme: { group: 'Params', type: 'array', displayName: 'Form scheme', tooltip: "Example: [{name: 'startDate', initialValue: new Date(), validate: isNotEmpty}]" },
+
+
         buttonType: { group: 'Params', type: { name: 'enum', enums: enums.buttonTypes }, displayName: 'Button type', tooltip: '"Submit" to trigger form' },
         qrCodeLevel: { group: 'Params', type: { name: 'enum', enums: enums.qrCodeLevels }, displayName: 'QR code level', default: 'L' },
         withAsterisk: { group: 'Params', type: 'boolean', displayName: 'With asterisk' },
         dateFormat: { group: 'Params', type: 'string', displayName: 'Date format', default: 'YYYY-MM-DD HH:mm' },
         limitMinDate: { group: 'Params', type: 'boolean', displayName: 'Limit minimal date', default: false },
-        daysOffset: { group: 'Params', ...number, displayName: 'Minimum days offset', default: 0, tooltip: 'Number of days to offset. Negative for past offset' },
+        daysOffset: { group: 'Params', type: 'number', displayName: 'Minimum days offset', default: 0, tooltip: 'Number of days to offset. Negative for past offset' },
         labelField: { group: 'Params', type: 'string', displayName: 'Label field' },
         searchable: { group: 'Params', type: 'boolean', displayName: 'Searchable' },
         clearable: { group: 'Params', type: 'boolean', displayName: 'Clearable' },
         creatable: { group: 'Params', type: 'boolean', displayName: 'Creatable' },
         debounced: { group: 'Params', type: 'boolean', displayName: 'Debounced', default: false, tooltip: 'Delay typed string at output' },
-        delay: { group: 'Params', ...number, displayName: 'Delay (ms)', default: 350 },
-        autoClose: { group: 'Params', ...number, displayName: 'Autoclose (ms)', default: 2000 },
+        delay: { group: 'Params', type: 'number', displayName: 'Delay (ms)', default: 350 },
+        autoClose: { group: 'Params', type: 'number', displayName: 'Autoclose (ms)', default: 2000 },
         useCustomItems: { group: 'Params', type: 'boolean', displayName: 'Use custom items', default: false },
         withArrow: { group: 'Params', type: 'boolean', displayName: 'With arrow' },
         datePickerType: { group: 'Params', type: { name: 'enum', enums: enums.datePickerTypes }, displayName: 'Type', default: 'default' },
         inline: { group: 'Params', type: 'boolean', displayName: 'Inline' },
         screenshotEnabled: { group: 'Params', type: 'boolean', displayName: 'Enable screenshot' },
-        maxScansPerSecond: { group: 'Params', ...number, displayName: 'Max scans per second', default: 25 },
+        maxScansPerSecond: { group: 'Params', type: 'number', displayName: 'Max scans per second', default: 25 },
 
     },
     States: {
@@ -123,10 +116,9 @@ const oldPorts: {
         editItem: { group: 'Signals', type: 'signal', displayName: 'Edit item clicked' },
         viewImages: { group: 'Signals', type: 'signal', displayName: 'View images' },
         clicked: { group: 'Signals', type: 'signal', displayName: 'Clicked' },
-        show: { group: 'Signals', type: 'boolean', displayName: 'Show' },
-        hided: { group: 'Signals', type: 'signal', displayName: 'Hided' },
+
         hide: { group: 'Signals', type: 'boolean', displayName: 'Hide' },
-        submited: { group: 'Signals', type: 'signal', displayName: 'Submited' },
+
         create: { group: 'Signals', type: 'signal', displayName: 'Create' },
         screenshoted: { group: 'Signals', type: 'signal', displayName: 'Screenshoted' },
         uploaded: { group: 'Signals', type: 'signal', displayName: 'Uploaded' },
@@ -142,7 +134,7 @@ const oldPorts: {
 
 
         buttonColor: { group: 'Style', type: { name: 'enum', enums: enums.colors }, displayName: 'Button color' },
-        opacity: { group: 'Style', ...number, displayName: 'Opacity' },
+
 
         actionVariant: { group: 'Style', type: { name: 'enum', enums: enums.actionVariants }, displayName: 'Variant' },
         striped: { group: 'Style', type: 'boolean', displayName: 'Striped' },
@@ -161,50 +153,50 @@ const oldPorts: {
         pl: { ...Paddings, type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding left' },
     },
     Layout: {
-        verticalSpacing: { ...Layout, type: { name: 'enum', enums: enums.sizes }, displayName: 'Vertical spacing' },
-        spacing: { ...Layout, type: { name: 'enum', enums: enums.sizes }, displayName: 'Spacing' },
-        stackAlign: { ...Layout, type: { name: 'enum', enums: enums.stackAligns }, displayName: 'Align' },
-        stackJustify: { ...Layout, type: { name: 'enum', enums: enums.stackJustifies }, displayName: 'Justify' },
-        position: { ...Layout, type: { name: 'enum', enums: enums.positions }, displayName: 'Position' },
-        popoverPosition: { ...Layout, type: { name: 'enum', enums: enums.popoverPositions }, displayName: 'Position' },
-        indicatorPosition: { ...Layout, type: { name: 'enum', enums: enums.indicatorPositions }, displayName: 'Position', default: 'top-end' },
-        grow: { ...Layout, type: 'boolean', displayName: 'Grow' },
-        orientation: { ...Layout, type: 'boolean', displayName: 'Vertical', default: false },
-        bottomOffset: { ...Layout, ...number, displayName: 'Bottom offset', default: 0 },
-        drawerPosition: { ...Layout, type: { name: 'enum', enums: enums.drawerPositions }, displayName: 'Position' },
-        gutter: { ...Layout, type: { name: 'enum', enums: enums.sizes }, displayName: 'Gutter' },
-        spans: { ...Layout, type: 'array', displayName: 'Spans', tooltip: "Example: [4,4,4] One row = 12. Can be number, auto, content" },
-        direction: { ...Layout, type: { name: 'enum', enums: enums.directions }, displayName: 'Direction', },
-        dropdownType: { ...Layout, type: { name: 'enum', enums: enums.dropdownTypes }, displayName: 'Dropdown type', default: 'popover' },
+        verticalSpacing: { group: '', type: { name: 'enum', enums: enums.sizes }, displayName: 'Vertical spacing' },
+        spacing: { group: '', type: { name: 'enum', enums: enums.sizes }, displayName: 'Spacing' },
+        stackAlign: { group: '', type: { name: 'enum', enums: enums.stackAligns }, displayName: 'Align' },
+        stackJustify: { group: '', type: { name: 'enum', enums: enums.stackJustifies }, displayName: 'Justify' },
+        position: { group: '', type: { name: 'enum', enums: enums.positions }, displayName: 'Position' },
+        popoverPosition: { group: '', type: { name: 'enum', enums: enums.popoverPositions }, displayName: 'Position' },
+        indicatorPosition: { group: '', type: { name: 'enum', enums: enums.indicatorPositions }, displayName: 'Position', default: 'top-end' },
+        grow: { group: '', type: 'boolean', displayName: 'Grow' },
+        orientation: { group: '', type: 'boolean', displayName: 'Vertical', default: false },
+        bottomOffset: { group: '', type: 'number', displayName: 'Bottom offset', default: 0 },
+
+        gutter: { group: '', type: { name: 'enum', enums: enums.sizes }, displayName: 'Gutter' },
+        spans: { group: '', type: 'array', displayName: 'Spans', tooltip: "Example: [4,4,4] One row = 12. Can be number, auto, content" },
+        direction: { group: '', type: { name: 'enum', enums: enums.directions }, displayName: 'Direction', },
+        dropdownType: { group: '', type: { name: 'enum', enums: enums.dropdownTypes }, displayName: 'Dropdown type', default: 'popover' },
     },
     Dimensions: {
         w: { group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Width' },
         maw: { group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Max width' },
         h: { group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Height' },
 
-        sizeUnits: { group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Size' },
+
         sizeString: { group: 'Dimensions', type: 'string', displayName: 'Size string' },
-        sizeNumber: { group: 'Dimensions', ...number, displayName: 'Size number' },
+        sizeNumber: { group: 'Dimensions', type: 'number', displayName: 'Size number' },
     },
     Icon: {
         iconName: { ...Icon, type: 'string', displayName: 'Icon name', tooltip: 'Find icon at tabler-icons.io and capitalize it: "IconSuperName"' },
         iconSize: { ...Icon, type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Icon size' },
-        stroke: { ...Icon, ...number, displayName: 'Stroke' },
+        stroke: { ...Icon, type: 'number', displayName: 'Stroke' },
     },
     ControlledDimensions: {
         widthString: { ...ControlledDimensions, type: 'string', displayName: 'Width (string)' },
         heightString: { ...ControlledDimensions, type: 'string', displayName: 'Height (string)' },
-        widthNumber: { ...ControlledDimensions, ...number, displayName: 'Width (number)' },
-        heightNumber: { ...ControlledDimensions, ...number, displayName: 'Height (number)' },
+        widthNumber: { ...ControlledDimensions, type: 'number', displayName: 'Width (number)' },
+        heightNumber: { ...ControlledDimensions, type: 'number', displayName: 'Height (number)' },
     },
     Font: {
         fz: { ...Font, type: { name: 'enum', enums: enums.sizes }, displayName: 'Size' },
         fw: { ...Font, type: { name: 'enum', enums: enums.fontWeights }, displayName: 'Weight' },
     },
     Form: {
-        useForm: { ...Form, type: 'boolean', displayName: 'Use form' },
-        formField: { ...Form, type: 'string', displayName: 'Form field' },
-        formHook: { ...Form, type: 'object', displayName: 'Form hook' },
+        useForm: { group: 'Form', type: 'boolean', displayName: 'Use form' },
+        formField: { group: 'Form', type: 'string', displayName: 'Form field' },
+
     },
     Sx: {
         minHeight: { ...Sx, type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Min height' },
@@ -258,6 +250,8 @@ const ports = [
     { name: 'label', group: 'Data', type: 'string', displayName: 'Label' },
     { name: 'description', group: 'Data', type: 'string', displayName: 'Description' },
     { name: 'error', group: 'Data', type: 'string', displayName: 'error' },
+    // Forn
+    { name: 'formHook', group: 'Form', type: 'object', displayName: 'Form hook' },
     // States
     { name: 'disabled', group: 'States', type: 'boolean', displayName: 'Disabled', default: false },
     { name: 'loading', group: 'States', type: 'boolean', displayName: 'Loading', default: false },
@@ -270,6 +264,9 @@ const ports = [
     { name: 'singleSelect', group: 'Params', type: 'boolean', displayName: 'Single select', default: false, dependsOn: 'selectable' },
     { name: 'multiSelect', group: 'Params', type: 'boolean', displayName: 'Multi select', default: false, dependsOn: 'selectable' },
     { name: 'allSelect', group: 'Params', type: 'boolean', displayName: 'All select', default: false, dependsOn: 'multiSelect' },
+    { name: 'formScheme', group: 'Params', type: 'object', displayName: 'Form scheme', tooltip: "Example: {name: 'startDate', initialValue: new Date(), validate: isNotEmpty}" },
+    { name: 'title', group: 'Params', type: 'string', displayName: 'Title' },
+    { name: 'withCloseButton', group: 'Params', type: 'boolean', displayName: 'With close button', default: false, tooltip: "Hides close button and title" },
     // Signals
     { name: 'expandAll', group: 'Signals', type: 'signal', displayName: 'Expand all rows' },
     { name: 'unExpandAll', group: 'Signals', type: 'signal', displayName: 'Unexpand all rows' },
@@ -278,6 +275,10 @@ const ports = [
     { name: 'jwtValidationFailed', group: 'Signals', type: 'signal', displayName: 'JWT validation failed' },
     { name: 'jwtValidationSucceed', group: 'Signals', type: 'signal', displayName: 'JWT validation succeed' },
     { name: 'actionName', group: 'Signals', type: 'string', displayName: 'Action name' },
+    { name: 'submited', group: 'Signals', type: 'signal', displayName: 'Submited' },
+    { name: 'open', group: 'Signals', type: 'signal', displayName: 'Open' },
+    { name: 'close', group: 'Signals', type: 'signal', displayName: 'Close' },
+    { name: 'hided', group: 'Signals', type: 'signal', displayName: 'Hided' },
     // Margins
     { name: 'margins', group: 'Margins', type: 'boolean', displayName: 'Margins' },
     { name: 'm', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin', dependsOn: 'margins' },
@@ -302,12 +303,15 @@ const ports = [
     { name: 'shadow', group: 'Style', type: { name: 'enum', enums: enums.sizes }, displayName: 'Shadow', default: 'sm' },
     { name: 'withColumnBorders', group: 'Style', type: 'boolean', displayName: 'Column borders' },
     { name: 'radius', group: 'Style', type: { name: 'enum', enums: enums.sizes }, displayName: 'Radius', default: 'md' },
+    { name: 'opacity', group: 'Style', type: 'number', displayName: 'Opacity' },
     // Layout
     { name: 'tableDensity', group: 'Table layout', type: { name: 'enum', enums: enums.tableDensities }, displayName: 'Density', default: 'xs' },
     { name: 'labelPosition', group: 'Layout', type: { name: 'enum', enums: enums.labelPositions }, displayName: 'Label position', default: 'right' },
+    { name: 'drawerPosition', group: 'Layout', type: { name: 'enum', enums: enums.drawerPositions }, displayName: 'Position', default: 'right' },
     // Dimensions        
     { name: 'loaderSize', group: 'Dimensions', type: { name: 'enum', enums: enums.sizes }, displayName: 'Loader size', default: 'lg' },
     { name: 'size', group: 'Dimensions', type: { name: 'enum', enums: enums.sizes }, displayName: 'Size', default: 'sm' },
+    { name: 'sizeUnits', group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Size' },
 ] as const satisfies readonly NodePort[];
 
 type PortsNames = typeof ports[number]['name']

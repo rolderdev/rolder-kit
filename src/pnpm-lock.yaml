@@ -59,6 +59,9 @@ dependencies:
   just-filter-object:
     specifier: 3.2.0
     version: 3.2.0
+  just-flush:
+    specifier: 2.3.0
+    version: 2.3.0
   just-insert:
     specifier: 3.2.0
     version: 3.2.0
@@ -3491,6 +3494,10 @@ packages:
 
   /just-filter-object@3.2.0:
     resolution: {integrity: sha512-OeorYJxmp2zhy/0LxjS1UjbJ7XMY8M4gVa1RRKxnIVheCYmng2E2hE0lEbDGv4aRh/HI7FgNUXtOMnmNxpoXRQ==}
+    dev: false
+
+  /just-flush@2.3.0:
+    resolution: {integrity: sha512-fBuxQ1gJ61BurmhwKS5LYTzhkbrT5j/2U7ax+UbLm9aRvCTh2h6AfzLteOckE4KKomqOf0Y3zIG3Xu57sRsKUg==}
     dev: false
 
   /just-insert@3.2.0:

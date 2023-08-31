@@ -79,16 +79,6 @@ export const getReactNode = ({ nodeName, nodeVersion, Comps, compVersions }:
       }
       // recreate ports when version changed
       graphModel.on(`nodeAdded.rolder-kit.${nodeName}_${nodeVersion}`, function (node: any) {
-        function verifyInputs() {
-          const requiredInputs = compVersions[node.parameters.version]?.inputs?.filter(i => i.required)
-          requiredInputs?.forEach(requiredInput => {
-            if (!node.parameters[requiredInput.name]) {
-              context.editorConnection.sendWarning(node.component.name, node.id, requiredInput.name, {
-                message: `Specify required input: "${requiredInput.displayName}"`
-              })
-            } else context.editorConnection.clearWarning(node.component.name, node.id, requiredInput.name)
-          })
-        }
 
         function updatePorts() {
           let ports: any = []
@@ -104,7 +94,6 @@ export const getReactNode = ({ nodeName, nodeVersion, Comps, compVersions }:
             // output ports and signals                    
             if (compVersions[node.parameters.version]?.outputs) ports = ports.concat(compVersions[node.parameters.version]?.outputs)
           }
-          verifyInputs()
           context.editorConnection.sendDynamicPorts(node.id, ports)
         }
 
@@ -125,12 +114,6 @@ export const getJsNodes = (nodeName: string, nodecompVersions: any) => {
       inputs: inputs,
       outputs: outputs,
       initialize: function () { nodeImport.then((node: any) => node.default.initialize(this)) },
-      /*  signals: {
-         [nodeName]: {
-           displayName: nodeName,
-           signal: function () { nodeImport.then((node: any) => node.default(this)) }
-         }
-       } */
     })
   })
 }

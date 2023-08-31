@@ -2,7 +2,7 @@ import { Checkbox, Group, MantineColor, createStyles } from "@mantine/core"
 import { MRT_Cell, MRT_Row, MRT_RowSelectionState } from "mantine-react-table"
 import icons from "../../../../../../libs/icons/v0.2.0/icons"
 import { Column } from "../types/Column"
-import useActions from "../hooks/useActions"
+import useAction from "../hooks/useAction"
 import { NodeInstance } from "@noodl/noodl-sdk"
 
 const IconChevronDown = icons('IconChevronDown')
@@ -18,9 +18,9 @@ const useStyles = createStyles(() => ({
 
 export function MultiSelectionRow(props: {
     row: MRT_Row<Item>, cell: MRT_Cell<Item>, multiSelection: MRT_RowSelectionState, multiSelectCheckboxColor: MantineColor,
-    setMultiSelection: any, grouped: boolean, groupColumnDef?: Column, multiSelect: boolean, noodlNode: NodeInstance
+    setMultiSelection: any, groupColumnDef?: Column, multiSelect: boolean, noodlNode: NodeInstance, grouped: boolean, loading: boolean
 }) {
-    const { row, cell, multiSelection, multiSelectCheckboxColor, setMultiSelection, groupColumnDef, multiSelect, noodlNode } = props
+    const { row, cell, multiSelection, multiSelectCheckboxColor, setMultiSelection, groupColumnDef, multiSelect, noodlNode, grouped, loading } = props
     const notGroupedLeafRows = row.getLeafRows().filter((row) => !row.getIsGrouped())
     const selectedLeafsCount = notGroupedLeafRows.filter((row) => multiSelection[row.id]).length
     const allSelected = selectedLeafsCount === notGroupedLeafRows.length
@@ -44,8 +44,12 @@ export function MultiSelectionRow(props: {
         ml = groupColumnDef?.cellProps?.ml || 0
     }
 
+    let actions: any = <></>
+    if (grouped && !row.getIsGrouped()) actions = groupColumnDef?.actions.map(i => { return useAction({ noodlNode, actionDef: i, row }) })
+    if (!grouped) actions = columnDef?.actions.map((i: any) => { return useAction({ noodlNode, actionDef: i, row }) })
+
     return (
-        <Group position={groupColumnDef?.actions?.length ? 'apart' : 'left'} noWrap >
+        <Group position={actions?.length ? 'apart' : 'left'} noWrap >
             <Group ml={ml} noWrap>
                 {checkboxEnabled && <Checkbox
                     color={multiSelectCheckboxColor}
@@ -64,7 +68,7 @@ export function MultiSelectionRow(props: {
                 />}
                 {value}
             </Group>
-            <>{!row.getIsGrouped() && groupColumnDef?.actions.map(i => { return useActions({ noodlNode, actionDef: i, row }) })}</>
+            {!loading && actions}
         </Group>
     )
 }

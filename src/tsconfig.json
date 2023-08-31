@@ -25,6 +25,7 @@
     "rNodes",
     "jsNodes",
     "libs",
-    "utils"
-, "../recycle/webcam", "../InitLoader"  ]
+    "utils",
+    "../InitLoader"
+  ]
 }
