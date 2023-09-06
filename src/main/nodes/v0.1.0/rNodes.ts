@@ -1,6 +1,7 @@
 // data
 import UseDataNodes from "../../../rNodes/data/UseData/UseDataNodes";
 import UseSearchNodes from "../../../rNodes/data/UseSearch/UseSearchNodes";
+import UseSearchNode_v1 from "../../../rNodes/data/UseSearch/v1/UseSearchNode";
 // organisms
 import AppNodes from "../../../rNodes/organisms/App/AppNodes";
 import AuthNodes from "../../../rNodes/organisms/Auth/AuthNodes";
@@ -26,6 +27,7 @@ import UnstyledButtonNodes from "../../../rNodes/molecules/UnstyledButton/Unstyl
 // buttons
 import ActionIconNodes from "../../../rNodes/elements/buttons/ActionIcon/ActionIconNodes";
 import ButtonNodes from "../../../rNodes/elements/buttons/Button/ButtonNodes";
+import ButtonNode_v0 from "../../../rNodes/elements/buttons/Button/v0/ButtonNode";
 import PopoverActionIconNodes from "../../../rNodes/elements/buttons/PopoverActionIcon/PopoverActionIconNodes";
 // dataDisplay
 import AvatarNodes from "../../../rNodes/elements/dataDisplay/Avatar/AvatarNodes";
@@ -45,16 +47,21 @@ import MultiSelectNodes from "../../../rNodes/elements/inputs/MultiSelect/MultiS
 import SelectNodes from "../../../rNodes/elements/inputs/Select/SelectNodes";
 import TextareaNodes from "../../../rNodes/elements/inputs/Textarea/TextareaNodes";
 import TextInputNodes from "../../../rNodes/elements/inputs/TextInput/TextInputNodes";
+import TextInputNode_v0 from "../../../rNodes/elements/inputs/TextInput/v0/TextInputNode";
 import CheckboxNode_v0 from "../../../rNodes/elements/inputs/Checkbox/v0/CheckboxNode";
+import MaskedInputNode_v0 from "../../../rNodes/elements/inputs/MaskedInput/v0/MaskedInputNode";
 // miscellaneous
 import WebCameraNodes from "../../../rNodes/elements/miscellaneous/WebCamera/WebCameraNodes";
 import QRScannerNodes from "../../../rNodes/elements/miscellaneous/QRScanner/QRScannerNodes";
+import DividerNode_v0 from "../../../rNodes/elements/miscellaneous/Divider/v0/DividerNode";
 // typography
 import TextNodes from "../../../rNodes/elements/typography/Text/TextNodes";
+import TextNode_v1 from "../../../rNodes/elements/typography/Text/v1/TextNode";
+import TitleNode_v0 from "../../../rNodes/elements/typography/Title/v0/TitleNode";
 
 const reactNodes: any = [
     // data
-    ...UseDataNodes, ...UseSearchNodes,
+    ...UseDataNodes, ...UseSearchNodes, UseSearchNode_v1,
     // organisms
     ...AppNodes, ...AuthNodes, ...AppShellNodes, ...TableNodes, TableNode_v1, ...ETableNodes, ...FormNodes, FormNode_V0,
     // molecules
@@ -62,18 +69,18 @@ const reactNodes: any = [
     ...GridNodes, ...PaperNodes, ...UnstyledButtonNodes,
     // elements
     // buttons
-    ...ActionIconNodes, ...ButtonNodes, ...PopoverActionIconNodes,
+    ...ActionIconNodes, ...ButtonNodes, ButtonNode_v0, ...PopoverActionIconNodes,
     // dataDisplay
     ...AvatarNodes, ...IconNodes, ...BadgeNodes, ...ImageNodes, ...QRCodeNodes,
     // feedback
     ...LoaderNodes, ...IndicatorNodes,
     // inputs
     ...SegmentedControlNodes, ...CheckboxGroupNodes, CheckboxNode_v0, ...DatePickerInputNodes, ...DateTimePickerNodes, ...MultiSelectNodes,
-    ...SelectNodes, ...TextareaNodes, ...TextInputNodes,
+    ...SelectNodes, ...TextareaNodes, ...TextInputNodes, TextInputNode_v0, MaskedInputNode_v0,
     // miscellaneous
-    ...WebCameraNodes, ...QRScannerNodes,
+    ...WebCameraNodes, ...QRScannerNodes, DividerNode_v0,
     // typography
-    ...TextNodes
+    ...TextNodes, TextNode_v1, TitleNode_v0
 ]
 
 export default reactNodes

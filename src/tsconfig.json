@@ -26,6 +26,7 @@
     "jsNodes",
     "libs",
     "utils",
-    "../InitLoader"
+    "../InitLoader",
+    "types/custom-types.d.ts"
   ]
 }

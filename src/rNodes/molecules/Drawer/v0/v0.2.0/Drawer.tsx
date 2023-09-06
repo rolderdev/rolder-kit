@@ -1,4 +1,4 @@
-import { Drawer, Text } from '@mantine/core'
+import { Drawer, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { forwardRef, useImperativeHandle } from 'react'
 
@@ -18,7 +18,7 @@ const Comp = forwardRef(function (props: any, ref) {
         close()
         if (noodlNode.hasOutput('hided')) noodlNode.sendSignalOnOutput('hided')
       }}
-      title={<Text fw={700}>{title}</Text>}
+      title={<Title >{title}</Title>}
       overlayProps={{ opacity: 0.5, blur: 2 }}
       position={drawerPosition}
       children={children}

@@ -12,6 +12,7 @@ declare global {
         SetRefs: any
         FilterBy: any
         FormValidators: any
+        IsEmpty: any
     }
 }
 

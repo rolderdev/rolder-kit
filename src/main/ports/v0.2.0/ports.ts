@@ -1,8 +1,8 @@
-import { NodeInput, Type } from "@noodl/noodl-sdk"
+import clone from "just-clone";
 import { enums } from "./enums"
 
 const units = ['rem', '%', 'px']
-
+/*
 // groups
 const General = { group: 'General' }, Data = { group: 'Data' }, Params = { group: 'Params' }, States = { group: 'States' }
 const Paddings = { group: 'Paddings' }, Dimensions = { group: 'Dimensions' }, ControlledDimensions = { group: 'ControlledDimensions' }
@@ -15,28 +15,24 @@ const oldPorts: {
     ['Dimensions']: { [key: string]: NodeInput }, ['ControlledDimensions']: { [key: string]: NodeInput }, ['Icon']: { [key: string]: NodeInput }
     ['Font']: { [key: string]: NodeInput }, ['Form']: { [key: string]: NodeInput }, ['Sx']: { [key: string]: NodeInput }
 } = {
-    General: {
 
-    },
     Data: {
         dbClass: { group: 'Data', type: 'string', displayName: 'Database class', },
-        dbClasses: { group: 'Data', type: 'array', displayName: 'Database classes', },
+
         itemId: { group: 'Data', type: 'string', displayName: 'Item id' },
         itemsIds: { group: 'Data', type: 'array', displayName: 'Items ids', tooltip: "Example: ['id1', 'id2']" },
         tableData: { group: 'Data', type: 'object', displayName: 'Table data' },
-        foundedData: { group: 'Data', type: 'object', displayName: 'Founded data' },
 
         selectedPath: { group: 'Data', type: 'string', displayName: 'Selected path' },
         value: { group: 'Data', type: 'string', displayName: 'Value' },
-        searchString: { group: 'Data', type: 'string', displayName: 'Search string' },
+
         inputItems: { group: 'Data', type: 'array', displayName: 'Input items' },
 
         customItems: { group: 'Data', type: 'array', displayName: 'Custom items', tooltip: "Example: [{ value: 'option-1', label: 'Option 1' }]" },
         selectedValue: { group: 'Data', type: 'string', displayName: 'Selected value' },
 
-
         sourceUrl: { group: 'Data', type: 'string', displayName: 'Source url' },
-        placeholder: { group: 'Data', type: 'string', displayName: 'Placeholder' },
+
         createValue: { group: 'Data', type: 'string', displayName: 'Create value' },
         inputString: { group: 'Data', type: 'string', displayName: 'Input string' },
         screenshot: { group: 'Data', type: 'string', displayName: 'Screenshot' },
@@ -57,7 +53,6 @@ const oldPorts: {
 
         noHeader: { group: 'Params', type: 'boolean', displayName: 'No header' },
 
-
         multipleRowSelectable: { group: 'Params', type: 'boolean', displayName: 'Multiple row selectable' },
         selectableType: { group: 'Params', type: { name: 'enum', enums: enums.selectableTypes }, displayName: 'Type', default: 'singleRow' },
 
@@ -67,15 +62,12 @@ const oldPorts: {
         enableFooter: { group: 'Params', type: 'boolean', displayName: 'Footer' },
         enableNavbar: { group: 'Params', type: 'boolean', displayName: 'Navbar' },
         navItems: { group: 'Params', type: 'array', displayName: 'Navigation items' },
-        searchFields: { group: 'Params', type: 'array', displayName: 'Search fields', tooltip: "Example: ['content.name.search']" },
+
         tableScheme: { group: 'Params', type: 'array', displayName: 'Table scheme' },
         filterMaps: { group: 'Params', type: 'array', displayName: 'Filter maps' },
         offsetScrollbars: { group: 'Params', type: 'boolean', displayName: 'Offset scrollbars' },
 
-
-        buttonType: { group: 'Params', type: { name: 'enum', enums: enums.buttonTypes }, displayName: 'Button type', tooltip: '"Submit" to trigger form' },
         qrCodeLevel: { group: 'Params', type: { name: 'enum', enums: enums.qrCodeLevels }, displayName: 'QR code level', default: 'L' },
-        withAsterisk: { group: 'Params', type: 'boolean', displayName: 'With asterisk' },
         dateFormat: { group: 'Params', type: 'string', displayName: 'Date format', default: 'YYYY-MM-DD HH:mm' },
         limitMinDate: { group: 'Params', type: 'boolean', displayName: 'Limit minimal date', default: false },
         daysOffset: { group: 'Params', type: 'number', displayName: 'Minimum days offset', default: 0, tooltip: 'Number of days to offset. Negative for past offset' },
@@ -83,8 +75,8 @@ const oldPorts: {
         searchable: { group: 'Params', type: 'boolean', displayName: 'Searchable' },
         clearable: { group: 'Params', type: 'boolean', displayName: 'Clearable' },
         creatable: { group: 'Params', type: 'boolean', displayName: 'Creatable' },
-        debounced: { group: 'Params', type: 'boolean', displayName: 'Debounced', default: false, tooltip: 'Delay typed string at output' },
-        delay: { group: 'Params', type: 'number', displayName: 'Delay (ms)', default: 350 },
+
+
         autoClose: { group: 'Params', type: 'number', displayName: 'Autoclose (ms)', default: 2000 },
         useCustomItems: { group: 'Params', type: 'boolean', displayName: 'Use custom items', default: false },
         withArrow: { group: 'Params', type: 'boolean', displayName: 'With arrow' },
@@ -107,15 +99,13 @@ const oldPorts: {
         loaded: { group: 'Signals', type: 'signal', displayName: 'Loaded' },
 
         resetSelected: { group: 'Signals', type: 'signal', displayName: 'Reset selected' },
-        resetSingleSelected: { group: 'Signals', type: 'boolean', displayName: 'Reset single selected' },
-        resetMultipleSelected: { group: 'Signals', type: 'boolean', displayName: 'Reset multiple selected' },
+
         doDelete: { group: 'Signals', type: 'signal', displayName: 'Delete' },
         pathChanged: { group: 'Signals', type: 'signal', displayName: 'Path changed' },
         authenticated: { group: 'Signals', type: 'signal', displayName: 'Authenticated' },
         viewItem: { group: 'Signals', type: 'signal', displayName: 'View item clicked' },
         editItem: { group: 'Signals', type: 'signal', displayName: 'Edit item clicked' },
         viewImages: { group: 'Signals', type: 'signal', displayName: 'View images' },
-        clicked: { group: 'Signals', type: 'signal', displayName: 'Clicked' },
 
         hide: { group: 'Signals', type: 'boolean', displayName: 'Hide' },
 
@@ -131,20 +121,14 @@ const oldPorts: {
 
         borderRadius: { group: 'Style', type: { name: 'enum', enums: enums.sizes }, displayName: 'Border radius' },
 
-
-
         buttonColor: { group: 'Style', type: { name: 'enum', enums: enums.colors }, displayName: 'Button color' },
 
-
-        actionVariant: { group: 'Style', type: { name: 'enum', enums: enums.actionVariants }, displayName: 'Variant' },
         striped: { group: 'Style', type: 'boolean', displayName: 'Striped' },
         loaderVariant: { group: 'Style', type: { name: 'enum', enums: enums.loaderVariants }, displayName: 'Variant' },
         avatarVariant: { group: 'Style', type: { name: 'enum', enums: enums.avatarVariants }, displayName: 'Variant' },
         badgeVariant: { group: 'Style', type: { name: 'enum', enums: enums.badgeVariants }, displayName: 'Variant', default: 'light' },
     },
-    Margins: {
-
-    },
+    
     Paddings: {
         p: { ...Paddings, type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding' },
         pt: { ...Paddings, type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding top' },
@@ -170,18 +154,16 @@ const oldPorts: {
         dropdownType: { group: '', type: { name: 'enum', enums: enums.dropdownTypes }, displayName: 'Dropdown type', default: 'popover' },
     },
     Dimensions: {
-        w: { group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Width' },
-        maw: { group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Max width' },
-        h: { group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Height' },
 
+        maw: { group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Max width' },
 
         sizeString: { group: 'Dimensions', type: 'string', displayName: 'Size string' },
         sizeNumber: { group: 'Dimensions', type: 'number', displayName: 'Size number' },
     },
     Icon: {
-        iconName: { ...Icon, type: 'string', displayName: 'Icon name', tooltip: 'Find icon at tabler-icons.io and capitalize it: "IconSuperName"' },
-        iconSize: { ...Icon, type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Icon size' },
-        stroke: { ...Icon, type: 'number', displayName: 'Stroke' },
+        iconName: { group: 'Icon', type: 'string', displayName: 'Icon name', tooltip: 'Find icon at tabler-icons.io and capitalize it: "IconSuperName"' },
+        iconSize: { group: 'Icon', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Icon size' },
+        stroke: { group: 'Icon', type: 'number', displayName: 'Stroke' },
     },
     ControlledDimensions: {
         widthString: { ...ControlledDimensions, type: 'string', displayName: 'Width (string)' },
@@ -189,15 +171,7 @@ const oldPorts: {
         widthNumber: { ...ControlledDimensions, type: 'number', displayName: 'Width (number)' },
         heightNumber: { ...ControlledDimensions, type: 'number', displayName: 'Height (number)' },
     },
-    Font: {
-        fz: { ...Font, type: { name: 'enum', enums: enums.sizes }, displayName: 'Size' },
-        fw: { ...Font, type: { name: 'enum', enums: enums.fontWeights }, displayName: 'Weight' },
-    },
-    Form: {
-        useForm: { group: 'Form', type: 'boolean', displayName: 'Use form' },
-        formField: { group: 'Form', type: 'string', displayName: 'Form field' },
 
-    },
     Sx: {
         minHeight: { ...Sx, type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Min height' },
         fontSize: { ...Sx, type: { name: 'enum', enums: enums.sizes }, displayName: 'Font size' },
@@ -240,33 +214,62 @@ const jsPorts: { [key: string]: { [key: string]: NodeInput } } = {
         refDbClass: { group: 'Params', type: 'string', displayName: 'Reference database class', },
         reversedRef: { group: 'Params', type: 'boolean', displayName: 'Reversed reference', default: false },
     }
-}
+} */
 
 const ports = [
     // Data
-    { name: 'items', group: 'Data', type: 'array', displayName: 'Items' },
+    { name: 'items', group: 'Data', type: { name: 'array', allowConnectionsOnly: true }, displayName: 'Items' },
     { name: 'selectedItem', group: 'Data', type: 'object', displayName: 'Selected item' },
     { name: 'selectedItems', group: 'Data', type: 'array', displayName: 'Selected items' },
-    { name: 'label', group: 'Data', type: 'string', displayName: 'Label' },
-    { name: 'description', group: 'Data', type: 'string', displayName: 'Description' },
-    { name: 'error', group: 'Data', type: 'string', displayName: 'error' },
-    // Forn
-    { name: 'formHook', group: 'Form', type: 'object', displayName: 'Form hook' },
+    { name: 'value', group: 'Data', type: 'string', displayName: 'Value' },
+    { name: 'typedValue', group: 'Data', type: { name: 'string', allowConnectionsOnly: true }, displayName: 'Typed value' },
+    { name: 'actionItem', group: 'Data', type: 'object', displayName: 'Action item' },
+    { name: 'searchString', group: 'Data', type: 'string', displayName: 'Search string' },
+    { name: 'foundedData', group: 'Data', type: 'object', displayName: 'Founded data' },
+    // Form
+    { name: 'useForm', group: 'Form', type: 'boolean', displayName: 'Use form' },
+    { name: 'formField', group: 'Form', type: 'string', displayName: 'Form field', dependsOn: 'useForm' },
+    { name: 'formHook', group: 'Form', type: 'object', displayName: 'Form hook', dependsOn: 'useForm' },
+    { name: 'formHookAtForm', group: 'Form', type: 'object', displayName: 'Form hook' },
     // States
     { name: 'disabled', group: 'States', type: 'boolean', displayName: 'Disabled', default: false },
     { name: 'loading', group: 'States', type: 'boolean', displayName: 'Loading', default: false },
     { name: 'searching', group: 'States', type: 'boolean', displayName: 'Searching', default: false },
     { name: 'checked', group: 'States', type: 'boolean', displayName: 'Checked', default: false },
+    // Icon
+    { name: 'iconName', group: 'Icon', type: 'string', displayName: 'Icon name', tooltip: 'Find icon at tabler-icons.io and capitalize it: "IconSuperName"' },
+    { name: 'iconSize', group: 'Icon', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Icon size' },
+    { name: 'stroke', group: 'Icon', type: 'number', displayName: 'Stroke' },
     // Params
-    { name: 'columns', group: 'Params', type: 'object', displayName: 'Columns' },
+    { name: 'columns', group: 'Params', type: 'array', displayName: 'Columns' },
     { name: 'grouped', group: 'Params', type: 'boolean', displayName: 'Grouped', default: false, },
     { name: 'selectable', group: 'Params', type: 'boolean', displayName: 'Selectable', default: false, },
     { name: 'singleSelect', group: 'Params', type: 'boolean', displayName: 'Single select', default: false, dependsOn: 'selectable' },
+    { name: 'singleUnselectable', group: 'Params', type: 'boolean', displayName: 'Single unselectable', default: false, dependsOn: 'singleSelect' },
     { name: 'multiSelect', group: 'Params', type: 'boolean', displayName: 'Multi select', default: false, dependsOn: 'selectable' },
-    { name: 'allSelect', group: 'Params', type: 'boolean', displayName: 'All select', default: false, dependsOn: 'multiSelect' },
-    { name: 'formScheme', group: 'Params', type: 'object', displayName: 'Form scheme', tooltip: "Example: {name: 'startDate', initialValue: new Date(), validate: isNotEmpty}" },
+    { name: 'allSelect', group: 'Params', type: 'boolean', displayName: 'All select', default: true, dependsOn: 'multiSelect' },
+    { name: 'formScheme', group: 'Params', type: 'array', displayName: 'Form scheme', isObject: true, tooltip: "Example: {name: 'startDate', initialValue: new Date(), validate: isNotEmpty}" },
     { name: 'title', group: 'Params', type: 'string', displayName: 'Title' },
-    { name: 'withCloseButton', group: 'Params', type: 'boolean', displayName: 'With close button', default: false, tooltip: "Hides close button and title" },
+    { name: 'label', group: 'Params', type: 'string', displayName: 'Label' },
+    { name: 'placeholder', group: 'Params', type: 'string', displayName: 'Placeholder' },
+    { name: 'description', group: 'Params', type: 'string', displayName: 'Description' },
+    { name: 'error', group: 'Params', type: 'string', displayName: 'Error' },
+    { name: 'mask', group: 'Params', type: 'string', displayName: 'Mask', default: '{8} (000) 000-00-00', tooltip: "IMask js lib mask" },
+    { name: 'hideMask', group: 'Params', type: 'boolean', displayName: 'Hide mask', default: false },
+    { name: 'overwrite', group: 'Params', type: 'boolean', displayName: 'Overwrite', default: true },
+    { name: 'debounced', group: 'Params', type: 'boolean', displayName: 'Debounced', default: false, tooltip: 'Delay typed value' },
+    { name: 'delay', group: 'Params', type: 'number', displayName: 'Delay (ms)', default: 350, dependsOn: 'debounced' },
+    { name: 'buttonType', group: 'Params', type: { name: 'enum', enums: enums.buttonTypes }, displayName: 'Button type', tooltip: '"Submit" to trigger form' },
+    { name: 'expandAllAction', group: 'Params', type: 'boolean', displayName: 'Expand all', default: true, dependsOn: 'grouped' },
+    { name: 'drawerHeaderEnabled', group: 'Params', type: 'boolean', displayName: 'Header', default: false },
+    { name: 'closeActionEnabled', group: 'Params', type: 'boolean', displayName: 'Enable close action', default: false, dependsOn: 'drawerHeaderEnabled' },
+    { name: 'drawerTitle', group: 'Params', type: 'string', displayName: 'Drawer title', dependsOn: 'drawerHeaderEnabled' },
+    { name: 'options', group: 'Params', type: 'array', displayName: 'Options', isObject: true, tooltip: "Example: [{ size: 100 }]" },
+    { name: 'masked', group: 'Params', type: 'boolean', displayName: 'Masked', default: false },
+    { name: 'textMask', group: 'Params', type: 'string', displayName: 'Mask', default: '{8} (000) 000-00-00', tooltip: "IMask js lib mask", dependsOn: 'masked' },
+    // Proplists
+    { name: 'dbClasses', group: 'Database classes', type: 'proplist', displayName: 'Database classes' },
+    { name: 'searchFields', group: 'Search fields', type: 'proplist', displayName: 'Search fields', tooltip: "Example: content.name.search" },
     // Signals
     { name: 'expandAll', group: 'Signals', type: 'signal', displayName: 'Expand all rows' },
     { name: 'unExpandAll', group: 'Signals', type: 'signal', displayName: 'Unexpand all rows' },
@@ -279,6 +282,11 @@ const ports = [
     { name: 'open', group: 'Signals', type: 'signal', displayName: 'Open' },
     { name: 'close', group: 'Signals', type: 'signal', displayName: 'Close' },
     { name: 'hided', group: 'Signals', type: 'signal', displayName: 'Hided' },
+    { name: 'closed', group: 'Signals', type: 'signal', displayName: 'Closed' },
+    { name: 'clicked', group: 'Signals', type: 'signal', displayName: 'Clicked' },
+    { name: 'resetSingleSelected', group: 'Signals', type: 'signal', displayName: 'Reset single selected' },
+    { name: 'resetMultipleSelected', group: 'Signals', type: 'signal', displayName: 'Reset multiple selected' },
+    { name: 'completed', group: 'Signals', type: 'signal', displayName: 'Completed' },
     // Margins
     { name: 'margins', group: 'Margins', type: 'boolean', displayName: 'Margins' },
     { name: 'm', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin', dependsOn: 'margins' },
@@ -288,6 +296,11 @@ const ports = [
     { name: 'mr', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin right', dependsOn: 'margins' },
     { name: 'mb', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin bottom', dependsOn: 'margins' },
     { name: 'ml', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin left', dependsOn: 'margins' },
+    // Font    
+    { name: 'drawerTitleOrder', group: 'Font', type: 'number', displayName: 'Order', tooltip: '1 - 6', dependsOn: 'drawerHeaderEnabled', default: 4 },
+    { name: 'titleOrder', group: 'Font', type: 'number', displayName: 'Order', tooltip: '1 - 6', default: 3 },
+    { name: 'fz', group: 'Font', type: { name: 'enum', enums: enums.sizes }, displayName: 'Size', default: 'md' },
+    { name: 'fw', group: 'Font', type: { name: 'enum', enums: enums.fontWeights }, displayName: 'Weight' },
     // Style
     //// colors
     { name: 'color', group: 'Style', type: 'string', displayName: 'Color', tooltip: 'red, red.5' },
@@ -304,23 +317,35 @@ const ports = [
     { name: 'withColumnBorders', group: 'Style', type: 'boolean', displayName: 'Column borders' },
     { name: 'radius', group: 'Style', type: { name: 'enum', enums: enums.sizes }, displayName: 'Radius', default: 'md' },
     { name: 'opacity', group: 'Style', type: 'number', displayName: 'Opacity' },
+    { name: 'withAsterisk', group: 'Style', type: 'boolean', displayName: 'With asterisk' },
+    { name: 'dividerVariant', group: 'Style', type: { name: 'enum', enums: enums.dividerVariants }, displayName: 'Variant', default: 'solid' },
+    { name: 'buttonVariant', group: 'Style', type: { name: 'enum', enums: enums.buttonVariants }, displayName: 'Variant', default: 'filled' },
     // Layout
     { name: 'tableDensity', group: 'Table layout', type: { name: 'enum', enums: enums.tableDensities }, displayName: 'Density', default: 'xs' },
     { name: 'labelPosition', group: 'Layout', type: { name: 'enum', enums: enums.labelPositions }, displayName: 'Label position', default: 'right' },
     { name: 'drawerPosition', group: 'Layout', type: { name: 'enum', enums: enums.drawerPositions }, displayName: 'Position', default: 'right' },
+    { name: 'dividerLabelPosition', group: 'Layout', type: { name: 'enum', enums: enums.dividerLabelPositions }, displayName: 'Label position', default: 'left' },
+    { name: 'dividerOrientation', group: 'Layout', type: { name: 'enum', enums: enums.dividerOrientations }, displayName: 'Orientation', default: 'horizontal' },
     // Dimensions        
     { name: 'loaderSize', group: 'Dimensions', type: { name: 'enum', enums: enums.sizes }, displayName: 'Loader size', default: 'lg' },
     { name: 'size', group: 'Dimensions', type: { name: 'enum', enums: enums.sizes }, displayName: 'Size', default: 'sm' },
     { name: 'sizeUnits', group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Size' },
+    { name: 'w', group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Width' },
+    { name: 'h', group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Height' },
+    // Fonr titleOrder
 ] as const satisfies readonly NodePort[];
 
 type PortsNames = typeof ports[number]['name']
 
 export const groupedPorts = {
-    'Table params': ['columns', 'grouped', 'selectable', 'singleSelect', 'multiSelect', 'allSelect'],
+    'Margins': ['margins', 'm', 'my', 'mx', 'mt', 'mr', 'mb', 'ml'],
+    'Table params': ['columns', 'grouped', 'selectable', 'singleSelect', 'singleUnselectable', 'multiSelect', 'allSelect', 'expandAllAction'],
     'Table layout': ['tableDensity'],
     'Table style': ['loaderSize', 'loaderColor', 'withBorder', 'shadow', 'withColumnBorders', 'radius'],
-    'Rows style': ['highlightOnHover', 'onHoverColor', 'backgroundColor', 'highlightSelected', 'selectedColor', 'multiSelectCheckboxColor']
+    'Rows style': ['highlightOnHover', 'onHoverColor', 'backgroundColor', 'highlightSelected', 'selectedColor', 'multiSelectCheckboxColor'],
+    'Form': ['useForm', 'formField', 'formHook'],
+    'Icon': ['iconName', 'iconSize', 'stroke'],
+    'Font': ['fz', 'fw']
 } satisfies Record<string, PortsNames[]>;
 type GroupedPortsNames = keyof typeof groupedPorts
 
@@ -340,7 +365,7 @@ export function getPorts(props: GetPorts): NodePort[] {
         i.plug = props.type
         if (props.customs?.groupName) i.group = props.customs?.groupName
         if (props.requiredInputs?.includes(i.name)) i.required = true
-        return i
+        return clone(i)
     })
 }
 

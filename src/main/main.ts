@@ -1,4 +1,5 @@
 import Clone from 'just-clone'; window.Clone = Clone
+import isEmpty from 'just-is-empty'; window.IsEmpty = isEmpty
 import Mustache from 'mustache'; window.Mustache = Mustache
 import Cookies from 'js-cookie'; window.Cookies = Cookies
 

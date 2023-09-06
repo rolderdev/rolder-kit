@@ -51,9 +51,10 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: '0', label: '0' }, { value: '1', label: '1' }, { value: '2', label: '2' }, { value: '3', label: '3' }, { value: '4', label: '4' },
         { value: '5', label: '5' }, { value: '6', label: '6' }, { value: '7', label: '7' }, { value: '8', label: '8' }, { value: '9', label: '9' }
     ],
-    actionVariants: [
-        { value: 'transparent', label: 'Transparent' }, { value: 'subtle', label: 'Subtle' }, { value: 'filled', label: 'Filled' },
-        { value: 'light', label: 'Light' }, { value: 'outline', label: 'Outline' }, { value: 'default', label: 'Default' }
+    buttonVariants: [
+        { value: 'default', label: 'Default' }, { value: 'filled', label: 'Filled' }, { value: 'subtle', label: 'Subtle' },
+        { value: 'outline', label: 'Outline' }, { value: 'light', label: 'Light' }, { value: 'gradient', label: 'Gradient' },
+        { value: 'white', label: 'White' },
     ],
     drawerPositions: [
         { value: 'top', label: 'Top' }, { value: 'right', label: 'Right' }, { value: 'left', label: 'Left' },
@@ -71,4 +72,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     datePickerTypes: [{ value: 'default', label: 'Default' }, { value: 'range', label: 'Range' },],
     dropdownTypes: [{ value: 'popover', label: 'Popover' }, { value: 'modal', label: 'Modal' },],
     labelPositions: [{ value: 'right', label: 'Right' }, { value: 'left', label: 'Left' },],
+    dividerVariants: [{ value: 'solid', label: 'Solid' }, { value: 'dashed', label: 'Dashed' }, { value: 'dotted', label: 'Dotted' }],
+    dividerLabelPositions: [{ value: 'left', label: 'Left' }, { value: 'right', label: 'Right' }, { value: 'center', label: 'Center' },],
+    dividerOrientations: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' },],
 }

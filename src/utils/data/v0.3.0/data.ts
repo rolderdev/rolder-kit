@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import dayjs from 'dayjs'
+import { IMask } from 'react-imask';
 
 export function getValue(obj: any, nestedKey: string | undefined) {
     const Mustache = window.Mustache
@@ -27,6 +28,13 @@ export function getDate(obj: any, nestedKey: string | undefined, dateFormat: str
             return value
         }
     } else return value
+}
+export function getMasked(value: string, maskFormat: string | undefined) {
+    if (value) {
+        const masked = IMask.createMask({ mask: maskFormat });
+        masked.resolve(value);
+        return masked.value
+    }
 }
 
 export function convertForSelect(obj: { value: any; id: any; label: string | undefined }, nestedKey: any) {

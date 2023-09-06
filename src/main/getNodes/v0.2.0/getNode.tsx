@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import { defineReactNode, defineNode } from '@noodl/noodl-sdk'
+import { CompVersions } from '../../../types/custom-types'
 
 export const getReactNode = ({ nodeName, nodeVersion, Comps, compVersions }:
   { nodeName: string, nodeVersion: string, Comps: any, compVersions: CompVersions }) => {
@@ -10,7 +11,6 @@ export const getReactNode = ({ nodeName, nodeVersion, Comps, compVersions }:
     getReactComponent() {
       return forwardRef(Comps)
     },
-    initialize: function () { this.clearWarnings() },
     changed: {
       version() {
         // On first load
@@ -49,10 +49,19 @@ export const getReactNode = ({ nodeName, nodeVersion, Comps, compVersions }:
           set: function () {
             // Sets props of current version
             Object.keys(this._inputValues).forEach(portName => {
-              if (compVersions[this._inputValues.version]?.inputs?.map(i => i.name).includes(portName)) {
-                this.props[portName] = this._inputValues[portName]
+              const input = compVersions[this._inputValues.version]?.inputs?.find(i => i.name === portName)
+              if (input) {
+                // convert array string to array
+                if (input.type === 'array' && this._inputValues[portName] && typeof this._inputValues[portName] === 'string')
+                  // convert single object array to object
+                  if (input.isObject) this.props[portName] = eval(this._inputValues[portName])[0]
+                  else this.props[portName] = eval(this._inputValues[portName])
+                else this.props[portName] = this._inputValues[portName]
+                // convert proplist to array
+                if (input.type === 'proplist' && this._inputValues[portName])
+                  this.props[portName] = this._inputValues[portName].map((i: any) => i.label)
                 // Reset prop if dependsOn is false
-                const dependsOnName = compVersions[this._inputValues.version]?.inputs?.find(i => i.name === portName)?.dependsOn
+                const dependsOnName = input.dependsOn
                 if (dependsOnName && !this._inputValues[dependsOnName]) this.props[portName] = undefined
               }
             })
