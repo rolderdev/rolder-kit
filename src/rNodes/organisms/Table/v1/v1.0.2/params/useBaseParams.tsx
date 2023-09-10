@@ -7,9 +7,9 @@ import { MRT_TableOptions } from "mantine-react-table";
 import cellProps from "../props/cellProps";
 import { Selection } from "../types/Selection";
 
-export default function useBaseParams(props: { resultColumns: Column[], tableProps: TableCompProps, selectionProps: Selection }) {
+export default function (props: { resultColumns: Column[], tableProps: TableCompProps, selectionProps: Selection }) {
     const { items, loading, searching, tableDensity, highlightOnHover, withColumnBorders, loaderColor, loaderSize } = props.tableProps
-    const { tableProps, resultColumns } = props
+    const { tableProps } = props
 
     const baseParams: MRT_TableOptions<Item> = {
         columns: props.resultColumns,
@@ -38,6 +38,7 @@ export default function useBaseParams(props: { resultColumns: Column[], tablePro
             withColumnBorders,
             sx: { '& tbody tr:last-of-type td': { borderBottom: 'none' } }
         },
+        //mantineTableContainerProps: { sx: { maxHeight: '70%' } },
         mantineLoadingOverlayProps: {
             loaderProps: {
                 color: convertColor(loaderColor),
@@ -45,7 +46,7 @@ export default function useBaseParams(props: { resultColumns: Column[], tablePro
             }
         },
         mantineTableBodyRowProps: ({ row }) => rowProps({ row, ...props }),
-        mantineTableBodyCellProps: ({ row }) => cellProps({ tableProps, columnDef: resultColumns[0], row }),
+        mantineTableBodyCellProps: ({ row, column }: any) => cellProps({ tableProps, columnDef: column.columnDef, row }),
     }
 
     return baseParams

@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import icons from '../../../../../../libs/icons/v0.2.0/icons';
 import { Button } from '@mantine/core';
-import sendSignal from '../../../../../../utils/noodl/v0.1.0/sendSignal';
+import { sendSignal } from '../../../../../../utils/noodl/v0.1.0/send';
 
 const Comp = forwardRef(function (props: any) {
   const { noodlNode, label, iconName, iconSize, stroke, buttonType, buttonVariant } = props

@@ -1,10 +1,11 @@
 // data
 import UseDataNodes from "../../../rNodes/data/UseData/UseDataNodes";
+import UseDataNode_v1 from "../../../rNodes/data/UseData/v1/UseDataNode";
 import UseSearchNodes from "../../../rNodes/data/UseSearch/UseSearchNodes";
-import UseSearchNode_v1 from "../../../rNodes/data/UseSearch/v1/UseSearchNode";
 // organisms
 import AppNodes from "../../../rNodes/organisms/App/AppNodes";
 import AuthNodes from "../../../rNodes/organisms/Auth/AuthNodes";
+import AuthNode_v0 from "../../../rNodes/organisms/Auth/v0/AuthNode";
 import AppShellNodes from "../../../rNodes/organisms/AppShell/AppShellNodes";
 import TableNodes from "../../../rNodes/organisms/Table/TableNodes";
 import TableNode_v1 from "../../../rNodes/organisms/Table/v1/TableNode";
@@ -29,6 +30,7 @@ import ActionIconNodes from "../../../rNodes/elements/buttons/ActionIcon/ActionI
 import ButtonNodes from "../../../rNodes/elements/buttons/Button/ButtonNodes";
 import ButtonNode_v0 from "../../../rNodes/elements/buttons/Button/v0/ButtonNode";
 import PopoverActionIconNodes from "../../../rNodes/elements/buttons/PopoverActionIcon/PopoverActionIconNodes";
+import PopoverButtonNode_v0 from "../../../rNodes/elements/buttons/PopoverButton/v0/PopoverButtonNode";
 // dataDisplay
 import AvatarNodes from "../../../rNodes/elements/dataDisplay/Avatar/AvatarNodes";
 import IconNodes from "../../../rNodes/elements/dataDisplay/Icon/Icon";
@@ -61,15 +63,15 @@ import TitleNode_v0 from "../../../rNodes/elements/typography/Title/v0/TitleNode
 
 const reactNodes: any = [
     // data
-    ...UseDataNodes, ...UseSearchNodes, UseSearchNode_v1,
+    ...UseDataNodes, UseDataNode_v1, ...UseSearchNodes,
     // organisms
-    ...AppNodes, ...AuthNodes, ...AppShellNodes, ...TableNodes, TableNode_v1, ...ETableNodes, ...FormNodes, FormNode_V0,
+    ...AppNodes, ...AuthNodes, AuthNode_v0, ...AppShellNodes, ...TableNodes, TableNode_v1, ...ETableNodes, ...FormNodes, FormNode_V0,
     // molecules
     ...StackNodes, ...GroupNodes, ...CenterNodes, ...ScrollAreaNodes, ...DrawerNodes, DrawerNode_v0, ...CarouselNodes, ...ModalNodes,
     ...GridNodes, ...PaperNodes, ...UnstyledButtonNodes,
     // elements
     // buttons
-    ...ActionIconNodes, ...ButtonNodes, ButtonNode_v0, ...PopoverActionIconNodes,
+    ...ActionIconNodes, ...ButtonNodes, ButtonNode_v0, ...PopoverActionIconNodes, PopoverButtonNode_v0,
     // dataDisplay
     ...AvatarNodes, ...IconNodes, ...BadgeNodes, ...ImageNodes, ...QRCodeNodes,
     // feedback

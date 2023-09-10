@@ -3,9 +3,9 @@ import icons from "../../../../../../libs/icons/v0.2.0/icons";
 import { Action } from "../types/Column";
 import { MRT_Row } from "mantine-react-table";
 import { getValue } from "../../../../../../utils/data/v0.3.0/data";
-import sendOutput from "../../../../../../utils/noodl/v0.1.0/sendOutput";
 import { Selection } from "../types/Selection";
 import { TableCompProps } from "../types/TableCompProps";
+import { sendOutput } from "../../../../../../utils/noodl/v0.1.0/send";
 
 export default function useAction(props: { tableProps: TableCompProps, selectionProps: Selection, actionDef: Action, row: MRT_Row<Item>, }) {
     const { name, type, disabledSource, props: actionProps } = props.actionDef

@@ -235,6 +235,7 @@ const jsPorts: { [key: string]: { [key: string]: NodeInput } } = {
         createdUserItem: { ...Data, ...object, displayName: 'Created user item' },
         deleteUserIds: { ...Data, ...array, displayName: 'Delete user ids', tooltip: "Example: ['kuid1', 'kuid2']" },
         filteredItems: { ...Data, ...array, displayName: 'Filtered items' },
+        userRole: { ...Data, ...string, displayName: 'User role' },
     },
     States: {
         creating: { ...States, ...boolean, displayName: 'Creating' },

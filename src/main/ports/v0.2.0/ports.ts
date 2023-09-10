@@ -1,5 +1,5 @@
 import clone from "just-clone";
-import { enums } from "./enums"
+import { enums } from "../v0.3.0/enums"
 
 const units = ['rem', '%', 'px']
 /*
@@ -17,8 +17,7 @@ const oldPorts: {
 } = {
 
     Data: {
-        dbClass: { group: 'Data', type: 'string', displayName: 'Database class', },
-
+        
         itemId: { group: 'Data', type: 'string', displayName: 'Item id' },
         itemsIds: { group: 'Data', type: 'array', displayName: 'Items ids', tooltip: "Example: ['id1', 'id2']" },
         tableData: { group: 'Data', type: 'object', displayName: 'Table data' },
@@ -45,10 +44,9 @@ const oldPorts: {
         qrString: { group: 'Data', type: 'string', displayName: 'QR string' },
     },
     Params: {
-        useDataType: { ...General, type: { name: 'enum', enums: enums.useDataTypes }, displayName: 'Query type' },
+        
         notificationsPosition: { group: 'Params', type: { name: 'enum', enums: enums.notificationsPositions }, displayName: 'Notifications position', default: 'bottom-right' },
-        query: { group: 'Params', type: 'array', displayName: 'Query', tooltip: "Example: [{ content.name: { 'ta-da!!!'} }]" },
-        sorts: { group: 'Params', type: 'array', displayName: 'Sorts', tooltip: "Example: [{ content.name: 'asc' }]" },
+                
         options: { group: 'Params', type: 'array', displayName: 'Options', tooltip: "Example: [{ size: 100 }]" },
 
         noHeader: { group: 'Params', type: 'boolean', displayName: 'No header' },
@@ -76,10 +74,9 @@ const oldPorts: {
         clearable: { group: 'Params', type: 'boolean', displayName: 'Clearable' },
         creatable: { group: 'Params', type: 'boolean', displayName: 'Creatable' },
 
-
         autoClose: { group: 'Params', type: 'number', displayName: 'Autoclose (ms)', default: 2000 },
         useCustomItems: { group: 'Params', type: 'boolean', displayName: 'Use custom items', default: false },
-        withArrow: { group: 'Params', type: 'boolean', displayName: 'With arrow' },
+        
         datePickerType: { group: 'Params', type: { name: 'enum', enums: enums.datePickerTypes }, displayName: 'Type', default: 'default' },
         inline: { group: 'Params', type: 'boolean', displayName: 'Inline' },
         screenshotEnabled: { group: 'Params', type: 'boolean', displayName: 'Enable screenshot' },
@@ -88,28 +85,24 @@ const oldPorts: {
     },
     States: {
         enabled: { group: 'States', type: 'boolean', displayName: 'Enabled' },
-
-
-        searchEnabled: { group: 'States', type: 'boolean', displayName: 'Search enabled' },
+       
         uploading: { group: 'States', type: 'boolean', displayName: 'Uploading' },
         processing: { group: 'States', type: 'boolean', displayName: 'Processing' },
     },
     Signals: {
         inited: { group: 'Signals', type: 'signal', displayName: 'Inited' },
-        loaded: { group: 'Signals', type: 'signal', displayName: 'Loaded' },
-
+        
         resetSelected: { group: 'Signals', type: 'signal', displayName: 'Reset selected' },
 
         doDelete: { group: 'Signals', type: 'signal', displayName: 'Delete' },
         pathChanged: { group: 'Signals', type: 'signal', displayName: 'Path changed' },
-        authenticated: { group: 'Signals', type: 'signal', displayName: 'Authenticated' },
+        
         viewItem: { group: 'Signals', type: 'signal', displayName: 'View item clicked' },
         editItem: { group: 'Signals', type: 'signal', displayName: 'Edit item clicked' },
         viewImages: { group: 'Signals', type: 'signal', displayName: 'View images' },
 
         hide: { group: 'Signals', type: 'boolean', displayName: 'Hide' },
-
-        create: { group: 'Signals', type: 'signal', displayName: 'Create' },
+        
         screenshoted: { group: 'Signals', type: 'signal', displayName: 'Screenshoted' },
         uploaded: { group: 'Signals', type: 'signal', displayName: 'Uploaded' },
         jwtValidationFailed: { group: 'Signals', type: 'signal', displayName: 'JWT validation failed' },
@@ -121,28 +114,19 @@ const oldPorts: {
 
         borderRadius: { group: 'Style', type: { name: 'enum', enums: enums.sizes }, displayName: 'Border radius' },
 
-        buttonColor: { group: 'Style', type: { name: 'enum', enums: enums.colors }, displayName: 'Button color' },
-
         striped: { group: 'Style', type: 'boolean', displayName: 'Striped' },
         loaderVariant: { group: 'Style', type: { name: 'enum', enums: enums.loaderVariants }, displayName: 'Variant' },
         avatarVariant: { group: 'Style', type: { name: 'enum', enums: enums.avatarVariants }, displayName: 'Variant' },
         badgeVariant: { group: 'Style', type: { name: 'enum', enums: enums.badgeVariants }, displayName: 'Variant', default: 'light' },
     },
-    
-    Paddings: {
-        p: { ...Paddings, type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding' },
-        pt: { ...Paddings, type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding top' },
-        pr: { ...Paddings, type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding right' },
-        pb: { ...Paddings, type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding bottom' },
-        pl: { ...Paddings, type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding left' },
-    },
+        
     Layout: {
         verticalSpacing: { group: '', type: { name: 'enum', enums: enums.sizes }, displayName: 'Vertical spacing' },
-        spacing: { group: '', type: { name: 'enum', enums: enums.sizes }, displayName: 'Spacing' },
+        
         stackAlign: { group: '', type: { name: 'enum', enums: enums.stackAligns }, displayName: 'Align' },
         stackJustify: { group: '', type: { name: 'enum', enums: enums.stackJustifies }, displayName: 'Justify' },
         position: { group: '', type: { name: 'enum', enums: enums.positions }, displayName: 'Position' },
-        popoverPosition: { group: '', type: { name: 'enum', enums: enums.popoverPositions }, displayName: 'Position' },
+        
         indicatorPosition: { group: '', type: { name: 'enum', enums: enums.indicatorPositions }, displayName: 'Position', default: 'top-end' },
         grow: { group: '', type: 'boolean', displayName: 'Grow' },
         orientation: { group: '', type: 'boolean', displayName: 'Vertical', default: false },
@@ -197,20 +181,16 @@ const jsPorts: { [key: string]: { [key: string]: NodeInput } } = {
         deleteUserIds: { group: 'Data', type: 'array', displayName: 'Delete user ids', tooltip: "Example: ['kuid1', 'kuid2']" },
         filteredItems: { group: 'Data', type: 'array', displayName: 'Filtered items' },
     },
-    States: {
-        creating: { group: 'States', type: 'boolean', displayName: 'Creating' },
-        updating: { group: 'States', type: 'boolean', displayName: 'Updating' },
+    States: {        
+        
         deleting: { group: 'States', type: 'boolean', displayName: 'Deleting' },
     },
     Signals: {
-
-
-        created: { group: 'Signals', type: 'signal', displayName: 'Created' },
-        updated: { group: 'Signals', type: 'signal', displayName: 'Updated' },
+              
         deleted: { group: 'Signals', type: 'signal', displayName: 'Deleted' },
     },
     Params: {
-        dbClass: { group: 'Params', type: 'string', displayName: 'Database class', },
+        
         refDbClass: { group: 'Params', type: 'string', displayName: 'Reference database class', },
         reversedRef: { group: 'Params', type: 'boolean', displayName: 'Reversed reference', default: false },
     }
@@ -226,6 +206,17 @@ const ports = [
     { name: 'actionItem', group: 'Data', type: 'object', displayName: 'Action item' },
     { name: 'searchString', group: 'Data', type: 'string', displayName: 'Search string' },
     { name: 'foundedData', group: 'Data', type: 'object', displayName: 'Founded data' },
+    { name: 'userRole', group: 'Data', type: 'string', displayName: 'User role' },
+    { name: 'createScheme', group: 'Data', type: { name: 'object', allowConnectionsOnly: true }, displayName: 'Create scheme' },
+    { name: 'createdData', group: 'Data', type: 'object', displayName: 'Created data' },
+    { name: 'updateScheme', group: 'Data', type: { name: 'object', allowConnectionsOnly: true }, displayName: 'Update scheme' },
+    { name: 'updatedData', group: 'Data', type: 'object', displayName: 'Updated data' },
+    { name: 'userItem', group: 'Data', type: { name: 'object', allowConnectionsOnly: true }, displayName: 'User item' },
+    { name: 'userItems', group: 'Data', type: { name: 'array', allowConnectionsOnly: true }, displayName: 'User items' },
+    { name: 'fetchedCount', group: 'Data', type: 'number', displayName: 'Fetched count' },
+    { name: 'totalCount', group: 'Data', type: 'number', displayName: 'Total count' },
+    { name: 'userIds', group: 'Data', type: { name: 'array', allowConnectionsOnly: true }, displayName: 'User ids' },
+    { name: 'users', group: 'Data', type: 'array', displayName: 'Users' },
     // Form
     { name: 'useForm', group: 'Form', type: 'boolean', displayName: 'Use form' },
     { name: 'formField', group: 'Form', type: 'string', displayName: 'Form field', dependsOn: 'useForm' },
@@ -236,6 +227,10 @@ const ports = [
     { name: 'loading', group: 'States', type: 'boolean', displayName: 'Loading', default: false },
     { name: 'searching', group: 'States', type: 'boolean', displayName: 'Searching', default: false },
     { name: 'checked', group: 'States', type: 'boolean', displayName: 'Checked', default: false },
+    { name: 'creating', group: 'States', type: 'boolean', displayName: 'Creating', default: false },
+    { name: 'updating', group: 'States', type: 'boolean', displayName: 'Updating', default: false },
+    //{ name: 'fetching', group: 'States', type: 'boolean', displayName: 'Fetching', default: false },
+    //{ name: 'getting', group: 'States', type: 'boolean', displayName: 'Getting', default: false },
     // Icon
     { name: 'iconName', group: 'Icon', type: 'string', displayName: 'Icon name', tooltip: 'Find icon at tabler-icons.io and capitalize it: "IconSuperName"' },
     { name: 'iconSize', group: 'Icon', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Icon size' },
@@ -264,9 +259,15 @@ const ports = [
     { name: 'drawerHeaderEnabled', group: 'Params', type: 'boolean', displayName: 'Header', default: false },
     { name: 'closeActionEnabled', group: 'Params', type: 'boolean', displayName: 'Enable close action', default: false, dependsOn: 'drawerHeaderEnabled' },
     { name: 'drawerTitle', group: 'Params', type: 'string', displayName: 'Drawer title', dependsOn: 'drawerHeaderEnabled' },
-    { name: 'options', group: 'Params', type: 'array', displayName: 'Options', isObject: true, tooltip: "Example: [{ size: 100 }]" },
     { name: 'masked', group: 'Params', type: 'boolean', displayName: 'Masked', default: false },
     { name: 'textMask', group: 'Params', type: 'string', displayName: 'Mask', default: '{8} (000) 000-00-00', tooltip: "IMask js lib mask", dependsOn: 'masked' },
+    { name: 'withArrow', group: 'Params', type: 'boolean', displayName: 'With arrow', default: true },
+    { name: 'dbClass', group: 'Params', type: '*', displayName: 'Database class' },
+    /* { name: 'query', group: 'Params', type: 'array', displayName: 'Query', isObject: true, dependsOn: { input: 'queryType', value: 'fetch' }, tooltip: "Example: [{ equals: { 'content.firstName': 'Родион' } }]" },
+    { name: 'sort', group: 'Params', type: 'array', displayName: 'Sort', dependsOn: { input: 'queryType', value: 'fetch' }, tooltip: "Example: [{ content.lastName: 'asc' }, { content.firstName: 'asc' }]" },
+    { name: 'options', group: 'Params', type: 'array', displayName: 'Options', isObject: true, dependsOn: { input: 'queryType', value: 'fetch' }, tooltip: "Example: [{ size: 100 }]" },
+    { name: 'subscribe', group: 'Params', type: 'boolean', displayName: 'Subscribe to DB changes', default: false },
+    { name: 'queryType', group: 'Version', type: { name: 'enum', enums: enums.queryTypes }, displayName: 'Query type', default: 'fetch' }, */
     // Proplists
     { name: 'dbClasses', group: 'Database classes', type: 'proplist', displayName: 'Database classes' },
     { name: 'searchFields', group: 'Search fields', type: 'proplist', displayName: 'Search fields', tooltip: "Example: content.name.search" },
@@ -287,6 +288,19 @@ const ports = [
     { name: 'resetSingleSelected', group: 'Signals', type: 'signal', displayName: 'Reset single selected' },
     { name: 'resetMultipleSelected', group: 'Signals', type: 'signal', displayName: 'Reset multiple selected' },
     { name: 'completed', group: 'Signals', type: 'signal', displayName: 'Completed' },
+    { name: 'authenticated', group: 'Signals', type: 'signal', displayName: 'Authenticated' },
+    { name: 'create', group: 'Signals', type: 'signal', displayName: 'Create' },
+    { name: 'created', group: 'Signals', type: 'signal', displayName: 'Created' },
+    { name: 'update', group: 'Signals', type: 'signal', displayName: 'Update' },
+    { name: 'updated', group: 'Signals', type: 'signal', displayName: 'Updated' },
+    { name: 'updateUser', group: 'Signals', type: 'signal', displayName: 'Update user' },
+    { name: 'mUpdateUser', group: 'Signals', type: 'signal', displayName: 'Update users' },
+    //{ name: 'fetch', group: 'Signals', type: 'signal', displayName: 'Fetch' },
+    //{ name: 'fetched', group: 'Signals', type: 'signal', displayName: 'Fetched' },
+    //{ name: 'mGetUsers', group: 'Signals', type: 'signal', displayName: 'Get users' },
+    //{ name: 'got', group: 'Signals', type: 'signal', displayName: 'Got' },
+    { name: 'runQuery', group: 'Signals', type: 'signal', displayName: 'Run query' },
+    { name: 'loaded', group: 'Signals', type: 'signal', displayName: 'Loaded' },
     // Margins
     { name: 'margins', group: 'Margins', type: 'boolean', displayName: 'Margins' },
     { name: 'm', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin', dependsOn: 'margins' },
@@ -296,6 +310,12 @@ const ports = [
     { name: 'mr', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin right', dependsOn: 'margins' },
     { name: 'mb', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin bottom', dependsOn: 'margins' },
     { name: 'ml', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin left', dependsOn: 'margins' },
+    // Paddings    
+    { name: 'p', group: 'Paddings', type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding' },
+    { name: 'pt', group: 'Paddings', type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding top' },
+    { name: 'pr', group: 'Paddings', type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding right' },
+    { name: 'pb', group: 'Paddings', type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding bottom' },
+    { name: 'pl', group: 'Paddings', type: { name: 'enum', enums: enums.sizes }, displayName: 'Padding left' },
     // Font    
     { name: 'drawerTitleOrder', group: 'Font', type: 'number', displayName: 'Order', tooltip: '1 - 6', dependsOn: 'drawerHeaderEnabled', default: 4 },
     { name: 'titleOrder', group: 'Font', type: 'number', displayName: 'Order', tooltip: '1 - 6', default: 3 },
@@ -309,6 +329,7 @@ const ports = [
     { name: 'onHoverColor', group: 'Style', type: 'string', displayName: 'On hover color', tooltip: 'red, red.5', dependsOn: 'highlightOnHover' },
     { name: 'selectedColor', group: 'Style', type: 'string', displayName: 'Selected color', tooltip: 'red, red.5', dependsOn: 'highlightSelected' },
     { name: 'multiSelectCheckboxColor', group: 'Style', type: 'string', displayName: 'Checkbox color', tooltip: 'red, red.5', dependsOn: 'multiSelect' },
+    { name: 'buttonColor', group: 'Style', type: 'string', displayName: 'Button color' },
     ////
     { name: 'highlightOnHover', group: 'Style', type: 'boolean', displayName: 'Hightlight on hover', default: false },
     { name: 'highlightSelected', group: 'Params', type: 'boolean', displayName: 'Hightlight selected', default: false, dependsOn: 'singleSelect' },
@@ -326,6 +347,8 @@ const ports = [
     { name: 'drawerPosition', group: 'Layout', type: { name: 'enum', enums: enums.drawerPositions }, displayName: 'Position', default: 'right' },
     { name: 'dividerLabelPosition', group: 'Layout', type: { name: 'enum', enums: enums.dividerLabelPositions }, displayName: 'Label position', default: 'left' },
     { name: 'dividerOrientation', group: 'Layout', type: { name: 'enum', enums: enums.dividerOrientations }, displayName: 'Orientation', default: 'horizontal' },
+    { name: 'popoverPosition', group: 'Layout', type: { name: 'enum', enums: enums.popoverPositions }, displayName: 'Position' },
+    { name: 'stackSpacing', group: 'Layout', type: { name: 'enum', enums: enums.sizes }, displayName: 'Spacing', default: 'md' },
     // Dimensions        
     { name: 'loaderSize', group: 'Dimensions', type: { name: 'enum', enums: enums.sizes }, displayName: 'Loader size', default: 'lg' },
     { name: 'size', group: 'Dimensions', type: { name: 'enum', enums: enums.sizes }, displayName: 'Size', default: 'sm' },
@@ -363,7 +386,7 @@ export function getPorts(props: GetPorts): NodePort[] {
         props.groupsNames?.includes(i.group)
     ).map((i: any) => {
         i.plug = props.type
-        if (props.customs?.groupName) i.group = props.customs?.groupName
+        //if (props.customs?.groupName) i.group = props.customs?.groupName
         if (props.requiredInputs?.includes(i.name)) i.required = true
         return clone(i)
     })
@@ -377,7 +400,7 @@ export function getGroupedPorts(props: GetGroupedPorts): NodePort[] {
             type: props.type,
             portsNames: groupedPorts[groupName],
             requiredInputs: props.requiredInputs,
-            customs: { groupName }
+            // customs: { groupName }
         }))
     })
     return resultPorts

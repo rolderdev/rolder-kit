@@ -99,10 +99,10 @@ declare type NoodlEnum = {
 declare type Item = {
     id: string
     content: any
-    states: any
+    states?: any
     [key: string]: {
         id: string
-        content: any
+        content?: any
     },
     _kuzzle_info: {
         author: string
@@ -125,12 +125,50 @@ declare type NodePort = {
     isObject?: boolean
 }
 
+declare type NodePort2 = {
+    plug?: string
+    type: Type
+    name: string
+    displayName: string
+    group: string
+    default?: any
+    tooltip?: string
+    required?: boolean
+    dependsOn?: { name: string, value: boolean | string }
+    isObject?: boolean
+}
+
 declare type CompVersions = {
     [key: string]: {
         Comp: any
         inputs?: NodePort[]
         outputs?: NodePort[]
         signals?: NodePort[]
+    }
+}
+
+declare type CompVersions2 = {
+    [key: string]: {
+        Comp: any
+        inputs?: NodePort2[]
+        outputs?: NodePort2[]
+        signals?: NodePort2[]
+    }
+}
+
+declare type JsVersions = {
+    [key: string]: {
+        signals: any
+        inputs?: NodePort[]
+        outputs?: NodePort[]
+    }
+}
+
+declare type JsVersions2 = {
+    [key: string]: {
+        signals: any
+        inputs?: NodePort2[]
+        outputs?: NodePort2[]
     }
 }
 
@@ -171,7 +209,7 @@ declare type Type =
         defaultUnit?: string
     }
 
-type NodeInstance = {
+declare type NodeInstance = {
     [x: string]: any;
     _internal: any;
     id: string;
@@ -246,3 +284,11 @@ type NodeInstance = {
     flagOutputDirty(name: string): void;
     sendSignalOnOutput(name: string): void;
 };
+
+/* declare type KuzzleFetch = {
+    dbClass: string
+    query?: Query
+    sort?: Sort
+    options?: Options
+}
+ */

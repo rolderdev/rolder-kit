@@ -88,7 +88,7 @@ export default function (props: {
     const actions = row.getIsGrouped() ? groupActions : leafActions
 
     return <Group ml={margins.cell} position={hasAction ? 'apart' : 'left'} noWrap>
-        <Group noWrap>
+        <Group noWrap w='100%'>
             {row.getIsGrouped() && <IconChevronDown
                 size={16}
                 className={cx(classes.expandIcon, { [classes.expandIconRotated]: row.getIsExpanded() })}

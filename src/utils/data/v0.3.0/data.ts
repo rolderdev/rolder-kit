@@ -111,7 +111,7 @@ export function dbVersion() {
     return project + '_v' + dbVersion
 }
 
-export const convertKuzzleResponse = (kObject: { _source: any; _id: any }) => {
+export const convertKuzzleResponse = (kObject: { _source: any; _id: string }) => {
     let result = kObject._source
     result.id = kObject._id
     return result

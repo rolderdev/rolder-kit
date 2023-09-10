@@ -1,3 +1,5 @@
+import { Observer } from "kuzzle-sdk"
+
 declare global {
     interface Window {
         Rolder: RolderType

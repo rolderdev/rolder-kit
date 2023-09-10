@@ -1,12 +1,31 @@
 import { forwardRef } from 'react'
-import { defineReactNode, defineNode } from '@noodl/noodl-sdk'
+import { defineReactNode, defineNode, Color } from '@noodl/noodl-sdk'
+import typeOf from 'just-typeof'
+
+function covertType(input: NodePort, portName: string, values: any) {
+  const value = values[portName]
+  const typeOfValue: any = typeOf(value)
+  // convert types
+  if (value) {
+    // convert array string to array                           
+    if (input?.type === 'array' && typeOfValue === 'string') {
+      // convert single object array to object
+      if (input.isObject) values[portName] = eval(value)[0]
+      else values[portName] = eval(value)
+    }
+    // convert proplist to array
+    if (input?.type === 'proplist') values[portName] = value.map((i: any) => i.label)
+  }
+  // Reset prop if dependsOn is false
+  const dependsOnName = input?.dependsOn
+  if (dependsOnName && !values[dependsOnName]) values[portName] = undefined
+}
 
 export const getReactNode = ({ nodeName, nodeVersion, Comps, compVersions }:
   { nodeName: string, nodeVersion: string, Comps: any, compVersions: CompVersions }) => {
   return defineReactNode({
     name: `rolder-kit.${nodeName}_${nodeVersion}`,
     displayName: `${nodeName} ${nodeVersion}`,
-    noodlNodeAsProp: true,
     getReactComponent() {
       return forwardRef(Comps)
     },
@@ -50,15 +69,23 @@ export const getReactNode = ({ nodeName, nodeVersion, Comps, compVersions }:
             Object.keys(this._inputValues).forEach(portName => {
               const input = compVersions[this._inputValues.version]?.inputs?.find(i => i.name === portName)
               if (input) {
-                // convert array string to array
-                if (input.type === 'array' && this._inputValues[portName] && typeof this._inputValues[portName] === 'string')
-                  // convert single object array to object
-                  if (input.isObject) this.props[portName] = eval(this._inputValues[portName])[0]
-                  else this.props[portName] = eval(this._inputValues[portName])
-                else this.props[portName] = this._inputValues[portName]
-                // convert proplist to array
-                if (input.type === 'proplist' && this._inputValues[portName])
-                  this.props[portName] = this._inputValues[portName].map((i: any) => i.label)
+                const value = this._inputValues[portName]
+                const typeOfValue: any = typeOf(value)
+                this.props[portName] = value
+                // convert types
+                if (value) {
+                  // convert array string to array                           
+                  if (input.type === 'array' && typeOfValue === 'string') {
+                    // convert single object array to object
+                    if (input.isObject) this.props[portName] = eval(value)[0]
+                    else this.props[portName] = eval(value)
+                  }
+                  // convert proplist to array
+                  if (input.type === 'proplist') this.props[portName] = value.map((i: any) => i.label)
+                  // convert unit to string
+                  const t: any = input.type
+                  if (t.units) this.props[portName] = `${value.value}${value.unit}`
+                }
                 // Reset prop if dependsOn is false
                 const dependsOnName = input.dependsOn
                 if (dependsOnName && !this._inputValues[dependsOnName]) this.props[portName] = undefined
@@ -87,7 +114,6 @@ export const getReactNode = ({ nodeName, nodeVersion, Comps, compVersions }:
       }
       // recreate ports when version changed
       graphModel.on(`nodeAdded.rolder-kit.${nodeName}_${nodeVersion}`, function (node: any) {
-
         function updatePorts() {
           let ports: any = []
           if (node.parameters?.version) {
@@ -112,16 +138,85 @@ export const getReactNode = ({ nodeName, nodeVersion, Comps, compVersions }:
   })
 }
 
-export const getJsNodes = (nodeName: string, nodecompVersions: any) => {
-  return Object.keys(nodecompVersions).map(nodeVersion => {
-    const { nodeImport, inputs, outputs } = nodecompVersions[nodeVersion]
+type JsNodePops = {
+  nodeName: string
+  nodeVersion: string
+  jsVersions: JsVersions
+  color?: Color
+}
 
-    return defineNode({
-      name: `rolder-kit.${nodeName}_v${nodeVersion}`,
-      displayName: `${nodeName} v${nodeVersion}`,
-      inputs: inputs,
-      outputs: outputs,
-      initialize: function () { nodeImport.then((node: any) => node.default.initialize(this)) },
-    })
+export const getJsNode = ({ nodeName, nodeVersion, jsVersions, color }: JsNodePops) => {
+  return defineNode({
+    name: `rolder-kit.${nodeName}_${nodeVersion}`,
+    displayName: `${nodeName} ${nodeVersion}`,
+    color: color,
+    inputs: {
+      version: {
+        group: 'Version',
+        displayName: 'Version',
+        type: { name: 'enum', allowEditOnly: true, enums: Object.keys(jsVersions).map(i => ({ value: i, label: i })) },
+      },
+    },
+    initialize: function () { this.outputPropValues = {} },
+    changed: {
+      version(version: any) {
+        Object.keys(this._inputValues).forEach(portName => {
+          const input = jsVersions[version]?.inputs?.find(i => i.name === portName)
+          if (input) covertType(input, portName, this._inputValues)
+        })
+      }
+    },
+    methods: {
+      // on inputs data change
+      registerInputIfNeeded: function (name: any) {
+        if (this.hasInput(name)) return
+        this.registerInput(name, {
+          set: function (value: any) {
+            this._inputValues[name] = value
+            const input = jsVersions[this.inputs.version]?.inputs?.find(i => i.name === name)
+            if (input) covertType(input, name, this._inputValues)
+            if (input?.type === 'signal' && value) jsVersions[this.inputs.version]?.signals.then((n: any) => n.default[name](this))
+          }
+        });
+      },
+      // on outputs data change
+      registerOutputIfNeeded: function (name: any) {
+        if (this.hasOutput(name)) return
+        this.registerOutput(name, { getter: () => this.outputPropValues?.[name] });
+      },
+    },
+    setup: function (context: any, graphModel: any) {
+      if (!context.editorConnection || !context.editorConnection.isRunningLocally()) {
+        return;
+      }
+      // recreate ports when version changed
+      graphModel.on(`nodeAdded.rolder-kit.${nodeName}_${nodeVersion}`, function (node: any) {
+        function updatePorts() {
+          let ports: any = []
+          if (node.parameters?.version) {
+            // inputs
+            const allInputs = jsVersions[node.parameters.version]?.inputs
+            allInputs?.forEach(input => {
+              if (input.name === 'dbClass') {
+                input.type = {
+                  name: 'enum',
+                  enums: Object.keys(eval(window.Noodl.getProjectSettings().dbClasses)[0]).map(i => ({ value: i, label: i }))
+                }
+                ports.push(input)
+              } else if (input.dependsOn && node.parameters[input.dependsOn]) ports.push(input)
+              else if (!input.dependsOn) ports.push(input)
+            })
+            // input signals
+            if (jsVersions[node.parameters.version]?.signals) ports = ports.concat(jsVersions[node.parameters.version]?.signals)
+            // output ports and signals                    
+            if (jsVersions[node.parameters.version]?.outputs) ports = ports.concat(jsVersions[node.parameters.version]?.outputs)
+          }
+          context.editorConnection.sendDynamicPorts(node.id, ports)
+        }
+
+        updatePorts()
+        node.on('parameterUpdated', function () { updatePorts() })
+      });
+    },
   })
 }

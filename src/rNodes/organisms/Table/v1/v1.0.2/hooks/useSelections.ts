@@ -4,8 +4,7 @@ import { MRT_RowSelectionState, MRT_TableInstance } from "mantine-react-table";
 import { useState } from "react";
 import isObjetEmpty from 'just-is-empty'
 import flush from 'just-flush'
-import sendOutput from "../../../../../../utils/noodl/v0.1.0/sendOutput";
-import sendSignal from "../../../../../../utils/noodl/v0.1.0/sendSignal";
+import { sendOutput, sendSignal } from "../../../../../../utils/noodl/v0.1.0/send";
 
 export default function useSelections(props: { noodlNode: NodeInstance, items?: Item[] }) {
     const { noodlNode, items } = props

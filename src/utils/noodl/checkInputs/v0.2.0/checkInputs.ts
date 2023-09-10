@@ -19,7 +19,10 @@ export default function (thisProps: { noodlNode: NodeInstance, inputs?: NodePort
         const inputType: any = input.type
         const typeOfValue: string = typeOf(value)
         if (value && typeOfValue !== inputType) {
-            sendWarning(input.name, `Input "${input.displayName}" should be "${inputType}", got "${typeOfValue}"`)
+            const message = `Input "${input.displayName}" should be "${inputType}", got "${typeOfValue}"`
+            if (inputType === 'string') {
+                if (!['string', 'number'].includes(typeOfValue)) sendWarning(input.name, message)
+            } else sendWarning(input.name, message)
             return false
         } else return true
     }

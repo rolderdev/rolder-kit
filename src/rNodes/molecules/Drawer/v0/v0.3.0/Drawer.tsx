@@ -1,7 +1,7 @@
 import { Drawer, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { forwardRef, useImperativeHandle } from 'react'
-import sendSignal from '../../../../../utils/noodl/v0.1.0/sendSignal'
+import { sendSignal } from '../../../../../utils/noodl/v0.1.0/send'
 
 const Comp = forwardRef(function (props: any, ref) {
   const { children, drawerTitle, sizeUnits, noodlNode, drawerPosition, drawerTitleOrder, drawerHeaderEnabled, closeActionEnabled } = props

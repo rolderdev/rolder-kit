@@ -1,8 +1,7 @@
-import { getReactNode } from "../../../../../main/getNodes/v0.2.0/getNode"
-import { useImperativeHandle, useRef, useState } from 'react'
+import { getReactNode } from "../../../../../main/getNodes/v0.3.0/getNode"
+import { useImperativeHandle, useRef } from 'react'
 import { useShallowEffect } from '@mantine/hooks';
-import checkRequiredInputs from '../../../../../utils/noodl/v0.1.0/checkRequiredInputs';
-import setCompDef from '../../../../../utils/noodl/v0.1.0/setCompDef';
+import useComp from "../../../../../utils/noodl/useComp/v0.2.0/useComp";
 import { getGroupedPorts, getPorts } from '../../../../../main/ports/v0.2.0/ports';
 
 import v0_2_0 from './v0.2.0/Button';
@@ -18,20 +17,18 @@ const compVersions: CompVersions = {
     }
 }
 
-function Comps(props: any, ref: any) {
+function Comps(compProps: any, ref: any) {
     const localRef = useRef<any>(null)
-    const [compDef, setCompDefState] = useState({ props, Comp: compVersions[props.version]?.Comp });
-    const compReady = checkRequiredInputs({ compDef, compVersions, version: props.version })
-    useShallowEffect(() => {
-        if (compReady) compDef.props.noodlNode.clearWarnings()
-    }, [compReady])
+    const { compReady, Comp, resultProps, checksHandler } = useComp({ compProps, compVersions })
 
+    // on load comp
+    useShallowEffect(() => checksHandler(compProps), [])
     useImperativeHandle(ref, () => ({
-        setCompDef(localProps: any, recreate: boolean) { setCompDefState(setCompDef({ compDef, localProps, props, recreate, compVersions })) },
+        // on Noodl props change
+        setComp(nodeProps: any) { checksHandler({ ...compProps, ...nodeProps }) },
         // custom
     }))
-
-    return compReady ? <compDef.Comp {...compDef.props} ref={localRef} /> : <></>
+    return compReady ? <Comp {...resultProps} ref={localRef} /> : <></>
 }
 
 ////////////////////////////////////////

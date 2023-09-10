@@ -1,4 +1,4 @@
-import { Group } from "@mantine/core"
+import { Group, Text } from "@mantine/core"
 import { MRT_Cell, MRT_Row } from "mantine-react-table"
 import useAction from "../hooks/useAction"
 import { Column } from "../types/Column"
@@ -15,7 +15,7 @@ export default function (props: {
     return <Group position={actions?.length ? 'apart' : 'left'} noWrap>
         <Group noWrap>
             <CellCheckbox {...props} />
-            {cell.getValue<string>()}
+            <Text>{cell.getValue<string>()}</Text>
         </Group>
         {!tableProps.loading && actions}
     </Group>
