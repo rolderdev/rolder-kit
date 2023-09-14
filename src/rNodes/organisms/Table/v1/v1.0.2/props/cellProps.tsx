@@ -5,7 +5,7 @@ import { MRT_Row } from "mantine-react-table";
 import { Sx } from "@mantine/core";
 import { getValue } from "../../../../../../utils/data/v0.3.0/data";
 
-export default function (props: { tableProps: TableCompProps, columnDef: Column, row: MRT_Row<Item> }) {
+export default function (props: { tableProps: TableCompProps, columnDef: Column, row: MRT_Row<NItem> }) {
     const { backgroundColor, loading } = props.tableProps
     const { columnDef, row } = props
     const grouping = columnDef?.groupScheme?.map(i => i.groupBy)

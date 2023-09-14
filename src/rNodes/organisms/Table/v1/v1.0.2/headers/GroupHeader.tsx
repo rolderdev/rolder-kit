@@ -16,7 +16,7 @@ const useStyles = createStyles(() => ({
     },
 }))
 
-export default function (props: { tableProps: TableCompProps, selectionProps: Selection, columnDef: Column, table: MRT_TableInstance<Item> }) {
+export default function (props: { tableProps: TableCompProps, selectionProps: Selection, columnDef: Column, table: MRT_TableInstance<NItem> }) {
     const { table, tableProps } = props
     const { loading, expandAllAction, items, allSelect } = tableProps
     const { cx, classes } = useStyles()

@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 import { FormProvider, useForm } from './useForm'
 import { sendOutput } from '../../../../../utils/noodl/v0.1.0/send'
+import { sendSignal } from '../../../../../utils/noodl/send/v0.2.0/send'
 
 const Comp = forwardRef(function (props: any) {
   const { formScheme, noodlNode } = props
@@ -9,7 +10,7 @@ const Comp = forwardRef(function (props: any) {
 
   if (form) return (
     <FormProvider form={form}>
-      <form onSubmit={form.onSubmit(() => noodlNode.sendSignalOnOutput('submited'))}>
+      <form onSubmit={form.onSubmit(() => sendSignal(noodlNode, 'submited'))}>
         {props.children}
       </form>
     </FormProvider>

@@ -3,20 +3,25 @@ import data from "./ports/data";
 import signals from "./ports/signals";
 import states from "./ports/states";
 import params from "./ports/params";
+import form from "./ports/form";
+import icon from "./ports/icon";
+import margins from "./ports/margins";
+import dimensions from "./ports/dimensions";
+import style from "./ports/style";
 
-const ports = [...data, ...signals, ...states, ...params]
+const ports = [...data, ...signals, ...states, ...params, ...form, ...icon, ...margins, ...dimensions, ...style]
 
 export type PortsNames = typeof ports[number]['name']
 
 export const groupedPorts = {
-    /*  'Margins': ['margins', 'm', 'my', 'mx', 'mt', 'mr', 'mb', 'ml'],
-     'Table params': ['columns', 'grouped', 'selectable', 'singleSelect', 'singleUnselectable', 'multiSelect', 'allSelect', 'expandAllAction'],
+    'Margins': ['margins', 'm', 'my', 'mx', 'mt', 'mr', 'mb', 'ml'],
+    /* 'Table params': ['columns', 'grouped', 'selectable', 'singleSelect', 'singleUnselectable', 'multiSelect', 'allSelect', 'expandAllAction'],
      'Table layout': ['tableDensity'],
      'Table style': ['loaderSize', 'loaderColor', 'withBorder', 'shadow', 'withColumnBorders', 'radius'],
      'Rows style': ['highlightOnHover', 'onHoverColor', 'backgroundColor', 'highlightSelected', 'selectedColor', 'multiSelectCheckboxColor'],
-     'Form': ['useForm', 'formField', 'formHook'],
-     'Icon': ['iconName', 'iconSize', 'stroke'],
-     'Font': ['fz', 'fw'] */
+     'Form': ['useForm', 'formField', 'formHook'], */
+    'Icon': ['iconName', 'iconSize', 'stroke'],
+    //'Font': ['fz', 'fw']
 } satisfies Record<string, PortsNames[]>;
 type GroupedPortsNames = keyof typeof groupedPorts
 

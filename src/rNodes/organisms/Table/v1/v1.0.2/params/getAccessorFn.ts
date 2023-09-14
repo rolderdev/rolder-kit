@@ -3,7 +3,7 @@ import { getDate, getMasked } from "../../../../../../utils/data/v0.3.0/data";
 import getValue from "../../../../../../utils/data/getValue/v0.4.0/getValue";
 
 
-export default function (columnDef: Column, row: Item) {
+export default function (columnDef: Column, row: NItem) {
     switch (columnDef.dataType) {
         case 'date': {
             const date = getDate(row, columnDef.accessor, columnDef.dateFormat)

@@ -1,3 +1,4 @@
+import { QueryClient } from "@tanstack/react-query"
 import { Observer } from "kuzzle-sdk"
 
 declare global {
@@ -5,7 +6,7 @@ declare global {
         Rolder: RolderType
         Noodl: any
         Kuzzle: Kuzzle
-        QueryClient: any
+        QueryClient: QueryClient
         Clone: any;
         Dayjs: any;
         Ms: any;

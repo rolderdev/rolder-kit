@@ -1,12 +1,12 @@
-import { getReactNode } from "../../../../../main/getNodes/v0.3.0/getNode"
 import { useImperativeHandle, useRef } from 'react'
 import { useShallowEffect } from '@mantine/hooks';
-import useComp from "../../../../../utils/noodl/useComp/v0.2.0/useComp";
-import { getGroupedPorts, getPorts } from '../../../../../main/ports/v0.2.0/ports';
+import { getPorts, getGroupedPorts } from '../../../../../main/ports/v0.3.0/get';
+import useComp from '../../../../../utils/noodl/useComp/v0.3.0/useComp';
+import { getReactNode } from '../../../../../main/getNodes/v0.4.0/getNode';
 
 import v0_2_0 from './v0.2.0/Button';
 
-const compVersions: CompVersions = {
+const compVersions: CompVersions2 = {
     'v0.2.0': {
         Comp: v0_2_0,
         inputs: [

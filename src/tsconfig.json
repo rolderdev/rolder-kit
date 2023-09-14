@@ -28,5 +28,5 @@
     "utils",
     "../InitLoader",
     "types/custom-types.d.ts"
-, "../recycle/mGetUsers", "../recycle/fetch"  ]
+  ]
 }

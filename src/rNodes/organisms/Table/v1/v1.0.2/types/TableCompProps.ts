@@ -10,7 +10,7 @@ export type TableCompProps = {
   columns: Column[], selectable: boolean, singleSelect: boolean, singleUnselectable: boolean, multiSelect: boolean, grouped: boolean,
   allSelect: boolean, expandAllAction: boolean
   // Data
-  items: Item[]
+  items: NItem[]
   // States
   loading: boolean, searching: boolean
   // Table layout

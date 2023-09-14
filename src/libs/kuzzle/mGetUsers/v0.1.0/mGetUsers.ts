@@ -1,7 +1,7 @@
 import { convertKuzzleResponse } from '../../../../utils/data/v0.3.0/data'
 import conLog from '../../../../utils/debug/conLog/v0.1.0/conLog'
 import ErrorHandler from '../../../errorHandler/v0.1.0/ErrorHandler'
-import updateNoodlClass from '../../utils/updateNoodlClass/v0.1.0/updateNoodlClass'
+import updateNoodlClass from '../../utils/updateNClasses/v0.1.0/updateNClasses'
 
 async function mGetUsers(ids: string[]): Promise<NoodlDbClass> {
     const { Kuzzle, Noodl } = window

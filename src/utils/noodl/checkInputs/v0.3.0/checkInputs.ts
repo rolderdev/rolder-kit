@@ -17,7 +17,8 @@ export default function (thisProps: { noodlNode: NodeInstance, inputs?: NodePort
     function checkValueType(input: NodePort2) {
         const value = resultProps[input.name]
         const inputType: any = input.type
-        const typeOfValue: string = typeOf(value)
+        let typeOfValue: string = typeOf(value)
+        if (input.isObject) typeOfValue = 'array'
         if (value && typeOfValue !== inputType) {
             const message = `Input "${input.displayName}" should be "${inputType}", got "${typeOfValue}"`
             if (inputType === 'string') {

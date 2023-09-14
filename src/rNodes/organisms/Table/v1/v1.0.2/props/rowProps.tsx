@@ -2,7 +2,7 @@ import { MRT_Row } from "mantine-react-table";
 import { convertColor } from "../../../../../../utils/converters/v0.1.0/converters";
 import { TableCompProps } from "../types/TableCompProps";
 
-export default function (props: { tableProps: TableCompProps, selectionProps: any, row: MRT_Row<Item> }) {
+export default function (props: { tableProps: TableCompProps, selectionProps: any, row: MRT_Row<NItem> }) {
     const { highlightOnHover, onHoverColor, singleSelect, highlightSelected, selectedColor, singleUnselectable, grouped } = props.tableProps
     const { singleSelection, setSingleSelection } = props.selectionProps
     const { row } = props

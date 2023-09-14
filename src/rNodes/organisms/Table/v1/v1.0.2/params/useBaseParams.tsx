@@ -11,10 +11,10 @@ export default function (props: { resultColumns: Column[], tableProps: TableComp
     const { items, loading, searching, tableDensity, highlightOnHover, withColumnBorders, loaderColor, loaderSize } = props.tableProps
     const { tableProps } = props
 
-    const baseParams: MRT_TableOptions<Item> = {
+    const baseParams: MRT_TableOptions<NItem> = {
         columns: props.resultColumns,
         data: items || [],
-        getRowId: (originalRow: Item) => originalRow.id,
+        getRowId: (originalRow: NItem) => originalRow.id,
         groupedColumnMode: false,
         enableFacetedValues: true,
         enableColumnOrdering: false,

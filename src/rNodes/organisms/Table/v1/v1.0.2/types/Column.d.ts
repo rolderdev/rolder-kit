@@ -7,7 +7,7 @@ export interface Action {
     props?: any
 }
 
-export interface Column extends MRT_ColumnDef<Item> {
+export interface Column extends MRT_ColumnDef<NItem> {
     id: string
     accessor: string
     groupScheme?: {

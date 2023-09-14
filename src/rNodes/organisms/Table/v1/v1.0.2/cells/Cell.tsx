@@ -7,7 +7,7 @@ import { TableCompProps } from "../types/TableCompProps"
 import CellCheckbox from "./CellCheckbox"
 
 export default function (props: {
-    tableProps: TableCompProps, selectionProps: Selection, row: MRT_Row<Item>, cell: MRT_Cell<Item>, columnDef: Column,
+    tableProps: TableCompProps, selectionProps: Selection, row: MRT_Row<NItem>, cell: MRT_Cell<NItem>, columnDef: Column,
 }) {
     const { row, cell, columnDef, tableProps, selectionProps } = props
     const actions = columnDef.actions?.map(i => { return useAction({ actionDef: i, row, tableProps, selectionProps }) })

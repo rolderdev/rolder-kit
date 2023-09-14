@@ -9,5 +9,5 @@ export type Selection = {
   allSelectionHandler: (value: boolean) => void
   partialSelected: boolean
   handleFiltered: (value: boolean) => void
-  setSelectionTableInstance: React.Dispatch<React.SetStateAction<MRT_TableInstance<Item> | undefined>>
+  setSelectionTableInstance: React.Dispatch<React.SetStateAction<MRT_TableInstance<NItem> | undefined>>
 }

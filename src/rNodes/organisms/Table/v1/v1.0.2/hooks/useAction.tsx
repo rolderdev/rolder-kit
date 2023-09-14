@@ -7,7 +7,7 @@ import { Selection } from "../types/Selection";
 import { TableCompProps } from "../types/TableCompProps";
 import { sendOutput } from "../../../../../../utils/noodl/v0.1.0/send";
 
-export default function useAction(props: { tableProps: TableCompProps, selectionProps: Selection, actionDef: Action, row: MRT_Row<Item>, }) {
+export default function useAction(props: { tableProps: TableCompProps, selectionProps: Selection, actionDef: Action, row: MRT_Row<NItem>, }) {
     const { name, type, disabledSource, props: actionProps } = props.actionDef
     const { noodlNode } = props.tableProps
     const { row } = props

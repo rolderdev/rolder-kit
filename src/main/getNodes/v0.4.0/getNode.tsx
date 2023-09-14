@@ -7,7 +7,7 @@ function covertType(input: NodePort2, portName: string, values: any) {
   const typeOfValue: any = typeOf(value)
   // convert types
   if (value) {
-    // convert array string to array                           
+    // convert array string to array            
     if (input?.type === 'array' && typeOfValue === 'string') {
       // convert single object array to object
       if (input.isObject) values[portName] = eval(value)[0]
@@ -135,10 +135,14 @@ export const getJsNode = ({ nodeName, nodeVersion, jsVersions, color }: JsNodePo
     initialize: function () { this.outputPropValues = {} },
     changed: {
       version(version: any) {
-        Object.keys(this._inputValues).forEach(portName => {
-          const input = jsVersions[version]?.inputs?.find(i => i.name === portName)
-          if (input) covertType(input, portName, this._inputValues)
-        })
+        const inputsDef = jsVersions[version]?.inputs
+        if (inputsDef) {
+          inputsDef.forEach(inputsDef => {
+            // defaults            
+            //if (inputsDef.default) this._inputValues[inputsDef.name] = inputsDef.default
+            covertType(inputsDef, inputsDef.name, this._inputValues)
+          })
+        }
       }
     },
     methods: {
@@ -148,9 +152,9 @@ export const getJsNode = ({ nodeName, nodeVersion, jsVersions, color }: JsNodePo
         this.registerInput(name, {
           set: function (value: any) {
             this._inputValues[name] = value
-            const input = jsVersions[this.inputs.version]?.inputs?.find(i => i.name === name)
-            if (input) covertType(input, name, this._inputValues)
-            if (input?.type === 'signal' && value) jsVersions[this.inputs.version]?.signals.then((n: any) => n.default[name](this))
+            const inputDef = jsVersions[this.inputs.version]?.inputs?.find(i => i.name === name)
+            if (inputDef) covertType(inputDef, name, this._inputValues)
+            if (inputDef?.type === 'signal' && value) jsVersions[this.inputs.version]?.signals.then((n: any) => n.default[name](this))
           }
         });
       },

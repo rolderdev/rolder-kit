@@ -17,7 +17,7 @@ const useStyles = createStyles(() => ({
 }))
 
 export default function (props: {
-    tableProps: TableCompProps, selectionProps: Selection, row: MRT_Row<Item>, cell: MRT_Cell<Item>, columnDef: Column,
+    tableProps: TableCompProps, selectionProps: Selection, row: MRT_Row<NItem>, cell: MRT_Cell<NItem>, columnDef: Column,
 }) {
     const { row, cell, columnDef: leafColumnDef, tableProps, selectionProps } = props
     const { multiSelect, multiSelectCheckboxColor, tableDensity } = tableProps

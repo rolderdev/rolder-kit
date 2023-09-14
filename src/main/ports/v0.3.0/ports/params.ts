@@ -12,6 +12,10 @@ const params = [
     { name: 'dbClasses', group: 'Database classes', type: 'array', displayName: 'Database classes', dependsOn: { name: 'searchEnabled', value: true } },
     { name: 'searchFields', group: 'Search fields', type: 'array', displayName: 'Search fields', tooltip: "Example: content.name.search", dependsOn: { name: 'searchEnabled', value: true } },
     { name: 'searchDelay', group: 'Params', type: 'number', displayName: 'Delay (ms)', default: 350, dependsOn: { name: 'searchEnabled', value: true } },
+    { name: 'optimistic', group: 'Params', type: 'boolean', displayName: 'Optimistic', default: false },
+    { name: 'useReferences', group: 'Params', type: 'boolean', displayName: 'Use references', default: false, dependsOn: { name: 'searchEnabled', value: true } },
+    { name: 'label', group: 'Params', type: 'string', displayName: 'Label' },
+    { name: 'buttonType', group: 'Params', type: { name: 'enum', enums: enums.buttonTypes }, displayName: 'Button type', tooltip: '"Submit" to trigger form' },
 ] as const satisfies readonly NodePort2[];
 
 export default params

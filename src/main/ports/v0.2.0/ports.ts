@@ -171,10 +171,7 @@ const jsPorts: { [key: string]: { [key: string]: NodeInput } } = {
         createdItem: { group: 'Data', type: 'object', displayName: 'Created item' },
         createItems: { group: 'Data', type: 'object', displayName: 'Create items', tooltip: "Example: { dbClass: 'task', items: [{body: {...} }] }" },
         createdItems: { group: 'Data', type: 'array', displayName: 'Created items' },
-        updateItem: { group: 'Data', type: 'object', displayName: 'Update item', tooltip: "Example: { dbClass: 'task', id: 'task id', body: {...} }" },
-        updatedItem: { group: 'Data', type: 'object', displayName: 'Updated item' },
-        updateItems: { group: 'Data', type: 'object', displayName: 'Update items', tooltip: "Example: { dbClass: 'task', items: [{id: 'id', body: {...} }] }" },
-        updatedItems: { group: 'Data', type: 'array', displayName: 'Updated items' },
+        
         deleteItems: { group: 'Data', type: 'array', displayName: 'Delete items', tooltip: "Example: { dbClass: 'task', itemsIds: ['id1'] }" },
         createUserItem: { group: 'Data', type: 'object', displayName: 'Create user item', tooltip: "Example: {body: {content: {...}, credentials: {...}}}" },
         createdUserItem: { group: 'Data', type: 'object', displayName: 'Created user item' },
