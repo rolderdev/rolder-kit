@@ -22,7 +22,7 @@
 # Changelog
 ## 2023-09-19 v0.13.0
 ### Общие изменения:
-* Рефакторинг интеграции с Noodl. Здесь описание: https://github.com/rolderman/rolder-kit/blob/55925690170cb6cbfec2a570a31431571432dd54/NODES.md
+* Рефакторинг интеграции с Noodl. Здесь описание: NODES.md
 
 ### Изменения нод:
 #### initBackend v0(.3.0)
