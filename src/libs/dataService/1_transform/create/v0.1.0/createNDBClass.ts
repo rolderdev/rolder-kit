@@ -1,5 +1,6 @@
 import convertK from "../../tools/convertK/v0.1.0/convertK"
 import setRefs from "../../tools/setRefs/v0.5.0/setRefs"
+import triggerQueries from "../../tools/triggerQueries/v0.1.0/triggerQueries"
 
 export default function (dbClass: string, kResponse: KResponse, subscribe: boolean): NDBClass {
     const { Noodl } = window
@@ -13,6 +14,7 @@ export default function (dbClass: string, kResponse: KResponse, subscribe: boole
         items: rItems.map(r => Noodl.Object.create(r)),
     } as NDBClass)
     setRefs(dbClass)
+    triggerQueries(dbClass)
     return nDBClass as NDBClass
 }
 

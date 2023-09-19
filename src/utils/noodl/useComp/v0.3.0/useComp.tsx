@@ -13,7 +13,7 @@ export default function (thisProps: { compProps: any, compVersions: CompVersions
             // clear before checks to clear resolved warnings, but to repeat not resolved
             resultProps.noodlNode?.clearWarnings()
             const warningsCount = checkInputs({
-                noodlNode: resultProps.noodlNode, inputs: compVersions[resultProps.version].inputs, resultProps, hasFormContext
+                noodlNode: compProps.noodlNode, inputs: compVersions[resultProps.version].inputs, resultProps, hasFormContext
             })
             if (warningsCount === 0) {
                 setComp(compVersions[resultProps.version].Comp)

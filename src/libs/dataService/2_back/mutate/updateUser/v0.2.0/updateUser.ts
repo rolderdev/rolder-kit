@@ -21,6 +21,9 @@ const updateUser = async (updateUser: CreateUpdateUser, optimistic: boolean): Pr
         Kuzzle.security.updateCredentials('local', id, body.credentials?.local)
             .then(() => Kuzzle.security.updateUser(id, userBody, options)
                 .then(() => {
+                    conLog(`UpdateUser`, 'timeEnd')
+                    conLog([`User updated: `, nUser])
+
                     if (!optimistic) nUser = updateNItems('user', [{ id, ...flushedBody }])?.[0]
                     return nUser
                 }))

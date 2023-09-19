@@ -11,7 +11,7 @@ const getQueryKey: GetQueryKey = {
         sorts: setSorts(dbClass, sorts),
         options: setOptions(dbClass, options),
         subscribe
-    }]
-
+    }],
+    get: ({ dbClass, itemId, subscribe }) => [{ ...getQueryKey.command('get', dbClass)[0], itemId, subscribe }],
 }
 export default getQueryKey

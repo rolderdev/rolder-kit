@@ -8,35 +8,43 @@ import icon from "./ports/icon";
 import margins from "./ports/margins";
 import dimensions from "./ports/dimensions";
 import style from "./ports/style";
+import paddings from "./ports/paddings";
+import layout from "./ports/layout";
+import { NodePort } from "./types";
+import font from "./ports/font";
+import format from "./ports/format";
+import fetch from "./ports/fetch";
 
-const ports = [...data, ...signals, ...states, ...params, ...form, ...icon, ...margins, ...dimensions, ...style]
+const ports = [...data, ...signals, ...states, ...params, ...form, ...icon, ...margins, ...dimensions, ...style, ...paddings, ...layout, ...font,
+...format, ...fetch]
 
-export type PortsNames = typeof ports[number]['name']
+export type PortNames = typeof ports[number]['name']
 
 export const groupedPorts = {
     'Margins': ['margins', 'm', 'my', 'mx', 'mt', 'mr', 'mb', 'ml'],
+    'Paddings': ['paddings', 'p', 'py', 'px', 'pt', 'pr', 'pb', 'pl'],
     /* 'Table params': ['columns', 'grouped', 'selectable', 'singleSelect', 'singleUnselectable', 'multiSelect', 'allSelect', 'expandAllAction'],
      'Table layout': ['tableDensity'],
      'Table style': ['loaderSize', 'loaderColor', 'withBorder', 'shadow', 'withColumnBorders', 'radius'],
-     'Rows style': ['highlightOnHover', 'onHoverColor', 'backgroundColor', 'highlightSelected', 'selectedColor', 'multiSelectCheckboxColor'],
-     'Form': ['useForm', 'formField', 'formHook'], */
+     'Rows style': ['highlightOnHover', 'onHoverColor', 'backgroundColor', 'highlightSelected', 'selectedColor', 'multiSelectCheckboxColor'],*/
+    'Form': ['useForm', 'formField', 'formHook'],
     'Icon': ['iconName', 'iconSize', 'stroke'],
     //'Font': ['fz', 'fw']
-} satisfies Record<string, PortsNames[]>;
-type GroupedPortsNames = keyof typeof groupedPorts
+} satisfies Record<string, PortNames[]>;
+type GroupedPortNames = keyof typeof groupedPorts
 
-type GroupsNames = typeof ports[number]['group']
+type GroupNames = typeof ports[number]['group']
 type GetPorts = {
     type: 'input' | 'output'
-    portsNames?: PortsNames[]
-    requiredInputs?: PortsNames[]
-    groupsNames?: GroupsNames[]
+    portNames?: PortNames[]
+    requiredInputs?: PortNames[]
+    groupNames?: GroupNames[]
     customs?: { groupName?: string }
 }
-export function getPorts(props: GetPorts): NodePort2[] {
+export function getPorts(props: GetPorts): NodePort[] {
     return ports.filter((i: any) =>
-        props.portsNames?.includes(i.name) ||
-        props.groupsNames?.includes(i.group)
+        props.portNames?.includes(i.name) ||
+        props.groupNames?.includes(i.group)
     ).map((i: any) => {
         i.plug = props.type
         if (props.customs?.groupName) i.group = props.customs?.groupName
@@ -45,13 +53,13 @@ export function getPorts(props: GetPorts): NodePort2[] {
     })
 }
 
-type GetGroupedPorts = { type: 'input' | 'output', groupsNames: GroupedPortsNames[], requiredInputs?: PortsNames[] }
-export function getGroupedPorts(props: GetGroupedPorts): NodePort2[] {
-    let resultPorts: NodePort2[] = []
-    props.groupsNames.forEach(groupName => {
+type GetGroupedPorts = { type: 'input' | 'output', groupNames: GroupedPortNames[], requiredInputs?: PortNames[] }
+export function getGroupedPorts(props: GetGroupedPorts): NodePort[] {
+    let resultPorts: NodePort[] = []
+    props.groupNames.forEach(groupName => {
         resultPorts = resultPorts.concat(getPorts({
             type: props.type,
-            portsNames: groupedPorts[groupName],
+            portNames: groupedPorts[groupName],
             requiredInputs: props.requiredInputs,
             customs: { groupName }
         }))

@@ -1,5 +1,4 @@
 import { useDebouncedValue, useShallowEffect } from "@mantine/hooks";
-import { sendOutput } from "../../../../../utils/noodl/send/v0.2.0/send";
 import { forwardRef, useState } from "react";
 import getQuery from "../../../../../libs/dataService/0_query/getQuery/v0.7.0/getQuery";
 import { setFilters, setSorts } from "../../../../../libs/dataService/0_query/tools/setDefaults/v0.2.0/setDefaults";
@@ -8,11 +7,12 @@ import updateNDBClass from "../../../../../libs/dataService/1_transform/update/v
 import subscribe from "../../../../../libs/dataService/2_back/get/subscribe/v0.3.0/subscribe";
 import triggerQuery from "../../../../../libs/dataService/1_transform/tools/triggerQueries/v0.1.0/triggerQueries";
 import search from '../../../../../libs/dataService/2_back/get/search/v0.4.0/search'
+import { sendOutput } from "../../../../../main/ports/send/v0.3.0/send";
 
 const Fetch = forwardRef(function (props: any) {
     const { Noodl } = window
     const {
-        noodlNode, dbClass, getUsers, subscribe: subscribeEnabled, filters, sorts,
+        node, dbClass, getUsers, subscribe: subscribeEnabled, filters, sorts,
         searchString, searchDelay, send, useReferences, searchFields
     } = props
 
@@ -24,16 +24,16 @@ const Fetch = forwardRef(function (props: any) {
             send(Noodl.Objects[dbClass])
         }
     }, [data])
-    sendOutput(noodlNode, 'loading', isLoading)
+    sendOutput(node, 'loading', isLoading)
 
     // search
     const [debounced] = useDebouncedValue(searchString, searchDelay);
     useShallowEffect(() => {
         if (debounced?.length > 1) {
-            sendOutput(noodlNode, 'searching', true)
+            sendOutput(node, 'searching', true)            
             search({ dbClass, searchString: debounced, useReferences, searchFields, sorts: setSorts(dbClass, sorts) }).then((searchNResults) => {
                 if (searchNResults) send(searchNResults)
-                sendOutput(noodlNode, 'searching', false)
+                sendOutput(node, 'searching', false)
             })
         }
     }, [debounced])

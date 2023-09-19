@@ -43,10 +43,7 @@ const oldPorts: {
         selectedDates: { group: 'Data', type: 'array', displayName: 'Selected dates' },
         qrString: { group: 'Data', type: 'string', displayName: 'QR string' },
     },
-    Params: {
-        
-        notificationsPosition: { group: 'Params', type: { name: 'enum', enums: enums.notificationsPositions }, displayName: 'Notifications position', default: 'bottom-right' },
-                
+    Params: {                
         options: { group: 'Params', type: 'array', displayName: 'Options', tooltip: "Example: [{ size: 100 }]" },
 
         noHeader: { group: 'Params', type: 'boolean', displayName: 'No header' },
@@ -108,9 +105,7 @@ const oldPorts: {
         jwtValidationFailed: { group: 'Signals', type: 'signal', displayName: 'JWT validation failed' },
         qrScanned: { group: 'Signals', type: 'signal', displayName: 'QR scanned' },
     },
-    Style: {
-        detectColorScheme: { group: 'Style', type: 'boolean', displayName: 'Autodetect color scheme', },
-        colorScheme: { group: 'Style', type: { name: 'enum', enums: enums.colorSchemes }, displayName: 'Default color scheme' },
+    Style: {       
 
         borderRadius: { group: 'Style', type: { name: 'enum', enums: enums.sizes }, displayName: 'Border radius' },
 

@@ -1,19 +1,19 @@
 import { forwardRef, useRef, useState } from 'react'
-import { sendOutput, sendSignal } from '../../../../../utils/noodl/send/v0.2.0/send'
 import Fetch from './Fetch'
+import { sendOutput, sendSignal } from '../../../../../main/ports/send/v0.3.0/send'
 
 const Comp = forwardRef(function (props: any) {
   const localRef = useRef<any>(null)
-  const { noodlNode, queryType } = props
+  const { node, queryType } = props
 
   const [loadedSended, setLoadedSended] = useState(false)
 
   function send(data: QClass) {
-    sendOutput(noodlNode, 'items', data.items)
-    sendOutput(noodlNode, 'fetchedCount', data.fetchedCount)
-    sendOutput(noodlNode, 'totalCount', data.totalCount)
+    sendOutput(node, 'items', data.items)
+    sendOutput(node, 'fetchedCount', data.fetchedCount)
+    sendOutput(node, 'totalCount', data.totalCount)
     if (!loadedSended) {
-      sendSignal(noodlNode, 'loaded')
+      sendSignal(node, 'loaded')
       setLoadedSended(true)
     }
   }

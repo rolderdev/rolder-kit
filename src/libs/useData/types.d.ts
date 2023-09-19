@@ -32,7 +32,7 @@ declare type QueryKey = {
 }
 
 declare type UseQueryOptionsProps = {
-    command: 'fetch' | 'search'
+    command: 'fetch' | 'search' | 'get'
     subscribe?: boolean | undefined
     searchString?: string | undefined
 }

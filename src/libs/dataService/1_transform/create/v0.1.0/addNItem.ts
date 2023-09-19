@@ -21,7 +21,8 @@ export default function (dbClass: string, rItem: RItem | RUser, sorts?: any) {
         totalCount: Noodl.Objects[dbClass].totalCount + 1,
         items: nItems
     })
-
+    
     setRefs(dbClass)
+    
     return nItem
 }

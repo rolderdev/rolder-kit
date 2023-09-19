@@ -23,7 +23,7 @@ const create = async (createItem: CreateUpdateItem): Promise<NItem> => {
                 const rItem = convertK([kItem])?.[0]
                 const nItem = addNItem(dbClass, rItem)
                 triggerQueries(dbClass)
-
+                
                 conLog([`${dbClassV} created: `, nItem])
                 conLog(`${dbClassV} create`, 'timeEnd')
                 return nItem

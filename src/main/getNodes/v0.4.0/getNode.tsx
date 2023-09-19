@@ -7,7 +7,7 @@ function covertType(input: NodePort2, portName: string, values: any) {
   const typeOfValue: any = typeOf(value)
   // convert types
   if (value) {
-    // convert array string to array            
+    // convert array string to array                
     if (input?.type === 'array' && typeOfValue === 'string') {
       // convert single object array to object
       if (input.isObject) values[portName] = eval(value)[0]
@@ -15,6 +15,9 @@ function covertType(input: NodePort2, portName: string, values: any) {
     }
     // convert proplist to array
     if (input?.type === 'proplist') values[portName] = value.map((i: any) => i.label)
+    // convert unit to string
+    const unitType: any = input.type
+    if (unitType.units) values[portName] = value.value + value.unit
   }
   // Reset prop if dependsOn is false    
   if (input.dependsOn && !values[input.dependsOn?.name]) values[portName] = undefined
@@ -35,8 +38,8 @@ export const getReactNode = ({ nodeName, nodeVersion, Comps, compVersions }:
         compVersions[this._inputValues.version]?.inputs?.forEach(inputDef => {
           if (!this._inputValues[inputDef.name]) this._inputValues[inputDef.name] = inputDef.default
         })
-        this.props = { noodlNode: this, ...this._inputValues }
-        if (this.innerReactComponentRef) this.innerReactComponentRef.setComp(this._inputValues, true)
+        this.props = this._inputValues
+        if (this.innerReactComponentRef) this.innerReactComponentRef.setComp(this._inputValues)
       }
     },
     inputs: {

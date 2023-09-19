@@ -1,70 +1,72 @@
 import { useImperativeHandle, useRef, useState } from 'react'
-import { useShallowEffect } from '@mantine/hooks';
-import useComp from '../../../../utils/noodl/useComp/v0.3.0/useComp';
-import { getReactNode } from '../../../../main/getNodes/v0.4.0/getNode';
 import { getPorts } from '../../../../main/ports/v0.3.0/get';
+import { CompVersions } from '../../../../main/getNodes/v0.5.0/types';
+import { getReactNode } from '../../../../main/getNodes/v0.5.0/getNode';
+import { useForceUpdate } from '@mantine/hooks';
 
-import v1_0_0 from './v1.0.0/UseData';
+import v1_0_0 from './v1.0.0/UseData'
 import v1_1_0 from './v1.1.0/UseData'
 
-const compVersions: CompVersions2 = {
+const compVersions: CompVersions = {
     'v1.0.0': {
         Comp: v1_0_0,
         inputs: [
-            ...getPorts({ type: 'input', portsNames: ['queryType'], customs: { groupName: 'Query type' } }),
+            ...getPorts({ type: 'input', portNames: ['queryType'], customs: { groupName: 'Query type' } }),
             ...getPorts({
                 type: 'input',
-                portsNames: ['dbClass', 'filters', 'sorts', 'options', 'subscribe', 'getUsers'],
+                portNames: ['dbClass', 'filters', 'sorts', 'options', 'subscribe', 'getUsers'],
                 requiredInputs: ['dbClass'],
                 customs: { groupName: 'Query params' }
             }),
             ...getPorts({
                 type: 'input',
-                portsNames: ['searchEnabled', 'dbClasses', 'searchFields', 'searchString', 'searchDelay'],
+                portNames: ['searchEnabled', 'dbClasses', 'searchFields', 'searchString', 'searchDelay'],
                 customs: { groupName: 'Search params' }
             }),
         ],
-        outputs: [...getPorts({ type: 'output', portsNames: ['items', 'loaded', 'loading', 'fetchedCount', 'totalCount', 'searching'] })],
-        signals: [...getPorts({ type: 'input', portsNames: ['runQuery', 'reload'] })]
+        outputs: [...getPorts({ type: 'output', portNames: ['items', 'loaded', 'loading', 'fetchedCount', 'totalCount', 'searching'] })],
+        signals: [...getPorts({ type: 'input', portNames: ['runQuery', 'reload'] })]
     },
     'v1.1.0': {
         Comp: v1_1_0,
         inputs: [
-            ...getPorts({ type: 'input', portsNames: ['queryType'], customs: { groupName: 'Query type' } }),
+            ...getPorts({ type: 'input', portNames: ['queryType'], customs: { groupName: 'Query type' } }),
             ...getPorts({
                 type: 'input',
-                portsNames: ['dbClass', 'filters', 'sorts', 'options', 'subscribe', 'getUsers'],
+                portNames: ['dbClass', 'filters', 'sorts', 'options', 'subscribe', 'getUsers'],
                 requiredInputs: ['dbClass'],
                 customs: { groupName: 'Query params' }
             }),
             ...getPorts({
                 type: 'input',
-                portsNames: ['searchEnabled', 'useReferences', 'searchFields', 'searchString', 'searchDelay'],
+                portNames: ['searchEnabled', 'useReferences', 'searchFields', 'searchString', 'searchDelay'],
                 customs: { groupName: 'Search params' }
             }),
         ],
-        outputs: [...getPorts({ type: 'output', portsNames: ['items', 'loaded', 'loading', 'fetchedCount', 'totalCount', 'searching'] })],
-        signals: [...getPorts({ type: 'input', portsNames: ['runQuery'] })]
-    }
+        outputs: [...getPorts({ type: 'output', portNames: ['items', 'loaded', 'loading', 'fetchedCount', 'totalCount', 'searching'] })],
+        signals: [...getPorts({ type: 'input', portNames: ['runQuery'] })]
+    },    
 }
 
-function Comps(compProps: any, ref: any) {
+function CompsHandler(props: any, ref: any) {
     const localRef = useRef<any>(null)
-    const { compReady, Comp, resultProps, checksHandler } = useComp({ compProps, compVersions })
+    const { resultInputs, _inputValues } = props.node
     const [queryReady, setQueryReady] = useState(false)
 
-    // on load comp
-    useShallowEffect(() => checksHandler(compProps), [])
+    const forceUpdate = useForceUpdate()
+    const Comp = compVersions[props.node._inputValues.version]?.Comp
     useImperativeHandle(ref, () => ({
-        // on Noodl props change
-        setComp(nodeProps: any) { checksHandler({ ...compProps, ...nodeProps }) },
+        forceUpdate() { forceUpdate() },
         // custom
-        runQuery() { setQueryReady(true) },
-        reload() { localRef.current?.reload() }
+        runQuery() { setQueryReady(true) }
     }))
-    return compReady && queryReady ? <Comp {...resultProps} ref={localRef} /> : <></>
+
+    return props.node.compReady && queryReady && Comp
+        ? <Comp node={props.node} {...resultInputs} mounted={_inputValues.mounted} children={props.children} ref={localRef} />
+        : <></>
 }
 
+////////////////////////////
 const nodeName = 'UseData'
 const nodeVersion = 'v1'
-export default getReactNode({ nodeName, nodeVersion, Comps, compVersions })
+export default getReactNode({ nodeName, nodeVersion, CompsHandler, compVersions })

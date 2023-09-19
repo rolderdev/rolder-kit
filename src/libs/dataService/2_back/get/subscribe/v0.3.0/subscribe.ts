@@ -7,7 +7,7 @@ import triggerQueries from "../../../../1_transform/tools/triggerQueries/v0.1.0/
 import addNItem from "../../../../1_transform/create/v0.1.0/addNItem";
 import removeNItem from "../../../../1_transform/create/v0.1.0/removeNItem";
 
-export default async function ({ dbClass, filters, sorts }: GetQuery) {
+export default async function ({ dbClass, filters, sorts }: FetchQuery) {
     const { Kuzzle, Noodl } = window
     const dbClassV = dbClassVersion(dbClass)
 

@@ -1,35 +1,45 @@
 import { useImperativeHandle, useRef } from 'react'
-import { useShallowEffect } from '@mantine/hooks';
+import { useForceUpdate } from '@mantine/hooks';
 import { getPorts } from '../../../../main/ports/v0.3.0/get';
-import { getReactNode } from '../../../../main/getNodes/v0.4.0/getNode';
-import useComp from '../../../../utils/noodl/useComp/v0.3.0/useComp';
+import { getReactNode } from '../../../../main/getNodes/v0.5.0/getNode';
+import { CompVersions } from '../../../../main/getNodes/v0.5.0/types';
 
 import v0_2_0 from './v0.2.0/Form';
+import v0_3_0 from './v0.3.0/Form';
+import { useFormContextWitchCheck } from '../../../../libs/contenxt/form/v0.1.0/useForm';
 
-const compVersions: CompVersions2 = {
+const compVersions: CompVersions = {
     'v0.2.0': {
         Comp: v0_2_0,
-        inputs: [...getPorts({ type: 'input', portsNames: ['formScheme'], requiredInputs: ['formScheme'] })],
-        outputs: [...getPorts({ type: 'output', portsNames: ['formHookAtForm', 'submited'] })],
+        inputs: [...getPorts({ type: 'input', portNames: ['formScheme'], requiredInputs: ['formScheme'] })],
+        outputs: [...getPorts({ type: 'output', portNames: ['formHookAtForm', 'submited'] })],
+    },
+    'v0.3.0': {
+        Comp: v0_3_0,
+        inputs: [...getPorts({ type: 'input', portNames: ['formScheme'], requiredInputs: ['formScheme'] })],
+        outputs: [...getPorts({ type: 'output', portNames: ['formHookAtForm', 'submited'] })],
     }
 }
 
-function Comps(compProps: any, ref: any) {
+function CompsHandler(props: any, ref: any) {
     const localRef = useRef<any>(null)
-    const { compReady, Comp, resultProps, checksHandler } = useComp({ compProps, compVersions })
+    const { resultInputs, _inputValues } = props.node
+    const hasFormContext = useFormContextWitchCheck() ? true : false
 
-    // on load comp
-    useShallowEffect(() => checksHandler(compProps), [])
+    const forceUpdate = useForceUpdate()
+    const Comp = compVersions[props.node._inputValues.version]?.Comp
     useImperativeHandle(ref, () => ({
-        // on Noodl props change
-        setComp(nodeProps: any) { checksHandler({ ...compProps, ...nodeProps }) },
+        forceUpdate() { forceUpdate() },
+        checkFormContext(callBack: any) { if (props.node._inputValues.version !== 'v0.2.0') callBack(hasFormContext) },
         // custom
     }))
-    return compReady ? <Comp {...resultProps} ref={localRef} /> : <></>
+
+    return props.node.compReady && Comp
+        ? <Comp node={props.node} {...resultInputs} mounted={_inputValues.mounted} children={props.children} ref={localRef} />
+        : <></>
 }
 
-///////////////////////////////////////////////////////////////////////
+////////////////////////////
 const nodeName = 'Form'
 const nodeVersion = 'v0'
-
-export default getReactNode({ nodeName, nodeVersion, Comps, compVersions })
+export default getReactNode({ nodeName, nodeVersion, CompsHandler, compVersions })

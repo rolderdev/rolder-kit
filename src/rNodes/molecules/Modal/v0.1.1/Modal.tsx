@@ -22,6 +22,5 @@ export default function Modal_v0_1_0(props: any) {
     >
       {children}
     </Modal>
-
   )
 }

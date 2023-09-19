@@ -16,6 +16,9 @@ declare global {
         FilterBy: any
         FormValidators: any
         IsEmpty: any
+        Flush: any
+        Tail: any
+        Numbro: any
     }
 }
 

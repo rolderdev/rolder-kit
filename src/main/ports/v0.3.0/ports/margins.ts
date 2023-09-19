@@ -1,4 +1,5 @@
 import { enums } from "../enums";
+import { NodePort } from "../types";
 
 const margins = [
     { name: 'margins', group: 'Margins', type: 'boolean', displayName: 'Margins' },
@@ -9,6 +10,6 @@ const margins = [
     { name: 'mr', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin right', dependsOn: { name: 'margins', value: true } },
     { name: 'mb', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin bottom', dependsOn: { name: 'margins', value: true } },
     { name: 'ml', group: 'Margins', type: { name: 'enum', enums: enums.sizes }, displayName: 'Margin left', dependsOn: { name: 'margins', value: true } },
-] as const satisfies readonly NodePort2[];
+] as const satisfies readonly NodePort[];
 
 export default margins

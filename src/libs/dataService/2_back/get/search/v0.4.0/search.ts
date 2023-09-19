@@ -8,7 +8,7 @@ import setSearchResults from "../../../../1_transform/search/v0.1.0/setSearchRes
 export default async function (props: SearchProps): Promise<SearchNResults> {
     const { Kuzzle, Noodl } = window
     const { dbClass, searchString, searchFields, useReferences, sorts } = props
-
+    
     let dbClassesV = [dbClassVersion(dbClass)]
     const dbClasses: DbClassesDef = eval(Noodl.getProjectSettings().dbClasses)[0]
     if (useReferences) dbClasses[dbClass]?.references?.map(i => dbClasses[i] && dbClassesV.push(dbClassVersion(i)))

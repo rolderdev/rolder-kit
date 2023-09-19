@@ -24,27 +24,31 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' }, { value: 'flex-end', label: 'Flex end' },
         { value: 'space-between', label: 'Space between' }, { value: 'space-around', label: 'Space around' }
     ],
-    flexJustifies: [{ value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' }, { value: 'flex-end', label: 'Flex end' }],
+    flexJustifies: [{ value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' },
+    { value: 'flex-end', label: 'Flex end' }],
     avatarVariants: [{ value: 'light', label: 'Light' }, { value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' }],
     queryTypes: [
         { value: 'fetch', label: 'Fetch' }, //{ value: 'get', label: 'Get' }, { value: 'mGet', label: 'mGet' },
     ],
     directions: [{ value: 'row', label: 'Row' }, { value: 'column', label: 'Column' }],
     wraps: [{ value: 'wrap', label: 'Wrap' }, { value: 'nowrap', label: 'Nowrap' }, { value: 'wrap-reverse', label: 'Wrap reverse' }],
-    positions: [{ value: 'left', label: 'Left' }, { value: 'center', label: 'Center' }, { value: 'right', label: 'Right' },
-    { value: 'apart', label: 'Apart' }],
+    positions: [
+        { value: 'left', label: 'Left' }, { value: 'center', label: 'Center' }, { value: 'right', label: 'Right' },
+        { value: 'apart', label: 'Apart' }
+    ],
     popoverPositions: [
-        { value: 'bottom', label: 'Bottom' }, { value: 'left', label: 'Left' }, { value: 'right', label: 'Right' }, { value: 'top', label: 'Top' },
+        { value: 'bottom', label: 'Bottom' }, { value: 'left', label: 'Left' }, { value: 'right', label: 'Right' },
+        { value: 'top', label: 'Top' },
         { value: 'bottom-end', label: 'Bottom end' }, { value: 'bottom-start', label: 'Bottom start' },
         { value: 'left-end', label: 'Left end' }, { value: 'left-start', label: 'Left start' },
         { value: 'right-end', label: 'Right end' }, { value: 'right-start', label: 'Right start' },
         { value: 'top-end', label: 'Top end' }, { value: 'top-start', label: 'Top start' },
     ],
     indicatorPositions: [
-        { value: 'bottom-end', label: 'Bottom end' }, { value: 'bottom-start', label: 'Bottom start' },
-        { value: 'top-end', label: 'Top end' }, { value: 'top-start', label: 'Top start' },
-        { value: 'bottom-center', label: 'Bottom center' }, { value: 'top-center', label: 'Top center' },
-        { value: 'middle-center', label: 'Middle center' }, { value: 'middle-end', label: 'Middle end' }, { value: 'middle-center', label: 'Middle center' },
+        { value: 'bottom-end', label: 'Bottom end' }, { value: 'bottom-start', label: 'Bottom start' }, { value: 'top-end', label: 'Top end' },
+        { value: 'top-start', label: 'Top start' }, { value: 'bottom-center', label: 'Bottom center' },
+        { value: 'top-center', label: 'Top center' }, { value: 'middle-center', label: 'Middle center' },
+        { value: 'middle-end', label: 'Middle end' }, { value: 'middle-center', label: 'Middle center' },
     ],
     colorShades: [
         { value: '0', label: '0' }, { value: '1', label: '1' }, { value: '2', label: '2' }, { value: '3', label: '3' }, { value: '4', label: '4' },
@@ -56,8 +60,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'white', label: 'White' },
     ],
     drawerPositions: [
-        { value: 'top', label: 'Top' }, { value: 'right', label: 'Right' }, { value: 'left', label: 'Left' },
-        { value: 'bottom', label: 'Bottom' }
+        { value: 'top', label: 'Top' }, { value: 'right', label: 'Right' }, { value: 'left', label: 'Left' }, { value: 'bottom', label: 'Bottom' }
     ],
     selectableTypes: [
         { value: 'clickOnly', label: 'Click only' }, { value: 'singleRow', label: 'Single row' }, { value: 'multipleRows', label: 'Multiple rows' }
@@ -65,8 +68,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     badgeVariants: [{ value: 'light', label: 'Light' }, { value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' }],
     buttonTypes: [{ value: 'submit', label: 'Submit' }],
     qrCodeLevels: [
-        { value: 'L', label: 'Lowest' }, { value: 'M', label: 'Medium' }, { value: 'Q', label: 'Quality' },
-        { value: 'H', label: 'Highest' }
+        { value: 'L', label: 'Lowest' }, { value: 'M', label: 'Medium' }, { value: 'Q', label: 'Quality' }, { value: 'H', label: 'Highest' }
     ],
     datePickerTypes: [{ value: 'default', label: 'Default' }, { value: 'range', label: 'Range' },],
     dropdownTypes: [{ value: 'popover', label: 'Popover' }, { value: 'modal', label: 'Modal' },],
@@ -74,4 +76,8 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     dividerVariants: [{ value: 'solid', label: 'Solid' }, { value: 'dashed', label: 'Dashed' }, { value: 'dotted', label: 'Dotted' }],
     dividerLabelPositions: [{ value: 'left', label: 'Left' }, { value: 'right', label: 'Right' }, { value: 'center', label: 'Center' },],
     dividerOrientations: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' },],
+    maskTypes: [{ value: 'pattern', label: 'Pattern' }, { value: 'number', label: 'Number' }],
+    validationTypes: [
+        { value: 'onSubmit', label: 'On submit' }, { value: 'onChange', label: 'On change' }, { value: 'onBlur', label: 'On blur' }
+    ],
 }

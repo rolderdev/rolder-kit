@@ -8,12 +8,12 @@ export default async function (useQueryProps: any): Promise<NDBClass> {
     const { dbClass, filters, sorts, options, subscribe } = useQueryProps.queryKey[0]
     const dbClassV = dbClassVersion(dbClass)
 
-    conLog(dbClassV, 'time')
+    conLog(`${dbClassV} fetch`, 'time')
 
     return Kuzzle.connect().then(() =>
         Kuzzle.document.search(dbVersion(), dbClassV, { query: filters, sort: sorts }, { ...options })
             .then((k: KResponse) => {
-                conLog(dbClassV, 'timeEnd')
+                conLog(`${dbClassV} fetch`, 'timeEnd')
                 return { ...createNDBClass(dbClass, k, subscribe), version: 1 }
             }).catch((error: { message: string }) =>
                 ErrorHandler({ title: 'Системная ошибка!', message: 'Kuzzle fetch ' + dbClassV + ': ' + error.message }))

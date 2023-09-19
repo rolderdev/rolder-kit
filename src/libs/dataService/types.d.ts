@@ -129,11 +129,17 @@ declare type KResponse = {
     total?: number
 }
 
-declare type GetQuery = {
+declare type FetchQuery = {
     dbClass: string
     filters?: Filters
     sorts?: Sorts
     options?: Options
+    subscribe?: boolean
+}
+
+declare type GetQuery = {
+    dbClass: string
+    itemId: string
     subscribe?: boolean
 }
 
@@ -150,8 +156,10 @@ declare type GetQueryKey = {
     all: () => [{ dbVersion: string }]
     dbClass: (dbClass: string | string[]) => [{ dbVersion: string, dbClass: string | string[] }]
     command: (command: string, dbClass: string | string[]) => [{ dbVersion: string, dbClass: string | string[], command: string }]
-    fetch: (props: GetQuery) =>
+    fetch: (props: FetchQuery) =>
         [{ dbVersion: string, dbClass: string | string[], command: string, filters: Filters, sorts: Sorts, options: Options }]
+    get: (props: GetQuery) =>
+        [{ dbVersion: string, dbClass: string | string[], command: string, itemId: string }]
 }
 
 declare type NDBClass = {
@@ -194,4 +202,15 @@ declare type SearchKResponse = {
         collection: string
         _source: KItem
     }[]
+}
+
+declare type LocalCreds = {
+    username: string
+    password: string
+}
+
+declare type UserSession = {
+    username: string
+    jwt: string
+    jwtExpiresAt: string
 }

@@ -4,6 +4,7 @@ import UseDataNode_v1 from "../../../rNodes/data/UseData/v1/UseDataNode";
 import UseSearchNodes from "../../../rNodes/data/UseSearch/UseSearchNodes";
 // organisms
 import AppNodes from "../../../rNodes/organisms/App/AppNodes";
+import AppNode_v1 from "../../../rNodes/organisms/App/v1/AppNode";
 import AuthNodes from "../../../rNodes/organisms/Auth/AuthNodes";
 import AuthNode_v0 from "../../../rNodes/organisms/Auth/v0/AuthNode";
 import AppShellNodes from "../../../rNodes/organisms/AppShell/AppShellNodes";
@@ -19,8 +20,10 @@ import CenterNodes from "../../../rNodes/molecules/Center/CenterNodes";
 import ScrollAreaNodes from "../../../rNodes/molecules/ScrollArea/ScrollAreaNodes";
 import DrawerNodes from "../../../rNodes/molecules/Drawer/DrawerNodes";
 import DrawerNode_v0 from "../../../rNodes/molecules/Drawer/v0/DrawerNode";
+import DrawerNode_v1 from "../../../rNodes/molecules/Drawer/v1/DrawerNode";
 import CarouselNodes from "../../../rNodes/molecules/Carousel/CarouselNodes";
 import ModalNodes from "../../../rNodes/molecules/Modal/ModalNodes";
+import ModalNode_v0 from "../../../rNodes/molecules/Modal/v0/ModalNode";
 import GridNodes from "../../../rNodes/molecules/Grid/GridNodes";
 import PaperNodes from "../../../rNodes/molecules/Paper/PaperNodes";
 import UnstyledButtonNodes from "../../../rNodes/molecules/UnstyledButton/UnstyledButtonNodes";
@@ -65,10 +68,10 @@ const reactNodes: any = [
     // data
     ...UseDataNodes, UseDataNode_v1, ...UseSearchNodes,
     // organisms
-    ...AppNodes, ...AuthNodes, AuthNode_v0, ...AppShellNodes, ...TableNodes, TableNode_v1, ...ETableNodes, ...FormNodes, FormNode_V0,
+    ...AppNodes, AppNode_v1, ...AuthNodes, AuthNode_v0, ...AppShellNodes, ...TableNodes, TableNode_v1, ...ETableNodes, ...FormNodes, FormNode_V0,
     // molecules
-    ...StackNodes, ...GroupNodes, ...CenterNodes, ...ScrollAreaNodes, ...DrawerNodes, DrawerNode_v0, ...CarouselNodes, ...ModalNodes,
-    ...GridNodes, ...PaperNodes, ...UnstyledButtonNodes,
+    ...StackNodes, ...GroupNodes, ...CenterNodes, ...ScrollAreaNodes, ...DrawerNodes, DrawerNode_v0, DrawerNode_v1, ...CarouselNodes, ...ModalNodes,
+    ModalNode_v0, ...GridNodes, ...PaperNodes, ...UnstyledButtonNodes,
     // elements
     // buttons
     ...ActionIconNodes, ...ButtonNodes, ButtonNode_v0, ...PopoverActionIconNodes, PopoverButtonNode_v0,

@@ -1,21 +1,24 @@
 import { enums } from "../enums";
+import { NodePort } from "../types";
 
 const params = [
     { name: 'dbClass', group: 'Params', type: '*', displayName: 'Database class' },
-    { name: 'filters', group: 'Params', type: 'array', displayName: 'Filters', isObject: true, dependsOn: { name: 'queryType', value: 'fetch' }, tooltip: "Example: [{ equals: { 'content.firstName': 'Родион' } }]" },
-    { name: 'sorts', group: 'Params', type: 'array', displayName: 'Sorts', dependsOn: { name: 'queryType', value: 'fetch' }, tooltip: "Example: [{ content.lastName: 'asc' }, { content.firstName: 'asc' }]" },
-    { name: 'options', group: 'Params', type: 'array', displayName: 'Options', isObject: true, dependsOn: { name: 'queryType', value: 'fetch' }, tooltip: "Example: [{ size: 100 }]" },
     { name: 'subscribe', group: 'Params', type: 'boolean', displayName: 'Subscribe', default: false },
-    { name: 'queryType', group: 'Params', type: { name: 'enum', enums: enums.queryTypes }, displayName: 'Query type', default: 'fetch' },
     { name: 'getUsers', group: 'Params', type: 'boolean', displayName: 'Get users', default: false },
-    { name: 'searchEnabled', group: 'Params', type: 'boolean', displayName: 'Enabled search', default: false, dependsOn: { name: 'queryType', value: 'fetch' } },
-    { name: 'dbClasses', group: 'Database classes', type: 'array', displayName: 'Database classes', dependsOn: { name: 'searchEnabled', value: true } },
-    { name: 'searchFields', group: 'Search fields', type: 'array', displayName: 'Search fields', tooltip: "Example: content.name.search", dependsOn: { name: 'searchEnabled', value: true } },
-    { name: 'searchDelay', group: 'Params', type: 'number', displayName: 'Delay (ms)', default: 350, dependsOn: { name: 'searchEnabled', value: true } },
     { name: 'optimistic', group: 'Params', type: 'boolean', displayName: 'Optimistic', default: false },
-    { name: 'useReferences', group: 'Params', type: 'boolean', displayName: 'Use references', default: false, dependsOn: { name: 'searchEnabled', value: true } },
     { name: 'label', group: 'Params', type: 'string', displayName: 'Label' },
     { name: 'buttonType', group: 'Params', type: { name: 'enum', enums: enums.buttonTypes }, displayName: 'Button type', tooltip: '"Submit" to trigger form' },
-] as const satisfies readonly NodePort2[];
+    { name: 'notificationsPosition', group: 'Params', type: { name: 'enum', enums: enums.notificationsPositions }, displayName: 'Notifications position', default: 'bottom-right' },
+    { name: 'placeholder', group: 'Params', type: 'string', displayName: 'Placeholder' },
+    { name: 'debounced', group: 'Params', type: 'boolean', displayName: 'Debounced', default: false, tooltip: 'Delay typed value' },
+    { name: 'delay', group: 'Params', type: 'number', displayName: 'Delay (ms)', default: 350, dependsOn: { name: 'debounced', value: true } },
+    { name: 'modalHeaderEnabled', group: 'Params', type: 'boolean', displayName: 'Header', default: false },
+    { name: 'modalTitle', group: 'Params', type: 'string', displayName: 'Modal title', dependsOn: { name: 'modalHeaderEnabled', value: true } },
+    { name: 'closeActionEnabled', group: 'Params', type: 'boolean', displayName: 'Enable close action', default: false, dependsOn: { name: 'modalHeaderEnabled', value: true } },
+    { name: 'drawerHeaderEnabled', group: 'Params', type: 'boolean', displayName: 'Header', default: false },
+    { name: 'drawerTitle', group: 'Params', type: 'string', displayName: 'Drawer title', dependsOn: { name: 'drawerHeaderEnabled', value: true } },
+    { name: 'debouncedTyping', group: 'Params', type: 'boolean', displayName: 'Debounced', default: false, tooltip: 'Delay typed value' },
+    { name: 'typingDelay', group: 'Params', type: 'number', displayName: 'Delay (ms)', default: 350, dependsOn: { name: 'debouncedTyping', value: true } },
+] as const satisfies readonly NodePort[];
 
 export default params

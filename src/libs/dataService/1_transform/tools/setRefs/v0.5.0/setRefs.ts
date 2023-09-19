@@ -11,7 +11,7 @@ export default function (dbClass: string) {
                     if (refItem) return refItem
                 })
             } else {
-                const refItem = Noodl.Objects[item[refDbClass].id]
+                const refItem = Noodl.Objects[item[refDbClass]?.id]
                 if (refItem) item[refDbClass] = refItem
             }
         })

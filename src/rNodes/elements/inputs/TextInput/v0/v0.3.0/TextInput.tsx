@@ -2,19 +2,19 @@ import { forwardRef, useState } from 'react'
 import { TextInput, CloseButton } from '@mantine/core'
 import { useShallowEffect, useDebouncedValue } from '@mantine/hooks'
 import icons from '../../../../../../libs/icons/v0.2.0/icons'
-import { useFormContextWitchCheck } from '../../../../../organisms/Form/v0/v0.2.0/useForm'
-import { sendOutput } from '../../../../../../utils/noodl/v0.1.0/send'
+import { sendOutput } from '../../../../../../main/ports/send/v0.3.0/send'
+import { useFormContextWitchCheck } from '../../../../../../libs/contenxt/form/v0.1.0/useForm'
 
 const Comp = forwardRef(function (props: any) {
-  const { iconName, iconSize, formField, debounced, delay, noodlNode, useForm } = props
+  const { iconName, iconSize, formField, debounced, delay, node, useForm } = props
   const Icon = icons(iconName)
   const formHook: any = useForm ? useFormContextWitchCheck() : undefined
 
   const [value, setValue] = useState('')
   const [debouncedValue] = useDebouncedValue(value, delay)
 
-  useShallowEffect(() => { if (!debounced || !value) sendOutput({ noodlNode, portName: 'typedValue', value: value }) }, [value])
-  useShallowEffect(() => { if (debounced && value) sendOutput({ noodlNode, portName: 'typedValue', value: debouncedValue }) }, [debouncedValue])
+  useShallowEffect(() => { if (!debounced || !value) sendOutput(node, 'typedValue', value) }, [value])
+  useShallowEffect(() => { if (debounced && value) sendOutput(node, 'typedValue', debouncedValue) }, [debouncedValue])
   useShallowEffect(() => { setValue(formHook?.values[formField]) }, [formHook?.values[formField]])
 
   return (
