@@ -9,6 +9,7 @@ const dimensions = [
     { name: 'sizePresets', group: 'Dimensions', type: { name: 'enum', enums: enums.sizes }, displayName: 'Size', default: 'sm' },
     { name: 'sizeString', group: 'Dimensions', type: 'string', displayName: 'Size (string)' },
     { name: 'sizeUnits', group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Size (units)' },
+    { name: 'loaderSize', group: 'Loader', type: { name: 'enum', enums: enums.sizes }, displayName: 'Size', default: 'md' },
 ] as const satisfies readonly NodePort[];
 
 export default dimensions

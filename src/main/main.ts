@@ -1,11 +1,12 @@
 import Clone from 'just-clone'; window.Clone = Clone
 import Mustache from 'mustache'; window.Mustache = Mustache
 import Cookies from 'js-cookie'; window.Cookies = Cookies
-import numbro from 'numbro'; window.Numbro = numbro
+import numbro from 'numbro';
+import locale from 'numbro/dist/languages/ru-RU.min.js'; numbro.registerLanguage(locale); numbro.setLanguage('ru-RU'); window.Numbro = numbro;
 
 import isEmpty from 'just-is-empty'; window.IsEmpty = isEmpty
 import flush from 'just-flush'; window.Flush = flush
-import tail from 'just-tail'; window.Tail = tail
+import last from 'just-last'; window.Last = last
 
 import Dayjs from 'dayjs'
 import 'dayjs/locale/ru'

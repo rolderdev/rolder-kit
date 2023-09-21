@@ -27,6 +27,7 @@ import ModalNode_v0 from "../../../rNodes/molecules/Modal/v0/ModalNode";
 import GridNodes from "../../../rNodes/molecules/Grid/GridNodes";
 import PaperNodes from "../../../rNodes/molecules/Paper/PaperNodes";
 import UnstyledButtonNodes from "../../../rNodes/molecules/UnstyledButton/UnstyledButtonNodes";
+import LoadingOverlayNode_v0 from "../../../rNodes/molecules/LoadingOverlay/v0/LoadingOverlayNode";
 // elements
 // buttons
 import ActionIconNodes from "../../../rNodes/elements/buttons/ActionIcon/ActionIconNodes";
@@ -43,6 +44,7 @@ import QRCodeNodes from "../../../rNodes/elements/dataDisplay/QRCode/QRCodeNodes
 // feedback
 import LoaderNodes from "../../../rNodes/elements/feedback/Loader/LoaderNodes";
 import IndicatorNodes from "../../../rNodes/elements/feedback/Indicator/IndicatorNodes";
+import BarLoaderNode_v0 from "../../../rNodes/elements/feedback/BarLoader/v0/BarLoaderNode";
 // inputs
 import SegmentedControlNodes from "../../../rNodes/elements/inputs/SegmentedControl/SegmentedControlNodes";
 import CheckboxGroupNodes from "../../../rNodes/elements/inputs/CheckboxGroup/CheckboxGroupNodes";
@@ -71,14 +73,14 @@ const reactNodes: any = [
     ...AppNodes, AppNode_v1, ...AuthNodes, AuthNode_v0, ...AppShellNodes, ...TableNodes, TableNode_v1, ...ETableNodes, ...FormNodes, FormNode_V0,
     // molecules
     ...StackNodes, ...GroupNodes, ...CenterNodes, ...ScrollAreaNodes, ...DrawerNodes, DrawerNode_v0, DrawerNode_v1, ...CarouselNodes, ...ModalNodes,
-    ModalNode_v0, ...GridNodes, ...PaperNodes, ...UnstyledButtonNodes,
+    ModalNode_v0, ...GridNodes, ...PaperNodes, ...UnstyledButtonNodes, LoadingOverlayNode_v0,
     // elements
     // buttons
     ...ActionIconNodes, ...ButtonNodes, ButtonNode_v0, ...PopoverActionIconNodes, PopoverButtonNode_v0,
     // dataDisplay
     ...AvatarNodes, ...IconNodes, ...BadgeNodes, ...ImageNodes, ...QRCodeNodes,
     // feedback
-    ...LoaderNodes, ...IndicatorNodes,
+    ...LoaderNodes, ...IndicatorNodes, BarLoaderNode_v0,
     // inputs
     ...SegmentedControlNodes, ...CheckboxGroupNodes, CheckboxNode_v0, ...DatePickerInputNodes, ...DateTimePickerNodes, ...MultiSelectNodes,
     ...SelectNodes, ...TextareaNodes, ...TextInputNodes, TextInputNode_v0, MaskedInputNode_v0,

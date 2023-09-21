@@ -1,5 +1,5 @@
-import { getJsNodes } from '../../../../main/getNodes/v0.1.0/getNodes'
-import { reactPorts } from '../../../../main/ports/v0.1.0/ports'
+import { getJsNodes } from '../../../main/getNodes/v0.1.0/getNodes'
+import { reactPorts } from '../../../main/ports/v0.1.0/ports'
 
 const { uploadItems, uploadFolder, uploadedUrls } = reactPorts.Data
 const { uploading } = reactPorts.States

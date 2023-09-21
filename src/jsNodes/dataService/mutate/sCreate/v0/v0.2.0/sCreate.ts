@@ -20,12 +20,11 @@ const signals = {
       let results: any = {};
       for (const schemeArray of schemeArrays) {
         const arrayResults = await Promise.all(schemeArray.map((scheme: any) => {
-          const refs: string[] = scheme.references          
+          const refs: string[] = scheme.references
           if (refs) refs.forEach(ref => scheme.body[ref] = { ...scheme.body[ref], id: results[ref]?.id })
           if (scheme.dbClass === 'user') return createUserPromise(scheme)
           else return createPromise(scheme)
         }))
-        console.log(arrayResults)
         schemeArray.forEach((scheme, idx) => results[scheme.dbClass] = arrayResults[idx])
       }
       sendOutput(node, 'createdData', results)

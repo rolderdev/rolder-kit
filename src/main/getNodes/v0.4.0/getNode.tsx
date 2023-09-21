@@ -1,8 +1,10 @@
 import { forwardRef } from 'react'
 import { defineReactNode, defineNode, Color } from '@noodl/noodl-sdk'
 import typeOf from 'just-typeof'
+import { NodePort } from '../../ports/v0.3.0/types'
+import { JsVersions } from '../v0.5.0/types'
 
-function covertType(input: NodePort2, portName: string, values: any) {
+function covertType(input: NodePort, portName: string, values: any) {
   const value = values[portName]
   const typeOfValue: any = typeOf(value)
   // convert types
@@ -119,7 +121,7 @@ export const getReactNode = ({ nodeName, nodeVersion, Comps, compVersions }:
 type JsNodePops = {
   nodeName: string
   nodeVersion: string
-  jsVersions: JsVersions2
+  jsVersions: JsVersions
   color?: Color
 }
 

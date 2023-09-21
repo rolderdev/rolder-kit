@@ -5,7 +5,7 @@ import { setFilters, setSorts } from "../../../../../libs/dataService/0_query/to
 import mGetUsers from '../../../../../libs/dataService/2_back/get/mGetUsers/v0.2.0/mGetUsers'
 import updateNDBClass from "../../../../../libs/dataService/1_transform/update/v0.1.0/updateNDBClass";
 import subscribe from "../../../../../libs/dataService/2_back/get/subscribe/v0.3.0/subscribe";
-import triggerQuery from "../../../../../libs/dataService/1_transform/tools/triggerQueries/v0.1.0/triggerQueries";
+import triggerQueries from "../../../../../libs/dataService/1_transform/tools/triggerQueries/v0.1.0/triggerQueries";
 import search from '../../../../../libs/dataService/2_back/get/search/v0.4.0/search'
 import { sendOutput } from "../../../../../main/ports/send/v0.3.0/send";
 
@@ -30,7 +30,7 @@ const Fetch = forwardRef(function (props: any) {
     const [debounced] = useDebouncedValue(searchString, searchDelay);
     useShallowEffect(() => {
         if (debounced?.length > 1) {
-            sendOutput(node, 'searching', true)            
+            sendOutput(node, 'searching', true)
             search({ dbClass, searchString: debounced, useReferences, searchFields, sorts: setSorts(dbClass, sorts) }).then((searchNResults) => {
                 if (searchNResults) send(searchNResults)
                 sendOutput(node, 'searching', false)
@@ -50,7 +50,7 @@ const Fetch = forwardRef(function (props: any) {
         if (data && getUsers && !usersLoaded) {
             if (eval(Noodl.getProjectSettings().dbClasses)?.[0]?.[dbClass]?.references?.includes('user')) {
                 const userIds = data?.items?.map(i => i.user?.id)
-                if (userIds) mGetUsers(userIds).then(() => triggerQuery(dbClass))
+                if (userIds) mGetUsers(userIds).then(() => triggerQueries(dbClass))
             }
             setUsersLoaded(true)
         }

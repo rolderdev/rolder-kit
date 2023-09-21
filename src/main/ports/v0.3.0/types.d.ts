@@ -4,7 +4,7 @@ export type NodePort = {
     name: string
     displayName: string
     group: string
-    default?: any
+    default?: string | boolean | number
     tooltip?: string
     required?: boolean
     dependsOn?: DependsOn | readonly DependsOn[]

@@ -20,6 +20,7 @@ const signals = [
     { name: 'open', group: 'Signals', type: 'signal', displayName: 'Open' },
     { name: 'close', group: 'Signals', type: 'signal', displayName: 'Close' },
     { name: 'closed', group: 'Signals', type: 'signal', displayName: 'Closed' },
+    { name: 'createXlsx', group: 'Signals', type: 'signal', displayName: 'Create XLSX' },
 ] as const satisfies readonly NodePort[];
 
 export default signals

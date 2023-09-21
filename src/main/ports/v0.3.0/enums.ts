@@ -14,7 +14,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'bottom-left', label: 'Bottom left' }, { value: 'bottom-right', label: 'Bottom right' },
         { value: 'bottom-center', label: 'Bottom center' },
     ],
-    loaderVariants: [{ value: 'bars', label: 'Bars' }, { value: 'dots', label: 'Dots' }],
+    loaderVariants: [{ value: 'oval', label: 'Oval' },{ value: 'bars', label: 'Bars' }, { value: 'dots', label: 'Dots' }],
     stackAligns: [
         { value: 'stretch', label: 'Stretch' }, { value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' },
         { value: 'flex-end', label: 'Flex end' }

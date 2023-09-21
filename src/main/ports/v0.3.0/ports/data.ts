@@ -16,6 +16,8 @@ const data = [
     { name: 'typedValue', group: 'Data', type: { name: 'string', allowConnectionsOnly: true }, displayName: 'Typed value' },
     { name: 'defaultNumberValue', group: 'Data', type: 'number', displayName: 'Default value' },
     { name: 'value', group: 'Data', type: 'string', displayName: 'Value' },
+    { name: 'selectedItem', group: 'Data', type: 'object', displayName: 'Selected item' },
+    { name: 'selectedItems', group: 'Data', type: 'array', displayName: 'Selected items' },    
 ] as const satisfies readonly NodePort[];
 
 export default data

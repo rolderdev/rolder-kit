@@ -1,14 +1,14 @@
-import { NodeInstance } from "@noodl/noodl-sdk"
 import { MRT_Row, MRT_RowSelectionState, MRT_TableOptions } from "mantine-react-table"
 import { MantineColor, Sx } from "@mantine/core"
 import { convertColor } from "../../../../../../utils/converters/v0.1.0/converters"
+import { NodeInstance } from "../../../../../../main/getNodes/v0.5.0/types"
 
 export default function mantineTableBodyRowProps(props: {
-    row: MRT_Row<Item>, noodlNode: NodeInstance, singleSelect: boolean, setSingleRowSelection: any, singleRowSelection: MRT_RowSelectionState,
+    row: MRT_Row<Item>, node: NodeInstance, singleSelect: boolean, setSingleRowSelection: any, singleRowSelection: MRT_RowSelectionState,
     highlightSelected: boolean, selectedColor: MantineColor, highlightOnHover: boolean, onHoverColor: MantineColor, backgroundColor: MantineColor
 }): MRT_TableOptions['mantineTableBodyRowProps'] {
     const {
-        row, noodlNode, singleSelect, setSingleRowSelection, singleRowSelection, highlightSelected, selectedColor, highlightOnHover, onHoverColor,
+        row, node, singleSelect, setSingleRowSelection, singleRowSelection, highlightSelected, selectedColor, highlightOnHover, onHoverColor,
         backgroundColor
     } = props
     let sx: Sx = {}
@@ -26,9 +26,9 @@ export default function mantineTableBodyRowProps(props: {
     if (singleSelect && !row.getIsGrouped()) {
         returnProps.onClick = () => {
             setSingleRowSelection({ [row.id]: singleRowSelection[row.id] ? false : true })
-            noodlNode.outputPropValues.selectedItem = row.original
-            noodlNode.flagOutputDirty('selectedItem')
-            noodlNode.sendSignalOnOutput('singleSelected')
+            node.outputPropValues.selectedItem = row.original
+            node.flagOutputDirty('selectedItem')
+            node.sendSignalOnOutput('singleSelected')
         }
     }
 

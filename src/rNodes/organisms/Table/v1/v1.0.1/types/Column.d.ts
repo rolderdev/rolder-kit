@@ -26,5 +26,5 @@ export interface Column extends MRT_ColumnDef<Item> {
     filterProps?: {
         dateFormat: string
     }
-    actions: Action[]
+    actions?: Action[]
 }

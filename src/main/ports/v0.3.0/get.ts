@@ -14,19 +14,20 @@ import { NodePort } from "./types";
 import font from "./ports/font";
 import format from "./ports/format";
 import fetch from "./ports/fetch";
+import table from "./ports/table";
 
 const ports = [...data, ...signals, ...states, ...params, ...form, ...icon, ...margins, ...dimensions, ...style, ...paddings, ...layout, ...font,
-...format, ...fetch]
+...format, ...fetch, ...table]
 
 export type PortNames = typeof ports[number]['name']
 
 export const groupedPorts = {
     'Margins': ['margins', 'm', 'my', 'mx', 'mt', 'mr', 'mb', 'ml'],
     'Paddings': ['paddings', 'p', 'py', 'px', 'pt', 'pr', 'pb', 'pl'],
-    /* 'Table params': ['columns', 'grouped', 'selectable', 'singleSelect', 'singleUnselectable', 'multiSelect', 'allSelect', 'expandAllAction'],
-     'Table layout': ['tableDensity'],
-     'Table style': ['loaderSize', 'loaderColor', 'withBorder', 'shadow', 'withColumnBorders', 'radius'],
-     'Rows style': ['highlightOnHover', 'onHoverColor', 'backgroundColor', 'highlightSelected', 'selectedColor', 'multiSelectCheckboxColor'],*/
+    'Table params': ['columns', 'grouped', 'selectable', 'singleSelect', 'singleUnselectable', 'multiSelect', 'allSelect', 'expandAllAction'],
+    'Table layout': ['tableDensity'],
+    'Table style': ['loaderSize', 'loaderColor', 'withBorder', 'shadow', 'withColumnBorders', 'radius'],
+    'Rows style': ['highlightOnHover', 'onHoverColor', 'backgroundColor', 'highlightSelected', 'selectedColor', 'multiSelectCheckboxColor'],
     'Form': ['useForm', 'formField', 'formHook'],
     'Icon': ['iconName', 'iconSize', 'stroke'],
     //'Font': ['fz', 'fw']

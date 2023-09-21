@@ -27,7 +27,7 @@ export default function prepColumns(columns: Column[]) {
                 return (
                     <Group position={cell.getValue() ? 'apart' : 'center'} noWrap >
                         {`${cell.getValue()}`}
-                        {i.actions.map(actionDef => useAction({ noodlNode, actionDef, row }))}
+                        {i.actions.map(actionDef => useAction({ node, actionDef, row }))}
                     </Group>
                 )
         return <>TEST</>

@@ -9,7 +9,7 @@ import getTabelInstance from './TableInstance';
 import { TableCompProps } from './types/TableCompProps';
 
 const Comp = forwardRef(function (props: TableCompProps, ref) {
-  const { items, searching, loaderColor, withBorder, shadow, radius } = props
+  const { items, tableSearching, loaderColor, withBorder, shadow, radius } = props
 
   // signals
   useImperativeHandle(ref, () => ({
@@ -28,7 +28,7 @@ const Comp = forwardRef(function (props: TableCompProps, ref) {
     >
       <BarLoader
         color={convertColor(loaderColor)}
-        loading={searching}
+        loading={tableSearching}
         cssOverride={{
           display: "block",
           position: 'absolute',

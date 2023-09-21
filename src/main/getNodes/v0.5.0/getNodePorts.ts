@@ -1,6 +1,7 @@
+import typeOf from "just-typeof"
 import { NodePort } from "../../ports/v0.3.0/types"
 import checkDependsOn from "./checkDependsOn"
-import { CompVersions } from "./types"
+import { CompVersions, JsVersions } from "./types"
 
 function setPorts(node: any, allNodePorts: NodePort[], currentNodePorts: NodePort[]) {
     const resultNodePorts: NodePort[] = []
@@ -38,12 +39,12 @@ function setPorts(node: any, allNodePorts: NodePort[], currentNodePorts: NodePor
     return resultNodePorts
 }
 
-export default function (node: any, compVersions: CompVersions) {
+export default function (node: any, compVersions: CompVersions | JsVersions) {
     let resultNodePorts: NodePort[] = []
     if (node.parameters?.version) {
         const inputs = compVersions[node.parameters.version]?.inputs || []
         const outputs = compVersions[node.parameters.version]?.outputs || []
-        const signals = compVersions[node.parameters.version]?.signals || []
+        let signals = compVersions[node.parameters.version]?.signals || []
         const allPorts = [...inputs, ...outputs, ...signals]
         resultNodePorts = resultNodePorts.concat(setPorts(node, allPorts, inputs))
         resultNodePorts = resultNodePorts.concat(setPorts(node, allPorts, outputs))

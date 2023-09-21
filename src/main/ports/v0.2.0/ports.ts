@@ -110,7 +110,7 @@ const oldPorts: {
         borderRadius: { group: 'Style', type: { name: 'enum', enums: enums.sizes }, displayName: 'Border radius' },
 
         striped: { group: 'Style', type: 'boolean', displayName: 'Striped' },
-        loaderVariant: { group: 'Style', type: { name: 'enum', enums: enums.loaderVariants }, displayName: 'Variant' },
+        
         avatarVariant: { group: 'Style', type: { name: 'enum', enums: enums.avatarVariants }, displayName: 'Variant' },
         badgeVariant: { group: 'Style', type: { name: 'enum', enums: enums.badgeVariants }, displayName: 'Variant', default: 'light' },
     },

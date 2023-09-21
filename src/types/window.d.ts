@@ -17,7 +17,7 @@ declare global {
         FormValidators: any
         IsEmpty: any
         Flush: any
-        Tail: any
+        Last: any
         Numbro: any
     }
 }

@@ -1,17 +1,17 @@
-import { NodeInstance } from "@noodl/noodl-sdk"
 import { MRT_DensityState } from "mantine-react-table"
 import { DefaultMantineColor, MantineNumberSize, MantineShadow } from "@mantine/core"
 import { Column } from "./Column"
+import { NodeInstance } from "../../../../../../main/getNodes/v0.5.0/types"
 
 export type TableCompProps = {
   // Noodle node
-  noodlNode: NodeInstance
+  node: NodeInstance
   // Params
   columns: Column[], selectable: boolean, singleSelect: boolean, multiSelect: boolean, grouped: boolean, allSelect: boolean
   // Data
   items: Item[]
   // States
-  loading: boolean, searching: boolean
+  loading: boolean, tableSearching: boolean
   // Table layout
   tableDensity: MRT_DensityState
   // Table style  

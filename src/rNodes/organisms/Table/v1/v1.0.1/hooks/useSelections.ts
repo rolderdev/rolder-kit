@@ -1,12 +1,12 @@
 import { useSetState, useShallowEffect } from "@mantine/hooks";
-import { NodeInstance } from "@noodl/noodl-sdk";
 import { MRT_RowSelectionState, MRT_TableInstance } from "mantine-react-table";
 import { useState } from "react";
 import isObjetEmpty from 'just-is-empty'
 import flush from 'just-flush'
+import { NodeInstance } from "../../../../../../main/getNodes/v0.5.0/types";
 
-export default function useSelections(props: { noodlNode: NodeInstance, items?: Item[] }) {
-    const { noodlNode, items } = props
+export default function useSelections(props: { node: NodeInstance, items?: Item[] }) {
+    const { node, items } = props
 
     const [multiSelection, setMultiSelection] = useSetState<MRT_RowSelectionState>({});
     const [filtered, setFiltered] = useState(false);
@@ -50,8 +50,8 @@ export default function useSelections(props: { noodlNode: NodeInstance, items?: 
     useShallowEffect(() => {
         if (!isObjetEmpty(flush(multiSelection))) {
             allPartialSelectionHandler(filtered)
-            noodlNode.outputPropValues.selectedItems = items?.filter(i => multiSelection[i.id])
-            noodlNode.flagOutputDirty('selectedItems')
+            node.outputPropValues.selectedItems = items?.filter(i => multiSelection[i.id])
+            node.flagOutputDirty('selectedItems')
         }
     }, [multiSelection, filtered])
 

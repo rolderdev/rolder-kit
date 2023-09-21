@@ -16,12 +16,12 @@ import useSelections from "./hooks/useSelections";
 import mantineTableBodyCellProps from "./mantineProps/mantineTableBodyCellProps";
 
 export default function getTabelInctance(props: TableCompProps) {
-    const { columns, items, grouped, multiSelect, noodlNode } = props
+    const { columns, items, grouped, multiSelect, node } = props
 
     // multiSelection hook
     const {
         multiSelection, setMultiSelection, handleFiltered, setSelectionTableInstance, allSelectionHandler, allSelected, partialSelected
-    } = useSelections({ noodlNode, items })
+    } = useSelections({ node, items })
 
     // single selection 
     const [singleRowSelection, setSingleRowSelection] = useState<MRT_RowSelectionState>({});

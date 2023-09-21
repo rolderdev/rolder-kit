@@ -14,7 +14,7 @@ export type CompDefinition = {
 
 export type JsVersions = {
     [key: string]: {
-        signals: any
+        signals: Promise
         inputs?: NodePort[]
         outputs?: NodePort[]
     }
@@ -22,7 +22,7 @@ export type JsVersions = {
 
 export type NodeInstance = {
     nodeName: string
-    resultInputs: { [key: string]: any }
+    resultInputs: any
     warnings: {
         count: number
         requiered: { [key: string]: string }

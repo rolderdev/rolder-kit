@@ -1,11 +1,13 @@
-import { getReactNode } from "../../../../main/getNodes/v0.3.0/getNode"
 import { useImperativeHandle, useRef } from 'react'
-import { useShallowEffect } from '@mantine/hooks';
-import { getPorts, getGroupedPorts } from '../../../../main/ports/v0.2.0/ports';
-import useComp from "../../../../utils/noodl/useComp/v0.2.0/useComp";
+import { getGroupedPorts, getPorts } from '../../../../main/ports/v0.3.0/get';
+import { CompVersions } from '../../../../main/getNodes/v0.5.0/types';
+import { getReactNode } from '../../../../main/getNodes/v0.5.0/getNode';
+import { useForceUpdate } from '@mantine/hooks';
+
 
 import v1_0_1 from './v1.0.1/Table';
 import v1_0_2 from './v1.0.2/Table';
+import v1_1_0 from './v1.1.0/Table';
 
 const compVersions: CompVersions = {
     'v1.0.1': {
@@ -13,18 +15,18 @@ const compVersions: CompVersions = {
         inputs: [
             ...getGroupedPorts({
                 type: 'input',
-                groupsNames: ['Table params', 'Table layout', 'Table style', 'Rows style'],
+                groupNames: ['Table params', 'Table layout', 'Table style', 'Rows style'],
                 requiredInputs: ['columns'],
             }),
             ...getPorts({
                 type: 'input',
-                portsNames: ['items', 'loading', 'searching']
+                portNames: ['items', 'loading', 'tableSearching']
             })
         ],
-        outputs: [...getPorts({ type: 'output', portsNames: ['singleSelected', 'selectedItem', 'selectedItems', 'actionName'] })],
+        outputs: [...getPorts({ type: 'output', portNames: ['singleSelected', 'selectedItem', 'selectedItems', 'actionName'] })],
         signals: getPorts({
             type: 'input',
-            portsNames: ['expandAll', 'unExpandAll']
+            portNames: ['expandAll', 'unExpandAll']
         }),
     },
     'v1.0.2': {
@@ -32,42 +34,62 @@ const compVersions: CompVersions = {
         inputs: [
             ...getGroupedPorts({
                 type: 'input',
-                groupsNames: ['Table params', 'Table layout', 'Table style', 'Rows style'],
+                groupNames: ['Table params', 'Table layout', 'Table style', 'Rows style'],
                 requiredInputs: ['columns'],
             }),
             ...getPorts({
                 type: 'input',
-                portsNames: ['items', 'loading', 'searching']
+                portNames: ['items', 'loading', 'tableSearching']
             })
         ],
-        outputs: [...getPorts({ type: 'output', portsNames: ['singleSelected', 'selectedItem', 'selectedItems', 'actionName', 'actionItem'], })],
+        outputs: [...getPorts({ type: 'output', portNames: ['singleSelected', 'selectedItem', 'selectedItems', 'actionName', 'actionItem'], })],
         signals: getPorts({
             type: 'input',
-            portsNames: ['expandAll', 'unExpandAll', 'resetSingleSelected', 'resetMultipleSelected']
+            portNames: ['expandAll', 'unExpandAll', 'resetSingleSelected', 'resetMultipleSelected']
+        }),
+    },
+    'v1.1.0': {
+        Comp: v1_1_0,
+        inputs: [
+            ...getGroupedPorts({
+                type: 'input',
+                groupNames: ['Table params', 'Table layout', 'Table style', 'Rows style'],
+                requiredInputs: ['columns'],
+            }),
+            ...getPorts({
+                type: 'input',
+                portNames: ['items', 'loading', 'tableSearching']
+            })
+        ],
+        outputs: [...getPorts({ type: 'output', portNames: ['singleSelected', 'selectedItem', 'selectedItems', 'actionName', 'actionItem'], })],
+        signals: getPorts({
+            type: 'input',
+            portNames: ['expandAll', 'unExpandAll', 'resetSingleSelected', 'resetMultipleSelected']
         }),
     }
 }
 
-function Comps(compProps: any, ref: any) {
+function CompsHandler(props: any, ref: any) {
     const localRef = useRef<any>(null)
-    const { compReady, Comp, resultProps, checksHandler } = useComp({ compProps, compVersions })
+    const { resultInputs, _inputValues } = props.node
 
-    // on load comp
-    useShallowEffect(() => checksHandler(compProps), [])
+    const forceUpdate = useForceUpdate()
+    const Comp = compVersions[props.node._inputValues.version]?.Comp
     useImperativeHandle(ref, () => ({
-        // on Noodl props change
-        setComp(nodeProps: any) { checksHandler({ ...compProps, ...nodeProps }) },
-        // custom
+        forceUpdate() { forceUpdate() },
+        // custom       
         expandAll() { localRef.current?.expandAll() },
         unExpandAll() { localRef.current?.unExpandAll() },
         resetSingleSelected() { localRef.current?.resetSingleSelected() },
         resetMultipleSelected() { localRef.current?.resetMultipleSelected() }
     }))
-    return compReady ? <Comp {...resultProps} ref={localRef} /> : <></>
+
+    return props.node.compReady && Comp
+        ? <Comp node={props.node} {...resultInputs} mounted={_inputValues.mounted} children={props.children} ref={localRef} />
+        : <></>
 }
 
-////////////////////////////////////////
+////////////////////////////
 const nodeName = 'Table'
 const nodeVersion = 'v1'
-
-export default getReactNode({ nodeName, nodeVersion, Comps, compVersions })
+export default getReactNode({ nodeName, nodeVersion, CompsHandler, compVersions })

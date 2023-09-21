@@ -3,7 +3,7 @@ import { MRT_Cell, MRT_Row, MRT_RowSelectionState } from "mantine-react-table"
 import icons from "../../../../../../libs/icons/v0.2.0/icons"
 import { Column } from "../types/Column"
 import useAction from "../hooks/useAction"
-import { NodeInstance } from "@noodl/noodl-sdk"
+import { NodeInstance } from "../../../../../../main/getNodes/v0.5.0/types"
 
 const IconChevronDown = icons('IconChevronDown')
 // expand animation
@@ -18,9 +18,9 @@ const useStyles = createStyles(() => ({
 
 export function MultiSelectionRow(props: {
     row: MRT_Row<Item>, cell: MRT_Cell<Item>, multiSelection: MRT_RowSelectionState, multiSelectCheckboxColor: MantineColor,
-    setMultiSelection: any, groupColumnDef?: Column, multiSelect: boolean, noodlNode: NodeInstance, grouped: boolean, loading: boolean
+    setMultiSelection: any, groupColumnDef?: Column, multiSelect: boolean, node: NodeInstance, grouped: boolean, loading: boolean
 }) {
-    const { row, cell, multiSelection, multiSelectCheckboxColor, setMultiSelection, groupColumnDef, multiSelect, noodlNode, grouped, loading } = props
+    const { row, cell, multiSelection, multiSelectCheckboxColor, setMultiSelection, groupColumnDef, multiSelect, node, grouped, loading } = props
     const notGroupedLeafRows = row.getLeafRows().filter((row) => !row.getIsGrouped())
     const selectedLeafsCount = notGroupedLeafRows.filter((row) => multiSelection[row.id]).length
     const allSelected = selectedLeafsCount === notGroupedLeafRows.length
@@ -45,8 +45,8 @@ export function MultiSelectionRow(props: {
     }
 
     let actions: any = <></>
-    if (grouped && !row.getIsGrouped()) actions = groupColumnDef?.actions.map(i => { return useAction({ noodlNode, actionDef: i, row }) })
-    if (!grouped) actions = columnDef?.actions.map((i: any) => { return useAction({ noodlNode, actionDef: i, row }) })
+    if (grouped && !row.getIsGrouped()) actions = groupColumnDef?.actions.map(i => { return useAction({ node, actionDef: i, row }) })
+    if (!grouped) actions = columnDef?.actions.map((i: any) => { return useAction({ node, actionDef: i, row }) })
 
     return (
         <Group position={actions?.length ? 'apart' : 'left'} noWrap >
