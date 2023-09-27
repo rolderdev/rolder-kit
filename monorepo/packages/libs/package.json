@@ -1,0 +1,22 @@
+{
+  "name": "libs",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "rspack build",
+    "patch": "npm version patch && rspack build",
+    "minor": "npm version minor && rspack build"
+  },
+  "dependencies": {
+    "lodash": "4.17.21",
+    "just-clone": "6.2.0",
+    "just-map-object": "2.3.0",
+    "just-typeof": "3.2.0",
+    "just-flush": "2.3.0",
+    "js-cookie": "3.0.5"
+  },
+  "devDependencies": {
+    "@types/lodash": "4.14.199",
+    "@types/js-cookie": "3.0.3"
+  }
+}

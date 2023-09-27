@@ -2,6 +2,7 @@ import { useShallowEffect } from '@mantine/hooks'
 import useData from '../../../../libs/useData/v0.3.0/useData'
 import { useState } from 'react'
 import { setRefs } from '../../../../utils/data/v0.3.0/data'
+import { QueryClientProvider } from '@tanstack/react-query'
 
 function UseData(props: any) {
   const { useDataType, dbClass } = props
@@ -41,5 +42,10 @@ export default function UseData_v0_2_0(props: { enabled: boolean; useDataType: s
       setEnabled(true)
     }
   }, [enabled])
-  return localEnabled ? <UseData {...props} /> : <></>
+  const queryClient = window.QueryClient
+  return localEnabled ? (
+    < QueryClientProvider client={queryClient} >
+      <UseData {...props} />
+    </QueryClientProvider >
+  ) : <></>
 }

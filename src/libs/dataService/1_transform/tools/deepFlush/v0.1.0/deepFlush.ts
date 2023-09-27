@@ -1,12 +1,15 @@
 import isEmpty from "just-is-empty";
 import map from "just-map-object"
+import typeOf from "just-typeof";
 
-export default function deepFlush(item: any) {
+export default function deepFlush(item: unknown) {
     const finalObj: any = {};
-    if (item && typeof item === 'object') {
-        map(item, (k, v) => {
-            if (typeof v === 'object' && !Array.isArray(v)) {
-                if (!isEmpty(v)) {
+    if (item && typeOf(item) === 'object') {
+        const untypedItem: any = item
+        map(untypedItem, (k, v) => {
+            if (typeOf(v) === 'object' && !Array.isArray(v)) {
+                const untypedV: any = v
+                if (!isEmpty(untypedV)) {
                     const nestedObj = deepFlush(v)
                     if (!isEmpty(nestedObj)) finalObj[k] = nestedObj
                 }

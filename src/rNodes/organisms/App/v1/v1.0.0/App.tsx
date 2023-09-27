@@ -88,8 +88,7 @@ const Comp = forwardRef(function (props: any) {
 						backgroundColor: colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
 					}
 				}),
-			}
-			}
+			}}
 		>
 			<DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 1 }}>
 				<Notifications position={notificationsPosition} />

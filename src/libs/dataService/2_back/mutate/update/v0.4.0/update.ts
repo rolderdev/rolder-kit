@@ -17,7 +17,7 @@ const update = async (updateItem: CreateUpdateItem, optimistic: boolean): Promis
 
     let nItem: NItem
     if (optimistic) nItem = updateNItems(dbClass, [{ id, ...flushedBody }])?.[0]
-    
+
     return Kuzzle.connect().then(() =>
         Kuzzle.document.update(dbVersion(), dbClassV, id, flushedBody, options)
             .then(() => {

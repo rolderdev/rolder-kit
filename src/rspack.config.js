@@ -11,6 +11,8 @@ const baseDir = '/Users/decard/Library/Application Support/Noodl/projects/'
 const projectDir = 'c09055b1-4710-4c0c-9ef3-6fc6c8446046'
 // Rasko
 //const projectDir = '927b35ec-cd3b-431a-ae83-d1525db09bb9'
+// Temp
+//const projectDir = 'c0f27b62-61f0-4c23-be5c-0b97571a45d2'
 var outputPath = path.resolve(__dirname, baseDir + projectDir + '/noodl_modules/' + name + '_v' + version)
 //var outputPath = path.resolve(__dirname, `../dist/rolder-kit_v${version}`)
 
@@ -42,7 +44,21 @@ module.exports = {
 			{
 				test: /\.svg$/,
 				type: 'asset'
-			}
+			},
+			{
+				test: /\.css$/,
+				use: [
+					{
+						loader: 'postcss-loader',
+						options: {
+							postcssOptions: {
+								// ...
+							},
+						},
+					},
+				],
+				type: 'css',
+			},
 		]
 	}
 }

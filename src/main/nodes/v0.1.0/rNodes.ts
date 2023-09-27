@@ -3,7 +3,7 @@ import UseDataNodes from "../../../rNodes/data/UseData/UseDataNodes";
 import UseDataNode_v1 from "../../../rNodes/data/UseData/v1/UseDataNode";
 import UseSearchNodes from "../../../rNodes/data/UseSearch/UseSearchNodes";
 // organisms
-import AppNodes from "../../../rNodes/organisms/App/AppNodes";
+import AppNodes_old from "../../../rNodes/organisms/App/AppNodes_old";
 import AppNode_v1 from "../../../rNodes/organisms/App/v1/AppNode";
 import AuthNodes from "../../../rNodes/organisms/Auth/AuthNodes";
 import AuthNode_v0 from "../../../rNodes/organisms/Auth/v0/AuthNode";
@@ -70,7 +70,8 @@ const reactNodes: any = [
     // data
     ...UseDataNodes, UseDataNode_v1, ...UseSearchNodes,
     // organisms
-    ...AppNodes, AppNode_v1, ...AuthNodes, AuthNode_v0, ...AppShellNodes, ...TableNodes, TableNode_v1, ...ETableNodes, ...FormNodes, FormNode_V0,
+    ...AppNodes_old, AppNode_v1, ...AuthNodes, AuthNode_v0, ...AppShellNodes, ...TableNodes, TableNode_v1,
+    ...ETableNodes, ...FormNodes, FormNode_V0,
     // molecules
     ...StackNodes, ...GroupNodes, ...CenterNodes, ...ScrollAreaNodes, ...DrawerNodes, DrawerNode_v0, DrawerNode_v1, ...CarouselNodes, ...ModalNodes,
     ModalNode_v0, ...GridNodes, ...PaperNodes, ...UnstyledButtonNodes, LoadingOverlayNode_v0,
