@@ -1,7 +1,6 @@
 export default function (dbClass: string) {
     const Noodl = window.Noodl
     const dbClasses: { [key: string]: DbClass } = eval(Noodl.getProjectSettings().dbClasses)[0]
-
     function sf(dbClass: string, refDbClass: string) {
         const items: { id: string, [key: string]: any }[] = Noodl.Objects[dbClass]?.items
         items?.forEach(item => {

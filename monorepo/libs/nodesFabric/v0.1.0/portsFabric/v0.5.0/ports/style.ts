@@ -25,6 +25,8 @@ const style = [
     { name: 'navLinkVariant', group: 'Loader', type: { name: 'enum', enums: enums.navLinkVariants }, default: 'light', displayName: 'Variant' },
     { name: 'tabsVariant', group: 'Loader', type: { name: 'enum', enums: enums.tabsVariants }, default: 'default', displayName: 'Variant' },
     { name: 'unstyled', group: 'Style', type: 'boolean', displayName: 'Unstyled', default: false },
+    { name: 'withArrow', group: 'Style', type: 'boolean', displayName: 'With arrow', default: true },
+    { name: 'checkboxColor', group: 'Checkbox', type: 'string', displayName: 'Color', tooltip: 'red, red.5' },
 ] as const satisfies readonly NodePort[];
 
 export default style

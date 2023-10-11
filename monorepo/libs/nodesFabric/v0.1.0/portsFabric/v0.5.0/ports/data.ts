@@ -1,5 +1,6 @@
 const data = [
     { name: 'items', group: 'Data', type: { name: 'array', allowConnectionsOnly: true }, displayName: 'Items' },
+    { name: 'inputItems', group: 'Data', type: 'array', displayName: 'Items' },
     { name: 'fetchedCount', group: 'Data', type: 'number', displayName: 'Fetched count' },
     { name: 'totalCount', group: 'Data', type: 'number', displayName: 'Total count' },
     { name: 'updateItem', group: 'Data', type: 'object', displayName: 'Update item', tooltip: "Example: { dbClass: 'task', id: 'task id', body: {...} }" },
@@ -13,8 +14,14 @@ const data = [
     { name: 'typedValue', group: 'Data', type: { name: 'string', allowConnectionsOnly: true }, displayName: 'Typed value' },
     { name: 'defaultNumberValue', group: 'Data', type: 'number', displayName: 'Default value' },
     { name: 'value', group: 'Data', type: 'string', displayName: 'Value' },
+    { name: 'createValue', group: 'Data', type: 'string', displayName: 'Create value', dependsOn: [{ name: 'creatable', value: true }] },
     { name: 'selectedItem', group: 'Data', type: 'object', displayName: 'Selected item' },
     { name: 'selectedItems', group: 'Data', type: 'array', displayName: 'Selected items' },
+    { name: 'defaultItem', group: 'Data', type: { name: 'object', allowConnectionsOnly: true }, displayName: 'Default item', dependsOn: [{ name: 'useForm', value: false }] },
+    { name: 'defaultSegmentedControlItem', group: 'Data', type: { name: 'string', allowConnectionsOnly: true }, displayName: 'Default item', required: true, dependsOn: [{ name: 'useForm', value: false }] },
+    { name: 'selectedDate', group: 'Data', type: '*', displayName: 'Selected date' },
+    { name: 'defaultDate', group: 'Data', type: { name: '*', allowConnectionsOnly: true }, displayName: 'Default date' },
+    { name: 'defaultItems', group: 'Data', type: 'array', displayName: 'Default items' },
 ] as const satisfies readonly NodePort[];
 
 export default data

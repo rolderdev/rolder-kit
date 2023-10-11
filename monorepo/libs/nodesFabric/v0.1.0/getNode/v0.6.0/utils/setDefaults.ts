@@ -8,7 +8,7 @@ export default function (noodlNode: NoodlNode, nodeInputs: NodePort[]) {
         // and delete it if value is nil and default is nil
         if (isNil(value) && isNil(nodeInput.default)) delete noodlNode.resultProps[nodeInput.name]
     }
-
+    
     nodeInputs.forEach(nodeInput => {
         const isDependent = nodeInput.dependsOn
         // first set it self, if it is not dependent

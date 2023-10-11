@@ -11,22 +11,20 @@ import paddings from "./ports/paddings";
 import layout from "./ports/layout";
 import font from "./ports/font";
 import format from "./ports/format";
-import fetch from "./ports/fetch";
+import useData from "./ports/useData";
 import table from "./ports/table";
 import appShell from "./ports/appShell";
 
-const ports = [...data, ...signals, ...states, ...params, ...form, ...icon, ...margins, ...dimensions, ...style, ...paddings, ...layout, ...font,
-...format, ...fetch, ...table, ...appShell]
+export const customProps: NodePort = { index: 10000, plug: 'input', name: 'customProps', group: 'Advanced', type: 'array', displayName: 'Custom props', isObject: true }
+
+const ports = [...data, ...signals, ...states, ...params, ...form, ...icon, ...margins, ...dimensions, ...style, ...paddings, ...layout,
+...font, ...format, ...useData, ...table, ...appShell]
 
 export type PortNames = typeof ports[number]['name']
 
 export const groupedPorts = {
     'Margins': ['margins', 'm', 'my', 'mx', 'mt', 'mr', 'mb', 'ml'],
     'Paddings': ['paddings', 'p', 'py', 'px', 'pt', 'pr', 'pb', 'pl'],
-    'Table params': ['columns', 'grouped', 'selectable', 'singleSelect', 'singleUnselectable', 'multiSelect', 'allSelect', 'expandAllAction'],
-    'Table layout': ['tableDensity'],
-    'Table style': ['loaderSize', 'loaderColor', 'withBorder', 'shadow', 'withColumnBorders', 'radius'],
-    'Rows style': ['highlightOnHover', 'onHoverColor', 'backgroundColor', 'highlightSelected', 'selectedColor', 'multiSelectCheckboxColor'],
     'Form': ['useForm', 'formField', 'formHook'],
     'Icon': ['iconName', 'iconSize', 'stroke'],
     //'Font': ['fz', 'fw']
@@ -40,7 +38,7 @@ export function getPorts(
         i.plug = type
         if (customs?.groupName) i.group = customs?.groupName
         if (requiredInputs?.includes(i.name)) i.required = true
-        return window.R.libs.clone(i)
+        return { ...i }
     })
 }
 

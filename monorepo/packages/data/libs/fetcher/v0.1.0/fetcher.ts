@@ -1,0 +1,18 @@
+import { nanoquery } from "@nanostores/query"
+import { time } from "../../../../../utils/debug/log/v0.2.0/log"
+import { getKuzzleFetchKeys } from "./keysFabric"
+import getRItems from "../../getRItems/v0.2.0/getRItems"
+
+export const [createFetcherStore, createMutatorStore] = nanoquery({
+    fetcher: (...storeKeys) => window.R.libs.Kuzzle?.connect().then(() => {
+        const dbClass = storeKeys[1] as string
+        time(`${storeKeys[1]} fetch`)
+        return window.R.libs.Kuzzle?.document.search(...getKuzzleFetchKeys(storeKeys)).then((kResponse: KResponse) => {
+            time(`${dbClass} fetch`, true)
+            const references = storeKeys[5] as string
+            const customReferences = storeKeys[6] as string
+            return getRItems(dbClass, kResponse.hits as KItem[], references, customReferences)
+        })
+    }),
+    refetchOnFocus: true
+})

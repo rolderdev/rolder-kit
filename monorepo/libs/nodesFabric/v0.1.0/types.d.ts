@@ -11,13 +11,16 @@ declare type CompDefinition = {
 
 declare type JsVersions = {
     [key: string]: {
-        signals: Promise
         inputs?: NodePort[]
         outputs?: NodePort[]
+        onInputChange?: any
+        signals?: any
+        onDelete?: any
     }
 }
 
 declare type NodePort = {
+    index?: number
     plug?: 'input' | 'output'
     type: Type
     name: string
@@ -99,8 +102,51 @@ declare type ReactNodeDef = {
     resultProps?: { [key: string]: any }
 }
 
+declare type JsNodeDef = {
+    name: string
+    displayName: string
+    color?: NodeColor
+    nodeName?: string
+    _inputValues?: any
+    resultProps?: { [x: key]: string }
+    outputPropValues?: { [x: key]: string }
+    loaded?: boolean
+    warnings?: {
+        count: number
+        required: { [x: key]: string }
+        types: { [x: key]: string }
+    }
+    initialize(): void
+    inputs: {
+        version: {
+            group: 'Version'
+            displayName: 'Version'
+            type: Type
+        }
+    }
+    changed?: {
+        [key: string]: (
+            this: JsNodeDef,
+            newValue: string,
+            oldValue: string
+        ) => void
+    }
+    scheduleAfterInputsHaveUpdated?: any
+    setInputsValue?: (inputName: string, inputValue: any) => void
+    signals?: {
+        [key: string]: {
+            displayName: string,
+            signal: (this: NoodlNode) => void
+        }
+    }
+    methods: { [key: string]: any }
+    setup(context: any, graphModel: any): void
+    addDeleteListener?: any
+}
+
 declare type NoodlNode = {
     resultProps: { [x: string]: any }
+    dataStore: any
     warnings: {
         count: number
         required: { [x: string]: string }
@@ -218,3 +264,12 @@ declare type GraphModelNode = {
     type: string
     on(listener: string, callback: ({ name: string, state: any, value: any }) => void): void
 }
+
+type ColorTypes = {
+    purple: 'component'
+    green: 'data'
+    visual: 'blue'
+    default: 'default'
+    grey: 'default'
+}
+declare type NodeColor = keyof ColorTypes | ColorTypes[keyof ColorTypes]

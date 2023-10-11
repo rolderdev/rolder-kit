@@ -30,7 +30,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     { value: 'gradient', label: 'Gradient' }],
     navLinkVariants: [{ value: 'light', label: 'Light' }, { value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' }],
     queryTypes: [
-        { value: 'fetch', label: 'Fetch' }, //{ value: 'get', label: 'Get' }, { value: 'mGet', label: 'mGet' },
+        { value: 'query', label: 'Query' }, { value: 'scheme', label: 'Scheme' },
     ],
     directions: [{ value: 'row', label: 'Row' }, { value: 'column', label: 'Column' }],
     wraps: [{ value: 'wrap', label: 'Wrap' }, { value: 'nowrap', label: 'Nowrap' }, { value: 'wrap-reverse', label: 'Wrap reverse' }],
@@ -88,5 +88,11 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'left', label: 'Left' }, { value: 'right', label: 'Right' }, { value: 'center', label: 'Center' },
         { value: 'apart', label: 'Apart' }
     ],
-    tabsOrientations: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' },],
+    tabsOrientations: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' }],
+    segmentedControlOrientations: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' }],
+    tableVariants: [{ value: 'basic', label: 'Basic' }, { value: 'grouped', label: 'Grouped' }],
+    tableLayouts: [{ value: 'auto', label: 'Auto' }, { value: 'fixed', label: 'Fixed' }],
+    expendOnVariants: [{ value: 'row', label: 'Row' }, { value: 'icon', label: 'Icon' }],
+    dropdownPositions: [{ value: 'flip', label: 'Flip' }, { value: 'bottom', label: 'Bottom' }, { value: 'top', label: 'Top' }],
+    checkboxGroupOrientations: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' }],
 }

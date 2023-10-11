@@ -1,4 +1,4 @@
-import icons from "../../../../../../packages/react-layer/libs/icons/v0.2.0/icons"
+import icons from "../../../../../../packages/mantine/libs/icons/v0.2.0/icons"
 import { changeWarnings } from "./warnings"
 
 export default function (noodlNode: NoodlNode, nodeInputs: NodePort[], inputName: string, value: any) {
@@ -19,7 +19,7 @@ export default function (noodlNode: NoodlNode, nodeInputs: NodePort[], inputName
     }
 
     if (nodeInput) {
-        const typeOfValue: any = typeOf(value)
+        const typeOfValue: any = typeOf(value)        
         // convert types
         if (typeOfValue !== 'undefined') {
             let complexValue: any
@@ -28,8 +28,9 @@ export default function (noodlNode: NoodlNode, nodeInputs: NodePort[], inputName
             if (nodeInput.type === 'array' && typeOfValue === 'string') {
                 isComplexType = true
                 // convert single object array to object                                                
-                try {
+                try {                    
                     const evalValue = eval(value)
+
                     // should have only one object                
                     if (evalValue?.length && nodeInput.isObject) {
                         if (evalValue?.length > 1) {

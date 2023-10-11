@@ -1,0 +1,18 @@
+{
+  "name": "data",
+  "private": true,
+  "version": "0.3.0",
+  "scripts": {
+    "build": "rspack build",
+    "patch": "npm version patch && rspack build",
+    "minor": "npm version minor && rspack build"
+  },
+  "dependencies": {
+    "kuzzle-sdk": "7.11.0",
+    "nanostores": "0.9.3",
+    "@nanostores/query": "0.2.4",
+    "just-debounce-it": "3.2.0",
+    "@tanstack/react-query": "4.36.1",
+    "@tanstack/react-query-devtools": "4.36.1"
+  }
+}

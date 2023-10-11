@@ -1,0 +1,10 @@
+{
+  "name": "utils",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "rspack build",
+    "patch": "npm version patch && rspack build",
+    "minor": "npm version minor && rspack build"
+  }
+}

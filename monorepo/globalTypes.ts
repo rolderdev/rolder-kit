@@ -4,4 +4,5 @@ declare module "@noodl/noodl-sdk" {
         nodes?: any
         settings?: NodePort[]
     }): void
+    function defineNode(n: any): void
 }

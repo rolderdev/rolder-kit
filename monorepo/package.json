@@ -1,18 +1,16 @@
 {
   "name": "rolder-kit",
   "private": true,
-  "version": "0.15.0",
+  "version": "0.16.0",
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {
-    "@mantine/hooks": "6.0.21"
-  },
   "devDependencies": {
-    "react": "16.8.1",
-    "@rspack/cli": "0.3.5",
-    "@types/react": "18.2.22",
-    "@types/react-dom": "18.2.7",
-    "typescript": "5.2.2"
+    "react": "18.2.0",
+    "@rspack/cli": "0.3.6",
+    "@types/react": "18.2.25",
+    "@types/react-dom": "18.2.10",
+    "typescript": "5.2.2",
+    "@nanostores/query": "0.2.4"
   }
 }

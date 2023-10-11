@@ -9,7 +9,9 @@ const dimensions = [
     { name: 'sizeString', group: 'Dimensions', type: 'string', displayName: 'Size (string)' },
     { name: 'sizeUnits', group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Size (units)' },
     { name: 'loaderSize', group: 'Loader', type: { name: 'enum', enums: enums.sizes }, displayName: 'Size', default: 'md' },
-    { name: 'appLoaderSize', group: 'Loader', type: { name: 'enum', enums: enums.sizes }, displayName: 'Size', default: 'xl' },    
+    { name: 'appLoaderSize', group: 'Loader', type: { name: 'enum', enums: enums.sizes }, displayName: 'Size', default: 'xl' },
+    { name: 'maxDropdownHeight', group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Max dropdown height' },
+    { name: 'fullWidth', group: 'Dimensions', type: 'boolean', displayName: 'Full width' },
 ] as const satisfies readonly NodePort[];
 
 export default dimensions

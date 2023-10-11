@@ -1,7 +1,7 @@
 {
   "name": "rolder-kit",
   "private": true,
-  "version": "0.15.0",
+  "version": "0.14.0",
   "scripts": {
     "dev": "rspack serve",
     "build": "rspack build",
@@ -55,7 +55,7 @@
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
   },
   "devDependencies": {
-    "@rspack/cli": "0.3.4",
+    "@rspack/cli": "0.3.6",
     "@types/js-cookie": "3.0.3",
     "@types/lodash": "4.14.196",
     "@types/ms": "0.7.31",

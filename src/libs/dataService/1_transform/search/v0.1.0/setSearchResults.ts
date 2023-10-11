@@ -16,10 +16,14 @@ export default function (dbClass: string, searchResults: SearchResults, sorts: a
     })
 
     if (useReferences) {
-        map(nSearchResults, (k, foundedNItems) => {
-            if (k !== dbClass) {
+        map(nSearchResults, (refDbClass, foundedNItems) => {
+            if (refDbClass !== dbClass) {
                 foundedNItems.forEach(foundedNItem => {
-                    nItems.push(Noodl.Objects[dbClass]?.items.find((i: NItem) => i[k].id === foundedNItem.id))
+                    nItems.push(Noodl.Objects[dbClass]?.items.find((i: any) => {
+                        if (Array.isArray(i[refDbClass]) && i[refDbClass].map((i: any) => i.id).includes(foundedNItem.id)) return true
+                        else if (i[refDbClass].id === foundedNItem.id) return true
+                        return false
+                    }))
                 })
             }
         })

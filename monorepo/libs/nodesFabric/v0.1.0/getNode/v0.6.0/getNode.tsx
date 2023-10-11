@@ -1,16 +1,19 @@
-import { forwardRef, useContext, useImperativeHandle, useRef } from "react"
+import { forwardRef, useImperativeHandle, useRef } from "react"
 import getRNodePorts from "./utils/getRNodePorts"
 import { useForceUpdate } from "@mantine/hooks"
 import getResultProps from "./utils/getResultProps"
-import NodeContext from "../../../../NodeContext/v0.1.0/NodeContext"
-import { changeWarnings } from "./utils/warnings"
+import convertAndCheckType from "./utils/convertAndCheckType"
+import setValue from "./utils/setValue"
+import setDefaults from "./utils/setDefaults"
+import checkRequired from "./utils/checkRequired"
+import getJsNodePorts from "./utils/getJsNodePorts"
 
-export const getReactNode = (nodeName: string, compVersions: CompVersions, allowChildren: boolean, contextName?: string): ReactNodeDef => {
+export const getReactNode = (nodeName: string, compVersions: CompVersions, allowChildren?: boolean): ReactNodeDef => {
     return {
         name: `rolder-kit.${nodeName}`,
         displayName: `${nodeName}`,
         noodlNodeAsProp: true,
-        allowChildren,
+        allowChildren: allowChildren || false,
         initialize: function () {
             this.resultProps = {}
             this.warnings = { count: 0, required: {}, types: {} }
@@ -26,9 +29,6 @@ export const getReactNode = (nodeName: string, compVersions: CompVersions, allow
 
                     const localRef = useRef<any>(null)
                     const Comp = compVersions[compProps.version]?.Comp
-                    const ctx = useContext(NodeContext)
-                    const hasContext = contextName && ctx.contextName === contextName
-                    if (contextName && !hasContext) changeWarnings(compProps.noodlNode, 'context', contextName)
                     const { compReady, resultProps } = getResultProps(compVersions, compProps)
 
                     return Comp && compReady ? <Comp {...resultProps} ref={localRef} /> : <></>
@@ -44,9 +44,6 @@ export const getReactNode = (nodeName: string, compVersions: CompVersions, allow
         },
         methods: {
             registerInputIfNeeded: function (name: any) {
-                if (['mounted', 'styleCss'].includes(name)) {
-                    //console.log(this.innerReactComponentRef)
-                }
                 if (this.hasInput(name)) return
                 this.registerInput(name, {
                     set: function (value: any) {
@@ -70,7 +67,6 @@ export const getReactNode = (nodeName: string, compVersions: CompVersions, allow
         },
         setup: function (context: NodeContext, graphModel: GraphModel) {
             if (!context.editorConnection || !context.editorConnection.isRunningLocally()) { return }
-            // Stage 0
             // recreate ports on changes
             graphModel.on(`nodeAdded.rolder-kit.${nodeName}`, function (node: GraphModelNode) {
                 context.editorConnection.sendDynamicPorts(node.id, getRNodePorts(node, compVersions))
@@ -80,4 +76,89 @@ export const getReactNode = (nodeName: string, compVersions: CompVersions, allow
             });
         }
     }
+}
+
+export const getJsNode = (nodeName: string, jsVersions: JsVersions, color: NodeColor, experimental: boolean) => {
+    const nodeDef: JsNodeDef = {
+        name: `rolder-kit.${nodeName}`,
+        displayName: nodeName + (experimental ? ' #experimental' : ''),
+        color: color,
+        initialize: function () {
+            this.nodeName = nodeName
+            this.resultProps = {}
+            this.warnings = { count: 0, required: {}, types: {} }
+            this.outputPropValues = {}
+            this.addDeleteListener(() => {
+                const onDelete = jsVersions[this._inputValues?.version].onDelete
+                if (onDelete) onDelete(this)
+            })
+        },
+        changed: {
+            version() {
+                this.scheduleAfterInputsHaveUpdated(() => {
+                    // triggers last on load, dummy setInputsValue to trigger on first load
+                    this.loaded = true
+                    if (this.setInputsValue) this.setInputsValue('loaded', true)
+                })
+            }
+        },
+        inputs: {
+            version: {
+                group: 'Version',
+                displayName: 'Version',
+                type: { name: 'enum', allowEditOnly: true, enums: Object.keys(jsVersions).map(i => ({ value: i, label: i })) },
+            },
+        },
+        methods: {
+            // Stage 2
+            // on inputs data change
+            registerInputIfNeeded: function (name: any) {
+                if (this.hasInput(name)) return
+                this.registerInput(name, {
+                    set: function (value: any) {
+                        this.setInputsValue(name, value)
+                        const nodePort = jsVersions[this.inputs.version]?.inputs?.find(i => i.name === name)
+                        if (nodePort?.type === 'signal' && value) jsVersions[this.inputs.version]?.signals[name](this)
+                    }
+                });
+            },
+            // on outputs data change
+            registerOutputIfNeeded: function (name: any) {
+                if (this.hasOutput(name)) return
+                this.registerOutput(name, { getter: () => this.outputPropValues?.[name] });
+            },
+            setInputsValue: function (inputName: string, inputValue: any) {
+                const nodeInputs = jsVersions[this._inputValues.version]?.inputs
+                if (nodeInputs) { // skip without inputs and triggers after first load
+                    const node = this as NoodlNode
+                    // convert value and ceck type
+                    const convertedValue = convertAndCheckType(node, nodeInputs, inputName, inputValue)
+                    // save to internal storage to restore hided inputs
+                    this._inputValues[inputName] = convertedValue
+                    // set value and restore dependetns if needed
+                    setValue(node, nodeInputs, inputName, convertedValue)
+                    // set defaults if needed for any empty value                    
+                    setDefaults(node, nodeInputs)
+                    // check required input including dependents
+                    checkRequired(node, nodeInputs)
+                }
+                const isSignal = nodeInputs?.some(i => i.type === 'signal' && i.name === inputName)
+                if (!this.warnings?.count && this.loaded && !isSignal) {
+                    const onInputChange = jsVersions[this._inputValues.version].onInputChange
+                    if (onInputChange) onInputChange(this)
+                }
+            }
+        },
+        setup: function (context: NodeContext, graphModel: GraphModel) {
+            if (!context.editorConnection || !context.editorConnection.isRunningLocally()) { return }
+            // recreate ports on changes
+            graphModel.on(`nodeAdded.rolder-kit.${nodeName}`, function (node: GraphModelNode) {
+                context.editorConnection.sendDynamicPorts(node.id, getJsNodePorts(node, jsVersions))
+                node.on('parameterUpdated', function () {
+                    context.editorConnection.sendDynamicPorts(node.id, getJsNodePorts(node, jsVersions))
+                })
+            });
+        }
+    }
+    return nodeDef
 }

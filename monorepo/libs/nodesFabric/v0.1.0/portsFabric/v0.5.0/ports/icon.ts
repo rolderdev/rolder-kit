@@ -1,5 +1,3 @@
-import { NodePort } from "../../../types";
-
 const units = ['rem', '%', 'px']
 
 const icon = [
