@@ -6,12 +6,12 @@ import setSearchResults from "./setSearchResults"
 
 export default async function (props: SearchProps): Promise<SearchResults | void> {
     const { Kuzzle } = window.R.libs
-    const { dbClass, searchString, searchFields, sorts, references, customReferences, useReferences } = props
+    const { dbClass, searchString, searchFields, sorts, references, backReferences, useReferences } = props
 
     const dbClassesV = [
         dbClassVersion(dbClass),
         ...references?.map(i => dbClassVersion(i)) || [],
-        ...customReferences?.map(i => dbClassVersion(i)) || []
+        ...backReferences?.map(i => dbClassVersion(i)) || []
     ]
 
     const query = {
@@ -36,7 +36,7 @@ export default async function (props: SearchProps): Promise<SearchResults | void
             const rItems: RItem[] = []
             kResponse.result.hits.forEach((hit: any) => {
                 const hitDbClass: string = hit.collection.split('_')[0]
-                const rItem = getRItems(hitDbClass, [hit] as KItem[], JSON.stringify(references), JSON.stringify(customReferences))?.[0]
+                const rItem = getRItems(hitDbClass, [hit] as KItem[], JSON.stringify(references), JSON.stringify(backReferences))?.[0]
                 if (rItem) rItems.push(rItem)
             })
             const searchResults = setSearchResults(dbClass, rItems, sorts, useReferences)

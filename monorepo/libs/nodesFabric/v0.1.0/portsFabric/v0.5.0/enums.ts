@@ -30,7 +30,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     { value: 'gradient', label: 'Gradient' }],
     navLinkVariants: [{ value: 'light', label: 'Light' }, { value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' }],
     queryTypes: [
-        { value: 'query', label: 'Query' }, { value: 'scheme', label: 'Scheme' },
+        { value: 'query', label: 'Query' }, //{ value: 'scheme', label: 'Scheme' },
     ],
     directions: [{ value: 'row', label: 'Row' }, { value: 'column', label: 'Column' }],
     wraps: [{ value: 'wrap', label: 'Wrap' }, { value: 'nowrap', label: 'Nowrap' }, { value: 'wrap-reverse', label: 'Wrap reverse' }],

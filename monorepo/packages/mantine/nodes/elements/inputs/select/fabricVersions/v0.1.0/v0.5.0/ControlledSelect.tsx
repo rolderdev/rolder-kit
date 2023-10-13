@@ -50,7 +50,10 @@ export default forwardRef(function (props: any, ref) {
             value={value}
             icon={Icon && <Icon size={props.iconSize} stroke={props.stroke} />}
             error={props.inputError || false}
-            onChange={setValue}
+            onChange={(v) => {
+                setValue(v)
+                if (!v) sendSignal(props.noodlNode, 'reseted')
+            }}
             styles={() => ({
                 item: {
                     '&[data-selected]': { '&, &:hover': { backgroundColor: convertColor(props.backgroundColor) }, },

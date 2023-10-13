@@ -7,7 +7,7 @@ const jsVersions: JsVersions = {
     'v0.1.0': {
         inputs: getPorts(
             'input',
-            ['fetch', 'queryType', 'fetchOnMount', 'dbClass', 'filters', 'sorts', 'options', 'subscribe', 'references', 'customReferences',
+            ['fetch', 'queryType', 'fetchOnMount', 'dbClass', 'filters', 'sorts', 'options', 'subscribe', 'references', 'backReferences',
                 'searchFields', 'searchEnabled', 'searchString', 'useReferences'],
             ['dbClass', 'searchFields']),
         outputs: getPorts('output', ['items', 'fetching', 'fetched', 'searching', 'founded']),

@@ -16,7 +16,7 @@ const compVersions: CompVersions = {
             ),
             ...getGroupedPorts('input', ['Icon']),
         ],
-        outputs: getPorts('output', ['selected', 'createValueSubmited', 'selectedItem', 'createValue']),
+        outputs: getPorts('output', ['selected', 'createValueSubmited', 'selectedItem', 'createValue', 'reseted']),
         signals: getPorts('input', ['resetSelected'])
     }
 }

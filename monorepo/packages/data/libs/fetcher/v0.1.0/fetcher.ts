@@ -10,8 +10,8 @@ export const [createFetcherStore, createMutatorStore] = nanoquery({
         return window.R.libs.Kuzzle?.document.search(...getKuzzleFetchKeys(storeKeys)).then((kResponse: KResponse) => {
             time(`${dbClass} fetch`, true)
             const references = storeKeys[5] as string
-            const customReferences = storeKeys[6] as string
-            return getRItems(dbClass, kResponse.hits as KItem[], references, customReferences)
+            const backReferences = storeKeys[6] as string
+            return getRItems(dbClass, storeKeys.join(''), kResponse.hits as KItem[], references, backReferences)
         })
     }),
     refetchOnFocus: true

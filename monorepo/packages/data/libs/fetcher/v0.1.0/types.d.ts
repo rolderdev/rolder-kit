@@ -16,17 +16,21 @@ declare type KItem = {
     _version: number
 }
 
-declare interface RItem extends ItemBody {
+declare interface RItem extends ItemSysProps extends ItemBody {
     id: string
-    dbClass: string
-    refs: string[]
-    customRefs: string[]
     _kuzzle_info?: {
         author: string
         createdAt: number
         updater: string | null
         updatedAt: number | null
     }
+}
+
+declare type ItemSysProps = {
+    dbClass: string
+    storeKey: string
+    refs: string[]
+    backRefs: string[]
 }
 
 declare type ItemBody = {
@@ -80,7 +84,7 @@ declare type KeysDef = {
     sorts?: Sorts,
     options?: Options
     references?: string[]
-    customReferences?: string[]
+    backReferences?: string[]
 }
 
 declare type Filters = { [key: string]: any }
@@ -137,7 +141,7 @@ declare type SearchProps = {
     sorts?: Sorts
     useReferences?: boolean
     references?: string[]
-    customReferences?: string[]
+    backReferences?: string[]
 }
 
 declare type SearchResults = {

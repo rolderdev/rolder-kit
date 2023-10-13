@@ -8,7 +8,7 @@ export default [
     { name: 'subscribe', group: 'Query params', type: 'boolean', displayName: 'Subscribe', default: false },
     { name: 'dbClass', group: 'Query params', type: '*', displayName: 'Database class', dependsOn: [{ name: 'queryType', value: 'query' }] },
     { name: 'references', group: 'References', type: 'proplist', displayName: 'References' },
-    { name: 'customReferences', group: 'Custom references', type: 'proplist', displayName: 'Custom references' },
+    { name: 'backReferences', group: 'Backward references', type: 'proplist', displayName: 'Backward references' },
     { name: 'filters', group: 'Query params', type: 'array', displayName: 'Filters', isObject: true, dependsOn: [{ name: 'queryType', value: 'query' }], tooltip: helpers.filters },
     { name: 'sorts', group: 'Query params', type: 'array', displayName: 'Sorts', dependsOn: [{ name: 'queryType', value: 'query' }], tooltip: helpers.sorts },
     { name: 'options', group: 'Query params', type: 'array', displayName: 'Options', isObject: true, dependsOn: [{ name: 'queryType', value: 'query' }], tooltip: helpers.options },

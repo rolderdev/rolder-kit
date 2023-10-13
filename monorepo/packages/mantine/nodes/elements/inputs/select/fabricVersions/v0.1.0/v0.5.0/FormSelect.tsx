@@ -29,6 +29,7 @@ export default forwardRef(function (props: any, ref) {
             const selectedItem = props.inputItems.find((i: any) => value && [i.value, i.id, i.label].includes(value))
             sendOutput(props.noodlNode, 'selectedItem', selectedItem || null)
             sendSignal(props.noodlNode, 'selected')
+            if (!value) sendSignal(props.noodlNode, 'reseted')
         }
     }, [formHook?.values?.[props.formField]])
 

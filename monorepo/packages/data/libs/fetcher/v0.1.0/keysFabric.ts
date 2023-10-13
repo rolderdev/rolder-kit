@@ -8,7 +8,7 @@ export function getStoreKeys(keysDef: KeysDef) {
     keys.push(keysDef.sorts ? JSON.stringify(keysDef.sorts) : '')
     keys.push(keysDef.options ? JSON.stringify(keysDef.options) : '')
     keys.push(keysDef.references ? JSON.stringify(keysDef.references) : '')
-    keys.push(keysDef.customReferences ? JSON.stringify(keysDef.customReferences) : '')    
+    keys.push(keysDef.backReferences ? JSON.stringify(keysDef.backReferences) : '')
     return keys
 }
 
@@ -26,7 +26,7 @@ export function getKuzzleFetchKeys(storeKeys: (string | number)[]): KuzzleFetchK
     keys.push(setOptions(dbClass, options))
     const references = storeKeys[5] ? JSON.parse(storeKeys[5] as string) : []
     keys.push(references)
-    const customReferences = storeKeys[6] ? JSON.parse(storeKeys[6] as string) : []
-    keys.push(customReferences)    
+    const backReferences = storeKeys[6] ? JSON.parse(storeKeys[6] as string) : []
+    keys.push(backReferences)
     return keys
 }

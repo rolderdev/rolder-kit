@@ -7,16 +7,17 @@ import search from "../../../../../libs/search/v0.5.0/search"
 const unbinders: { [nodeId: string]: () => void } = {}
 
 function subscribeToStore(noodlNode: NoodlNode) {
-  const { dbClass, filters, subscribe: enableSubscribe, sorts, options, references, customReferences } = noodlNode.resultProps
+  const { dbClass, filters, subscribe: enableSubscribe, sorts, options, references, backReferences } = noodlNode.resultProps
 
-  const store = createStore(noodlNode.id, dbClass, filters, sorts, options, references, customReferences)
+  const store = createStore(noodlNode.id, dbClass, filters, sorts, options, references, backReferences)
   unbinders[noodlNode.id] = store.listen(v => {
+    v // dummy call for case when no output connection
     sendOutput(noodlNode, 'items', v.data)
     sendOutput(noodlNode, 'fetching', v.loading)
     sendSignal(noodlNode, 'fetched')
   })
 
-  if (enableSubscribe) subscribe(store, dbClass, sorts, filters, references, customReferences)
+  if (enableSubscribe) subscribe(store, dbClass, sorts, filters, references, backReferences)
   else unsubscribe(store.key)
 
   return store
@@ -35,9 +36,9 @@ const debounceSearch = debounce((searchString: string) => {
 
 export default {
   onInputChange(noodlNode: NoodlNode) {
-    const { dbClass, fetchOnMount, searchString, searchFields, sorts, useReferences, references, customReferences } = noodlNode.resultProps
+    const { dbClass, fetchOnMount, searchString, searchFields, sorts, useReferences, references, backReferences } = noodlNode.resultProps
     if (searchString?.length > 1) {
-      searchParams = { dbClass, searchFields, sorts, useReferences, references, customReferences }
+      searchParams = { dbClass, searchFields, sorts, useReferences, references, backReferences }
       nNode = noodlNode
       sendOutput(nNode, 'searching', true)
       debounceSearch(searchString)
