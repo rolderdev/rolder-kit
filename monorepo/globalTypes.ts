@@ -6,3 +6,4 @@ declare module "@noodl/noodl-sdk" {
     }): void
     function defineNode(n: any): void
 }
+declare module 'numbro/dist/languages/ru-RU.min.js';

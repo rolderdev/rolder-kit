@@ -5,7 +5,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'xl', label: 'xl' },
     ],
     tableDensities: [{ value: 'xs', label: 'xs' }, { value: 'md', label: 'md' }, { value: 'xl', label: 'xl' }],
-    fontWeights: [{ value: '600', label: 'Medium' }, { value: '700', label: 'Bold' }],
+    fontWeights: [{ value: '400', label: 'Normal' }, { value: '600', label: 'Medium' }, { value: '700', label: 'Bold' }],
     colors: [
         { value: 'gray', label: 'Gray' }, { value: 'dark', label: 'Dark' }, { value: 'blue', label: 'Blue' }, { value: 'red', label: 'Red' }
     ],
@@ -19,13 +19,11 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'stretch', label: 'Stretch' }, { value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' },
         { value: 'flex-end', label: 'Flex end' }
     ],
-    flexAligns: [{ value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' }, { value: 'flex-end', label: 'Flex end' }],
+
     stackJustifies: [
         { value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' }, { value: 'flex-end', label: 'Flex end' },
         { value: 'space-between', label: 'Space between' }, { value: 'space-around', label: 'Space around' }
     ],
-    flexJustifies: [{ value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' },
-    { value: 'flex-end', label: 'Flex end' }],
     avatarVariants: [{ value: 'light', label: 'Light' }, { value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' },
     { value: 'gradient', label: 'Gradient' }],
     navLinkVariants: [{ value: 'light', label: 'Light' }, { value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' }],
@@ -34,9 +32,12 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     ],
     directions: [{ value: 'row', label: 'Row' }, { value: 'column', label: 'Column' }],
     wraps: [{ value: 'wrap', label: 'Wrap' }, { value: 'nowrap', label: 'Nowrap' }, { value: 'wrap-reverse', label: 'Wrap reverse' }],
-    positions: [
+    groupPositions: [
         { value: 'left', label: 'Left' }, { value: 'center', label: 'Center' }, { value: 'right', label: 'Right' },
         { value: 'apart', label: 'Apart' }
+    ],
+    textAligns: [
+        { value: 'left', label: 'Left' }, { value: 'center', label: 'Center' }, { value: 'right', label: 'Right' }
     ],
     popoverPositions: [
         { value: 'bottom', label: 'Bottom' }, { value: 'left', label: 'Left' }, { value: 'right', label: 'Right' },
@@ -95,4 +96,14 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     expendOnVariants: [{ value: 'row', label: 'Row' }, { value: 'icon', label: 'Icon' }],
     dropdownPositions: [{ value: 'flip', label: 'Flip' }, { value: 'bottom', label: 'Bottom' }, { value: 'top', label: 'Top' }],
     checkboxGroupOrientations: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' }],
+    textFormats: [
+        { value: 'none', label: 'None' }, { value: 'number', label: 'Number' }, { value: 'date', label: 'Date' },
+        { value: 'mask', label: 'Mask' },
+    ],
+    dataSources: [{ value: 'item', label: 'Item' }, { value: 'value', label: 'Value' }],
+    flexJustifies: [{ value: 'flex-start', label: 'Flex-start' }, { value: 'center', label: 'Center' },
+    { value: 'flex-end', label: 'Flex-end' }],
+    flexAligns: [{ value: 'flex-start', label: 'Flex-start' }, { value: 'center', label: 'Center' }, { value: 'flex-end', label: 'Flex-end' }],
+    flexDirections: [{ value: 'row', label: 'Row' }, { value: 'column', label: 'Column' },
+    { value: 'row-reverse', label: 'Row-reverse' }, { value: 'column-reverse', label: 'Column-reverse' }],
 }

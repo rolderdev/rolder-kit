@@ -27,6 +27,7 @@ const style = [
     { name: 'unstyled', group: 'Style', type: 'boolean', displayName: 'Unstyled', default: false },
     { name: 'withArrow', group: 'Style', type: 'boolean', displayName: 'With arrow', default: true },
     { name: 'checkboxColor', group: 'Checkbox', type: 'string', displayName: 'Color', tooltip: 'red, red.5' },
+    { name: 'dividerVariant', group: 'Style', type: { name: 'enum', enums: enums.dividerVariants }, displayName: 'Variant', default: 'solid' },
 ] as const satisfies readonly NodePort[];
 
 export default style

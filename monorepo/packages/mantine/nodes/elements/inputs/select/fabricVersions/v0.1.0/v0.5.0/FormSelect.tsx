@@ -34,9 +34,7 @@ export default forwardRef(function (props: any, ref) {
     }, [formHook?.values?.[props.formField]])
 
     // reset
-    useImperativeHandle(ref, () => ({
-        resetSelected() { formHook?.setFieldValue(props.formField, null) }
-    }), [])
+    useImperativeHandle(ref, () => ({ resetSelected() { formHook?.setFieldValue(props.formField, null) } }), [])
 
     return (
         <Select

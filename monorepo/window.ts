@@ -25,6 +25,7 @@ import sortBy from 'just-sort-by';
 import unique from 'just-unique'
 import compare from 'just-compare'
 import flatten from 'just-flatten-it';
+import debounce from 'just-debounce-it'
 // loadsh
 import { isNil } from 'lodash'
 // form
@@ -36,6 +37,7 @@ import getValue6 from './packages/utils/getValue/6/getValue';
 import getValue7 from './packages/utils/getValue/7/getValue';
 import getFormatedDate2 from './packages/utils/getFormatedDate/2/getFormatedDate';
 import getMasked2 from './packages/utils/getMasked/2/getMasked';
+import filterBy from './packages/utils/filterBy/3/filterBy';
 
 declare type RolderType = {
     states: {
@@ -101,6 +103,7 @@ declare type RolderType = {
             unique: typeof unique
             compare: typeof compare
             flatten: typeof flatten
+            debounce: typeof debounce
         }
         isNil: typeof isNil
         lodash: {
@@ -118,9 +121,13 @@ declare type RolderType = {
         }
         getMasked: {
             v2: typeof getMasked2
+        },
+        filterBy: {
+            v3: typeof filterBy
         }
     },
-    items: { [itemId: string]: RItem }
+    items: { [itemId: string]: RItem },
+    user: any
 }
 
 declare global {

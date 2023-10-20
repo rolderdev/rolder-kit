@@ -12,6 +12,7 @@ const dimensions = [
     { name: 'appLoaderSize', group: 'Loader', type: { name: 'enum', enums: enums.sizes }, displayName: 'Size', default: 'xl' },
     { name: 'maxDropdownHeight', group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Max dropdown height' },
     { name: 'fullWidth', group: 'Dimensions', type: 'boolean', displayName: 'Full width' },
+    { name: 'fitContent', group: 'Dimensions', type: 'boolean', displayName: 'Fit content', default: false },
 ] as const satisfies readonly NodePort[];
 
 export default dimensions

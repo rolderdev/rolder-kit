@@ -1,13 +1,15 @@
-const data = [
+import { enums } from "../enums";
+
+export default [
     { name: 'items', group: 'Data', type: { name: 'array', allowConnectionsOnly: true }, displayName: 'Items' },
     { name: 'inputItems', group: 'Data', type: 'array', displayName: 'Items' },
     { name: 'fetchedCount', group: 'Data', type: 'number', displayName: 'Fetched count' },
     { name: 'totalCount', group: 'Data', type: 'number', displayName: 'Total count' },
     { name: 'updateItem', group: 'Data', type: 'object', displayName: 'Update item', tooltip: "Example: { dbClass: 'task', id: 'task id', body: {...} }" },
     { name: 'updatedItem', group: 'Data', type: 'object', displayName: 'Updated item' },
-    { name: 'updateScheme', group: 'Data', type: { name: 'object', allowConnectionsOnly: true }, displayName: 'Update scheme' },
+    { name: 'updateScheme', group: 'Data', type: { name: 'array', allowConnectionsOnly: true }, displayName: 'Update scheme' },
     { name: 'updatedData', group: 'Data', type: 'object', displayName: 'Updated data' },
-    { name: 'createScheme', group: 'Data', type: { name: 'object', allowConnectionsOnly: true }, displayName: 'Create scheme' },
+    { name: 'createScheme', group: 'Data', type: { name: 'array', allowConnectionsOnly: true }, displayName: 'Create scheme' },
     { name: 'createdData', group: 'Data', type: 'object', displayName: 'Created data' },
     { name: 'updateItems', group: 'Data', type: { name: 'object', allowConnectionsOnly: true }, displayName: 'Update items', tooltip: "Example: { dbClass: 'task', items: [{id: 'id', body: {...} }] }" },
     { name: 'updatedItems', group: 'Data', type: 'array', displayName: 'Updated items' },
@@ -20,8 +22,13 @@ const data = [
     { name: 'defaultItem', group: 'Data', type: { name: 'object', allowConnectionsOnly: true }, displayName: 'Default item', dependsOn: [{ name: 'useForm', value: false }] },
     { name: 'defaultSegmentedControlItem', group: 'Data', type: { name: 'string', allowConnectionsOnly: true }, displayName: 'Default item', required: true, dependsOn: [{ name: 'useForm', value: false }] },
     { name: 'selectedDate', group: 'Data', type: '*', displayName: 'Selected date' },
+    { name: 'selectedDates', group: 'Data', type: 'array', displayName: 'Selected dates' },
     { name: 'defaultDate', group: 'Data', type: { name: '*', allowConnectionsOnly: true }, displayName: 'Default date' },
     { name: 'defaultItems', group: 'Data', type: 'array', displayName: 'Default items' },
-] as const satisfies readonly NodePort[];
-
-export default data
+    { name: 'dataSource', group: 'Data', type: { name: 'enum', enums: enums.dataSources }, displayName: 'Data source', default: 'item' },
+    { name: 'itemSource', group: 'Data', type: { name: '*', allowConnectionsOnly: true }, displayName: 'Item', dependsOn: [{ name: 'dataSource', value: 'item' }] },
+    { name: 'sourceField', group: 'Data', type: 'string', displayName: 'Field', dependsOn: [{ name: 'dataSource', value: 'item' }] },
+    { name: 'valueSource', group: 'Data', type: 'string', displayName: 'Value', dependsOn: [{ name: 'dataSource', value: 'value' }] },
+    { name: 'userIds', group: 'Data', type: 'array', displayName: 'User ids' },
+    { name: 'users', group: 'Data', type: 'array', displayName: 'Users' },
+] as const satisfies readonly NodePort[]

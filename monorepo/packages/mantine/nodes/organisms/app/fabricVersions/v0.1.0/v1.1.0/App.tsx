@@ -50,7 +50,7 @@ export default forwardRef(function (props: any) {
         window.R.env.envVersion = envVersion
         window.R.env.project = project
         window.R.env.projectVersion = projectVersion
-        window.R.env.dbVersion = dbVersion
+        window.R.env.dbVersion = dbVersion        
         window.R.params.dbClasses = eval(dbClasses)[0]
         window.R.params.sessionTimeout = sessionTimeout
         window.R.params.defaults = { dateFormat: defaultDateFormat }
@@ -84,7 +84,10 @@ export default forwardRef(function (props: any) {
                 ///
                 validateJwt().then((jwtValid) => {
                     if (jwtValid)
-                        Kuzzle?.auth.getCurrentUser().then((r: any) => sendOutput(props.noodlNode, 'userRole', r.content.role?.value))
+                        Kuzzle?.auth.getCurrentUser().then((r: any) => {
+                            window.R.user = { ...r.content, id: r._id }
+                            sendOutput(props.noodlNode, 'userRole', r.content.role?.value)
+                        })
                     else sendOutput(props.noodlNode, 'userRole', 'notAuthenticated')
 
                     window.R.states.inited = true

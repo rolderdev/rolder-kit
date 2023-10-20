@@ -36,8 +36,9 @@ import sortBy from 'just-sort-by';
 import unique from 'just-unique'
 import compare from 'just-compare'
 import flatten from 'just-flatten-it';
+import debounce from 'just-debounce-it'
 window.R.libs.just = {
-    clone, map, typeOf, flush, template, isEmpty, omit, insert, get, set, clamp, last, remove, sortBy, unique, compare, flatten
+    clone, map, typeOf, flush, template, isEmpty, omit, insert, get, set, clamp, last, remove, sortBy, unique, compare, flatten, debounce
 }
 
 // lodash
@@ -49,7 +50,11 @@ window.R.libs.lodash = { isNil }
 import { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField } from '@mantine/form'
 window.R.libs.form = { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField }
 
+// numbro
+import numbro from 'numbro';
+import locale from 'numbro/dist/languages/ru-RU.min.js'; numbro.registerLanguage(locale); numbro.setLanguage('ru-RU')
+window.R.libs.numbro = numbro
+
 import cookies from 'js-cookie'; window.R.libs.cookies = cookies
-import numbro from 'numbro'; window.R.libs.numbro = numbro
 import { IMask } from 'react-imask'; window.R.libs.IMask = IMask
 import { sort } from "fast-sort"; window.R.libs.sort = sort

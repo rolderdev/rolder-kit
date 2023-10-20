@@ -3,7 +3,7 @@ import { dbClassVersion, dbVersion } from "../../../utils/getVersion/v0.3.0/getV
 import { FetcherStore } from "@nanostores/query"
 import { log } from "../../../../../utils/debug/log/v0.2.0/log"
 import mutator from "../../mutator/v0.1.0/mutator"
-import getRItems from "../../getRItems/v0.2.0/getRItems"
+import getRItems from "../../../utils/setItems/v0.2.0/setItems"
 
 let roomIds: { [storeKey: string]: string } = {}
 
@@ -22,7 +22,8 @@ export function subscribe(
                             dbClass, store.key, [notif.result] as KItem[], JSON.stringify(references), JSON.stringify(backReferences)
                         )?.[0]
                         if (rItem) switch (notif.action) {
-                            case 'update': mutator.update(rItem); break
+                            case 'update': store.invalidate(); break
+                            //case 'update': mutator.update(rItem); break
                             case 'create': mutator.add(rItem, sorts); break
                             case 'delete': mutator.remove(rItem); break
                         }

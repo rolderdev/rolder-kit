@@ -9,7 +9,7 @@ const table = [
     { name: 'columns', group: 'Params', type: 'array', displayName: 'Columns', required: true },
     { name: 'selectable', group: 'Params', type: 'boolean', displayName: 'Selectable', default: false, },
     // states
-    { name: 'tableLoading', group: 'States', type: 'boolean', displayName: 'Loading', default: false },
+    { name: 'tableLoading', group: 'States', type: 'boolean', displayName: 'Loading', default: true },
     { name: 'tableSearching', group: 'States', type: 'boolean', displayName: 'Searching', default: false },
     // layout    
     { name: 'disableHeader', group: 'Layout', type: 'boolean', displayName: 'Disable header', default: false },

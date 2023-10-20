@@ -18,4 +18,4 @@ const compVersions: CompVersions = {
 
 //===================================================================
 
-export default getReactNode('NavLink', compVersions, true)
+export default getReactNode('NavLink', compVersions)

@@ -2,7 +2,6 @@ import helpers from "../helpers";
 import { enums } from "../enums";
 
 const params = [    
-    { name: 'getUsers', group: 'Params', type: 'boolean', displayName: 'Get users', default: false },
     { name: 'optimistic', group: 'Params', type: 'boolean', displayName: 'Optimistic', default: false },
     { name: 'label', group: 'Params', type: 'string', displayName: 'Label' },
     { name: 'description', group: 'Params', type: 'string', displayName: 'Description' },
@@ -34,6 +33,14 @@ const params = [
     { name: 'dateFormat', group: 'Params', type: 'string', displayName: 'Date format', default: 'projectDefault' },
     { name: 'limitMinDate', group: 'Params', type: 'boolean', displayName: 'Limit min date', default: false },
     { name: 'minDateOffset', group: 'Params', type: 'number', displayName: 'Min date offset', default: 0, dependsOn: [{ name: 'limitMinDate', value: true }] },
+    { name: 'textFormat', group: 'Params', type: { name: 'enum', enums: enums.textFormats }, displayName: 'Text format', default: 'none' },
+    { name: 'textMask', group: 'Params', type: 'string', displayName: 'Mask', default: '{8} (000) 000-00-00', tooltip: "IMask js lib mask", dependsOn: [{ name: 'textFormat', value: 'mask' }] },
+    { name: 'numberFormat', group: 'Params', type: 'array', displayName: 'Number format', isObject: true, tooltip: "Numbro lib format [{ thousandSeparated: true }]", dependsOn: [{ name: 'textFormat', value: 'number' }] },
+    { name: 'dateFormatAtText', group: 'Params', type: 'string', displayName: 'Date format', tooltip: "Dayjs format string", default: 'YYYY-MM-DD', dependsOn: [{ name: 'textFormat', value: 'date' }] },
+    { name: 'dateFormatAtDatePicker', group: 'Params', type: 'string', displayName: 'Date format', default: 'YYYY-MM-DD' },
+    { name: 'datePickerType', group: 'Params', type: { name: 'enum', enums: enums.datePickerTypes }, displayName: 'Type', default: 'default' },
+    //{ name: 'kuzzleRefresh', group: 'Params', type: 'boolean', displayName: 'Refresh', default: true },
+    //{ name: 'kuzzleSilent', group: 'Params', type: 'boolean', displayName: 'Silent', default: false },
 ] as const satisfies readonly NodePort[];
 
 export default params

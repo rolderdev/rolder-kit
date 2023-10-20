@@ -1,6 +1,6 @@
 import { setSorts } from "../../../utils/setDefaults/v0.3.0/setDefaults";
+import { setRefsFromItem } from "../../../utils/setRefs/v0.6.0/setRefs";
 import { createMutatorStore } from "../../fetcher/v0.1.0/fetcher";
-import { setRefsFromItem } from "../../setRefs/v0.6.0/setRefs";
 
 const mutator = {
     update(rItem: RItem) {

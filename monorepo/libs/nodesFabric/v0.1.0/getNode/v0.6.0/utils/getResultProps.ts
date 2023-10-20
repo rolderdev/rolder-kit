@@ -6,11 +6,11 @@ import setValue from "./setValue"
 
 export default function (compVersions: CompVersions, compProps: any) {
     const nodeInputs = compVersions[compProps.version]?.inputs
+    const noodlNode: NoodlNode = compProps.noodlNode
 
     if (compProps.version && nodeInputs) {
         // overwrite initial props with changed props from node
         const rawProps = { ...compProps, ...compProps.noodlNode.props }
-        const noodlNode: NoodlNode = rawProps.noodlNode
 
         // set customProps input
         noodlNode.resultProps.customProps = convertAndCheckType(noodlNode, [customProps], 'customProps', rawProps.customProps)
@@ -29,17 +29,15 @@ export default function (compVersions: CompVersions, compProps: any) {
         setDefaults(noodlNode, nodeInputs)
         // check required input including dependents
         checkRequired(noodlNode, nodeInputs)
-
-        if (noodlNode.warnings.count) return { compReady: false }
-        else return {
-            compReady: true,
-            resultProps: {
-                ...compProps.noodlNode.resultProps,
-                noodlNode: compProps.noodlNode,
-                children: compProps.children,
-                style: compProps.style
-            }
+    }
+    if (noodlNode.warnings.count) return { compReady: false }
+    else return {
+        compReady: true,
+        resultProps: {
+            ...compProps.noodlNode.resultProps,
+            noodlNode: compProps.noodlNode,
+            children: compProps.children,
+            style: compProps.style
         }
     }
-    return { compReady: false }
 }

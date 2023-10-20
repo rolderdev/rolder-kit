@@ -4,12 +4,7 @@ import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-qu
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 window.QueryInit = { QueryCache, QueryClient, QueryClientProvider, ReactQueryDevtools }
 
+import { defineModule, defineNode } from '../../node_modules/@noodl/noodl-sdk'
+
 import nodesStore from './nodes/nodesStore'
-function handleNoodl() {
-    window.setTimeout(function () {
-        if (window.Noodl.defineModule && window.Noodl.defineNode)
-            return window.Noodl.defineModule({ nodes: nodesStore.map(i => window.Noodl.defineNode(i)) })
-        else handleNoodl()
-    }, 10)
-}
-handleNoodl()
+defineModule({ nodes: nodesStore.map(i => defineNode(i)) })

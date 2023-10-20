@@ -18,9 +18,9 @@ export default function (
             thousandsSeparator: maskProps.thousandsSeparator || ' ',
             radix: maskProps.radix || '.'
         }; break
-        default: resultProps = { mask: maskProps.maskPattern }
+        default: resultProps = { mask: maskProps.maskPattern || '' }
     }
-
+    
     if (value) {
         const masked = IMask.createMask(resultProps);
         masked.resolve(value);

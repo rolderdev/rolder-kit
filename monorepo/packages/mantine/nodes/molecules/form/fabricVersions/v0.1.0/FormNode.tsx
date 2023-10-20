@@ -10,6 +10,7 @@ const compVersions: CompVersions = {
         Comp: v0_4_0,
         inputs: getPorts('input', ['formScheme']),
         outputs: getPorts('output', ['formHook', 'submited']),
+        signals: getPorts('input', ['refresh'])
     }
 }
 

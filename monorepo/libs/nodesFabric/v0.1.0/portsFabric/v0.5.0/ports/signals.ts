@@ -3,7 +3,7 @@ const signals = [
     { name: 'loaded', group: 'Signals', type: 'signal', displayName: 'Loaded' },
     { name: 'reload', group: 'Signals', type: 'signal', displayName: 'Reload' },
     { name: 'update', group: 'Signals', type: 'signal', displayName: 'Update' },
-    { name: 'updated', group: 'Signals', type: 'signal', displayName: 'Updated' },    
+    { name: 'updated', group: 'Signals', type: 'signal', displayName: 'Updated' },
     { name: 'submited', group: 'Signals', type: 'signal', displayName: 'Submited' },
     { name: 'clicked', group: 'Signals', type: 'signal', displayName: 'Clicked' },
     { name: 'create', group: 'Signals', type: 'signal', displayName: 'Create' },
@@ -21,6 +21,8 @@ const signals = [
     { name: 'createValueSubmited', group: 'Signals', type: 'signal', displayName: 'Create value submited', dependsOn: [{ name: 'creatable', value: true }] },
     { name: 'resetSelected', group: 'Signals', type: 'signal', displayName: 'Reset selected' },
     { name: 'reseted', group: 'Signals', type: 'signal', displayName: 'Reseted' },
+    { name: 'logout', group: 'Signals', type: 'signal', displayName: 'Logout' },
+    { name: 'loggedOut', group: 'Signals', type: 'signal', displayName: 'Logged out' },
 ] as const satisfies readonly NodePort[];
 
 export default signals

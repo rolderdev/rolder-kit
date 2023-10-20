@@ -18,9 +18,13 @@ import AvatarNode_f0_1_0 from "./molecules/avatar/fabricVersions/v0.1.0/AvatarNo
 import FormNode_f0_1_0 from "./molecules/form/fabricVersions/v0.1.0/FormNode";
 import DrawerNode_f0_1_0 from "./molecules/drawer/fabricVersions/v0.1.0/DrawerNode";
 import ModalNode_f0_1_0 from "./molecules/modal/fabricVersions/v0.1.0/ModalNode";
+import StackNode_f0_1_0 from "./molecules/stack/fabricVersions/v0.1.0/StackNode";
+import FlexNode_f0_1_0 from "./molecules/flex/fabricVersions/v0.1.0/FlexNode";
+import CenterNode_f0_1_0 from "./molecules/center/fabricVersions/v0.1.0/CenterNode";
+import GroupNode_f0_1_0 from "./molecules/group/fabricVersions/v0.1.0/GroupNode";
 //// elements
-// navigation
-import NavLinkNode_f0_1_0 from "./elements/navigation/navLink/fabricVersions/v0.1.0/NavLinkNode";
+// dataDisplay
+import IconNode_f0_1_0 from "./elements/dataDisplay/icon/fabricVersions/v0.1.0/IconNode";
 // inputs
 import TextInputNode_f0_1_0 from "./elements/inputs/textInput/fabricVersions/v0.1.0/TextInputNode";
 import SelectNode_f0_1_0 from "./elements/inputs/select/fabricVersions/v0.1.0/SelectNode";
@@ -28,6 +32,15 @@ import DateTimePickerNode_f0_1_0 from "./elements/inputs/dateTimePicker/fabricVe
 import SegmentedControlNode_f0_1_0 from "./elements/inputs/segmentedControl/fabricVersions/v0.1.0/SegmentedControlNode";
 import CheckboxGroupNode_f0_1_0 from "./elements/inputs/checkboxGroup/fabricVersions/v0.1.0/CheckboxGroupNode";
 import MultiSelectNode_f0_1_0 from "./elements/inputs/multiSelect/fabricVersions/v0.1.0/MultiSelectNode";
+import DatePickerInputNode_f0_1_0 from "./elements/inputs/datePickerInput/fabricVersions/v0.1.0/DatePickerInputNode";
+import MaskedInputNode_f0_1_0 from "./elements/inputs/MaskedInput/fabricVersions/v0.1.0/MaskedInputNode";
+// miscellaneous
+import DividerNode_f0_1_0 from "./elements/miscellaneous/divider/fabricVersions/v0.1.0/DividerNode";
+// navigation
+import NavLinkNode_f0_1_0 from "./elements/navigation/navLink/fabricVersions/v0.1.0/NavLinkNode";
+// typography
+import TextNode_f0_1_0 from "./elements/typography/text/fabricVersions/v0.1.0/TextNode";
+import TitleNode_f0_1_0 from "./elements/typography/title/fabricVersions/v0.1.0/TitleNode";
 
 export default [
     ///// organisms
@@ -38,10 +51,18 @@ export default [
     // Tabs
     TabsNode_f0_1_0, TabNode_f0_1_0,
     // molecules
-    BoxNode_f0_1_0, AvatarNode_f0_1_0, FormNode_f0_1_0, DrawerNode_f0_1_0, ModalNode_f0_1_0,
+    BoxNode_f0_1_0, AvatarNode_f0_1_0, FormNode_f0_1_0, DrawerNode_f0_1_0, ModalNode_f0_1_0, StackNode_f0_1_0, FlexNode_f0_1_0,
+    CenterNode_f0_1_0, GroupNode_f0_1_0,
     //// elements
+    // dataDisplay
+    IconNode_f0_1_0,
+    // inputs
+    TextInputNode_f0_1_0, SelectNode_f0_1_0, DateTimePickerNode_f0_1_0, SegmentedControlNode_f0_1_0, CheckboxGroupNode_f0_1_0,
+    MultiSelectNode_f0_1_0, DatePickerInputNode_f0_1_0, MaskedInputNode_f0_1_0,
+    // miscellaneous
+    DividerNode_f0_1_0,
     // navigation
     NavLinkNode_f0_1_0,
-    // inputs
-    TextInputNode_f0_1_0, SelectNode_f0_1_0, DateTimePickerNode_f0_1_0, SegmentedControlNode_f0_1_0, CheckboxGroupNode_f0_1_0, MultiSelectNode_f0_1_0,
+    // typography
+    TextNode_f0_1_0, TitleNode_f0_1_0,
 ]

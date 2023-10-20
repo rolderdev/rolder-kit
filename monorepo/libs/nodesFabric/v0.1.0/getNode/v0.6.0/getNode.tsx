@@ -30,7 +30,6 @@ export const getReactNode = (nodeName: string, compVersions: CompVersions, allow
                     const localRef = useRef<any>(null)
                     const Comp = compVersions[compProps.version]?.Comp
                     const { compReady, resultProps } = getResultProps(compVersions, compProps)
-
                     return Comp && compReady ? <Comp {...resultProps} ref={localRef} /> : <></>
                 }
             )

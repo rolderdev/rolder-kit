@@ -8,8 +8,9 @@ export default function (dbClass: string, allRItems: RItem[], sorts: any, useRef
     if (useReferences) {
         refDbClassRItems.forEach(refRItem => {
             let targetRItem: any = undefined
-            map(window.R.items as any, (_itemId, item: RItem) => {
-                if (get(item, [refRItem.dbClass, 'id'])) targetRItem = item
+            map(window.Noodl.Object._models as any, (itemId, _item) => {
+                const nItem = window.Noodl.Objects[itemId]
+                if (nItem && nItem[refRItem.dbClass]?.id === refRItem.id) targetRItem = nItem
             })
             if (targetRItem && !resultRItems.map(i => i.id).includes(targetRItem.id)) resultRItems.push(targetRItem)
         })

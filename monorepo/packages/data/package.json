@@ -4,15 +4,17 @@
   "version": "0.4.0",
   "scripts": {
     "build": "rspack build",
+    "prod": "webpack --mode=production",
     "patch": "npm version patch && rspack build",
     "minor": "npm version minor && rspack build"
   },
   "dependencies": {
-    "kuzzle-sdk": "7.11.0",
-    "nanostores": "0.9.3",
+    "@noodl/noodl-sdk": "0.5.4",
     "@nanostores/query": "0.2.4",
-    "just-debounce-it": "3.2.0",
     "@tanstack/react-query": "4.36.1",
-    "@tanstack/react-query-devtools": "4.36.1"
+    "@tanstack/react-query-devtools": "4.36.1",
+    "just-debounce-it": "3.2.0",
+    "kuzzle-sdk": "7.11.0",
+    "nanostores": "0.9.4"
   }
 }
