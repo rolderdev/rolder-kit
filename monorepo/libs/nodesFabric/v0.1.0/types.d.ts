@@ -83,11 +83,13 @@ declare type ReactNodeDef = {
     displayName: string
     noodlNodeAsProp: boolean
     allowChildren: boolean
+    color?: NodeColor
     warnings?: {
         count: number
         required: { [x: key]: string }
         types: { [x: key]: string }
     }
+    currentPorts?: NodePort[] | {}
     initialize(): void
     getReactComponent(): any
     inputProps: {
@@ -100,6 +102,7 @@ declare type ReactNodeDef = {
     methods: { [key: string]: any }
     setup(context: any, graphModel: any): void
     resultProps?: { [key: string]: any }
+    addDeleteListener?: any
 }
 
 declare type JsNodeDef = {

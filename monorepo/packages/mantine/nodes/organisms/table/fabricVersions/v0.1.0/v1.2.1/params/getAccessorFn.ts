@@ -3,7 +3,7 @@ import { ColumnDef } from "../types/Column";
 export default function (columnDef: ColumnDef, row: RItem) {
     const { numbro } = window.R.libs
     const { getFormatedDate, getMasked, getValue } = window.R.utils
-    
+
     switch (columnDef.data?.type) {
         case 'date': {
             const date = getFormatedDate.v2(row, columnDef.accessor, columnDef.data.dateFormat)

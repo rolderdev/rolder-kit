@@ -1,5 +1,4 @@
 import { enums } from "../enums";
-import { NodePort } from "../../../types";
 
 const margins = [
     { name: 'margins', group: 'Margins', type: 'boolean', displayName: 'Margins' },

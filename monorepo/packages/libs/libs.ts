@@ -37,8 +37,10 @@ import unique from 'just-unique'
 import compare from 'just-compare'
 import flatten from 'just-flatten-it';
 import debounce from 'just-debounce-it'
+import capitalize from 'just-capitalize';
 window.R.libs.just = {
-    clone, map, typeOf, flush, template, isEmpty, omit, insert, get, set, clamp, last, remove, sortBy, unique, compare, flatten, debounce
+    clone, map, typeOf, flush, template, isEmpty, omit, insert, get, set, clamp, last, remove, sortBy, unique, compare, flatten, debounce,
+    capitalize
 }
 
 // lodash
@@ -52,9 +54,14 @@ window.R.libs.form = { isNotEmpty, isEmail, matches, isInRange, hasLength, match
 
 // numbro
 import numbro from 'numbro';
-import locale from 'numbro/dist/languages/ru-RU.min.js'; numbro.registerLanguage(locale); numbro.setLanguage('ru-RU')
+import locale from 'numbro/dist/languages/ru-RU.min.js';
+locale.delimiters.decimal = '.'
+numbro.registerLanguage(locale);
+numbro.setLanguage('ru-RU')
 window.R.libs.numbro = numbro
 
 import cookies from 'js-cookie'; window.R.libs.cookies = cookies
 import { IMask } from 'react-imask'; window.R.libs.IMask = IMask
 import { sort } from "fast-sort"; window.R.libs.sort = sort
+import generatePassword from "omgopass"; window.R.libs.generatePassword = generatePassword
+import ms from "ms"; window.R.libs.ms = ms

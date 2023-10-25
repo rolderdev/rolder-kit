@@ -1,8 +1,7 @@
 import { ArgsDocumentControllerCreate } from "kuzzle-sdk"
 import { dbClassVersion, dbVersion } from "../../../utils/getVersion/v0.3.0/getVersion"
-import deepFlush from "../../../utils/deepFlush/v0.2.0/deepFlush"
 import { log, time } from "../../../../../utils/debug/log/v0.2.0/log"
-import ErrorHandler from "../../../../mantine/libs/errorHandler/v0.2.0/ErrorHandler"
+import ErrorHandler from "../../../../mantine/utils/errorHandler/v0.2.0/ErrorHandler"
 
 export default async (updateItems: UpdateItems, kuzzleOptions?: KuzzleOptions): Promise<RItem[] | void> => {
     const { Kuzzle } = window.R.libs
@@ -16,16 +15,16 @@ export default async (updateItems: UpdateItems, kuzzleOptions?: KuzzleOptions): 
     }
 
     const dbClassV = dbClassVersion(dbClass)
-    const flushedItems = items.map((i: any) => {
+    const kItems = items.map((i: any) => {
         i._id = i.id
-        return deepFlush(i)
+        return i
     })
 
     time(`${dbClassV} mUpdate`)
-    log(`mUpdate ${dbClassV} props`, { dbClass, flushedItems, options })
+    log(`mUpdate ${dbClassV} props`, { dbClass, kItems, options })
 
     return Kuzzle.connect().then(() =>
-        Kuzzle.document.mUpdate(dbVersion(), dbClassV, flushedItems, { ...options, retryOnConflict: 3 })
+        Kuzzle.document.mUpdate(dbVersion(), dbClassV, kItems, { ...options, retryOnConflict: 3 })
             .then(kResponse => {
                 const rItems = kResponse.successes.map((kItem: KItem) => ({ id: kItem._id, ...kItem._source }))
 

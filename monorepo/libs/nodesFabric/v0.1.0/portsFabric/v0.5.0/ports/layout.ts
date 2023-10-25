@@ -27,6 +27,10 @@ const layout = [
     { name: 'dividerOrientation', group: 'Layout', type: { name: 'enum', enums: enums.dividerOrientations }, displayName: 'Orientation', default: 'horizontal' },
     { name: 'dividerLabelPosition', group: 'Layout', type: { name: 'enum', enums: enums.dividerLabelPositions }, displayName: 'Label position', default: 'left' },
     { name: 'dropdownType', group: 'Layout', type: { name: 'enum', enums: enums.dropdownTypes }, displayName: 'Dropdown type', default: 'popover' },
+    { name: 'autosize', group: 'Layout', type: 'boolean', displayName: 'Autosize', default: false },
+    { name: 'minRows', group: 'Layout', type: 'number', displayName: 'Min rows', default: 2 },
+    { name: 'maxRows', group: 'Layout', type: 'number', displayName: 'Max rows', dependsOn: [{ name: 'autosize', value: true }] },
+    { name: 'zIndex', group: 'Layout', type: 'number', displayName: 'ZIndex', default: 2 },
 ] as const satisfies readonly NodePort[];
 
 export default layout

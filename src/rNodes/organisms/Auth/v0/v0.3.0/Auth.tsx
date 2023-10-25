@@ -15,7 +15,7 @@ const Comp = forwardRef(function (props: any) {
       if (r.error) ErrorHandler({ title: r.message, autoClose: 2000 })
       else {
         validateJwt()
-        window.Kuzzle?.auth.getCurrentUser().then((res: any) => {
+        window.Kuzzle?.auth.getCurrentUser().then((res: any) => {          
           sendOutput(node, 'userRole', res.content.role?.value)
           sendSignal(node, 'authenticated')
         })

@@ -1,5 +1,8 @@
+// data
+import UseDataNode_f0_1_0 from "./data/useData/fabricVersions/v0.1.0/UseDataNode";
 ///// organisms
 import AppNode_f0_1_0 from "./organisms/app/fabricVersions/v0.1.0/AppNode";
+import AuthNode_f0_1_0 from "./organisms/auth/fabricVersions/v0.1.0/AuthNode";
 import TableNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/TableNode";
 // AppShell
 import AppShellNode_f0_1_0 from "./organisms/appShell/fabricVersions/v0.1.0/AppShellNode";
@@ -22,9 +25,14 @@ import StackNode_f0_1_0 from "./molecules/stack/fabricVersions/v0.1.0/StackNode"
 import FlexNode_f0_1_0 from "./molecules/flex/fabricVersions/v0.1.0/FlexNode";
 import CenterNode_f0_1_0 from "./molecules/center/fabricVersions/v0.1.0/CenterNode";
 import GroupNode_f0_1_0 from "./molecules/group/fabricVersions/v0.1.0/GroupNode";
+import CarouselNode_f0_1_0 from "./molecules/carousel/fabricVersions/v0.1.0/CarouselNode";
 //// elements
+// buttons
+import ActionIconNode_f0_1_0 from "./elements/buttons/actionIcon/fabricVersions/v0.1.0/ActionIconNode";
 // dataDisplay
 import IconNode_f0_1_0 from "./elements/dataDisplay/icon/fabricVersions/v0.1.0/IconNode";
+// feedback
+import BarLoaderNode_f0_1_0 from "./elements/feedback/barLoader/fabricVersions/v0.1.0/BarLoaderNode";
 // inputs
 import TextInputNode_f0_1_0 from "./elements/inputs/textInput/fabricVersions/v0.1.0/TextInputNode";
 import SelectNode_f0_1_0 from "./elements/inputs/select/fabricVersions/v0.1.0/SelectNode";
@@ -33,7 +41,8 @@ import SegmentedControlNode_f0_1_0 from "./elements/inputs/segmentedControl/fabr
 import CheckboxGroupNode_f0_1_0 from "./elements/inputs/checkboxGroup/fabricVersions/v0.1.0/CheckboxGroupNode";
 import MultiSelectNode_f0_1_0 from "./elements/inputs/multiSelect/fabricVersions/v0.1.0/MultiSelectNode";
 import DatePickerInputNode_f0_1_0 from "./elements/inputs/datePickerInput/fabricVersions/v0.1.0/DatePickerInputNode";
-import MaskedInputNode_f0_1_0 from "./elements/inputs/MaskedInput/fabricVersions/v0.1.0/MaskedInputNode";
+import MaskedInputNode_f0_1_0 from "./elements/inputs/maskedInput/fabricVersions/v0.1.0/MaskedInputNode";
+import TextareaNode_f0_1_0 from "./elements/inputs/textarea/fabricVersions/v0.1.0/TextareaNode";
 // miscellaneous
 import DividerNode_f0_1_0 from "./elements/miscellaneous/divider/fabricVersions/v0.1.0/DividerNode";
 // navigation
@@ -43,8 +52,10 @@ import TextNode_f0_1_0 from "./elements/typography/text/fabricVersions/v0.1.0/Te
 import TitleNode_f0_1_0 from "./elements/typography/title/fabricVersions/v0.1.0/TitleNode";
 
 export default [
+    // data
+    UseDataNode_f0_1_0,
     ///// organisms
-    AppNode_f0_1_0, TableNode_f0_1_0,
+    AppNode_f0_1_0, AuthNode_f0_1_0, TableNode_f0_1_0,
     // AppShell
     AppShellNode_f0_1_0, NavbarNode_f0_1_0, NavbarSectionNode_f0_1_0, HeaderNode_f0_1_0, AsideNode_f0_1_0,
     AsideSectionNode_f0_1_0, FooterNode_f0_1_0,
@@ -52,13 +63,17 @@ export default [
     TabsNode_f0_1_0, TabNode_f0_1_0,
     // molecules
     BoxNode_f0_1_0, AvatarNode_f0_1_0, FormNode_f0_1_0, DrawerNode_f0_1_0, ModalNode_f0_1_0, StackNode_f0_1_0, FlexNode_f0_1_0,
-    CenterNode_f0_1_0, GroupNode_f0_1_0,
+    CenterNode_f0_1_0, GroupNode_f0_1_0, CarouselNode_f0_1_0,
     //// elements
+    // buttons
+    ActionIconNode_f0_1_0,
     // dataDisplay
     IconNode_f0_1_0,
+    // feedback
+    BarLoaderNode_f0_1_0,
     // inputs
     TextInputNode_f0_1_0, SelectNode_f0_1_0, DateTimePickerNode_f0_1_0, SegmentedControlNode_f0_1_0, CheckboxGroupNode_f0_1_0,
-    MultiSelectNode_f0_1_0, DatePickerInputNode_f0_1_0, MaskedInputNode_f0_1_0,
+    MultiSelectNode_f0_1_0, DatePickerInputNode_f0_1_0, MaskedInputNode_f0_1_0, TextareaNode_f0_1_0,
     // miscellaneous
     DividerNode_f0_1_0,
     // navigation

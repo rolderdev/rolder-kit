@@ -1,6 +1,6 @@
-import { sendOutput, sendSignal } from "../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/send"
-import { useDataNoodlNodes } from "../../../nodes/useData/fabricVersions/v0.1.0/v0.2.0/useData"
-import createRItem from "../../createRItem/v0.1.0/createRItem"
+import { sendOutput } from "../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/send"
+import { useDataNoodlNodes } from "../../../nodes/useData_old/fabricVersions/v0.1.0/v0.3.0/useData"
+import getSysProps from "../../getSysProps/v0.1.0/getSysProps"
 import { setItemRefs, setRefsFromItem } from "../../setRefs/v0.7.0/setRefs"
 
 export default function (
@@ -12,18 +12,22 @@ export default function (
     const backRefs: string[] = backReferences ? JSON.parse(backReferences) : []
     const rItems = kItems?.map(kItem => ({ id: kItem._id, ...kItem._source })) as RItem[]
     let refNoodlNodeIds: string[] = []
-    
+
     const returnItems = rItems?.map(rItem => {
         const sysProps: ItemSysProps = { dbClass, noodlNodeId, storeKey: storeKey || '', refs, backRefs }
-        rItem = createRItem(rItem, sysProps)
-        rItem = setItemRefs(rItem)
-        refNoodlNodeIds = refNoodlNodeIds.concat(setRefsFromItem(rItem))
+        const defindedProps = getSysProps(sysProps)
+        const nItem = window.Noodl.Object.create(rItem)
+        Object.defineProperties(rItem, defindedProps)
+        Object.defineProperties(nItem, defindedProps)
+        setItemRefs(nItem)
+        refNoodlNodeIds = refNoodlNodeIds.concat(setRefsFromItem(nItem))
         return rItem
     })
 
     unique(refNoodlNodeIds).forEach(noodlNodeId => {
-        sendOutput(useDataNoodlNodes[noodlNodeId], 'items', useDataNoodlNodes[noodlNodeId].outputPropValues.items)
-        sendSignal(useDataNoodlNodes[noodlNodeId], 'refetched')
+        if (useDataNoodlNodes[noodlNodeId]) {
+            sendOutput(useDataNoodlNodes[noodlNodeId], 'items', useDataNoodlNodes[noodlNodeId].outputPropValues.items)
+        }
     })
 
     return returnItems

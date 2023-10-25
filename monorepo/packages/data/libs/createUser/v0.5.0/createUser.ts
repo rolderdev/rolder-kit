@@ -1,15 +1,13 @@
 import { log, time } from '../../../../../utils/debug/log/v0.2.0/log'
-import ErrorHandler from '../../../../mantine/libs/errorHandler/v0.2.0/ErrorHandler'
-import deepFlush from '../../../utils/deepFlush/v0.2.0/deepFlush'
+import ErrorHandler from '../../../../mantine/utils/errorHandler/v0.2.0/ErrorHandler'
 
 export default async (userData: CreateUser): Promise<RItem> => {
     const { Kuzzle } = window.R.libs
     const { body } = userData
     const options = { refresh: 'wait_for' }
-    const flushedBody = deepFlush(body)
 
-    const content = { ...flushedBody.content, credentials: { local: { notSecret: flushedBody.credentials?.local.notSecret } } }
-    let credentials = flushedBody.credentials
+    const content = { ...body.content, credentials: { local: { notSecret: body.credentials?.local.notSecret } } }
+    let credentials = body.credentials
     delete credentials?.local.notSecret
 
     time('CreateUser')
@@ -18,7 +16,7 @@ export default async (userData: CreateUser): Promise<RItem> => {
     return Kuzzle.connect().then(() =>
         Kuzzle.security.createUser(null, { content, credentials }, options)
             .then((kUser: KUser) => {
-                kUser._source.credentials.local.username = credentials.local.username
+                kUser._source.credentials.local.username = credentials?.local.username
                 const rUser = { id: kUser._id, ...kUser._source }
 
                 time('CreateUser', true)

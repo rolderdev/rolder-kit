@@ -8,15 +8,19 @@ import setDefaults from "./utils/setDefaults"
 import checkRequired from "./utils/checkRequired"
 import getJsNodePorts from "./utils/getJsNodePorts"
 
-export const getReactNode = (nodeName: string, compVersions: CompVersions, allowChildren?: boolean): ReactNodeDef => {
+export const getReactNode = (
+    nodeName: string, compVersions: CompVersions, allowChildren?: boolean, color?: NodeColor, experimental?: boolean
+): ReactNodeDef => {
     return {
         name: `rolder-kit.${nodeName}`,
-        displayName: `${nodeName}`,
+        displayName: nodeName + (experimental ? ' #experimental' : ''),
         noodlNodeAsProp: true,
         allowChildren: allowChildren || false,
+        color: color || 'blue',
         initialize: function () {
             this.resultProps = {}
             this.warnings = { count: 0, required: {}, types: {} }
+            this.currentPorts = {}
         },
         getReactComponent() {
             return forwardRef(
@@ -66,11 +70,24 @@ export const getReactNode = (nodeName: string, compVersions: CompVersions, allow
         },
         setup: function (context: NodeContext, graphModel: GraphModel) {
             if (!context.editorConnection || !context.editorConnection.isRunningLocally()) { return }
-            // recreate ports on changes
+
+           /*  function addUseDataPort(compVersions: CompVersions, node: GraphModelNode, ports: NodePort[]) {
+                const dbClassesPort = compVersions[node.parameters.version]?.inputs?.find(i => i.name === 'dbClasses')
+                if (dbClassesPort) {
+                    node.parameters.dbClasses?.forEach((props: any) => {
+                        ports.push({ plug: 'output', name: props.label, group: 'Data', type: 'array', displayName: props.label })
+                    })
+                }
+            } */
+
             graphModel.on(`nodeAdded.rolder-kit.${nodeName}`, function (node: GraphModelNode) {
-                context.editorConnection.sendDynamicPorts(node.id, getRNodePorts(node, compVersions))
+                let ports = getRNodePorts(node, compVersions)
+                //addUseDataPort(compVersions, node, ports)
+                context.editorConnection.sendDynamicPorts(node.id, ports)
                 node.on('parameterUpdated', function () {
-                    context.editorConnection.sendDynamicPorts(node.id, getRNodePorts(node, compVersions))
+                    let ports = getRNodePorts(node, compVersions)
+                    //addUseDataPort(compVersions, node, ports)
+                    context.editorConnection.sendDynamicPorts(node.id, ports)
                 })
             });
         }

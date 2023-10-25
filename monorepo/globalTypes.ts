@@ -7,3 +7,4 @@ declare module "@noodl/noodl-sdk" {
     function defineNode(n: any): void
 }
 declare module 'numbro/dist/languages/ru-RU.min.js';
+declare module 'omgopass';

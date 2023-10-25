@@ -5,6 +5,7 @@ export default forwardRef(function (props: any) {
     const Icon = props.iconName && icons(props.iconName)
     return Icon ? <Icon
         size={props.iconSize}
+        stroke={props.stroke}
         {...props}
         {...props.customProps}
     /> : <></>

@@ -28,9 +28,10 @@ declare interface RItem extends ItemSysProps extends ItemBody {
 
 declare type ItemSysProps = {
     dbClass: string
-    storeKey: string
-    refs: string[]
-    backRefs: string[]
+    noodlNodeId: string
+    storeKey?: string
+    refs?: string[]
+    backRefs?: string[]
 }
 
 declare type ItemBody = {
@@ -80,11 +81,13 @@ interface Queries { [nodeId: string]: KeysDef }
 
 declare type KeysDef = {
     dbClass: string,
+    noodlNodeId: string
     filters?: Filters,
     sorts?: Sorts,
     options?: Options
     references?: string[]
     backReferences?: string[]
+    getUsers?: boolean
 }
 
 declare type Filters = { [key: string]: any }

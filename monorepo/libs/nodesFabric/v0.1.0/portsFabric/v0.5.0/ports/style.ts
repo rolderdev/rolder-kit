@@ -28,6 +28,8 @@ const style = [
     { name: 'withArrow', group: 'Style', type: 'boolean', displayName: 'With arrow', default: true },
     { name: 'checkboxColor', group: 'Checkbox', type: 'string', displayName: 'Color', tooltip: 'red, red.5' },
     { name: 'dividerVariant', group: 'Style', type: { name: 'enum', enums: enums.dividerVariants }, displayName: 'Variant', default: 'solid' },
+    { name: 'actionIconVariant', group: 'Style', type: { name: 'enum', enums: enums.actionIconVariants }, displayName: 'Variant', default: 'subtle' },
+    { name: 'textareaVariant', group: 'Style', type: { name: 'enum', enums: enums.textareaVariants }, displayName: 'Variant', default: 'default' },
 ] as const satisfies readonly NodePort[];
 
 export default style

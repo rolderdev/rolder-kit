@@ -1,21 +1,40 @@
 import { Center, Loader, MantineProvider } from "@mantine/core"
 import { DatesProvider } from "@mantine/dates"
 import { Notifications } from "@mantine/notifications"
-import { forwardRef, useState } from "react"
-import ErrorHandler from '../../../../../../libs/errorHandler/v0.2.0/ErrorHandler'
+import { forwardRef, useEffect, useState } from "react"
+import ErrorHandler from '../../../../../../utils/errorHandler/v0.2.0/ErrorHandler'
 import { sendOutput } from '../../../../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/send'
 import { log, time } from "../../../../../../../../utils/debug/log/v0.2.0/log"
-import { useColorScheme, useShallowEffect, useWindowEvent } from "@mantine/hooks"
-import validateJwt from "./validateJwt"
+import { useColorScheme, useInterval, useShallowEffect } from "@mantine/hooks"
+import validateJwt from "../../../../../../utils/validateJwt/v0.3.0/validateJwt"
+import { dbClassVersion, dbVersion as getDbVersion } from "../../../../../../../data/utils/getVersion/v0.3.0/getVersion"
+import { QueryCache, QueryClient, QueryClientProvider, focusManager } from "@tanstack/react-query"
 
-const { QueryCache, QueryClient, QueryClientProvider, ReactQueryDevtools } = window.QueryInit
 const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: Infinity,
+            refetchOnWindowFocus: "always",
+            refetchOnMount: "always",
+        },
+    },
     queryCache: new QueryCache({
         onError: (error: any, query: any) => {
             if (query.state.data !== undefined) ErrorHandler('Системная ошибка!', error.message)
         },
     }),
 })
+window.R.libs.queryClient = queryClient
+// refetch on window visible, but dont trigger onFocus (does't work on mobile and too often)
+focusManager.setEventListener((handleFocus: any) => {
+    if (typeof window !== 'undefined' && window.addEventListener) {
+        window.addEventListener('visibilitychange', handleFocus, false)
+    }
+    return () => {
+        window.removeEventListener('visibilitychange', handleFocus)
+    }
+})
+
 /// old app compatibility
 window.QueryClient = queryClient
 
@@ -50,11 +69,11 @@ export default forwardRef(function (props: any) {
         window.R.env.envVersion = envVersion
         window.R.env.project = project
         window.R.env.projectVersion = projectVersion
-        window.R.env.dbVersion = dbVersion        
+        window.R.env.dbVersion = dbVersion
         window.R.params.dbClasses = eval(dbClasses)[0]
         window.R.params.sessionTimeout = sessionTimeout
         window.R.params.defaults = { dateFormat: defaultDateFormat }
-        log('Rolder', window.R)
+        !inited && log('Rolder', window.R)
 
         /// old app compatibility
         window.Rolder = {
@@ -73,7 +92,7 @@ export default forwardRef(function (props: any) {
         //===================================================================
 
         if (props.connectKuzzle && !inited) {
-            time('Kuzzle init')
+            time('App init')
             const Kuzzle = new window.KuzzleInit.Kuzzle(
                 new window.KuzzleInit.WebSocket(`${project}.kuzzle.${envVersion}.rolder.app`, { port: 443 })
             )
@@ -84,15 +103,34 @@ export default forwardRef(function (props: any) {
                 ///
                 validateJwt().then((jwtValid) => {
                     if (jwtValid)
-                        Kuzzle?.auth.getCurrentUser().then((r: any) => {
-                            window.R.user = { ...r.content, id: r._id }
-                            sendOutput(props.noodlNode, 'userRole', r.content.role?.value)
+                        Kuzzle.auth.getCurrentUser().then(user => {
+                            if (user._source.dbClass) Kuzzle.document.search(
+                                getDbVersion(),
+                                dbClassVersion(user._source.dbClass),
+                                { query: { equals: { 'user.id': user._id } } },
+                                { lang: 'koncorde' }
+                            ).then(kRes => {
+                                const kItem = kRes.hits.find(i => i._source.user?.id === user._id)
+                                let rItem: any = { user: {} }
+                                if (kItem) rItem = { ...kRes.hits[0]?._source, id: kRes.hits[0]?._id }
+                                rItem.user = { ...user._source, id: user._id }
+                                window.R.user = rItem
+                                sendOutput(props.noodlNode, 'userRole', rItem.user.role?.value)
+                                window.R.states.inited = true
+                                setInited(true)
+                            })
+                            else {
+                                sendOutput(props.noodlNode, 'userRole', user._source.role?.value)
+                                window.R.states.inited = true
+                                setInited(true)
+                            }
                         })
-                    else sendOutput(props.noodlNode, 'userRole', 'notAuthenticated')
-
-                    window.R.states.inited = true
-                    setInited(true)
-                    time('Kuzzle init', true)
+                    else {
+                        sendOutput(props.noodlNode, 'userRole', 'notAuthenticated')
+                        window.R.states.inited = true
+                        time('App init', true)
+                        setInited(true)
+                    }
                 })
 
                 //===================================================================
@@ -113,8 +151,24 @@ export default forwardRef(function (props: any) {
         } else if (!props.connectKuzzle) window.R.states.inited = true
     }, [props])
 
-    useWindowEvent('focus', () => validateJwt().then((jwtValid) =>
-        !jwtValid && sendOutput(props.noodlNode, 'userRole', 'notAuthenticated')))
+    // jwt check
+    const validateJwtInteval = useInterval(() => {
+        validateJwt().then((jwtValid) => {
+            if (!jwtValid) sendOutput(props.noodlNode, 'userRole', 'notAuthenticated')
+        })
+    }, 360000)
+    useEffect(() => {
+        validateJwtInteval.start();
+        window.addEventListener(
+            'visibilitychange',
+            () => {
+                if (document.visibilityState === "visible") validateJwt().then((jwtValid) => {
+                    if (!jwtValid) sendOutput(props.noodlNode, 'userRole', 'notAuthenticated')
+                })
+            }
+        )
+        return validateJwtInteval.stop;
+    }, []);
 
     //===================================================================
 
@@ -143,7 +197,6 @@ export default forwardRef(function (props: any) {
                             ? props.children
                             : <Center h='100%'><Loader size={props.appLoaderSize} color={props.loaderColor} /></Center>
                     }
-                    {debug > 0 && <ReactQueryDevtools />}
                 </QueryClientProvider>
             </DatesProvider>
         </MantineProvider >

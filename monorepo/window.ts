@@ -1,11 +1,28 @@
 //// libs
 import { Kuzzle, WebSocket } from 'kuzzle-sdk'
 const kuzzle = new Kuzzle(new WebSocket(`rolder.app`, { port: 443 }))
+import { QueryCache, QueryClient } from "@tanstack/react-query"
+import ErrorHandler from './packages/mantine/utils/errorHandler/v0.2.0/ErrorHandler'
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: Infinity,
+        },
+    },
+    queryCache: new QueryCache({
+        onError: (error: any, query: any) => {
+            if (query.state.data !== undefined) ErrorHandler('Системная ошибка!', error.message)
+        },
+    }),
+})
 import mutator from './packages/data/libs/mutator/v0.1.0/mutator';
 import dayjs from 'dayjs'
 import cookies from 'js-cookie';
 import numbro from 'numbro';
 import { IMask } from 'react-imask';
+import { sort } from "fast-sort"
+import generatePassword from "omgopass";
+import ms from "ms"
 // just
 import clone from "just-clone";
 import map from "just-map-object";
@@ -26,15 +43,16 @@ import unique from 'just-unique'
 import compare from 'just-compare'
 import flatten from 'just-flatten-it';
 import debounce from 'just-debounce-it'
+import capitalize from 'just-capitalize';
 // loadsh
 import { isNil } from 'lodash'
 // form
 import { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField } from '@mantine/form'
-import { sort } from "fast-sort"
 
 //// utils
 import getValue6 from './packages/utils/getValue/6/getValue';
 import getValue7 from './packages/utils/getValue/7/getValue';
+import getValue8 from './packages/utils/getValue/8/getValue';
 import getFormatedDate2 from './packages/utils/getFormatedDate/2/getFormatedDate';
 import getMasked2 from './packages/utils/getMasked/2/getMasked';
 import filterBy from './packages/utils/filterBy/3/filterBy';
@@ -55,18 +73,22 @@ declare type RolderType = {
         dbClasses?: {
             [x: string]: any//DbClass
         }
-        sessionTimeout?: string
+        sessionTimeout: string
         defaults?: {
             dateFormat: string
         }
     }
     libs: {
         Kuzzle: typeof kuzzle
+        queryClient: typeof queryClient
         mutator: typeof mutator
         dayjs: typeof dayjs
         cookies: typeof cookies
         numbro: typeof numbro
         IMask: typeof IMask
+        sort: typeof sort
+        generatePassword: typeof generatePassword
+        ms: typeof ms
         form: {
             isNotEmpty: typeof isNotEmpty
             isEmail: typeof isEmail
@@ -104,17 +126,18 @@ declare type RolderType = {
             compare: typeof compare
             flatten: typeof flatten
             debounce: typeof debounce
+            capitalize: typeof capitalize
         }
         isNil: typeof isNil
         lodash: {
             isNil: typeof isNil
         }
-        sort: typeof sort
     }
     utils: {
         getValue: {
             v6: typeof getValue6
             v7: typeof getValue7
+            v8: typeof getValue8
         }
         getFormatedDate: {
             v2: typeof getFormatedDate2
@@ -137,8 +160,7 @@ declare global {
         QueryClient: any
         Kuzzle: any
         Noodl: any
-        KuzzleInit: any
-        QueryInit: any
+        KuzzleInit: { Kuzzle: typeof Kuzzle, WebSocket: typeof WebSocket }
     }
 }
 

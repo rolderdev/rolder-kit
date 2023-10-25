@@ -106,4 +106,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     flexAligns: [{ value: 'flex-start', label: 'Flex-start' }, { value: 'center', label: 'Center' }, { value: 'flex-end', label: 'Flex-end' }],
     flexDirections: [{ value: 'row', label: 'Row' }, { value: 'column', label: 'Column' },
     { value: 'row-reverse', label: 'Row-reverse' }, { value: 'column-reverse', label: 'Column-reverse' }],
+    actionIconVariants: [{ value: 'transparent', label: 'Transparent' }, { value: 'subtle', label: 'Subtle' }, { value: 'light', label: 'Light' },
+    { value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' }, { value: 'default', label: 'Default' },],
+    textareaVariants: [{ value: 'default', label: 'Default' }, { value: 'filled', label: 'Filled' }, { value: 'unstyled', label: 'Unstyled' }]
 }

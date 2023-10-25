@@ -16,10 +16,5 @@ module.exports = {
 	watch: true,
 	entry: { [pJson.name]: `./${pJson.name}` },
 	output: { path: outputPath, clean: true },
-	builtins: { copy: { patterns: [{ from: './manifest.json' }] } },
-	externals: {
-		react: 'React',
-		'react-dom': 'ReactDOM',
-		'@noodl/noodl-sdk': 'Noodl'
-	},
+	builtins: { copy: { patterns: [{ from: './manifest.json' }] } }
 }

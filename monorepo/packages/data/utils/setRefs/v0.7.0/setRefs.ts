@@ -1,25 +1,25 @@
-export function setItemRefs(rItem: any) {
+export function setItemRefs(nItem: any) {
     const { Noodl } = window
     const { map } = window.R.libs.just
-    // forward refs    
-    rItem.refs?.forEach((refDbClass: string) => {
-        if (Array.isArray(rItem[refDbClass])) {
-            rItem[refDbClass] = rItem[refDbClass].map((refIdItem: { id: string }) => {
+    // forward refs        
+    nItem.refs?.forEach((refDbClass: string) => {
+        if (Array.isArray(nItem[refDbClass])) {
+            nItem[refDbClass] = nItem[refDbClass].map((refIdItem: { id: string }) => {
                 if (Noodl.Object.exists(refIdItem.id)) return Noodl.Objects[refIdItem.id]
                 else return refIdItem
             })
-        } else if (Noodl.Object.exists(rItem[refDbClass]?.id)) rItem[refDbClass] = Noodl.Objects[rItem[refDbClass]?.id]
+        } else if (Noodl.Object.exists(nItem[refDbClass]?.id)) nItem[refDbClass] = Noodl.Objects[nItem[refDbClass]?.id]
     })
     // backward refs        
-    rItem.backRefs?.forEach((refDbClass: string) => {
+    nItem.backRefs?.forEach((refDbClass: string) => {
         const refItems: RItem[] = []
         map(window.Noodl.Object._models, (itemId, _refItem) => {
             const refNItem = Noodl.Objects[itemId]
-            if (refNItem.dbClass === refDbClass && rItem.id === refNItem[rItem.dbClass]?.id) refItems.push(refNItem)
+            if (refNItem.dbClass === refDbClass && nItem.id === refNItem[nItem.dbClass]?.id) refItems.push(refNItem)
         })
-        if (refItems.length) rItem[refDbClass] = refItems
+        if (refItems.length) nItem[refDbClass] = refItems
     })
-    return rItem
+    return nItem
 }
 
 export function setRefsFromItem(targetItem: any) {
@@ -37,13 +37,11 @@ export function setRefsFromItem(targetItem: any) {
                 if (targetItem.id === targetIdItem.id) {
                     targetIdItem = targetItem
                     if (!refNoodlNodeIds.includes(sourceNItem.noodlNodeId)) refNoodlNodeIds.push(sourceNItem.noodlNodeId)
-                    //mutator.update(sourceItem)
                 }
             })
             else if (targetItem.id === sourceNItem[targetItem.dbClass]?.id) {
                 sourceNItem[targetItem.dbClass] = targetItem
                 if (!refNoodlNodeIds.includes(sourceNItem.noodlNodeId)) refNoodlNodeIds.push(sourceNItem.noodlNodeId)
-                //mutator.update(sourceItem)
             }
         }
         // backward refs
@@ -55,7 +53,6 @@ export function setRefsFromItem(targetItem: any) {
                 else sourceTargetItems.push(targetItem)
             }
             sourceNItem[targetItem.dbClass] = sourceTargetItems
-            //mutator.update(setItemSysProps(sourceItem))
         }
     })
 

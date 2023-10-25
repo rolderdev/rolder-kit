@@ -1,7 +1,6 @@
 import { ArgsDocumentControllerCreate } from "kuzzle-sdk"
 import { log, time } from "../../../../../utils/debug/log/v0.2.0/log"
-import ErrorHandler from "../../../../mantine/libs/errorHandler/v0.2.0/ErrorHandler"
-import deepFlush from "../../../utils/deepFlush/v0.2.0/deepFlush"
+import ErrorHandler from "../../../../mantine/utils/errorHandler/v0.2.0/ErrorHandler"
 import { dbClassVersion, dbVersion } from "../../../utils/getVersion/v0.3.0/getVersion"
 
 export default async (createItem: CreateItem, kuzzleOptions?: KuzzleOptions): Promise<RItem | void> => {
@@ -14,14 +13,13 @@ export default async (createItem: CreateItem, kuzzleOptions?: KuzzleOptions): Pr
         silent: kuzzleOptions?.silent
     }
     const dbClassV = dbClassVersion(dbClass)
-    const flushedBody = deepFlush(body)
 
     time(`${dbClassV} create`)
     log(`${dbClassV} props`, { dbClass, body, options })
 
     return Kuzzle.connect().then(() =>
-        Kuzzle.document.create(dbVersion(), dbClassV, flushedBody, undefined, options)
-            .then(kItem => {
+        Kuzzle.document.create(dbVersion(), dbClassV, body, undefined, options)
+            .then((kItem: any) => {
                 const rItem = { id: kItem._id, ...kItem._source } as RItem
 
                 log(`${dbClassV} props`, rItem)

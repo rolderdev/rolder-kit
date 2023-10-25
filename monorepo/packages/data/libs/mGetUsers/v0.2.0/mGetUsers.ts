@@ -1,5 +1,5 @@
 import { time } from "../../../../../utils/debug/log/v0.2.0/log"
-import ErrorHandler from "../../../../mantine/libs/errorHandler/v0.2.0/ErrorHandler"
+import ErrorHandler from "../../../../mantine/utils/errorHandler/v0.2.0/ErrorHandler"
 
 export default async function (userIds: string[]): Promise<RUser[] | void> {
     const { Kuzzle } = window.R.libs

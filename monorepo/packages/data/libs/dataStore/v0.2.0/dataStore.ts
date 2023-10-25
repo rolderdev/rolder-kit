@@ -11,12 +11,15 @@ function createStore(
     refetchOnFocus?: boolean, getUsers?: boolean
 ) {
     const { set } = window.R.libs.just
+    //const storeOptions = { refetchOnReconnect: true, refetchOnFocus }
+    //const interval = refetchInterval ? refetchInterval * 1000 : undefined
 
     const store = createFetcherStore<RItem[]>(
         getStoreKeys({ dbClass, noodlNodeId, filters, sorts, options, references, backReferences, getUsers }),
-        { refetchOnFocus }
+        { refetchOnReconnect: true, refetchOnFocus }
     )
     set(stores, [dbClass, noodlNodeId], store)
+
     return store
 }
 
@@ -47,10 +50,12 @@ function isParamsChanged(noodlNode: NoodlNode) {
 }
 
 export const unbinders: { [nodeId: string]: () => void } = {}
-export const invalidatingStates: { [nodeId: string]: boolean } = {}
+export const refetchings: { [nodeId: string]: boolean } = {}
 
 export function subscribeToStore(noodlNode: NoodlNode) {
-    const { dbClass, filters, subscribe: enableSubscribe, sorts, options, references, backReferences, refetchOnFocus, getUsers } = noodlNode.resultProps
+    const {
+        dbClass, filters, subscribe: enableSubscribe, sorts, options, references, backReferences, refetchOnFocus, getUsers
+    } = noodlNode.resultProps
 
     let exStore = getStore(noodlNode.id, dbClass)
     const paramsChanged = isParamsChanged(noodlNode)
@@ -64,17 +69,17 @@ export function subscribeToStore(noodlNode: NoodlNode) {
         }
 
         unbinders[noodlNode.id] = store.listen(v => {
-            v // dummy call for case when no output connection                  
-            invalidatingStates[noodlNode.id] ? sendOutput(noodlNode, 'refetching', v.loading) : sendOutput(noodlNode, 'fetching', v.loading)
+            //v // dummy call for case when no output connection            
             if (!v.loading) {
-                sendOutput(noodlNode, 'items', v.data)
-                invalidatingStates[noodlNode.id] ? sendSignal(noodlNode, 'refetched') : sendSignal(noodlNode, 'fetched')
-            }
-            if (!v.loading) invalidatingStates[noodlNode.id] = false
+                sendOutput(noodlNode, 'items', v.data?.map(i => window.Noodl.Objects[i.id]))
+                sendSignal(noodlNode, 'fetched')
+                refetchings[noodlNode.id] ? sendOutput(noodlNode, 'refetching', false) : sendOutput(noodlNode, 'fetching', false)
+                refetchings[noodlNode.id] = false
+            } else refetchings[noodlNode.id] ? sendOutput(noodlNode, 'refetching', true) : sendOutput(noodlNode, 'fetching', true)
         })
 
         if (exStore) unsubscribe(exStore.key)
-        if (enableSubscribe) subscribe(store, dbClass, noodlNode.id, sorts, filters)
+        if (enableSubscribe) subscribe(store, dbClass, noodlNode.id, filters, references, backReferences)
         else unsubscribe(store.key)
 
         return store

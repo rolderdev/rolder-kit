@@ -3,8 +3,8 @@ import { useShallowEffect } from "@mantine/hooks"
 import { forwardRef, useState } from "react"
 
 export default forwardRef(function (props: any) {
-    const { dayjs, numbro } = window.R.libs
-    const { getValue, getMasked } = window.R.utils
+    const { numbro } = window.R.libs
+    const { getValue, getMasked, getFormatedDate } = window.R.utils
     const [value, setValue] = useState('')
 
     useShallowEffect(() => {
@@ -12,7 +12,7 @@ export default forwardRef(function (props: any) {
         if (source) switch (props.textFormat) {
             case 'none': setValue(source); break
             case 'number': setValue(numbro(source || 0).format(props.numberFormat)); break
-            case 'date': setValue(dayjs(source).format(props.dateFormatAtText)); break
+            case 'date': setValue(getFormatedDate.v2({ source }, 'source', props.dateFormatAtText)); break
             case 'mask': setValue(getMasked.v2({ type: 'pattern', maskPattern: props.textMask }, source) || ''); break
         }
     }, [props])
