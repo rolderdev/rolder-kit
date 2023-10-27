@@ -1,6 +1,7 @@
 import helpers from "../helpers";
 
 export default [
+    { name: 'useDataScheme', group: 'Params', type: 'array', displayName: 'Scheme', isObject: true, required: true },
     { name: 'dbClass', group: 'Query params', type: '*', displayName: 'Database class' },
     { name: 'getUsers', group: 'Query params', type: 'boolean', displayName: 'Get users', default: false },
     { name: 'refs', group: 'References', type: 'proplist', displayName: 'References' },

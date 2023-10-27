@@ -2,6 +2,7 @@ import { getReactNode } from '../../../../../../../libs/nodesFabric/v0.1.0/getNo
 import { getPorts } from '../../../../../../../libs/nodesFabric/v0.1.0/portsFabric/v0.5.0/get'
 
 import v1_1_0 from './v1.1.0/App'
+import v1_2_0 from './v1.2.0/App'
 
 const compVersions: CompVersions = {
     'v1.1.0': {
@@ -9,7 +10,13 @@ const compVersions: CompVersions = {
         inputs: [...getPorts('input',
             ['detectColorScheme', 'colorScheme', 'notificationsPosition', 'connectKuzzle', 'appLoaderSize', 'loaderColor'])],
         outputs: [...getPorts('output', ['userRole'])]
-    }
+    },
+    'v1.2.0': {
+        Comp: v1_2_0,
+        inputs: [...getPorts('input',
+            ['detectColorScheme', 'colorScheme', 'notificationsPosition', 'connectKuzzle', 'appLoaderSize', 'loaderColor'])],
+        outputs: [...getPorts('output', ['userRole'])]
+    },
 }
 
 //===================================================================
