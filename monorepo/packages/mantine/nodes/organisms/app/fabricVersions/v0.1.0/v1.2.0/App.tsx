@@ -6,7 +6,7 @@ import ErrorHandler from '../../../../../../utils/errorHandler/v0.2.0/ErrorHandl
 import { sendOutput } from '../../../../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/send'
 import { log, time } from "../../../../../../../../utils/debug/log/v0.2.0/log"
 import { useColorScheme, useInterval, useShallowEffect } from "@mantine/hooks"
-import validateJwt from "../../../../../../utils/validateJwt/v0.3.0/validateJwt"
+import validateJwt, { jwtValidState } from "../../../../../../utils/validateJwt/v0.3.0/validateJwt"
 import { QueryCache, QueryClient, QueryClientProvider, focusManager } from "@tanstack/react-query"
 import initKuzzle from "./initKuzzle"
 
@@ -24,11 +24,13 @@ const queryClient = new QueryClient({
         },
     }),
 })
-window.R.libs.queryClient = queryClient
-// refetch on window visible, but dont trigger onFocus (does't work on mobile and too often)
+
+// refetch on window visible if jwtValid, but dont trigger onFocus (does't work on mobile and too often)
 focusManager.setEventListener((handleFocus: any) => {
     if (typeof window !== 'undefined' && window.addEventListener) {
-        window.addEventListener('visibilitychange', handleFocus, false)
+        window.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === "visible" && jwtValidState.get()) handleFocus()
+        }, false)
     }
     return () => {
         window.removeEventListener('visibilitychange', handleFocus)
@@ -53,7 +55,7 @@ export default forwardRef(function (props: any) {
 
     //===================================================================
 
-    const [inited, setInited] = useState(false)
+    const [initState, setInitState] = useState<'started' | 'initing' | 'finished'>('started')
     useShallowEffect(() => {
         if (projectVersion) {
             const cookieProjectVersion = cookies.get('projectVersion')
@@ -89,74 +91,16 @@ export default forwardRef(function (props: any) {
         }
 
         //===================================================================        
-        if (props.connectKuzzle && !inited) {
-            time('App init')
+        if (props.connectKuzzle && initState === 'started') {
+            setInitState('initing')
+            time('Kuzzle init')
             initKuzzle(props.noodlNode).then(() => {
-                window.R.states.inited = true
-                setInited(true)
+                setInitState('finished')
                 log('Rolder', window.R)
-                time('App init', true)
+                time('Kuzzle init', true)
             })
-            /* const Kuzzle = new window.KuzzleInit.Kuzzle(
-                new window.KuzzleInit.WebSocket(`${project}.kuzzle.${envVersion}.rolder.app`, { port: 443 })
-            )
-            Kuzzle.connect().then(() => {
-                window.R.libs.Kuzzle = Kuzzle
-                /// old app compatibility ///
-                window.Kuzzle = Kuzzle
-                ///
-                validateJwt().then(async (jwtValid) => {
-                    if (jwtValid) {
-                        await Kuzzle.auth.getCurrentUser().then(user => {
-                            if (user._source.dbClass) Kuzzle.document.search(
-                                getDbVersion(),
-                                dbClassVersion(user._source.dbClass),
-                                { query: { equals: { 'user.id': user._id } } },
-                                { lang: 'koncorde' }
-                            ).then(kRes => {
-                                const kItem = kRes.hits.find(i => i._source.user?.id === user._id)
-                                let rItem: any = { user: {} }
-                                if (kItem) rItem = { ...kRes.hits[0]?._source, id: kRes.hits[0]?._id }
-                                rItem.user = { ...user._source, id: user._id }
-                                window.R.user = rItem
-                                sendOutput(props.noodlNode, 'userRole', rItem.user.role?.value)
-                            })
-                            else sendOutput(props.noodlNode, 'userRole', user._source.role?.value)
-                        })
-
-                        await Kuzzle.document.search('config', 'dbclass_v1', {}, { size: 100 }).then((r) => {
-                            console.log(r.hits.map(i => ({ ...i._source })))
-                        })
-
-                        window.R.states.inited = true
-                        setInited(true)
-                        time('App init', true)
-                    } else {
-                        sendOutput(props.noodlNode, 'userRole', 'notAuthenticated')
-                        window.R.states.inited = true
-                        time('App init', true)
-                        setInited(true)
-                    }
-                })
-
-                //===================================================================
-
-                Kuzzle.on('disconnected', (...args: any) => {
-                    time('Reconnect')
-                    log('Kuzzle disconnected:', args)
-                });
-                Kuzzle.on('reconnected', () => {
-                    time('Reconnect', true)
-                    log('Kuzzle reconnected')
-                });
-                Kuzzle.on('tokenExpired', () => {
-                    sendOutput(props.noodlNode, 'userRole', 'notAuthenticated')
-                    log('Token expired')
-                })
-            }) */
         } else if (!props.connectKuzzle) {
-            window.R.states.inited = true
-            setInited(true)
+            setInitState('finished')
             log('Rolder', window.R)
         }
     }, [props])
@@ -173,6 +117,7 @@ export default forwardRef(function (props: any) {
             'visibilitychange',
             () => {
                 if (document.visibilityState === "visible") validateJwt().then((jwtValid) => {
+                    console.log('visibilitychange jwtValid', jwtValid)
                     if (!jwtValid) sendOutput(props.noodlNode, 'userRole', 'notAuthenticated')
                 })
             }
@@ -203,7 +148,7 @@ export default forwardRef(function (props: any) {
                 <Notifications position={notificationsPosition} />
                 <QueryClientProvider client={queryClient}>
                     {
-                        window.R.states.inited
+                        initState === 'finished'
                             ? props.children
                             : <Center h='100%'><Loader size={props.appLoaderSize} color={props.loaderColor} /></Center>
                     }

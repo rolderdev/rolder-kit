@@ -1,6 +1,8 @@
 /**
  * @type {import('@rspack/cli').Configuration}
  */
+const rspack = require('@rspack/core');
+
 var path = require('path')
 const pJson = require('./package.json')
 const baseDir = '/Users/decard/Library/Application Support/Noodl/projects/'
@@ -12,16 +14,24 @@ const projectDir = 'c09055b1-4710-4c0c-9ef3-6fc6c8446046'
 var outputPath = path.resolve(__dirname, `${baseDir + projectDir}/noodl_modules/${pJson.name}-v${pJson.version}`)
 
 module.exports = {
-	context: __dirname,
-	watch: true,
-	entry: { [pJson.name]: `./${pJson.name}` },
-	output: { path: outputPath, clean: true },
-	builtins: { copy: { patterns: [{ from: './manifest.json' }] } },
-	externals: {
-		react: 'React',
-		'react-dom': 'ReactDOM',
-		'@noodl/noodl-sdk': 'Noodl',
-		"dayjs": "window.R.libs.dayjs",
-		"just-safe-get": "window.R.libs.just.get"
-	},
+    context: __dirname,
+    watch: true,
+    entry: {[pJson.name]: `./${pJson.name}`},
+    output: {path: outputPath, clean: true},    
+    externals: {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+        '@noodl/noodl-sdk': 'Noodl',
+        "dayjs": "window.R.libs.dayjs",
+        "just-safe-get": "window.R.libs.just.get"
+    },
+    plugins: [
+        new rspack.CopyRspackPlugin({
+            patterns: [
+                {
+					from: 'manifest.json',
+                },
+            ],
+        }),
+    ],
 }

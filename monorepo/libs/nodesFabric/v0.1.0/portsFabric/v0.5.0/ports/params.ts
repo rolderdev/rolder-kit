@@ -1,7 +1,7 @@
 import helpers from "../helpers";
 import { enums } from "../enums";
 
-const params = [    
+const params = [
     { name: 'optimistic', group: 'Params', type: 'boolean', displayName: 'Optimistic', default: false },
     { name: 'label', group: 'Params', type: 'string', displayName: 'Label' },
     { name: 'description', group: 'Params', type: 'string', displayName: 'Description' },
@@ -38,6 +38,7 @@ const params = [
     { name: 'numberFormat', group: 'Params', type: 'array', displayName: 'Number format', isObject: true, tooltip: "Numbro lib format [{ thousandSeparated: true }]", dependsOn: [{ name: 'textFormat', value: 'number' }] },
     { name: 'dateFormatAtText', group: 'Params', type: 'string', displayName: 'Date format', tooltip: "Dayjs format string", default: 'YYYY-MM-DD', dependsOn: [{ name: 'textFormat', value: 'date' }] },
     { name: 'dateFormatAtDatePicker', group: 'Params', type: 'string', displayName: 'Date format', default: 'YYYY-MM-DD' },
+    { name: 'dateFormatAtDateTimePicker', group: 'Params', type: 'string', displayName: 'Date format', default: 'YYYY-MM-DD HH:mm' },
     { name: 'datePickerType', group: 'Params', type: { name: 'enum', enums: enums.datePickerTypes }, displayName: 'Type', default: 'default' },
     //{ name: 'kuzzleRefresh', group: 'Params', type: 'boolean', displayName: 'Refresh', default: true },
     //{ name: 'kuzzleSilent', group: 'Params', type: 'boolean', displayName: 'Silent', default: false },

@@ -22,8 +22,8 @@ export default async (createItem: CreateItem, kuzzleOptions?: KuzzleOptions): Pr
             .then((kItem: any) => {
                 const rItem = { id: kItem._id, ...kItem._source } as RItem
 
-                log(`${dbClassV} props`, rItem)
                 time(`${dbClassV} create`, true)
+                log(`${dbClassV} props`, rItem)                
 
                 return rItem
             }).catch((error) => {

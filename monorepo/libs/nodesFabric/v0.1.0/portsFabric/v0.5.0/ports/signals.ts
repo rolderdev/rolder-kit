@@ -23,6 +23,7 @@ const signals = [
     { name: 'reseted', group: 'Signals', type: 'signal', displayName: 'Reseted' },
     { name: 'logout', group: 'Signals', type: 'signal', displayName: 'Logout' },
     { name: 'loggedOut', group: 'Signals', type: 'signal', displayName: 'Logged out' },
+    { name: 'reset', group: 'Signals', type: 'signal', displayName: 'Reset' },
 ] as const satisfies readonly NodePort[];
 
 export default signals

@@ -18,12 +18,16 @@ export default forwardRef(function (props: any) {
             icon={Icon && <Icon size={props.iconSize} stroke={props.stroke} />}
             rightSection={<CloseButton onClick={() => {
                 setValue('')
+                sendOutput(props.noodlNode, 'typedValue', '')
                 sendSignal(props.noodlNode, 'reseted')
             }} />}
             error={props.inputError || false}
             onChange={(e) => {
                 setValue(e.target.value)
-                if (e.target.value?.length === 0) sendSignal(props.noodlNode, 'reseted')
+                if (e.target.value?.length === 0) {
+                    sendOutput(props.noodlNode, 'typedValue', '')
+                    sendSignal(props.noodlNode, 'reseted')
+                }
             }}
             {...props}
             {...props.customProps}

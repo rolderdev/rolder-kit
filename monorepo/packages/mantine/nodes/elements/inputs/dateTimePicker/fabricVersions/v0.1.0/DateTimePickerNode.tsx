@@ -11,7 +11,7 @@ const compVersions: CompVersions = {
         inputs: [
             ...getPorts(
                 'input', ['useForm', 'formField', 'label', 'placeholder', 'disabled', 'radius', 'withAsterisk', 'w', 'clearable',
-                'dateFormat', 'limitMinDate', 'minDateOffset', 'defaultDate'],
+                'dateFormatAtDateTimePicker', 'limitMinDate', 'minDateOffset', 'defaultDate'],
                 ['formField']
             ),
             ...getGroupedPorts('input', ['Icon']),

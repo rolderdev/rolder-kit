@@ -44,9 +44,9 @@ window.R.libs.just = {
 }
 
 // lodash
-import { isNil } from 'lodash'
+import { isNil, unionBy } from 'lodash'
 window.R.libs.isNil = isNil
-window.R.libs.lodash = { isNil }
+window.R.libs.lodash = { isNil, unionBy }
 
 // form
 import { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField } from '@mantine/form'

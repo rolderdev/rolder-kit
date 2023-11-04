@@ -31,7 +31,7 @@ export default async function (queryContext: any): Promise<RItem[] | void> {
                 return rItems
             }
         }).catch((error) => {
-            ErrorHandler('Системная ошибка!', `Fetcher error: ${error.message}`)
+            ErrorHandler('Системная ошибка!', `Fetch ${dbClass} error: ${error.message}`)
             console.error(error)
         })
 }

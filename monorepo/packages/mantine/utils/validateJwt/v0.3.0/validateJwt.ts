@@ -1,4 +1,7 @@
+import { atom } from "nanostores"
 import { log } from "../../../../../utils/debug/log/v0.2.0/log"
+
+export const jwtValidState = atom(false)
 
 export default async function validateJwt() {
     const { Kuzzle, dayjs, cookies } = window.R.libs
@@ -7,6 +10,7 @@ export default async function validateJwt() {
     async function checkToken(userSession?: UserSession) {
         return await Kuzzle.auth.checkToken(userSession?.jwt).then((r: any) => {
             if (r.valid) {
+                jwtValidState.set(true)
                 Kuzzle.jwt = userSession?.jwt
                 Kuzzle.auth.refreshToken({ expiresIn: sessionTimeout }).then((r: any) => {
                     const expiresAt = dayjs(r.expiresAt).format('YYYY-MM-DD HH:mm:ss')
@@ -16,7 +20,10 @@ export default async function validateJwt() {
                     log('JWT refreshed', expiresAt)
                 })
                 return true
-            } else return false
+            } else {
+                jwtValidState.set(false)
+                return false
+            }
         })
     }
 

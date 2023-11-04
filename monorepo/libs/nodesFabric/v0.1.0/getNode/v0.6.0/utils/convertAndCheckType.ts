@@ -20,7 +20,7 @@ export default function (noodlNode: NoodlNode, nodeInputs: NodePort[], inputName
 
     if (nodeInput) {
         const typeOfValue: any = typeOf(value)        
-        // convert types
+        // convert types        
         if (typeOfValue !== 'undefined') {
             let complexValue: any
             let isComplexType = false
@@ -28,7 +28,7 @@ export default function (noodlNode: NoodlNode, nodeInputs: NodePort[], inputName
             if (nodeInput.type === 'array' && typeOfValue === 'string') {
                 isComplexType = true
                 // convert single object array to object                                                
-                try {                    
+                try {
                     const evalValue = eval(value)
 
                     // should have only one object                

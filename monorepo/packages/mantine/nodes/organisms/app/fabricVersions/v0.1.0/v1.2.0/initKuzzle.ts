@@ -15,25 +15,36 @@ export default async function (noodlNode: NoodlNode) {
 
     await Kuzzle.connect()
     const jwtValid = await validateJwt()
-    console.log(jwtValid)
     if (jwtValid) {
         const user = await Kuzzle.auth.getCurrentUser()
         if (user._source.dbClass) {
-            const userKItem = await Kuzzle.document.get(dbVersion(), dbClassVersion(user._source.dbClass), user._id)
-            console.log(userKItem)
-            /* const kItem = kRes.hits.find(i => i._source.user?.id === user._id)
+            const kRes = await Kuzzle.document.search(
+                dbVersion(),
+                dbClassVersion(user._source.dbClass),
+                { query: { equals: { 'user.id': user._id } } },
+                { lang: 'koncorde' }
+            )
+            const kItem = kRes.hits.find(i => i._source.user?.id === user._id)
             let rItem: any = { user: {} }
             if (kItem) rItem = { ...kRes.hits[0]?._source, id: kRes.hits[0]?._id }
             rItem.user = { ...user._source, id: user._id }
             window.R.user = rItem
-            sendOutput(noodlNode, 'userRole', rItem.user.role?.value) */
+            sendOutput(noodlNode, 'userRole', rItem.user.role?.value)
 
         } else sendOutput(noodlNode, 'userRole', user._source.role?.value)
 
         await Kuzzle.document.search('config', 'dbclass_v1', {}, { size: 100 }).then((r) => {
-            console.log(r.hits.map(i => ({ ...i._source })))
+            const dbClasses: any = {}
+            r.hits.map(i => {
+                dbClasses[i._source.name] = {
+                    version: i._source.version
+                }
+            })
+            window.R.dbClasses = dbClasses
         })
-    } else sendOutput(noodlNode, 'userRole', 'notAuthenticated')
+    } else {
+        sendOutput(noodlNode, 'userRole', 'notAuthenticated')
+    }
 
     Kuzzle.on('disconnected', (...args: any) => {
         time('Reconnect')

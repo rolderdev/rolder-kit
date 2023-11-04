@@ -14,7 +14,7 @@ export default forwardRef(function (props: any) {
         setLoading(true)
         Kuzzle.connect().then(() =>
             Kuzzle.auth.login('local', localCreds, sessionTimeout)
-                .then((jwt: string) => {
+                .then(async (jwt: string) => {
                     const expiresAt = dayjs().add(ms(sessionTimeout), 'ms').format('YYYY-MM-DD HH:mm:ss')
                     const userSession = { username: localCreds.username, jwt, jwtExpiresAt: expiresAt }
                     cookies.set('userSession', JSON.stringify(userSession), { expires: 30 })
@@ -39,6 +39,15 @@ export default forwardRef(function (props: any) {
                             sendSignal(props.noodlNode, 'authenticated')
                             setLoading(false)
                         }
+                    })
+                    await Kuzzle.document.search('config', 'dbclass_v1', {}, { size: 100 }).then((r) => {
+                        const dbClasses: any = {}
+                        r.hits.map(i => {
+                            dbClasses[i._source.name] = {
+                                version: i._source.version
+                            }
+                        })
+                        window.R.dbClasses = dbClasses
                     })
                 }).catch((error: any) => {
                     const errorMessage = error.code === 67305492 ? 'Неверный логин или пароль' : 'Неизвестная ошибка'

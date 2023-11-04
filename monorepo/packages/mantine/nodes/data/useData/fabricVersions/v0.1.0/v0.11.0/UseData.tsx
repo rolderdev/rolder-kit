@@ -1,63 +1,53 @@
-import { forwardRef, useEffect, useImperativeHandle } from "react"
-import { subscribe } from "./hooks/subscribe";
-import { sendOutput, sendSignal } from "../../../../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/send";
-import { useQuery } from "@tanstack/react-query";
-import fetch from "./fetchers/fetch";
-import setItems from "./utils/setItems";
-import search from "./fetchers/search";
-import { map } from "nanostores";
-import { useDebouncedValue } from "@mantine/hooks";
+import { forwardRef, useEffect } from "react"
+import { Box } from "@mantine/core";
+import Data, { searchCache } from "./Data";
+import { listenKeys, map } from "nanostores";
+import getSearchResults from "./search/getSearchResults";
+import { sendSignal } from "../../../../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/send";
+import sendUseDataOutput from "../../../../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/sendUseDataOutput";
 
-export const UseDataNoodlNodes: { [nodeId: string]: NoodlNode } = {}
-export const useDataCache = map<{ [nodeId: string]: RItem[] }>({})
+export const searchCount = map<{ [noodleNodeId: string]: number }>({})
+const searchListeners = map<{ [noodleNodeId: string]: boolean }>({})
 
-export default forwardRef(function (props: CompProps, ref) {
-  const { noodlNode, dbClass, refs, backRefs, filters, sorts, options, getUsers, searchString, searchScheme } = props
-  const queryKey: QueryKey = { dbClass, filters, sorts, options, refs, backRefs, getUsers }
+export default forwardRef(function (props: CompProps11) {
+  const { map } = window.R.libs.just
+  const { noodlNode } = props
 
-  // interconnection
-  useEffect(() => {
-    UseDataNoodlNodes[noodlNode.id] = noodlNode
-    return () => { delete UseDataNoodlNodes[noodlNode.id] }
-  }, [])
-
-  if (dbClass) subscribe(queryKey, noodlNode.id)
-
-  const { data, isInitialLoading, isFetching, refetch } = useQuery({
-    queryKey: [queryKey],
-    queryFn: fetch,
-    enabled: dbClass ? true : false
-  })
-
-  sendOutput(noodlNode, 'pending', isInitialLoading)
-  sendOutput(noodlNode, 'fetching', !isInitialLoading && isFetching)
-
-  // send data to output
-  function sendData() {
-    useDataCache.setKey(noodlNode.id, data || [])
-    const nItems = setItems(data || [], dbClass, noodlNode.id, refs, backRefs)   
-    sendOutput(noodlNode, 'items', nItems)
-    sendSignal(noodlNode, 'fetched')
+  const useDataScheme = () => {
+    return props.useDataScheme?.map(dataScheme => {
+      if (props.searchString && dataScheme.search?.fields) {
+        const matchQuery = {
+          multi_match: {
+            query: props.searchString,
+            fields: dataScheme.search.fields,
+            fuzziness: 1
+          }
+        }
+        dataScheme.query ? dataScheme.query?.and?.push(matchQuery) : dataScheme.query = matchQuery
+      }
+      return dataScheme
+    })
   }
-  // refetch
-  useImperativeHandle(ref, () => ({ refetch() { refetch() } }), [])
-  // data
-  useEffect(() => sendData(), [data])
 
-  // search
-  const [debouncedSearchString] = useDebouncedValue(searchString, 350)
+  searchCount.setKey(noodlNode.id, 0)
+  searchCache.setKey(noodlNode.id, {})
   useEffect(() => {
-    if (searchScheme && debouncedSearchString) {
-      sendOutput(noodlNode, 'searching', true)
-      search(debouncedSearchString, searchScheme, dbClass).then(nItems => {
-        sendOutput(noodlNode, 'items', nItems)
-        sendSignal(noodlNode, 'founded')
-        sendOutput(noodlNode, 'searching', false)
+    if (!searchListeners.get()[noodlNode.id]) {
+      searchListeners.setKey(noodlNode.id, true)
+      listenKeys(searchCount, [noodlNode.id], (value) => {
+        if (useDataScheme().length === value[noodlNode.id]) {
+          const searchResults = getSearchResults(noodlNode.id, useDataScheme())
+          map(searchResults, (dbClass, rItems) => sendUseDataOutput(noodlNode, dbClass, rItems))
+          sendSignal(noodlNode, 'founded')
+        }
       })
     }
-  }, [debouncedSearchString])
-  // reset search
-  useEffect(() => { if (!searchString && debouncedSearchString) sendData() }, [searchString, debouncedSearchString])
+    return () => searchListeners.setKey(noodlNode.id, false)
+  }, [])
 
-  return <></>
+  return <Box display='none'>
+    {useDataScheme()?.length && useDataScheme().map(
+      dataScheme => <Data {...{ noodlNode, useDataScheme: useDataScheme(), dataScheme, searchString: props.searchString }} />
+    )}
+  </Box>
 })

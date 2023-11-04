@@ -1,50 +1,51 @@
-declare type CompProps = {
-    noodlNode: NoodlNode
-    dbClass: string
-    filters?: Filters
-    sorts?: Sorts
-    options?: Options
-    refs?: string[]
-    backRefs?: string[]
-    getUsers?: boolean
-    searchString?: string
-    searchScheme?: SearchScheme
-    useRefs?: boolean
+declare type DataCache = {
+    [dbClass: string]: RItem[]
 }
 
-declare type QueryKey = {
+declare type SearchResults11 = {
+    [dbClass: string]: RItem[]
+}
+
+declare type DataStates = {
+    pendingCount: number
+    fetchingCount: number
+}
+
+declare type DataScheme = {
     dbClass: string
-    filters?: Filters
-    sorts?: Sorts
+    query?: Query
+    sort?: Sort
     options?: Options
+    getUsers?: boolean
+    sendStates?: boolean
     refs?: string[]
     backRefs?: string[]
-    getUsers?: boolean
-}
-declare type Search = {
-    searchString: string
-    searchScheme: SearchScheme
-}
-declare type SearchScheme = {
-    [dbClass: string]: {
-        fields: string[]
-        filters?: Filters
-        sorts?: Sorts
-        refs?: string[]
-        backRefs?: string[]
-        getUsers?: boolean
+    search?: {
+        fields?: string[]
+        setOutput?: {
+            [dbClass: string]: {
+                to: string
+                [dbClass: string]: { to: string }
+            }
+        } | boolean
     }
 }
 
-declare type ItemSysProps = {
-    dbClass: string
-    noodlNodeId: string
-    refs?: string[]
-    backRefs?: string[]
+declare type CompProps11 = {
+    noodlNode: NoodlNode
+    useDataScheme: DataScheme[]
+    searchString: string
 }
 
-declare type Filters = { [key: string]: any }
-declare type Sorts = { [key: string]: 'asc' | 'desc' }[]
+declare type DataProps11 = {
+    noodlNode: NoodlNode
+    useDataScheme: DataScheme[]
+    dataScheme: DataScheme
+    searchString: string
+}
+
+declare type Query = { [key: string]: any }
+declare type Sort = { [key: string]: 'asc' | 'desc' }[]
 declare type Options = {
     size?: number
     refresh?: 'wait_for'
@@ -52,7 +53,7 @@ declare type Options = {
     silent?: boolean
 }
 
-declare interface RItem extends ItemSysProps extends ItemBody {
+declare interface RItem extends ItemBody {
     id: string
     user?: any
     _kuzzle_info?: {

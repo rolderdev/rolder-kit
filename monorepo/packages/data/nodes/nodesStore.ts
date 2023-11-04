@@ -1,4 +1,3 @@
-//import useDataNode_f0_1_0 from "./useData_old/fabricVersions/v0.1.0/useDataNode_old"
 import getDataNode_f0_1_0 from "./getData/fabricVersions/v0.1.0/getDataNode"
 import sCreateNode_f0_1_0 from "./sCreate/fabricVersions/v0.1.0/sCreateNode"
 import sUpdateNode_f0_1_0 from "./sUpdate/fabricVersions/v0.1.0/sUpdateNode"

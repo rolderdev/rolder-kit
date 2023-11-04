@@ -71,22 +71,23 @@ export const getReactNode = (
         setup: function (context: NodeContext, graphModel: GraphModel) {
             if (!context.editorConnection || !context.editorConnection.isRunningLocally()) { return }
 
-           /*  function addUseDataPort(compVersions: CompVersions, node: GraphModelNode, ports: NodePort[]) {
+            function addUseDataPort(compVersions: CompVersions, node: GraphModelNode, ports: NodePort[]) {
                 const dbClassesPort = compVersions[node.parameters.version]?.inputs?.find(i => i.name === 'dbClasses')
                 if (dbClassesPort) {
-                    node.parameters.dbClasses?.forEach((props: any) => {
-                        ports.push({ plug: 'output', name: props.label, group: 'Data', type: 'array', displayName: props.label })
+                    const dbClasses = node.parameters.dbClasses
+                    dbClasses?.forEach((dbClass: { label: string }) => {
+                        ports.push({ plug: 'output', name: dbClass.label, group: 'DB Class items', type: 'array', displayName: dbClass.label })
                     })
                 }
-            } */
+            }
 
             graphModel.on(`nodeAdded.rolder-kit.${nodeName}`, function (node: GraphModelNode) {
                 let ports = getRNodePorts(node, compVersions)
-                //addUseDataPort(compVersions, node, ports)
+                addUseDataPort(compVersions, node, ports)
                 context.editorConnection.sendDynamicPorts(node.id, ports)
                 node.on('parameterUpdated', function () {
                     let ports = getRNodePorts(node, compVersions)
-                    //addUseDataPort(compVersions, node, ports)
+                    addUseDataPort(compVersions, node, ports)
                     context.editorConnection.sendDynamicPorts(node.id, ports)
                 })
             });

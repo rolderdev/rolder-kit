@@ -51,7 +51,7 @@ export default forwardRef(function (props: any, ref) {
             </Indicator>
         }}
         icon={(Icon && <Icon size={props.iconSize} stroke={props.stroke} />) || <IconCalendar size="1.25rem" stroke={1.5} />}
-        valueFormat={props.dateFormat}
+        valueFormat={props.dateFormatAtDateTimePicker}
         minDate={props.limitMinDate && dayjs().add(props.minDateOffset, 'day').toDate()}
         {...props}
         {...props.customProps}

@@ -3,20 +3,18 @@ import { dbClassVersion, dbVersion } from "../../../../../../../../data/utils/ge
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect } from "react"
 import { log } from "../../../../../../../../../utils/debug/log/v0.2.0/log"
-import setItems from "../utils/setItems"
 
-export function subscribe(queryKey: QueryKey, noodlNodeId: string) {
+export function subscribe(dataScheme: DataScheme) {
     const { Kuzzle } = window.R.libs
-    const { dbClass, filters } = queryKey
+    const { dbClass, query } = dataScheme
     const queryClient = useQueryClient()
 
     useEffect(() => {
         let roomId = ''
-        Kuzzle.connect().then(() => Kuzzle.realtime.subscribe(dbVersion(), dbClassVersion(dbClass), filters || {},
+        Kuzzle.connect().then(() => Kuzzle.realtime.subscribe(dbVersion(), dbClassVersion(dbClass), query || {},
             (notif: Notification) => {
-
                 if (notif.type !== 'document') return
-                if (notif.action === 'update') {
+                /* if (notif.action === 'update') {
                     queryClient.setQueriesData([queryKey], (oldData: any) => {
                         const update = (oldRItem: RItem) => {
                             if (oldRItem.id === notif.result._id) {
@@ -29,9 +27,8 @@ export function subscribe(queryKey: QueryKey, noodlNodeId: string) {
                             ? oldData.map(update)
                             : update(oldData)
                     })
-                }
-                queryClient.invalidateQueries({ queryKey: [queryKey] })
-
+                } */
+                queryClient.invalidateQueries({ queryKey: [dataScheme] })
                 log(`Subscribe - ${notif.action} ${dbClass}: `, notif.result)
             }
         ).then((rId: string) => {

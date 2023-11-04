@@ -1,20 +1,6 @@
 //// libs
 import { Kuzzle, WebSocket } from 'kuzzle-sdk'
 const kuzzle = new Kuzzle(new WebSocket(`rolder.app`, { port: 443 }))
-import { QueryCache, QueryClient } from "@tanstack/react-query"
-import ErrorHandler from './packages/mantine/utils/errorHandler/v0.2.0/ErrorHandler'
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            staleTime: Infinity,
-        },
-    },
-    queryCache: new QueryCache({
-        onError: (error: any, query: any) => {
-            if (query.state.data !== undefined) ErrorHandler('Системная ошибка!', error.message)
-        },
-    }),
-})
 import mutator from './packages/data/libs/mutator/v0.1.0/mutator';
 import dayjs from 'dayjs'
 import cookies from 'js-cookie';
@@ -45,7 +31,7 @@ import flatten from 'just-flatten-it';
 import debounce from 'just-debounce-it'
 import capitalize from 'just-capitalize';
 // loadsh
-import { isNil } from 'lodash'
+import { isNil, unionBy } from 'lodash'
 // form
 import { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField } from '@mantine/form'
 
@@ -57,9 +43,12 @@ import getFormatedDate2 from './packages/utils/getFormatedDate/2/getFormatedDate
 import getMasked2 from './packages/utils/getMasked/2/getMasked';
 import filterBy from './packages/utils/filterBy/3/filterBy';
 
+declare type DbClass = {
+    version: number
+}
+
 declare type RolderType = {
     states: {
-        inited?: boolean
         debug: number
     }
     env: {
@@ -78,9 +67,11 @@ declare type RolderType = {
             dateFormat: string
         }
     }
+    dbClasses?: {
+        [x: string]: DbClass
+    }
     libs: {
         Kuzzle: typeof kuzzle
-        queryClient: typeof queryClient
         mutator: typeof mutator
         dayjs: typeof dayjs
         cookies: typeof cookies
@@ -131,6 +122,7 @@ declare type RolderType = {
         isNil: typeof isNil
         lodash: {
             isNil: typeof isNil
+            unionBy: typeof unionBy
         }
     }
     utils: {
