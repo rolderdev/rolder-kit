@@ -24,7 +24,12 @@ export type CellDef = {
         accessor: string,
         map: { [x: string]: MantineColor }
     }
-    style?: Sx // any Sx style props
+    style?: any // any Sx style props
+    align?: 'left' | 'center' | 'right'
+}
+
+export type HeaderDef = {
+    align?: 'left' | 'center' | 'right'
 }
 
 export interface FilterDef {
@@ -53,9 +58,14 @@ export interface ColumnDef extends MRT_ColumnDef<RItem> {
     accessor: string // path to data
     data?: DataDef
     cell?: CellDef
+    headerProps?: HeaderDef
     filter?: FilterDef
     actions?: ActionDef[] // cell actions
     actionsOnly?: boolean // show only actions and center them
     hoverableActions?: boolean
     groupScheme?: GroupScheme[]
+    render?: {
+        comp: 'Avatar',
+        props: any
+    }
 }

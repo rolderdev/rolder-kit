@@ -16,6 +16,7 @@ export default function (columnsDef: ColumnDef[], tableProps: TableCompProps) {
             columnDef.enableSorting = columnDef.enableSorting || false
             columnDef.Header = ({ table }) => Header(tableProps, columnDef, table)
             columnDef.Cell = ({ renderedCellValue, table, row }) => Cell(tableProps, columnDef, table, row, renderedCellValue)
+            columnDef.mantineTableHeadCellProps = columnDef.headerProps
             return clone(columnDef)
         })
 

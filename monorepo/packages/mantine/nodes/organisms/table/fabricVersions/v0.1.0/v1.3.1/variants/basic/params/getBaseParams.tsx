@@ -2,7 +2,7 @@ import { TableCompProps } from "../../../types/TableCompProps";
 import { MRT_TableOptions } from "mantine-react-table";
 import { Sx } from "@mantine/core";
 import convertColor from "../../../../../../../../../utils/convertColor/v0.2.0/convertColor";
-import cellStyle from "../cell/cellStyle";
+import cellProps from "../cell/cellProps";
 import { useAtomValue, useSetAtom } from "jotai";
 import { getSelectedAtom } from "../../../selection/multiSelection";
 import { hoveredRowId } from "../../../params/getSharedParams";
@@ -13,8 +13,6 @@ export default function (tableProps: TableCompProps) {
         noodlNode, singleSelectable, rowBackgroundColor, highlightOnHover, onHoverColor, highlightSelectedRow, selectedRowColor,
         singleUnselectable
     } = tableProps
-
-
 
     const baseParams: Partial<MRT_TableOptions<RItem>> = {
         mantineTableBodyRowProps: ({ row }) => {
@@ -44,7 +42,7 @@ export default function (tableProps: TableCompProps) {
             }
             return { ...props, sx }
         },
-        mantineTableBodyCellProps: ({ column, row }) => cellStyle(tableProps, column, row),
+        mantineTableBodyCellProps: ({ column, row }) => cellProps(tableProps, column, row),
     }
 
     return baseParams

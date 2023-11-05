@@ -15,6 +15,7 @@ dayjs.extend(weekOfYear)
 dayjs.extend(advancedFormat)
 dayjs.extend(duration)
 dayjs.extend(relativeTime)
+dayjs.locale('ru')
 window.R.libs.dayjs = dayjs
 
 // just

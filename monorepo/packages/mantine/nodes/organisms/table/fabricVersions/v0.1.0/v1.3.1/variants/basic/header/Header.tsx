@@ -21,6 +21,6 @@ export default function (tableProps: TableCompProps, columnDef: ColumnDef, table
             onClick={(e) => e.stopPropagation()}
             disabled={!hasData}
         />}
-        <Text>{columnDef.header}</Text>
+        <Text {...columnDef.headerProps}>{columnDef.header}</Text>
     </Group>
 }

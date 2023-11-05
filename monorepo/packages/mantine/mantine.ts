@@ -4,7 +4,7 @@ window.R.states = { debug }
 import rKitJson from '../../package.json'
 window.R.env = { rolderKit: `v${rKitJson.version}` }
 
-//===================================================================
+//====================================================================
 
 import nodesStore from './nodes/nodesStore'
 

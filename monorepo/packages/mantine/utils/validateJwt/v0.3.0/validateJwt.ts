@@ -8,6 +8,7 @@ export default async function validateJwt() {
     const { sessionTimeout } = window.R.params
 
     async function checkToken(userSession?: UserSession) {
+        await Kuzzle.connect()
         return await Kuzzle.auth.checkToken(userSession?.jwt).then((r: any) => {
             if (r.valid) {
                 jwtValidState.set(true)
