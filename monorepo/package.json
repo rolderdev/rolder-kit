@@ -1,13 +1,13 @@
 {
   "name": "rolder-kit",
   "private": true,
-  "version": "0.20.0",
+  "version": "0.21.0",
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
     "react": "18.2.0",
-    "@rspack/cli": "0.3.10",
+    "@rspack/cli": "0.3.11",
     "@types/react": "18.2.34",
     "@types/react-dom": "18.2.14",
     "typescript": "5.2.2"
