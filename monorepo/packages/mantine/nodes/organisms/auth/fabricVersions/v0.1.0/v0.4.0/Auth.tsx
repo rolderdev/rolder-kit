@@ -3,24 +3,29 @@ import { sendOutput, sendSignal } from "../../../../../../../../libs/nodesFabric
 import ErrorHandler from "../../../../../../utils/errorHandler/v0.2.0/ErrorHandler"
 import { isNotEmpty, useForm } from "@mantine/form"
 import { Button, Group, Paper, PasswordInput, Stack, TextInput } from "@mantine/core"
-import { dbClassVersion, dbVersion } from "../../../../../../../data/utils/getVersion/v0.3.0/getVersion"
+import { dbClassVersion } from "../../../../../../../data/utils/getVersion/v0.5.0/getVersion"
 
 export default forwardRef(function (props: any) {
     const { Kuzzle, dayjs, ms, cookies } = window.R.libs
     const { sessionTimeout } = window.R.params
-
+    const { dbName } = window.R.env
 
     function loginHandler(localCreds: LocalCreds) {
         setLoading(true)
         Kuzzle.connect().then(() =>
             Kuzzle.auth.login('local', localCreds, sessionTimeout)
                 .then(async (jwt: string) => {
+                    await Kuzzle.document.search('config', 'dbclass_v1', {}, { size: 100 }).then((r) => {
+                        const dbClasses: any = {}
+                        r.hits.map(i => { dbClasses[i._source.name] = i._source })
+                        window.R.dbClasses = dbClasses
+                    })
                     const expiresAt = dayjs().add(ms(sessionTimeout), 'ms').format('YYYY-MM-DD HH:mm:ss')
                     const userSession = { username: localCreds.username, jwt, jwtExpiresAt: expiresAt }
                     cookies.set('userSession', JSON.stringify(userSession), { expires: 30 })
-                    Kuzzle.auth.getCurrentUser().then(user => {
+                    if (dbName) Kuzzle.auth.getCurrentUser().then(user => {
                         if (user._source.dbClass) Kuzzle.document.search(
-                            dbVersion(),
+                            dbName,
                             dbClassVersion(user._source.dbClass),
                             { query: { equals: { 'user.id': user._id } } },
                             { lang: 'koncorde' }
@@ -39,15 +44,6 @@ export default forwardRef(function (props: any) {
                             sendSignal(props.noodlNode, 'authenticated')
                             setLoading(false)
                         }
-                    })
-                    await Kuzzle.document.search('config', 'dbclass_v1', {}, { size: 100 }).then((r) => {
-                        const dbClasses: any = {}
-                        r.hits.map(i => {
-                            dbClasses[i._source.name] = {
-                                version: i._source.version
-                            }
-                        })
-                        window.R.dbClasses = dbClasses
                     })
                 }).catch((error: any) => {
                     const errorMessage = error.code === 67305492 ? 'Неверный логин или пароль' : 'Неизвестная ошибка'

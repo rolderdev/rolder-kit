@@ -29,6 +29,8 @@ const style = [
     { name: 'checkboxColor', group: 'Checkbox', type: 'string', displayName: 'Color', tooltip: 'red, red.5' },
     { name: 'dividerVariant', group: 'Style', type: { name: 'enum', enums: enums.dividerVariants }, displayName: 'Variant', default: 'solid' },
     { name: 'actionIconVariant', group: 'Style', type: { name: 'enum', enums: enums.actionIconVariants }, displayName: 'Variant', default: 'subtle' },
+    { name: 'popoverActionIconVariant', group: 'Style', type: { name: 'enum', enums: enums.actionIconVariants }, displayName: 'ActionIcon variant', default: 'subtle', dependsOn: [{ name: 'popoverTarget', value: 'actionIcon' }] },
+    { name: 'popoverButtonVariant', group: 'Style', type: { name: 'enum', enums: enums.buttonVariants }, displayName: 'Button variant', default: 'filled', dependsOn: [{ name: 'popoverTarget', value: 'button' }] },
     { name: 'textareaVariant', group: 'Style', type: { name: 'enum', enums: enums.textareaVariants }, displayName: 'Variant', default: 'default' },
 ] as const satisfies readonly NodePort[];
 

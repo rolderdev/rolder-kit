@@ -64,7 +64,7 @@ export interface ColumnDef extends MRT_ColumnDef<RItem> {
     actionsOnly?: boolean // show only actions and center them
     hoverableActions?: boolean
     groupScheme?: GroupScheme[]
-    render?: {
+    render?: (row: MRT_Row<RItem>) => {
         comp: 'Avatar',
         props: any
     }

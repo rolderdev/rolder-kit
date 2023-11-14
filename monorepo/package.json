@@ -1,15 +1,18 @@
 {
   "name": "rolder-kit",
   "private": true,
-  "version": "0.21.0",
+  "version": "0.20.0",
   "workspaces": [
     "packages/*"
   ],
+  "dependencies": {
+    "@noodl/noodl-sdk": "0.5.4"
+  },
   "devDependencies": {
     "react": "18.2.0",
     "@rspack/cli": "0.3.11",
-    "@types/react": "18.2.34",
-    "@types/react-dom": "18.2.14",
+    "@types/react": "18.2.37",
+    "@types/react-dom": "18.2.15",
     "typescript": "5.2.2"
   }
 }

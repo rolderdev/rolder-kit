@@ -33,10 +33,11 @@ export default function (
         {actions?.length && <Group position='right' noWrap>{actions}</Group>}
     </Group>
 
-    switch (columnDef.render?.comp) {
+    const render = columnDef.render && columnDef.render(row)
+    if (render) switch (render.comp) {
         case 'Avatar': return <Group w={columnDef.size ? columnDef.size : undefined} position={position} noWrap>
-            <Avatar {...columnDef.render.props}>{Value(columnDef, renderedCellValue)}</Avatar>
+            <Avatar {...render.props}>{Value(columnDef, renderedCellValue)}</Avatar>
         </Group>
         default: return defaultRender
-    }
+    } else return defaultRender
 }

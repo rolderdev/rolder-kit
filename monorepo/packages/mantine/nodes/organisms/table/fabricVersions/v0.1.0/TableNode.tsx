@@ -1,4 +1,4 @@
-import { getReactNode } from '../../../../../../../libs/nodesFabric/v0.1.0/getNode/v0.6.0/getNode'
+import { getReactNode } from '../../../../../../../libs/nodesFabric/v0.1.0/getNode/v0.7.0/getNode'
 import { getPorts } from '../../../../../../../libs/nodesFabric/v0.1.0/portsFabric/v0.5.0/get'
 
 import v1_2_0 from './v1.2.0/Table'
@@ -10,6 +10,7 @@ import v1_3_1 from './v1.3.1/Table'
 
 const compVersions: CompVersions = {
     'v1.2.0': {
+        hashTag: 'deprecated',
         Comp: v1_2_0,
         inputs: [
             // params, data
@@ -37,6 +38,7 @@ const compVersions: CompVersions = {
         signals: getPorts('input', ['expandAll', 'unExpandAll', 'resetSingleSelected', 'resetMultipleSelected']),
     },
     'v1.2.1': {
+        hashTag: 'deprecated',
         Comp: v1_2_1,
         inputs: [
             // params, data
@@ -64,6 +66,7 @@ const compVersions: CompVersions = {
         signals: getPorts('input', ['expandAll', 'unExpandAll', 'resetSingleSelected', 'resetMultipleSelected']),
     },
     'v1.3.0': {
+        hashTag: 'deprecated',
         Comp: v1_3_0,
         inputs: [
             // params, data

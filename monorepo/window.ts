@@ -1,7 +1,6 @@
 //// libs
 import { Kuzzle, WebSocket } from 'kuzzle-sdk'
 const kuzzle = new Kuzzle(new WebSocket(`rolder.app`, { port: 443 }))
-import mutator from './packages/data/libs/mutator/v0.1.0/mutator';
 import dayjs from 'dayjs'
 import cookies from 'js-cookie';
 import numbro from 'numbro';
@@ -9,6 +8,7 @@ import { IMask } from 'react-imask';
 import { sort } from "fast-sort"
 import generatePassword from "omgopass";
 import ms from "ms"
+import { plot, ruleY, dot, barY, groupX } from "@observablehq/plot"
 // just
 import clone from "just-clone";
 import map from "just-map-object";
@@ -30,6 +30,7 @@ import compare from 'just-compare'
 import flatten from 'just-flatten-it';
 import debounce from 'just-debounce-it'
 import capitalize from 'just-capitalize';
+import throttle from 'just-throttle';
 // loadsh
 import { isNil, unionBy } from 'lodash'
 // form
@@ -55,8 +56,8 @@ declare type RolderType = {
         rolderKit: string
         project?: string
         projectVersion?: string
-        envVersion?: string
-        dbVersion?: number
+        backendVersion?: string
+        dbName?: string
     }
     params: {
         dbClasses?: {
@@ -72,7 +73,6 @@ declare type RolderType = {
     }
     libs: {
         Kuzzle: typeof kuzzle
-        mutator: typeof mutator
         dayjs: typeof dayjs
         cookies: typeof cookies
         numbro: typeof numbro
@@ -80,6 +80,13 @@ declare type RolderType = {
         sort: typeof sort
         generatePassword: typeof generatePassword
         ms: typeof ms
+        plot: {
+            plot: typeof plot
+            ruleY: typeof ruleY
+            dot: typeof dot
+            barY: typeof barY
+            groupX: typeof groupX
+        }
         form: {
             isNotEmpty: typeof isNotEmpty
             isEmail: typeof isEmail
@@ -118,6 +125,7 @@ declare type RolderType = {
             flatten: typeof flatten
             debounce: typeof debounce
             capitalize: typeof capitalize
+            throttle: typeof throttle
         }
         isNil: typeof isNil
         lodash: {
@@ -148,9 +156,6 @@ declare type RolderType = {
 declare global {
     interface Window {
         R: RolderType
-        Rolder: any
-        QueryClient: any
-        Kuzzle: any
         Noodl: any
         KuzzleInit: { Kuzzle: typeof Kuzzle, WebSocket: typeof WebSocket }
     }

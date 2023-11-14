@@ -5,6 +5,9 @@ const states = [
     { name: 'creating', group: 'States', type: 'boolean', displayName: 'Creating', default: false },
     { name: 'active', group: 'States', type: 'boolean', displayName: 'Active', default: false },
     { name: 'activateLabel', group: 'States', type: 'string', displayName: 'Activate label' },
+    { name: 'deleting', group: 'States', type: 'boolean', displayName: 'Deleting', default: false },
+    { name: 'indicatorProcessing', group: 'States', type: 'boolean', displayName: 'Processing', default: false },
+    { name: 'executing', group: 'States', type: 'boolean', displayName: 'Executing', default: false },
 ] as const satisfies readonly NodePort[];
 
 export default states

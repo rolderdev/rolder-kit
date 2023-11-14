@@ -8,6 +8,8 @@ node_modules
 **/node_modules
 **/recycle
 .nova
+*.ffs_db
+**/build
 
 # Editor directories and files
 .vscode/*

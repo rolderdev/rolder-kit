@@ -1,6 +1,5 @@
-import { Kuzzle, WebSocket } from 'kuzzle-sdk'
-window.KuzzleInit = { Kuzzle, WebSocket }
-
-import nodesStore from './nodes/nodesStore'
 import { defineModule, defineNode } from '@noodl/noodl-sdk'
-defineModule({ nodes: nodesStore.map(i => defineNode(i)) })
+import jsNodesStore from './nodes/jsNodesStore'
+import rNodesStore from './nodes/rNodesStore'
+
+defineModule({ nodes: jsNodesStore.map(i => defineNode(i)), reactNodes: rNodesStore })

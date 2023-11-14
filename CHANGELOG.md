@@ -1,7 +1,14 @@
 # Changelog
-## 2023-11-01 v0.20.0
+## 2023-11-14 v0.20.0
 ### Общие изменения
-* Production клиниг развернут на Yandex. Готовимся к Noodle open source. При этом возникло новое требование - в настрйоках проекта URL path type должен быть hash. Последние версии Rolder Kit не имеют с этим проблем.
+* Разделение Mantine и React Query. Раньше эти библиотеки настраивались в App. Пришло время разложить все по полочкам. Теперь будет работать так:
+    * App остается как контейнер для настроек проекта. Как и раньше - это самая верхняя нода в иерархии.    
+    * Data - новая нода. Опциональна, можно не использовать в редких случаях, когда весь бекенд Kuzzle не нужен. Держит в себе настройки Kuzzle. Подключается к Kuzzle, импортирует из него настройки классов. Поддерживает соединение с Kuzzle и сессию пользователя (авторизация). Идет вторым уровнем в иерархии.
+    * Mantine - новая нода. Задает контекст для всех нод Mantine. Держит в себе настройки для Mantine. Идет третьим уровнем в иерархии.
+* Вводим два новых тега:
+    * #deprecated - так будем помечать ноды, порты, настройки, которые планируем выводить из использования.
+    * #breakingChange - так будем помечать ноды, порты, настройки, изменение которых не соввместимо с предыдущей реализацией.
+    * #experimental - подразумевает, что это всегда еще и breakingChange.
 * Схема классов в БД. Потребовалась для миграции классов, когда нужно поменять маппинг не трогая старые данные. Оказалось удобно и для Rolder Kit. Пока нужна только для UseData v0.11.0. Для использования нужно завести БД (index) с названием "config" и класс с названием "dbclass_v1". Пока вот такой простой меппинг:
 ```json
 {
@@ -17,10 +24,44 @@
 }
 ```
 Так же нужно добавить этот класс в профиль безопасности на чтение, если применяется. Каждый класс должен иметь соотвествующую запись в этом классе.
+* Production клиниг развернут на Yandex. Готовимся к Noodle open source. При этом возникло новое требование - в настрйоках проекта URL path type должен быть hash. Последние версии Rolder Kit не имеют с этим проблем.
+### Новые ноды:
+#### Mantine v0.1.0 `#experimental`
+* Сюда из App переехало:
+    * Настрокйи темы.
+    * Настройки дат.
+    * Настройки сообщений.
+#### Data v0.1.0 `#experimental`
+* Сюда из App переехало:
+    * Подключение к Kuzzle
+    * Сессия пользователя
+    * React Query.
+#### nodered v0.1.0
+* Нода для запуска flow Nodered. В каждом проекте могут быть разные flow. Частый пример - загрузка фото.
+* Заменяет не настраиваемую ноду uploadWebCamShots. Практика показала - пытаться загружать в S3 файлы прямо с фронта плохая идея.
+* Проверена на 2-х сценариях - загрузка файлов с компа, загрузка фото с вебкамеры.
+* Работает так:
+    * Нужно иметь flow в Nodered и знать название его endpoint. 
+    * Стандарт принимаемых данных такой, на примере:
+    ```js
+    Outputs.flowData = {
+        params: { folder: `task/${Inputs.selectedTaskId}/${Inputs.selectedTaskResultId}` }, // параметры специфичные для каждого flow
+        data: {somedata: []} // здесь могут быть любые данные кроме бинарных. Формат должен быть объектом или массивом.
+        files: images.map(i => dataURItoFile(i.data?.data, i.data.name)) // Массив файлов. Формат именно File (смотри js new File). В файле должны быть: name, size и mimetype.
+    }
+    ```
+#### DropZone v0.1.0 by Мишаня
+* Принимает один файл выбранного типа, не позволяя вставлять иного типа.
+
 ### Изменения нод
-#### App v1.3.0
-* Рефаткоринг процесса инициализации.
-* Еще одна попытка поправить баг вылетающей сессии.
+#### App v1.3.0 `#experimental`
+* Отчистка от Mantine и React Query.
+* Убрана инициализация Kuzzle и поддержка сессии пользователя.
+* Анимация инициализации теперь (снова) не испозьзует Mantine. Используется библиотека react-spinners, которую мы уже используем для BarLoader.
+* Defaults теперь указываются здесь.
+* breakingChange:
+    * Перестанут работать UseData до версии 0.10.0 включительно.
+    * Перестанут работать все настройки проекта кроме названия и версии проекта.
 #### UseData v0.11.0 `#experimental`
 * Еще одна попытка найти оптимальное решение. На этот раз выяснилось, что 2 UseData рядом с одним классом не уживаются, а сценарий такой есть.
 * Как это работает:
@@ -81,10 +122,286 @@
 headerProps: { align: 'center' }, // 'left' | 'center' | 'right'
 cell: { align: 'center' } // 'left' | 'center' | 'right'
 ```
+#### create v0.4.0 `#experimental`
+* Эта нода призвана стать стандартом для любых сценариев создания данных. Заменит старый create и хорошо зарекомендовавший себя sCreate.
+* Гипотеза простая - должен быть один формат и вариант создания данных, который покрывает все основные сценарии или позволяет собрать из нескольких нод для редких сложных случаев.
+* Эта нода может:
+    * Создавать один или несколько объектов за раз.
+    * Работает с одним или несколькими классами за раз.
+    * Может создавать классы по очереди или одновременно.
+    * При варианте создания классов по очереди, может использовать результаты предыдущего шага для проставления связей.
+    * Может создавать пользователей, если название класса 'user'.
+* Формат схемы:
+    ```ts
+    type CreateScheme = {
+        dbClass: string
+        order: number    
+        items: RItem[]      
+    }[]
+    ```    
+    * dbClass - название класса без версии.
+    * order - номер для очереди создания. Если нужно создавать одновременно (когда нет связей), то можно указать один номер для разных классов.
+    * items - массив создаваемых объектов. Раньше требовалось обарачивать объекты в body, теперь это не нужно. Здесь же решается вопрос связей. Примеры ниже.    
+* Примеры (startum использует только новый create, есть примеры всех известных сценариев):
+    * Простой пример создания объекта одного класса:
+    ```js
+    const formHook = Inputs.formHook
+
+    if (formHook) {    
+        const house = {
+            dbClass: 'house',            
+            items: [{                
+                complex: { id: formHook.values.complex },
+                company: { id: R.user.company.id },
+                content: {
+                    address: formHook.values.houseAddress,
+                    name: formHook.values.houseName,
+                }
+            }]
+        }
+
+        Outputs.scheme = [house]
+        Outputs.create()
+    }
+    ```
+    * Одновременно несколько не связанных классов. Здесь создается один объект house и несколько area:
+    ```js
+    const formHook = Inputs.formHook
+
+    if (formHook) {    
+        const house = {
+            dbClass: 'house',
+            order: 0,
+            items: [{                
+                complex: { id: formHook.values.complex },
+                company: { id: R.user.company.id },
+                content: {
+                    address: formHook.values.houseAddress,
+                    name: formHook.values.houseName,
+                }
+            }]
+        }
+
+        const areas = {
+            dbClass: 'area',
+            order: 0,
+            items: formHook.values.areas.map(a => ({                
+                company: { id: R.user.company.id },
+                content: a.content
+            }))
+        }
+
+        Outputs.scheme = [house, areas]
+        Outputs.create()
+    }
+    ```
+    * Последовательно несколько связанных классов. Здесь создается один объект house и несколько area, ссылающихся на созданный house:
+    ```js
+    const formHook = Inputs.formHook
+
+    if (formHook) {    
+        const house = {
+            dbClass: 'house',
+            order: 0,
+            items: [{
+                refId: 0,
+                complex: { id: formHook.values.complex },
+                company: { id: R.user.company.id },
+                content: {
+                    address: formHook.values.houseAddress,
+                    name: formHook.values.houseName,
+                }
+            }]
+        }
+
+        const areas = {
+            dbClass: 'area',
+            order: 1,
+            items: formHook.values.areas.map(a => ({
+                house: { refId: 0 },
+                company: { id: R.user.company.id },
+                content: a.content
+            }))
+        }
+
+        Outputs.scheme = [house, areas]
+        Outputs.create()
+    }
+    ```
+    * Вариант с созданием пользователя:
+    ```js
+    const formHook = Inputs.formHook
+
+    if (formHook) {
+        const company = {
+            dbClass: 'company',
+            order: 0,
+            items: [{
+                refId: 0,
+                content: {
+                    name: formHook.values.companyName,
+                    contacts: {
+                        phone: formHook.values.companyPhone,
+                        email: formHook.values.companyEmail,
+                    },
+                    legal: {
+                        name: formHook.values.legalName,
+                        address: formHook.values.legalAddress,
+                        rs: formHook.values.legalRs,
+                        inn: formHook.values.legalInn,
+                        ogrn: formHook.values.legalOgrn,
+                        bik: formHook.values.legalBik,
+                        ks: formHook.values.legalKs,
+                    }
+                },
+                states: {
+                    flow: R.dbClasses.company.states.flow.find(i => i.value === 'created'),
+                    subscription: R.dbClasses.company.states.subscription.find(i => i.value === 'notRegistered')
+                }
+            }]
+        }
+
+        const user = {
+            dbClass: 'user',
+            order: 0,
+            items: [{
+                refId: 0,
+                content: {
+                    profileIds: ['companyReader', 'companyWriter'],
+                    role: {
+                        value: 'companyManager',
+                        title: 'Менеджер компании'
+                    },
+                    dbClass: 'manager'
+                },
+                credentials: {
+                    local: {
+                        username: formHook.values.userName,
+                        password: Inputs.selectedManager?.company?.states?.flow?.value === 'activated'
+                            ? formHook.values.password
+                            : (Math.random() + 1).toString(36).substring(7),
+                        notSecret: formHook.values.password
+                    }
+                }
+            }]
+        }
+
+        const manager = {
+            dbClass: 'manager',
+            order: 1,
+            items: [{
+                company: { refId: 0 },
+                user: { refId: 0 },
+                content: {
+                    firstName: formHook.values.firstName,
+                    lastName: formHook.values.lastName,
+                }
+            }]
+        }
+
+        Outputs.scheme = [company, user, manager]
+        Outputs.create()
+    }
+    ```
+
+#### update v0.3.0 `#experimental`
+* Эта нода призвана стать стандартом для любых сценариев удаления данных. Заменит старые update, mUpdate, sUpdate и smUpdate.
+* Работает как create учитывая order. Поскольку при обновлении связи уже проставлены, order часто имеет смысл высталять одинаковый для увеличения скорости.
+* Не умеет проставлять связи. Пока не было ни одного сценария, где бы нужно было при обновлении данних пересоздавать связи.
+* Схема как у create, но не нужно указывать refId. Нужно, чтобы каждый item содержал id.
+#### delete v0.3.0 `#experimental`
+* Эта нода призвана стать стандартом для любых сценариев изменения данных. Заменит старые delete, mDelete и mDeleteUsers.
+* Работает ассинхронно - удаляет заданные классы одновременно.
+* Схема:
+```js
+declare type DeleteScheme3 = {
+    dbClass: string
+    ids: string[]
+}
+```
+* Для удаления системных записей пользователей нужно указать класс user и передавать в ids kuid-ы.
+#### getData v0.2.0 `#experimental`
+* Предназначена для ручных запросов данных напрямую мимо кеша. Удобно, когда данные нужны по редкому событию.
+* Настраивается как UseData. Нужно задать классы и схему. На выходе для каждого класса появится порт.
+* В отличии от UseData, не умеет искать, автообновляться и т.д.
+* Умеет проставлять связи. Делает это так же, как UseData.
+* Умеет фильтровать данные шага по резуьтатам предыдущего шага. Синтаксис простой - filterBy: ['className']. Под капотом filterBy преобразует query, добавив { in: { 'className.id': classNameItems.map(i => i.id)} }. Это работает только при наличии связи на уровне БД. Пример ниже.
+* Пример схемы:
+```js
+Outputs.getDataScheme = [
+    {
+        dbClass: 'house',
+        query: { not: { equals: { 'states.archived': true } } },
+        options: { size: 100 },        
+    },
+    {
+        dbClass: 'task',
+        query: {
+            and: [
+                { not: { equals: { 'states.archived': true } } },
+                { in: { 'worker.id': R.libs.just.flush(selectedWorkers.map(i => i.id)) } }
+            ]
+        },
+        filterBy: ['house'],
+        options: { size: 100 },
+        refs: ['house']
+        sendStates: true     
+    }    
+]
+```
+#### Button v0.3.0
+* Нода переведена на новый формат.
+#### Popover v0.2.0
+* Нода переведена на новый формат.
+* Заменяет старые PopoverButton и PopoverActionIcon.
+* Добавлен выбор Target - компоненты, которая отрисовывается и по нажатию на которую открывается/закрывается dropdown.
+#### Loader v0.2.0
+* Нода переведена на новый формат.
+#### Paper v0.2.0 `#breakingChange`
+* Нода переведена на новый формат.
+* Убран параметр backgroundColor. Если нужен, можно использвать customProps -[{ sx: (theme) => ({ backgroundColor: theme.colors.red[6] }) }]
+#### QRCode v0.2.0
+* Нода переведена на новый формат.
+#### Image v0.2.0
+* Нода переведена на новый формат.
+#### Grid v0.2.0 `#breakingChange`
+* Нода переведена на новый формат.
+* Добавлены параметры - grow, justify, align, columnsCount.
+* Вместо spans теперь подается схема колонок. Поскольку в схему можно передать любые параметры, можно использовать все, что описаны в документации Mantine для Grid.Col. Пример:
+```js
+[
+    {
+        span: 'auto'
+    },
+    {
+        span: 'content',
+        offset: 5
+    }
+]
+```
+#### Indicator v0.2.0
+* Нода переведена на новый формат.
+#### UnstyledButton v0.2.0
+* Нода переведена на новый формат.
+* На выходе как обычная кнопка имеет согнал clicked.
+* Поскольку это кнопка без стилей, все настройки нужно передавать через customProps.
+#### notification v0.2.0
+* Нода переведена на новый формат.
+* Особый пурпурный.
+
+### Удаленные ноды
+* sCreate - заменена create
+* sUpdate - заменена update
+* smUpdate - заменена update
+* logout v0.1.0 - старая версия    
+
 ### Обновления библиотек:
 * @tabler/icons-react 2.39.0 > 2.40.0
-* jotai 2.4.3 > 2.5.0
+* jotai 2.4.3 > 2.5.1
 * bunshi 2.0.1 > 2.0.2
+* mantine-react-table 1.3.3 > 1.3.4
+* nanostores 0.9.4 > 0.9.5
+* ky 1.1.3 - HTTP клиент.
 
 ## 2023-10-26 v0.19.0
 ### Общие изменения:

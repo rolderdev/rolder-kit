@@ -21,10 +21,7 @@ module.exports = {
     output: { path: outputPath, clean: true },
     externals: {
         react: 'React',
-        'react-dom': 'ReactDOM',
-        '@noodl/noodl-sdk': 'Noodl',
-        "dayjs": "window.R.libs.dayjs",
-        "just-safe-get": "window.R.libs.just.get"
+        'react-dom': 'ReactDOM'
     },
     plugins: [
         new rspack.CopyRspackPlugin({

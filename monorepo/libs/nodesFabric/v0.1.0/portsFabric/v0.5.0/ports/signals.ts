@@ -24,6 +24,14 @@ const signals = [
     { name: 'logout', group: 'Signals', type: 'signal', displayName: 'Logout' },
     { name: 'loggedOut', group: 'Signals', type: 'signal', displayName: 'Logged out' },
     { name: 'reset', group: 'Signals', type: 'signal', displayName: 'Reset' },
+    { name: 'delete', group: 'Signals', type: 'signal', displayName: 'Delete' },
+    { name: 'deleted', group: 'Signals', type: 'signal', displayName: 'Deleted' },
+    { name: 'screenshoted', group: 'Signals', type: 'signal', displayName: 'Screenshoted' },
+    { name: 'qrScanned', group: 'Signals', type: 'signal', displayName: 'Scanned' },
+    { name: 'send', group: 'Signals', type: 'signal', displayName: 'Send' },
+    { name: 'execute', group: 'Signals', type: 'signal', displayName: 'Execute' },
+    { name: 'executed', group: 'Signals', type: 'signal', displayName: 'Executed' },
+    { name: 'rejected', group: 'Signals', type: 'signal', displayName: 'Rejected' },
 ] as const satisfies readonly NodePort[];
 
 export default signals

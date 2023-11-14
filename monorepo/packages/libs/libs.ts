@@ -39,9 +39,10 @@ import compare from 'just-compare'
 import flatten from 'just-flatten-it';
 import debounce from 'just-debounce-it'
 import capitalize from 'just-capitalize';
+import throttle from 'just-throttle';
 window.R.libs.just = {
-    clone, map, typeOf, flush, template, isEmpty, omit, insert, get, set, clamp, last, remove, sortBy, unique, compare, flatten, debounce,
-    capitalize
+    clone, map, typeOf, flush, template, isEmpty, omit, insert, get, set, clamp, last, remove, sortBy, unique, compare, flatten,
+    debounce, capitalize, throttle
 }
 
 // lodash

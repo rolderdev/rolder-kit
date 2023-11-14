@@ -1,7 +1,7 @@
 {
   "name": "mantine",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "build": "rspack build",
     "dev": "rspack build --mode=development",
@@ -18,28 +18,18 @@
     "@mantine/hooks": "6.0.21",
     "@mantine/notifications": "6.0.21",
     "@mantine/carousel": "6.0.21",
+    "@mantine/dropzone": "6.0.21",
     "embla-carousel-react": "7.1.0",
-    "mantine-react-table": "1.3.3",
+    "mantine-react-table": "1.3.4",
     "react-spinners": "0.13.8",
-    "jotai": "2.5.0",
+    "jotai": "2.5.1",
     "bunshi": "2.0.2",
-    "nanostores": "0.9.4"
+    "nanostores": "0.9.5",
+    "qrcode.react": "3.1.0",
+    "react-webcam": "7.2.0",
+    "html5-qrcode": "2.3.8"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^4.36.1",
-    "lodash": "4.17.21",
-    "just-safe-get": "4.2.0",
-    "just-clone": "6.2.0",
-    "just-map-object": "2.3.0",
-    "just-typeof": "3.2.0",
-    "just-flush": "2.3.0",
-    "just-template": "2.2.0",
-    "just-is-empty": "3.4.1",
-    "just-omit": "2.2.0",
-    "just-insert": "3.2.0",
-    "numbro": "2.4.0",
-    "react-imask": "7.1.3",
-    "dayjs": "1.11.10",
-    "js-cookie": "3.0.5"
+    "@tanstack/eslint-plugin-query": "^4.36.1"
   }
 }

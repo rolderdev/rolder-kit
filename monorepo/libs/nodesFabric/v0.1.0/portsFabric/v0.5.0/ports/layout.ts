@@ -1,4 +1,5 @@
 import { enums } from "../enums";
+const units = ['rem', '%', 'px']
 
 const layout = [
     { name: 'groupPosition', group: 'Layout', type: { name: 'enum', enums: enums.groupPositions }, displayName: 'Position', default: 'left' },
@@ -12,7 +13,7 @@ const layout = [
     { name: 'grow', group: 'Layout', type: 'boolean', displayName: 'Grow', default: false },
     { name: 'tabsPosition', group: 'Layout', type: { name: 'enum', enums: enums.tabsPositions }, displayName: 'Tabs position', default: 'left' },
     { name: 'tabsOrientation', group: 'Layout', type: { name: 'enum', enums: enums.tabsOrientations }, displayName: 'Tabs orientation', default: 'horizontal' },
-    { name: 'popoverPosition', group: 'Layout', type: { name: 'enum', enums: enums.popoverPositions }, displayName: 'Position', },
+    { name: 'popoverPosition', group: 'Layout', type: { name: 'enum', enums: enums.popoverPositions }, displayName: 'Position', default: 'bottom' },
     { name: 'dropdownPosition', group: 'Layout', type: { name: 'enum', enums: enums.dropdownPositions }, displayName: 'Position', default: 'flip' },
     { name: 'segmentedControlOrientation', group: 'Layout', type: { name: 'enum', enums: enums.segmentedControlOrientations }, displayName: 'Orientation', default: 'horizontal' },
     { name: 'checkboxGroupOrientation', group: 'Layout', type: { name: 'enum', enums: enums.checkboxGroupOrientations }, displayName: 'Orientation', default: 'horizontal' },
@@ -31,6 +32,13 @@ const layout = [
     { name: 'minRows', group: 'Layout', type: 'number', displayName: 'Min rows', default: 2 },
     { name: 'maxRows', group: 'Layout', type: 'number', displayName: 'Max rows', dependsOn: [{ name: 'autosize', value: true }] },
     { name: 'zIndex', group: 'Layout', type: 'number', displayName: 'ZIndex', default: 2 },
+    { name: 'gridColumnsCount', group: 'Layout', type: 'number', displayName: 'Columns count', default: 12 },
+    { name: 'gutter', group: 'Layout', type: { name: 'enum', enums: enums.sizes }, displayName: 'Gutter', default: 'md' },
+    { name: 'gridJustify', group: 'Layout', type: { name: 'enum', enums: enums.gridJustifies }, displayName: 'Justify', default: 'flex-start' },
+    { name: 'gridAlign', group: 'Layout', type: { name: 'enum', enums: enums.gridAligns }, displayName: 'Align', default: 'stretch' },
+    { name: 'indicatorPosition', group: 'Layout', type: { name: 'enum', enums: enums.indicatorPositions }, displayName: 'Position', default: 'top-end' },
+    { name: 'scrollAreaBottomOffset', group: 'Layout', type: 'number', displayName: 'Bottom offset' },
+    { name: 'offsetScrollbars', group: 'Layout', type: 'boolean', displayName: 'Offset scrollbars', default: false },
 ] as const satisfies readonly NodePort[];
 
 export default layout

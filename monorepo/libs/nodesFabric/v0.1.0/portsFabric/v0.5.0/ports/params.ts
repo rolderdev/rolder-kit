@@ -2,7 +2,7 @@ import helpers from "../helpers";
 import { enums } from "../enums";
 
 const params = [
-    { name: 'optimistic', group: 'Params', type: 'boolean', displayName: 'Optimistic', default: false },
+    { name: 'sessionTimeout', group: 'Connection', type: 'string', displayName: 'Session timeout', default: '5d' },
     { name: 'label', group: 'Params', type: 'string', displayName: 'Label' },
     { name: 'description', group: 'Params', type: 'string', displayName: 'Description' },
     { name: 'buttonType', group: 'Params', type: { name: 'enum', enums: enums.buttonTypes }, displayName: 'Button type', tooltip: '"Submit" to trigger form' },
@@ -40,8 +40,25 @@ const params = [
     { name: 'dateFormatAtDatePicker', group: 'Params', type: 'string', displayName: 'Date format', default: 'YYYY-MM-DD' },
     { name: 'dateFormatAtDateTimePicker', group: 'Params', type: 'string', displayName: 'Date format', default: 'YYYY-MM-DD HH:mm' },
     { name: 'datePickerType', group: 'Params', type: { name: 'enum', enums: enums.datePickerTypes }, displayName: 'Type', default: 'default' },
-    //{ name: 'kuzzleRefresh', group: 'Params', type: 'boolean', displayName: 'Refresh', default: true },
-    //{ name: 'kuzzleSilent', group: 'Params', type: 'boolean', displayName: 'Silent', default: false },
+    { name: 'plotFunc', group: 'Params', type: '*', displayName: 'Plot' },
+    { name: 'popoverTarget', group: 'Params', type: { name: 'enum', enums: enums.popoverTargets }, displayName: 'Target', default: 'actionIcon' },
+    { name: 'popoverButtonLabel', group: 'Params', type: 'string', displayName: 'Button label', dependsOn: [{ name: 'popoverTarget', value: 'button' }] },
+    { name: 'qrCodeLevel', group: 'Params', type: { name: 'enum', enums: enums.qrCodeLevels }, displayName: 'QR code level', default: 'L' },
+    { name: 'gridColumnsScheme', group: 'Params', type: 'array', displayName: 'Columns scheme' },
+    { name: 'screenshotEnabled', group: 'Params', type: 'boolean', displayName: 'Enable screenshot', default: false },
+    { name: 'maxScansPerSecond', group: 'Params', type: 'number', displayName: 'Enable screenshot', default: 25 },
+    { name: 'title', group: 'Params', type: 'string', displayName: 'Title' },
+    { name: 'message', group: 'Params', type: 'string', displayName: 'Message' },
+    { name: 'autoClose', group: 'Params', type: 'boolean', displayName: 'Auto close', default: true },
+    { name: 'autoCloseTimeout', group: 'Params', type: 'number', displayName: 'Auto close timeout (ms)', default: 2000, dependsOn: [{ name: 'autoClose', value: true }] },
+    { name: 'uploadFolder', group: 'Params', type: 'string', displayName: 'Folder' },
+    { name: 'dataFormat', group: 'Params', type: { name: 'enum', enums: enums.dataFormats }, displayName: 'Data format', default: 'file' },
+    { name: 'flowEndpoint', group: 'Params', type: 'string', displayName: 'Flow endpoint' },
+    { name: 'dropZoneTitle', group: 'Params', type: 'string', displayName: 'Title', tooltip: 'Title for window in DropZone', default: "Внесите файл или нажмите, чтобы открыть в папке." },
+    { name: 'acceptedType', group: 'Params', type: 'string', displayName: 'Type of accepted file', tooltip: 'Type of appected file (*: all, pdf: .pdf, excel: .xls, .xlsx, .ods, image: all images)', default: '*' },
+    { name: 'acceptIconName', group: 'Params', type: 'string', displayName: 'Accept icon name', tooltip: 'Find icon at tabler-icons.io and capitalize it: "IconSuperName"', default: 'IconDownload' },
+    { name: 'rejectIconName', group: 'Params', type: 'string', displayName: 'Reject icon name', tooltip: 'Find icon at tabler-icons.io and capitalize it: "IconSuperName"', default: 'IconX' },
+    { name: 'idleIconName', group: 'Params', type: 'string', displayName: 'Neutral icon name', tooltip: 'Find icon at tabler-icons.io and capitalize it: "IconSuperName"', default: 'IconFolder' },
 ] as const satisfies readonly NodePort[];
 
 export default params

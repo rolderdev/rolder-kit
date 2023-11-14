@@ -3,7 +3,7 @@ import {
     IconIroning3, IconTrash, IconCheck, IconPlus, IconDeviceFloppy, IconBuildingCommunity, IconGhostFilled, IconPointFilled, IconPhoto,
     IconDatabaseOff, IconAdjustmentsHorizontal, IconLogout, IconChartAreaFilled, IconCoins, IconLock, IconFileSpreadsheet, IconCurrencyRubel,
     IconArrowRight, IconFolder, IconPencil, IconLogout2, IconRefresh, IconWand, IconBrush, IconFileTypeXls, IconInfoCircle, IconArchive,
-    IconBriefcase2, IconX, IconDownload,
+    IconBriefcase2, IconX, IconDownload, IconChevronUp, IconThumbUp, IconThumbDown, IconCircleCheck,
 } from '@tabler/icons-react'
 
 export default function icons(iconName: string) {
@@ -12,7 +12,7 @@ export default function icons(iconName: string) {
         IconIroning3, IconTrash, IconCheck, IconPlus, IconDeviceFloppy, IconBuildingCommunity, IconGhostFilled, IconPointFilled, IconPhoto,
         IconDatabaseOff, IconAdjustmentsHorizontal, IconLogout, IconChartAreaFilled, IconCoins, IconLock, IconFileSpreadsheet, IconCurrencyRubel,
         IconArrowRight, IconFolder, IconPencil, IconLogout2, IconRefresh, IconWand, IconBrush, IconFileTypeXls, IconInfoCircle, IconArchive,
-        IconBriefcase2, IconX, IconDownload,
+        IconBriefcase2, IconX, IconDownload, IconChevronUp, IconThumbUp, IconThumbDown, IconCircleCheck,
     }
     return icons[iconName]
 }

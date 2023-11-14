@@ -3,6 +3,7 @@ import helpers from "../helpers";
 export default [
     { name: 'dbClasses', group: 'DB classes output registration', type: 'proplist', displayName: 'DB classes' },
     { name: 'useDataScheme', group: 'Params', type: 'array', displayName: 'Scheme' },
+    { name: 'getDataScheme', group: 'Params', type: 'array', displayName: 'Scheme' },
     { name: 'dbClass', group: 'Query params', type: '*', displayName: 'Database class' },
     { name: 'getUsers', group: 'Query params', type: 'boolean', displayName: 'Get users', default: false },
     { name: 'refs', group: 'References', type: 'proplist', displayName: 'References' },

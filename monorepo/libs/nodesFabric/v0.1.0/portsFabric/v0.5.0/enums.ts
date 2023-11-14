@@ -19,7 +19,6 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'stretch', label: 'Stretch' }, { value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' },
         { value: 'flex-end', label: 'Flex end' }
     ],
-
     stackJustifies: [
         { value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' }, { value: 'flex-end', label: 'Flex end' },
         { value: 'space-between', label: 'Space between' }, { value: 'space-around', label: 'Space around' }
@@ -108,5 +107,15 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     { value: 'row-reverse', label: 'Row-reverse' }, { value: 'column-reverse', label: 'Column-reverse' }],
     actionIconVariants: [{ value: 'transparent', label: 'Transparent' }, { value: 'subtle', label: 'Subtle' }, { value: 'light', label: 'Light' },
     { value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' }, { value: 'default', label: 'Default' },],
-    textareaVariants: [{ value: 'default', label: 'Default' }, { value: 'filled', label: 'Filled' }, { value: 'unstyled', label: 'Unstyled' }]
+    textareaVariants: [{ value: 'default', label: 'Default' }, { value: 'filled', label: 'Filled' }, { value: 'unstyled', label: 'Unstyled' }],
+    popoverTargets: [{ value: 'actionIcon', label: 'ActionIcon' }, { value: 'button', label: 'Button' }],
+    gridJustifies: [
+        { value: 'flex-start', label: 'Flex-start' }, { value: 'flex-end', label: 'Flex-end' }, { value: 'center', label: 'Center' },
+        { value: 'space-between', label: 'Space between' }, { value: 'space-around', label: 'Space around' }
+    ],
+    gridAligns: [
+        { value: 'stretch', label: 'Stretch' }, { value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' },
+        { value: 'flex-end', label: 'Flex end' }
+    ],
+    dataFormats: [{ value: 'file', label: 'File' }, { value: 'webcam', label: 'Webcam' },]
 }

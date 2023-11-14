@@ -1,6 +1,8 @@
 import { enums } from "../enums";
 
 export default [
+    { name: 'backendVersion', group: 'Connection', type: 'string', displayName: 'Backend version', default: 'd2' },
+    { name: 'dbName', group: 'Connection', type: 'string', displayName: 'Database name' },
     { name: 'items', group: 'Data', type: { name: 'array', allowConnectionsOnly: true }, displayName: 'Items' },
     { name: 'inputItems', group: 'Data', type: 'array', displayName: 'Items' },
     { name: 'fetchedCount', group: 'Data', type: 'number', displayName: 'Fetched count' },
@@ -31,4 +33,11 @@ export default [
     { name: 'valueSource', group: 'Data', type: 'string', displayName: 'Value', dependsOn: [{ name: 'dataSource', value: 'value' }] },
     { name: 'userIds', group: 'Data', type: 'array', displayName: 'User ids' },
     { name: 'users', group: 'Data', type: 'array', displayName: 'Users' },
+    { name: 'deleteScheme', group: 'Data', type: { name: 'array', allowConnectionsOnly: true }, displayName: 'Delete scheme' },
+    { name: 'sourceUrl', group: 'Data', type: 'string', displayName: 'Source URL' },
+    { name: 'screenshot', group: 'Data', type: '*', displayName: 'Screenshot' },
+    { name: 'qrString', group: 'Data', type: 'string', displayName: 'QR string' },
+    { name: 'flowData', group: 'Data', type: '*', displayName: 'Flow data' },
+    { name: 'result', group: 'Data', type: '*', displayName: 'Result' },
+    { name: 'file', group: 'Data', type: '*', displayName: 'File' },
 ] as const satisfies readonly NodePort[]

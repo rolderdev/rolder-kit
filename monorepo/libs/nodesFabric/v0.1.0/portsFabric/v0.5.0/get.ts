@@ -14,11 +14,12 @@ import format from "./ports/format";
 import useGetData from "./ports/useGetData";
 import table from "./ports/table";
 import appShell from "./ports/appShell";
+import app from "./ports/app";
 
 export const customProps: NodePort = { index: 10000, plug: 'input', name: 'customProps', group: 'Advanced', type: 'array', displayName: 'Custom props', isObject: true }
 
 const ports = [...data, ...signals, ...states, ...params, ...form, ...icon, ...margins, ...dimensions, ...style, ...paddings, ...layout,
-...font, ...format, ...useGetData, ...table, ...appShell]
+...font, ...format, ...useGetData, ...table, ...appShell, ...app]
 
 export type PortNames = typeof ports[number]['name']
 

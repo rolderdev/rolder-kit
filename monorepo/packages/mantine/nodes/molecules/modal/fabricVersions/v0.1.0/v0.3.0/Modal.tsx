@@ -16,6 +16,7 @@ export default forwardRef(function (props: any, ref) {
             sendSignal(props.noodlNode, 'closed')
         }}
         {...props}
+        {...props.customProps}
     >
         <Modal.Overlay opacity={props.modalOpacity} blur={props.modalBlur} />
         <Modal.Content>

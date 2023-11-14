@@ -1,64 +1,36 @@
 /**
  * @type {import('@rspack/cli').Configuration}
  */
+const rspack = require('@rspack/core');
+
 var path = require('path')
 const pJson = require('./package.json')
+//const baseDir = '/Users/decard/Library/Application Support/Noodl/projects/'
 
-const name = 'rolder-kit'
-const version = pJson.version
-const baseDir = '/Users/decard/Library/Application Support/Noodl/projects/'
 // Smart clean
-const projectDir = 'c09055b1-4710-4c0c-9ef3-6fc6c8446046'
+//const projectDir = 'c09055b1-4710-4c0c-9ef3-6fc6c8446046'
 // Rasko
 //const projectDir = '927b35ec-cd3b-431a-ae83-d1525db09bb9'
-// Temp
-//const projectDir = 'c0f27b62-61f0-4c23-be5c-0b97571a45d2'
-var outputPath = path.resolve(__dirname, baseDir + projectDir + '/noodl_modules/' + name + '_v' + version)
-//var outputPath = path.resolve(__dirname, `../dist/rolder-kit_v${version}`)
+//var outputPath = path.resolve(__dirname, `${baseDir + projectDir}/noodl_modules/${pJson.name}-v${pJson.version}`)
+var outputPath = path.resolve(__dirname, `../build/${pJson.name}-v${pJson.version}`)
 
 module.exports = {
 	context: __dirname,
 	watch: true,
-	entry: {
-		main: './main/main.ts'
-	},
-	output: {
-		path: outputPath,
-		clean: true
-	},
+	entry: { main: './main/main.ts' },
+	output: { path: outputPath, clean: true },
 	externals: {
 		react: 'React',
 		'react-dom': 'ReactDOM'
 	},
-	builtins: {
-		copy: {
+	plugins: [
+		new rspack.CopyRspackPlugin({
 			patterns: [
 				{
-					from: './manifest.json',
+					from: 'manifest.json',
 				},
 			],
-		},
-	},
-	module: {
-		rules: [
-			{
-				test: /\.svg$/,
-				type: 'asset'
-			},
-			{
-				test: /\.css$/,
-				use: [
-					{
-						loader: 'postcss-loader',
-						options: {
-							postcssOptions: {
-								// ...
-							},
-						},
-					},
-				],
-				type: 'css',
-			},
-		]
-	}
+		}),
+	],
 }
+

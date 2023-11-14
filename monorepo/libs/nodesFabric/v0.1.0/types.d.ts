@@ -4,6 +4,7 @@ declare type CompVersions = {
 
 declare type CompDefinition = {
     Comp: any
+    hashTag?: 'experimental' | 'deprecated'
     inputs?: NodePort[]
     outputs?: NodePort[]
     signals?: NodePort[]
@@ -11,6 +12,7 @@ declare type CompDefinition = {
 
 declare type JsVersions = {
     [key: string]: {
+        hashTag?: 'experimental' | 'deprecated'
         inputs?: NodePort[]
         outputs?: NodePort[]
         onInputChange?: any
