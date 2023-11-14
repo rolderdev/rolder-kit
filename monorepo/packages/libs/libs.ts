@@ -40,9 +40,10 @@ import flatten from 'just-flatten-it';
 import debounce from 'just-debounce-it'
 import capitalize from 'just-capitalize';
 import throttle from 'just-throttle';
+import filter from 'just-filter-object'
 window.R.libs.just = {
     clone, map, typeOf, flush, template, isEmpty, omit, insert, get, set, clamp, last, remove, sortBy, unique, compare, flatten,
-    debounce, capitalize, throttle
+    debounce, capitalize, throttle, filter
 }
 
 // lodash

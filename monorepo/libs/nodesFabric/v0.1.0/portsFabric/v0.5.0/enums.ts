@@ -92,7 +92,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     segmentedControlOrientations: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' }],
     tableVariants: [{ value: 'basic', label: 'Basic' }, { value: 'grouped', label: 'Grouped' }],
     tableLayouts: [{ value: 'auto', label: 'Auto' }, { value: 'fixed', label: 'Fixed' }],
-    expendOnVariants: [{ value: 'row', label: 'Row' }, { value: 'icon', label: 'Icon' }],
+    expandOnVariants: [{ value: 'row', label: 'Row' }, { value: 'icon', label: 'Icon' }],
     dropdownPositions: [{ value: 'flip', label: 'Flip' }, { value: 'bottom', label: 'Bottom' }, { value: 'top', label: 'Top' }],
     checkboxGroupOrientations: [{ value: 'horizontal', label: 'Horizontal' }, { value: 'vertical', label: 'Vertical' }],
     textFormats: [

@@ -31,6 +31,7 @@ import flatten from 'just-flatten-it';
 import debounce from 'just-debounce-it'
 import capitalize from 'just-capitalize';
 import throttle from 'just-throttle';
+import filter from 'just-filter-object';
 // loadsh
 import { isNil, unionBy } from 'lodash'
 // form
@@ -126,6 +127,7 @@ declare type RolderType = {
             debounce: typeof debounce
             capitalize: typeof capitalize
             throttle: typeof throttle
+            filter: typeof filter
         }
         isNil: typeof isNil
         lodash: {
