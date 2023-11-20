@@ -12,6 +12,8 @@
     "@noodl/noodl-sdk": "0.5.4",
     "kuzzle-sdk": "7.11.0",
     "nanostores": "0.9.5",
+    "jotai": "2.5.1",
+    "bunshi": "2.0.2",
     "@mantine/hooks": "6.0.21",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz",
     "ky": "1.1.3"

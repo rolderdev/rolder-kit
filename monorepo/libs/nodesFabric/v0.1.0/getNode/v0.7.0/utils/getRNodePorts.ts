@@ -2,7 +2,7 @@ import { customProps } from "../../../portsFabric/v0.5.0/get"
 import getNodePorts from "./getNodePorts"
 
 export default function (node: any, compVersions: CompVersions | JsVersions) {
-    let resultNodePorts: NodePort[] = [window.R.libs.clone(customProps)]
+    let resultNodePorts: NodePort[] = [window.R.libs.just.clone(customProps)]
     if (node.parameters?.version) {
         const inputs = compVersions[node.parameters.version]?.inputs || []
         const outputs = compVersions[node.parameters.version]?.outputs || []

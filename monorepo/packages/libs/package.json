@@ -30,6 +30,8 @@
     "just-capitalize": "3.2.0",
     "just-throttle": "4.2.0",
     "just-filter-object": "3.2.0",
+    "just-group-by": "2.2.0",
+    "just-memoize": "2.2.0",
     "numbro": "2.4.0",
     "react-imask": "7.1.3",
     "dayjs": "1.11.10",
@@ -37,7 +39,8 @@
     "@mantine/form": "6.0.21",
     "fast-sort": "3.4.0",
     "omgopass": "3.2.1",
-    "ms": "2.1.3"
+    "ms": "2.1.3",
+    "fast-deep-equal": "3.1.3"
   },
   "devDependencies": {
     "@types/lodash": "4.14.201",

@@ -2,7 +2,7 @@ import icons from "../../../../../../packages/mantine/libs/icons/v0.2.0/icons"
 import { changeWarnings } from "./warnings"
 
 export default function (noodlNode: NoodlNode, nodeInputs: NodePort[], inputName: string, value: any) {
-    const { typeOf } = window.R.libs
+    const { typeOf } = window.R.libs.just
     const nodeInput = nodeInputs.find(i => i.name === inputName)
 
     function checkLiteralType(nodeInput: NodePort, value: any) {
@@ -19,7 +19,7 @@ export default function (noodlNode: NoodlNode, nodeInputs: NodePort[], inputName
     }
 
     if (nodeInput) {
-        const typeOfValue: any = typeOf(value)        
+        const typeOfValue: any = typeOf(value)
         // convert types        
         if (typeOfValue !== 'undefined') {
             let complexValue: any

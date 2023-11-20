@@ -67,7 +67,10 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     selectableTypes: [
         { value: 'clickOnly', label: 'Click only' }, { value: 'singleRow', label: 'Single row' }, { value: 'multipleRows', label: 'Multiple rows' }
     ],
-    badgeVariants: [{ value: 'light', label: 'Light' }, { value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' }],
+    badgeVariants: [
+        { value: 'light', label: 'Light' }, { value: 'filled', label: 'Filled' }, { value: 'outline', label: 'Outline' },
+        { value: 'dot', label: 'Dot' }, { value: 'gradient', label: 'Gradient' }
+    ],
     buttonTypes: [{ value: 'submit', label: 'Submit' }],
     qrCodeLevels: [
         { value: 'L', label: 'Lowest' }, { value: 'M', label: 'Medium' }, { value: 'Q', label: 'Quality' }, { value: 'H', label: 'Highest' }
@@ -117,5 +120,8 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'stretch', label: 'Stretch' }, { value: 'center', label: 'Center' }, { value: 'flex-start', label: 'Flex start' },
         { value: 'flex-end', label: 'Flex end' }
     ],
-    dataFormats: [{ value: 'file', label: 'File' }, { value: 'webcam', label: 'Webcam' },]
+    dataFormats: [{ value: 'file', label: 'File' }, { value: 'webcam', label: 'Webcam' },],
+    numberInputVariants: [
+        { value: 'default', label: 'Default' }, { value: 'filled', label: 'Filled' }, { value: 'unstyled', label: 'Unstyled' }
+    ],
 }

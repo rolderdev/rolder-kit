@@ -1,23 +1,23 @@
-declare type DataCache = {
+declare type DataCache12 = {
     [dbClass: string]: RItem[]
 }
 
-declare type SearchResults11 = {
+declare type SearchResults12 = {
     [dbClass: string]: RItem[]
 }
 
-declare type DataStates = {
-    pendingCount: number
-    fetchingCount: number
-}
-
-declare type DataScheme = {
+declare type DataScheme12 = {
     dbClass: string
+    order?: number
     query?: Query
     sort?: Sort
     options?: Options
+    filterBy?: {
+        dbClassAccessor: string
+        filterByDbClass: string
+        filterByAccessor: string
+    }[]
     getUsers?: boolean
-    sendStates?: boolean
     refs?: string[]
     backRefs?: string[]
     search?: {
@@ -31,17 +31,22 @@ declare type DataScheme = {
     }
 }
 
-declare type CompProps11 = {
+declare type CompProps12 = {
     noodlNode: NoodlNode
-    useDataScheme: DataScheme[]
+    useDataScheme: DataScheme12[]
     searchString: string
 }
 
-declare type DataProps11 = {
-    noodlNode: NoodlNode
-    useDataScheme: DataScheme[]
-    dataScheme: DataScheme
-    searchString: string
+/* declare type DataStore12 = {
+    scheme: DataScheme12
+    enabled: boolean
+    items?: RItem[]
+}
+ */
+declare type QueryComp12 = {
+    noodlNode: NoodlNode,
+    initialSchemes: DataScheme12[]
+    initialScheme: DataScheme12
 }
 
 declare type Query = { [key: string]: any }

@@ -39,6 +39,7 @@ const layout = [
     { name: 'indicatorPosition', group: 'Layout', type: { name: 'enum', enums: enums.indicatorPositions }, displayName: 'Position', default: 'top-end' },
     { name: 'scrollAreaBottomOffset', group: 'Layout', type: 'number', displayName: 'Bottom offset' },
     { name: 'offsetScrollbars', group: 'Layout', type: 'boolean', displayName: 'Offset scrollbars', default: false },
+    { name: 'labelPosition', group: 'Layout', type: { name: 'enum', enums: enums.labelPositions }, displayName: 'Label position', default: 'right' },
 ] as const satisfies readonly NodePort[];
 
 export default layout

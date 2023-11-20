@@ -1,5 +1,5 @@
 export function sendWarnings(noodlNode: NoodlNode) {
-    const { map } = window.R.libs
+    const { map } = window.R.libs.just
     const ownerName = noodlNode.nodeScope.componentOwner.name
 
     noodlNode.context.editorConnection.clearWarnings(ownerName, noodlNode.id)
@@ -19,7 +19,7 @@ export function sendWarnings(noodlNode: NoodlNode) {
 export function changeWarnings(
     noodlNode: NoodlNode, type: 'required' | 'types' | 'context', displayName?: string, value?: any, message?: string
 ) {
-    const { isNil } = window.R.libs
+    const { isNil } = window.R.libs.lodash
 
     switch (type) {
         case 'required': {

@@ -9,7 +9,7 @@ export const asideOffsetAtom = atom(undefined)
 export const appShellPropsAtom = atom({ layout: 'default' })
 
 export default forwardRef(function (props: any) {
-    const { flush } = window.R.libs
+    const { flush } = window.R.libs.just
 
     const setAppShellProps = useSetAtom(appShellPropsAtom);
 

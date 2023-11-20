@@ -8,6 +8,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import duration from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import utc from 'dayjs/plugin/utc'
 dayjs.extend(isBetween)
 dayjs.extend(isSameOrAfter)
 dayjs.extend(dayOfYear)
@@ -15,20 +16,20 @@ dayjs.extend(weekOfYear)
 dayjs.extend(advancedFormat)
 dayjs.extend(duration)
 dayjs.extend(relativeTime)
+dayjs.extend(utc)
 dayjs.locale('ru')
 window.R.libs.dayjs = dayjs
 
 // just
-import clone from "just-clone"; window.R.libs.clone = clone
-import map from "just-map-object"; window.R.libs.map = map
-import typeOf from "just-typeof"; window.R.libs.typeOf = typeOf
-import flush from "just-flush"; window.R.libs.flush = flush
-import template from "just-template"; window.R.libs.template = template
-import isObjectEmpty from 'just-is-empty'; window.R.libs.isObjectEmpty = isObjectEmpty
+import clone from "just-clone"
+import map from "just-map-object"
+import typeOf from "just-typeof"
+import flush from "just-flush"
+import template from "just-template"
 import isEmpty from 'just-is-empty'
-import omit from 'just-omit'; window.R.libs.omit = omit
-import insert from 'just-insert'; window.R.libs.insert = insert
-import get from 'just-safe-get'; window.R.libs.get = get;
+import omit from 'just-omit'
+import insert from 'just-insert'
+import get from 'just-safe-get'
 import set from 'just-safe-set';
 import last from "just-last"
 import clamp from 'just-clamp'
@@ -41,14 +42,15 @@ import debounce from 'just-debounce-it'
 import capitalize from 'just-capitalize';
 import throttle from 'just-throttle';
 import filter from 'just-filter-object'
+import groupBy from 'just-group-by';
+import memoize from 'just-memoize'
 window.R.libs.just = {
     clone, map, typeOf, flush, template, isEmpty, omit, insert, get, set, clamp, last, remove, sortBy, unique, compare, flatten,
-    debounce, capitalize, throttle, filter
+    debounce, capitalize, throttle, filter, groupBy, memoize
 }
 
 // lodash
 import { isNil, unionBy } from 'lodash'
-window.R.libs.isNil = isNil
 window.R.libs.lodash = { isNil, unionBy }
 
 // form
@@ -68,3 +70,4 @@ import { IMask } from 'react-imask'; window.R.libs.IMask = IMask
 import { sort } from "fast-sort"; window.R.libs.sort = sort
 import generatePassword from "omgopass"; window.R.libs.generatePassword = generatePassword
 import ms from "ms"; window.R.libs.ms = ms
+import deepEqual from 'fast-deep-equal'; window.R.libs.deepEqual = deepEqual

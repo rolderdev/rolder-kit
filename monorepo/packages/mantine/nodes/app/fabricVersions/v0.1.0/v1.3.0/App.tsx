@@ -1,5 +1,8 @@
+import { Provider, createStore } from "jotai"
 import { forwardRef, useState } from "react"
 import BounceLoader from "react-spinners/BounceLoader"
+
+const store = createStore()
 
 export default forwardRef(function (props: any) {
     const { cookies } = window.R.libs
@@ -17,7 +20,7 @@ export default forwardRef(function (props: any) {
     window.R.env.project = project
     window.R.env.projectVersion = projectVersion
     window.R.params.defaults = props.projectDefaults
-
+    
     const [backendInited, setBackendInited] = useState(false)
 
     window.Noodl.Events.on("backendInited", () => setBackendInited(true))
@@ -29,6 +32,6 @@ export default forwardRef(function (props: any) {
                 loading={!backendInited}
             />
         </div>
-        {window.R.env.project && props.children}
+        {window.R.env.project && <Provider store={store}>{props.children}</Provider>}
     </>
 })

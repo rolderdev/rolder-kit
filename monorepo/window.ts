@@ -9,13 +9,13 @@ import { sort } from "fast-sort"
 import generatePassword from "omgopass";
 import ms from "ms"
 import { plot, ruleY, dot, barY, groupX } from "@observablehq/plot"
+import deepEqual from 'fast-deep-equal'
 // just
 import clone from "just-clone";
 import map from "just-map-object";
 import typeOf from "just-typeof"
 import flush from "just-flush";
 import template from "just-template";
-import isObjectEmpty from 'just-is-empty';
 import isEmpty from 'just-is-empty'
 import omit from 'just-omit'
 import insert from 'just-insert'
@@ -32,6 +32,8 @@ import debounce from 'just-debounce-it'
 import capitalize from 'just-capitalize';
 import throttle from 'just-throttle';
 import filter from 'just-filter-object';
+import groupBy from 'just-group-by';
+import memoize from 'just-memoize'
 // loadsh
 import { isNil, unionBy } from 'lodash'
 // form
@@ -96,16 +98,7 @@ declare type RolderType = {
             hasLength: typeof hasLength
             matchesField: typeof matchesField
         }
-        clone: typeof clone
-        map: typeof map
-        typeOf: typeof typeOf
-        flush: typeof flush
-        template: typeof template
-        isObjectEmpty: typeof isObjectEmpty
-        omit: typeof omit
-        insert: typeof insert
-        get: typeof get
-        clamp: typeof clamp
+        deepEqual: typeof deepEqual
         just: {
             clone: typeof clone
             map: typeof map
@@ -128,8 +121,9 @@ declare type RolderType = {
             capitalize: typeof capitalize
             throttle: typeof throttle
             filter: typeof filter
+            groupBy: typeof groupBy
+            memoize: typeof memoize
         }
-        isNil: typeof isNil
         lodash: {
             isNil: typeof isNil
             unionBy: typeof unionBy

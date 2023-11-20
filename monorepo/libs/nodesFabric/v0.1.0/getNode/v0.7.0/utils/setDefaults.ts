@@ -2,13 +2,13 @@ import checkDependsOn from "./checkDependsOn"
 
 export default function (noodlNode: NoodlNode, nodeInputs: NodePort[]) {
     function setDefault(nodeInput: NodePort, value: any) {
-        const { isNil } = window.R.libs
+        const { isNil } = window.R.libs.lodash
         // first set value if is nil and default in not nil (can be flase default)
         if (isNil(value) && !isNil(nodeInput.default)) noodlNode.resultProps[nodeInput.name] = nodeInput.default
         // and delete it if value is nil and default is nil
         if (isNil(value) && isNil(nodeInput.default)) delete noodlNode.resultProps[nodeInput.name]
     }
-    
+
     nodeInputs.forEach(nodeInput => {
         const isDependent = nodeInput.dependsOn
         // first set it self, if it is not dependent

@@ -32,6 +32,9 @@ const style = [
     { name: 'popoverActionIconVariant', group: 'Style', type: { name: 'enum', enums: enums.actionIconVariants }, displayName: 'ActionIcon variant', default: 'subtle', dependsOn: [{ name: 'popoverTarget', value: 'actionIcon' }] },
     { name: 'popoverButtonVariant', group: 'Style', type: { name: 'enum', enums: enums.buttonVariants }, displayName: 'Button variant', default: 'filled', dependsOn: [{ name: 'popoverTarget', value: 'button' }] },
     { name: 'textareaVariant', group: 'Style', type: { name: 'enum', enums: enums.textareaVariants }, displayName: 'Variant', default: 'default' },
+    { name: 'badgeVariant', group: 'Style', type: { name: 'enum', enums: enums.badgeVariants }, displayName: 'Variant', default: 'light' },
+    { name: 'gradient', group: 'Style', type: 'array', displayName: 'Gradient', isObject: true },
+    { name: 'numberInputVariant', group: 'Style', type: { name: 'enum', enums: enums.numberInputVariants }, displayName: 'Variant', default: 'default' },
 ] as const satisfies readonly NodePort[];
 
 export default style

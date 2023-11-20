@@ -8,7 +8,6 @@ const compVersions: CompVersions = {
         hashTag: 'experimental',
         Comp: v0_1_0,
         inputs: getPorts('input', ['detectColorScheme', 'colorScheme', 'notificationsPosition']),
-        outputs: getPorts('output', ['userRole'])
     },
 }
 

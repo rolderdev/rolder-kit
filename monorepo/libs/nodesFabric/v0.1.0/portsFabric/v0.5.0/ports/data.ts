@@ -40,4 +40,5 @@ export default [
     { name: 'flowData', group: 'Data', type: '*', displayName: 'Flow data' },
     { name: 'result', group: 'Data', type: '*', displayName: 'Result' },
     { name: 'file', group: 'Data', type: '*', displayName: 'File' },
+    { name: 'item', group: 'Data', type: { name: 'object', allowConnectionsOnly: true }, displayName: 'Item' },
 ] as const satisfies readonly NodePort[]

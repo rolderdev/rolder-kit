@@ -1,5 +1,5 @@
 export default function (obj: any, templ: string | undefined, defaultValue?: any) {
-    const { template } = window.R.libs
+    const { template } = window.R.libs.just
 
     let value = ''
     if (obj?.data && templ) {

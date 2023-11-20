@@ -1,5 +1,5 @@
 export default function (noodlNode: NoodlNode, nodeInputs: NodePort[], inputName: string, value: any) {
-    const { isNil } = window.R.libs
+    const { isNil } = window.R.libs.lodash
     const nodeInput: NodePort | undefined = nodeInputs.find(i => i.name === inputName)
 
     if (nodeInput) {

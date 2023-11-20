@@ -59,6 +59,11 @@ const params = [
     { name: 'acceptIconName', group: 'Params', type: 'string', displayName: 'Accept icon name', tooltip: 'Find icon at tabler-icons.io and capitalize it: "IconSuperName"', default: 'IconDownload' },
     { name: 'rejectIconName', group: 'Params', type: 'string', displayName: 'Reject icon name', tooltip: 'Find icon at tabler-icons.io and capitalize it: "IconSuperName"', default: 'IconX' },
     { name: 'idleIconName', group: 'Params', type: 'string', displayName: 'Neutral icon name', tooltip: 'Find icon at tabler-icons.io and capitalize it: "IconSuperName"', default: 'IconFolder' },
+    { name: 'hideControls', group: 'Params', type: 'boolean', displayName: 'Hide controls', default: false },
+    { name: 'min', group: 'Params', type: 'number', displayName: 'Min' },
+    { name: 'max', group: 'Params', type: 'number', displayName: 'Max' },
+    { name: 'step', group: 'Params', type: 'number', displayName: 'Step', default: 1 },
+    { name: 'childIsRepeater', group: 'Params', type: 'boolean', displayName: 'Child is repeater', default: false },
 ] as const satisfies readonly NodePort[];
 
 export default params

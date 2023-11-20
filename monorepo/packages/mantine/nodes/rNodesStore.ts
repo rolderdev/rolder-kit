@@ -38,6 +38,7 @@ import ButtonNode_f0_1_0 from "./elements/buttons/button/fabricVersions/v0.1.0/B
 import IconNode_f0_1_0 from "./elements/dataDisplay/icon/fabricVersions/v0.1.0/IconNode";
 import QRCodeNode_f0_1_0 from "./elements/dataDisplay/qrCode/fabricVersions/v0.1.0/QRCodeNode";
 import ImageNode_f0_1_0 from "./elements/dataDisplay/image/fabricVersions/v0.1.0/ImageNode";
+import BadgeNode_f0_1_0 from "./elements/dataDisplay/badge/fabricVersions/v0.1.0/BadgeNode";
 // feedback
 import BarLoaderNode_f0_1_0 from "./elements/feedback/barLoader/fabricVersions/v0.1.0/BarLoaderNode";
 import LoaderNode_f0_1_0 from "./elements/feedback/loader/fabricVersions/v0.1.0/LoaderNode";
@@ -52,6 +53,8 @@ import MultiSelectNode_f0_1_0 from "./elements/inputs/multiSelect/fabricVersions
 import DatePickerInputNode_f0_1_0 from "./elements/inputs/datePickerInput/fabricVersions/v0.1.0/DatePickerInputNode";
 import MaskedInputNode_f0_1_0 from "./elements/inputs/maskedInput/fabricVersions/v0.1.0/MaskedInputNode";
 import TextareaNode_f0_1_0 from "./elements/inputs/textarea/fabricVersions/v0.1.0/TextareaNode";
+import CheckboxNode_f0_1_0 from "./elements/inputs/checkbox/fabricVersions/v0.1.0/CheckboxNode";
+import NumberInputNode_f0_1_0 from "./elements/inputs/numberInput/fabricVersions/v0.1.0/NumberInputNode";
 // miscellaneous
 import DividerNode_f0_1_0 from "./elements/miscellaneous/divider/fabricVersions/v0.1.0/DividerNode";
 import WebCameraNode_f0_1_0 from "./elements/miscellaneous/webCamera/fabricVersions/v0.1.0/WebCameraNode";
@@ -80,12 +83,13 @@ export default [
     // buttons
     ActionIconNode_f0_1_0, ButtonNode_f0_1_0,
     // dataDisplay
-    IconNode_f0_1_0, QRCodeNode_f0_1_0, ImageNode_f0_1_0,
+    IconNode_f0_1_0, QRCodeNode_f0_1_0, ImageNode_f0_1_0, BadgeNode_f0_1_0,
     // feedback
     BarLoaderNode_f0_1_0, LoaderNode_f0_1_0, IndicatorNode_f0_1_0,
     // inputs
     TextInputNode_f0_1_0, SelectNode_f0_1_0, DateTimePickerNode_f0_1_0, SegmentedControlNode_f0_1_0, CheckboxGroupNode_f0_1_0,
-    MultiSelectNode_f0_1_0, DatePickerInputNode_f0_1_0, MaskedInputNode_f0_1_0, TextareaNode_f0_1_0,
+    MultiSelectNode_f0_1_0, DatePickerInputNode_f0_1_0, MaskedInputNode_f0_1_0, TextareaNode_f0_1_0, CheckboxNode_f0_1_0,
+    NumberInputNode_f0_1_0,
     // miscellaneous
     DividerNode_f0_1_0, WebCameraNode_f0_1_0, QRScannerNode_f0_1_0, DropZoneNode_f0_1_0,
     // navigation

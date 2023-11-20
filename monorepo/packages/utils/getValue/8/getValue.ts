@@ -1,5 +1,5 @@
 export default function (item: any, target: string, defaultValue?: any, defaultTarget?: string) {
-    const { template, get } = window.R.libs
+    const { template, get } = window.R.libs.just
     if (item && target) {
         const hasTemplate = target.split('{{')?.length > 1
         if (defaultTarget && !get(item, defaultTarget)) return defaultValue

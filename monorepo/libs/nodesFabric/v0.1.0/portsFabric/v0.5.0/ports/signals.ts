@@ -32,6 +32,8 @@ const signals = [
     { name: 'execute', group: 'Signals', type: 'signal', displayName: 'Execute' },
     { name: 'executed', group: 'Signals', type: 'signal', displayName: 'Executed' },
     { name: 'rejected', group: 'Signals', type: 'signal', displayName: 'Rejected' },
+    { name: 'increment', group: 'Signals', type: 'signal', displayName: 'Increment' },
+    { name: 'decrement', group: 'Signals', type: 'signal', displayName: 'Decrement' },
 ] as const satisfies readonly NodePort[];
 
 export default signals
