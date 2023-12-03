@@ -3,11 +3,9 @@ export function setRefs(sourceItems: RItem[], refDbClass: string, refItems: RIte
         if (Array.isArray(sourceItem[refDbClass])) {
             const refItemsArr = refItems?.filter((i: any) => sourceItem[refDbClass]?.map((i: any) => i.id).includes(i.id))
             if (refItemsArr?.length) sourceItem[refDbClass] = refItemsArr.map(i => new Proxy(i, {}))
-            else delete sourceItem[refDbClass]
         } else {
             const refItem = refItems?.find((i: any) => sourceItem[refDbClass]?.id === i.id)
             if (refItem) sourceItem[refDbClass] = new Proxy(refItem, {})
-            else delete sourceItem[refDbClass]
         }
         return sourceItem
     })
@@ -18,7 +16,6 @@ export function setBackRefs(dbClass: string, sourceItems: RItem[], refDbClass: s
     const items = sourceItems.map((sourceItem: any) => {
         const refItemsArr = refItems?.filter((i: any) => sourceItem.id === i[dbClass]?.id)
         if (refItemsArr?.length) sourceItem[refDbClass] = refItemsArr.map(i => new Proxy(i, {}))
-        else delete sourceItem[refDbClass]
         return sourceItem
     })
     return items

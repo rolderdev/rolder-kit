@@ -3,35 +3,37 @@ import ErrorHandler from "../../../../../../../mantine/utils/errorHandler/v0.2.0
 import { dbClassVersion } from "../../../../../../utils/getVersion/v0.5.0/getVersion"
 import fetchUsers from "./fetchUsers"
 
-export default async function (queryContext: any): Promise<RItem[] | void> {
+export default async function (queryContext: any): Promise<{ items: RItem[], total: number, aggregations: any } | void> {
     const { Kuzzle } = window.R.libs
     const { flush } = window.R.libs.just
     const { dbName } = window.R.env
-    const [dataScheme]: DataScheme[] = queryContext.queryKey
-    const { dbClass, query, sort, options, getUsers } = dataScheme
+    const [dataScheme]: DataScheme12[] = queryContext.queryKey
+    const { dbClass, filters, sorts, size, searchAfter, getUsers, aggQuery: aggregations } = dataScheme
+    const dbClassV = dbClassVersion(dbClass)
+    const sort = [...sorts || [], { _id: 'asc' }]
 
-    time(`${dbClass} fetch`)
+    time(`${dbClassV} fetch`)
     await Kuzzle.connect()
-    if (dbName) return Kuzzle.document.search(dbName, dbClassVersion(dbClass), { query, sort }, { ...options, lang: 'koncorde' })
-        .then((kResponse: KResponse) => {
-            let rItems = kResponse.hits?.map(kItem => ({ id: kItem._id, ...kItem._source })) as RItem[]
+    if (dbName) {
+        try {
+            let results = await Kuzzle.document.search(
+                dbName,
+                dbClassV,
+                { query: filters, sort, search_after: searchAfter, aggregations },
+                { lang: 'koncorde', size }
+            )
+            let items = results.hits.map(i => ({ ...i._source, id: i._id })) as RItem[]
+
             if (getUsers) {
-                const userIds = flush(rItems?.filter(i => i.user?.id).map(i => i.user?.id))
-                if (userIds?.length) {
-                    return fetchUsers(userIds, rItems).then(rItemsWithUser => {
-                        time(`${dbClass} fetch`, true)
-                        return rItemsWithUser
-                    })
-                } else {
-                    time(`${dbClass} fetch`, true)
-                    return rItems
-                }
-            } else {
-                time(`${dbClass} fetch`, true)
-                return rItems
+                const userIds = flush(items?.filter(i => i.user?.id).map(i => i.user?.id))
+                if (userIds?.length) items = await fetchUsers(userIds, items)
             }
-        }).catch((error) => {
-            ErrorHandler('Системная ошибка!', `Fetch ${dbClass} error: ${error.message}`)
+
+            time(`${dbClassV} fetch`, true)
+            return { items, total: results.total, aggregations: results.aggregations }
+        } catch (error: any) {
+            ErrorHandler('Системная ошибка!', `Fetch ${dbClassV} error: ${error.message}`)
             console.error(error.message)
-        })
+        }
+    }
 }

@@ -34,6 +34,13 @@ const signals = [
     { name: 'rejected', group: 'Signals', type: 'signal', displayName: 'Rejected' },
     { name: 'increment', group: 'Signals', type: 'signal', displayName: 'Increment' },
     { name: 'decrement', group: 'Signals', type: 'signal', displayName: 'Decrement' },
+    { name: 'changed', group: 'Signals', type: 'signal', displayName: 'Changed' },
+    { name: 'ganttTaskChanged', group: 'Signals', type: 'signal', displayName: 'Task changed' },
+    { name: 'ganttExpandChanged', group: 'Signals', type: 'signal', displayName: 'Expand changed' },
+    { name: 'ganttTaskDeleted', group: 'Signals', type: 'signal', displayName: 'Task deleted' },
+    { name: 'ganttTaskProgressChanged', group: 'Signals', type: 'signal', displayName: 'Task progress changed' },
+    { name: 'doubleClicked', group: 'Signals', type: 'signal', displayName: 'Double clicked' },
+    { name: 'scroll', group: 'Signals', type: 'signal', displayName: 'Scroll' },
 ] as const satisfies readonly NodePort[];
 
 export default signals

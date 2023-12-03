@@ -8,6 +8,7 @@ export default forwardRef(function (props: any) {
     const { notificationsPosition, detectColorScheme, colorScheme: cs } = props
     let colorScheme = useColorScheme()
     if (!detectColorScheme) colorScheme = cs
+    window.R.params.colorScheme = colorScheme
 
     return (
         <MantineProvider

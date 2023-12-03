@@ -16,6 +16,6 @@ export default forwardRef(function (props: any) {
         {...props}
         {...props.customProps}
     >
-        {children.map((child: any) => <Carousel.Slide >{child}</Carousel.Slide>)}
+        {children.map((child: any, idx: number) => <Carousel.Slide key={idx}>{child}</Carousel.Slide>)}
     </Carousel>
 })

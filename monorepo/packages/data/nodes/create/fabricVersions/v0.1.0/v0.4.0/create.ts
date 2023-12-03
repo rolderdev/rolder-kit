@@ -50,6 +50,14 @@ export default {
 
           schemeArray.forEach((scheme: CreateScheme4, idx: number) => results[scheme.dbClass] = arrayResults[idx])
         }
+
+        map(results, (dbClass, items) => {
+          results[dbClass] = items.map(i => {
+            delete i.refId
+            return i
+          })
+        })
+
         sendOutput(noodlNode, 'createdData', results)
         sendSignal(noodlNode, 'created')
         sendOutput(noodlNode, 'creating', false)

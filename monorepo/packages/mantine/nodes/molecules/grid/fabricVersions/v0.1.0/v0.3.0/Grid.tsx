@@ -6,9 +6,9 @@ export default forwardRef(function (props: any) {
         const { childIsRepeater, children } = p
         switch (true) {
             case Array.isArray(children) && childIsRepeater: return children.slice(1)
-                .map((child: any, idx: number) => <Grid.Col {...props.gridColumnsScheme[idx]}>{child}</Grid.Col>)
+                .map((child: any, idx: number) => <Grid.Col key={idx} {...props.gridColumnsScheme[idx]}>{child}</Grid.Col>)
             case Array.isArray(children) && !childIsRepeater: return children
-                .map((child: any, idx: number) => <Grid.Col {...props.gridColumnsScheme[idx]}>{child}</Grid.Col>)
+                .map((child: any, idx: number) => <Grid.Col key={idx} {...props.gridColumnsScheme[idx]}>{child}</Grid.Col>)
             case !Array.isArray(children): return <Grid.Col {...props.gridColumnsScheme[0]}>{children}</Grid.Col>
         }
     }

@@ -124,4 +124,12 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     numberInputVariants: [
         { value: 'default', label: 'Default' }, { value: 'filled', label: 'Filled' }, { value: 'unstyled', label: 'Unstyled' }
     ],
+    table2VerticalAlignments: [{ value: 'center', label: 'Center' }, { value: 'top', label: 'Top' }, { value: 'bottom', label: 'Bottom' },],
+    ganttViewModes: [
+        { value: 'Hour', label: 'Час' }, { value: 'QuarterDay', label: 'Четверть дня' },
+        { value: 'HalfDay', label: 'Полдня' }, { value: 'Day', label: 'День' },
+        { value: 'Week', label: 'Неделя' }, { value: 'Month', label: 'Месяц' },
+        { value: 'QuarterYear', label: 'Квартал' }, { value: 'Year', label: 'Год' }
+    ],
+    scrollBehaviors: [{ value: 'smooth', label: 'Smooth' }, { value: 'instant', label: 'Instant' }, { value: 'auto', label: 'Auto' },]
 }

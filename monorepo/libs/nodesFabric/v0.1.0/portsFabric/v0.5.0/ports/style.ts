@@ -5,7 +5,7 @@ const style = [
     { name: 'buttonVariant', group: 'Style', type: { name: 'enum', enums: enums.buttonVariants }, displayName: 'Variant', default: 'filled' },
     { name: 'color', group: 'Style', type: 'string', displayName: 'Color', tooltip: 'red, red.5' },
     { name: 'detectColorScheme', group: 'Style', type: 'boolean', displayName: 'Autodetect color scheme', default: false },
-    { name: 'colorScheme', group: 'Style', type: { name: 'enum', enums: enums.colorSchemes }, displayName: 'Default color scheme' },
+    { name: 'colorScheme', group: 'Style', type: { name: 'enum', enums: enums.colorSchemes }, displayName: 'Default color scheme', default: 'light' },
     { name: 'shadow', group: 'Style', type: { name: 'enum', enums: enums.sizes }, displayName: 'Shadow', default: 'sm' },
     { name: 'buttonColor', group: 'Style', type: 'string', displayName: 'Button color' },
     { name: 'modalOpacity', group: 'Style', type: 'number', displayName: 'Opacity', default: 0.6 },

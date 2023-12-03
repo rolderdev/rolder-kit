@@ -40,7 +40,7 @@ export default forwardRef(function (props: DataProps11, ref) {
         dataCache.setKey(`${noodlNode.id}.${dataScheme.dbClass}`, dataWithRefs || [])
         backwardSetRefs(noodlNode, useDataScheme, dataScheme)
       }
-    } else if (isFetched) {
+    } else if (!isFetching) {
       if (dataScheme.search?.fields) {
         let foudedRItems = dataCache.get()[noodlNode.id]?.[dataScheme.dbClass]?.filter(i => data?.map(i => i.id).includes(i.id))
         foudedRItems = foudedRItems.concat(searchCache.get()[noodlNode.id]?.[dataScheme.dbClass]

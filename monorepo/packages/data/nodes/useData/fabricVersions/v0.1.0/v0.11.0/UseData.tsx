@@ -23,7 +23,11 @@ export default forwardRef(function (props: CompProps11, ref) {
             fuzziness: 1
           }
         }
-        dataScheme.query ? dataScheme.query?.and?.push(matchQuery) : dataScheme.query = matchQuery
+        dataScheme.query
+          ? dataScheme.query.and
+            ? dataScheme.query.and?.push(matchQuery)
+            : dataScheme.query = { and: [dataScheme.query, matchQuery] }
+          : dataScheme.query = matchQuery
       }
       return dataScheme
     })

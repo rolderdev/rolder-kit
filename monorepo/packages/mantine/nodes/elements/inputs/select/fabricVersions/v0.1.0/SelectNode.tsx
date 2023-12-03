@@ -10,8 +10,9 @@ const compVersions: CompVersions = {
         Comp: v0_5_0,
         inputs: [
             ...getPorts(
-                'input', ['useForm', 'formField', 'label', 'labelField', 'placeholder', 'disabled', 'radius', 'withAsterisk', 'w', 'inputItems',
-                'searchable', 'clearable', 'creatable', 'backgroundColor', 'defaultItem', 'maxDropdownHeight', 'dropdownPosition', 'inputError'],
+                'input', ['useForm', 'formField', 'label', 'labelField', 'placeholder', 'disabled', 'radius', 'withAsterisk', 'w',
+                'inputItems', 'searchable', 'clearable', 'creatable', 'backgroundColor', 'defaultItem', 'maxDropdownHeight',
+                'dropdownPosition', 'inputError', 'size'],
                 ['formField']
             ),
             ...getGroupedPorts('input', ['Icon']),

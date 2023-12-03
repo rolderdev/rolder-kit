@@ -34,6 +34,7 @@ import throttle from 'just-throttle';
 import filter from 'just-filter-object';
 import groupBy from 'just-group-by';
 import memoize from 'just-memoize'
+import range from 'just-range'
 // loadsh
 import { isNil, unionBy } from 'lodash'
 // form
@@ -70,6 +71,7 @@ declare type RolderType = {
         defaults?: {
             dateFormat: string
         }
+        colorScheme: 'light' | 'dark'
     }
     dbClasses?: {
         [x: string]: DbClass
@@ -123,6 +125,7 @@ declare type RolderType = {
             filter: typeof filter
             groupBy: typeof groupBy
             memoize: typeof memoize
+            range: typeof range
         }
         lodash: {
             isNil: typeof isNil

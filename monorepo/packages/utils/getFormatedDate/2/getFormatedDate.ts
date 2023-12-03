@@ -4,9 +4,9 @@ export default function (obj: any, templ: string | undefined, dateFormat: string
     const defaultDateFormat = window.R.params.defaults?.dateFormat
     let value = ''
     if (obj && templ) {
-        const v = getValue.v7(obj, templ)
+        const v = getValue.v8(obj, templ)
         if (v) {
-            if (dayjs.unix(v).format() !== 'Invalid Date') return dayjs.unix(v).format(dateFormat || defaultDateFormat)
+            if (dayjs(v).format() !== 'Invalid Date') return dayjs(v).format(dateFormat || defaultDateFormat)
             else if (dayjs(v).format() !== 'Invalid Date') return dayjs(v).format(dateFormat || defaultDateFormat)
         } else return value
     } else return value

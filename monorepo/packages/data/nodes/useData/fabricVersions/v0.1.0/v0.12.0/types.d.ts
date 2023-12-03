@@ -1,61 +1,35 @@
-declare type DataCache12 = {
-    [dbClass: string]: RItem[]
-}
-
-declare type SearchResults12 = {
-    [dbClass: string]: RItem[]
+declare type CompProps12 = {
+    noodlNode: NoodlNode
+    dbClass: string
+    filters?: Query
+    sorts?: Sorts
+    querySize?: number
+    refs?: string[]
+    backRefs?: string[]
+    getUsers?: boolean
+    searchFields?: string[]
+    searchString?: string
+    aggQuery?: Query
 }
 
 declare type DataScheme12 = {
     dbClass: string
-    order?: number
-    query?: Query
-    sort?: Sort
-    options?: Options
-    filterBy?: {
-        dbClassAccessor: string
-        filterByDbClass: string
-        filterByAccessor: string
-    }[]
-    getUsers?: boolean
+    filters?: Query
+    sorts?: Sorts
+    size?: number
     refs?: string[]
     backRefs?: string[]
-    search?: {
-        fields?: string[]
-        setOutput?: {
-            [dbClass: string]: {
-                to: string
-                [dbClass: string]: { to: string }
-            }
-        } | boolean
-    }
-}
-
-declare type CompProps12 = {
-    noodlNode: NoodlNode
-    useDataScheme: DataScheme12[]
-    searchString: string
-}
-
-/* declare type DataStore12 = {
-    scheme: DataScheme12
-    enabled: boolean
-    items?: RItem[]
-}
- */
-declare type QueryComp12 = {
-    noodlNode: NoodlNode,
-    initialSchemes: DataScheme12[]
-    initialScheme: DataScheme12
+    searchAfter?: string[]
+    getUsers?: boolean
+    aggQuery?: Query
 }
 
 declare type Query = { [key: string]: any }
-declare type Sort = { [key: string]: 'asc' | 'desc' }[]
-declare type Options = {
-    size?: number
-    refresh?: 'wait_for'
-    lang?: 'koncorde'
-    silent?: boolean
+declare type Sorts = { [key: string]: 'asc' | 'desc' }[]
+
+declare type PagesSearchAfter = {
+    page: number
+    searchAfter?: any[]
 }
 
 declare interface RItem extends ItemBody {

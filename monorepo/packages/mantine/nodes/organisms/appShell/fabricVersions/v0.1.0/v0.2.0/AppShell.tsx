@@ -40,10 +40,10 @@ export default forwardRef(function (props: any) {
         padding={props.appShellCustomPadding ? props.appShellCustomPadding : props.appShellPadding}
         navbarOffsetBreakpoint={navbarOffset}
         asideOffsetBreakpoint={asideOffset}
-        navbar={comps?.Navbar ? comps?.Navbar : <></>}
-        header={comps?.Header ? comps?.Header : <></>}
-        aside={comps?.Aside ? comps.Aside : <></>}
-        footer={comps?.Footer ? comps.Footer : <></>}
+        navbar={comps?.Navbar ? comps?.Navbar : undefined}
+        header={comps?.Header ? comps?.Header : undefined}
+        aside={comps?.Aside ? comps.Aside : undefined}
+        footer={comps?.Footer ? comps.Footer : undefined}
     >
         {comps?.content}
     </AppShell >)

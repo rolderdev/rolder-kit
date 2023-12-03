@@ -8,8 +8,8 @@ export default forwardRef(function (props: any) {
 
     return (
         <NavLink
-            {...props}
             key={props.label}
+            {...props}
             variant={props.navLinkVariant}
             active={props.active || props.label === props.activateLabel}
             icon={Icon && <Icon size={props.iconSize} stroke={props.stroke} />}

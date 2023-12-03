@@ -8,7 +8,7 @@ export default forwardRef(function (props: any, ref) {
 
     const [value, setValue] = useState<number | ''>(props.defaultNumberValue)
     const handlers = useRef<NumberInputHandlers>();
-    // reset
+      
     useImperativeHandle(ref, () => ({
         reset() {
             setValue(props.defaultNumberValue || 0)

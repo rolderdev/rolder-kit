@@ -20,13 +20,12 @@ function getItemsByFoundedRefs(noodlNodeId: string, searchResults: SearchResults
     const targetItemsFromRefs = allTargetItems.filter(i => foundedRefItems.map(i => i.id).includes(i[refDataScheme.dbClass].id))
     const targetItemsFromBRefs = allTargetItems.filter(i => foundedRefItems.map(i => i[targetDataScheme.dbClass]?.id).includes(i.id))
     let resultTargetItems = unionBy(foundedTargetItems, [...targetItemsFromRefs, ...targetItemsFromBRefs], 'id')
-
     return sortItems(targetDataScheme, resultTargetItems)
 }
 
 export default function (noodlNodeId: string, useDataScheme: DataScheme[]) {
     const { unionBy } = window.R.libs.lodash
-
+        
     let searchResults: SearchResults11 = {}
     useDataScheme.filter(i => i.search?.setOutput).forEach(outputDataScheme => {
         const setOutput = outputDataScheme.search?.setOutput
@@ -60,5 +59,6 @@ export default function (noodlNodeId: string, useDataScheme: DataScheme[]) {
             })
         }
     })
+
     return searchResults
 }

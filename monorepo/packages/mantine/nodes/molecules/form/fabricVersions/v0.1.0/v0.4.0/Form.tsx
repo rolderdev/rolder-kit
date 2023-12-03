@@ -22,5 +22,5 @@ export default forwardRef(function (props: any) {
         </ScopeProvider>
     }
 
-    return props.formScheme ? <Form {...props.formScheme} /> : <></>
+    return props.formScheme ? <Form {...props.formScheme} /> : undefined
 })

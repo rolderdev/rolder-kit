@@ -8,6 +8,7 @@ const states = [
     { name: 'deleting', group: 'States', type: 'boolean', displayName: 'Deleting', default: false },
     { name: 'indicatorProcessing', group: 'States', type: 'boolean', displayName: 'Processing', default: false },
     { name: 'executing', group: 'States', type: 'boolean', displayName: 'Executing', default: false },
+    { name: 'checked', group: 'States', type: 'boolean', displayName: 'Checked', default: false },
 ] as const satisfies readonly NodePort[];
 
 export default states

@@ -4,19 +4,25 @@ import 'dayjs/locale/ru'
 import isBetween from 'dayjs/plugin/isBetween'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import dayOfYear from 'dayjs/plugin/dayOfYear'
-import weekOfYear from 'dayjs/plugin/weekOfYear'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import duration from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import utc from 'dayjs/plugin/utc'
+import weekday from 'dayjs/plugin/weekday'
+import weekYear from 'dayjs/plugin/weekYear'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+import timezone from 'dayjs/plugin/timezone'
 dayjs.extend(isBetween)
 dayjs.extend(isSameOrAfter)
 dayjs.extend(dayOfYear)
-dayjs.extend(weekOfYear)
 dayjs.extend(advancedFormat)
 dayjs.extend(duration)
 dayjs.extend(relativeTime)
 dayjs.extend(utc)
+dayjs.extend(weekday)
+dayjs.extend(weekYear)
+dayjs.extend(weekOfYear)
+dayjs.extend(timezone)
 dayjs.locale('ru')
 window.R.libs.dayjs = dayjs
 
@@ -44,9 +50,10 @@ import throttle from 'just-throttle';
 import filter from 'just-filter-object'
 import groupBy from 'just-group-by';
 import memoize from 'just-memoize'
+import range from 'just-range'
 window.R.libs.just = {
     clone, map, typeOf, flush, template, isEmpty, omit, insert, get, set, clamp, last, remove, sortBy, unique, compare, flatten,
-    debounce, capitalize, throttle, filter, groupBy, memoize
+    debounce, capitalize, throttle, filter, groupBy, memoize, range
 }
 
 // lodash

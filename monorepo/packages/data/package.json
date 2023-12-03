@@ -9,10 +9,10 @@
     "minor": "npm version minor && rspack build"
   },
   "dependencies": {
-    "@noodl/noodl-sdk": "0.5.4",
-    "kuzzle-sdk": "7.11.0",
+    "kuzzle-sdk": "7.11.1",
+    "@tanstack/react-query": "4.36.1",
     "nanostores": "0.9.5",
-    "jotai": "2.5.1",
+    "jotai": "2.6.0",
     "bunshi": "2.0.2",
     "@mantine/hooks": "6.0.21",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz",

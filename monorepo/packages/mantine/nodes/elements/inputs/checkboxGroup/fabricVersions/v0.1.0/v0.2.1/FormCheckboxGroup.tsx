@@ -41,14 +41,14 @@ export default forwardRef(function (props: any, ref) {
         {props.checkboxGroupOrientation === 'horizontal'
             ?
             <Group grow={props.grow} mr='-1rem' mb='1rem' mt={props.withAsterisk ? 8 : 0}>
-                {data?.map((i: any) => <Box>
+                {data?.map((i: any, idx) => <Box key={idx}>
                     <Text fz={props.checkBoxFz}>{i.label}</Text>
                     <Checkbox mt={8} value={i.value} disabled={props.disabled || i.disabled} color={props.checkboxColor} />
                 </Box>)}
             </Group>
             :
             <Stack spacing={props.spacing}>
-                {data?.map((i: any) => <Box>
+                {data?.map((i: any, idx) => <Box key={idx}>
                     <Text fz={props.checkBoxFz}>{i.label}</Text>
                     <Checkbox mt={8} value={i.value} disabled={props.disabled || i.disabled} color={props.checkboxColor} />
                 </Box>)}

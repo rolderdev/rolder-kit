@@ -39,7 +39,7 @@ export default forwardRef(function (props: any, ref) {
                     >
                         {props.popoverButtonLabel}
                     </Button>
-                    : <></>}
+                    : undefined}
         </Popover.Target>
         <Popover.Dropdown>{props.children}</Popover.Dropdown>
     </Popover >

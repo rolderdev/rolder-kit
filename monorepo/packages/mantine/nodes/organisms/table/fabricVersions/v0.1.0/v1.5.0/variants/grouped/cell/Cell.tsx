@@ -43,7 +43,7 @@ export default function (
             size={props.size}
             stroke={props.stroke}
             color={convertColor(props.color)}
-        /> : <></>
+        /> : undefined
     }
 
     const render = columnDef.render && columnDef.render(row)
@@ -55,7 +55,7 @@ export default function (
             <Icon {...render.props} />
         </Group>
         case 'Icons': return <Group w={columnDef.size ? columnDef.size : undefined} position={position} noWrap>
-            {render.props.map((props: any) => <Icon {...props} />)}
+            {render.props.map((props: any, idx: number) => <Icon key={idx} {...props} />)}
         </Group>
         default: return defaultRender
     } else return defaultRender

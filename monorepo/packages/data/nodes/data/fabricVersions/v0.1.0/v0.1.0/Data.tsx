@@ -46,7 +46,7 @@ export default forwardRef(function (props: any) {
             projectVersion: window.R.env.projectVersion,
             envVersion: window.R.env.backendVersion,
             dbVersion: window.R.env.dbName?.split('_v')[1],
-            dbClasses: eval(dbClasses)[0],
+            dbClasses: eval(dbClasses)?.[0],
             debug: window.R.states.debug,
             sessionTimeout,
             defaults: projectDefaults,

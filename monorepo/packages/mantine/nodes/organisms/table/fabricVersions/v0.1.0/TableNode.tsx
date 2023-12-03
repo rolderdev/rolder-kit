@@ -7,6 +7,7 @@ import v1_3_0 from './v1.3.0/Table'
 import v1_3_1 from './v1.3.1/Table'
 import v1_4_0 from './v1.4.0/Table'
 import v1_5_0 from './v1.5.0/Table'
+import v2_0_0 from './v2.0.0/Table'
 
 //===================================================================
 
@@ -183,6 +184,30 @@ const compVersions: CompVersions = {
             'groupedRowSelected', 'selectedGroupedItem'],)],
         signals: getPorts('input', ['expandAll', 'unExpandAll', 'resetSingleSelected', 'resetGroupedRowSelection',
             'resetMultipleSelected']),
+    },
+    'v2.0.0': {
+        hashTag: 'experimental',
+        Comp: v2_0_0,
+        inputs: getPorts('input', [
+            'table2Columns',
+            // Data
+            'items', 'table2DefaultSelectedItem', 'table2DefaultSort',
+            // States
+            'table2Fetching',
+            // Layout
+            'table2NoHeader', //'table2VerticalAlignment',
+            // Dimensions
+            'table2Width', 'table2DynamicHeight', 'table2MaxHeight', 'table2ViewportBOffset', 'table2HorizontalSpacing',
+            'table2VerticalSpacing', 'table2FontSize',
+            // Style
+            'table2WithBorder', 'table2BorderRadius', 'table2WithColumnBorders', 'table2Striped', 'table2HighlightOnHover',
+            'table2Shadow',
+            // Selectable
+            'table2Selectable', 'table2SingleRowSelectable',
+            // Row style
+            'table2RowBackgroundColor', 'table2RowOnHoverBackgroundColor', 'table2SelectedRowBackgroundColor'
+        ]),
+        outputs: getPorts('output', ['selectedItem', 'table2Sort'])
     }
 }
 

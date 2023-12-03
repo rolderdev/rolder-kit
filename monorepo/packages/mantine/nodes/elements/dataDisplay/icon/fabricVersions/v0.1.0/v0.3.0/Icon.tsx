@@ -8,5 +8,5 @@ export default forwardRef(function (props: any) {
         stroke={props.stroke}
         {...props}
         {...props.customProps}
-    /> : <></>
+    /> : undefined
 })

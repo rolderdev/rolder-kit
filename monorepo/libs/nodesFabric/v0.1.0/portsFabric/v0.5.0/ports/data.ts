@@ -41,4 +41,9 @@ export default [
     { name: 'result', group: 'Data', type: '*', displayName: 'Result' },
     { name: 'file', group: 'Data', type: '*', displayName: 'File' },
     { name: 'item', group: 'Data', type: { name: 'object', allowConnectionsOnly: true }, displayName: 'Item' },
+    { name: 'ganttTasks', group: 'Data', type: { name: 'array', allowConnectionsOnly: true }, displayName: 'Tasks' },
+    { name: 'ganttChangedTask', group: 'Data', type: 'object', displayName: 'Changed task' },
+    { name: 'ganttChangedProject', group: 'Data', type: 'object', displayName: 'Changed project' },
+    { name: 'ganttDeletedTask', group: 'Data', type: 'object', displayName: 'Deleted task' },
+    { name: 'ganttSelectedTask', group: 'Data', type: 'object', displayName: 'Selected task' },
 ] as const satisfies readonly NodePort[]

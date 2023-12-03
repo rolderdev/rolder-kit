@@ -3,7 +3,7 @@ import { getPorts } from '../../../../../../libs/nodesFabric/v0.1.0/portsFabric/
 
 import v0_10_0 from './v0.10.0/UseData'
 import v0_11_0 from './v0.11.0/UseData'
-//import v0_12_0 from './v0.12.0/UseData'
+import v0_12_0 from './v0.12.0/UseData'
 
 //===================================================================
 
@@ -24,13 +24,22 @@ const compVersions: CompVersions = {
         outputs: getPorts('output', ['fetched', 'founded', 'pending', 'fetching']),
         signals: getPorts('input', ['refetch'])
     },
-    /* 'v0.12.0': {
+    'v0.12.0': {
         hashTag: 'experimental',
         Comp: v0_12_0,
-        inputs: getPorts('input', ['dbClasses', 'useDataScheme', 'searchString'], ['dbClasses']),
-        outputs: getPorts('output', ['fetched', 'founded', 'pending', 'fetching']),
-        signals: getPorts('input', ['refetch'])
-    } */
+        inputs: getPorts(
+            'input',
+            [
+                'useDataContext', 'dbClass', 'filters', 'sorts', 'querySize', 'refs', 'backRefs', 'getUsers',
+                'searchFields', 'searchString', 'aggQuery'
+            ],
+            ['dbClass']
+        ),
+        outputs: getPorts('output',
+            ['items', 'fetched', 'fetching', 'fetchedPage', 'fetchedItemsCount', 'totalItemsCount', 'aggregations']
+        ),
+        signals: getPorts('input', ['nextFetch', 'previousFetch'])
+    },
 }
 
 //===================================================================
