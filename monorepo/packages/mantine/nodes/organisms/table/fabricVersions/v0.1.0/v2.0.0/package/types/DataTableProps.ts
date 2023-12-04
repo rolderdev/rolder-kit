@@ -11,7 +11,7 @@ import type {
   DataTableSelectionProps,
   DataTableSortProps,
   DataTableVerticalAlignment,
-} from './';
+} from '.';
 import type { DataTableColumnProps } from './DataTableColumnProps';
 import type { DataTableLoaderProps } from './DataTableLoaderProps';
 
