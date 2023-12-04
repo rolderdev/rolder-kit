@@ -1,6 +1,6 @@
 declare type CompProps12 = {
     noodlNode: NoodlNode
-    dbClass: string
+    dbClass2: string
     filters?: Query
     sorts?: Sorts
     querySize?: number

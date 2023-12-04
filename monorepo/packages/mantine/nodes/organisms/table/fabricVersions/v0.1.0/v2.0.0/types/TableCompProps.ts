@@ -2,7 +2,7 @@ import { MantineColor, MantineNumberSize } from "@mantine/core"
 import { DataTableColumn } from "mantine-datatable"
 
 export type TableCompProps200 = {
-  noodlNode: NoodlNode, table2Columns: DataTableColumn<RItem>[], customProps: any
+  noodlNode: NoodlNode, table2Columns: DataTableColumn<RItem>[], customProps: any, children: any
   // Data
   items: RItem[], table2DefaultSort: any[], table2DefaultSelectedItem: RItem,
   // States
@@ -10,7 +10,7 @@ export type TableCompProps200 = {
   // Layout
   table2NoHeader: boolean, //table2VerticalAlignment: DataTableVerticalAlignment,
   // Dimensions
-  table2Width: MantineNumberSize, table2DynamicHeight: boolean, table2MaxHeight: MantineNumberSize,
+  table2Width: MantineNumberSize, table2MinHeight: MantineNumberSize, table2DynamicHeight: boolean, table2MaxHeight: MantineNumberSize,
   table2ViewportBOffset: number, table2HorizontalSpacing: MantineNumberSize, table2VerticalSpacing: MantineNumberSize,
   table2FontSize: MantineNumberSize,
   // Style

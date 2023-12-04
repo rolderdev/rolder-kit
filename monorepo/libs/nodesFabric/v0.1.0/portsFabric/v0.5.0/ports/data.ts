@@ -46,4 +46,5 @@ export default [
     { name: 'ganttChangedProject', group: 'Data', type: 'object', displayName: 'Changed project' },
     { name: 'ganttDeletedTask', group: 'Data', type: 'object', displayName: 'Deleted task' },
     { name: 'ganttSelectedTask', group: 'Data', type: 'object', displayName: 'Selected task' },
+    { name: 'tableItem', group: 'Data', type: 'object', displayName: 'Table item' },
 ] as const satisfies readonly NodePort[]

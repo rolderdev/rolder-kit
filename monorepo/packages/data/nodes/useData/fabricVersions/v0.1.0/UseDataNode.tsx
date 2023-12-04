@@ -30,10 +30,10 @@ const compVersions: CompVersions = {
         inputs: getPorts(
             'input',
             [
-                'useDataContext', 'dbClass', 'filters', 'sorts', 'querySize', 'refs', 'backRefs', 'getUsers',
+                'useDataContext', 'dbClass2', 'filters', 'sorts', 'querySize', 'refs', 'backRefs', 'getUsers',
                 'searchFields', 'searchString', 'aggQuery'
             ],
-            ['dbClass']
+            ['dbClass2']
         ),
         outputs: getPorts('output',
             ['items', 'fetched', 'fetching', 'fetchedPage', 'fetchedItemsCount', 'totalItemsCount', 'aggregations']

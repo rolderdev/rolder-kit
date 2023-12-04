@@ -19,7 +19,7 @@ function getSearchAfter(items?: RItem[], sorts?: Sorts) {
 
 function getDataScheme(props: CompProps12) {
   const { clone } = window.R.libs.just
-  const { dbClass, filters, sorts, querySize, refs, backRefs, getUsers, searchFields, searchString, aggQuery } = props
+  const { dbClass2: dbClass, filters, sorts, querySize, refs, backRefs, getUsers, searchFields, searchString, aggQuery } = props
 
   const matchQuery = {
     multi_match: {
@@ -42,7 +42,7 @@ export const localDataCache = deepMap<{ [noodleNodeId: string]: RItem[] }>({})
 export const maxPage = deepMap<{ [noodleNodeId: string]: number }>({})
 
 export default forwardRef(function (props: CompProps12, ref) {
-  const { noodlNode, dbClass, filters, sorts } = props
+  const { noodlNode, dbClass2: dbClass, filters, sorts } = props
   const dataContextId = useMolecule(DataContextMolecule)
 
   subscribe({ ...getDataScheme(props), filters })

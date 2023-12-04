@@ -191,26 +191,27 @@ const compVersions: CompVersions = {
         inputs: getPorts('input', [
             'table2Columns',
             // Data
-            'items', 'table2DefaultSelectedItem', 'table2DefaultSort',
+            'items', 'table2DefaultSelectedItem', 'table2DefaultSorts',
             // States
             'table2Fetching',
             // Layout
             'table2NoHeader', //'table2VerticalAlignment',
             // Dimensions
-            'table2Width', 'table2DynamicHeight', 'table2MaxHeight', 'table2ViewportBOffset', 'table2HorizontalSpacing',
+            'table2Width', 'table2MinHeight', 'table2DynamicHeight', 'table2MaxHeight', 'table2ViewportBOffset', 'table2HorizontalSpacing',
             'table2VerticalSpacing', 'table2FontSize',
             // Style
-            'table2WithBorder', 'table2BorderRadius', 'table2WithColumnBorders', 'table2Striped', 'table2HighlightOnHover',
+            'table2WithBorder', 'table2BorderRadius', 'table2WithColumnBorders',
             'table2Shadow',
             // Selectable
             'table2Selectable', 'table2SingleRowSelectable',
             // Row style
-            'table2RowBackgroundColor', 'table2RowOnHoverBackgroundColor', 'table2SelectedRowBackgroundColor'
+            'table2RowBackgroundColor', 'table2Striped', 'table2HighlightOnHover', 'table2RowOnHoverBackgroundColor',
+            'table2SelectedRowBackgroundColor'
         ]),
-        outputs: getPorts('output', ['selectedItem', 'table2Sort'])
+        outputs: getPorts('output', ['selectedItem', 'table2ExpandChanged', 'table2ExpandedItems', 'table2Sorts'])
     }
 }
 
 //===================================================================
 
-export default getReactNode('Table', compVersions, false)
+export default getReactNode('Table', compVersions, true)

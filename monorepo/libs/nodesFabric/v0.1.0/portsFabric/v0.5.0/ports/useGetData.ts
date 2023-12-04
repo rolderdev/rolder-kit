@@ -7,6 +7,7 @@ export default [
     { name: 'useDataScheme', group: 'Params', type: 'array', displayName: 'Scheme' },
     { name: 'getDataScheme', group: 'Params', type: 'array', displayName: 'Scheme' },
     { name: 'dbClass', group: 'Query params', type: '*', displayName: 'Database class' },
+    { name: 'dbClass2', group: 'Query params', type: 'string', displayName: 'Database class' },
     { name: 'querySize', group: 'Query params', type: 'number', displayName: 'Size', default: 10 },
     { name: 'searchQuerySize', group: 'Query params', type: 'number', displayName: 'Size', default: 10, dependsOn: [{ name: 'useDataContext', value: false }] },
     { name: 'refs', group: 'References', type: 'proplist', displayName: 'References', dependsOn: [{ name: 'useDataContext', value: true }] },
