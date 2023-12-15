@@ -100,7 +100,7 @@ export const getJsNode = (nodeName: string, jsVersions: JsVersions, color: NodeC
     const nodeDef: JsNodeDef = {
         name: `rolder-kit.${nodeName}`,
         displayName: nodeName,
-        color: color,
+        color,
         initialize: function () {
             this.nodeName = nodeName
             this.resultProps = {}

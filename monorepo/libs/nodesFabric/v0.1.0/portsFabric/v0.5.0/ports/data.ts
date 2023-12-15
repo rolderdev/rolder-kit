@@ -28,6 +28,11 @@ export default [
     { name: 'defaultDate', group: 'Data', type: { name: '*', allowConnectionsOnly: true }, displayName: 'Default date' },
     { name: 'defaultItems', group: 'Data', type: 'array', displayName: 'Default items' },
     { name: 'dataSource', group: 'Data', type: { name: 'enum', enums: enums.dataSources }, displayName: 'Data source', default: 'item' },
+    { name: 'dataSource2', group: 'Data', type: { name: 'enum', enums: enums.dataSources2 }, displayName: 'Data source', default: 'item' },
+    { name: 'sourceField2', group: 'Data', type: 'string', displayName: 'Field', dependsOn: [{ name: 'dataSource2', value: 'item' }] },
+    { name: 'sourceField2', group: 'Data', type: 'string', displayName: 'Field', dependsOn: [{ name: 'dataSource2', value: 'table' }] },
+    { name: 'itemSource2', group: 'Data', type: { name: '*', allowConnectionsOnly: true }, displayName: 'Item', dependsOn: [{ name: 'dataSource2', value: 'item' }] },
+    { name: 'valueSource2', group: 'Data', type: 'string', displayName: 'Value', dependsOn: [{ name: 'dataSource2', value: 'value' }] },
     { name: 'itemSource', group: 'Data', type: { name: '*', allowConnectionsOnly: true }, displayName: 'Item', dependsOn: [{ name: 'dataSource', value: 'item' }] },
     { name: 'sourceField', group: 'Data', type: 'string', displayName: 'Field', dependsOn: [{ name: 'dataSource', value: 'item' }] },
     { name: 'valueSource', group: 'Data', type: 'string', displayName: 'Value', dependsOn: [{ name: 'dataSource', value: 'value' }] },
@@ -46,5 +51,5 @@ export default [
     { name: 'ganttChangedProject', group: 'Data', type: 'object', displayName: 'Changed project' },
     { name: 'ganttDeletedTask', group: 'Data', type: 'object', displayName: 'Deleted task' },
     { name: 'ganttSelectedTask', group: 'Data', type: 'object', displayName: 'Selected task' },
-    { name: 'tableItem', group: 'Data', type: 'object', displayName: 'Table item' },
+    { name: 'cellItem', group: 'Data', type: 'object', displayName: 'Cell item' },
 ] as const satisfies readonly NodePort[]

@@ -103,6 +103,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'mask', label: 'Mask' },
     ],
     dataSources: [{ value: 'item', label: 'Item' }, { value: 'value', label: 'Value' }],
+    dataSources2: [{ value: 'item', label: 'Item' }, { value: 'table', label: 'Table' }, { value: 'value', label: 'Value' }],
     flexJustifies: [{ value: 'flex-start', label: 'Flex-start' }, { value: 'center', label: 'Center' },
     { value: 'flex-end', label: 'Flex-end' }],
     flexAligns: [{ value: 'flex-start', label: 'Flex-start' }, { value: 'center', label: 'Center' }, { value: 'flex-end', label: 'Flex-end' }],
@@ -131,5 +132,10 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'Week', label: 'Неделя' }, { value: 'Month', label: 'Месяц' },
         { value: 'QuarterYear', label: 'Квартал' }, { value: 'Year', label: 'Год' }
     ],
-    scrollBehaviors: [{ value: 'smooth', label: 'Smooth' }, { value: 'instant', label: 'Instant' }, { value: 'auto', label: 'Auto' },]
+    scrollBehaviors: [{ value: 'smooth', label: 'Smooth' }, { value: 'instant', label: 'Instant' }, { value: 'auto', label: 'Auto' },],
+    table2OnRowClicks: [
+        { value: 'disabled', label: 'Disabled' }, { value: 'singleSelection', label: 'Single selection' },
+        { value: 'expansion', label: 'Expansion' }
+    ],
+    table2sortTypes: [{ value: 'frontend', label: 'Frontend' }, { value: 'backend', label: 'Backend' },]
 }

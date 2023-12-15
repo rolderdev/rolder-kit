@@ -189,26 +189,47 @@ const compVersions: CompVersions = {
         hashTag: 'experimental',
         Comp: v2_0_0,
         inputs: getPorts('input', [
-            'table2Columns',
+            // Enablers
+            'table2SingleSelection', 'table2MultiSelection', 'table2Sort', 'table2Expansion', 'table2Layout', 'table2Dimensions', 'table2TableStyles',
+            'table2RowStyles',
+            // Params
+            'table2Columns', 'table2OnRowClick', 'table2TextSelection',
             // Data
-            'items', 'table2DefaultSelectedItem', 'table2DefaultSorts',
+            'table2Items',
+            // Single selection
+            'table2SingleSelectedItem', 'table2Unselectable',
+            // Multi selection
+            'table2MultiSelectedItems',
+            // Sort
+            'table2SortType', 'table2SortedIcon', 'table2UnsortedIcon',
+            // Expansion    
+            'table2ExpandedItems', 'table2AllowMultiple',
+            // Layout
+            'table2NoHeader',
+            // Dimensions
+            'table2Width', 'table2MinHeight', 'table2DynamicHeight', 'table2ViewportBOffset', //'table2MaxHeight',
+            'table2HorizontalSpacing', 'table2VerticalSpacing', 'table2FontSize',
+            // Table styles
+            'table2Shadow', 'table2WithBorder', 'table2BorderRadius', 'table2ColumnBorders', 'table2Animation', 'table2LoaderColor',
+            // Row styles
+            'table2RowBorders', 'table2Striped', 'table2OddBgColor', 'table2EvenBgColor', 'table2RowBgColor', 'table2HighlightOnHover',
+            'table2OnHoverBgColor', 'table2SingleSelectedRowBgColor', 'table2MutliSelectedRowBgColor',
             // States
             'table2Fetching',
-            // Layout
-            'table2NoHeader', //'table2VerticalAlignment',
-            // Dimensions
-            'table2Width', 'table2MinHeight', 'table2DynamicHeight', 'table2MaxHeight', 'table2ViewportBOffset', 'table2HorizontalSpacing',
-            'table2VerticalSpacing', 'table2FontSize',
-            // Style
-            'table2WithBorder', 'table2BorderRadius', 'table2WithColumnBorders',
-            'table2Shadow',
-            // Selectable
-            'table2Selectable', 'table2SingleRowSelectable',
-            // Row style
-            'table2RowBackgroundColor', 'table2Striped', 'table2HighlightOnHover', 'table2RowOnHoverBackgroundColor',
-            'table2SelectedRowBackgroundColor'
         ]),
-        outputs: getPorts('output', ['selectedItem', 'table2ExpandChanged', 'table2ExpandedItems', 'table2Sorts'])
+        outputs: getPorts('output', [
+            // Single selection
+            'table2SingleSelectedItem', 'table2SingleSelected', 'table2SingleUnselected',
+            // Multi selection
+            'table2MultiSelectedItems', 'table2MultiSelectionChanged',
+            // Sort
+            'table2SortValue',
+            // Expansion    
+            'table2ExpandedItems', 'table2ExpansionChanged',
+        ]),
+        signals: getPorts('input', [
+            'table2ResetSingleSelection', 'table2ResetMultiSelection', 'table2ResetSort', 'table2ExpandAll', 'table2UnexpandAll', 'reset'
+        ])
     }
 }
 
