@@ -1,15 +1,14 @@
 import { Text } from "@mantine/core"
 import { useShallowEffect } from "@mantine/hooks"
-import { useMolecule } from "bunshi/react"
 import { forwardRef, useState } from "react"
-import { CellMolecule } from "../../../../../../../libs/scopes/table/v0.1.0/cellScope"
+import useScope from "../../../../../../../libs/scopes/useScope/v0.1.0/useScope"
 
 export default forwardRef(function (props: any) {
     const { numbro } = window.R.libs
     const { getValue, getMasked, getFormatedDate } = window.R.utils
-
-    const [value, setValue] = useState('')
-    const { cellItem } = useMolecule(CellMolecule)
+    //'useScope', 'scope', 'propsFunction',
+    const [value, setValue] = useState('')    
+    const { cellItem } = useScope[props.scope]["v0.1.0"]()
 
     useShallowEffect(() => {
         let source = ''

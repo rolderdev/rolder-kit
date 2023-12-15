@@ -103,7 +103,6 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'mask', label: 'Mask' },
     ],
     dataSources: [{ value: 'item', label: 'Item' }, { value: 'value', label: 'Value' }],
-    dataSources2: [{ value: 'item', label: 'Item' }, { value: 'table', label: 'Table' }, { value: 'value', label: 'Value' }],
     flexJustifies: [{ value: 'flex-start', label: 'Flex-start' }, { value: 'center', label: 'Center' },
     { value: 'flex-end', label: 'Flex-end' }],
     flexAligns: [{ value: 'flex-start', label: 'Flex-start' }, { value: 'center', label: 'Center' }, { value: 'flex-end', label: 'Flex-end' }],
@@ -137,5 +136,6 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'disabled', label: 'Disabled' }, { value: 'singleSelection', label: 'Single selection' },
         { value: 'expansion', label: 'Expansion' }
     ],
-    table2sortTypes: [{ value: 'frontend', label: 'Frontend' }, { value: 'backend', label: 'Backend' },]
+    table2sortTypes: [{ value: 'frontend', label: 'Frontend' }, { value: 'backend', label: 'Backend' },],
+    scopes: [{ value: 'tableCell', label: 'Table cell' }]
 }

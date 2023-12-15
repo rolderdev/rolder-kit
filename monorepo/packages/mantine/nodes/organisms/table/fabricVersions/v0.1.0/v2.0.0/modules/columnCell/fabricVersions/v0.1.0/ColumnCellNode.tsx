@@ -8,7 +8,7 @@ const compVersions: CompVersions = {
     'v0.1.0': {
         hashTag: 'experimental',
         Comp: v0_1_0,
-        inputs: getPorts('input', ['table2ColumnIndex', 'table2repeater'], ['table2ColumnIndex']),
+        inputs: getPorts('input', ['table2ColumnIndex', 'table2Controlled'], ['table2ColumnIndex']),
     },
 }
 

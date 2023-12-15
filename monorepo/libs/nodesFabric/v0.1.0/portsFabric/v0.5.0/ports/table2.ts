@@ -17,7 +17,7 @@ export default [
     { name: 'table2OnRowClick', group: 'Params', type: { name: 'enum', enums: enums.table2OnRowClicks }, displayName: 'On row click', default: 'disabled' },
     { name: 'table2TextSelection', group: 'Params', type: 'boolean', displayName: 'Text selection', default: true },
     { name: 'table2ColumnIndex', group: 'Params', type: 'number', displayName: 'Column index', required: true },
-    { name: 'table2repeater', group: 'Params', type: 'boolean', displayName: 'Repeater', default: false },
+    { name: 'table2Controlled', group: 'Params', type: 'boolean', displayName: 'Controlled', default: false },
     // Data
     { name: 'table2Items', group: 'Data', type: 'array', displayName: 'Items' },
     // Single selection
