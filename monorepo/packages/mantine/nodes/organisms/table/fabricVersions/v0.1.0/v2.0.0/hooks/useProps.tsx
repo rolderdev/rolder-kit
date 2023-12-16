@@ -12,7 +12,7 @@ export default function (props: TableCompProps200) {
 
     // Params    
     const params = {
-        table2OnRowClick: props.table2OnRowClick, customProps: props.customProps, columnsDef: props.table2Columns, items: props.table2Items
+        onRowClick: props.table2OnRowClick, customProps: props.customProps, columnsDef: props.table2Columns, items: props.table2Items
     }
     // Selection
     const selection = {
@@ -21,15 +21,20 @@ export default function (props: TableCompProps200) {
     }
     // Sort
     const sort = { enabled: props.table2Sort, type: props.table2SortType, sortedIcon: props.table2SortedIcon, unsortedIcon: props.table2UnsortedIcon }
+    // Filter
+    const filter = { enabled: props.table2FilterEnabled, type: props.table2FilterType }
     // Expansion
-    const allowMultiple = props.table2Expansion && props.table2AllowMultiple
+    const expansion = {
+        enabled: props.table2Expansion,
+        allowMultiple: props.table2Expansion && props.table2AllowMultiple,
+        expandedItems: props.table2Expansion && props.table2ExpandedItems
+    }
     // Dimensions
     const dimensions = {
         width: table2Dimensions ? props.table2Width : undefined
     }
-    const expandedItems = props.table2Expansion && props.table2ExpandedItems
     // Table styles
-    const tableStyles = { animation: props.table2Animation }
+    const tableStyles = { animation: props.table2Expansion ? false : props.table2Animation }
     // Row styles
     const rowStyles = {
         enabled: props.table2RowStyles, rowBorders: props.table2RowBorders, oddBgColor: props.table2OddBgColor,
@@ -69,8 +74,8 @@ export default function (props: TableCompProps200) {
     }
 
     const newProps = {
-        noodlNode: props.noodlNode, children: props.children, libProps, ...params, selection, sort, dimensions, tableStyles, rowStyles,
-        fetching: props.table2Fetching, expandedItems, allowMultiple
+        noodlNode: props.noodlNode, children: props.children, libProps, ...params, selection, sort, filter, dimensions, tableStyles,
+        rowStyles, fetching: props.table2Fetching, expansion
     } as TableProps200
     const oldProps = propsCache.get()[nid]
 

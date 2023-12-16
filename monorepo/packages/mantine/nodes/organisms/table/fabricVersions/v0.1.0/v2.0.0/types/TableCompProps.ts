@@ -3,8 +3,8 @@ import { ColumnDef200 } from "./Column"
 
 export type TableCompProps200 = {
   // Enablers
-  table2SingleSelection: boolean, table2MultiSelection: boolean, table2Sort: boolean, table2Expansion: boolean, table2Layout: boolean, 
-  table2Dimensions: boolean,  table2TableStyles: boolean, table2RowStyles: boolean,
+  table2SingleSelection: boolean, table2MultiSelection: boolean, table2Sort: boolean, table2FilterEnabled: boolean,
+  table2Expansion: boolean, table2Layout: boolean, table2Dimensions: boolean, table2TableStyles: boolean, table2RowStyles: boolean,
   // Params
   noodlNode: NoodlNode, table2Columns: ColumnDef200[], customProps: any, children: any
   table2OnRowClick: 'disabled' | 'singleSelection' | 'expansion', table2TextSelection: boolean
@@ -16,6 +16,8 @@ export type TableCompProps200 = {
   table2MultiSelectedItems: RItem[]
   // Sort
   table2SortType: 'frontend' | 'backend', table2SortedIcon?: string, table2UnsortedIcon?: string
+  // Filter
+  table2FilterType: 'frontend' | 'backend'
   // Expansion
   table2ExpandedItems: RItem[], table2AllowMultiple: boolean
   // Layout

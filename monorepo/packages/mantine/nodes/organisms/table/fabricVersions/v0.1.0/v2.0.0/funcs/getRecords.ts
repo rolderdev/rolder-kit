@@ -6,12 +6,14 @@ import { columnsCache } from "./getColumns";
 export const records = deepMap<{ [noodleNodeId: string]: RItem[] }>({})
 export const filterFuncs = deepMap<{ [noodleNodeId: string]: { [idx: string]: ColumnDef200['filterFunc'] } }>({})
 export const filterValues = deepMap<{ [noodleNodeId: string]: { [idx: string]: any } }>({})
+export const filterStates = deepMap<{ [noodleNodeId: string]: { [idx: string]: boolean } }>({})
 
 export default (
     noodlNodeId: string, items: RItem[], fetching?: boolean, sortStatus?: DataTableSortStatus
 ): RItem[] => {
     const columns = columnsCache.get()[noodlNodeId] as ColumnDef200[]
     let resultRecords = [...items || []]    
+    
     // Front filter
     columns?.forEach((_, columnsIdx) => {
         const filterFunc = filterFuncs.get()[noodlNodeId]?.[columnsIdx]

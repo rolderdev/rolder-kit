@@ -20,4 +20,6 @@ export default createStyles((_, {
     },
     multiSelected: { '&&': { '&&': { '&&': { backgroundColor: convertColor(mutliSelectedRowBgColor) } } } },
     singleSelected: { '&&': { '&&': { '&&': { backgroundColor: convertColor(singleSelectedRowBgColor) } } } },
+    expandIcon: { transition: 'transform 0.2s ease' },
+    expandIconRotated: { transform: 'rotate(90deg)' },
 }));

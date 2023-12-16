@@ -5,7 +5,7 @@ import { ColumnDef200 } from "./Column"
 export type TableProps200 = {
   libProps: DataTableProps<RItem>, children: any, columnsDef: ColumnDef200[], items: RItem[], fetching: boolean, allowMultiple: boolean
   // Params
-  noodlNode: NoodlNode, table2OnRowClick: 'disabled' | 'singleSelection' | 'expansion', customProps?: any
+  noodlNode: NoodlNode, onRowClick: 'disabled' | 'singleSelection' | 'expansion', customProps?: any
   // Selection
   selection: {
     single: { enabled: boolean, unselectable: boolean, selectedItem: RItem },
@@ -13,8 +13,10 @@ export type TableProps200 = {
   }
   // Sort
   sort: { enabled: boolean, type: 'frontend' | 'backend', sortedIcon?: string, unsortedIcon?: string }
+  // Filter
+  filter: { enabled: boolean, type: 'frontend' | 'backend' }
   // Expansion
-  expandedItems: RItem[]
+  expansion: { enabled: boolean, allowMultiple?: boolean, expandedItems?: RItem[] }
   // Dimensions
   dimensions: { width: MantineNumberSize }
   // Table styles

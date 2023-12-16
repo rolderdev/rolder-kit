@@ -137,5 +137,6 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'expansion', label: 'Expansion' }
     ],
     table2sortTypes: [{ value: 'frontend', label: 'Frontend' }, { value: 'backend', label: 'Backend' },],
+    table2filterTypes: [{ value: 'frontend', label: 'Frontend' }, { value: 'backend', label: 'Backend' },],
     scopes: [{ value: 'tableCell', label: 'Table cell' }]
 }

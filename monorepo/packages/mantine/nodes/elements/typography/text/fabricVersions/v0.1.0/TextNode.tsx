@@ -16,7 +16,7 @@ const compVersions: CompVersions = {
         Comp: v0_6_0,
         inputs: getPorts('input', [
             'fz', 'fw', 'color', 'w', 'h', 'opacity', 'inline', 'fitContent', 'ta', 'textFormat', 'textMask', 'numberFormat',
-            'dateFormatAtText', 'dataSource', 'itemSource', 'sourceField', 'valueSource', 'useScope', 'scope', 'propsFunction',
+            'dateFormatAtText', 'dataSource', 'itemSource', 'sourceField', 'valueSource', 'useScope', 'scope',
         ])
     }
 }

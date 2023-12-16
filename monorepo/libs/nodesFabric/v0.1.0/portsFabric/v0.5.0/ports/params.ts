@@ -67,10 +67,7 @@ const params = [
     { name: 'ganttViewMode', group: 'Params', type: { name: 'enum', enums: enums.ganttViewModes }, displayName: 'View mode', default: 'Day' },
     { name: 'showTaskList', group: 'Params', type: 'boolean', displayName: 'Show task list', default: false },
     { name: 'scrollToMultiplier', group: 'Params', type: 'number', displayName: 'Scroll to multiplier', default: 1 },
-    { name: 'scrollBehavior', group: 'Params', type: { name: 'enum', enums: enums.scrollBehaviors }, displayName: 'Scroll behavior', default: 'smooth' },
-    { name: 'useScope', group: 'Params', type: 'boolean', displayName: 'Use scope', default: false },
-    { name: 'scope', group: 'Params', type: { name: 'enum', enums: enums.scopes }, displayName: 'Scope', default: 'table', dependsOn: [{ name: 'useScope', value: true }] },
-    { name: 'propsFunction', group: 'Params', type: 'array', isObject: true, displayName: 'Props function' },
+    { name: 'scrollBehavior', group: 'Params', type: { name: 'enum', enums: enums.scrollBehaviors }, displayName: 'Scroll behavior', default: 'smooth' },    
 ] as const satisfies readonly NodePort[];
 
 export default params

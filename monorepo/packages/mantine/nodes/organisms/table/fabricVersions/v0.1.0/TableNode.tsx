@@ -190,8 +190,8 @@ const compVersions: CompVersions = {
         Comp: v2_0_0,
         inputs: getPorts('input', [
             // Enablers
-            'table2SingleSelection', 'table2MultiSelection', 'table2Sort', 'table2Expansion', 'table2Layout', 'table2Dimensions', 'table2TableStyles',
-            'table2RowStyles',
+            'table2SingleSelection', 'table2MultiSelection', 'table2Sort', 'table2FilterEnabled', 'table2Expansion', 'table2Layout',
+            'table2Dimensions', 'table2TableStyles', 'table2RowStyles',
             // Params
             'table2Columns', 'table2OnRowClick', 'table2TextSelection',
             // Data
@@ -202,6 +202,8 @@ const compVersions: CompVersions = {
             'table2MultiSelectedItems',
             // Sort
             'table2SortType', 'table2SortedIcon', 'table2UnsortedIcon',
+            // Filter
+            'table2FilterType',
             // Expansion    
             'table2ExpandedItems', 'table2AllowMultiple',
             // Layout
@@ -228,7 +230,8 @@ const compVersions: CompVersions = {
             'table2ExpandedItems', 'table2ExpansionChanged',
         ]),
         signals: getPorts('input', [
-            'table2ResetSingleSelection', 'table2ResetMultiSelection', 'table2ResetSort', 'table2ExpandAll', 'table2UnexpandAll', 'reset'
+            'table2ResetSingleSelection', 'table2ResetMultiSelection', 'table2ResetSort', 'table2ExpandAll', 'table2UnexpandAll',
+            'table2ResetFilters'
         ])
     }
 }

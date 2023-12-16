@@ -6,7 +6,7 @@ import AuthNode_f0_1_0 from "./organisms/auth/fabricVersions/v0.1.0/AuthNode";
 import TableNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/TableNode";
 import ColumnFilterNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/v2.0.0/modules/columnFilter/fabricVersions/v0.1.0/ColumnFilterNode";
 import ColumnCellNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/v2.0.0/modules/columnCell/fabricVersions/v0.1.0/ColumnCellNode";
-import RowItemNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/v2.0.0/modules/rowItem/fabricVersions/v0.1.0/RowItemNode";
+import ExpansionRowNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/v2.0.0/modules/expansionRow/fabricVersions/v0.1.0/ExpansionRowNode";
 // appShell
 import AppShellNode_f0_1_0 from "./organisms/appShell/fabricVersions/v0.1.0/AppShellNode";
 import NavbarNode_f0_1_0 from "./organisms/appShell/navbar/fabricVersions/v0.1.0/NavbarNode";
@@ -75,7 +75,7 @@ export default [
     ///// organisms
     AuthNode_f0_1_0,
     // table
-    TableNode_f0_1_0, ColumnFilterNode_f0_1_0, ColumnCellNode_f0_1_0, RowItemNode_f0_1_0,
+    TableNode_f0_1_0, ColumnFilterNode_f0_1_0, ColumnCellNode_f0_1_0, ExpansionRowNode_f0_1_0,
     // appShell
     AppShellNode_f0_1_0, NavbarNode_f0_1_0, NavbarSectionNode_f0_1_0, HeaderNode_f0_1_0, AsideNode_f0_1_0,
     AsideSectionNode_f0_1_0, FooterNode_f0_1_0,

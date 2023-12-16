@@ -7,6 +7,7 @@ import setValue from "./utils/setValue"
 import setDefaults from "./utils/setDefaults"
 import checkRequired from "./utils/checkRequired"
 import getJsNodePorts from "./utils/getJsNodePorts"
+import { BaseProps } from "../../../../../packages/mantine/nodes/types"
 
 export const getReactNode = (nodeName: string, compVersions: CompVersions, allowChildren?: boolean): ReactNodeDef => {
     return {

@@ -18,6 +18,7 @@ import app from "./ports/app";
 import table2 from "./ports/table2";
 
 export const customProps: NodePort = { index: 10000, plug: 'input', name: 'customProps', group: 'Advanced', type: 'array', displayName: 'Custom props', isObject: true }
+export const propsFunction: NodePort = { index: 10001, plug: 'input', name: 'propsFunction', group: 'Advanced', type: 'array', displayName: 'Props function', isObject: true }
 
 const ports = [...data, ...signals, ...states, ...params, ...form, ...icon, ...margins, ...dimensions, ...style, ...paddings, ...layout,
 ...font, ...format, ...useGetData, ...table, ...appShell, ...app, ...table2]

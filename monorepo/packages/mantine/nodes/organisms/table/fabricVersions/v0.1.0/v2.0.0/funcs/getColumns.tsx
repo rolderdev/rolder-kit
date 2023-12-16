@@ -1,25 +1,69 @@
 import { TableProps200 } from "../types/TableProps";
 import { ColumnDef200 } from "../types/Column";
 import { deepMap } from "nanostores";
-import { cloneElement } from "react";
+import { Dispatch, cloneElement } from "react";
+import { filterFuncs, filterStates } from "./getRecords";
+import { ActionIcon, Group } from "@mantine/core";
+import { IconChevronRight } from "@tabler/icons-react";
+import useRowStyles from "../hooks/useRowStyles";
 
 export const columnsCache = deepMap<{ [noodleNodeId: string]: any[] }>({})
 
 export default function (
-    noodlNode: NoodlNode, columnsDef: ColumnDef200[], sort: TableProps200['sort'], children: any, setFilterValue: any,
+    noodlNode: NoodlNode, columnsDef: ColumnDef200[], sort: TableProps200['sort'], filter: TableProps200['filter'], children: any,
+    setFilterValue: any, setFilterState: any, forceUpdate: any, rowStyles: TableProps200['rowStyles'],
+    expansion: TableProps200['expansion'], expandedRecordIds: string[], setExpandedRecordIds: Dispatch<React.SetStateAction<string[]>>,
+    onRowClick: TableProps200['onRowClick'], customProps: any
 ) {
+    // ColumnFilter
     const columnFilters = Array.isArray(children)
         ? children.filter(i => i.props.noodlNode.model.type.split('.')[1] === 'ColumnFilter')
         : children?.props.noodlNode.model.type.split('.')[1] === 'ColumnFilter'
             ? [children]
             : null
 
+    // ColumnCell
     const columnCells = Array.isArray(children)
         ? children.filter(i => i.props.noodlNode.model.type.split('.')[1] === 'ColumnCell')
         : children?.props.noodlNode.model.type.split('.')[1] === 'ColumnCell'
             ? [children]
             : []
-    
+
+    // Expander
+    const { classes, cx } = useRowStyles(rowStyles)
+    function Chevron(recordId: string) {
+        return <IconChevronRight
+            size="1.2em"
+            className={cx(classes.expandIcon, {
+                [classes.expandIconRotated]: expandedRecordIds.includes(recordId),
+            })}
+            {...customProps.expander.chevronIcon}
+        />
+    }
+    function Expander(recordId: string, cellChild: any) {
+        return <Group spacing="xs">
+            {onRowClick === 'expansion'
+                ? Chevron(recordId)
+                : <ActionIcon
+                    my={-8}
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        setExpandedRecordIds(old => {
+                            if (expansion.allowMultiple) {
+                                if (old.includes(recordId)) return old.filter(i => i !== recordId)
+                                else return [...old, recordId]
+                            } else return old.includes(recordId) ? [] : [recordId]
+                        })
+                    }}
+                    {...customProps.expander.actionIcon}
+                >
+                    {Chevron(recordId)}
+                </ActionIcon>}
+
+            {cellChild}
+        </Group>
+    }
+
     const columns = columnsDef.map((column, columnIdx) => {
         // Sort
         if (!sort.enabled) {
@@ -30,53 +74,40 @@ export default function (
             if (column.sort) column.sortable = true
         }
 
-        // Filters
-        // const columnFilter = columnFilters?.find(i => i.props.noodlNode.props.table2ColumnIndex === columnIdx)
-        /* if (columnFilter) {
-            filterFuncs.setKey(`${noodlNode.id}.${columnIdx}`, column.filterFunc)
-            columnFilter.props.noodlNode.resultProps.setFilterValue = setFilterValue
-            columnFilter.props.noodlNode.resultProps.column = column
-            column.filter = ({ close }: { close: () => void }) => {
-                columnFilter.props.noodlNode.resultProps.close = close
-                return columnFilter
+        // Filter
+        if (!filter.enabled) {
+            delete column.filter
+            delete column.filterFunc
+            delete column.filtering
+        } else {
+            if (filter.type === 'backend') {
+                delete column.filterFunc
             }
-        } */
-
-        // ColumnCell       
-
+            const columnFilter = columnFilters?.find(i => i.props.noodlNode.props.table2ColumnIndex === columnIdx)
+            if (columnFilter) {
+                if (filter.type === 'frontend') {
+                    filterFuncs.setKey(`${noodlNode.id}.${columnIdx}`, column.filterFunc)
+                    columnFilter.props.noodlNode.resultProps.setFilterValue = setFilterValue
+                }
+                columnFilter.props.noodlNode.resultProps.setFilterState = setFilterState
+                columnFilter.props.noodlNode.resultProps.forceUpdate = forceUpdate
+                column.filter = ({ close }: { close: () => void }) => {
+                    columnFilter.props.noodlNode.resultProps.close = close
+                    return columnFilter
+                }
+                column.filtering = filterStates.get()[noodlNode.id]?.[columnIdx]
+            }
+        }
 
         column.render = (record) => {
-
+            // ColumnCell
             const columnCell = columnCells?.find(i => i.props.noodlNode.props.table2ColumnIndex === columnIdx)
-
             if (columnCell) {
-                //const cellItem = useMolecule(CellItem200, { withScope: [ColumnCellScope, `${columnIdx}_${record.id}`] })
-                //cellItem.set(record)
                 columnCell.props.noodlNode.resultProps.record = record
-                //columnCell.props.noodlNode.resultProps.forceUpdate = forceUpdate()
-                return cloneElement(columnCell)
-                //console.log(columnCell)
-                /* columnCell.props.noodlNode.resultProps.record = record
-                columnCell.props.noodlNode.resultProps.recordIdx = recordIdx
-                columnCell.props.noodlNode.resultProps.forceUpdate = forceUpdate */
-                /*  let render = columnCell
-                 if (columnCell.props.noodlNode.childrenCache?.length) {
-                     render = columnCell.props.noodlNode.childrenCache
-                     forceUpdate()
-                 } */
-                //sendOutput(columnCell.props.noodlNode, 'tableItem', record)                                
-                /* const renderChildren = columnCell?.props.noodlNode.getChildren()                
-                console.log(renderChildren[1]?._forEachModel.id)
-                let renderItemChild = renderChildren.slice(1).find((i: any) => i._forEachModel.id === record.id)
-                return renderChildren?.length <= 1 ? renderChildren?.[0]?.render() : renderItemChild ? renderItemChild.render() : null */
-                /* const renderChildren = columnCell?.props.noodlNode.getChildren()
-                console.log(renderChildren[0])
-                console.log(renderChildren[1])
-                if (renderChildren[1]) renderChildren[1]?.update()
-                console.log(renderChildren)
-                let renderItemChild = renderChildren.slice(1).find((i: any) => i._forEachModel.id === record.id)
-                return renderChildren?.length <= 1 ? renderChildren?.[0]?.render() : renderItemChild ? renderItemChild.render() : null */
-            } else return window.R.utils.getValue.v8(record, column.accessor)
+                return expansion.enabled && column.expander ? Expander(record.id, cloneElement(columnCell)) : cloneElement(columnCell)
+            } else return expansion.enabled && column.expander
+                ? Expander(record.id, window.R.utils.getValue.v8(record, column.accessor))
+                : window.R.utils.getValue.v8(record, column.accessor)
         }
 
         return column
