@@ -39,19 +39,6 @@ export default forwardRef(function (props: any) {
         window.R.params.sessionTimeout = sessionTimeout
         window.R.params.defaults = projectDefaults
 
-        /// old app compatibility
-        const { dbClasses } = window.Noodl.getProjectSettings()
-        window.Rolder = {
-            project: window.R.env.project,
-            projectVersion: window.R.env.projectVersion,
-            envVersion: window.R.env.backendVersion,
-            dbVersion: window.R.env.dbName?.split('_v')[1],
-            dbClasses: eval(dbClasses)?.[0],
-            debug: window.R.states.debug,
-            sessionTimeout,
-            defaults: projectDefaults,
-        }
-
         time('Kuzzle init')
         initKuzzle(props.noodlNode).then(() => {
             window.Noodl.Events.emit("backendInited")

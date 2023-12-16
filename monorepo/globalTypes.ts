@@ -8,3 +8,5 @@ declare module "@noodl/noodl-sdk" {
 }
 declare module 'numbro/dist/languages/ru-RU.min.js';
 declare module 'omgopass';
+
+declare type Vesrions = 'v0.1.0'

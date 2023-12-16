@@ -1,4 +1,4 @@
-import { customProps } from "../../../portsFabric/v0.5.0/get"
+import { customProps, propsFunction } from "../../../portsFabric/v0.5.0/get"
 import checkRequired from "./checkRequired"
 import convertAndCheckType from "./convertAndCheckType"
 import setDefaults from "./setDefaults"
@@ -16,6 +16,11 @@ export default function (compVersions: CompVersions, compProps: any) {
         noodlNode.resultProps.customProps = convertAndCheckType(noodlNode, [customProps], 'customProps', rawProps.customProps)
         noodlNode._inputValues.customProps = noodlNode.resultProps.customProps
         setValue(noodlNode, [customProps], 'customProps', noodlNode.resultProps.customProps)
+
+        // set Props function input
+        noodlNode.resultProps.propsFunction = convertAndCheckType(noodlNode, [propsFunction], 'propsFunction', rawProps.propsFunction)
+        noodlNode._inputValues.propsFunction = noodlNode.resultProps.propsFunction
+        setValue(noodlNode, [propsFunction], 'propsFunction', noodlNode.resultProps.propsFunction)
 
         nodeInputs?.map(i => {
             // convert value and ceck type

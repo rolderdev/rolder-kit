@@ -3,13 +3,10 @@
   "private": true,
   "version": "0.6.0",
   "scripts": {
-    "build": "rspack build",
-    "prod": "webpack --mode=production",
-    "patch": "npm version patch && rspack build",
-    "minor": "npm version minor && rspack build"
+    "build": "rspack build"    
   },
   "dependencies": {
-    "kuzzle-sdk": "7.11.1",
+    "kuzzle-sdk": "7.11.2",
     "@tanstack/react-query": "4.36.1",
     "nanostores": "0.9.5",
     "jotai": "2.6.0",

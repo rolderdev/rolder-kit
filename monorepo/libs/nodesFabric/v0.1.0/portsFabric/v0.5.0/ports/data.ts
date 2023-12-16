@@ -46,5 +46,7 @@ export default [
     { name: 'ganttChangedProject', group: 'Data', type: 'object', displayName: 'Changed project' },
     { name: 'ganttDeletedTask', group: 'Data', type: 'object', displayName: 'Deleted task' },
     { name: 'ganttSelectedTask', group: 'Data', type: 'object', displayName: 'Selected task' },
-    { name: 'tableItem', group: 'Data', type: 'object', displayName: 'Table item' },
+    { name: 'cellItem', group: 'Data', type: 'object', displayName: 'Cell item' },
+    { name: 'useScope', group: 'Data', type: 'boolean', displayName: 'Use scope', default: false },
+    { name: 'scope', group: 'Data', type: { name: 'enum', enums: enums.scopes }, displayName: 'Scope', dependsOn: [{ name: 'useScope', value: true }] },
 ] as const satisfies readonly NodePort[]

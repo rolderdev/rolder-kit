@@ -41,6 +41,7 @@ const signals = [
     { name: 'ganttTaskProgressChanged', group: 'Signals', type: 'signal', displayName: 'Task progress changed' },
     { name: 'doubleClicked', group: 'Signals', type: 'signal', displayName: 'Double clicked' },
     { name: 'scroll', group: 'Signals', type: 'signal', displayName: 'Scroll' },
+    { name: 'getItem', group: 'Signals', type: 'signal', displayName: 'Get item' },
 ] as const satisfies readonly NodePort[];
 
 export default signals

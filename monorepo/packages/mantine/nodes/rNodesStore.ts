@@ -2,9 +2,11 @@ import AppNode_f0_1_0 from "./app/fabricVersions/v0.1.0/AppNode";
 import MantineNode_f0_1_0 from "./mantine/fabricVersions/v0.1.0/MantineNode";
 ///// organisms
 import AuthNode_f0_1_0 from "./organisms/auth/fabricVersions/v0.1.0/AuthNode";
+// table
 import TableNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/TableNode";
-import TableRowNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/v2.0.0/tableRow/fabricVersions/v0.1.0/TableRowNode";
-import TableCellNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/v2.0.0/tableCell/fabricVersions/v0.1.0/TableCellNode";
+import ColumnFilterNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/v2.0.0/modules/columnFilter/fabricVersions/v0.1.0/ColumnFilterNode";
+import ColumnCellNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/v2.0.0/modules/columnCell/fabricVersions/v0.1.0/ColumnCellNode";
+import ExpansionRowNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/v2.0.0/modules/expansionRow/fabricVersions/v0.1.0/ExpansionRowNode";
 // appShell
 import AppShellNode_f0_1_0 from "./organisms/appShell/fabricVersions/v0.1.0/AppShellNode";
 import NavbarNode_f0_1_0 from "./organisms/appShell/navbar/fabricVersions/v0.1.0/NavbarNode";
@@ -71,11 +73,13 @@ import TitleNode_f0_1_0 from "./elements/typography/title/fabricVersions/v0.1.0/
 export default [
     MantineNode_f0_1_0, AppNode_f0_1_0,
     ///// organisms
-    AuthNode_f0_1_0, TableNode_f0_1_0, TableRowNode_f0_1_0, TableCellNode_f0_1_0,
-    // AppShell
+    AuthNode_f0_1_0,
+    // table
+    TableNode_f0_1_0, ColumnFilterNode_f0_1_0, ColumnCellNode_f0_1_0, ExpansionRowNode_f0_1_0,
+    // appShell
     AppShellNode_f0_1_0, NavbarNode_f0_1_0, NavbarSectionNode_f0_1_0, HeaderNode_f0_1_0, AsideNode_f0_1_0,
     AsideSectionNode_f0_1_0, FooterNode_f0_1_0,
-    // Tabs
+    // tabs
     TabsNode_f0_1_0, TabNode_f0_1_0,
     // molecules
     BoxNode_f0_1_0, AvatarNode_f0_1_0, FormNode_f0_1_0, DrawerNode_f0_1_0, ModalNode_f0_1_0, StackNode_f0_1_0, FlexNode_f0_1_0,

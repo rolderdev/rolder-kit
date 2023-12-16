@@ -10,7 +10,7 @@ var outputPath = path.resolve(__dirname, `../../../build/${pJson.name}-v${pJson.
 
 module.exports = {
     context: __dirname,
-    watch: true,
+    //watch: true,
     entry: { [pJson.name]: `./${pJson.name}` },
     output: {
         path: outputPath,

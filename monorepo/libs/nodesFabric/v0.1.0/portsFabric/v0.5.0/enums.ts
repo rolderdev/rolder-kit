@@ -131,5 +131,12 @@ export const enums: { [key: string]: NoodlEnum[] } = {
         { value: 'Week', label: 'Неделя' }, { value: 'Month', label: 'Месяц' },
         { value: 'QuarterYear', label: 'Квартал' }, { value: 'Year', label: 'Год' }
     ],
-    scrollBehaviors: [{ value: 'smooth', label: 'Smooth' }, { value: 'instant', label: 'Instant' }, { value: 'auto', label: 'Auto' },]
+    scrollBehaviors: [{ value: 'smooth', label: 'Smooth' }, { value: 'instant', label: 'Instant' }, { value: 'auto', label: 'Auto' },],
+    table2OnRowClicks: [
+        { value: 'disabled', label: 'Disabled' }, { value: 'singleSelection', label: 'Single selection' },
+        { value: 'expansion', label: 'Expansion' }
+    ],
+    table2sortTypes: [{ value: 'frontend', label: 'Frontend' }, { value: 'backend', label: 'Backend' },],
+    table2filterTypes: [{ value: 'frontend', label: 'Frontend' }, { value: 'backend', label: 'Backend' },],
+    scopes: [{ value: 'tableCell', label: 'Table cell' }]
 }
