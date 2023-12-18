@@ -1,7 +1,7 @@
 {
   "name": "rolder-kit",
   "private": true,
-  "version": "0.24.0",
+  "version": "0.25.0",
   "workspaces": [
     "packages/*"
   ],
@@ -13,9 +13,8 @@
     "@rspack/core": "0.4.3",
     "@rspack/cli": "0.4.3",
     "rspack-manifest-plugin": "5.0.0-alpha0",
-    "@types/react": "18.2.43",
-    "@types/react-dom": "18.2.17",
-    "typescript": "5.3.3",
-    "oxlint": "0.0.19"
+    "@types/react": "18.2.45",
+    "@types/react-dom": "18.2.18",
+    "typescript": "5.3.3"    
   }
 }

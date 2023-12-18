@@ -8,6 +8,9 @@ const font = [
     { name: 'fw', group: 'Font', type: { name: 'enum', enums: enums.fontWeights }, displayName: 'Weight', default: '400' },
     { name: 'ta', group: 'Layout', type: { name: 'enum', enums: enums.textAligns }, displayName: 'Align', default: 'left' },
     { name: 'titleOrder', group: 'Font', type: 'number', displayName: 'Order', tooltip: '1 - 6', default: 3 },
+    { name: 'highlight', group: 'Highlight', type: 'array', displayName: 'Highlight' },
+    { name: 'highlightColor', group: 'Highlight', type: 'string', displayName: 'Color' },
+    { name: 'highlightStyles', group: 'Highlight', type: 'array', isObject: true, displayName: 'Styles' },
 ] as const satisfies readonly NodePort[];
 
 export default font

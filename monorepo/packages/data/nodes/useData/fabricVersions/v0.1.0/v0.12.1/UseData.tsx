@@ -40,6 +40,7 @@ function getDataScheme(props: CompProps12) {
 
 export const localDataCache = deepMap<{ [noodleNodeId: string]: RItem[] }>({})
 export const maxPage = deepMap<{ [noodleNodeId: string]: number }>({})
+export const hack = deepMap<{ [noodleNodeId: string]: boolean }>({})
 
 export default forwardRef(function (props: CompProps12, ref) {
   const { noodlNode, dbClass2: dbClass, sorts } = props
@@ -57,27 +58,35 @@ export default forwardRef(function (props: CompProps12, ref) {
 
   useImperativeHandle(ref, () => ({
     nextFetch() {
-      setPage(old => {
-        const newPage = old + 0.5
-        if (Number.isInteger(newPage) && newPage <= maxPage.get()[noodlNode.id]) {
-          let items = []
-          if (dataContextId) items = dataCache.get()[dataContextId]?.[dbClass]
-          else items = localDataCache.get()[noodlNode.id]
-          if (items?.length) {
-            const searchAfter = getSearchAfter(items, sorts)
-            setPagesSearchAfter(old => [...old, { page: newPage, searchAfter }])
+      if (!hack.get()[noodlNode.id]) hack.setKey(noodlNode.id, true)
+      else {
+        setPage(old => {
+          const newPage = old + 1
+          if (newPage <= maxPage.get()[noodlNode.id]) {
+            let items = []
+            if (dataContextId) items = dataCache.get()[dataContextId]?.[dbClass]
+            else items = localDataCache.get()[noodlNode.id]
+            if (items?.length) {
+              const searchAfter = getSearchAfter(items, sorts)
+              setPagesSearchAfter(old => [...old, { page: newPage, searchAfter }])
+            }
           }
-        }
-        return newPage <= maxPage.get()[noodlNode.id] ? newPage : maxPage.get()[noodlNode.id]
-      })
+          return newPage <= maxPage.get()[noodlNode.id] ? newPage : maxPage.get()[noodlNode.id]
+        })
+        hack.setKey(noodlNode.id, false)
+      }
     },
     previousFetch() {
-      setPage(old => {
-        const newPage = old - 0.5
-        return newPage > 0 ? newPage : 1
-      })
+      if (!hack.get()[noodlNode.id]) hack.setKey(noodlNode.id, true)
+      else {
+        setPage(old => {
+          const newPage = old - 1
+          return newPage > 0 ? newPage : 1
+        })
+        hack.setKey(noodlNode.id, false)
+      }
     }
-  }), [])
+  }), [hack, page, setPage, dataContextId, setPagesSearchAfter, noodlNode, getSearchAfter])
 
   return <Query {...{ noodlNode, dataContextId, dataScheme: getDataScheme(props), page, pagesSearchAfter }} />
 })

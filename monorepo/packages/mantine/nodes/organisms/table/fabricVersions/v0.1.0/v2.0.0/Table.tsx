@@ -130,6 +130,7 @@ export default forwardRef(function (props: TableCompProps200, ref) {
                 { [classes.multiSelected]: rowStyles.enabled && selection.multi.enabled && selectedRecords?.map(i => i.id).includes(id) },
                 { [classes.singleSelected]: rowStyles.enabled && selection.single.enabled && selectedRecord?.id === id },
             ))}
+            sx={expansion.enabled && !rowStyles.rowBorders && { '&&': { 'tbody tr td': { borderTop: 'none' } } }}
             // States
             fetching={fetching}
             {...libProps}

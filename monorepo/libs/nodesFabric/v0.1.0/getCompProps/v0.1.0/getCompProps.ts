@@ -1,4 +1,4 @@
-export default function (props: any, other: any) {
+export default function (props: any, other?: any) {
     const propsFunction: Object = props.propsFunction
     try {
         return propsFunction && Object.values(propsFunction)?.[0](props, other) || props

@@ -40,8 +40,8 @@ const compVersions: CompVersions = {
             ['items', 'fetched', 'fetching', 'fetchedPage', 'fetchedItemsCount', 'totalItemsCount', 'aggregations']
         ),
         signals: getPorts('input', ['nextFetch', 'previousFetch'])
-    },    
-    'v0.12.1': {        
+    },
+    'v0.12.1': {
         Comp: v0_12_1,
         inputs: getPorts(
             'input',
@@ -55,7 +55,7 @@ const compVersions: CompVersions = {
             ['items', 'fetched', 'fetching', 'fetchedPage', 'fetchedItemsCount', 'totalItemsCount', 'aggregations']
         ),
         signals: getPorts('input', ['nextFetch', 'previousFetch'])
-    },
+    }
 }
 
 //===================================================================

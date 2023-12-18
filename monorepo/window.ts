@@ -47,6 +47,7 @@ import getValue8 from './packages/utils/getValue/8/getValue';
 import getFormatedDate2 from './packages/utils/getFormatedDate/2/getFormatedDate';
 import getMasked2 from './packages/utils/getMasked/2/getMasked';
 import filterBy from './packages/utils/filterBy/3/filterBy';
+import convertColor from './packages/mantine/utils/convertColor/v0.2.0/convertColor';
 
 declare type DbClass = {
     version: number
@@ -143,9 +144,12 @@ declare type RolderType = {
         }
         getMasked: {
             v2: typeof getMasked2
-        },
+        }
         filterBy: {
             v3: typeof filterBy
+        }
+        convertColor: {
+            v2: typeof convertColor
         }
     },
     items: { [itemId: string]: RItem },

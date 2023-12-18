@@ -14,7 +14,7 @@ export default function (props:
     const { noodlNode, dataContextId, dataScheme, page, pagesSearchAfter } = props
     const { dbClass, size } = dataScheme
 
-    subscribe({ ...dataScheme, searchAfter: pagesSearchAfter.find(i => i.page === page)?.searchAfter  })
+    subscribe({ ...dataScheme, searchAfter: pagesSearchAfter.find(i => i.page === page)?.searchAfter })
     const { data, isFetching, isFetched } = useQuery({
         queryKey: [{ ...dataScheme, searchAfter: pagesSearchAfter.find(i => i.page === page)?.searchAfter }],
         queryFn: fetch
