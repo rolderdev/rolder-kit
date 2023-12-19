@@ -42,7 +42,7 @@ export default [
     { name: 'table2FilterValue', group: 'Filter', type: '*', displayName: 'Filter value' },
     { name: 'table2SetFilterValue', group: 'Filter', type: 'signal', displayName: 'Set filter value' },
     { name: 'table2Filter', group: 'Filter', type: 'signal', displayName: 'Filter' },
-    { name: 'table2ResetFilters', group: 'Filter', type: 'signal', displayName: 'Reset filters' },
+    { name: 'table2ResetFilters', group: 'Filter', type: 'signal', displayName: 'Reset filters', dependsOn: [{ name: 'table2FilterEnabled', value: true }] },
     // Expansion    
     { name: 'table2ExpandedItems', group: 'Expansion', type: 'array', displayName: 'Expanded items', dependsOn: [{ name: 'table2Expansion', value: true }] },
     { name: 'table2AllowMultiple', group: 'Expansion', type: 'boolean', displayName: 'Allow multiple', dependsOn: [{ name: 'table2Expansion', value: true }] },
@@ -53,9 +53,9 @@ export default [
     { name: 'table2NoHeader', group: 'Layout', type: 'boolean', displayName: 'No header', default: false, dependsOn: [{ name: 'table2Layout', value: true }] },
     // Dimensions
     { name: 'table2Width', group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Width', dependsOn: [{ name: 'table2Dimensions', value: true }] },
-    { name: 'table2MinHeight', group: 'Dimensions', type: { name: 'number', units: heightUnits, defaultUnit: 'px' }, default: 126, displayName: 'Min height', dependsOn: [{ name: 'table2Dimensions', value: true }] },
+    { name: 'table2MinHeight', group: 'Dimensions', type: { name: 'number', units: heightUnits, defaultUnit: 'px' }, default: 84, displayName: 'Min height', dependsOn: [{ name: 'table2Dimensions', value: true }] },
     { name: 'table2DynamicHeight', group: 'Dimensions', type: 'boolean', displayName: 'Dynamic height', default: false, dependsOn: [{ name: 'table2Dimensions', value: true }] },
-    { name: 'table2MaxHeight', group: 'Dimensions', type: { name: 'number', units: heightUnits, defaultUnit: 'rem' }, displayName: 'Max height', dependsOn: [{ name: 'table2DynamicHeight', value: false }, { name: 'table2Dimensions', value: true }] },
+    { name: 'table2Height', group: 'Dimensions', type: { name: 'number', units: heightUnits, defaultUnit: 'rem' }, displayName: 'Height', dependsOn: [{ name: 'table2DynamicHeight', value: false }, { name: 'table2Dimensions', value: true }] },
     { name: 'table2ViewportBOffset', group: 'Dimensions', type: 'number', displayName: 'Viewport bottom offset', default: 0, dependsOn: [{ name: 'table2DynamicHeight', value: true }, { name: 'table2Dimensions', value: true }] },
     { name: 'table2HorizontalSpacing', group: 'Dimensions', type: { name: 'enum', enums: enums.sizes }, displayName: 'Horizontal spacing', default: 'sm', dependsOn: [{ name: 'table2Dimensions', value: true }] },
     { name: 'table2VerticalSpacing', group: 'Dimensions', type: { name: 'enum', enums: enums.sizes }, displayName: 'Vertical spacing', default: 'xs', dependsOn: [{ name: 'table2Dimensions', value: true }] },

@@ -6,5 +6,6 @@ export type ColumnDef200 = DataTableColumn<RItem> & {
         func?(items: RItem[], direction: 'asc' | 'desc'): RItem[]
     }
     filterFunc?(items: RItem[], value: any): RItem[]
-    expander: boolean
+    expander?: boolean
+    cellProps?: any    
 }

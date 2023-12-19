@@ -3,7 +3,7 @@ import { ColumnDef200 } from "../types/Column";
 import { deepMap } from "nanostores";
 import { Dispatch, cloneElement } from "react";
 import { filterFuncs, filterStates } from "./getRecords";
-import { ActionIcon, Group } from "@mantine/core";
+import { ActionIcon, Box, Group } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 import useRowStyles from "../hooks/useRowStyles";
 
@@ -37,11 +37,11 @@ export default function (
             className={cx(classes.expandIcon, {
                 [classes.expandIconRotated]: expandedRecordIds.includes(recordId),
             })}
-            {...customProps.expander.chevronIcon}
+            {...customProps?.expander?.chevronIcon}
         />
     }
     function Expander(recordId: string, cellChild: any) {
-        return <Group spacing="xs">
+        return <Group spacing="xs" noWrap={true}>
             {onRowClick === 'expansion'
                 ? Chevron(recordId)
                 : <ActionIcon
@@ -55,11 +55,10 @@ export default function (
                             } else return old.includes(recordId) ? [] : [recordId]
                         })
                     }}
-                    {...customProps.expander.actionIcon}
+                    {...customProps?.expander?.actionIcon}
                 >
                     {Chevron(recordId)}
                 </ActionIcon>}
-
             {cellChild}
         </Group>
     }
@@ -104,10 +103,12 @@ export default function (
             const columnCell = columnCells?.find(i => i.props.noodlNode.props.table2ColumnIndex === columnIdx)
             if (columnCell) {
                 columnCell.props.noodlNode.resultProps.record = record
-                return expansion.enabled && column.expander ? Expander(record.id, cloneElement(columnCell)) : cloneElement(columnCell)
+                return expansion.enabled && column.expander
+                    ? <Box {...column.cellProps}>{Expander(record.id, cloneElement(columnCell))}</Box>
+                    : <Box {...column.cellProps}>{cloneElement(columnCell)}</Box>
             } else return expansion.enabled && column.expander
-                ? Expander(record.id, window.R.utils.getValue.v8(record, column.accessor))
-                : window.R.utils.getValue.v8(record, column.accessor)
+                ? <Box {...column.cellProps}>{Expander(record.id, window.R.utils.getValue.v8(record, column.accessor))}</Box>
+                : <Box {...column.cellProps}>{window.R.utils.getValue.v8(record, column.accessor)}</Box>
         }
 
         return column
