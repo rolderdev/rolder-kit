@@ -3,6 +3,7 @@ import { DatesProvider } from "@mantine/dates"
 import { Notifications } from "@mantine/notifications"
 import { forwardRef } from "react"
 import { useColorScheme, } from "@mantine/hooks"
+import 'dayjs/locale/ru'
 
 export default forwardRef(function (props: any) {
     const { notificationsPosition, detectColorScheme, colorScheme: cs } = props

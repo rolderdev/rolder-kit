@@ -29,7 +29,7 @@ export default function (
             ? [children]
             : []
 
-    // Expander
+    // Expander    
     const { classes, cx } = useRowStyles(rowStyles)
     function Chevron(recordId: string) {
         return <IconChevronRight
@@ -97,8 +97,8 @@ export default function (
                 column.filtering = filterStates.get()[noodlNode.id]?.[columnIdx]
             }
         }
-
-        if (!column.render) column.render = (record) => {
+        const customRender = column.render
+        column.render = (record, idx) => {
             // ColumnCell
             const columnCell = columnCells?.find(i => i.props.noodlNode.props.table2ColumnIndex === columnIdx)
             if (columnCell) {
@@ -107,8 +107,12 @@ export default function (
                     ? <Box {...column.boxProps}>{Expander(record.id, cloneElement(columnCell))}</Box>
                     : <Box {...column.boxProps}>{cloneElement(columnCell)}</Box>
             } else return expansion.enabled && column.expander
-                ? <Box {...column.boxProps}>{Expander(record.id, window.R.utils.getValue.v8(record, column.accessor))}</Box>
-                : <Box {...column.boxProps}>{window.R.utils.getValue.v8(record, column.accessor)}</Box>
+                ? <Box {...column.boxProps}>{Expander(record.id, customRender
+                    ? customRender(record, idx)
+                    : window.R.utils.getValue.v8(record, column.accessor))}</Box>
+                : <Box {...column.boxProps}>{customRender
+                    ? customRender(record, idx)
+                    : window.R.utils.getValue.v8(record, column.accessor)}</Box>
         }
 
         return column

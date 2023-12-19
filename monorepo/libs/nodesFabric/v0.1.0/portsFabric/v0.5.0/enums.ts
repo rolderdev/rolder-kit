@@ -75,7 +75,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     qrCodeLevels: [
         { value: 'L', label: 'Lowest' }, { value: 'M', label: 'Medium' }, { value: 'Q', label: 'Quality' }, { value: 'H', label: 'Highest' }
     ],
-    datePickerTypes: [{ value: 'default', label: 'Default' }, { value: 'range', label: 'Range' },],
+    datePickerTypes: [{ value: 'default', label: 'Default' }, { value: 'range', label: 'Range' }, { value: 'multiple', label: 'Multiple' },],
     dropdownTypes: [{ value: 'popover', label: 'Popover' }, { value: 'modal', label: 'Modal' },],
     labelPositions: [{ value: 'right', label: 'Right' }, { value: 'left', label: 'Left' },],
     dividerVariants: [{ value: 'solid', label: 'Solid' }, { value: 'dashed', label: 'Dashed' }, { value: 'dotted', label: 'Dotted' }],

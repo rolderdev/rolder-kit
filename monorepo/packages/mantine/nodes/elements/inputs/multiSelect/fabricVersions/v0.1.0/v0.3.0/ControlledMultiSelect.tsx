@@ -29,6 +29,7 @@ export default forwardRef(function (props: any, ref) {
         resetSelected() {
             setValue([])
             sendOutput(noodlNode, 'selectedItems', [])
+            setTimeout(() => sendSignal(noodlNode, 'reseted'))
         }
     }), [])
     useEffect(() => { return () => { sendSignal(noodlNode, 'closed') } }, [])
@@ -40,17 +41,17 @@ export default forwardRef(function (props: any, ref) {
             setValue(v)
             if (!v) {
                 sendOutput(noodlNode, 'selectedItems', [])
-                setTimeout(() => sendSignal(noodlNode, 'selected'))
+                setTimeout(() => sendSignal(noodlNode, 'reseted'))
             } else {
                 const selectedItems = props.inputItems.filter((i: any) => v.includes(i.value) || v.includes(i.id) || v.includes(i.label))
                 sendOutput(noodlNode, 'selectedItems', selectedItems)
-                setTimeout(() => sendSignal(noodlNode, 'selected'))
+                setTimeout(() => sendSignal(noodlNode, 'selected'))                
             }
         }}
         getCreateLabel={(value) => `+ Создать "${value}"`}
         onCreate={(value) => {
-            sendOutput(props.noodlNode, 'createValue', value)
-            sendSignal(props.noodlNode, 'createValueSubmited')
+            sendOutput(noodlNode, 'createValue', value)            
+            setTimeout(() => sendSignal(noodlNode, 'createValueSubmited'))
         }}
         icon={Icon && <Icon size={props.iconSize} stroke={props.stroke} />}
         error={props.inputError || false}

@@ -128,7 +128,7 @@ export default forwardRef(function (props: TableCompProps200, ref) {
                 { [classes.row]: rowStyles.enabled },
                 { [classes.striped]: rowStyles.enabled && rowStyles.striped },
                 { [classes.multiSelected]: rowStyles.enabled && selection.multi.enabled && selectedRecords?.map(i => i.id).includes(id) },
-                { [classes.singleSelected]: rowStyles.enabled && selection.single.enabled && selectedRecord?.id === id },
+                { [classes.singleSelected]: rowStyles.enabled && selection.single.enabled && selectedRecord?.id === id }
             ))}
             sx={expansion.enabled && !rowStyles.rowBorders && { '&&': { 'tbody tr td': { borderTop: 'none' } } }}
             // States
