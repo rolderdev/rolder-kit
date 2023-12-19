@@ -9,7 +9,7 @@ node_modules
 **/recycle
 .nova
 *.ffs_db
-**/build
+build
 
 # Editor directories and files
 .vscode/*
