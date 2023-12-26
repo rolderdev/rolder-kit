@@ -19,8 +19,7 @@ const compVersions: CompVersions = {
             ['detectColorScheme', 'colorScheme', 'notificationsPosition', 'connectKuzzle', 'appLoaderSize', 'loaderColor'])],
         outputs: [...getPorts('output', ['userRole'])]
     },
-    'v1.3.0': {
-        hashTag: 'experimental',
+    'v1.3.0': {        
         Comp: v1_3_0,
         inputs: [...getPorts('input', ['appLoaderColor', 'projectDefaults'])],
     },

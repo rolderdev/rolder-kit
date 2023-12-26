@@ -6,32 +6,35 @@ import { Dropzone } from '@mantine/dropzone'; //
 import { log } from "../../../../../../../../../utils/debug/log/v0.2.0/log";
 
 export default forwardRef(function (props: any) {
-  const AcceptIcon      = icons(props.acceptIconName)
-  const RejectIcon      = icons(props.rejectIconName)
-  const IdleIcon        = icons(props.idleIconName)
-  const dropZoneTitle   = props.dropZoneTitle
+  const AcceptIcon = icons(props.acceptIconName)
+  const RejectIcon = icons(props.rejectIconName)
+  const IdleIcon = icons(props.idleIconName)
+  const dropZoneTitle = props.dropZoneTitle
 
-  function handleFileType(acceptedType: '*'|'pdf'|'excel'|'image'): string|{[key:string]:string[]} {
+  function handleFileType(acceptedType: '*' | 'pdf' | 'excel' | 'image'): string | { [key: string]: string[] } {
     if (acceptedType === 'pdf') {
-      return {'application/pdf': ['.pdf']}
+      return { 'application/pdf': ['.pdf'] }
     }
     else if (acceptedType === 'excel') {
       return {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
-        'application/vnd.ms-excel' : ['.xls'],
+        'application/vnd.ms-excel': ['.xls'],
         'application/vnd.oasis.opendocument.spreadsheet': ['.ods']
       }
     }
     else if (acceptedType === 'image') {
-      return {'image/*': []}
+      return {
+        'image/*': [],
+        'application/pdf': ['.pdf']
+      }
     }
     else {
       return '*'
     }
   }
 
-  return (    
-    <Dropzone       
+  return (
+    <Dropzone
       onDrop={(files) => {                                        // Принятие файла
         sendOutput(props.noodlNode, 'file', files[0])
         sendOutput(props.noodlNode, 'fileName', files[0].name)
@@ -48,13 +51,13 @@ export default forwardRef(function (props: any) {
       {...props.customProps}
     >
       <Group position="center" align="center" spacing="xl" style={{ minHeight: '180px', pointerEvents: 'none' }}> {/* style={{ minHeight: rem(220), pointerEvents: 'none' }} */}
-        
+
         {/* Нейтральное состояние */}
         <Dropzone.Idle>
           <Stack align="center" justify="center">
             <IdleIcon size={props.iconSize} stroke={props.stroke} />
             <Text size="md" color="dimmed" inline>
-                {dropZoneTitle}
+              {dropZoneTitle}
             </Text>
           </Stack>
         </Dropzone.Idle>
@@ -64,7 +67,7 @@ export default forwardRef(function (props: any) {
           <Stack align="center" justify="center">
             <AcceptIcon size={props.iconSize} stroke={props.stroke} />
             <Text size="md" color="dimmed" inline>
-                {dropZoneTitle}
+              {dropZoneTitle}
             </Text>
           </Stack>
         </Dropzone.Accept>
@@ -74,13 +77,13 @@ export default forwardRef(function (props: any) {
           <Stack align="center" justify="center">
             <RejectIcon size={props.iconSize} stroke={props.stroke} />
             <Text size="md" color="dimmed" inline>
-                {dropZoneTitle}
+              {dropZoneTitle}
             </Text>
-          </Stack>          
+          </Stack>
         </Dropzone.Reject>
 
       </Group>
-    </Dropzone>    
+    </Dropzone>
   );
 })
 

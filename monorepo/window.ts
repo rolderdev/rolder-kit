@@ -1,6 +1,16 @@
 //// libs
 import { Kuzzle, WebSocket } from 'kuzzle-sdk'
 const kuzzle = new Kuzzle(new WebSocket(`rolder.app`, { port: 443 }))
+import { QueryClient } from "@tanstack/react-query"
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: Infinity,
+            refetchOnWindowFocus: "always",
+            refetchOnMount: "always",
+        },
+    },
+})
 import dayjs from 'dayjs'
 import cookies from 'js-cookie';
 import numbro from 'numbro';
@@ -79,6 +89,7 @@ declare type RolderType = {
     }
     libs: {
         Kuzzle: typeof kuzzle
+        queryClient: typeof queryClient
         dayjs: typeof dayjs
         cookies: typeof cookies
         numbro: typeof numbro
@@ -86,6 +97,7 @@ declare type RolderType = {
         sort: typeof sort
         generatePassword: typeof generatePassword
         ms: typeof ms
+        deepEqual: typeof deepEqual        
         plot: {
             plot: typeof plot
             ruleY: typeof ruleY
@@ -101,7 +113,6 @@ declare type RolderType = {
             hasLength: typeof hasLength
             matchesField: typeof matchesField
         }
-        deepEqual: typeof deepEqual
         just: {
             clone: typeof clone
             map: typeof map

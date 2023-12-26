@@ -1,6 +1,5 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { Suspense, forwardRef, lazy, useEffect, useImperativeHandle, useState } from 'react';
 import { TableCompProps200 } from './types/TableCompProps';
-import { DataTable } from './lib';
 import { Box } from '@mantine/core';
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import getRecords, { filterStates, filterValues, records } from './funcs/getRecords';
@@ -14,6 +13,8 @@ import useRowStyles from './hooks/useRowStyles';
 import getColumns from './funcs/getColumns';
 import { sendOutput, sendSignal } from '../../../../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/send';
 
+const DataTable = lazy(() => import("./lib/DataTable"))
+
 export default forwardRef(function (props: TableCompProps200, ref) {
     const {
         noodlNode, columnsDef, children, customProps, items, selection, sort, filter, expansion, libProps, dimensions, tableStyles,
@@ -24,7 +25,7 @@ export default forwardRef(function (props: TableCompProps200, ref) {
     useEffect(() => {
         records.setKey(noodlNode.id, items)
         // ColumnCell repeter render hack
-        setTimeout(() => { forceUpdate(); setTimeout(() => forceUpdate(),100) })
+        setTimeout(() => { forceUpdate(); setTimeout(() => forceUpdate(), 100) })
     }, [items])
 
     // Single selection
@@ -82,59 +83,61 @@ export default forwardRef(function (props: TableCompProps200, ref) {
     const { classes, cx } = useRowStyles(rowStyles)
 
     return <Box w={dimensions.width}>
-        <DataTable<RItem>
-            // Params    
-            columns={getColumns(
-                noodlNode, columnsDef, sort, filter, children, setFilterValue, setFilterState, forceUpdate,
-                rowStyles, expansion, expandedRecordIds, setExpandedRecordIds, onRowClick, customProps
-            )}
-            // Data                
-            records={getRecords(noodlNode.id, items, libProps.fetching, sortStatus)}
-            onRowClick={
-                // Single selection
-                selection.single.enabled && onRowClick === 'singleSelection'
-                    ? (item) => {
-                        if (selectedRecord?.id === item.id && selection.single.unselectable) setSelectedRecord(undefined)
-                        else setSelectedRecord(item)
-                    }
-                    : undefined
-            }
-            // Multi selection
-            selectedRecords={selection.multi.enabled ? selectedRecords : undefined}
-            onSelectedRecordsChange={setSelectedRecords}
-            // Sort
-            sortStatus={sortStatus}
-            onSortStatusChange={setSortStatus}
-            sortIcons={{
-                sorted: SortedIcon && <SortedIcon size={14} {...customProps?.sortedIcon} />,
-                unsorted: UnsortedIcon && <UnsortedIcon size={14} {...customProps?.unsortedIcon} />,
-            }}
-            // Expansion
-            rowExpansion={
-                expansion.enabled && {
-                    allowMultiple: expansion.allowMultiple,
-                    trigger: onRowClick === 'expansion' ? 'click' : 'never',
-                    expanded: { recordIds: expandedRecordIds, onRecordIdsChange: setExpandedRecordIds },
-                    content: ({ record }) => {
-                        if (expansionRow) expansionRow.props.noodlNode.resultProps.record = record
-                        return expansionRow
-                    },
-                    collapseProps: { transitionDuration: 50, ...customProps?.collapseProps },
+        <Suspense fallback={null}>
+            <DataTable
+                // Params    
+                columns={getColumns(
+                    noodlNode, columnsDef, sort, filter, children, setFilterValue, setFilterState, forceUpdate,
+                    rowStyles, expansion, expandedRecordIds, setExpandedRecordIds, onRowClick, customProps
+                )}
+                // Data                
+                records={getRecords(noodlNode.id, items, libProps.fetching, sortStatus)}
+                onRowClick={
+                    // Single selection
+                    selection.single.enabled && onRowClick === 'singleSelection'
+                        ? (item: RItem) => {
+                            if (selectedRecord?.id === item.id && selection.single.unselectable) setSelectedRecord(undefined)
+                            else setSelectedRecord(item)
+                        }
+                        : undefined
+                }
+                // Multi selection
+                selectedRecords={selection.multi.enabled ? selectedRecords : undefined}
+                onSelectedRecordsChange={setSelectedRecords}
+                // Sort
+                sortStatus={sortStatus}
+                onSortStatusChange={setSortStatus}
+                sortIcons={{
+                    sorted: SortedIcon && <SortedIcon size={14} {...customProps?.sortedIcon} />,
+                    unsorted: UnsortedIcon && <UnsortedIcon size={14} {...customProps?.unsortedIcon} />,
                 }}
-            // Table styles
-            bodyRef={tableStyles.animation ? bodyRef : undefined}
-            // Row styles
-            rowClassName={({ id }) => (cx(
-                { [classes.row]: rowStyles.enabled },
-                { [classes.striped]: rowStyles.enabled && rowStyles.striped },
-                { [classes.multiSelected]: rowStyles.enabled && selection.multi.enabled && selectedRecords?.map(i => i.id).includes(id) },
-                { [classes.singleSelected]: rowStyles.enabled && selection.single.enabled && selectedRecord?.id === id }
-            ))}
-            sx={expansion.enabled && !rowStyles.rowBorders && { '&&': { 'tbody tr td': { borderTop: 'none' } } }}
-            // States
-            fetching={fetching}
-            {...libProps}
-            {...customProps}
-        />
+                // Expansion
+                rowExpansion={
+                    expansion.enabled && {
+                        allowMultiple: expansion.allowMultiple,
+                        trigger: onRowClick === 'expansion' ? 'click' : 'never',
+                        expanded: { recordIds: expandedRecordIds, onRecordIdsChange: setExpandedRecordIds },
+                        content: ({ record }) => {
+                            if (expansionRow) expansionRow.props.noodlNode.resultProps.record = record
+                            return expansionRow
+                        },
+                        collapseProps: { transitionDuration: 50, ...customProps?.collapseProps },
+                    }}
+                // Table styles
+                bodyRef={tableStyles.animation ? bodyRef : undefined}
+                // Row styles
+                rowClassName={({ id }) => (cx(
+                    { [classes.row]: rowStyles.enabled },
+                    { [classes.striped]: rowStyles.enabled && rowStyles.striped },
+                    { [classes.multiSelected]: rowStyles.enabled && selection.multi.enabled && selectedRecords?.map(i => i.id).includes(id) },
+                    { [classes.singleSelected]: rowStyles.enabled && selection.single.enabled && selectedRecord?.id === id }
+                ))}
+                sx={expansion.enabled && !rowStyles.rowBorders && { '&&': { 'tbody tr td': { borderTop: 'none' } } }}
+                // States
+                fetching={fetching}
+                {...libProps}
+                {...customProps}
+            />
+        </Suspense>
     </Box>
 })

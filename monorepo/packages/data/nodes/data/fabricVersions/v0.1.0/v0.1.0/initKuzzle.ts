@@ -11,8 +11,6 @@ export default async function (noodlNode: NoodlNode) {
         new WebSocket(`${project}.kuzzle.${backendVersion}.rolder.app`, { port: 443 })
     )
     window.R.libs.Kuzzle = kuzzle
-    // old
-    window.Kuzzle = window.R.libs.Kuzzle
 
     await kuzzle.connect()
     const jwtValid = await validateJwt()
