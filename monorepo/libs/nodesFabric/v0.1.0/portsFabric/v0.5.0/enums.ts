@@ -104,7 +104,7 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     ],
     dataSources: [{ value: 'item', label: 'Item' }, { value: 'value', label: 'Value' }],
     flexJustifies: [{ value: 'flex-start', label: 'Flex-start' }, { value: 'center', label: 'Center' },
-    { value: 'flex-end', label: 'Flex-end' }],
+    { value: 'flex-end', label: 'Flex-end' }, { value: 'space-between', label: 'Space between' }],
     flexAligns: [{ value: 'flex-start', label: 'Flex-start' }, { value: 'center', label: 'Center' }, { value: 'flex-end', label: 'Flex-end' }],
     flexDirections: [{ value: 'row', label: 'Row' }, { value: 'column', label: 'Column' },
     { value: 'row-reverse', label: 'Row-reverse' }, { value: 'column-reverse', label: 'Column-reverse' }],

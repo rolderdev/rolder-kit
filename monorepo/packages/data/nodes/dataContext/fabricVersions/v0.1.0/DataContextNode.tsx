@@ -6,8 +6,7 @@ import v0_1_0 from './v0.1.0/DataContext'
 //===================================================================
 
 const compVersions: CompVersions = {
-    'v0.1.0': {
-        hashTag: 'experimental',
+    'v0.1.0': {        
         Comp: v0_1_0,
         inputs: getPorts('input', []),
         outputs: getPorts('output', ['fetched', 'fetching']),

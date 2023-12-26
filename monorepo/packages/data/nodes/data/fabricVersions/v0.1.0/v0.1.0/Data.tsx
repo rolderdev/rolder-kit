@@ -19,8 +19,11 @@ const queryClient = new QueryClient({
 // refetch on window visible if jwtValid, but dont trigger onFocus (does't work on mobile and too often)
 focusManager.setEventListener((handleFocus: any) => {
     if (typeof window !== 'undefined' && window.addEventListener) {
-        window.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === "visible" && jwtValidState.get()) handleFocus()
+        window.addEventListener('visibilitychange', async () => {
+            if (document.visibilityState === "visible" && jwtValidState.get()) {
+                await validateJwt()
+                handleFocus()
+            }
         }, false)
     }
     return () => {
@@ -30,6 +33,8 @@ focusManager.setEventListener((handleFocus: any) => {
 
 export default forwardRef(function (props: any) {
     const [backendInited, setBackendInited] = useState(false)
+
+    window.R.libs.queryClient = queryClient
 
     useEffect(() => {
         const { backendVersion, dbName, sessionTimeout, projectDefaults } = props
@@ -50,9 +55,7 @@ export default forwardRef(function (props: any) {
 
     // jwt check    
     const validateJwtInteval = useInterval(() => {
-        validateJwt().then((jwtValid) => {
-            if (!jwtValid) sendOutput(props.noodlNode, 'userRole', 'notAuthenticated')
-        })
+        validateJwt().then((jwtValid) => { if (!jwtValid) sendOutput(props.noodlNode, 'userRole', 'notAuthenticated') })
     }, 360000)
     useEffect(() => {
         validateJwtInteval.start();

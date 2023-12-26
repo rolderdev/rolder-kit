@@ -108,7 +108,7 @@ export const getJsNode = (nodeName: string, jsVersions: JsVersions, color: NodeC
             this.warnings = { count: 0, required: {}, types: {} }
             this.outputPropValues = {}
             this.addDeleteListener(() => {
-                const onDelete = jsVersions[this._inputValues?.version].onDelete
+                const onDelete = jsVersions[this._inputValues?.version]?.onDelete
                 if (onDelete) onDelete(this)
             })
         },

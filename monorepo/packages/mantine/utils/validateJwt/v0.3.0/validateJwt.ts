@@ -9,7 +9,7 @@ export default async function validateJwt() {
 
     async function checkToken(userSession?: UserSession) {
         await Kuzzle.connect()
-        return await Kuzzle.auth.checkToken(userSession?.jwt).then((r: any) => {
+        return await Kuzzle.auth.checkToken(userSession?.jwt).then(r => {            
             if (r.valid) {
                 jwtValidState.set(true)
                 Kuzzle.jwt = userSession?.jwt
@@ -33,8 +33,8 @@ export default async function validateJwt() {
         const userSession: UserSession | undefined = cookie && JSON.parse(cookie)
         const jwtExpireDiff: number = dayjs(userSession?.jwtExpiresAt).diff(dayjs())
         if (Kuzzle.authenticated) {
-            if (userSession?.jwt && jwtExpireDiff > 10000) return checkToken(userSession)
-        } else if (userSession?.jwt && jwtExpireDiff > 10000) return checkToken(userSession)
+            if (userSession?.jwt && jwtExpireDiff > 10000) return await checkToken(userSession)
+        } else if (userSession?.jwt && jwtExpireDiff > 10000) return await checkToken(userSession)
         else return false
     }
 }
