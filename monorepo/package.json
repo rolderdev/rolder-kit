@@ -10,8 +10,8 @@
   },
   "devDependencies": {
     "react": "18.2.0",
-    "@rspack/core": "0.4.4",
-    "@rspack/cli": "0.4.4",
+    "@rspack/core": "0.4.5",
+    "@rspack/cli": "0.4.5",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.18",

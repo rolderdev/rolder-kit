@@ -1,5 +1,156 @@
 # Changelog
 
+## 2023-12-31 v0.27.0
+
+### Новый пакеты
+
+#### pdf v0.1.0
+
+* Состоит из набора нод для создания PDF и одной ноды для отображения.
+
+#### qr-code v0.1.0
+
+* Сейчас с одной нодой для получения QR, готового для вставки в Image.
+
+### Новые ноды
+
+#### PdfViewer v0.1.0
+
+* Отображает одну страницу PDF за раз.
+* На вход можно подать Blob или URL.
+* Выдает количество странниц и текущую страницу.
+* На вход можно подавать номер страниц, тем самым управляя навигацией по PDF.
+* Задается ширина или высота. Если задать ширину, высота игнорируется.
+
+#### PdfDocument v0.1.0
+
+* Нода родитель для создания PDF-документа.
+* [Настройки](https://react-pdf.org/components) задются через Custom props.
+* Дочерней нодой может быть только PdfPage.
+* Создание PDF запускается сигналом create. Создание выведено в сигнал, т.к. рендеринг PDF тяжелая опреация и нужно контролировать ее.
+* На выходе выдает статус, сигнал завершения и blob, который можно подать в PdfViewer или сохранить с помощью saveAs.
+* Процесс создания PDF большого объема нагружает проц пользователя, что блокирует интерфейс. Первый опыт показал - лучше не пытаться генерировать PDF больше 100 страниц.
+
+#### PdfPage v0.1.0
+
+* Страница PDF. Можно сказать, что это логическая странница, т.к. с дефолтными настройками библиотека сама разрезает содеражание на страницы.
+* [Настройки](https://react-pdf.org/components) задются через Custom props.
+* [Стили](https://react-pdf.org/styling) задаются в настройке Page styles.
+* Дочерними нодами могут быть PdfView, PdfText или PdfImage. Можно использовать Repeater.
+
+#### PdfView v0.1.0
+
+* Эта нода организует пространство на стрнице. По сути это div. Макет организуется через классический CSS или FlexBox, смотри стили и пример в Клининге.
+* [Настройки](https://react-pdf.org/components) задются через Custom props.
+* [Стили](https://react-pdf.org/styling) задаются в настройке View styles.
+* Дочерними нодами могут быть PdfView, PdfText или PdfImage. Можно использовать Repeater, но не проверено.
+
+#### PdfText v0.1.0
+
+* Текст. Сейчас используется один шрифт - Roboto.
+* Text content - параметр для передачи текста.
+* [Настройки](https://react-pdf.org/components) задются через Custom props.
+* [Стили](https://react-pdf.org/styling) задаются в настройке Text styles.
+
+#### PdfImage v0.1.0
+
+* Картинка. Source работает как у обычного Image.
+* [Настройки](https://react-pdf.org/components) задются через Custom props.
+* [Стили](https://react-pdf.org/styling) задаются в настройке Image styles.
+
+#### saveAs v0.1.0
+
+* Преобразует Blob в File и передает его браузеру для сохранения.
+
+#### List v0.1.0
+
+* Отображает список с номерацией или "пулями".
+* Можно заменять "пули" иконкой.
+* Можно вкладывать один список в другой.
+* Все параметры из [библиотеки](https://v6.mantine.dev/core/list/) реализованы.
+* Поддерживает Prop function.
+* Можно подать иконку для всего списка в параметрах. Можно указать для каждого элемента в схеме, эта иконка перезапишет иконку в параметрах.
+* В схему можно подавать customProps.
+* Пример схемы:
+
+```js
+[
+  {
+    string: 'First string',
+    icon: {
+      name: 'IconHome',
+      type: 'themeIcon',
+      themeIconProps: {
+        size: 'sm',
+        color: 'red',
+        radius: 'md'
+      },
+      iconPprops: {
+        size: '1rem',
+      }
+    }
+  },
+  {
+    string: 'Second string',
+    icon: {
+      name: 'IconUser',      
+      iconPprops: {
+        size: '1rem',
+      }
+    },
+    customProps: {sx: {backgroundColor: '#555'}}
+  }
+]
+```
+
+* Тип данных схемы:
+
+```ts
+listScheme?: {
+    string?: string    
+    icon?: {
+        type?: 'icon' | 'themeIcon'            
+        name?: string
+        iconProps?: {
+            size?: MantineNumberSize
+            color?:MantineColor
+            stroke?: number
+        }
+        themIconProps?: {
+            variant?: ThemeIconVariant
+            size?: MantineNumberSize
+            radius?: MantineNumberSize
+            color?: MantineColor
+            gradient?: MantineGradient
+        }    
+    }
+    customProps?: any
+}[]
+```
+
+#### getQrCode v0.1.0
+
+* Преобразует текст в QR.
+* Выдает Data URL, который можно подавать в Image.
+
+### Изменения нод
+
+#### Table v2.1.1
+
+* Исправлен баг - expander множился пачкованием.
+* Больше не срабатывают тригер мульти-выбора при монтировании.
+
+#### Image v0.3.0
+
+* Добавлен контекст таблицы.
+* Добавлен Prop function. Вторым параметром принимает item с таблицы.
+
+#### Icon v0.5.0
+
+* Теперь можно выбрать между простой иконкой и [Theme Icon](https://v6.mantine.dev/core/theme-icon/)
+* Theme Icon - обертка для Icon. Позволяет задать цвет фона иконки, размер фона и т.д.
+* Поправлен баг - цвет иконки не принимал формат Mantine.
+
 ## 2023-12-26 v0.26.0
 
 ### Общие изменения

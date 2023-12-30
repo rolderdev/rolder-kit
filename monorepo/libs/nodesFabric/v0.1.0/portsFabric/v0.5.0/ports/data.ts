@@ -50,4 +50,6 @@ export default [
     { name: 'useScope', group: 'Data', type: 'boolean', displayName: 'Use scope', default: false },
     { name: 'scope', group: 'Data', type: { name: 'enum', enums: enums.scopes }, displayName: 'Scope', dependsOn: [{ name: 'useScope', value: true }] },
     { name: 'dateValue', group: 'Data', type: '*', displayName: 'Date value' },
+    { name: 'qrDataUrl', group: 'Data', type: '*', displayName: 'QR data URL' },
+    { name: 'blob', group: 'Data', type: '*', displayName: 'Blob' },    
 ] as const satisfies readonly NodePort[]

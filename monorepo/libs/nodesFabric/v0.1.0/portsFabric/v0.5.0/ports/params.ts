@@ -18,6 +18,7 @@ const params = [
     { name: 'typingDelay', group: 'Params', type: 'number', displayName: 'Delay (ms)', default: 350, dependsOn: [{ name: 'debouncedTyping', value: true }] },
     { name: 'xlsxColumns', group: 'Params', type: 'array', displayName: 'Columns', default: helpers['xlsxColumns'] },
     { name: 'fileName', group: 'Params', type: 'string', displayName: 'File name', default: 'file.xlsx' },
+    { name: 'fileName2', group: 'Params', type: 'string', displayName: 'File name' },
     { name: 'sheetName', group: 'Params', type: 'string', displayName: 'Sheet name' },
     { name: 'xlsxCompression', group: 'Params', type: 'boolean', displayName: 'Compression', default: true },
     { name: 'connectKuzzle', group: 'Params', type: 'boolean', displayName: 'Connect Kuzzle', default: true },
@@ -44,6 +45,7 @@ const params = [
     { name: 'popoverTarget', group: 'Params', type: { name: 'enum', enums: enums.popoverTargets }, displayName: 'Target', default: 'actionIcon' },
     { name: 'popoverButtonLabel', group: 'Params', type: 'string', displayName: 'Button label', dependsOn: [{ name: 'popoverTarget', value: 'button' }] },
     { name: 'qrCodeLevel', group: 'Params', type: { name: 'enum', enums: enums.qrCodeLevels }, displayName: 'QR code level', default: 'L' },
+    { name: 'qrCodeLevel2', group: 'Params', type: { name: 'enum', enums: enums.qrCodeLevels }, displayName: 'QR code level', default: 'M' },
     { name: 'gridColumnsScheme', group: 'Params', type: 'array', displayName: 'Columns scheme' },
     { name: 'screenshotEnabled', group: 'Params', type: 'boolean', displayName: 'Enable screenshot', default: false },
     { name: 'maxScansPerSecond', group: 'Params', type: 'number', displayName: 'Enable screenshot', default: 25 },
@@ -68,6 +70,12 @@ const params = [
     { name: 'showTaskList', group: 'Params', type: 'boolean', displayName: 'Show task list', default: false },
     { name: 'scrollToMultiplier', group: 'Params', type: 'number', displayName: 'Scroll to multiplier', default: 1 },
     { name: 'scrollBehavior', group: 'Params', type: { name: 'enum', enums: enums.scrollBehaviors }, displayName: 'Scroll behavior', default: 'smooth' },
+    { name: 'pdfTextContent', group: 'Params', type: 'string', displayName: 'Text content' },
+    { name: 'pdfImageSource', group: 'Params', type: 'string', displayName: 'Image source' },
+    { name: 'listScheme', group: 'Params', type: 'array', displayName: 'Scheme' },
+    { name: 'listType', group: 'Params', type: { name: 'enum', enums: enums.listTypes }, displayName: 'Type', default: 'unordered' },
+    { name: 'currentPage', group: 'Params', type: 'number', displayName: 'Current page', default: 1 },
+    { name: 'totalPages', group: 'Params', type: 'number', displayName: 'Total pages' },
 ] as const satisfies readonly NodePort[];
 
 export default params

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.6.0",
   "scripts": {
-    "build": "rspack build"    
+    "build": "rspack build"
   },
   "dependencies": {
     "kuzzle-sdk": "7.11.2",
@@ -13,6 +13,7 @@
     "bunshi": "2.0.2",
     "@mantine/hooks": "6.0.21",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz",
-    "ky": "1.1.3"
+    "ky": "1.1.3",
+    "file-saver": "2.0.5"
   }
 }

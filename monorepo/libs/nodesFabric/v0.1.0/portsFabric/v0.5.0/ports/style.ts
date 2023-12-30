@@ -35,6 +35,10 @@ const style = [
     { name: 'badgeVariant', group: 'Style', type: { name: 'enum', enums: enums.badgeVariants }, displayName: 'Variant', default: 'light' },
     { name: 'gradient', group: 'Style', type: 'array', displayName: 'Gradient', isObject: true },
     { name: 'numberInputVariant', group: 'Style', type: { name: 'enum', enums: enums.numberInputVariants }, displayName: 'Variant', default: 'default' },
+    { name: 'pdfTextStyles', group: 'Style', type: 'array', displayName: 'Text styles', isObject: true },
+    { name: 'pdfPageStyles', group: 'Style', type: 'array', displayName: 'Page styles', isObject: true },
+    { name: 'pdfImageStyles', group: 'Style', type: 'array', displayName: 'Image styles', isObject: true },
+    { name: 'pdfViewStyles', group: 'Style', type: 'array', displayName: 'View styles', isObject: true },
 ] as const satisfies readonly NodePort[];
 
 export default style

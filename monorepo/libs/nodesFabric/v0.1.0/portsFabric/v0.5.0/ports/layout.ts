@@ -1,5 +1,4 @@
 import { enums } from "../enums";
-const units = ['rem', '%', 'px']
 
 const layout = [
     { name: 'groupPosition', group: 'Layout', type: { name: 'enum', enums: enums.groupPositions }, displayName: 'Position', default: 'left' },
@@ -40,6 +39,7 @@ const layout = [
     { name: 'scrollAreaBottomOffset', group: 'Layout', type: 'number', displayName: 'Bottom offset' },
     { name: 'offsetScrollbars', group: 'Layout', type: 'boolean', displayName: 'Offset scrollbars', default: false },
     { name: 'labelPosition', group: 'Layout', type: { name: 'enum', enums: enums.labelPositions }, displayName: 'Label position', default: 'right' },
+    { name: 'withPadding', group: 'Layout', type: 'boolean', displayName: 'With padding', default: false },
 ] as const satisfies readonly NodePort[];
 
 export default layout

@@ -138,5 +138,11 @@ export const enums: { [key: string]: NoodlEnum[] } = {
     ],
     table2sortTypes: [{ value: 'frontend', label: 'Frontend' }, { value: 'backend', label: 'Backend' },],
     table2filterTypes: [{ value: 'frontend', label: 'Frontend' }, { value: 'backend', label: 'Backend' },],
-    scopes: [{ value: 'tableCell', label: 'Table cell' }]
+    scopes: [{ value: 'tableCell', label: 'Table cell' }],
+    listTypes: [{ value: 'unordered', label: 'Unordered' }, { value: 'ordered', label: 'Ordered' }],
+    themeIconVariants: [
+        { value: 'filled', label: 'Filled' }, { value: 'light', label: 'Light' }, { value: 'gradient', label: 'Gradient' },
+        { value: 'outline', label: 'Outline' }, { value: 'default', label: 'Default' }
+    ],
+    iconTypes: [{ value: 'icon', label: 'Icon' }, { value: 'themeIcon', label: 'Theme icon' }],
 }

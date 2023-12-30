@@ -42,6 +42,10 @@ const signals = [
     { name: 'doubleClicked', group: 'Signals', type: 'signal', displayName: 'Double clicked' },
     { name: 'scroll', group: 'Signals', type: 'signal', displayName: 'Scroll' },
     { name: 'getItem', group: 'Signals', type: 'signal', displayName: 'Get item' },
+    { name: 'getQrCode', group: 'Signals', type: 'signal', displayName: 'Get QR code' },
+    { name: 'nextPage', group: 'Signals', type: 'signal', displayName: 'Next page' },
+    { name: 'previousPage', group: 'Signals', type: 'signal', displayName: 'Previous page' },
+    { name: 'saveAs', group: 'Signals', type: 'signal', displayName: 'Save as' },
 ] as const satisfies readonly NodePort[];
 
 export default signals
