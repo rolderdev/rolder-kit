@@ -16,6 +16,8 @@ const dimensions = [
     { name: 'barLoaderWidth', group: 'Dimensions', type: { name: 'number', units, defaultUnit: '%' }, displayName: 'Width', default: '100%' },
     { name: 'maw', group: 'Dimensions', type: { name: 'number', units, defaultUnit: 'rem' }, displayName: 'Max width' },
     { name: 'ganttHeight', group: 'Dimensions', type: 'number', displayName: 'Height' },    
+    { name: 'pdfViewerWidth', group: 'Dimensions', type: 'number', displayName: 'Width' },
+    { name: 'pdfViewerHeight', group: 'Dimensions', type: 'number', displayName: 'Height' },
 ] as const satisfies readonly NodePort[];
 
 export default dimensions

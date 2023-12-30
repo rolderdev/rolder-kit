@@ -70,6 +70,7 @@ import NavLinkNode_f0_1_0 from "./elements/navigation/navLink/fabricVersions/v0.
 import TextNode_f0_1_0 from "./elements/typography/text/fabricVersions/v0.1.0/TextNode";
 import TitleNode_f0_1_0 from "./elements/typography/title/fabricVersions/v0.1.0/TitleNode";
 import HighlightNode_f0_1_0 from "./elements/typography/highlight/fabricVersions/v0.1.0/HighlightNode";
+import ListNode_f0_1_0 from "./elements/typography/list/fabricVersions/v0.1.0/ListNode";
 
 export default [
     MantineNode_f0_1_0, AppNode_f0_1_0,
@@ -102,5 +103,5 @@ export default [
     // navigation
     NavLinkNode_f0_1_0,
     // typography
-    TextNode_f0_1_0, TitleNode_f0_1_0, HighlightNode_f0_1_0,
+    TextNode_f0_1_0, TitleNode_f0_1_0, HighlightNode_f0_1_0, ListNode_f0_1_0,
 ]

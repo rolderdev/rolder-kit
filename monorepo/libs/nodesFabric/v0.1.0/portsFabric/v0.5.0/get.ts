@@ -29,7 +29,8 @@ export const groupedPorts = {
     'Margins': ['margins', 'm', 'my', 'mx', 'mt', 'mr', 'mb', 'ml'],
     'Paddings': ['paddings', 'p', 'py', 'px', 'pt', 'pr', 'pb', 'pl'],
     'Form': ['useForm', 'formField', 'formHook'],
-    'Icon': ['iconName', 'iconSize', 'stroke']
+    'Icon': ['iconName', 'iconSize', 'stroke', 'iconColor'],
+    'Embedded icon': ['iconType','iconName', 'iconSize', 'stroke', 'iconColor', 'themeIconVariant', 'themeIconSize', 'themeIconRadius', 'themeIconColor', 'themeIconGradient']
 } satisfies Record<string, PortNames[]>;
 type GroupedPortNames = keyof typeof groupedPorts
 

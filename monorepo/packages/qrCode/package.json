@@ -1,0 +1,14 @@
+{
+  "name": "qr-code",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "rspack build"
+  },
+  "dependencies": {
+    "qrcode": "1.5.3"
+  },
+  "devDependencies": {
+    "@types/qrcode": "1.5.5"
+  }
+}
