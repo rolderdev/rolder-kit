@@ -18,7 +18,7 @@ const compVersions: CompVersions = {
         Comp: v0_3_0,
         inputs: [
             ...getGroupedPorts('input', ['Margins']),
-            ...getPorts('input', ['sourceUrl', 'radius', 'maw'])
+            ...getPorts('input', ['useScope', 'scope', 'sourceUrl', 'radius', 'maw'])
         ]
     }
 }

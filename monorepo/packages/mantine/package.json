@@ -8,7 +8,8 @@
     "patch": "npm version patch && rspack build",
     "minor": "npm version minor && rspack build"
   },
-  "dependencies": {    
+  "dependencies": {
+    "node-fabrik": "workspace:*",
     "@emotion/react": "11.11.1",
     "@tabler/icons-react": "2.42.0",
     "@mantine/core": "6.0.21",
@@ -19,7 +20,7 @@
     "@mantine/carousel": "6.0.21",
     "@mantine/dropzone": "6.0.21",
     "embla-carousel-react": "7.1.0",
-    "mantine-react-table": "1.3.4",    
+    "mantine-react-table": "1.3.4",
     "react-spinners": "0.13.8",
     "jotai": "2.6.0",
     "bunshi": "2.0.2",

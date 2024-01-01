@@ -6,6 +6,7 @@ const style = [
     { name: 'color', group: 'Style', type: 'string', displayName: 'Color', tooltip: 'red, red.5' },
     { name: 'detectColorScheme', group: 'Style', type: 'boolean', displayName: 'Autodetect color scheme', default: false },
     { name: 'colorScheme', group: 'Style', type: { name: 'enum', enums: enums.colorSchemes }, displayName: 'Default color scheme', default: 'light' },
+    { name: 'colorScheme2', group: 'Style', type: { name: 'enum', enums: enums.colorSchemes2 }, displayName: 'Color scheme', default: 'light' },
     { name: 'shadow', group: 'Style', type: { name: 'enum', enums: enums.sizes }, displayName: 'Shadow', default: 'sm' },
     { name: 'buttonColor', group: 'Style', type: 'string', displayName: 'Button color' },
     { name: 'modalOpacity', group: 'Style', type: 'number', displayName: 'Opacity', default: 0.6 },
@@ -18,7 +19,7 @@ const style = [
     { name: 'overlayBlur', group: 'Overlay', type: 'number', displayName: 'Blur', default: 2 },
     { name: 'overlayOpacity', group: 'Overlay', type: 'number', displayName: 'Opacity', default: 0.6 },
     { name: 'overlayColor', group: 'Overlay', type: 'string', displayName: 'Color', tooltip: 'red, red.5' },
-    { name: 'withBorder', group: 'Style', type: 'boolean', displayName: 'With border', default: false },
+    { name: 'withBorder', group: 'Style', type: 'boolean', displayName: 'With border' },
     { name: 'backgroundColor', group: 'Style', type: 'string', displayName: 'Background color', tooltip: 'red, red.5' },
     { name: 'opacity', group: 'Style', type: 'number', displayName: 'Opacity', default: 1 },
     { name: 'avatarVariant', group: 'Loader', type: { name: 'enum', enums: enums.avatarVariants }, default: 'light', displayName: 'Variant' },
@@ -39,6 +40,7 @@ const style = [
     { name: 'pdfPageStyles', group: 'Style', type: 'array', displayName: 'Page styles', isObject: true },
     { name: 'pdfImageStyles', group: 'Style', type: 'array', displayName: 'Image styles', isObject: true },
     { name: 'pdfViewStyles', group: 'Style', type: 'array', displayName: 'View styles', isObject: true },
+    { name: 'mantineTheme', group: 'Style', type: 'array', displayName: 'Theme', isObject: true },
 ] as const satisfies readonly NodePort[];
 
 export default style

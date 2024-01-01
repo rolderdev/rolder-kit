@@ -46,6 +46,9 @@ const signals = [
     { name: 'nextPage', group: 'Signals', type: 'signal', displayName: 'Next page' },
     { name: 'previousPage', group: 'Signals', type: 'signal', displayName: 'Previous page' },
     { name: 'saveAs', group: 'Signals', type: 'signal', displayName: 'Save as' },
+    { name: 'setColorScheme', group: 'Signals', type: 'signal', displayName: 'Set color scheme' },
+    { name: 'toggleColorScheme', group: 'Signals', type: 'signal', displayName: 'Toggle color scheme' },
+    { name: 'colorSchemeChanged', group: 'Signals', type: 'signal', displayName: 'Color scheme changed' },
 ] as const satisfies readonly NodePort[];
 
 export default signals
