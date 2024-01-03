@@ -26,15 +26,15 @@ export const Primary: Story = {
       {...props}
       onClick={(): void => {
         // eslint-disable-next-line no-alert -- alert for demo
-        alert("Hello from Turborepo!");
+        alert("Hello from SSS!");
       }}
     >
-      Hello
+      SSS
     </Button>
   ),
   name: "Button",
   args: {
-    children: "Hello",
+    children: "SSSS",
     type: "button",
     style: {
       color: "blue",
