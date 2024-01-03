@@ -1,0 +1,3 @@
+{
+  "extends": "@rk/typescript-config/base.json"
+}

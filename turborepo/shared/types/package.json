@@ -1,0 +1,8 @@
+{
+  "name": "@rk/types-v0.1.0",
+  "types": "src/index.d.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "latest"
+  }
+}

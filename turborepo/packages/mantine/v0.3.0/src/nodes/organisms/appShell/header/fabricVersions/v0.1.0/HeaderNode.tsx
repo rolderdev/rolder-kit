@@ -1,0 +1,22 @@
+import { CompVersions, getPorts, getReactNode } from '@rk/node-fabrik'
+
+import v0_1_0 from './v0.1.0/Header'
+import v0_1_1 from './v0.1.1/Header'
+
+//===================================================================
+
+const compVersions: CompVersions = {
+    'v0.1.0': {
+        hashTag: 'deprecated',
+        Comp: v0_1_0,
+        inputs: [...getPorts('input', ['headerWithBorder', 'headerHeight', 'burgerSize'])]
+    },
+    'v0.1.1': {
+        Comp: v0_1_1,
+        inputs: [...getPorts('input', ['headerWithBorder', 'headerHeight', 'burgerSize'])]
+    }
+}
+
+//===================================================================
+
+export default getReactNode('Header', compVersions, true)

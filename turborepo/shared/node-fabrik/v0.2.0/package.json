@@ -1,0 +1,18 @@
+{
+  "name": "@rk/node-fabrik-v0.2.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "dependencies": {
+    "@rk/port-fabrik": "workspace:@rk/port-fabrik-v0.6.0@*",
+    "just-typeof": "3.2.0",
+    "just-map-object": "2.3.0",
+    "lodash": "4.17.21",
+    "nanostores": "0.9.5",
+    "@mantine/hooks": "6.0.21"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "@types/lodash": "4.14.202",
+    "@types/react": "18.2.46"
+  }
+}

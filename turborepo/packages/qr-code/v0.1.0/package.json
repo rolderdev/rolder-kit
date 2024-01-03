@@ -1,0 +1,20 @@
+{
+  "name": "qr-code-v0.1.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "rspack build"
+  },
+  "dependencies": {
+    "@noodl/noodl-sdk": "0.5.4",
+    "@rk/node-fabrik": "workspace:@rk/node-fabrik-v0.2.0@*",
+    "@rk/port-fabrik": "workspace:@rk/port-fabrik-v0.6.0@*",
+    "qrcode": "1.5.3"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "@rspack/cli": "0.4.5",
+    "rspack-manifest-plugin": "5.0.0-alpha0",
+    "@types/qrcode": "1.5.5"
+  }
+}

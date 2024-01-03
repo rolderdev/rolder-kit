@@ -1,0 +1,8 @@
+{
+  "extends": "@rk/typescript-config/react-library.json",
+  "compilerOptions": {
+    "outDir": "../../build"
+  },
+  "include": ["src", "turbo"],
+  "exclude": ["node_modules", "dist"]
+}
