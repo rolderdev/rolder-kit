@@ -1,0 +1,17 @@
+{
+  "name": "@rk/icons-v0.3.0",
+  "main": "icons.ts",
+  "types": "icons.ts",
+  "type": "module",
+  "dependencies": {
+    "@tabler/icons-react": "2.45.0"
+  },
+  "devDependencies": {
+    "@rk/typescript-config": "workspace:*",
+    "@rk/eslint-config": "workspace:*",
+    "@types/react": "18.2.46",
+    "@types/react-dom": "18.2.18",
+    "eslint": "8.56.0",
+    "typescript": "5.3.3"
+  }
+}

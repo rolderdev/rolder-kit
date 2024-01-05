@@ -1,0 +1,18 @@
+{
+  "name": "@rk/docs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "rspress": "1.9.2",
+    "@rk/app-v1.4.0": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^16",
+    "@types/react": "18.2.46"
+  }
+}

@@ -21,3 +21,14 @@ build
 *.njsproj
 *.sln
 *.sw?
+
+.turbo
+.next
+dist
+dist-ssr
+*.local
+.env
+.cache
+server/dist
+public/dist
+storybook-static/
