@@ -16,6 +16,5 @@ export default defineConfig({
       { icon: 'github', mode: 'link', content: 'https://github.com/rolderman/rolder-kit' },
     ],
   },
-  ssg: false,
-  base: '/rolder-kit/',  
+  ssg: false,  
 });
