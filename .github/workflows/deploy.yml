@@ -37,7 +37,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: monorepo/apps/docs/doc_build
+          path: apps/docs/doc_build
 
   # Deployment job
   deploy:
