@@ -2,7 +2,7 @@ name: Deploy docs
  
 on:
   push:
-    branches: ["main"]
+    branches: ["releases/v0.28.0"]
   pull_request:
     types: [opened, synchronize]
  
@@ -38,16 +38,8 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           path: apps/docs/doc_build
-
-  # Deployment job
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    name: Deploy
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: JamesIves/github-pages-deploy-action@releases/v4
+      
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: apps/docs/doc_build
