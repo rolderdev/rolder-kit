@@ -1,0 +1,2 @@
+/*! For license information please see 167.73915251.js.LICENSE.txt */
+(self.webpackChunk_rk_docs=self.webpackChunk_rk_docs||[]).push([["167"],{955227:function(n,r,e){"use strict";e.r(r),e.d(r,{default:function(){return t}});var c=e("766791"),u=e("349997");function t(n){return(0,c.jsx)(u.Group,{p:"md",position:"center",w:n.w||"60%",children:n.children})}}}]);

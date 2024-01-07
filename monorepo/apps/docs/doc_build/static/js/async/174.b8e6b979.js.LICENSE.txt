@@ -1,0 +1,49 @@
+/*! ../../configurator/SizeUnit */
+
+/*! @mantine/core */
+
+/*! ./Unit */
+
+/*! @mantine/core */
+
+/*! react */
+
+/*! @rk/image-v0.4.0 */
+
+/*! react/jsx-runtime */
+
+/*! ../../../../../src/elements/dataDisplay/Image */
+
+/*! core-js/modules/esnext.iterator.constructor.js */
+
+/*! @mdx-js/react */
+
+/*! @mantine/core */
+
+/*! core-js/modules/esnext.iterator.find.js */
+
+/*! react/jsx-runtime */
+
+/*! react/jsx-runtime */
+
+/*! ../../containers/Comp */
+
+/*! react/jsx-runtime */
+
+/*! ../../configurator/Configurator */
+
+/*! core-js/modules/esnext.async-iterator.find.js */
+
+/*! @tabler/icons-react */
+
+/*! ../../configurator/SizeSlider */
+
+/*! ../../containers/Loader */
+
+/*! ../../containers/Aside */
+
+/*! react */
+
+/*! @tabler/icons-react */
+
+/*! ../../configurator/params/sizes */
