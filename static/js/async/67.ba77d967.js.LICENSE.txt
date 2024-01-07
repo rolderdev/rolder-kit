@@ -1,0 +1,1364 @@
+/*! prop-types */
+
+/*! ./icons/IconArrowRight.js */
+
+/*! ./icons/IconPhoto.js */
+
+/*! ./icons/IconRestore.js */
+
+/*! ../get-floating-value.js */
+
+/*! react */
+
+/*! @radix-ui/react-context */
+
+/*! @mantine/styles */
+
+/*! react */
+
+/*! @mantine/styles */
+
+/*! @mantine/hooks */
+
+/*! ../createReactComponent.js */
+
+/*! ./icons/IconCheck.js */
+
+/*! ./src/Serializer.js */
+
+/*! react */
+
+/*! ../Input/Input.js */
+
+/*! ./ActionIcon/ActionIcon.js */
+
+/*! ./Divider/Divider.js */
+
+/*! ./Portal.js */
+
+/*! ../Input/use-input-props.js */
+
+/*! @mantine/styles */
+
+/*! ../theme-color/theme-color.js */
+
+/*! ./src/Parser.js */
+
+/*! ../createReactComponent.js */
+
+/*! react */
+
+/*! react */
+
+/*! ./Group/Group.js */
+
+/*! ../../ScrollArea/ScrollArea.js */
+
+/*! react */
+
+/*! ./cjs/react-is.production.min.js */
+
+/*! ./cover/cover.js */
+
+/*! react-dom */
+
+/*! ./icons/IconEdit.js */
+
+/*! ./SwitchGroup.context.js */
+
+/*! react */
+
+/*! ./icons/IconPerspective.js */
+
+/*! ./use-os/use-os.js */
+
+/*! ./Utility.js */
+
+/*! react */
+
+/*! ./icons/IconLogout2.js */
+
+/*! ./tss/get-styles-ref.js */
+
+/*! @mantine/utils */
+
+/*! ../TextInput/TextInput.js */
+
+/*! ./utils/use-guaranteed-memo/use-guaranteed-memo.js */
+
+/*! @radix-ui/primitive */
+
+/*! ./icons/IconChartBar.js */
+
+/*! ../createReactComponent.js */
+
+/*! react */
+
+/*! ../createReactComponent.js */
+
+/*! @mantine/styles */
+
+/*! react */
+
+/*! ../InputError/InputError.js */
+
+/*! ./Input.styles.js */
+
+/*! ./SelectScrollArea/SelectScrollArea.js */
+
+/*! ../SliderRoot/SliderRoot.styles.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./Tokenizer.js */
+
+/*! @mantine/styles */
+
+/*! ../Popover.context.js */
+
+/*! ../createReactComponent.js */
+
+/*! @emotion/serialize */
+
+/*! ./Text/Text.js */
+
+/*! ./icons/IconArrowLeft.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./icons/IconPrinter.js */
+
+/*! react */
+
+/*! ../createReactComponent.js */
+
+/*! @radix-ui/number */
+
+/*! react-dom */
+
+/*! ./Stack/Stack.js */
+
+/*! ./primary-shade/primary-shade.js */
+
+/*! ./get-spacing-value.js */
+
+/*! react */
+
+/*! ./icons/IconFileTypeXls.js */
+
+/*! ./use-click-outside/use-click-outside.js */
+
+/*! @mantine/styles */
+
+/*! ./Slider/Slider/Slider.js */
+
+/*! ./icons/IconCircleCheck.js */
+
+/*! ./Utility.js */
+
+/*! @emotion/utils */
+
+/*! ../createReactComponent.js */
+
+/*! ./icons/IconArrowsVertical.js */
+
+/*! ./get-transition-styles/get-transition-styles.js */
+
+/*! @mantine/styles */
+
+/*! react */
+
+/*! ../createReactComponent.js */
+
+/*! ../theme/MantineProvider.js */
+
+/*! @mantine/styles */
+
+/*! @mantine/styles */
+
+/*! @mantine/styles */
+
+/*! ./theme/MantineProvider.js */
+
+/*! ./theme/functions/fns/breakpoints/breakpoints.js */
+
+/*! ../createReactComponent.js */
+
+/*! react */
+
+/*! ../createReactComponent.js */
+
+/*! ./NumberInput.styles.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./use-isomorphic-effect/use-isomorphic-effect.js */
+
+/*! ./icons/IconChartAreaFilled.js */
+
+/*! ../use-reduced-motion/use-reduced-motion.js */
+
+/*! ../createReactComponent.js */
+
+/*! ../../../utils/to-rgba/to-rgba.js */
+
+/*! ./InputPlaceholder/InputPlaceholder.js */
+
+/*! ../createReactComponent.js */
+
+/*! ../createReactComponent.js */
+
+/*! @mantine/styles */
+
+/*! ./icons/IconPencil.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./SelectItems.styles.js */
+
+/*! react */
+
+/*! @mantine/utils */
+
+/*! ../system-props/system-props.js */
+
+/*! react */
+
+/*! ../createReactComponent.js */
+
+/*! ./icons/IconUsers.js */
+
+/*! ../createReactComponent.js */
+
+/*! ../utils/get-change-value/get-change-value.js */
+
+/*! @mantine/styles */
+
+/*! ../SliderRoot/SliderRoot.styles.js */
+
+/*! ./theme-color/theme-color.js */
+
+/*! ../ActionIcon/ActionIcon.js */
+
+/*! react */
+
+/*! ./Divider.styles.js */
+
+/*! @radix-ui/react-scroll-area */
+
+/*! ../../../utils/to-rgba/to-rgba.js */
+
+/*! ./default-emotion-cache.js */
+
+/*! ./Select/Select.js */
+
+/*! ./icons/IconCubePlus.js */
+
+/*! @radix-ui/react-compose-refs */
+
+/*! @radix-ui/react-compose-refs */
+
+/*! ./Chevron.js */
+
+/*! @mantine/styles */
+
+/*! @radix-ui/react-use-layout-effect */
+
+/*! ./icons/IconSwitchVertical.js */
+
+/*! @mantine/styles */
+
+/*! react */
+
+/*! @babel/runtime/helpers/esm/extends */
+
+/*! ./CloseIcon.js */
+
+/*! ./icons/IconFileSpreadsheet.js */
+
+/*! react */
+
+/*! ./icons/IconChevronUp.js */
+
+/*! ./icons/IconUser.js */
+
+/*! ./Paper/Paper.js */
+
+/*! ./icons/IconRepeat.js */
+
+/*! ../Popover.context.js */
+
+/*! clsx */
+
+/*! ../createReactComponent.js */
+
+/*! @mantine/hooks */
+
+/*! ../Box/Box.js */
+
+/*! ../../Divider/Divider.js */
+
+/*! react */
+
+/*! ./get-default-value.js */
+
+/*! ./group-options/group-options.js */
+
+/*! ./UnstyledButton.styles.js */
+
+/*! ../../../utils/rem/rem.js */
+
+/*! @mantine/styles */
+
+/*! ../createReactComponent.js */
+
+/*! @mantine/styles */
+
+/*! ./flex-props.js */
+
+/*! react-is */
+
+/*! @emotion/react */
+
+/*! ../createReactComponent.js */
+
+/*! ../SliderRoot/SliderRoot.styles.js */
+
+/*! ../use-isomorphic-effect/use-isomorphic-effect.js */
+
+/*! ./InputLabel.styles.js */
+
+/*! ./create-polymorphic-component/create-polymorphic-component.js */
+
+/*! react */
+
+/*! @mantine/styles */
+
+/*! ./icons/IconMinus.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./SelectPopover/SelectPopover.js */
+
+/*! ../createReactComponent.js */
+
+/*! ../createReactComponent.js */
+
+/*! @mantine/hooks */
+
+/*! react */
+
+/*! @mantine/styles */
+
+/*! ./use-reduced-motion/use-reduced-motion.js */
+
+/*! ./SelectRightSection.js */
+
+/*! @mantine/styles */
+
+/*! @mantine/utils */
+
+/*! ../createReactComponent.js */
+
+/*! ./create-aria-hider.js */
+
+/*! ./use-merged-ref/use-merged-ref.js */
+
+/*! ../Input/Input.js */
+
+/*! @mantine/styles */
+
+/*! ../Box/Box.js */
+
+/*! react */
+
+/*! ./icons/IconCoins.js */
+
+/*! react */
+
+/*! ../theme-color/theme-color.js */
+
+/*! ../primary-shade/primary-shade.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./icons/IconArchive.js */
+
+/*! ../../Box/Box.js */
+
+/*! ../Box/Box.js */
+
+/*! ./use-scroll-into-view/use-scroll-into-view.js */
+
+/*! @mantine/utils */
+
+/*! ../createReactComponent.js */
+
+/*! ../createReactComponent.js */
+
+/*! ../../FocusTrap/FocusTrap.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./loaders/Dots.js */
+
+/*! ./InputError.styles.js */
+
+/*! @mantine/hooks */
+
+/*! ./utils/merge-theme/merge-theme.js */
+
+/*! @mantine/styles */
+
+/*! ./PopoverDropdown.styles.js */
+
+/*! react */
+
+/*! react */
+
+/*! react */
+
+/*! @mantine/styles */
+
+/*! ../value-getters/value-getters.js */
+
+/*! @mantine/hooks */
+
+/*! ./icons/IconLogout.js */
+
+/*! ./lighten/lighten.js */
+
+/*! ../noop/noop.js */
+
+/*! ../../Box/Box.js */
+
+/*! react */
+
+/*! ./icons/IconTrash.js */
+
+/*! @emotion/cache */
+
+/*! @mantine/styles */
+
+/*! @emotion/react */
+
+/*! ../createReactComponent.js */
+
+/*! ./Enum.js */
+
+/*! react */
+
+/*! react */
+
+/*! react */
+
+/*! ./breakpoints/breakpoints.js */
+
+/*! ./icons/IconClipboard.js */
+
+/*! @mantine/utils */
+
+/*! ../Box/Box.js */
+
+/*! ../../Text/Text.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./Badge/Badge.js */
+
+/*! ./Loader/Loader.js */
+
+/*! react */
+
+/*! ../SelectScrollArea/SelectScrollArea.js */
+
+/*! ../createReactComponent.js */
+
+/*! @mantine/styles */
+
+/*! ./icons/IconHelp.js */
+
+/*! ./use-did-update/use-did-update.js */
+
+/*! ./darken/darken.js */
+
+/*! @floating-ui/utils */
+
+/*! ./icons/IconAdjustments.js */
+
+/*! ./Switch.styles.js */
+
+/*! react */
+
+/*! @floating-ui/react-dom */
+
+/*! ./icons/IconQrcode.js */
+
+/*! @mantine/styles */
+
+/*! @mantine/styles */
+
+/*! ./Image/Image.js */
+
+/*! ./theme/utils/rem/rem.js */
+
+/*! ./rgba/rgba.js */
+
+/*! ../../Floating/FloatingArrow/FloatingArrow.js */
+
+/*! ../createReactComponent.js */
+
+/*! ../createReactComponent.js */
+
+/*! react */
+
+/*! @emotion/unitless */
+
+/*! ./Badge.styles.js */
+
+/*! ./icons/IconSquareNumber1.js */
+
+/*! ./icons/IconThumbUp.js */
+
+/*! ./InputError/InputError.js */
+
+/*! @emotion/serialize */
+
+/*! @mantine/utils */
+
+/*! ./tss/use-css.js */
+
+/*! ../utils/random-id/random-id.js */
+
+/*! react */
+
+/*! react */
+
+/*! ./Box/Box.js */
+
+/*! react */
+
+/*! react */
+
+/*! @radix-ui/react-compose-refs */
+
+/*! react */
+
+/*! ../../../utils/rem/rem.js */
+
+/*! ../createReactComponent.js */
+
+/*! react */
+
+/*! @mantine/styles */
+
+/*! ../../Transition/Transition.js */
+
+/*! ./icons/IconReportAnalytics.js */
+
+/*! @mantine/styles */
+
+/*! @floating-ui/react */
+
+/*! clsx */
+
+/*! ../SliderRoot/SliderRoot.js */
+
+/*! @radix-ui/react-presence */
+
+/*! @emotion/utils */
+
+/*! react */
+
+/*! ./icons/IconDownload.js */
+
+/*! @emotion/weak-memoize */
+
+/*! ../Box/Box.js */
+
+/*! @mantine/hooks */
+
+/*! ../createReactComponent.js */
+
+/*! ./ChevronIcon.js */
+
+/*! ./utils/set-scroll-param.js */
+
+/*! ../use-did-update/use-did-update.js */
+
+/*! @mantine/styles */
+
+/*! react */
+
+/*! ./utils/filter-props/filter-props.js */
+
+/*! react */
+
+/*! ./SelectItems/SelectItems.js */
+
+/*! @mantine/styles */
+
+/*! ./icons/IconBuildingCommunity.js */
+
+/*! ../Box/style-system-props/extract-system-styles/extract-system-styles.js */
+
+/*! ./icons/IconThumbDown.js */
+
+/*! ./icons/IconX.js */
+
+/*! ./font-styles/font-styles.js */
+
+/*! ./Popover.errors.js */
+
+/*! @mantine/utils */
+
+/*! ./icons/IconIroning3.js */
+
+/*! ./Track.styles.js */
+
+/*! @mantine/styles */
+
+/*! ./icons/IconLock.js */
+
+/*! @mantine/hooks */
+
+/*! ../SliderRoot/SliderRoot.styles.js */
+
+/*! ./defaultAttributes.js */
+
+/*! @mantine/styles */
+
+/*! ../use-media-query/use-media-query.js */
+
+/*! ./InputWrapper/InputWrapper.js */
+
+/*! @babel/runtime/helpers/esm/extends */
+
+/*! @mantine/hooks */
+
+/*! ./utils/merge-class-names/merge-class-names.js */
+
+/*! react */
+
+/*! ../Floating/get-floating-position/get-floating-position.js */
+
+/*! ./use-id/use-id.js */
+
+/*! ../primary-shade/primary-shade.js */
+
+/*! ../createReactComponent.js */
+
+/*! @mantine/styles */
+
+/*! ./emotion-element-c39617d8.browser.esm.js */
+
+/*! ../../Box/Box.js */
+
+/*! ./InputLabel/InputLabel.js */
+
+/*! ./functions/attach-functions.js */
+
+/*! ./src/Utility.js */
+
+/*! @radix-ui/react-primitive */
+
+/*! @mantine/styles */
+
+/*! ./get-font-size-value.js */
+
+/*! @babel/runtime/helpers/esm/extends */
+
+/*! ./Utility.js */
+
+/*! react */
+
+/*! ../InputDescription/InputDescription.js */
+
+/*! ./use-focus-trap/use-focus-trap.js */
+
+/*! @mantine/hooks */
+
+/*! react */
+
+/*! @emotion/react */
+
+/*! ../InputLabel/InputLabel.js */
+
+/*! ../../Transition/Transition.js */
+
+/*! ./icons/IconDeviceFloppy.js */
+
+/*! ./icons/IconPointFilled.js */
+
+/*! ./ScrollArea.styles.js */
+
+/*! react */
+
+/*! ../createReactComponent.js */
+
+/*! ../utils/assign-ref/assign-ref.js */
+
+/*! ../Thumb/Thumb.js */
+
+/*! ./theme/utils/get-size/get-size.js */
+
+/*! react */
+
+/*! ./icons/IconSend.js */
+
+/*! hoist-non-react-statics */
+
+/*! ./icons/IconArrowBackUp.js */
+
+/*! @mantine/styles */
+
+/*! ../Box/Box.js */
+
+/*! ../primary-shade/primary-shade.js */
+
+/*! @emotion/cache */
+
+/*! @mantine/styles */
+
+/*! ../createReactComponent.js */
+
+/*! ../createReactComponent.js */
+
+/*! ../Popover.errors.js */
+
+/*! ../../Popover/Popover.js */
+
+/*! ./SliderRoot.styles.js */
+
+/*! ./icons/IconInfoCircle.js */
+
+/** @license React v16.13.1
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/*! @emotion/utils */
+
+/*! ./utils/assign-ref/assign-ref.js */
+
+/*! react-dom */
+
+/*! @mantine/styles */
+
+/*! ../Box/Box.js */
+
+/*! ../transitions.js */
+
+/*! ./SelectRightSection/get-select-right-section-props.js */
+
+/*! @mantine/styles */
+
+/*! ./NumberInput/NumberInput.js */
+
+/*! ./use-move/use-move.js */
+
+/*! react */
+
+/*! @mantine/styles */
+
+/*! ../createReactComponent.js */
+
+/*! react */
+
+/*! ../../Box/Box.js */
+
+/*! react */
+
+/*! ./use-css.js */
+
+/*! ../Text/Text.js */
+
+/*! ../../Box/Box.js */
+
+/*! ./GlobalStyles.js */
+
+/*! ./default-theme.js */
+
+/*! ./InlineInput.styles.js */
+
+/*! ./tabbable.js */
+
+/*! ../createReactComponent.js */
+
+/*! react */
+
+/*! ../createReactComponent.js */
+
+/*! @mantine/hooks */
+
+/*! ./InputDescription/InputDescription.js */
+
+/*! ../use-window-event/use-window-event.js */
+
+/*! ../Box/style-system-props/extract-system-styles/extract-system-styles.js */
+
+/*! ./style-system-props/extract-system-styles/extract-system-styles.js */
+
+/*! ../createReactComponent.js */
+
+/*! ../../functions/fns/breakpoints/breakpoints.js */
+
+/*! @mantine/styles */
+
+/*! @mantine/styles */
+
+/*! @mantine/utils */
+
+/*! react */
+
+/*! @mantine/styles */
+
+/*! @mantine/hooks */
+
+/*! ./Stack.styles.js */
+
+/*! ./primary-color/primary-color.js */
+
+/*! ../createReactComponent.js */
+
+/*! @emotion/react */
+
+/*! ./icons/IconUrgent.js */
+
+/*! ./Marks.styles.js */
+
+/*! react */
+
+/*! @mantine/styles */
+
+/*! ./variant/variant.js */
+
+/*! @mantine/styles */
+
+/*! ./is-mark-filled.js */
+
+/*! react-dom */
+
+/*! @mantine/styles */
+
+/*! ../../../utils/rem/rem.js */
+
+/*! ../style-system-props/get-system-styles/get-system-styles.js */
+
+/*! ./src/Enum.js */
+
+/*! ./DefaultItem/DefaultItem.js */
+
+/*! react */
+
+/*! ../../CloseButton/CloseButton.js */
+
+/*! ../Box/Box.js */
+
+/*! ./pack-sx/pack-sx.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./icons/IconPlus.js */
+
+/*! ./icons/IconBrush.js */
+
+/*! ../../Text/Text.js */
+
+/*! ../../Box/Box.js */
+
+/*! @mantine/utils */
+
+/*! ./get-color-value.js */
+
+/*! ../createReactComponent.js */
+
+/*! ../createReactComponent.js */
+
+/*! react */
+
+/*! ./dimmed/dimmed.js */
+
+/*! react-dom */
+
+/*! ./radius/radius.js */
+
+/*! ../Box/Box.js */
+
+/*! ../Marks/Marks.js */
+
+/*! ../Loader/Loader.js */
+
+/*! ./utils/get-relative-position.js */
+
+/*! ./focus-styles/focus-styles.js */
+
+/*! @floating-ui/utils */
+
+/*! ./tabbable.js */
+
+/*! ./get-arrow-position-styles.js */
+
+/*! ./utils/rem/rem.js */
+
+/*! ../createReactComponent.js */
+
+/*! react */
+
+/*! ../SwitchGroup.context.js */
+
+/*! ../InlineInput/InlineInput.js */
+
+/*! ./fns/index.js */
+
+/*! @mantine/styles */
+
+/*! @emotion/sheet */
+
+/*! react */
+
+/*! ./placeholder-styles/placeholder-styles.js */
+
+/*! @mantine/styles */
+
+/*! react */
+
+/*! ./icons/IconFolderPlus.js */
+
+/*! react */
+
+/*! ./ActionIcon.styles.js */
+
+/*! react */
+
+/*! ./use-emotion-cache.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./TextInput/TextInput.js */
+
+/*! ./utils/random-id/random-id.js */
+
+/*! @floating-ui/core */
+
+/*! ./Enum.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./InputDescription.styles.js */
+
+/*! ./icons/IconBriefcase2.js */
+
+/*! ./scope-tab.js */
+
+/*! react */
+
+/*! @mantine/hooks */
+
+/*! react */
+
+/*! react */
+
+/*! react */
+
+/*! ./icons/IconSun.js */
+
+/*! react */
+
+/*! ./get-input-offsets.js */
+
+/*! @mantine/styles */
+
+/*! react */
+
+/*! ../utils/clamp/clamp.js */
+
+/*! @mantine/styles */
+
+/*! ../createReactComponent.js */
+
+/*! ../createReactComponent.js */
+
+/*! @mantine/styles */
+
+/*! @mantine/styles */
+
+/*! ../createReactComponent.js */
+
+/*! react */
+
+/*! ./Flex/Flex.js */
+
+/*! ../createReactComponent.js */
+
+/*! @radix-ui/react-use-callback-ref */
+
+/*! react */
+
+/*! @emotion/memoize */
+
+/*! ../createReactComponent.js */
+
+/*! ./theme/utils/get-default-z-index/get-default-z-index.js */
+
+/*! react */
+
+/*! react */
+
+/*! ../createReactComponent.js */
+
+/*! ./Utility.js */
+
+/*! @emotion/hash */
+
+/*! @mantine/hooks */
+
+/*! ./get-gradient-color-stops/get-gradient-color-stops.js */
+
+/*! ./use-uncontrolled/use-uncontrolled.js */
+
+/*! ./icons/IconGhostFilled.js */
+
+/*! ./InputWrapper.context.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./icons/IconCurrencyRubel.js */
+
+/*! @emotion/cache */
+
+/*! @mantine/styles */
+
+/*! react */
+
+/*! ../createReactComponent.js */
+
+/*! ../InputWrapper.context.js */
+
+/*! ./Switch/Switch.js */
+
+/*! ./close-on-escape/close-on-escape.js */
+
+/*! ./Paper.styles.js */
+
+/*! react */
+
+/*! ../utils/random-id/random-id.js */
+
+/*! react */
+
+/*! @mantine/utils */
+
+/*! ./use-transition.js */
+
+/*! react */
+
+/*! ./icons/IconKey.js */
+
+/*! stylis */
+
+/*! @radix-ui/react-use-layout-effect */
+
+/*! ../createReactComponent.js */
+
+/*! ../theme/MantineProvider.js */
+
+/*! ./NormalizeCSS.js */
+
+/*! ./Group.styles.js */
+
+/*! react */
+
+/*! react */
+
+/*! ../createReactComponent.js */
+
+/*! @mantine/styles */
+
+/*! ./filter-falsy-children/filter-falsy-children.js */
+
+/*! @mantine/utils */
+
+/*! ../createReactComponent.js */
+
+/*! @radix-ui/react-slot */
+
+/*! ./theme/utils/filter-props/filter-props.js */
+
+/*! ./icons/IconChevronLeft.js */
+
+/*! @mantine/styles */
+
+/*! react */
+
+/*! ./tss/create-styles.js */
+
+/*! ./PopoverTarget/PopoverTarget.js */
+
+/*! ../UnstyledButton/UnstyledButton.js */
+
+/*! react */
+
+/*! ../../../utils/get-size/get-size.js */
+
+/*! @mantine/utils */
+
+/*! ../Box/Box.js */
+
+/*! ../primary-shade/primary-shade.js */
+
+/*! ./SwitchGroup/SwitchGroup.js */
+
+/*! ../gradient/gradient.js */
+
+/*! ./Select.styles.js */
+
+/*! ../Box/style-system-props/get-system-styles/get-system-styles.js */
+
+/*! ./icons/IconWand.js */
+
+/*! @emotion/use-insertion-effect-with-fallbacks */
+
+/*! ./gradient/gradient.js */
+
+/*! react */
+
+/*! ./icons/IconAdjustmentsHorizontal.js */
+
+/*! ./is-element/is-element.js */
+
+/*! ./utils/ease-in-out-quad.js */
+
+/*! ../utils/get-position/get-position.js */
+
+/*! ../Box/Box.js */
+
+/*! ./get-input-mode/get-input-mode.js */
+
+/*! @mantine/hooks */
+
+/*! ../Box/style-system-props/extract-system-styles/extract-system-styles.js */
+
+/*! @mantine/styles */
+
+/*! @mantine/utils */
+
+/*! ./utils/clamp/clamp.js */
+
+/*! ../rgba/rgba.js */
+
+/*! react */
+
+/*! ./filter-data/filter-data.js */
+
+/*! ../createReactComponent.js */
+
+/*! ../get-responsive-value/get-responsive-value.js */
+
+/*! react */
+
+/*! ./src/Middleware.js */
+
+/*! ./MantineCssVariables.js */
+
+/*! @mantine/styles */
+
+/*! @mantine/styles */
+
+/*! ./icons/IconListDetails.js */
+
+/*! ./Image.styles.js */
+
+/*! ../Floating/use-floating-auto-update.js */
+
+/*! react */
+
+/*! ./ImageIcon.js */
+
+/*! ./Text.styles.js */
+
+/*! ../Track/Track.js */
+
+/*! react */
+
+/*! react */
+
+/*! ../createReactComponent.js */
+
+/*! ./icons/IconFunction.js */
+
+/*! ../../Portal/OptionalPortal.js */
+
+/*! ../../../utils/to-rgba/to-rgba.js */
+
+/*! react */
+
+/*! react */
+
+/*! react */
+
+/*! react */
+
+/*! ./src/Tokenizer.js */
+
+/*! ./utils/get-scroll-start.js */
+
+/*! @mantine/styles */
+
+/*! ./use-focus-return/use-focus-return.js */
+
+/*! ../Box/Box.js */
+
+/*! ../../functions/attach-functions.js */
+
+/*! ../Box/Box.js */
+
+/*! ../createReactComponent.js */
+
+/*! @mantine/styles */
+
+/*! ./icons/IconSearch.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./icons/IconChevronDown.js */
+
+/*! ./icons/IconMoon.js */
+
+/*! @emotion/serialize */
+
+/*! ./use-react-id.js */
+
+/*! @floating-ui/react */
+
+/*! @mantine/utils */
+
+/*! ../createReactComponent.js */
+
+/*! ../use-isomorphic-effect/use-isomorphic-effect.js */
+
+/*! @mantine/utils */
+
+/*! ./use-sx/use-sx.js */
+
+/*! @mantine/hooks */
+
+/*! ../createReactComponent.js */
+
+/*! ./PopoverDropdown/PopoverDropdown.js */
+
+/*! ../rem/rem.js */
+
+/*! @mantine/styles */
+
+/*! @emotion/use-insertion-effect-with-fallbacks */
+
+/*! @floating-ui/utils/dom */
+
+/*! ./utils/rem/rem.js */
+
+/*! @emotion/cache */
+
+/*! ./icons/IconArrowUp.js */
+
+/*! ../Text/Text.js */
+
+/*! react */
+
+/*! ./SelectPopover.styles.js */
+
+/*! @mantine/styles */
+
+/*! ./hover/hover.js */
+
+/*! ./icons/IconFolder.js */
+
+/*! ./Thumb.styles.js */
+
+/*! ./InputWrapper.styles.js */
+
+/*! @mantine/styles */
+
+/*! @mantine/styles */
+
+/*! @mantine/styles */
+
+/*! @radix-ui/react-direction */
+
+/*! ./icons/IconRobot.js */
+
+/*! @mantine/styles */
+
+/*! ../createReactComponent.js */
+
+/*! react */
+
+/*! ./Popover.context.js */
+
+/*! ../Input/Input.js */
+
+/*! ./icons/IconLayersSubtract.js */
+
+/*! ../Input/use-input-props.js */
+
+/*! @mantine/hooks */
+
+/*! @mantine/utils */
+
+/*! ./icons/IconDatabaseOff.js */
+
+/*! ./icons/IconRefresh.js */
+
+/*! ../../Box/Box.js */
+
+/*! @babel/runtime/helpers/esm/extends */
+
+/*! react */
+
+/*! @mantine/styles */
+
+/*! ../../Box/Box.js */
+
+/*! ../utils/get-position/get-position.js */
+
+/*! ../createReactComponent.js */
+
+/*! ./loaders/Oval.js */
+
+/*! ../../Input/Input.js */
+
+/*! ./icons/IconCalendarEvent.js */
+
+/*! @mantine/styles */
+
+/*! ./default-colors.js */
+
+/*! ./loaders/Bars.js */
+
+/*! ../../Text/Text.js */
+
+/*! ./create-safe-context/create-safe-context.js */
+
+/*! ../get-precision.js */
+
+/*! @mantine/styles */
+
+/*! @mantine/styles */
+
+/*! ./icons/IconHome.js */
+
+/*! ../../Box/Box.js */
+
+/*! ./icons/IconChevronRight.js */
+
+/*! @mantine/styles */
+
+/*! react */
+
+/*! ./use-popover.js */
+
+/*! @floating-ui/dom */

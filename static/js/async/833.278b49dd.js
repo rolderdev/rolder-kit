@@ -1,0 +1,2 @@
+/*! For license information please see 833.278b49dd.js.LICENSE.txt */
+(self.webpackChunk_rk_docs=self.webpackChunk_rk_docs||[]).push([["833"],{49957:function(e,n,r){"use strict";r.r(n),r.d(n,{default:function(){return t}});var c=r("766791"),i=r("349228");function t(e){return(0,c.jsxs)(i.Flex,{w:e.w||"40%",children:[(0,c.jsx)(i.Divider,{orientation:"vertical"}),(0,c.jsx)(i.Stack,{p:"md",w:"100%",children:e.children})]})}}}]);
