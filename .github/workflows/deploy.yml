@@ -11,7 +11,7 @@ permissions:
     
 jobs:
   build:
-    name: Build
+    name: Deploy docs
     timeout-minutes: 15
     runs-on: ubuntu-latest    
  
