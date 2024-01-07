@@ -2,4 +2,3 @@ export type { NoodlNode, JsVersions, CompVersions, BaseJsProps, BaseReactProps }
 export { jsNode } from "./src/node/jsNode/jsNode"
 export { reactNode } from "./src/node/reactNode/reactNode"
 export { sendOutput, sendSignal } from "./src/send"
-export { getCompProps } from './src/getCompProps'

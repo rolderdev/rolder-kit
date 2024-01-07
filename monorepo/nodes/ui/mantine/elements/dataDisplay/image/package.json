@@ -4,7 +4,7 @@
   "dependencies": {    
     "@rk/node": "workspace:@rk/node-v0.2.0@*",
     "@rk/port": "workspace:@rk/port-v0.6.0@*",    
-    "@rk/image-v0.3.1": "workspace:*"
+    "@rk/image-v0.4.0": "workspace:*"
   },
   "devDependencies": {
     "@rk/typescript-config": "workspace:*",

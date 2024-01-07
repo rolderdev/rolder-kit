@@ -1,0 +1,14 @@
+[
+  {   
+      "type": "file",
+      "name": "index",
+      "label": "Intro"      
+  },
+  {   
+      "type": "dir",
+      "name": "ui",
+      "label": "UI",
+      "collapsible": true,
+      "collapsed": true
+  }
+]

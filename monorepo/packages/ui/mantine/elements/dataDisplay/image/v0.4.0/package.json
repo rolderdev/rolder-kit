@@ -1,12 +1,15 @@
 {
-  "name": "@rk/image-v0.3.1",
+  "name": "@rk/image-v0.4.0",
   "main": "image.tsx",
   "types": "image.tsx",  
   "type": "module",
   "dependencies": {
-    "@mantine/core": "6.0.21"
+    "@mantine/core": "6.0.21",
+    "@rk/icons": "workspace:@rk/icons-v0.3.0@*"
   },  
   "devDependencies": {
+    "@rk/node": "workspace:@rk/node-v0.2.0@*",
+    "@rk/port": "workspace:@rk/port-v0.6.0@*",
     "@rk/typescript-config": "workspace:*",
     "@rk/eslint-config": "workspace:*",
     "@types/react": "18.2.46",

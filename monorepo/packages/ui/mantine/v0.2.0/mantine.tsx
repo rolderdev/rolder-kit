@@ -34,7 +34,7 @@ export default forwardRef(function (props: CompProps) {
                         backgroundColor: backgroundColor,
                     }
                 }),
-                
+                ...mantineTheme
             }}>
             <DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 1 }} >
                 <Notifications position={notificationsPosition} />

@@ -10,7 +10,7 @@ var outputPath = path.resolve(__dirname, `./dist`)
 
 module.exports = {
     context: __dirname,
-    watch: true,
+    stats: { preset: 'errors-only', timings: true },
     entry: { [pJson.name]: `./mantineOld` },
     output: {
         path: outputPath,

@@ -46,6 +46,8 @@
 
 ### Изменения нод
 
+* [Image v0.4.0](http://localhost:8080/rk/ui/elements/dataDisplay/Image.html)
+
 #### App v1.4.0
 
 * Управление темой перехало из ноды Mantine.

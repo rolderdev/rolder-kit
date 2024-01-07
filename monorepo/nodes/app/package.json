@@ -1,8 +1,8 @@
 {
   "name": "@nodes/app",  
   "scripts": {
-    "build": "rspack build",
-    "dev": "rspack build --watch",
+    "build": "rspack build --mode=production",
+    "dev": "rspack build --mode=development --watch",
     "lint": "eslint . --max-warnings 0",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },

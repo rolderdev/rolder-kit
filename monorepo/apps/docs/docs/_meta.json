@@ -1,16 +1,7 @@
 [
   {
-    "text": "Guide",
-    "link": "/guide/",
-    "activeMatch": "/guide/"
-  },
-  {
-    "text": "Hello World",
-    "link": "/hello/",
-    "activeMatch": "/hello/"
-  },
-  {
-    "text": "Rspress API",
-    "link": "https://rspress.dev/api/index.html"
+    "text": "Rolder Kit",
+    "link": "/rk/index",
+    "activeMatch": "/rk/"
   }
 ]

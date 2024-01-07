@@ -3,8 +3,7 @@
   "pipeline": {
     "build": {
       "outputs": [
-        "dist/**",
-        "dist/js/**",
+        "dist/**",        
         "doc_build/**"
       ],
       "dependsOn": [
@@ -13,11 +12,8 @@
     },
     "lint": {},
     "dev": {
-      "cache": true,
-      "persistent": true,
-      "outputs": [
-        "dist/**"
-      ]
+      "cache": false,
+      "persistent": true
     },
     "clean": {
       "cache": false

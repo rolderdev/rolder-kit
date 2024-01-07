@@ -5,19 +5,19 @@ import { CompVersions, reactNode } from '@rk/node'
 import app140 from '@rk/app-v1.4.0'
 
 const compVersions: CompVersions = {
-/*     'v1.3.0': {
-        module: app130,
-        inputs: [
-            getPort({
-                plug: 'input', name: 'projectDefaults', displayName: 'Defaults', group: 'Project', type: 'array',
-                customs: { isObject: true }
-            }),
-            getPort({
-                plug: 'input', name: 'appLoaderColor', displayName: 'Color', group: 'Loader', type: 'color',
-                default: '#073BF5', customs: { required: 'both' }
-            })
-        ],
-    }, */
+    /*     'v1.3.0': {
+            module: app130,
+            inputs: [
+                getPort({
+                    plug: 'input', name: 'projectDefaults', displayName: 'Defaults', group: 'Project', type: 'array',
+                    customs: { isObject: true }
+                }),
+                getPort({
+                    plug: 'input', name: 'appLoaderColor', displayName: 'Color', group: 'Loader', type: 'color',
+                    default: '#073BF5', customs: { required: 'both' }
+                })
+            ],
+        }, */
     'v1.4.0': {
         module: app140,
         inputs: [
@@ -42,7 +42,7 @@ const compVersions: CompVersions = {
         ]
     },
 }
-console.log('test2')
+
 //===================================================================
 // @ts-ignore
 window.Noodl.defineModule({

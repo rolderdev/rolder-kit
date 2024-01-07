@@ -2,15 +2,15 @@
 pageType: home
 
 hero:
-  name: Rolder Kit
+  name: Rolder
   text: documentation  
   actions:
     - theme: brand
-      text: Quick Start
-      link: /guide/
-    - theme: alt
-      text: Github (private)
-      link: https://github.com/rolderman/rolder-kit
+      text: Rolder Kit
+      link: /rk/index    
+    - theme: brand
+      text: Backend
+      link: /
   image:
     src: /rspress-icon.png
     alt: Rolder Kit Logo

@@ -8,8 +8,10 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "1.9.2",
-    "@rk/app-v1.4.0": "workspace:*"
+    "rspress": "1.9.3",
+    "@mantine/core": "6.0.21",
+    "@tabler/icons-react": "2.45.0",
+    "@rk/image-v0.4.0": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^16",
