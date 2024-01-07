@@ -5,7 +5,10 @@ on:
     branches: ["releases/v0.28.0"]
   pull_request:
     types: [opened, synchronize]
- 
+
+permissions:
+  contents: write
+    
 jobs:
   build:
     name: Build
