@@ -36,11 +36,6 @@ jobs:
  
       - name: Build
         run: pnpm build
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: apps/docs/doc_build
       
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
