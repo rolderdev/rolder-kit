@@ -26,6 +26,7 @@ build
 .next
 dist
 dist-ssr
+doc_build
 *.local
 .env
 .cache

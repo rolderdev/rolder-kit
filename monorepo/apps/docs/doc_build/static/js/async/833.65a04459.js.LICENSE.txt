@@ -1,3 +1,0 @@
-/*! react/jsx-runtime */
-
-/*! @mantine/core */
