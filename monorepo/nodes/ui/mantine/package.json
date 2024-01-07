@@ -1,0 +1,24 @@
+{
+  "name": "@nodes/mantine",
+  "scripts": {
+    "build": "rspack build --mode=production",
+    "dev": "rspack build --mode=development --watch",
+    "lint": "eslint . --max-warnings 0",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {    
+    "@rk/node": "workspace:@rk/node-v0.2.0@*",
+    "@rk/port": "workspace:@rk/port-v0.6.0@*",
+    "@rk/mantine-old": "workspace:*",
+    "@rk/mantine-v0.2.0": "workspace:*",
+    "@nodes/image": "workspace:*"
+  },
+  "devDependencies": {
+    "@rk/typescript-config": "workspace:*",
+    "@rk/eslint-config": "workspace:*",
+    "eslint": "8.56.0",
+    "@rspack/cli": "0.4.5",
+    "rspack-manifest-plugin": "5.0.0-alpha0",
+    "typescript": "5.3.3"
+  }
+}

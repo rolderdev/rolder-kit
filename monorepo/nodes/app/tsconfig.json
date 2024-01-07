@@ -1,0 +1,5 @@
+{
+  "extends": "@rk/typescript-config/react-library.json",
+  "include": ["./src", "appNode.ts"],
+  "exclude": ["dist", "build", "node_modules"]
+}

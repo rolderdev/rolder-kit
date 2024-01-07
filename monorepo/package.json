@@ -1,20 +1,19 @@
 {
-  "name": "rolder-kit",
   "private": true,
-  "version": "0.26.0",
-  "workspaces": [
-    "packages/*"
-  ],
-  "dependencies": {
-    "@noodl/noodl-sdk": "0.5.4"
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --concurrency 50",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean & rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo run build --filter=docs^... && changeset publish"
   },
   "devDependencies": {
-    "react": "18.2.0",
-    "@rspack/core": "0.4.5",
-    "@rspack/cli": "0.4.5",
-    "rspack-manifest-plugin": "5.0.0-alpha0",
-    "@types/react": "18.2.45",
-    "@types/react-dom": "18.2.18",
-    "typescript": "5.3.3"
-  }
+    "@changesets/cli": "2.27.1",
+    "prettier": "3.1.1",
+    "turbo": "1.11.2"
+  },
+  "packageManager": "pnpm@8.9.0"
 }

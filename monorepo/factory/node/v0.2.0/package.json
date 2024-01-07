@@ -1,0 +1,22 @@
+{
+  "name": "@rk/node-v0.2.0",
+  "main": "node.tsx",
+  "types": "node.tsx",
+  "type": "module",
+  "dependencies": {
+    "@rk/port": "workspace:@rk/port-v0.6.0@*",    
+    "lodash": "4.17.21",
+    "just-typeof": "3.2.0"
+  },
+  "devDependencies": {
+    "@rk/typescript-config": "workspace:*",
+    "@rk/eslint-config": "workspace:*",
+    "@types/react": "18.2.46",
+    "@types/react-dom": "18.2.18",
+    "eslint": "8.56.0",
+    "@rspack/cli": "0.4.5",
+    "tsup": "8.0.1",
+    "typescript": "5.3.3",
+    "@types/lodash": "4.14.202"
+  }
+}
