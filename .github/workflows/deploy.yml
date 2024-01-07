@@ -1,24 +1,53 @@
-name: Release
-
+name: Deploy docs
+ 
 on:
   push:
-    branches:
-      - main
-
-concurrency: ${{ github.workflow }}-${{ github.ref }}
-
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
+ 
 jobs:
-  release:
-    name: Release
-    runs-on: ubuntu-latest
+  build:
+    name: Build and Test
+    timeout-minutes: 15
+    runs-on: ubuntu-latest    
+ 
     steps:
-      - name: Checkout Repo
+      - name: Check out code
         uses: actions/checkout@v3
-
-      - name: Setup Node.js 20.x
+        with:
+          fetch-depth: 2
+ 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6
+ 
+      - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
-          node-version: 20.x
+          node-version: 18
+          cache: 'pnpm'
+ 
+      - name: Install dependencies
+        run: pnpm install
+ 
+      - name: Build
+        run: pnpm build
 
-      - name: Install Dependencies
-        run: yarn
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: monorepo/apps/docs/doc_build
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
