@@ -14,11 +14,11 @@
 
 /*! ../internals/to-object */
 
+/*! ./toPropertyKey.js */
+
 /*! ../internals/document-create-element */
 
 /*! ../internals/own-keys */
-
-/*! ./objectWithoutPropertiesLoose.js */
 
 /*! ../internals/descriptors */
 
@@ -33,8 +33,6 @@
 /*! ../internals/to-indexed-object */
 
 /*! ../internals/weak-map-basic-detection */
-
-/*! ./iterableToArray.js */
 
 /*! ../internals/uid */
 
@@ -66,6 +64,8 @@
 
 /*! ../internals/object-define-property */
 
+/*! ./toPrimitive.js */
+
 /*! ../internals/try-to-string */
 
 /*! ../internals/iterate */
@@ -73,8 +73,6 @@
 /*! ../internals/object-get-own-property-names */
 
 /*! ../internals/shared */
-
-/*! ./unsupportedIterableToArray.js */
 
 /*! ../internals/classof */
 
@@ -138,6 +136,8 @@
 
 /*! ../internals/is-null-or-undefined */
 
+/*! ./nonIterableSpread.js */
+
 /*! ../internals/async-iterator-close */
 
 /*! ../internals/object-keys-internal */
@@ -147,8 +147,6 @@
 /*! ../internals/get-iterator-direct */
 
 /*! ../internals/object-get-own-property-descriptor */
-
-/*! ./arrayWithoutHoles.js */
 
 /*! ../internals/classof-raw */
 
@@ -212,8 +210,6 @@
 
 /*! ../internals/require-object-coercible */
 
-/*! ./arrayLikeToArray.js */
-
 /*! ../internals/function-uncurry-this */
 
 /*! ../internals/global */
@@ -270,8 +266,6 @@
 
 /*! ../internals/object-get-prototype-of */
 
-/*! ./toPropertyKey.js */
-
 /*! ../internals/document-create-element */
 
 /*! ../internals/well-known-symbol */
@@ -283,6 +277,10 @@
 /*! ../internals/an-object */
 
 /*! ../internals/is-callable */
+
+/*! ./typeof.js */
+
+/*! ./typeof.js */
 
 /*! ../internals/function-call */
 
@@ -323,8 +321,6 @@
 /*! ../internals/fails */
 
 /*! ../internals/an-object */
-
-/*! ./toPrimitive.js */
 
 /*! ../internals/function-call */
 
@@ -385,8 +381,6 @@
 /*! ../internals/to-string */
 
 /*! ../internals/well-known-symbol */
-
-/*! ./nonIterableSpread.js */
 
 /*! ../internals/v8-prototype-define-bug */
 
@@ -490,11 +484,15 @@
 
 /*! ../internals/is-callable */
 
+/*! ./objectWithoutPropertiesLoose.js */
+
 /*! ../internals/fails */
 
 /*! ../internals/global */
 
 /*! ../internals/is-callable */
+
+/*! ./iterableToArray.js */
 
 /*! ../internals/fails */
 
@@ -532,15 +530,13 @@
 
 /*! ../internals/global */
 
+/*! ./unsupportedIterableToArray.js */
+
 /*! ../internals/is-object */
 
 /*! ../internals/is-callable */
 
-/*! ./typeof.js */
-
 /*! ../internals/object-property-is-enumerable */
-
-/*! ./typeof.js */
 
 /*! ../internals/get-method */
 
@@ -587,6 +583,8 @@
 /*! ../internals/global */
 
 /*! ../internals/an-object */
+
+/*! ./arrayWithoutHoles.js */
 
 /*! ../internals/to-string */
 
@@ -647,6 +645,8 @@
 /*! ../internals/fails */
 
 /*! ../internals/shared-key */
+
+/*! ./arrayLikeToArray.js */
 
 /*! ../internals/a-callable */
 

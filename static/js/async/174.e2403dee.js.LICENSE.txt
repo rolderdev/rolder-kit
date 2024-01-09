@@ -1,3 +1,5 @@
+/*! ../../configurator/params/sizes */
+
 /*! ../../configurator/SizeUnit */
 
 /*! @mantine/core */
@@ -14,9 +16,9 @@
 
 /*! ../../../../../src/elements/dataDisplay/Image */
 
-/*! core-js/modules/esnext.iterator.constructor.js */
-
 /*! @mdx-js/react */
+
+/*! core-js/modules/esnext.iterator.constructor.js */
 
 /*! @mantine/core */
 
@@ -45,5 +47,3 @@
 /*! react */
 
 /*! @tabler/icons-react */
-
-/*! ../../configurator/params/sizes */
