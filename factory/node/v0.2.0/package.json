@@ -4,7 +4,8 @@
   "types": "node.tsx",
   "type": "module",
   "dependencies": {
-    "@rk/port": "workspace:@rk/port-v0.6.0@*",    
+    "@rk/port": "workspace:@rk/port-v0.6.0@*",
+    "@rk/icons": "workspace:@rk/icons-v0.3.0@*",
     "lodash": "4.17.21",
     "just-typeof": "3.2.0"
   },

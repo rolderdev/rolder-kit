@@ -1,5 +1,5 @@
-import { isEmpty } from "lodash"
-import { GraphModel, GraphModelNode, JsNodeDef, JsVersions, NodeColor, NodeContext } from "../../../types"
+import { isNil } from "lodash"
+import { GraphModel, GraphModelNode, JsNodeDef, NodeVersions, NodeColor, NodeContext } from "../../../types"
 import { clearWarning, hasWarings, sendWarning } from "../funcs/warnings"
 import getJsNodePorts from "./getJsNodePorts"
 import typeOf from "just-typeof"
@@ -9,7 +9,7 @@ type Params = {
     propsFunction?: boolean
 }
 
-export const jsNode = (nodeName: string, versions: JsVersions, params: Params) => {
+export const jsNode = (nodeName: string, versions: NodeVersions, params: Params) => {
     const nodeDef: JsNodeDef = {
         name: `rolder-kit.${nodeName}`,
         displayName: nodeName,
@@ -20,7 +20,7 @@ export const jsNode = (nodeName: string, versions: JsVersions, params: Params) =
             this.scheduleAfterInputsHaveUpdated(() => {
                 const version = this._internal.version
                 const inputs = versions[version]?.inputs
-                inputs?.filter(i => !isEmpty(i.default)).forEach(nodePort => {
+                inputs?.filter(i => !isNil(i.default)).forEach(nodePort => {
                     this.setValue && this.setValue(nodePort.name, this._internal[nodePort.name])
                 })
             })
@@ -41,7 +41,7 @@ export const jsNode = (nodeName: string, versions: JsVersions, params: Params) =
                                 .forEach(nodePort => {
                                     const n = nodePort.name
                                     const dn = nodePort.displayName
-                                    if (isEmpty(this._internal[n]))
+                                    if (isNil(this._internal[n]))
                                         sendWarning(this.model, this.context, dn, `Empty input from connection: "${dn}"`)
                                     else clearWarning(this.model, this.context, dn)
                                 })
@@ -62,9 +62,9 @@ export const jsNode = (nodeName: string, versions: JsVersions, params: Params) =
                 const version = this._internal.version
                 const inputs = versions[version]?.inputs
                 const nodePort = inputs?.find(i => i.name === inputName)
-                if (isEmpty(value)) {
+                if (isNil(value)) {
                     // default
-                    if (!isEmpty(nodePort?.default)) this._internal[inputName] = nodePort?.default
+                    if (!isNil(nodePort?.default)) this._internal[inputName] = nodePort?.default
                     else delete this._internal[inputName]
                 } else this._internal[inputName] = value
             },

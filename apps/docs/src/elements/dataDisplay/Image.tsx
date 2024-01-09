@@ -45,7 +45,7 @@ export default function (props: any) {
                     onChange={(size, unit) => setProps(prev => ({ ...prev, height: size ? size + unit : undefined }))}
                 />
                 <Switch
-                    label='With placeholder (withPlaceholder)'
+                    label='Placeholder (withPlaceholder)'
                     checked={p.withPlaceholder}
                     onChange={v => setProps(prev => ({ ...prev, withPlaceholder: v.target.checked }))}
                 />

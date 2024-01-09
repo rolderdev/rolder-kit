@@ -1,3 +1,5 @@
+import { MantineTheme } from '@mantine/core'
+
 type DbClass = {
     version: number
 }
@@ -22,16 +24,16 @@ export type RolderType = {
             dateFormat: string
         }
         colorScheme: 'light' | 'dark',
-        mantineTheme?: any
+        mantineTheme?: MantineTheme
     }
     dbClasses?: {
         [x: string]: DbClass
-    }    
+    }
     user: any
 }
 
 export type RItem = {
-    id: string    
+    id: string
     content?: { [key: string]: any }
     states?: { [key: string]: any }
     [key: string]: {

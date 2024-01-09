@@ -3,13 +3,14 @@ import { BaseReactProps } from '@rk/node'
 import { RolderType } from '@rk/types'
 
 export type CompProps = BaseReactProps & {
-    appLoaderColor?: string
-    colorScheme: ColorScheme | 'auto'    
+  appLoader?: boolean
+  appLoaderColor?: string
+  colorScheme: ColorScheme | 'auto'
 }
 
 declare global {
-    interface Window {
-      R: RolderType
-      Noodl: any    
-    }
+  interface Window {
+    R: RolderType
+    Noodl: any
   }
+}

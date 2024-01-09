@@ -2,12 +2,22 @@ import clone from "just-clone";
 import { NodePort } from "../../types";
 import data from "../ports/data";
 import style from "../ports/style";
+import dimensions from "../ports/dimensions";
+import advanced from "../ports/advanced";
 
-export const ports = [...data, ...style]
+export const ports = [...advanced, ...data, ...style, ...dimensions]
 export type PortName = typeof ports[number]['name']
 
 export function getPort<Type extends NodePort>(nodePort: Type) {
-    return { ...nodePort, tooltip: nodePort.name }
+    let defaultValue = nodePort.default
+    const md = nodePort.customs?.mantineDefault
+    if (md) {
+        const defaultProps = window.R.params.mantineTheme?.components[md.comp]?.defaultProps        
+        if (defaultProps && typeof defaultProps !== 'function') defaultValue = defaultProps?.[md.prop]
+        else defaultValue = undefined
+    }
+
+    return { ...nodePort, default: defaultValue, tooltip: nodePort.name }
 }
 
 export function getPorts(plug: 'input' | 'output', portNames: PortName[], requiredEditorPorts?: PortName[]) {

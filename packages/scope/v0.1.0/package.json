@@ -1,0 +1,17 @@
+{
+  "name": "@rk/scope-v0.1.0",
+  "main": "scope.ts",
+  "types": "scope.ts",
+  "type": "module",
+  "dependencies": {
+    "bunshi": "2.0.2",
+    "nanostores": "0.9.5"
+  },
+  "devDependencies": {
+    "@rk/types": "workspace:@rk/types-v0.1.0@*",
+    "@rk/typescript-config": "workspace:*",
+    "@rk/eslint-config": "workspace:*",
+    "eslint": "8.56.0",
+    "typescript": "5.3.3"
+  }
+}

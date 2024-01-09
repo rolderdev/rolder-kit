@@ -6,13 +6,15 @@ import BounceLoader from "react-spinners/BounceLoader"
 import { CompProps } from "./types"
 import { sendOutput, sendSignal } from "@rk/node"
 import convertColor from "@rk/convertColor"
-//import { deepMap } from "nanostores"
+
+const urlParams = new URLSearchParams(window.location.search)
+const debug = parseInt(urlParams.get('debug') || '0')
+import rKitJson from '../../../package.json'
 
 //const store = createStore()
-//export const hack = deepMap<{ [noodlNodeId: string]: boolean }>({})
 
 export default forwardRef(function (props: CompProps, ref) {
-  const { project, projectVersion, projectDefaults, mantineTheme } = window.Noodl.getProjectSettings()
+  const { project, projectVersion, projectDefaults } = window.Noodl.getProjectSettings()
 
   useEffect(() => {
     const savedProjectVersion = localStorage.getItem('projectVersion')
@@ -23,11 +25,12 @@ export default forwardRef(function (props: CompProps, ref) {
     }
   }, [])
 
+  window.R.env = { rolderKit: `${rKitJson.version}` }
+  window.R.states = { debug }
   window.R.env.project = project
   window.R.env.projectVersion = projectVersion
   window.R.params.defaults = projectDefaults && eval(projectDefaults)?.[0]
-  window.R.params.mantineTheme = mantineTheme && eval(mantineTheme)?.[0]
-
+  
   const [backendInited, setBackendInited] = useState(false)
   window.Noodl.Events.on("backendInited", () => setBackendInited(true))
 
@@ -49,37 +52,32 @@ export default forwardRef(function (props: CompProps, ref) {
   useImperativeHandle(ref, () => ({
     setColorScheme() {
       if (cs !== 'auto') {
-        // if (!hack.get()[noodlNode.id]) hack.setKey(noodlNode.id, true)
-        //else {
         setColorScheme(cs)
         localStorage.setItem('mantine-color-scheme', cs)
         sendOutput(noodlNode, 'colorScheme', cs)
-        setTimeout(() => sendSignal(noodlNode, 'colorSchemeChanged'))
-        //hack.setKey(noodlNode.id, false)
-        //}
+        sendSignal(noodlNode, 'colorSchemeChanged')
       }
     },
     toggleColorScheme() {
       if (cs !== 'auto') {
-        //if (!hack.get()[noodlNode.id]) hack.setKey(noodlNode.id, true)
-        //else {
         const c = colorScheme === 'light' ? 'dark' : 'light'
         setColorScheme(c)
         localStorage.setItem('mantine-color-scheme', c)
         sendOutput(noodlNode, 'colorScheme', c)
-        setTimeout(() => sendSignal(noodlNode, 'colorSchemeChanged'))
-        //hack.setKey(noodlNode.id, false)
-        //}
+        sendSignal(noodlNode, 'colorSchemeChanged')
       }
     },
   }), [cs, colorScheme, setColorScheme])
 
   return <div style={{ width: '100%', height: '100%', backgroundColor: convertColor(colorScheme === 'dark' ? 'dark.7' : 'gray.0') }}>
     <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-30px', marginLeft: '-30px' }}>
-      <BounceLoader
-        color={props.appLoaderColor}
-        loading={!backendInited}
-      />
+      {props.appLoader
+        ? <BounceLoader
+          color={props.appLoaderColor}
+          loading={!backendInited}
+        />
+        : null
+      }
     </div>
     {window.R.env.project && props.children}
   </div>

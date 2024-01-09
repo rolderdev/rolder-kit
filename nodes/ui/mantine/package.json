@@ -8,8 +8,7 @@
   },
   "dependencies": {    
     "@rk/node": "workspace:@rk/node-v0.2.0@*",
-    "@rk/port": "workspace:@rk/port-v0.6.0@*",
-    "@rk/mantine-old": "workspace:*",
+    "@rk/port": "workspace:@rk/port-v0.6.0@*",    
     "@rk/mantine-v0.2.0": "workspace:*",
     "@nodes/image": "workspace:*"
   },

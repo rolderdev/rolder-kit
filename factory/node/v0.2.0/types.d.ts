@@ -32,12 +32,11 @@ export type JsVersions = {
     [key: string]: {
         hashTag?: 'experimental' | 'deprecated'
         inputs?: NodePort[]
-        outputs?: NodePort[]
-        onInputChange?: any
-        module?: any
-        onDelete?: any
+        outputs?: NodePort[]        
+        module?: any        
     }
 }
+
 export type ReactNodeDef = {
     name: string
     displayName: string
@@ -45,7 +44,7 @@ export type ReactNodeDef = {
     allowChildren: boolean
     props?: any
     currentPorts?: NodePort[] | {}
-    initialize(): void
+    //initialize(): void
     getReactComponent(): any
     setValue?(inputName: string, value: any): void
     scheduleAfterInputsHaveUpdated?: any
