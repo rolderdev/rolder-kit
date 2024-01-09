@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "Setup",
+    "label": "Setup"
+  },
+  {
+    "type": "file",
+    "name": "App",
+    "label": "App"
+  },
+  {
+    "type": "file",
+    "name": "Mantine",
+    "label": "Mantine"
+  }
+]

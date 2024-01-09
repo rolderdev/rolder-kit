@@ -41,7 +41,7 @@ import ButtonNode_f0_1_0 from "./elements/buttons/button/fabricVersions/v0.1.0/B
 // dataDisplay
 import IconNode_f0_1_0 from "./elements/dataDisplay/icon/fabricVersions/v0.1.0/IconNode";
 import QRCodeNode_f0_1_0 from "./elements/dataDisplay/qrCode/fabricVersions/v0.1.0/QRCodeNode";
-import ImageNode_f0_1_0 from "./elements/dataDisplay/image/fabricVersions/v0.1.0/ImageNode";
+//import ImageNode_f0_1_0 from "./elements/dataDisplay/image/fabricVersions/v0.1.0/ImageNode";
 import BadgeNode_f0_1_0 from "./elements/dataDisplay/badge/fabricVersions/v0.1.0/BadgeNode";
 // feedback
 import BarLoaderNode_f0_1_0 from "./elements/feedback/barLoader/fabricVersions/v0.1.0/BarLoaderNode";
@@ -90,7 +90,7 @@ const rNodesStore = [
     // buttons
     ActionIconNode_f0_1_0, ButtonNode_f0_1_0,
     // dataDisplay
-    IconNode_f0_1_0, QRCodeNode_f0_1_0, ImageNode_f0_1_0, BadgeNode_f0_1_0,
+    IconNode_f0_1_0, QRCodeNode_f0_1_0, BadgeNode_f0_1_0,
     // feedback
     BarLoaderNode_f0_1_0, LoaderNode_f0_1_0, IndicatorNode_f0_1_0,
     // inputs

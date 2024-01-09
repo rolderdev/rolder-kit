@@ -1,5 +1,5 @@
 import getEnum from "../funcs/getEnum";
 
-export default {
+export const enums = {
     sizes: getEnum(['xs', 'sm', 'md', 'lg', 'xl'], true)
 }

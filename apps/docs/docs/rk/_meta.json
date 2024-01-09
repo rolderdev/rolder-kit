@@ -1,14 +1,28 @@
 [
-  {   
-      "type": "file",
-      "name": "index",
-      "label": "Intro"      
+  {
+    "type": "file",
+    "name": "index",
+    "label": "Intro"
   },
-  {   
-      "type": "dir",
-      "name": "ui",
-      "label": "UI",
-      "collapsible": true,
-      "collapsed": true
+  {
+    "type": "dir",
+    "name": "project",
+    "label": "Project",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "style",
+    "label": "Style",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "ui",
+    "label": "UI",
+    "collapsible": true,
+    "collapsed": true
   }
 ]

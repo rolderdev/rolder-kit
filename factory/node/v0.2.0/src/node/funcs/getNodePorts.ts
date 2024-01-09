@@ -1,7 +1,8 @@
 import { NodePort } from '@rk/port'
 import { GraphModelNode, NodeContext } from '../../../types'
-import { isEmpty } from "lodash"
+import { isEmpty, isNil } from "lodash"
 import { clearWarning, sendWarning } from "./warnings"
+import getProps from './getProps'
 
 export default function (node: GraphModelNode, context: NodeContext, allNodePorts: NodePort[], currentNodePorts: NodePort[]) {
     const resultNodePorts: NodePort[] = []
@@ -13,6 +14,9 @@ export default function (node: GraphModelNode, context: NodeContext, allNodePort
         if (isEmpty(node.parameters[n]) && isEmpty(nodePort.default)) sendWarning(node, context, dn, `Specify required input: "${dn}"`)
         else clearWarning(node, context, dn)
     })
+
+    // params as props
+    node.parameters = getProps(node, context, allNodePorts, node.parameters)
 
     currentNodePorts.forEach((nodePort, idx) => {
         //nodePort.index = 1000 + idx
@@ -33,7 +37,11 @@ export default function (node: GraphModelNode, context: NodeContext, allNodePort
                 resultNodePorts.push(nodePort)
             } break */
             default: {
-                resultNodePorts.push(nodePort)
+                // filter disabled dependencies
+                if (nodePort.customs?.dependsOn) {
+                    if (nodePort.customs.dependsOn(node.parameters)) resultNodePorts.push(nodePort)
+                } else resultNodePorts.push(nodePort)
+
                 /* const isDependent = nodePort.dependsOn
                 // first set it self, if it is not dependent
                 if (!isDependent) resultNodePorts.push(nodePort)

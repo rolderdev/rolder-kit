@@ -9,10 +9,10 @@ import convertColor from '@rk/convertColor'
 export default forwardRef(function (props: CompProps) {
     const { notificationsPosition } = props
 
-    const [colorScheme, setColorScheme] = useState<ColorScheme>(window.R.params.colorScheme)    
+    const [colorScheme, setColorScheme] = useState<ColorScheme>(window.R.params.colorScheme)
     window.Noodl.Events.on("colorSchemeChanged", () => setColorScheme(window.R.params.colorScheme))
-    const backgroundColor = convertColor(colorScheme === 'dark' ? 'dark.7' : 'gray.0')    
-    const mantineTheme  = window.R.params.mantineTheme
+    const backgroundColor = convertColor(colorScheme === 'dark' ? 'dark.7' : 'gray.0')
+    const mantineTheme = window.R.params.mantineTheme
 
     return (
         <MantineProvider
@@ -22,13 +22,6 @@ export default forwardRef(function (props: CompProps) {
             theme={{
                 colorScheme,
                 defaultRadius: 'md',
-                components:{
-                    Image: {
-                        defaultProps:{
-                            radius: 'xl'
-                        }
-                    }
-                },
                 globalStyles: () => ({
                     body: {
                         backgroundColor: backgroundColor,

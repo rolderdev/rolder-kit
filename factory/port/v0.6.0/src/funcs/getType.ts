@@ -1,6 +1,6 @@
 import getEnum from "./getEnum"
 
-export type PortType = '*' | 'string' | 'number' | 'boolean' | 'array' | 'signal' | 'proplist' | 'color'
+export type PortType = ExpandedType | '*' | 'string' | 'number' | 'boolean' | 'array' | 'signal' | 'proplist' | 'color'
 export type ExpandedType = {
     name: string
     allowEditOnly?: boolean
@@ -9,7 +9,8 @@ export type ExpandedType = {
     units?: string[]
     defaultUnit?: Units
 }
-type Units = 'rem' | '%' | 'px'
+type Units = '%' | 'rem' | 'px'
+export const defaultUnits = ['%', 'rem', 'px']
 
 export function getEnumType(enums: ExpandedType['enums'], only?: 'editor' | 'connection') {
     let expandedType: ExpandedType = { name: 'enum', enums }

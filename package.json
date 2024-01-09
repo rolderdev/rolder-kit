@@ -1,7 +1,9 @@
 {
   "private": true,
+  "version": "v0.28.0",
   "scripts": {
     "build": "turbo run build",
+    "noodl": "turbo run build --filter=!docs",
     "dev": "turbo run dev --concurrency 50",
     "lint": "turbo run lint",
     "clean": "turbo run clean & rm -rf node_modules",
