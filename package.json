@@ -1,21 +1,15 @@
 {
-  "private": true,
-  "version": "v0.28.0",
+  "name": "rolder-kit",
+  "version": "v0.29.0",
+  "private": true,  
   "scripts": {
     "build": "turbo run build",
-    "noodl": "turbo run build --filter=!docs",
+    "noodl": "turbo run build --force --filter=!docs",
     "dev": "turbo run dev --concurrency 50",
-    "lint": "turbo run lint",
-    "clean": "turbo run clean & rm -rf node_modules",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "turbo run build --filter=docs^... && changeset publish"
+    "clean": "turbo run clean & rm -rf node_modules"
   },
-  "devDependencies": {
-    "@changesets/cli": "2.27.1",
-    "prettier": "3.1.1",
+  "devDependencies": {    
     "turbo": "1.11.3"
   },
-  "packageManager": "pnpm@8.9.0"
+  "packageManager": "pnpm@8.14.1"
 }

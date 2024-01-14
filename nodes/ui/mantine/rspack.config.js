@@ -7,11 +7,15 @@ const manifestPlugin = require('rspack-manifest-plugin').WebpackManifestPlugin
 var path = require('path')
 const pJson = require('./package.json')
 var outputPath = path.resolve(__dirname, `./dist`)
+const mfConfig = require('./modulefederation.config')
 
-module.exports = {
+module.exports = {    
     context: __dirname,
     stats: { preset: 'errors-only', timings: true },
-    entry: { [pJson.name]: `./mantineNode` },
+    entry: { [pJson.name]: `./mantine.ts` },
+    resolve: {
+        extensions: ['...', '.tsx', '.ts']
+    },
     output: {
         path: outputPath,
         filename: '[contenthash].js',
@@ -28,25 +32,28 @@ module.exports = {
                 return { main: files[0].path.replace('auto/', '') }
             }
         }),
+        new rspack.container.ModuleFederationPlugin(mfConfig)
     ],
     module: {
         rules: [
             {
                 test: /\.ts$/,
-                exclude: /node_modules/,
+                exclude: /[\\/]node_modules[\\/]/,
                 loader: 'builtin:swc-loader',
                 options: {
                     jsc: {
                         parser: {
                             syntax: "typescript"
                         }
+                    },
+                    env: {
+                        targets: "Chrome >= 80"
                     }
-                },
-                type: 'javascript/auto',
+                }
             },
             {
                 test: /\.tsx$/,
-                exclude: /node_modules/,
+                exclude: /[\\/]node_modules[\\/]/,
                 loader: 'builtin:swc-loader',
                 options: {
                     jsc: {
@@ -55,12 +62,11 @@ module.exports = {
                             tsx: true
                         }
                     }
-                },
-                type: 'javascript/auto',
+                }
             },
             {
                 test: /\.jsx$/,
-                exclude: /node_modules/,
+                exclude: /[\\/]node_modules[\\/]/,
                 loader: 'builtin:swc-loader',
                 options: {
                     jsc: {

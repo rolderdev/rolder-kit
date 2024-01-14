@@ -1,22 +1,22 @@
 {
-  "name": "@nodes/app",  
+  "name": "@nodes/app",
   "scripts": {
     "build": "rspack build --mode=production",
     "dev": "rspack build --mode=development --watch",
     "lint": "eslint . --max-warnings 0",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
-  "dependencies": {    
-    "@rk/node": "workspace:@rk/node-v0.2.0@*",
-    "@rk/port": "workspace:@rk/port-v0.6.0@*",
-    "@rk/app-v1.4.0": "workspace:*"    
+  "dependencies": {
+    "@shared/node": "workspace:@shared/node-v0.2.0@*",
+    "@shared/port": "workspace:@shared/port-v0.6.0@*",
+    "just-template": "2.2.0",
+    "just-safe-get": "4.2.0"
   },
   "devDependencies": {
-    "@rk/typescript-config": "workspace:*",
-    "@rk/eslint-config": "workspace:*",
-    "eslint": "8.56.0",
-    "@rspack/cli": "0.4.5",
+    "@rspack/core": "0.5.0",
+    "@rspack/cli": "0.5.0",
     "rspack-manifest-plugin": "5.0.0-alpha0",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "@shared/typescript-config": "workspace:*"
   }
 }

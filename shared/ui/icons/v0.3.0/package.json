@@ -1,0 +1,16 @@
+{
+  "name": "@shared/icons-v0.3.0",
+  "main": "icons.ts",
+  "types": "icons.ts",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@tabler/icons-react": "2.46.0"
+  },
+  "devDependencies": {
+    "typescript": "5.3.3",
+    "@shared/typescript-config": "workspace:*"
+  }
+}

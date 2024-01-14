@@ -1,0 +1,24 @@
+{
+  "name": "@shared/mantine-v0.2.0",
+  "main": "mantine.tsx",
+  "types": "mantine.tsx",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@shared/convertColor": "workspace:@shared/convert-color-v0.3.0@*",
+    "@mantine/core": "6.0.21",
+    "@mantine/dates": "6.0.21",
+    "@mantine/notifications": "6.0.21",
+    "dayjs": "1.11.10"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@shared/node": "workspace:@shared/node-v0.2.0@*",
+    "@shared/types": "workspace:@shared/types-v0.1.0@*",
+    "@types/react": "16.9.49",
+    "@types/react-dom": "16.9.8",
+    "typescript": "5.3.3"
+  }
+}

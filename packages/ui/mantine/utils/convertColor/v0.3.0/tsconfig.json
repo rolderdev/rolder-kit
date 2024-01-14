@@ -1,5 +1,0 @@
-{
-  "extends": "@rk/typescript-config/react-library.json",
-  "include": ["./src", "convertColor.ts", "types.d.ts"],
-  "exclude": ["dist", "build", "node_modules"]
-}

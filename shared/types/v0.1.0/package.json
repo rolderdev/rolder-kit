@@ -1,0 +1,14 @@
+{
+  "name": "@shared/types-v0.1.0",
+  "main": "types.d.ts",
+  "types": "types.d.ts",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "devDependencies": {
+    "@mantine/core": "6.0.21",
+    "kuzzle-sdk": "7.11.2",
+    "@shared/typescript-config": "workspace:*",
+    "typescript": "5.3.3"
+  }
+}

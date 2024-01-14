@@ -1,15 +1,18 @@
 {
   "name": "@nodes/image",
-  "main": "imageNode.ts",  
-  "dependencies": {    
-    "@rk/node": "workspace:@rk/node-v0.2.0@*",
-    "@rk/port": "workspace:@rk/port-v0.6.0@*",    
-    "@rk/image-v0.4.0": "workspace:*"
+  "main": "image.ts",
+  "types": "image.ts",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@shared/node": "workspace:@shared/node-v0.2.0@*",
+    "@shared/port": "workspace:@shared/port-v0.6.0@*"
   },
   "devDependencies": {
-    "@rk/typescript-config": "workspace:*",
-    "@rk/eslint-config": "workspace:*",
-    "eslint": "8.56.0",    
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "@shared/typescript-config": "workspace:*",
+    "@types/react": "16.9.49",
+    "@types/react-dom": "16.9.8"
   }
 }

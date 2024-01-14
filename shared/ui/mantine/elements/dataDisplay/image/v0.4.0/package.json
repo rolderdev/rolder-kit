@@ -1,0 +1,21 @@
+{
+  "name": "@shared/image-v0.4.0",
+  "main": "image.tsx",
+  "types": "image.tsx",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@mantine/core": "6.0.21",
+    "@shared/icons": "workspace:@shared/icons-v0.3.0@*",    
+    "@shared/port": "workspace:@shared/port-v0.6.0@*",
+    "@shared/scope": "workspace:@shared/scope-v0.1.0@*"
+  },
+  "devDependencies": {
+    "@shared/node": "workspace:@shared/node-v0.2.0@*",
+    "@types/react": "16.9.49",
+    "@types/react-dom": "16.9.8",
+    "typescript": "5.3.3",
+    "@shared/typescript-config": "workspace:*"
+  }
+}

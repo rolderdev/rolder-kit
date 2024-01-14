@@ -1,5 +1,6 @@
 packages:  
-  - "packages/**"
+  - "host/**"
+  - "remote/**"
   - "factory/**"
   - "nodes/**"
-  - "apps/**"
+  - "shared/**"
