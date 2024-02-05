@@ -57,8 +57,8 @@ export default forwardRef(function (props: TableCompProps200, ref) {
         sendSignal(noodlNode, 'table2ExpansionChanged')
     }, [expandedRecordIds])
     const expansionRow = Array.isArray(children)
-        ? children.filter(i => i.props.noodlNode.model.type.split('.')[1] === 'ExpansionRow')?.[0]
-        : children?.props.noodlNode.model.type.split('.')[1] === 'ExpansionRow'
+        ? children.filter(i => i.props.noodlNode.model?.type.split('.')[1] === 'ExpansionRow')?.[0]
+        : children?.props.noodlNode.model?.type.split('.')[1] === 'ExpansionRow'
             ? children
             : null
 

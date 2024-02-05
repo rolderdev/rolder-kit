@@ -1,7 +1,7 @@
 //import AppNode_f0_1_0 from "./app/fabricVersions/v0.1.0/AppNode";
 //import MantineNode_f0_1_0 from "./mantine/fabricVersions/v0.1.0/MantineNode";
 ///// organisms
-import AuthNode_f0_1_0 from "./organisms/auth/fabricVersions/v0.1.0/AuthNode";
+//import AuthNode_f0_1_0 from "./organisms/auth/fabricVersions/v0.1.0/AuthNode";
 // table
 import TableNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/TableNode";
 import ColumnFilterNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/v2.0.0/modules/columnFilter/fabricVersions/v0.1.0/ColumnFilterNode";
@@ -74,7 +74,7 @@ import ListNode_f0_1_0 from "./elements/typography/list/fabricVersions/v0.1.0/Li
 
 const rNodesStore = [
     ///// organisms
-    AuthNode_f0_1_0,
+    //AuthNode_f0_1_0,
     // table
     TableNode_f0_1_0, ColumnFilterNode_f0_1_0, ColumnCellNode_f0_1_0, ExpansionRowNode_f0_1_0,
     // appShell
@@ -98,7 +98,7 @@ const rNodesStore = [
     MultiSelectNode_f0_1_0, DatePickerInputNode_f0_1_0, MaskedInputNode_f0_1_0, TextareaNode_f0_1_0, CheckboxNode_f0_1_0,
     NumberInputNode_f0_1_0,
     // miscellaneous
-    DividerNode_f0_1_0, WebCameraNode_f0_1_0, QRScannerNode_f0_1_0, DropZoneNode_f0_1_0,
+    WebCameraNode_f0_1_0, DividerNode_f0_1_0, QRScannerNode_f0_1_0, DropZoneNode_f0_1_0,
     // navigation
     NavLinkNode_f0_1_0,
     // typography

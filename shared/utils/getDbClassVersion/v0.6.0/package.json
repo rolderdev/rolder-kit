@@ -9,7 +9,6 @@
   "dependencies": {},
   "devDependencies": {
     "@shared/types": "workspace:@shared/types-v0.1.0@*",
-    "@shared/typescript-config": "workspace:*",
-    "typescript": "5.3.3"
+    "@shared/typescript-config": "workspace:*"    
   }
 }

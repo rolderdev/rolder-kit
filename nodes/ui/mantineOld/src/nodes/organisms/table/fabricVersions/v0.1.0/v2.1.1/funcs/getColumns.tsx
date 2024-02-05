@@ -17,15 +17,15 @@ export default function (
 ) {
     // ColumnFilter
     const columnFilters = Array.isArray(children)
-        ? children.filter(i => i.props.noodlNode.model.type.split('.')[1] === 'ColumnFilter')
-        : children?.props.noodlNode.model.type.split('.')[1] === 'ColumnFilter'
+        ? children.filter(i => i.props.noodlNode.model?.type.split('.')[1] === 'ColumnFilter')
+        : children?.props.noodlNode.model?.type.split('.')[1] === 'ColumnFilter'
             ? [children]
             : null
 
     // ColumnCell
     const columnCells = Array.isArray(children)
-        ? children.filter(i => i.props.noodlNode.model.type.split('.')[1] === 'ColumnCell')
-        : children?.props.noodlNode.model.type.split('.')[1] === 'ColumnCell'
+        ? children.filter(i => i.props.noodlNode.model?.type.split('.')[1] === 'ColumnCell')
+        : children?.props.noodlNode.model?.type.split('.')[1] === 'ColumnCell'
             ? [children]
             : []
 

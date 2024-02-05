@@ -5,11 +5,11 @@ import { ScopeProvider, useMolecule } from "bunshi/react";
 import { FormHookMolecule, FormHookScope, FormValues } from "./useForm";
 import { useSetAtom } from "jotai";
 
-export default forwardRef(function (props: any) {
+export default forwardRef(function (props: any) {    
     const formId = Symbol()
     const formHookAtoms = useMolecule(FormHookMolecule, { withScope: [FormHookScope, formId] })
     const setFormHook = useSetAtom(formHookAtoms.setFormHook)
-
+    
     function Form(formScheme: FormValues) {
         const form = useForm<FormValues>(formScheme)
         setFormHook(form)

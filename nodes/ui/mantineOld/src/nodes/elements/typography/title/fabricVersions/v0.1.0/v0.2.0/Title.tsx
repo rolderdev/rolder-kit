@@ -8,7 +8,7 @@ export default forwardRef(function (props: any) {
     const [value, setValue] = useState('')
 
     useShallowEffect(() => {
-        const source = props.dataSource === 'item' ? getValue.v7(props.itemSource, props.sourceField) : props.valueSource
+        const source = props.dataSource === 'item' ? getValue.v8(props.itemSource, props.sourceField) : props.valueSource
         if (source) switch (props.textFormat) {
             case 'none': setValue(source); break
             case 'number': setValue(numbro(source || 0).format(props.numberFormat)); break

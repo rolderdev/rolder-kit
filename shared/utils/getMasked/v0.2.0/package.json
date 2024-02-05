@@ -1,0 +1,14 @@
+{
+  "name": "@shared/get-masked-v0.2.0",
+  "main": "getMasked.ts",
+  "types": "getMasked.ts",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "imask": "7.3.0"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*"
+  }
+}

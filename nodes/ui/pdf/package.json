@@ -1,0 +1,26 @@
+{
+  "name": "@nodes/pdf",
+  "scripts": {
+    "build": "rspack build --mode=production",
+    "dev": "rspack build --mode=development --env=noodlDev",
+    "lint": "eslint . --max-warnings 0",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@shared/port": "workspace:@shared/port-v0.6.0@*",
+    "@nodes/pdf-document": "workspace:*",
+    "@nodes/pdf-page": "workspace:*",
+    "@nodes/pdf-view": "workspace:*",
+    "@nodes/pdf-text": "workspace:*",
+    "@nodes/pdf-image": "workspace:*",
+    "@nodes/pdf-viewer": "workspace:*",
+    "@nodes/pdf-table": "workspace:*"
+  },
+  "devDependencies": {
+    "@rspack/core": "0.5.3",
+    "@rspack/cli": "0.5.3",
+    "rspack-manifest-plugin": "5.0.0-alpha0",
+    "@shared/typescript-config": "workspace:*"
+  }
+}

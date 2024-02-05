@@ -4,7 +4,6 @@ import { atom } from "nanostores";
 
 export const TableCellScope = createScope<unknown>(undefined);
 export const TableCellMolecule = molecule((_, scope) => {
-    scope(TableCellScope)
-    const item = atom<RItem | undefined>()
-    return { item }
+    scope(TableCellScope)    
+    return atom<RItem | undefined>()
 })

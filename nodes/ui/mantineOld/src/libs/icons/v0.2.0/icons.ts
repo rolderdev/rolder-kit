@@ -6,7 +6,7 @@ import {
     IconBriefcase2, IconX, IconDownload, IconChevronUp, IconThumbUp, IconThumbDown, IconCircleCheck, IconReportAnalytics, IconRepeat,
     IconSquareNumber1, IconUrgent, IconUsers, IconQrcode, IconMinus, IconSwitchVertical, IconHelp, IconFolderPlus, IconClipboard,
     IconCubePlus, IconLayersSubtract, IconKey, IconSend, IconArrowLeft, IconArrowBackUp, IconArrowUp, IconArrowsVertical, Icon, IconPrinter,
-    IconRobot, IconSun, IconMoon,
+    IconRobot, IconSun, IconMoon, IconCaretRight, IconCamera,
 } from '@tabler/icons-react'
 
 export default function icons(iconName: string) {
@@ -18,7 +18,7 @@ export default function icons(iconName: string) {
         IconBriefcase2, IconX, IconDownload, IconChevronUp, IconThumbUp, IconThumbDown, IconCircleCheck, IconReportAnalytics, IconRepeat,
         IconSquareNumber1, IconUrgent, IconUsers, IconQrcode, IconMinus, IconSwitchVertical, IconHelp, IconFolderPlus, IconClipboard,
         IconCubePlus, IconLayersSubtract, IconKey, IconSend, IconArrowLeft, IconArrowBackUp, IconArrowUp, IconArrowsVertical, IconPrinter,
-        IconRobot, IconSun, IconMoon,
+        IconRobot, IconSun, IconMoon, IconCaretRight, IconCamera,
     }
     return icons[iconName] as Icon
 }

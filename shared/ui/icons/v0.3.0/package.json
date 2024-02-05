@@ -9,8 +9,7 @@
   "dependencies": {
     "@tabler/icons-react": "2.46.0"
   },
-  "devDependencies": {
-    "typescript": "5.3.3",
+  "devDependencies": {    
     "@shared/typescript-config": "workspace:*"
   }
 }

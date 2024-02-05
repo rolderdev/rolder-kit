@@ -1,16 +1,17 @@
 {
   "name": "@nodes/image",
-  "main": "image.ts",
-  "types": "image.ts",
+  "main": "imageNode.ts",
+  "types": "imageNode.ts",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
-    "@shared/node": "workspace:@shared/node-v0.2.0@*",
-    "@shared/port": "workspace:@shared/port-v0.6.0@*"
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@shared/port": "workspace:@shared/port-v0.6.0@*",
+    "@shared/image-v0.4.0": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "5.3.3",
+    
     "@shared/typescript-config": "workspace:*",
     "@types/react": "16.9.49",
     "@types/react-dom": "16.9.8"

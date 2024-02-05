@@ -7,40 +7,37 @@ import { CompProps } from "./types"
 import convertColor from '@shared/convertColor'
 import React from "react"
 
-function MantineError(title?: string, message?: string, autoClose?: boolean | number): void {
+function MantineError(title: string, message?: string, autoClose?: boolean | number): void {
     notifications.show({ title, message, color: 'red', autoClose: autoClose ? autoClose : false })
-    console.error(message)
 }
 
 export default forwardRef(function (props: CompProps) {
     const { notificationsPosition } = props
 
-    const [colorScheme, setColorScheme] = useState<ColorScheme>(window.R.params.colorScheme || 'light')
-    window.Noodl.Events.on("colorSchemeChanged", () => setColorScheme(window.R.params.colorScheme || 'light'))
+    const [colorScheme, setColorScheme] = useState<ColorScheme>(R.params.colorScheme || 'light')
+    Noodl.Events.on("colorSchemeChanged", () => setColorScheme(R.params.colorScheme || 'light'))
     const backgroundColor = convertColor(colorScheme === 'dark' ? 'dark.7' : 'gray.0')
-    const mantineTheme = window.R.params.mantineTheme
+    const mantineTheme = eval(Noodl.getProjectSettings().mantineTheme)?.[0]
 
-    window.R.libs.mantine = { MantineError }
+    R.libs.mantine = { MantineError }
 
-    return (
-        <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            withCSSVariables
-            theme={{
-                colorScheme,
-                defaultRadius: 'md',
-                globalStyles: () => ({
-                    body: {
-                        backgroundColor: backgroundColor,
-                    }
-                }),
-                ...mantineTheme
-            }}>
-            <DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 1 }} >
-                <Notifications position={notificationsPosition} />
-                {props.children}
-            </DatesProvider>
-        </MantineProvider >
-    )
+    return <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        withCSSVariables
+        theme={{
+            colorScheme,
+            datesLocale: 'ru',
+            globalStyles: () => ({
+                body: {
+                    backgroundColor: backgroundColor,
+                }
+            }),
+            ...mantineTheme
+        }}>
+        <DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 1 }} >
+            <Notifications position={notificationsPosition} />
+            {props.children}
+        </DatesProvider>
+    </MantineProvider >
 })

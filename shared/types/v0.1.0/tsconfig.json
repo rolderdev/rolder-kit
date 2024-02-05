@@ -1,7 +1,7 @@
 {
   "extends": "@shared/typescript-config/react-library.json",
   "include": [
-    "types.d.ts"
+    "types.d.ts"    
   ],
   "exclude": [
     "dist",

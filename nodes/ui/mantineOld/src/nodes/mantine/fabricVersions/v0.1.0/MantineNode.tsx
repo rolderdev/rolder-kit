@@ -13,4 +13,4 @@ const compVersions: CompVersions = {
 
 //===================================================================
 
-export default getReactNode('Mantine', compVersions, true)
+export default getReactNode('MantineOld', compVersions, true)

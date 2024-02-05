@@ -18,7 +18,7 @@ export default function (tableProps: TableCompProps, actionDef: ActionDef, row: 
     switch (type) {
         case 'ActionIcon': {
             const Icon = iconProps?.name && icons(iconProps.name)
-            const value = disabledSource && getValue.v7(row?.original, disabledSource)
+            const value = disabledSource && getValue.v8(row?.original, disabledSource)
             let disabled = false
             if (disabledSource) {
                 if (Array.isArray(value) && !value?.length) disabled = true

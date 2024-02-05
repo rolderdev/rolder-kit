@@ -1,10 +1,11 @@
 {
   "extends": "@shared/typescript-config/react-library.json",
   "include": [
+    "../../global.d.ts",
     "src/**/*",
     "*.d.ts",
     "*.ts",
-    "*.tsx"
+    "*.tsx",
   ],
   "exclude": [
     "dist",

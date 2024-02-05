@@ -8,5 +8,5 @@ export {
   IconCircleCheck, IconReportAnalytics, IconRepeat, IconSquareNumber1, IconUrgent, IconUsers, IconQrcode,
   IconMinus, IconSwitchVertical, IconHelp, IconFolderPlus, IconClipboard, IconCubePlus, IconLayersSubtract,
   IconKey, IconSend, IconArrowLeft, IconArrowBackUp, IconArrowUp, IconArrowsVertical, IconPrinter, IconRobot,
-  IconSun, IconMoon, IconChartBar,
+  IconSun, IconMoon, IconChartBar, IconCaretRight, IconCamera,
 } from '@tabler/icons-react'

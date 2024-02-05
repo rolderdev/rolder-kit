@@ -7,12 +7,11 @@ const manifestPlugin = require('rspack-manifest-plugin').WebpackManifestPlugin
 var path = require('path')
 const pJson = require('./package.json')
 var outputPath = path.resolve(__dirname, `./dist`)
-const mfConfig = require('./modulefederation.config')
 
-module.exports = {    
+module.exports = {
     context: __dirname,
     stats: { preset: 'errors-only', timings: true },
-    entry: { [pJson.name]: `./app.ts` },
+    entry: { [pJson.name]: `./appNode.ts` },
     resolve: {
         extensions: ['...', '.tsx', '.ts']
     },
@@ -31,9 +30,13 @@ module.exports = {
             generate(_, files) {
                 return { main: files[0].path.replace('auto/', '') }
             }
-        }),
-        new rspack.container.ModuleFederationPlugin(mfConfig)
+        })
     ],
+    experiments: {
+        rspackFuture: {
+            newTreeshaking: true,
+        },
+    },
     module: {
         rules: [
             {

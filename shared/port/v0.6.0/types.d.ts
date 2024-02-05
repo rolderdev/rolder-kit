@@ -1,4 +1,4 @@
-import { GroupName, PortName } from "./src/funcs/getPort"
+import { PortName } from "./src/funcs/getPort"
 import { ExpandedType, PortType } from "./src/funcs/getType"
 import { } from '@shared/types'
 
@@ -8,8 +8,7 @@ export type NodePort = {
   type: PortType
   name: string
   displayName: string
-  group: 'Project' | 'Version' | 'Scope' | 'Data' | 'Signals' | 'Params' | 'Style' | 'Loader' | 'Layout' | 'Dimensions' | 'Placeholder'
-  | 'Advanced' | 'States'
+  group: GroupName
   default?: string | boolean | number
   tooltip?: string
   customs?: {
@@ -20,7 +19,15 @@ export type NodePort = {
       comp: string
       prop: string
     }
+    addNodePorts?(value: any): NodePort[]
+    validate?(props: { [name: string]: any }): string | boolean
   }
 }
 
-export type OutputName = 'colorScheme' | 'colorSchemeChanged' | 'items' | 'fetching' | 'fetched'
+export type TypeName = '*' | 'string' | 'number' | 'boolean' | 'array' | 'signal' | 'proplist' | 'color' | 'object'
+export type GroupName = 'Project' | 'Version' | 'Scope' | 'Data' | 'Signals' | 'Params' | 'Style' | 'Loader' | 'Layout' |
+  'Dimensions' | 'Placeholder' | 'Advanced' | 'States' | 'Icon' | 'DB classes' | 'Query params' | 'References' |
+  'Backward references' | 'Search' | 'Search fields' | 'Pagination' | 'Form' | 'Output DB classes' | 'Fetch'
+export type OutputName = 'colorScheme' | 'colorSchemeChanged' | 'items' | 'fetching' | 'fetched' | 'userRole' | 'signedIn' |
+  'signedOut' | 'reseted' | 'typedValue' | 'aggregations' | 'fetchedPage' | 'fetchedItemsCount' | 'totalItemsCount' | 'width' |
+  'height' | 'formHook' | 'submited' | 'screenshot' | 'screenshoted' | 'totalPages' | 'currentPage'

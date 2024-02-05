@@ -7,9 +7,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "typescript": "5.3.3",
+    
     "@shared/typescript-config": "workspace:*",
     "@shared/port": "workspace:@shared/port-v0.6.0@*",
-    "@shared/node": "workspace:@shared/node-v0.2.0@*"
+    "@shared/node": "workspace:@shared/node-v0.8.0@*"
   }
 }

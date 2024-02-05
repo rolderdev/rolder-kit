@@ -1,9 +1,9 @@
 import { MantineNumberSize } from "@mantine/core";
 import { BaseReactProps } from '@shared/node'
-import { Scopes } from "@shared/scope";
+import { Scope } from "@shared/scope";
 
-export type CompProps = BaseReactProps & {
+export type Props = BaseReactProps & {
   useScope: boolean
-  scope?: Scopes
+  scope?: Scope
   placeholderIconSize?: string | number
 }

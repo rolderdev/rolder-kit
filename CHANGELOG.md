@@ -2,13 +2,10 @@
 
 ## 2024-01-11 v0.29.0
 
-### Общие изменения
-
-* Turborepo в паре с RsPack позволяют нарезать все на меленькие пакеты. Но есть проблема. Слой интеграции с Noodl занимает окол 130К для каждого пакета. При это пакет может быть пару килобайт. В этой версии слой интеграции загружается один раз вместе с App, а остальные пакеты используют уже его.
-
 ### Mantine
 
 * [Mantine v0.3.0](https://kit.rolder.app/rk/project/Mantine.html)
+* `new` [PasswordInput v0.1.0](https://kit.rolder.app/rk/ui/elements/inputs/passwordInput.html)
 
 ### Data
 

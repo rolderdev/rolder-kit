@@ -15,10 +15,9 @@
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
-    "@shared/node": "workspace:@shared/node-v0.2.0@*",
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
     "@shared/types": "workspace:@shared/types-v0.1.0@*",
-    "@types/react": "16.9.49",
-    "@types/react-dom": "16.9.8",
+    
     "typescript": "5.3.3"
   }
 }

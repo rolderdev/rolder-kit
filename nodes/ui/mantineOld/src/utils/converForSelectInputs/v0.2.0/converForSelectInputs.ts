@@ -7,8 +7,8 @@ export default function (item: any, target: string) {
         if (item.disabled) newItem.disabled = item.disabled
         if (item.value) newItem.value = item.value
         else if (item.id) newItem.value = item.id
-        else newItem.value = getValue.v7(item, target)
-        newItem.label = getValue.v7(item, target)
+        else newItem.value = getValue.v8(item, target)
+        newItem.label = getValue.v8(item, target)
         return newItem
     } else return undefined
 }

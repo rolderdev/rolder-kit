@@ -1,6 +1,7 @@
+import { TypeName } from "../../types"
 import getEnum from "./getEnum"
 
-export type PortType = ExpandedType | '*' | 'string' | 'number' | 'boolean' | 'array' | 'signal' | 'proplist' | 'color'
+export type PortType = ExpandedType | TypeName
 export type ExpandedType = {
     name: string
     allowEditOnly?: boolean
@@ -11,8 +12,17 @@ export type ExpandedType = {
 }
 type Units = '%' | 'rem' | 'px'
 export const defaultUnits = ['%', 'rem', 'px']
+type Only = 'editor' | 'connection'
 
-export function getEnumType(enums: ExpandedType['enums'], only?: 'editor' | 'connection') {
+export function getType(type: TypeName, only: Only): ExpandedType {
+    return {
+        name: type,
+        allowEditOnly: only === 'editor',
+        allowConnectionsOnly: only === 'connection'
+    }
+}
+
+export function getEnumType(enums: ExpandedType['enums'], only?: Only) {
     let expandedType: ExpandedType = { name: 'enum', enums }
     if (only) {
         if (only === 'editor') expandedType.allowEditOnly = true
@@ -21,7 +31,7 @@ export function getEnumType(enums: ExpandedType['enums'], only?: 'editor' | 'con
     return expandedType
 }
 
-export function getCustomEnumType(values: string[], noCase?: boolean, only?: 'editor' | 'connection') {
+export function getCustomEnumType(values: string[], noCase?: boolean, only?: Only) {
     let expandedType: ExpandedType = { name: 'enum', enums: getEnum(values, noCase) }
     if (only) {
         if (only === 'editor') expandedType.allowEditOnly = true
@@ -30,7 +40,7 @@ export function getCustomEnumType(values: string[], noCase?: boolean, only?: 'ed
     return expandedType
 }
 
-export function getUnitType(units: string[], defaultUnit: Units, only?: 'editor' | 'connection') {
+export function getUnitType(units: string[], defaultUnit: Units, only?: Only) {
     let expandedType: ExpandedType = { name: 'number', units, defaultUnit }
     if (only) {
         if (only === 'editor') expandedType.allowEditOnly = true

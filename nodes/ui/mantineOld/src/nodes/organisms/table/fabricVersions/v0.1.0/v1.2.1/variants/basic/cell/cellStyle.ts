@@ -11,7 +11,7 @@ export default function (tableProps: TableCompProps, column: MRT_Column<RItem>, 
     let props: any = {}
     let sx: Sx = {}
     const colorMap = cellDef?.colorMap
-    if (colorMap) sx.color = colorMap.map[getValue.v7(row.original, colorMap.accessor)]
+    if (colorMap) sx.color = colorMap.map[getValue.v8(row.original, colorMap.accessor)]
     sx.backgroundColor = convertColor(tableProps.rowBackgroundColor)
     sx.whiteSpace = 'nowrap'
     return { ...props, sx: { ...cellDef?.style, ...sx } }

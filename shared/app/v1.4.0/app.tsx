@@ -1,17 +1,13 @@
 import { ColorScheme } from "@mantine/core"
 import { useColorScheme } from "@mantine/hooks"
-//import { Provider, createStore } from "jotai"
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
-import BounceLoader from "react-spinners/BounceLoader"
 import { CompProps } from "./types"
 import convertColor from "@shared/convertColor"
 import { sendOutput, sendSignal } from '@shared/port-send'
 import React from "react"
 
-//const store = createStore()
-
 export default forwardRef(function (props: CompProps, ref) {
-  const { project, projectVersion, projectDefaults } = window.Noodl.getProjectSettings()
+  const { project, projectVersion, projectDefaults } = Noodl.getProjectSettings()
 
   useEffect(() => {
     if (projectVersion) {
@@ -24,19 +20,16 @@ export default forwardRef(function (props: CompProps, ref) {
     }
   }, [])
 
-  window.R.env.project = project
-  window.R.env.projectVersion = projectVersion
-  window.R.params.defaults = projectDefaults && eval(projectDefaults)?.[0]
-
-  const [backendInited, setBackendInited] = useState(false)
-  window.Noodl.Events.on("backendInited", () => setBackendInited(true))
+  R.env.project = project
+  R.env.projectVersion = projectVersion
+  R.params.defaults = projectDefaults && eval(projectDefaults)?.[0]
 
   const { noodlNode, colorScheme: cs } = props
 
   let systemColorScheme = useColorScheme()
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light')
-  window.R.params.colorScheme = colorScheme
-  window.Noodl.Events.emit("colorSchemeChanged")
+  R.params.colorScheme = colorScheme
+  Noodl.Events.emit("colorSchemeChanged")
 
   useEffect(() => {
     if (cs === 'auto') setColorScheme(systemColorScheme)
@@ -67,15 +60,6 @@ export default forwardRef(function (props: CompProps, ref) {
   }), [cs, colorScheme, setColorScheme])
 
   return <div style={{ width: '100%', height: '100%', backgroundColor: convertColor(colorScheme === 'dark' ? 'dark.7' : 'gray.0') }}>
-    {props.appLoader
-      ? <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-30px', marginLeft: '-30px' }}>
-        <BounceLoader
-          color={props.appLoaderColor}
-          loading={!backendInited}
-        />
-      </div>
-      : (!props.appLoader || backendInited) && props.children}
+    {props.children}
   </div>
 })
-
-//{window.R.env.project && <Provider store={store}>{props.children}</Provider>}

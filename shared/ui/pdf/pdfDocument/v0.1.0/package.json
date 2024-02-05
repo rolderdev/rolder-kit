@@ -1,0 +1,17 @@
+{
+  "name": "@shared/pdf-document-v0.1.0",
+  "main": "pdfDocument.tsx",
+  "types": "pdfDocument.tsx",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*",    
+    "@react-pdf/renderer": "3.3.4"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@shared/node": "workspace:@shared/node-v0.8.0@*"
+  }
+}

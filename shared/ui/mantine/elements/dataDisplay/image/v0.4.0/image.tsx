@@ -1,17 +1,15 @@
 import { Image } from "@mantine/core"
 import { forwardRef } from "react"
-import { CompProps } from "./types"
+import { Props } from "./types"
 import React from "react"
-import { getCompProps } from '@shared/port'
 import icons from '@shared/icons'
-import { useScope } from "@shared/scope"
+import { scopes } from "@shared/scope"
+import { getCompProps } from "@shared/get-comp-props"
 
-export default forwardRef(function (props: CompProps, ref) {
+export default forwardRef(function (props: Props) {    
+    const item = props.useScope && props.scope && scopes[props.scope]().get()
 
-    const scope = useScope(props.scope, 'v0.1.0')
-    const item = props.useScope && scope && scope.item.get()
-
-    const p = { ...getCompProps(props, item) } as CompProps
+    const p = { ...getCompProps(props, item) } as Props
     const imageProps = { ...p }
     delete imageProps.placeholderIconSize
 

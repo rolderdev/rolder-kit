@@ -13,7 +13,7 @@ export default forwardRef(function (props: any, ref) {
     const [data, setData] = useState([])
     useShallowEffect(() => {
         const items = inputItems
-        if (labelField && items?.some((i: any) => getValue.v7(i, labelField)))
+        if (labelField && items?.some((i: any) => getValue.v8(i, labelField)))
             setData(items.map((i: any) => converForSelectInputs(i, labelField)))
     }, [inputItems, labelField])
 

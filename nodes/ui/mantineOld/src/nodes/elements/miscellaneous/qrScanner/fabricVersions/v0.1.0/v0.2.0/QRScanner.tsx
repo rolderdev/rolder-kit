@@ -41,7 +41,7 @@ export default forwardRef(function (props: any) {
                 html5QrCodeF = html5QrCode
             }
         }).catch(err => console.log('handle err', err))
-        return () => html5QrCodeF.stop()
+        return () => html5QrCodeF?.stop()
     }, []);
 
     return (

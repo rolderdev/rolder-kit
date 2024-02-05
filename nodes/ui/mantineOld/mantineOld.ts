@@ -4,7 +4,7 @@ import { rNodesStore } from './src/nodes/rNodesStore'
 import { defineNode } from '@noodl/noodl-sdk'
 
 //@ts-ignore
-window.Noodl.defineModule({
+Noodl.defineModule({
     reactNodes: rNodesStore,
     //@ts-ignore
     nodes: jsNodeStore.map(i => defineNode(i)),

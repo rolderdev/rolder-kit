@@ -8,7 +8,7 @@ var path = require('path')
 const pJson = require('./package.json')
 var outputPath = path.resolve(__dirname, `./dist`)
 
-module.exports = {    
+module.exports = {
     context: __dirname,
     stats: { preset: 'errors-only', timings: true },
     entry: { [pJson.name]: `./mantineOld.ts` },
@@ -32,6 +32,11 @@ module.exports = {
             }
         })
     ],
+    experiments: {
+        rspackFuture: {
+            newTreeshaking: true,
+        },
+    },
     module: {
         rules: [
             {

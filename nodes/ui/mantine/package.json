@@ -2,20 +2,23 @@
   "name": "@nodes/mantine",
   "scripts": {
     "build": "rspack build --mode=production",
-    "dev": "rspack build --mode=development --watch",
+    "dev": "rspack build --mode=production --env=noodlDev",
     "lint": "eslint . --max-warnings 0",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
-    "@shared/node": "workspace:@shared/node-v0.2.0@*",
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
     "@shared/port": "workspace:@shared/port-v0.6.0@*",
-    "@nodes/image": "workspace:*"    
+    "@shared/mantine-v0.3.0": "workspace:*",
+    "@nodes/image": "workspace:*",
+    "@nodes/password-input": "workspace:*",
+    "@nodes/form": "workspace:*"
   },
   "devDependencies": {
-    "@rspack/core": "0.5.0",
-    "@rspack/cli": "0.5.0",
+    "@rspack/core": "0.5.1",
+    "@rspack/cli": "0.5.1",
     "rspack-manifest-plugin": "5.0.0-alpha0",
-    "typescript": "5.3.3",
-    "@shared/typescript-config": "workspace:*"
+    "@shared/typescript-config": "workspace:*",
+    "@types/react": "16.9.49"
   }
 }

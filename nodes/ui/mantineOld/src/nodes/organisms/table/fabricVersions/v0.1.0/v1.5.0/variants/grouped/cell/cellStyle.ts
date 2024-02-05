@@ -8,7 +8,7 @@ export default function (column: MRT_Column<RItem>, row: MRT_Row<RItem>) {
 
     let sx: Sx = {}
     const colorMap = cellDef?.colorMap
-    if (colorMap) sx.color = colorMap.map[getValue.v7(row.original, colorMap.accessor)]
+    if (colorMap) sx.color = colorMap.map[getValue.v8(row.original, colorMap.accessor)]
     sx.whiteSpace = 'nowrap'
     return { sx: { ...cellDef?.style, ...sx } }
 }

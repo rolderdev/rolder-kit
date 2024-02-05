@@ -6,16 +6,14 @@
   "dependencies": {
     "@shared/convertColor": "workspace:@shared/convert-color-v0.3.0@*",
     "@mantine/core": "6.0.21",
-    "@mantine/hooks": "6.0.21",
-    "react-spinners": "0.13.8",
+    "@mantine/hooks": "6.0.21",    
     "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*"
-    
   },
   "devDependencies": {
-    "@shared/node": "workspace:@shared/node-v0.2.0@*",
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
     "@shared/types": "workspace:@shared/types-v0.1.0@*",
     "@shared/typescript-config": "workspace:*",
-    "typescript": "5.3.3",
+    
     "@types/react": "16.9.49",
     "@types/react-dom": "16.9.8"
   }

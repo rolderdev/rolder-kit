@@ -1,53 +1,72 @@
 import { MantineTheme } from '@mantine/core'
 import { Kuzzle, WebSocket } from 'kuzzle-sdk'
 const kuzzle = new Kuzzle(new WebSocket(`rolder.app`, { port: 443 }))
+import { QueryClient } from '@tanstack/react-query'
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: Infinity,
+            refetchOnWindowFocus: "always",
+            refetchOnMount: "always",
+        },
+    },
+})
 
-type DbClass = {
-    version: number
+export type DbClass = {
+    version: string,
+    states: {
+        [naem: string]: {
+            value: string,
+            label: string,
+            order?: number,
+            color?: string
+        }
+    }
 }
 
 declare global {
-    interface Window {
-        R: RolderType
-        Noodl: any
-    }
-}
-
-export type RolderType = {
-    states: {
-        debug: number
-    }
-    env: {
-        rolderKit?: string
-        project?: string
-        projectVersion?: string
-        backendVersion?: string
-        dbName?: string
-    }
-    params: {
+    type Rolder = {
+        states: {
+            debug: number
+            signedIn?: boolean
+        }
+        env: {
+            rolderKit?: string
+            project?: string
+            projectVersion?: string
+            backendVersion?: string
+            dbName?: string
+        }
+        params: {
+            moduleFedereation?: boolean
+            dbClasses?: {
+                [x: string]: {
+                    version: number
+                }
+            }
+            sessionTimeout?: string
+            defaults?: {
+                dateFormat: string
+            }
+            colorScheme?: 'light' | 'dark',
+        }
         dbClasses?: {
-            [x: string]: any//DbClass
+            [x: string]: DbClass
         }
-        sessionTimeout?: string
-        defaults?: {
-            dateFormat: string
+        libs: {
+            Kuzzle?: typeof kuzzle
+            queryClient?: typeof queryClient
+            mantine?: {
+                MantineError(title: string, message?: string, autoClose?: boolean | number): void
+            }
+            [name: string]: any
         }
-        colorScheme?: 'light' | 'dark',
-        mantineTheme?: MantineTheme
+        utils: any
+        user?: any
     }
-    dbClasses?: {
-        [x: string]: DbClass
-    }
-    libs: {
-        Kuzzle?: typeof kuzzle
-        mantine?: {
-            MantineError(title?: string, message?: string, autoClose?: boolean | number): void
-        }
-    }
-    user?: any
 }
 
-export type RItem = {
+export type Item = {
     id: string
     content?: { [key: string]: any }
     states?: { [key: string]: any }
@@ -63,4 +82,14 @@ export type RItem = {
     }
 }
 
-export type Vesrions = 'v0.1.0'
+export type User = {
+    [ket: string]: any
+    user: {
+        username?: string,
+        id?: string,
+        role?: {
+            value: string
+            label: string
+        }
+    }
+}

@@ -6,8 +6,7 @@ export default forwardRef(function (props: any) {
     return (
         <Box
             {...props}
-            {...props.customProps}
-            sx={{ ...props.style }}
+            {...props.customProps}            
         >
             {props.children}
         </Box>

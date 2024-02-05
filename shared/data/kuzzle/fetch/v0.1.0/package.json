@@ -1,18 +1,21 @@
 {
   "name": "@shared/kuzzle-fetch-v0.1.0",
-  "main": "kuzzleFetch.ts",
-  "types": "kuzzleFetch.ts",
+  "main": "fetch.ts",
+  "types": "fetch.ts",
   "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
     "nanostores": "0.9.5",
-    "@shared/get-dbclass-version": "workspace:@shared/get-dbclass-version-v0.6.0@*"
+    "@shared/get-dbclass-version": "workspace:@shared/get-dbclass-version-v0.6.0@*",
+    "just-flush": "2.3.0",
+    "just-safe-set": "4.2.1",
+    "@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.1.0@*"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
-    "@shared/node": "workspace:@shared/node-v0.2.0@*",
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
     "@shared/types": "workspace:@shared/types-v0.1.0@*",
     "typescript": "5.3.3"
   }

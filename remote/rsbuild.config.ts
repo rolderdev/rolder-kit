@@ -1,13 +1,11 @@
 import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
 import { rspack } from '@rspack/core';
 import mfConfig from './mfConfig';
 
-export default defineConfig({
+export default defineConfig({  
   html: {
     template: './src/index.html',
   },
-  plugins: [pluginReact({ swcReactOptions: { runtime: 'classic' } })],
   performance: {
     chunkSplit: {
       strategy: 'split-by-experience',
@@ -17,14 +15,24 @@ export default defineConfig({
       },
     },
   },
+  dev: {    
+    client: {      
+      host: '192.168.122.1',         
+    },
+  },
+  output: {
+    sourceMap: {
+      js: 'source-map',
+    },
+  },
   tools: {
     rspack: {
+      output: {
+        publicPath: 'auto',
+      },
       externals: {
         react: 'React',
         'react-dom': 'ReactDOM'
-      },
-      output: {
-        publicPath: 'auto',
       },
       plugins: [new rspack.container.ModuleFederationPlugin(mfConfig)],
     },

@@ -1,8 +1,9 @@
 {
-  "extends": "@shared/typescript-config/react-library.json",
+  "extends": "@shared/typescript-config/base.json",
   "include": [
     "src/**/*",
     "*.d.ts",
+    "*.config.ts",
     "*.ts",
     "*.tsx"
   ],
