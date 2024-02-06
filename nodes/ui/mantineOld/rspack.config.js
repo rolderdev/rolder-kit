@@ -32,11 +32,6 @@ module.exports = {
             }
         })
     ],
-    experiments: {
-        rspackFuture: {
-            newTreeshaking: true,
-        },
-    },
     module: {
         rules: [
             {

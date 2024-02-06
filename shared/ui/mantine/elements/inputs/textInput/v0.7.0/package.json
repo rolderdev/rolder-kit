@@ -1,5 +1,5 @@
 {
-  "name": "@shared/text-input-v0.1.0",
+  "name": "@shared/text-input-v1.0.0",
   "main": "textInput.tsx",
   "types": "textInput.tsx",
   "scripts": {

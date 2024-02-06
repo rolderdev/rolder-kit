@@ -36,11 +36,6 @@ module.exports = function (env, argv) {
             }),
             new rspack.container.ModuleFederationPlugin(env.noodlDev ? mfDev : mfProd)
         ],
-        experiments: {
-            rspackFuture: {
-                newTreeshaking: true,
-            },
-        },
         module: {
             rules: [
                 {

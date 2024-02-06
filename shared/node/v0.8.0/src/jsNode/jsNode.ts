@@ -15,7 +15,8 @@ type Params = {
 
 function getModule(version: JsDefinition, moduleName: string) {
     try {
-        const modulesOverrides: { [name: string]: JsDefinition['module']['default'] } = eval(Noodl.getProjectSettings().modules)?.[0] || {}
+        const modulesOverrides: { [name: string]: JsDefinition['module']['default'] }
+            = eval(Noodl.getProjectSettings().modules)?.[0] || {}
         const moduleType = modulesOverrides[moduleName] || version.module.default
         if (version.module[moduleType]) return version.module[moduleType]
         else {
@@ -34,9 +35,7 @@ export const jsNode = (nodeName: string, category: string, versions: JsVersions,
         displayName: nodeName,
         category,
         color: params?.color || 'green',
-        initialize: function () {
-            this.outputPropValues = {}
-        },
+        initialize: function () { this.outputPropValues = {} },
         methods: {
             // on inputs data change
             registerInputIfNeeded: function (inputName: any) {

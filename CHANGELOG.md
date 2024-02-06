@@ -9,8 +9,6 @@
 
 ### Data
 
-* `new` [fetch v0.1.0](https://kit.rolder.app/rk/data/fetch.html)
-
 ## 2024-01-09 v0.28.0
 
 ### Общие изменения

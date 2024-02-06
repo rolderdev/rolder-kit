@@ -10,8 +10,7 @@ var outputPath = path.resolve(__dirname, `./dist`)
 const mfDev = require('./mfDev.config')
 const mfProd = require('./mfProd.config')
 
-module.exports = function (env, argv) {
-    const isProd = process.env.NODE_ENV === 'production';
+module.exports = function (env) {
     return {
         context: __dirname,
         stats: { preset: 'errors-only', timings: true },
@@ -37,11 +36,6 @@ module.exports = function (env, argv) {
             }),
             new rspack.container.ModuleFederationPlugin(env.noodlDev ? mfDev : mfProd)
         ],
-        experiments: {
-            rspackFuture: {
-                newTreeshaking: true,
-            },
-        },
         module: {
             rules: [
                 {

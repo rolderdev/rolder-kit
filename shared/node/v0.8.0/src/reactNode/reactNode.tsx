@@ -15,7 +15,8 @@ type Params = {
 
 function getModule(version: CompDefinition, moduleName: string) {
     try {
-        const modulesOverrides: { [name: string]: CompDefinition['module']['default'] } = eval(Noodl.getProjectSettings().modules)?.[0] || {}
+        const modulesOverrides: { [name: string]: CompDefinition['module']['default'] }
+            = eval(Noodl.getProjectSettings().modules)?.[0] || {}
         const moduleType = modulesOverrides[moduleName] || version.module.default
         if (version.module[moduleType]) return version.module[moduleType]
         else {
