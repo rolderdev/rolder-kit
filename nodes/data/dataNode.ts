@@ -1,20 +1,20 @@
 import { reactNode } from '@shared/node'
 import { getPort } from '@shared/port'
+import { lazy } from 'react'
 
 const dataNode = reactNode('Data', {
-    'v0.2.0': {
+    'v1.0.0': {
         module: {
             default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/data-v0.2.0')),
-            //@ts-ignore
+                '@shared/data-v1.0.0')),
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/data/data-v0.2.0')),
+                `remote/data/data-v1.0.0`)),
         },
         inputs: [
             getPort({
@@ -44,6 +44,7 @@ const dataNode = reactNode('Data', {
                 }
             }),
         ],
+        outputs: [getPort({ plug: 'output', name: 'isOnline', displayName: 'Online', group: 'States', type: 'boolean' })]
     },
 }, { allowChildren: true, moduleName: 'data' })
 
@@ -58,7 +59,6 @@ import useDataNode from '@nodes/use-data'
 const reactNodes = [authNode, dataNode, dataContext, useDataNode]
 
 import getDataNode from '@nodes/get-data'
-import { lazy } from 'react'
 
 const nodes = [getDataNode]
 

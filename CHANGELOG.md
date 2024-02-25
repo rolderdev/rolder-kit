@@ -1,13 +1,8 @@
 # Changelog
 
-## 2024-01-11 v0.29.0
+## 2024-02-29 v1.0.0-beta1
 
-### Mantine
-
-* [Mantine v0.3.0](https://kit.rolder.app/rk/project/Mantine.html)
-* `new` [PasswordInput v0.1.0](https://kit.rolder.app/rk/ui/elements/inputs/passwordInput.html)
-
-### Data
+* Описание потеряно в крови и поту.
 
 ## 2024-01-09 v0.28.0
 

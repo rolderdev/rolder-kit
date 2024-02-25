@@ -1,5 +1,5 @@
 import { reactNode } from '@shared/node'
-import { NodePort, getPort, getPorts, getType } from '@shared/port'
+import { getPort, getPorts, getType } from '@shared/port'
 import { lazy } from 'react'
 
 export default reactNode('UseData', {
@@ -10,12 +10,11 @@ export default reactNode('UseData', {
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 "@shared/use-data-v0.11.0")),
-            //@ts-ignore
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/data/use-data-v0.11.0')),
+                `remote/data/use-data-v0.11.0`)),
         },
         inputs: [
             getPort({
@@ -48,12 +47,11 @@ export default reactNode('UseData', {
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 "@shared/use-data-v0.12.3")),
-            //@ts-ignore
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/data/use-data-v0.12.3')),
+                `remote/data/use-data-v0.12.3`)),
         },
         inputs: [
             ...getPorts('input', ['dbClass', 'filters', 'sorts', 'querySize', 'getUsers', 'searchFields', 'searchString', 'aggQuery']),
@@ -93,12 +91,11 @@ export default reactNode('UseData', {
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 "@shared/use-data-v0.12.4")),
-            //@ts-ignore
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/data/use-data-v0.12.4')),
+                `remote/data/use-data-v0.12.4`)),
         },
         inputs: [
             ...getPorts('input', ['dbClass', 'filters', 'sorts', 'querySize', 'getUsers', 'searchFields', 'searchString', 'aggQuery']),
@@ -131,23 +128,23 @@ export default reactNode('UseData', {
             getPort({ plug: 'output', name: 'totalItemsCount', displayName: 'Total count', group: 'Data', type: 'number' }),
         ]
     },
-    'v0.13.0': {
+    'v1.0.0': {
         module: {
             default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                "@shared/use-data-v0.13.0")),
-            //@ts-ignore
+                "@shared/use-data-v1.0.0")),
+
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/data/use-data-v0.13.0')),
+                `remote/data/use-data-v1.0.0`)),
         },
         inputs: [
             getPort({
-                plug: 'input', name: 'outputDbClasses', displayName: 'Output DB classes', group: 'Output DB classes',
+                plug: 'input', name: 'outputDbClasses', displayName: 'Output DB classes', group: 'Output DB classes*',
                 type: 'proplist', customs: {
                     required: 'both',
                     addNodePorts(dbClasses) {
@@ -168,27 +165,46 @@ export default reactNode('UseData', {
                 }
             }),
             getPort({
-                plug: 'input', name: 'fetchScheme', displayName: 'Fetch scheme', group: 'Fetch', type: 'array',
+                plug: 'input', name: 'fetchScheme', displayName: 'Scheme', group: 'Scheme', type: 'array',
                 customs: { required: 'connection' }
             }),
             getPort({
                 plug: 'input', name: 'searchEnabled', displayName: 'Enabled', group: 'Search', type: 'boolean', default: false
             }),
-            getPort({
+            /* getPort({
                 plug: 'input', name: 'searchScheme', displayName: 'Search scheme', group: 'Search', type: 'array',
                 customs: {
                     required: 'connection',
                     dependsOn(p) { return p.searchEnabled ? true : false }
                 }
-            }),
+            }), */
             getPort({
                 plug: 'input', name: 'searchString', displayName: 'Search string', group: 'Search',
                 type: getType('string', 'connection'), customs: { dependsOn(p) { return p.searchEnabled ? true : false } }
+            }),
+            getPort({
+                plug: 'input', name: 'paginationEnabled', displayName: 'Enabled', group: 'Pagination', type: 'boolean', default: false
+            }),
+            getPort({
+                plug: 'input', name: 'paginationDbClass', displayName: 'Pagination DB class', group: 'Pagination', type: 'string',
+                customs: {
+                    required: 'connection',
+                    dependsOn(p) { return p.paginationEnabled ? true : false }
+                }
+            }),
+            getPort({
+                plug: 'input', name: 'nextFetch', displayName: 'Next', group: 'Pagination', type: 'signal',
+                customs: { dependsOn(p) { return p.paginationEnabled ? true : false } }
+            }),
+            getPort({
+                plug: 'input', name: 'previousFetch', displayName: 'Previous', group: 'Pagination', type: 'signal',
+                customs: { dependsOn(p) { return p.paginationEnabled ? true : false } }
             }),
         ],
         outputs: [
             ...getPorts('output', ['fetching', 'fetched']),
             getPort({ plug: 'output', name: 'data', displayName: 'Data', group: 'Data', type: 'object' }),
+            getPort({ plug: 'output', name: 'fetchedPage', displayName: 'Page', group: 'Pagination', type: 'number' }),
         ]
     }
 }, { moduleName: 'data' })

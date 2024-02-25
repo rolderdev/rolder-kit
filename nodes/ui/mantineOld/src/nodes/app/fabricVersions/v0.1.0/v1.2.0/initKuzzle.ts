@@ -1,7 +1,7 @@
 import validateJwt from "../../../../../utils/validateJwt/v0.3.0/validateJwt"
-import { dbClassVersion } from "../../../../../../data/utils/getVersion/v0.5.0/getVersion"
 import { sendOutput } from "../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/send"
-import { log, time } from "../../../../../../../utils/debug/log/v0.2.0/log"
+import { dbClassVersion } from "../../../../../utils/getVersion/v0.5.0/getVersion"
+import { log, time } from "../../../../../utils/debug/log/v0.2.0/log"
 
 export default async function (noodlNode: NoodlNode) {
     const { project, envVersion, dbVersion } = window.R.env

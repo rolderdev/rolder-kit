@@ -10,8 +10,8 @@
     "@noodl/noodl-sdk": "0.5.4",
     "@shared/node": "workspace:@shared/node-v0.8.0@*",
     "@shared/port": "workspace:@shared/port-v0.6.0@*",
-    "@shared/data-v0.2.0": "workspace:*",
-    "@nodes/auth": "workspace:*",    
+    "@shared/data-v1.0.0": "workspace:*",
+    "@nodes/auth": "workspace:*",
     "@nodes/data-context": "workspace:*",
     "@nodes/use-data": "workspace:*",
     "@nodes/get-data": "workspace:*"
@@ -20,6 +20,7 @@
     "@rspack/core": "0.5.4",
     "@rspack/cli": "0.5.4",
     "rspack-manifest-plugin": "5.0.0-alpha0",
-    "@shared/typescript-config": "workspace:*"    
+    "@shared/typescript-config": "workspace:*",
+    "fetch-remote": "workspace:*"
   }
 }

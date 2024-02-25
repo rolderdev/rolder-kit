@@ -1,46 +1,21 @@
 import { reactNode } from '@shared/node'
-import { getPorts, getPort, getEnumType, enums, getCustomEnumType, getUnitType, defaultUnits, getMantinePort } from '@shared/port'
+import { getPorts, getPort, getCustomEnumType, getUnitType, defaultUnits, getMantinePort } from '@shared/port'
 import { lazy } from 'react'
 
 export default reactNode('Image', {
-    'v0.3.0': {
-        hashTag: 'deprecated',
-        module: {
-            default: 'dynamic',
-            dynamic: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                '../../../../mantineOld/src/nodes/elements/dataDisplay/image/fabricVersions/v0.1.0/v0.3.0/Image'))
-        },
-        inputs: [
-            //...getGroupedPorts('input', ['Margins']),
-            ...getPorts('input', ['useScope', 'maw']),
-            getPort({
-                plug: 'input', name: 'radius', displayName: 'Radius', group: 'Style', type: getEnumType(enums.sizes), default: 'md'
-            }),
-            getPort({ plug: 'input', name: 'sourceUrl', displayName: 'Source', group: 'Data', type: 'string' }),
-            getPort({
-                plug: 'input', name: 'scope', displayName: 'Placeholder', group: 'Scope',
-                type: getCustomEnumType(['table']), default: 'table', customs: {
-                    required: 'connection',
-                    dependsOn(props) { return props.useScope ? true : false }
-                }
-            }),
-        ]
-    },
-    'v0.4.0': {
+    'v1.0.0': {
         module: {
             default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/image-v0.4.0')),
+                '@shared/image-v1.0.0')),
             //@ts-ignore
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/ui/mantine/elements/dataDisplay/image-v0.4.0')),
+                'remote/ui/mantine/elements/dataDisplay/image-v1.0.0')),
         },
         inputs: [
             ...getPorts('input', ['customProps', 'propsFunction', 'useScope', 'src', 'height']),

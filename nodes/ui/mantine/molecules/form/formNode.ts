@@ -3,19 +3,19 @@ import { getPort } from '@shared/port'
 import { lazy } from 'react'
 
 export default reactNode('Form', {
-    'v0.5.0': {
+    'v1.0.0': {
         module: {
             default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/form-v0.5.0')),
+                '@shared/form-v1.0.0')),
             //@ts-ignore
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/ui/mantine/molecules/form-v0.5.0')),
+                'remote/ui/mantine/molecules/form-v1.0.0')),
         },
         inputs: [
             getPort({

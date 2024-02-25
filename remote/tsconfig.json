@@ -2,6 +2,7 @@
   "extends": "@shared/typescript-config/base.json",
   "include": [
     "src/**/*",
+    "mfes/**/*",
     "*.d.ts",
     "*.config.ts",
     "*.ts",

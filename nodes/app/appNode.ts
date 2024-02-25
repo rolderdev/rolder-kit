@@ -3,8 +3,9 @@ const d = parseInt(urlParams.get('debug') || '0')
 import rKitJson from '../../package.json'
 
 globalThis.R = {
-    states: { debug: d },
-    env: { rolderKit: `${rKitJson.version}` },
+    //@ts-ignore
+    states: { debug: d, devMode: DEVMODE },
+    env: { rolderKit: rKitJson.version },
     params: {},
     libs: {},
     utils: {},
@@ -33,7 +34,20 @@ document.body.insertAdjacentHTML("afterbegin", `
 // =====================================================
 import libs from './src/libs'; R.libs = libs
 import utils from './src/utils'; R.utils = utils
+import * as icons from './src/icons'; R.libs.icons = icons
 
+// =====================================================
+/* caches.open("rolder").then(async cache => {
+    await cache.add("noodl.viewer.js")
+    await cache.add("react-dom.production.min.js")
+    await cache.add("react.production.min.js")
+    await cache.add("noodl_modules/mantineOld/f6d6cc96bcdde0798471.js")
+})
+ */
+/* if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+ */
 // =====================================================
 import { getCustomEnumType, getPort } from '@shared/port'
 import { reactNode } from '@shared/node'

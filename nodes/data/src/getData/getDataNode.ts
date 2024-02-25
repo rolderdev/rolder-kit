@@ -2,23 +2,22 @@ import { jsNode } from '@shared/node'
 import { getPort, getPorts } from '@shared/port'
 
 export default jsNode('getData', 'data', {
-    'v0.3.0': {
+    'v1.0.0': {
         module: {
             default: 'remote',
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/get-data-v0.3.0'),
-            //@ts-ignore
+                '@shared/get-data-v1.0.0'),
             remote: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/data/get-data-v0.3.0'),
+                `remote/data/get-data-v1.0.0`),
         },
         inputs: [
             getPort({
-                plug: 'input', name: 'outputDbClasses', displayName: 'Output DB classes', group: 'Output DB classes',
+                plug: 'input', name: 'outputDbClasses', displayName: 'Output DB classes', group: 'Output DB classes*',
                 type: 'proplist', customs: {
                     required: 'both',
                     addNodePorts(dbClasses) {

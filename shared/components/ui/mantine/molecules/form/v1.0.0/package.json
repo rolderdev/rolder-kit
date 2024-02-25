@@ -1,0 +1,20 @@
+{
+  "name": "@shared/form-v1.0.0",
+  "main": "form.tsx",
+  "types": "form.tsx",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@mantine/core": "6.0.21",
+    "@mantine/form": "6.0.21",
+    "bunshi": "2.0.2",
+    "@shared/get-comp-props": "workspace:@shared/get-comp-props-v0.1.0@*",
+    "@shared/scope": "workspace:@shared/scope-v0.1.0@*",
+    "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*"
+  },
+  "devDependencies": {
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@shared/typescript-config": "workspace:*"
+  }
+}

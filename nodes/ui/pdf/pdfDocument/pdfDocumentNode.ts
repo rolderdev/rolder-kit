@@ -1,13 +1,13 @@
 import { reactNode } from '@shared/node'
 import { getPorts } from '@shared/port'
 
-import v010 from '@shared/pdf-document-v0.1.0'
+import v100 from '@shared/pdf-document-v1.0.0'
 
 export default reactNode('PdfDocument', {
-    'v0.1.0': {
+    'v1.0.0': {
         module: {
             default: 'static',            
-            static: v010
+            static: v100
         },
         inputs: getPorts('input', ['create']),
         outputs: getPorts('output', ['creating', 'created', 'blob'])

@@ -9,16 +9,37 @@
   "dependencies": {
     "@shared/node": "workspace:@shared/node-v0.8.0@*",
     "@shared/port": "workspace:@shared/port-v0.6.0@*",
-    "@shared/mantine-v0.3.0": "workspace:*",
+    "@shared/mantine-v1.0.0": "workspace:*",
     "@nodes/image": "workspace:*",
+    "@nodes/badge": "workspace:*",
     "@nodes/password-input": "workspace:*",
-    "@nodes/form": "workspace:*"
+    "@nodes/form": "workspace:*",
+    "@nodes/text-input": "workspace:*",
+    "@nodes/number-input": "workspace:*",
+    "@nodes/masked-input": "workspace:*",
+    "@nodes/select": "workspace:*",
+    "@nodes/textarea": "workspace:*",
+    "@nodes/date-time-picker": "workspace:*",
+    "@nodes/segmented-control": "workspace:*",
+    "@nodes/checkbox-group": "workspace:*",
+    "@nodes/checkbox": "workspace:*",
+    "@nodes/multi-select": "workspace:*",
+    "@nodes/date-picker-input": "workspace:*",
+    "@nodes/group": "workspace:*",
+    "@nodes/stack": "workspace:*",
+    "@nodes/table": "workspace:*",
+    "@nodes/column-cell": "workspace:*",
+    "@nodes/expansion-row": "workspace:*",
+    "@nodes/column-filter": "workspace:*",
+    "@nodes/highlight": "workspace:*",
+    "@nodes/icon": "workspace:*",
+    "@nodes/action-icon": "workspace:*"
   },
   "devDependencies": {
     "@rspack/core": "0.5.4",
     "@rspack/cli": "0.5.4",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "@shared/typescript-config": "workspace:*",
-    "@types/react": "16.9.49"
+    "fetch-remote": "workspace:*"
   }
 }

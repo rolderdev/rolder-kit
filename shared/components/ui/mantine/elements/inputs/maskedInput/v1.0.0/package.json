@@ -1,0 +1,21 @@
+{
+  "name": "@shared/masked-input-v1.0.0",
+  "main": "maskedInput.tsx",
+  "types": "maskedInput.tsx",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@mantine/core": "6.0.21",
+    "@mantine/hooks": "6.0.21",
+    "@shared/get-comp-props": "workspace:@shared/get-comp-props-v0.1.0@*",
+    "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*",
+    "@shared/scope": "workspace:@shared/scope-v0.1.0@*",    
+    "@shared/convert-color": "workspace:@shared/convert-color-v0.3.0@*",
+    "react-imask": "7.4.0"
+  },
+  "devDependencies": {
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@shared/typescript-config": "workspace:*"    
+  }
+}

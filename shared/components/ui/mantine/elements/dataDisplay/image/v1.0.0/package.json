@@ -1,0 +1,17 @@
+{
+  "name": "@shared/image-v1.0.0",
+  "main": "image.tsx",
+  "types": "image.tsx",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@mantine/core": "6.0.21",
+    "@shared/get-comp-props": "workspace:@shared/get-comp-props-v0.1.0@*",
+    "@shared/scope": "workspace:@shared/scope-v0.1.0@*"
+  },
+  "devDependencies": {
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@shared/typescript-config": "workspace:*"
+  }
+}

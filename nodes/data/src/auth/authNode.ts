@@ -4,19 +4,18 @@ import { lazy } from 'react'
 import ms from 'ms'
 
 export default reactNode('Auth', {
-    'v0.1.0': {
+    'v1.0.0': {
         module: {
             default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/auth-v0.1.0')),
-            //@ts-ignore
+                '@shared/auth-v1.0.0')),            
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/data/auth-v0.1.0')),
+                `remote/data/auth-v1.0.0`)),
         },
         inputs: [
             getPort({
@@ -39,7 +38,9 @@ export default reactNode('Auth', {
         outputs: [
             getPort({ plug: 'output', name: 'userRole', displayName: 'User role', group: 'Params', type: 'string' }),
             getPort({ plug: 'output', name: 'signedIn', displayName: 'Signed in', group: 'Signals', type: 'signal' }),
-            getPort({ plug: 'output', name: 'signedOut', displayName: 'Signed out', group: 'Signals', type: 'signal' })
+            getPort({ plug: 'output', name: 'signedOut', displayName: 'Signed out', group: 'Signals', type: 'signal' }),
+            getPort({ plug: 'output', name: 'signInFailed', displayName: 'Sign in failed', group: 'Signals', type: 'signal' }),
+            getPort({ plug: 'output', name: 'error', displayName: 'Error', group: 'Params', type: 'string' }),
         ]
     }
 }, { allowChildren: true, moduleName: 'data' })

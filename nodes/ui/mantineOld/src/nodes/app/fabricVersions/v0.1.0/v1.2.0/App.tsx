@@ -4,11 +4,11 @@ import { Notifications } from "@mantine/notifications"
 import { forwardRef, useEffect, useState } from "react"
 import ErrorHandler from '../../../../../utils/errorHandler/v0.2.0/ErrorHandler'
 import { sendOutput } from '../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/send'
-import { log, time } from "../../../../../../../utils/debug/log/v0.2.0/log"
 import { useColorScheme, useInterval, useShallowEffect } from "@mantine/hooks"
 import validateJwt, { jwtValidState } from "../../../../../utils/validateJwt/v0.3.0/validateJwt"
 import { QueryCache, QueryClient, QueryClientProvider, focusManager } from "@tanstack/react-query"
 import initKuzzle from "./initKuzzle"
+import { log, time } from "../../../../../utils/debug/log/v0.2.0/log"
 
 const queryClient = new QueryClient({
     defaultOptions: {

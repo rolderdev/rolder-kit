@@ -1,13 +1,13 @@
 import { reactNode } from '@shared/node'
 import { getPort } from '@shared/port'
 
-import v010 from '@shared/pdf-text-v0.1.0'
+import v100 from '@shared/pdf-text-v1.0.0'
 
 export default reactNode('PdfText', {
-    'v0.1.0': {
+    'v1.0.0': {
         module: {
             default: 'static',
-            static: v010
+            static: v100
         },
         inputs: [
             getPort({

@@ -1,7 +1,7 @@
-//import AppNode_f0_1_0 from "./app/fabricVersions/v0.1.0/AppNode";
-//import MantineNode_f0_1_0 from "./mantine/fabricVersions/v0.1.0/MantineNode";
+import AppNode_f0_1_0 from "./app/fabricVersions/v0.1.0/AppNode";
+import MantineNode_f0_1_0 from "./mantine/fabricVersions/v0.1.0/MantineNode";
 ///// organisms
-//import AuthNode_f0_1_0 from "./organisms/auth/fabricVersions/v0.1.0/AuthNode";
+import AuthNode_f0_1_0 from "./organisms/auth/fabricVersions/v0.1.0/AuthNode";
 // table
 import TableNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/TableNode";
 import ColumnFilterNode_f0_1_0 from "./organisms/table/fabricVersions/v0.1.0/v2.0.0/modules/columnFilter/fabricVersions/v0.1.0/ColumnFilterNode";
@@ -41,7 +41,7 @@ import ButtonNode_f0_1_0 from "./elements/buttons/button/fabricVersions/v0.1.0/B
 // dataDisplay
 import IconNode_f0_1_0 from "./elements/dataDisplay/icon/fabricVersions/v0.1.0/IconNode";
 import QRCodeNode_f0_1_0 from "./elements/dataDisplay/qrCode/fabricVersions/v0.1.0/QRCodeNode";
-//import ImageNode_f0_1_0 from "./elements/dataDisplay/image/fabricVersions/v0.1.0/ImageNode";
+import ImageNode_f0_1_0 from "./elements/dataDisplay/image/fabricVersions/v0.1.0/ImageNode";
 import BadgeNode_f0_1_0 from "./elements/dataDisplay/badge/fabricVersions/v0.1.0/BadgeNode";
 // feedback
 import BarLoaderNode_f0_1_0 from "./elements/feedback/barLoader/fabricVersions/v0.1.0/BarLoaderNode";
@@ -73,36 +73,41 @@ import HighlightNode_f0_1_0 from "./elements/typography/highlight/fabricVersions
 import ListNode_f0_1_0 from "./elements/typography/list/fabricVersions/v0.1.0/ListNode";
 
 const rNodesStore = [
+    //AppNode_f0_1_0, MantineNode_f0_1_0, AuthNode_f0_1_0,
+    //FormNode_f0_1_0, ImageNode_f0_1_0,
     ///// organisms
     //AuthNode_f0_1_0,
     // table
-    TableNode_f0_1_0, ColumnFilterNode_f0_1_0, ColumnCellNode_f0_1_0, ExpansionRowNode_f0_1_0,
+    // TableNode_f0_1_0,ColumnCellNode_f0_1_0, ExpansionRowNode_f0_1_0,ColumnFilterNode_f0_1_0,
     // appShell
     AppShellNode_f0_1_0, NavbarNode_f0_1_0, NavbarSectionNode_f0_1_0, HeaderNode_f0_1_0, AsideNode_f0_1_0,
     AsideSectionNode_f0_1_0, FooterNode_f0_1_0,
     // tabs
     TabsNode_f0_1_0, TabNode_f0_1_0,
     // molecules
-    BoxNode_f0_1_0, AvatarNode_f0_1_0, FormNode_f0_1_0, DrawerNode_f0_1_0, ModalNode_f0_1_0, StackNode_f0_1_0, FlexNode_f0_1_0,
-    CenterNode_f0_1_0, GroupNode_f0_1_0, CarouselNode_f0_1_0, PopoverNode_f0_1_0, PaperNode_f0_1_0, GridNode_f0_1_0,
+    // GroupNode_f0_1_0, StackNode_f0_1_0,
+    BoxNode_f0_1_0, AvatarNode_f0_1_0, DrawerNode_f0_1_0, ModalNode_f0_1_0, FlexNode_f0_1_0,
+    CenterNode_f0_1_0, CarouselNode_f0_1_0, PopoverNode_f0_1_0, PaperNode_f0_1_0, GridNode_f0_1_0,
     ScrollAreaNode_f0_1_0, UnstyledButtonNode_f0_1_0,
     //// elements
     // buttons
-    ActionIconNode_f0_1_0, ButtonNode_f0_1_0,
+    // ActionIconNode_f0_1_0,
+    ButtonNode_f0_1_0,
     // dataDisplay
-    IconNode_f0_1_0, QRCodeNode_f0_1_0, BadgeNode_f0_1_0,
+    // BadgeNode_f0_1_0,IconNode_f0_1_0,
+    QRCodeNode_f0_1_0,
     // feedback
     BarLoaderNode_f0_1_0, LoaderNode_f0_1_0, IndicatorNode_f0_1_0,
-    // inputs
-    TextInputNode_f0_1_0, SelectNode_f0_1_0, DateTimePickerNode_f0_1_0, SegmentedControlNode_f0_1_0, CheckboxGroupNode_f0_1_0,
-    MultiSelectNode_f0_1_0, DatePickerInputNode_f0_1_0, MaskedInputNode_f0_1_0, TextareaNode_f0_1_0, CheckboxNode_f0_1_0,
-    NumberInputNode_f0_1_0,
+    // inputs TextInputNode_f0_1_0 MaskedInputNode_f0_1_0 SelectNode_f0_1_0 TextareaNode_f0_1_0 DateTimePickerNode_f0_1_0
+    // SegmentedControlNode_f0_1_0 CheckboxGroupNode_f0_1_0 CheckboxNode_f0_1_0 MultiSelectNode_f0_1_0 DatePickerInputNode_f0_1_0     
+    // NumberInputNode_f0_1_0,
     // miscellaneous
     WebCameraNode_f0_1_0, DividerNode_f0_1_0, QRScannerNode_f0_1_0, DropZoneNode_f0_1_0,
     // navigation
     NavLinkNode_f0_1_0,
-    // typography
-    TextNode_f0_1_0, TitleNode_f0_1_0, HighlightNode_f0_1_0, ListNode_f0_1_0,
+    // typography 
+    // HighlightNode_f0_1_0,
+    TextNode_f0_1_0, TitleNode_f0_1_0, ListNode_f0_1_0,
 ]
 
 export { rNodesStore }

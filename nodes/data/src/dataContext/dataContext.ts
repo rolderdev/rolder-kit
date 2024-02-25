@@ -10,12 +10,11 @@ export default reactNode('DataContext', {
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 '@shared/data-context-v0.1.0')),
-            //@ts-ignore
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/data/data-context-v0.1.0')),
+                `remote/data/data-context-v0.1.0`)),
         },
         outputs: [
             getPort({ plug: 'output', name: 'fetched', displayName: 'Fetched', group: 'Signals', type: 'signal' }),
@@ -29,12 +28,11 @@ export default reactNode('DataContext', {
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 '@shared/data-context-v0.1.1')),
-            //@ts-ignore
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/data/data-context-v0.1.1')),
+                `remote/data/data-context-v0.1.1`)),
         },
         outputs: [
             getPort({ plug: 'output', name: 'fetched', displayName: 'Fetched', group: 'Signals', type: 'signal' }),

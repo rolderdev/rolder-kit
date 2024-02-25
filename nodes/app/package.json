@@ -32,7 +32,8 @@
     "just-last": "3.2.0",
     "just-unique": "4.2.0",
     "lodash": "4.17.21",
-    "fast-deep-equal": "3.1.3"
+    "fast-deep-equal": "3.1.3",
+    "@tabler/icons-react": "2.47.0"
   },
   "devDependencies": {
     "@rspack/core": "0.5.4",

@@ -1,5 +1,5 @@
 import { atom } from "nanostores"
-import { log } from "../../../../../utils/debug/log/v0.2.0/log"
+import { log } from "../../debug/log/v0.2.0/log"
 
 export const jwtValidState = atom(false)
 

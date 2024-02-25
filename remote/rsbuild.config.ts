@@ -1,8 +1,11 @@
 import { defineConfig } from '@rsbuild/core';
 import { rspack } from '@rspack/core';
-import mfConfig from './mfConfig';
 
-export default defineConfig({  
+//==========================================
+import v100Beta1 from './mfes/v1.0.0-beta1';
+//==========================================
+
+export default defineConfig({
   html: {
     template: './src/index.html',
   },
@@ -15,11 +18,6 @@ export default defineConfig({
       },
     },
   },
-  dev: {    
-    client: {      
-      host: '192.168.122.1',         
-    },
-  },
   output: {
     sourceMap: {
       js: 'source-map',
@@ -28,13 +26,13 @@ export default defineConfig({
   tools: {
     rspack: {
       output: {
-        publicPath: 'auto',
+        publicPath: 'auto'
       },
       externals: {
         react: 'React',
         'react-dom': 'ReactDOM'
       },
-      plugins: [new rspack.container.ModuleFederationPlugin(mfConfig)],
+      plugins: [new rspack.container.ModuleFederationPlugin(v100Beta1)],
     },
   },
 });

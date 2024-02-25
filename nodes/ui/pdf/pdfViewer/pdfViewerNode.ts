@@ -3,19 +3,19 @@ import { getPort, getPorts } from '@shared/port'
 import { lazy } from 'react'
 
 export default reactNode('PdfViewer', {
-    'v0.1.0': {
+    'v1.0.0': {
         module: {
             default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/pdf-viewer-v0.1.0')),
+                '@shared/pdf-viewer-v1.0.0')),
             //@ts-ignore
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/ui/pdf/pdf-viewer-v0.1.0')),
+                'remote/ui/pdf/pdf-viewer-v1.0.0')),
         },
         inputs: [
             ...getPorts('input', ['nextPage', 'previousPage']),

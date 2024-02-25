@@ -9,12 +9,13 @@
   "dependencies": {
     "@shared/node": "workspace:@shared/node-v0.8.0@*",
     "@shared/port": "workspace:@shared/port-v0.6.0@*",
-    "@shared/web-camera-v0.3.0": "workspace:*"
+    "@shared/web-camera-v1.0.0": "workspace:*"
   },
   "devDependencies": {
     "@rspack/core": "0.5.4",
     "@rspack/cli": "0.5.4",
     "rspack-manifest-plugin": "5.0.0-alpha0",
-    "@shared/typescript-config": "workspace:*"
+    "@shared/typescript-config": "workspace:*",
+    "fetch-remote": "workspace:*"
   }
 }

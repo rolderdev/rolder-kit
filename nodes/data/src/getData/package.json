@@ -8,7 +8,7 @@
   "dependencies": {
     "@shared/node": "workspace:@shared/node-v0.8.0@*",
     "@shared/port": "workspace:@shared/port-v0.6.0@*",
-    "@shared/get-data-v0.3.0": "workspace:*"
+    "@shared/get-data-v1.0.0": "workspace:*"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*"
