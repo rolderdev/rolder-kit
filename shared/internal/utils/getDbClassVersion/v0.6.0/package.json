@@ -1,0 +1,14 @@
+{
+  "name": "@shared/get-dbclass-version-v0.6.0",
+  "main": "getDbClassVersion.ts",
+  "types": "getDbClassVersion.ts",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@shared/types": "workspace:@shared/types-v0.1.0@*",
+    "@shared/typescript-config": "workspace:*"    
+  }
+}

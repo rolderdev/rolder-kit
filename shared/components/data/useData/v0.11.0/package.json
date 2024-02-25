@@ -1,0 +1,31 @@
+{
+  "name": "@shared/use-data-v0.11.0",
+  "main": "useData.tsx",
+  "types": "useData.tsx",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@mantine/core": "6.0.21",
+    "@mantine/hooks": "6.0.21",
+    "@tanstack/react-query": "4.36.1",
+    "nanostores": "0.9.5",
+    "just-map-object": "2.3.0",
+    "just-flush": "2.3.0",
+    "just-safe-set": "4.2.1",
+    "fast-sort": "3.4.0",
+    "lodash-es": "4.17.21",
+    "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*",
+    "@shared/get-dbclass-version": "workspace:@shared/get-dbclass-version-v0.6.0@*",
+    "@shared/get-value": "workspace:@shared/get-value-v0.8.0@*"
+  },
+  "devDependencies": {
+    
+    "@shared/typescript-config": "workspace:*",
+    
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@types/lodash-es": "4.17.12",
+    "@shared/types": "workspace:@shared/types-v0.1.0@*"
+  }
+}

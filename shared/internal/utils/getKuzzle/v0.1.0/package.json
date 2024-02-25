@@ -1,0 +1,15 @@
+{
+  "name": "@shared/get-kuzzle-v0.1.0",
+  "main": "getKuzzle.ts",
+  "types": "getKuzzle.ts",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@shared/types": "workspace:@shared/types-v0.1.0@*",
+    "kuzzle-sdk": "7.11.2"
+  }
+}

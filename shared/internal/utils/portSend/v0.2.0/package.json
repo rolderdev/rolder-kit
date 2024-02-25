@@ -1,0 +1,15 @@
+{
+  "name": "@shared/port-send-v0.2.0",
+  "main": "portSend.ts",
+  "types": "portSend.ts",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    
+    "@shared/typescript-config": "workspace:*",
+    "@shared/port": "workspace:@shared/port-v0.6.0@*",
+    "@shared/node": "workspace:@shared/node-v0.8.0@*"
+  }
+}

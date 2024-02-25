@@ -2,22 +2,44 @@
   "name": "@nodes/mantine",
   "scripts": {
     "build": "rspack build --mode=production",
-    "dev": "rspack build --mode=development --watch",
+    "dev": "rspack build --mode=production --env=noodlDev",
     "lint": "eslint . --max-warnings 0",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
-  "dependencies": {    
-    "@rk/node": "workspace:@rk/node-v0.2.0@*",
-    "@rk/port": "workspace:@rk/port-v0.6.0@*",    
-    "@rk/mantine-v0.2.0": "workspace:*",
-    "@nodes/image": "workspace:*"
+  "dependencies": {
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@shared/port": "workspace:@shared/port-v0.6.0@*",
+    "@shared/mantine-v1.0.0": "workspace:*",
+    "@nodes/image": "workspace:*",
+    "@nodes/badge": "workspace:*",
+    "@nodes/password-input": "workspace:*",
+    "@nodes/form": "workspace:*",
+    "@nodes/text-input": "workspace:*",
+    "@nodes/number-input": "workspace:*",
+    "@nodes/masked-input": "workspace:*",
+    "@nodes/select": "workspace:*",
+    "@nodes/textarea": "workspace:*",
+    "@nodes/date-time-picker": "workspace:*",
+    "@nodes/segmented-control": "workspace:*",
+    "@nodes/checkbox-group": "workspace:*",
+    "@nodes/checkbox": "workspace:*",
+    "@nodes/multi-select": "workspace:*",
+    "@nodes/date-picker-input": "workspace:*",
+    "@nodes/group": "workspace:*",
+    "@nodes/stack": "workspace:*",
+    "@nodes/table": "workspace:*",
+    "@nodes/column-cell": "workspace:*",
+    "@nodes/expansion-row": "workspace:*",
+    "@nodes/column-filter": "workspace:*",
+    "@nodes/highlight": "workspace:*",
+    "@nodes/icon": "workspace:*",
+    "@nodes/action-icon": "workspace:*"
   },
   "devDependencies": {
-    "@rk/typescript-config": "workspace:*",
-    "@rk/eslint-config": "workspace:*",
-    "eslint": "8.56.0",
-    "@rspack/cli": "0.4.5",
+    "@rspack/core": "0.5.4",
+    "@rspack/cli": "0.5.4",
     "rspack-manifest-plugin": "5.0.0-alpha0",
-    "typescript": "5.3.3"
+    "@shared/typescript-config": "workspace:*",
+    "fetch-remote": "workspace:*"
   }
 }

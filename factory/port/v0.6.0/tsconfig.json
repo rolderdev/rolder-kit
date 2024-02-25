@@ -1,5 +1,0 @@
-{
-  "extends": "@rk/typescript-config/base.json",
-  "include": ["./src", "port.ts", "types.d.ts"],
-  "exclude": ["dist", "build", "node_modules"]
-}

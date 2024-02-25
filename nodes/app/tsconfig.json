@@ -1,5 +1,15 @@
 {
-  "extends": "@rk/typescript-config/react-library.json",
-  "include": ["./src", "appNode.ts"],
-  "exclude": ["dist", "build", "node_modules"]
+  "extends": "@shared/typescript-config/react-library.json",
+  "include": [
+    "../../global.d.ts",
+    "src/**/*",
+    "*.d.ts",
+    "*.ts",
+    "*.tsx",
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules"
+  ]
 }

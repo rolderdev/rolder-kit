@@ -1,1 +1,0 @@
-export { useScope, type Scopes } from './src/useScope/useScope'

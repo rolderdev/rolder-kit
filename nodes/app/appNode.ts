@@ -1,53 +1,97 @@
-import { getCustomEnumType, getPort } from '@rk/port'
-import { CompVersions, reactNode } from '@rk/node'
+const urlParams = new URLSearchParams(window.location.search)
+const d = parseInt(urlParams.get('debug') || '0')
+import rKitJson from '../../package.json'
 
-import app140 from '@rk/app-v1.4.0'
-
-const compVersions: CompVersions = {
-    'v1.4.0': {
-        module: app140,
-        inputs: [
-            getPort({
-                plug: 'input', name: 'colorScheme', displayName: 'Color scheme', group: 'Style',
-                type: getCustomEnumType(['light', 'dark', 'auto']), default: 'light', customs: { required: 'connection' }
-            }),
-            getPort({ plug: 'input', name: 'appLoader', displayName: 'App loader', group: 'Loader', type: 'boolean', default: true }),
-            getPort({
-                plug: 'input', name: 'appLoaderColor', displayName: 'Color', group: 'Loader', type: 'color', default: '#073BF5',
-                customs: {
-                    required: 'both',
-                    dependsOn(props) { return props.appLoader ? true : false }
-                }
-            }),
-            getPort({
-                plug: 'input', name: 'setColorScheme', displayName: 'Set color scheme', group: 'Signals', type: 'signal',
-                customs: { dependsOn(props) { return props.colorScheme === 'auto' ? false : true } }
-            }),
-            getPort({
-                plug: 'input', name: 'toggleColorScheme', displayName: 'Toggle color scheme', group: 'Signals', type: 'signal',
-                customs: { dependsOn(props) { return props.colorScheme === 'auto' ? false : true } }
-            }),
-        ],
-        outputs: [
-            getPort({
-                plug: 'output', name: 'colorScheme', displayName: 'Color scheme', group: 'Style', type: 'string',
-                customs: { dependsOn(props) { return props.colorScheme === 'auto' ? false : true } }
-            }),
-            getPort({
-                plug: 'output', name: 'colorSchemeChanged', displayName: 'Color scheme changed', group: 'Signals', type: 'signal',
-                customs: { dependsOn(props) { return props.colorScheme === 'auto' ? false : true } }
-            }),
-        ]
-    },
+globalThis.R = {
+    //@ts-ignore
+    states: { debug: d, devMode: DEVMODE },
+    env: { rolderKit: rKitJson.version },
+    params: {},
+    libs: {},
+    utils: {},
 }
 
-//===================================================================
-window.Noodl.defineModule({
-    reactNodes: [reactNode('App', compVersions, { allowChildren: true })],
+import { consola } from "consola"
+switch (d) {
+    case 0: consola.level = 0; break
+    case 1: consola.level = 2; break
+    case 2: consola.level = 3; break
+}
+
+globalThis.log = {
+    start: () => performance.now(),
+    end: (title, startTime) => consola.log(title, Math.round(performance.now() - startTime)),
+    info: (title, ...args) => consola.info(title, ...args),
+    error: (title, ...args) => consola.error(title, ...args)
+}
+
+document.body.insertAdjacentHTML("afterbegin", `
+<div style="position: absolute; top: 50%; left: 50%; margin-top: -28px; margin-left: -64px;">
+    <h2>LOADING</h2>
+</div>
+`)
+
+// =====================================================
+import libs from './src/libs'; R.libs = libs
+import utils from './src/utils'; R.utils = utils
+import * as icons from './src/icons'; R.libs.icons = icons
+
+// =====================================================
+/* caches.open("rolder").then(async cache => {
+    await cache.add("noodl.viewer.js")
+    await cache.add("react-dom.production.min.js")
+    await cache.add("react.production.min.js")
+    await cache.add("noodl_modules/mantineOld/f6d6cc96bcdde0798471.js")
+})
+ */
+/* if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+ */
+// =====================================================
+import { getCustomEnumType, getPort } from '@shared/port'
+import { reactNode } from '@shared/node'
+
+import v140 from '@shared/app-v1.4.0'
+
+Noodl.defineModule({
+    reactNodes: [reactNode('App', {
+        'v1.4.0': {
+            module: {
+                default: 'static',
+                static: v140
+            },
+            inputs: [
+                getPort({
+                    plug: 'input', name: 'colorScheme', displayName: 'Color scheme', group: 'Style',
+                    type: getCustomEnumType(['light', 'dark', 'auto']), default: 'light', customs: { required: 'connection' }
+                }),
+                getPort({
+                    plug: 'input', name: 'setColorScheme', displayName: 'Set color scheme', group: 'Signals', type: 'signal',
+                    customs: { dependsOn(props) { return props.colorScheme === 'auto' ? false : true } }
+                }),
+                getPort({
+                    plug: 'input', name: 'toggleColorScheme', displayName: 'Toggle color scheme', group: 'Signals', type: 'signal',
+                    customs: { dependsOn(props) { return props.colorScheme === 'auto' ? false : true } }
+                }),
+            ],
+            outputs: [
+                getPort({
+                    plug: 'output', name: 'colorScheme', displayName: 'Color scheme', group: 'Style', type: 'string',
+                    customs: { dependsOn(props) { return props.colorScheme === 'auto' ? false : true } }
+                }),
+                getPort({
+                    plug: 'output', name: 'colorSchemeChanged', displayName: 'Color scheme changed', group: 'Signals', type: 'signal',
+                    customs: { dependsOn(props) { return props.colorScheme === 'auto' ? false : true } }
+                }),
+            ]
+        },
+    }, { allowChildren: true, moduleName: 'app' })],
     settings: [
         { name: 'project', type: 'string', displayName: 'Project name', group: 'Rolder', tooltip: "Examples: rasko, tex" },
         { name: 'projectVersion', type: 'string', displayName: 'Project version', group: 'Rolder' },
         { name: 'projectDefaults', type: 'array', displayName: 'Project defaults', group: 'Rolder' },
-        { name: 'mantineTheme', type: 'array', displayName: 'Mantine theme', group: 'Rolder' }
+        { name: 'mantineTheme', type: 'array', displayName: 'Mantine theme', group: 'Rolder' },
+        { name: 'modules', type: 'array', displayName: 'Modules', group: 'Rolder' },
     ]
 })

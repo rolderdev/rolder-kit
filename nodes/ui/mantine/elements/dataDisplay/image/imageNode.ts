@@ -1,34 +1,28 @@
-import { defaultUnits, enums, getCustomEnumType, getEnumType, getPort, getPorts, getUnitType } from '@rk/port'
-import { CompVersions, reactNode } from '@rk/node'
+import { reactNode } from '@shared/node'
+import { getPorts, getPort, getCustomEnumType, getUnitType, defaultUnits, getMantinePort } from '@shared/port'
+import { lazy } from 'react'
 
-const compVersions: CompVersions = {
-    'v0.3.0': {
-        hashTag: 'deprecated',
-        module: import('../../../../mantine-old/src/nodes/elements/dataDisplay/image/fabricVersions/v0.1.0/v0.3.0/Image'),
+export default reactNode('Image', {
+    'v1.0.0': {
+        module: {
+            default: 'remote',
+            dynamic: lazy(() => import(
+                /* webpackPrefetch: true */
+                /* webpackPreload: true */
+                '@shared/image-v1.0.0')),
+            //@ts-ignore
+            remote: lazy(() => import(
+                /* webpackPrefetch: true */
+                /* webpackPreload: true */
+                //@ts-ignore
+                'remote/ui/mantine/elements/dataDisplay/image-v1.0.0')),
+        },
         inputs: [
-            //...getGroupedPorts('input', ['Margins']),
-            //...getPorts('input', ['useScope', 'scope', 'sourceUrl', 'radius', 'maw'])
-            ...getPorts('input', ['useScope', 'maw']),
+            ...getPorts('input', ['customProps', 'propsFunction', 'useScope', 'src', 'height']),
+            getMantinePort('radius', { comp: 'Image', prop: 'radius' }),
             getPort({
-                plug: 'input', name: 'radius', displayName: 'Radius', group: 'Style', type: getEnumType(enums.sizes), default: 'md'
-            }),
-            getPort({ plug: 'input', name: 'sourceUrl', displayName: 'Source', group: 'Data', type: 'string' }),
-            getPort({
-                plug: 'input', name: 'scope', displayName: 'Placeholder', group: 'Scope',
-                type: getCustomEnumType(['table']), default: 'table', customs: {
-                    required: 'connection',
-                    dependsOn(props) { return props.useScope ? true : false }
-                }
-            }),
-        ]
-    },
-    'v0.4.0': {
-        module: import('@rk/image-v0.4.0'),
-        inputs: [
-            ...getPorts('input', ['customProps', 'propsFunction', 'useScope', 'src', 'width', 'height']),
-            getPort({
-                plug: 'input', name: 'radius', displayName: 'Radius', group: 'Style', type: getEnumType(enums.sizes),
-                customs: { mantineDefault: { comp: 'Image', prop: 'radius' } }
+                plug: 'input', name: 'width', displayName: 'Width', group: 'Dimensions', type: getUnitType(defaultUnits, '%'),
+                default: 100
             }),
             getPort({
                 plug: 'input', name: 'scope', displayName: 'Scope', group: 'Scope', type: getCustomEnumType(['table']),
@@ -48,7 +42,4 @@ const compVersions: CompVersions = {
             }),
         ]
     }
-}
-
-//===================================================================
-export default reactNode('Image', compVersions)
+}, { moduleName: 'mantine' })

@@ -1,0 +1,18 @@
+{
+  "name": "@shared/column-filter-v1.0.0",
+  "main": "columnFilter.tsx",
+  "types": "columnFilter.tsx",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*",
+    "@shared/scope": "workspace:@shared/scope-v0.1.0@*",
+    "@shared/is-empty": "workspace:@shared/is-empty-v0.1.0@*"
+  },
+  "devDependencies": {
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@shared/typescript-config": "workspace:*",
+    "@shared/types": "workspace:@shared/types-v0.1.0@*"
+  }
+}

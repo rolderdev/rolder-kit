@@ -1,0 +1,14 @@
+{
+  "name": "@shared/convert-for-select-inputs-v0.2.0",
+  "main": "convertForSelectInputs.ts",
+  "types": "convertForSelectInputs.ts",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@shared/get-value": "workspace:@shared/get-value-v0.8.0@*"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*"
+  }
+}
