@@ -19,7 +19,6 @@ export default forwardRef(function (props: Props, ref) {
         //@ts-ignore
         sendOutput(props.noodlNode, 'dateValue', value)
         sendSignal(props.noodlNode, 'changed')
-        formHook?.setFieldValue(props.formField, value)
         if (isEmpty(value)) sendSignal(props.noodlNode, 'reseted')
     }, [value])
 
