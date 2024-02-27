@@ -36,20 +36,24 @@ function convertAndCheckType(nodeInput: NodePort, typeOfValue: ValueType, value:
             if (nodeInput.customs?.isObject) {
                 // first time it is string
                 if (typeOfValue === 'string') {
-                    const evalValue = eval(value)
-                    // string >> object from array
-                    const typeOfEvalValue: any = typeOf(evalValue)
-                    if (typeOfEvalValue === 'array') {
-                        if (evalValue?.length) {
-                            // should have only one object
-                            if (evalValue?.length > 1) return { error: `Input "${dn}" should have one object, got ${evalValue?.length}` }
-                            // should be an object
-                            if (evalValue?.length === 1 && typeof evalValue[0] !== 'object') {
-                                return { error: `Input "${dn}" should be array with object type, got "${typeOf(evalValue[0])}"` }
-                            }
-                            return { value: evalValue[0] }
-                        } else return { value: evalValue[0] }
-                    } else return { error: `Input "${dn}" should be array with one object, got "${typeOf(evalValue[0])}"` }
+                    try {
+                        const evalValue = eval(value)
+                        // string >> object from array
+                        const typeOfEvalValue: any = typeOf(evalValue)
+                        if (typeOfEvalValue === 'array') {
+                            if (evalValue?.length) {
+                                // should have only one object
+                                if (evalValue?.length > 1) return { error: `Input "${dn}" should have one object, got ${evalValue?.length}` }
+                                // should be an object
+                                if (evalValue?.length === 1 && typeof evalValue[0] !== 'object') {
+                                    return { error: `Input "${dn}" should be array with object type, got "${typeOf(evalValue[0])}"` }
+                                }
+                                return { value: evalValue[0] }
+                            } else return { value: evalValue[0] }
+                        } else return { error: `Input "${dn}" should be array with one object, got "${typeOf(evalValue[0])}"` }
+                    } catch (error) {
+                        return { error: `Input "${dn}" eval error: "${value}"` }
+                    }
                 } else {
                     if (value?.length) {
                         // should have only one object
@@ -65,10 +69,14 @@ function convertAndCheckType(nodeInput: NodePort, typeOfValue: ValueType, value:
                 //// regular array
                 // first time it is string
                 if (typeOfValue === 'string') {
-                    const evalValue = eval(value)
-                    const typeOfEvalValue: any = typeOf(evalValue)
-                    if (typeOfEvalValue === 'array') return { value: evalValue }
-                    else return { error: `Input "${dn}" should be array type, got "${typeOf(evalValue)}"` }
+                    try {
+                        const evalValue = eval(value)
+                        const typeOfEvalValue: any = typeOf(evalValue)
+                        if (typeOfEvalValue === 'array') return { value: evalValue }
+                        else return { error: `Input "${dn}" should be array type, got "${typeOf(evalValue)}"` }
+                    } catch (error) {
+                        return { error: `Input "${dn}" eval error: "${value}"` }
+                    }
                 }
             }
             // regular array

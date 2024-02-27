@@ -49,7 +49,10 @@ import checkboxNode from "@nodes/checkbox"
 import multiSelectNode from "@nodes/multi-select"
 import datePickerInputNode from '@nodes/date-picker-input'
 //// typography
+import textNode from '@nodes/text'
+import titleNode from '@nodes/title'
 import highlightNode from '@nodes/highlight'
+import listNode from '@nodes/list'
 // molecules
 import formNode from '@nodes/form'
 import groupNode from '@nodes/group'
@@ -73,7 +76,7 @@ Noodl.defineModule({
         passwordInputNode, textInputNode, numberInputNode, maskedInputNode, selectNode, textareaNode, dateTimePickerNode,
         segmentedControlNode, checkboxGroupNode, checkboxNode, multiSelectNode, datePickerInputNode,
         //// typography
-        highlightNode,
+        textNode, titleNode, highlightNode, listNode,
         // molecules
         formNode, groupNode, stackNode,
         // organisms

@@ -36,7 +36,6 @@ import get from 'just-safe-get'
 import set from 'just-safe-set';
 import clamp from 'just-clamp'
 import remove from 'just-remove'
-import sortBy from 'just-sort-by';
 import compare from 'just-compare'
 import flatten from 'just-flatten-it';
 import debounce from 'just-debounce-it'
@@ -55,7 +54,8 @@ import capitalize from 'just-capitalize'
 import range from 'just-range'
 import last from "just-last"
 import unique from 'just-unique'
-libs.just = { typeOf, clone, flush, omit, insert, map, capitalize, range, last, unique }
+import sortBy from 'just-sort-by'
+libs.just = { typeOf, clone, flush, omit, insert, map, capitalize, range, last, unique, sortBy }
 
 ///////////// need to clear
 // lodash
