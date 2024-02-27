@@ -1,14 +1,14 @@
 {
   "name": "rolder-kit",
-  "version": "v1.0.0-beta1",
+  "version": "v1.0.0-beta2",
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --concurrency 100",    
+    "dev": "turbo run dev --concurrency 100",
     "clean": "turbo run clean & rm -rf node_modules"
   },
   "devDependencies": {
-    "turbo": "1.12.3",    
+    "turbo": "1.12.4",
     "typescript": "5.3.3",
     "@types/react": "16.9.49",
     "@types/react-dom": "16.9.8"
@@ -22,5 +22,5 @@
       "@react-pdf/pdfkit": "3.1.0"
     }
   },
-  "packageManager": "pnpm@8.15.1"
+  "packageManager": "pnpm@8.15.4"
 }

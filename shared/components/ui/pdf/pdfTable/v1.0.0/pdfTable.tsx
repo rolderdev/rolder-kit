@@ -5,7 +5,7 @@ import React from 'react';
 import Row from './src/row';
 import Cell from './src/cell';
 import { View } from '@react-pdf/renderer';
-import { getValue } from '@shared/get-value';
+import getValue from '@shared/get-value';
 
 export default forwardRef(function (props: Props) {
     const p = { ...getCompProps(props) } as Props

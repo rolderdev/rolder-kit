@@ -1,11 +1,11 @@
-import { getValue } from "@shared/get-value";
+import getValue from "@shared/get-value";
 import { dataCache, searchCache } from "../data";
 import { DataScheme, SearchResults } from "../../types";
 import { sort as fastSort } from 'fast-sort'
 import { unionBy } from 'lodash-es'
-import { RItem } from "@shared/types";
+import { Item } from "@shared/types";
 
-function sortItems(dataScheme: DataScheme, items: RItem[]) {
+function sortItems(dataScheme: DataScheme, items: Item[]) {
     const sort: any = dataScheme.sort
     if (sort) items = fastSort(items).by(sort.map((s: any) => {
         const order = s[Object.keys(s)[0]]

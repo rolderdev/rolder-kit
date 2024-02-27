@@ -9,5 +9,6 @@ export {
   IconCircleCheck, IconReportAnalytics, IconRepeat, IconSquareNumber1, IconUrgent, IconUsers, IconQrcode,
   IconMinus, IconSwitchVertical, IconHelp, IconFolderPlus, IconClipboard, IconCubePlus, IconLayersSubtract,
   IconKey, IconSend, IconArrowLeft, IconArrowBackUp, IconArrowUp, IconArrowsVertical, IconPrinter, IconRobot,
-  IconSun, IconMoon, IconChartBar, IconCaretRight, IconCamera, IconCalendar, IconWifiOff,
+  IconSun, IconMoon, IconChartBar, IconCaretRight, IconCamera, IconCalendar, IconWifiOff, IconDivide, IconLink,
+  IconUnlink, IconCalculator, IconHammer, IconLayoutGrid, IconSend2, IconPlaystationCircle,
 } from '@tabler/icons-react'

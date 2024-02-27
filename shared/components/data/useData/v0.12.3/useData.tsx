@@ -3,15 +3,15 @@ import { useMolecule } from 'bunshi/react';
 import { deepMap } from 'nanostores';
 import { unSubscribe } from './src/subscribe';
 import last from 'just-last'
-import { getValue } from '@shared/get-value';
+import getValue from '@shared/get-value';
 import { PagesSearchAfter, Props, Sorts } from './types';
 import clone from 'just-clone';
 import isObjectEmpty from 'just-is-empty'
-import { RItem } from '@shared/types'
+import { Item } from '@shared/types'
 import { DataContextMolecule, dataCache, dataNodes, dataSchemes } from '@shared/data-context'
 import React from 'react';
 
-function getSearchAfter(items?: RItem[], sorts?: Sorts) {
+function getSearchAfter(items?: Item[], sorts?: Sorts) {
   if (items?.length) {
     let searchAfter = []
     sorts?.forEach(i => searchAfter.push(getValue(last(items), Object.keys(i)[0])))
@@ -41,7 +41,7 @@ function getDataScheme(props: Props) {
   return { dbClass, filters: fs, sorts, querySize, refs, backRefs, getUsers, aggQuery }
 }
 
-export const localDataCache = deepMap<{ [noodlNodeId: string]: RItem[] }>({})
+export const localDataCache = deepMap<{ [noodlNodeId: string]: Item[] }>({})
 export const maxPage = deepMap<{ [noodlNodeId: string]: number }>({})
 export const hack = deepMap<{ [noodlNodeId: string]: boolean }>({})
 

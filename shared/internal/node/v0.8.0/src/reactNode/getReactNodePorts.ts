@@ -17,7 +17,8 @@ export default function (node: GraphModelNode, context: NodeContext, versions: C
         }
     } as NodePort
 
-    if (!node.parameters.version) {
+    const vs = Object.keys(versions).map(i => i + (versions[i]?.hashTag ? ' #' + versions[i]?.hashTag : ''))
+    if (!vs.includes(node.parameters.version)) {
         context.editorConnection.clearWarnings(node.component.name, node.id)
         sendWarning(node, context, 'Version', 'Choose version')
     } else clearWarning(node, context, 'Version')

@@ -8,11 +8,11 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "1.11.2",
+    "rspress": "1.12.3",
     "@mantine/core": "6.0.21",
     "@mantine/dates": "6.0.21",
     "@mantine/notifications": "6.0.21",
-    "@tabler/icons-react": "2.46.0",
+    "@tabler/icons-react": "2.47.0",
     "@shared/image": "workspace:@shared/image-v1.0.0@*",
     "@shared/password-input": "workspace:@shared/password-input-v1.0.0@*"
   },

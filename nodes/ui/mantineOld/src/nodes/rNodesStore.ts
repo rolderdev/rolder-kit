@@ -106,8 +106,7 @@ const rNodesStore = [
     // navigation
     NavLinkNode_f0_1_0,
     // typography 
-    // HighlightNode_f0_1_0,
-    TextNode_f0_1_0, TitleNode_f0_1_0, ListNode_f0_1_0,
+    // HighlightNode_f0_1_0,TextNode_f0_1_0, TitleNode_f0_1_0, ListNode_f0_1_0,
 ]
 
 export { rNodesStore }

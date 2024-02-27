@@ -6,6 +6,8 @@ import { getCompProps } from "@shared/get-comp-props"
 import { useTableCellScope } from "@shared/scope"
 import convertColor from "@shared/convert-color"
 
+export type { Props as IconProps }
+
 export default forwardRef(function (props: Props) {
     const item = useTableCellScope()
 

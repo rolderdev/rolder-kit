@@ -33,7 +33,10 @@
     "@nodes/column-filter": "workspace:*",
     "@nodes/highlight": "workspace:*",
     "@nodes/icon": "workspace:*",
-    "@nodes/action-icon": "workspace:*"
+    "@nodes/action-icon": "workspace:*",
+    "@nodes/text": "workspace:*",
+    "@nodes/title": "workspace:*",
+    "@nodes/list": "workspace:*"
   },
   "devDependencies": {
     "@rspack/core": "0.5.4",

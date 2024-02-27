@@ -1,5 +1,5 @@
 import { NoodlNode, BaseReactProps } from '@shared/node'
-import {RItem} from '@shared/types'
+import { Item } from '@shared/types'
 
 export type Props = BaseReactProps & {
     useDataScheme: DataScheme[]
@@ -7,11 +7,11 @@ export type Props = BaseReactProps & {
 }
 
 declare type DataCache = {
-    [dbClass: string]: RItem[]
+    [dbClass: string]: Item[]
 }
 
 declare type SearchResults = {
-    [dbClass: string]: RItem[]
+    [dbClass: string]: Item[]
 }
 
 declare type DataStates = {
