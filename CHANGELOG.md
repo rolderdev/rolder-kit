@@ -1,6 +1,13 @@
 # Changelog
 
-## 2024-02-27 v1.0.0-beta4
+## 2024-02-29 v1.0.0-beta5
+
+### Mantine
+
+* Переехали ноды: Button (нужно проверять, что в disabled подается boolean), UnstyledButton, Box, Flex, Center, Paper.
+* ActionIcon не простовлял дефолтный scope.
+
+## 2024-02-29 v1.0.0-beta4
 
 ### Mantine
 

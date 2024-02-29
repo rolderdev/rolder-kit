@@ -395,6 +395,15 @@ importers:
       '@nodes/badge':
         specifier: workspace:*
         version: link:elements/dataDisplay/badge
+      '@nodes/box':
+        specifier: workspace:*
+        version: link:molecules/box
+      '@nodes/button':
+        specifier: workspace:*
+        version: link:elements/buttons/button
+      '@nodes/center':
+        specifier: workspace:*
+        version: link:molecules/center
       '@nodes/checkbox':
         specifier: workspace:*
         version: link:elements/inputs/checkbox
@@ -416,6 +425,9 @@ importers:
       '@nodes/expansion-row':
         specifier: workspace:*
         version: link:organisms/table/modules/expansionRow
+      '@nodes/flex':
+        specifier: workspace:*
+        version: link:molecules/flex
       '@nodes/form':
         specifier: workspace:*
         version: link:molecules/form
@@ -443,6 +455,9 @@ importers:
       '@nodes/number-input':
         specifier: workspace:*
         version: link:elements/inputs/numberInput
+      '@nodes/paper':
+        specifier: workspace:*
+        version: link:molecules/paper
       '@nodes/password-input':
         specifier: workspace:*
         version: link:elements/inputs/passwordInput
@@ -470,6 +485,9 @@ importers:
       '@nodes/title':
         specifier: workspace:*
         version: link:elements/typography/title
+      '@nodes/unstyled-button':
+        specifier: workspace:*
+        version: link:elements/buttons/unstyledButton
       '@shared/mantine-v1.0.0':
         specifier: workspace:*
         version: link:../../../shared/components/ui/mantine/v1.0.0
@@ -507,6 +525,38 @@ importers:
       '@shared/port':
         specifier: workspace:@shared/port-v0.6.0@*
         version: link:../../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/elements/buttons/button:
+    dependencies:
+      '@shared/button-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../../shared/components/ui/mantine/elements/buttons/button/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/elements/buttons/unstyledButton:
+    dependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../../shared/internal/port/v0.6.0
+      '@shared/unstyled-button-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../../shared/components/ui/mantine/elements/buttons/unstyledButton/v1.0.0
     devDependencies:
       '@shared/typescript-config':
         specifier: workspace:*
@@ -816,6 +866,54 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../shared/internal/typescript-config
 
+  nodes/ui/mantine/molecules/box:
+    dependencies:
+      '@shared/box-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../shared/components/ui/mantine/molecules/box/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/molecules/center:
+    dependencies:
+      '@shared/center-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../shared/components/ui/mantine/molecules/center/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/molecules/flex:
+    dependencies:
+      '@shared/flex-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../shared/components/ui/mantine/molecules/flex/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../shared/internal/typescript-config
+
   nodes/ui/mantine/molecules/form:
     dependencies:
       '@shared/form-v1.0.0':
@@ -840,6 +938,22 @@ importers:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
         version: link:../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/molecules/paper:
+    dependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../shared/internal/node/v0.8.0
+      '@shared/paper-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../shared/components/ui/mantine/molecules/paper/v1.0.0
       '@shared/port':
         specifier: workspace:@shared/port-v0.6.0@*
         version: link:../../../../../shared/internal/port/v0.6.0
@@ -1659,6 +1773,59 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../../internal/typescript-config
 
+  shared/components/ui/mantine/elements/buttons/button/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@shared/convert-color':
+        specifier: workspace:@shared/convert-color-v0.3.0@*
+        version: link:../../../../utils/convertColor/v0.3.0
+      '@shared/get-comp-props':
+        specifier: workspace:@shared/get-comp-props-v0.1.0@*
+        version: link:../../../../../../../internal/utils/getCompProps/v0.1.0
+      '@shared/port-send':
+        specifier: workspace:@shared/port-send-v0.2.0@*
+        version: link:../../../../../../../internal/utils/portSend/v0.2.0
+      '@shared/scope':
+        specifier: workspace:@shared/scope-v0.1.0@*
+        version: link:../../../../../../../internal/scope/v0.1.0
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../../internal/node/v0.8.0
+      '@shared/types':
+        specifier: workspace:@shared/types-v0.1.0@*
+        version: link:../../../../../../../internal/types/v0.1.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../../internal/typescript-config
+
+  shared/components/ui/mantine/elements/buttons/unstyledButton/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@shared/get-comp-props':
+        specifier: workspace:@shared/get-comp-props-v0.1.0@*
+        version: link:../../../../../../../internal/utils/getCompProps/v0.1.0
+      '@shared/port-send':
+        specifier: workspace:@shared/port-send-v0.2.0@*
+        version: link:../../../../../../../internal/utils/portSend/v0.2.0
+      '@shared/scope':
+        specifier: workspace:@shared/scope-v0.1.0@*
+        version: link:../../../../../../../internal/scope/v0.1.0
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../../internal/node/v0.8.0
+      '@shared/types':
+        specifier: workspace:@shared/types-v0.1.0@*
+        version: link:../../../../../../../internal/types/v0.1.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../../internal/typescript-config
+
   shared/components/ui/mantine/elements/dataDisplay/badge/v1.0.0:
     dependencies:
       '@mantine/core':
@@ -2155,6 +2322,45 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../../internal/typescript-config
 
+  shared/components/ui/mantine/molecules/box/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../internal/typescript-config
+
+  shared/components/ui/mantine/molecules/center/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../internal/typescript-config
+
+  shared/components/ui/mantine/molecules/flex/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../internal/typescript-config
+
   shared/components/ui/mantine/molecules/form/v1.0.0:
     dependencies:
       '@mantine/core':
@@ -2184,6 +2390,19 @@ importers:
         version: link:../../../../../../internal/typescript-config
 
   shared/components/ui/mantine/molecules/group/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../internal/typescript-config
+
+  shared/components/ui/mantine/molecules/paper/v1.0.0:
     dependencies:
       '@mantine/core':
         specifier: 6.0.21

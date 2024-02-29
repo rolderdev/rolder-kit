@@ -36,7 +36,13 @@
     "@nodes/action-icon": "workspace:*",
     "@nodes/text": "workspace:*",
     "@nodes/title": "workspace:*",
-    "@nodes/list": "workspace:*"
+    "@nodes/list": "workspace:*",
+    "@nodes/button": "workspace:*",
+    "@nodes/unstyled-button": "workspace:*",
+    "@nodes/box": "workspace:*",
+    "@nodes/flex": "workspace:*",
+    "@nodes/center": "workspace:*",
+    "@nodes/paper": "workspace:*"
   },
   "devDependencies": {
     "@rspack/core": "0.5.5",

@@ -2,26 +2,24 @@ import { reactNode } from '@shared/node'
 import { getCustomEnumType, getPort, getPorts, inputGroups } from '@shared/port'
 import { lazy } from 'react'
 
-export default reactNode('ActionIcon', {
+export default reactNode('Button', {
     'v1.0.0': {
         module: {
             default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/action-icon-v1.0.0')),
+                '@shared/button-v1.0.0')),
             //@ts-ignore
             remote: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 //@ts-ignore
-                'remote/ui/mantine/elements/buttons/action-icon-v1.0.0')),
+                'remote/ui/mantine/elements/buttons/button-v1.0.0')),
         },
         inputs: [
             ...inputGroups.Margins, ...inputGroups.Icon,
-            ...getPorts('input', [
-                'customProps', 'propsFunction', 'useScope', 'disabled', 'size', 'radius', 'color', 'loading'
-            ]),
+            ...getPorts('input', ['customProps', 'propsFunction', 'useScope', 'label', 'disabled', 'size', 'radius', 'color', 'loading']),
             getPort({
                 plug: 'input', name: 'scope', displayName: 'Scope', group: 'Scope',
                 type: getCustomEnumType(['table']), default: 'table', customs: {
@@ -29,10 +27,11 @@ export default reactNode('ActionIcon', {
                 }
             }),
             getPort({
-                plug: 'input', name: 'actionIconVariant', displayName: 'Variant', group: 'Style',
-                type: getCustomEnumType(['transparent', 'subtle', 'light', 'filled', 'outline', 'default']),
-                default: 'subtle', customs: { required: 'connection' }
+                plug: 'input', name: 'buttonVariant', displayName: 'Variant', group: 'Style',
+                type: getCustomEnumType(['default', 'filled', 'subtle', 'outline', 'light', 'gradient', 'white']),
+                default: 'filled', customs: { required: 'connection' }
             }),
+            getPort({ plug: 'input', name: 'buttonType', displayName: 'Button type', group: 'Params', type: getCustomEnumType(['submit']) }),
         ],
         outputs: getPorts('output', ['clicked'])
     }
