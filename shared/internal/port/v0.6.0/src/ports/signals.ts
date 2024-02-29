@@ -19,4 +19,5 @@ export default [
     { name: 'clicked', displayName: 'Clicked', group: 'Signals', type: 'signal' },
     { name: 'increment', displayName: 'Increment', group: 'Signals', type: 'signal' },
     { name: 'decrement', displayName: 'Decrement', group: 'Signals', type: 'signal' },
+    { name: 'doubleClicked', displayName: 'Double clicked', group: 'Signals', type: 'signal' },
 ] as const satisfies readonly NodePort[]
