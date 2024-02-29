@@ -37,13 +37,14 @@
     "@tabler/icons-react": "2.47.0"
   },
   "devDependencies": {
-    "@rspack/core": "0.5.4",
-    "@rspack/cli": "0.5.4",
+    "@rspack/core": "0.5.5",
+    "@rspack/cli": "0.5.5",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "@shared/typescript-config": "workspace:*",
     "@shared/types": "workspace:@shared/types-v0.1.0@*",
     "@types/omgopass": "3.2.3",
     "@types/lodash": "4.14.202",
-    "kuzzle-sdk": "7.11.2"
+    "kuzzle-sdk": "7.11.2",
+    "workbox-rspack-plugin": "0.0.2"
   }
 }

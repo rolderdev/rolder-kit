@@ -11,10 +11,11 @@
     "@tanstack/react-query": "4.36.1",
     "kuzzle-sdk": "7.11.2",
     "@mantine/core": "6.0.21",
-    "@capacitor/network": "5.0.7"
+    "@capacitor/network": "next"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
-    "@shared/node": "workspace:@shared/node-v0.8.0@*"
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@capacitor/core": "next"
   }
 }

@@ -8,7 +8,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "1.12.3",
+    "rspress": "1.13.0",
     "@mantine/core": "6.0.21",
     "@mantine/dates": "6.0.21",
     "@mantine/notifications": "6.0.21",

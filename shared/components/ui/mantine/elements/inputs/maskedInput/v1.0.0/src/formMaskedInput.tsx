@@ -1,5 +1,5 @@
 import { CloseButton, Input } from "@mantine/core"
-import { forwardRef, useEffect, useImperativeHandle } from "react"
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { Props } from "../types"
 import React from "react"
 import { sendOutput, sendSignal } from '@shared/port-send'
@@ -13,15 +13,19 @@ export default forwardRef(function (props: Props, ref) {
     const Icon = props.iconName && R.libs.icons[props.iconName]
     const formHook = useFormScope()
 
-    const value = formHook?.values?.[props.formField]
+    const [value, setValue] = useState<string | number>('')
     const typingDelay = props.debouncedTyping ? props.typingDelay || 350 : 0
     const [debouncedTyping] = useDebouncedValue(value, typingDelay)
 
     useEffect(() => {
-        if (value?.length === 0) {
+        if (!debouncedTyping) {
+            formHook?.setFieldValue(props.formField, '')
             sendOutput(props.noodlNode, 'typedValue', '')
             sendSignal(props.noodlNode, 'reseted')
-        } else sendOutput(props.noodlNode, 'typedValue', value)
+        } else {
+            formHook?.setFieldValue(props.formField, debouncedTyping)
+            sendOutput(props.noodlNode, 'typedValue', value)
+        }
     }, [debouncedTyping])
 
     const validationDelay = props.debouncedValidation ? props.validationDelay || 350 : 0
@@ -36,6 +40,7 @@ export default forwardRef(function (props: Props, ref) {
         reset() {
             sendOutput(props.noodlNode, 'typedValue', '')
             sendSignal(props.noodlNode, 'reseted')
+            formHook?.setFieldValue(props.formField, '')
         }
     }), [])
 
@@ -68,7 +73,7 @@ export default forwardRef(function (props: Props, ref) {
             error={formHook?.errors[props.formField]}
             onAccept={(value: string | number) => {
                 const parsedValue = value === 0 ? '' : value
-                formHook?.setFieldValue(props.formField, parsedValue)
+                setValue(parsedValue)
             }}
             icon={Icon && <Icon size={props.iconSize} stroke={props.iconStroke} color={convertColor(props.iconColor)} />}
             rightSection={<CloseButton tabIndex={props.focusRightSection ? 0 : -1} onClick={() => {
@@ -81,7 +86,6 @@ export default forwardRef(function (props: Props, ref) {
             {...props}
             {...maskProps}
             {...props.customProps}
-            {...formHook?.getInputProps(props.formField)}
         />
     </Input.Wrapper>
 

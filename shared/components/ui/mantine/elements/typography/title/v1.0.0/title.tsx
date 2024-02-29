@@ -20,7 +20,7 @@ export default forwardRef(function (props: Props) {
         if (valueSource) switch (p.textFormat) {
             case 'none': setValue(valueSource); break
             case 'number': setValue(numbro(valueSource || 0).format(p.numberFormat)); break
-            case 'date': setValue(getFormatedDate.v2({ valueSource }, 'source', p.dateFormatAtText) || ''); break
+            case 'date': setValue(getFormatedDate.v2({ valueSource }, 'valueSource', p.dateFormatAtText) || ''); break
             case 'mask': setValue(getMasked.v2({ type: 'pattern', maskPattern: p.textMask }, valueSource) || ''); break
         }
     }, [props])

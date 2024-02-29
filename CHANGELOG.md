@@ -1,5 +1,14 @@
 # Changelog
 
+## 2024-02-27 v1.0.0-beta4
+
+### Mantine
+
+* Text и Title не форматировали дату.
+* Select больше не подает сигнал reset, если подать пустой default item.
+* MaskedInput больше не зацикливается в форме.
+* Gantt переехал в новый RK.
+
 ## 2024-02-27 v1.0.0-beta3
 
 ### Mantine

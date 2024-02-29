@@ -27,7 +27,7 @@ export default forwardRef(function (props: Props, ref) {
     useEffect(() => {
         if (!value) {
             sendOutput(noodlNode, 'selectedItem', null)
-            sendSignal(noodlNode, 'reseted')
+            //sendSignal(noodlNode, 'reseted')
         } else {
             const selectedItem = inputItems?.find((i: any) => value && [i.value, i.id, i.label].includes(value))
             sendOutput(noodlNode, 'selectedItem', selectedItem)
