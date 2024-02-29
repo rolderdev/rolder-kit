@@ -2,7 +2,7 @@ import { defineConfig } from '@rsbuild/core';
 import { rspack } from '@rspack/core';
 
 //==========================================
-import v100Beta4 from './mfes/v1.0.0-beta4';
+import v100Beta5 from './mfes/v1.0.0-beta5';
 //==========================================
 
 export default defineConfig({
@@ -32,7 +32,7 @@ export default defineConfig({
         react: 'React',
         'react-dom': 'ReactDOM'
       },
-      plugins: [new rspack.container.ModuleFederationPlugin(v100Beta4)],
+      plugins: [new rspack.container.ModuleFederationPlugin(v100Beta5)],
     },
   },
 });

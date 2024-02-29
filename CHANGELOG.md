@@ -1,13 +1,23 @@
 # Changelog
 
-## 2024-02-27 v1.0.0-beta4
+## 2024-02-29 v1.0.0-beta5
+
+### Mantine
+
+* Переехали ноды: Button (нужно проверять, что в disabled подается boolean), UnstyledButton, Box, Flex, Center, Paper.
+* ActionIcon не простовлял дефолтный scope.
+
+## 2024-02-29 v1.0.0-beta4
 
 ### Mantine
 
 * Text и Title не форматировали дату.
 * Select больше не подает сигнал reset, если подать пустой default item.
 * MaskedInput больше не зацикливается в форме.
-* Gantt переехал в новый RK.
+
+### Gantt
+
+* Переехал в новый RK.
 
 ## 2024-02-27 v1.0.0-beta3
 

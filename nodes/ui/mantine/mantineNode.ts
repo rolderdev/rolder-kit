@@ -35,6 +35,8 @@ import badgeNode from '@nodes/badge'
 import iconNode from '@nodes/icon'
 //// buttons
 import actionIconNode from '@nodes/action-icon'
+import buttonNode from '@nodes/button'
+import unstyledButtonNode from '@nodes/unstyled-button'
 //// inputs
 import passwordInputNode from '@nodes/password-input'
 import textInputNode from '@nodes/text-input'
@@ -57,6 +59,10 @@ import listNode from '@nodes/list'
 import formNode from '@nodes/form'
 import groupNode from '@nodes/group'
 import stackNode from '@nodes/stack'
+import boxNode from '@nodes/box'
+import flexNode from '@nodes/flex'
+import centerNode from '@nodes/center'
+import paperNode from '@nodes/paper'
 // organisms
 //// table
 import tableNode from '@nodes/table'
@@ -71,14 +77,14 @@ Noodl.defineModule({
         //// dataDisplay
         imageNode, badgeNode, iconNode,
         //// buttons
-        actionIconNode,
+        actionIconNode, buttonNode, unstyledButtonNode,
         //// inputs
         passwordInputNode, textInputNode, numberInputNode, maskedInputNode, selectNode, textareaNode, dateTimePickerNode,
         segmentedControlNode, checkboxGroupNode, checkboxNode, multiSelectNode, datePickerInputNode,
         //// typography
         textNode, titleNode, highlightNode, listNode,
         // molecules
-        formNode, groupNode, stackNode,
+        formNode, groupNode, stackNode, boxNode, flexNode, centerNode, paperNode,
         // organisms
         //// table
         tableNode, columnCellNode, expansionRowNode, columnFilterNode,
