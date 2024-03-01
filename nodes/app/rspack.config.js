@@ -3,11 +3,10 @@
  */
 const rspack = require('@rspack/core');
 const manifestPlugin = require('rspack-manifest-plugin').WebpackManifestPlugin
-//const { GenerateSW } = require("workbox-rspack-plugin");
 
 var path = require('path')
 const pJson = require('./package.json')
-var outputPath = path.resolve(__dirname, `./dist`)
+var outputPath = path.resolve(__dirname, `../../build/app`)
 
 module.exports = function (env) {
     return {
@@ -35,29 +34,7 @@ module.exports = function (env) {
             }),
             new rspack.DefinePlugin({
                 DEVMODE: env.noodlDev ? true : false
-            }),
-            /* new GenerateSW({
-                exclude: [/\.(?:png|jpg|jpeg|svg)$/],
-
-                // Define runtime caching rules.
-                runtimeCaching: [{
-                    // Match any request that ends with .png, .jpg, .jpeg or .svg.
-                    urlPattern: /\.(?:js|png|jpg|jpeg|svg)$/,
-
-                    // Apply a cache-first strategy.
-                    handler: 'CacheFirst',
-
-                    options: {
-                        // Use a custom cache name.
-                        cacheName: 'images',
-
-                        // Only cache 10 images.
-                        expiration: {
-                            maxEntries: 10,
-                        }
-                    }
-                }]
-            }), */
+            }),           
         ],
         module: {
             rules: [
