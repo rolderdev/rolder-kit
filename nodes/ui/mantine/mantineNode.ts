@@ -55,6 +55,8 @@ import textNode from '@nodes/text'
 import titleNode from '@nodes/title'
 import highlightNode from '@nodes/highlight'
 import listNode from '@nodes/list'
+//// navigation
+import navLinkNode from '@nodes/nav-link'
 // molecules
 import formNode from '@nodes/form'
 import groupNode from '@nodes/group'
@@ -63,6 +65,14 @@ import boxNode from '@nodes/box'
 import flexNode from '@nodes/flex'
 import centerNode from '@nodes/center'
 import paperNode from '@nodes/paper'
+//// hoverCard
+import hoverCardNode from '@nodes/hover-card'
+import hoverCardTargetNode from '@nodes/hover-card-target'
+import hoverCardDropdownNode from '@nodes/hover-card-dropdown'
+//// popover
+import popoverNode from '@nodes/popover'
+import popoverTargetNode from '@nodes/popover-target'
+import popoverDropdownNode from '@nodes/popover-dropdown'
 // organisms
 //// table
 import tableNode from '@nodes/table'
@@ -83,8 +93,14 @@ Noodl.defineModule({
         segmentedControlNode, checkboxGroupNode, checkboxNode, multiSelectNode, datePickerInputNode,
         //// typography
         textNode, titleNode, highlightNode, listNode,
+        //// navigation
+        navLinkNode,
         // molecules
         formNode, groupNode, stackNode, boxNode, flexNode, centerNode, paperNode,
+        //// hoverCard
+        hoverCardNode, hoverCardTargetNode, hoverCardDropdownNode,
+        //// popover
+        popoverNode, popoverTargetNode, popoverDropdownNode,
         // organisms
         //// table
         tableNode, columnCellNode, expansionRowNode, columnFilterNode,

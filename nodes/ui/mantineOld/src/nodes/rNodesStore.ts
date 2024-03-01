@@ -85,25 +85,24 @@ const rNodesStore = [
     // tabs
     TabsNode_f0_1_0, TabNode_f0_1_0,
     // molecules
-    // GroupNode_f0_1_0, StackNode_f0_1_0,BoxNode_f0_1_0,FlexNode_f0_1_0,CenterNode_f0_1_0,PaperNode_f0_1_0,
+    // GroupNode_f0_1_0, StackNode_f0_1_0,BoxNode_f0_1_0,FlexNode_f0_1_0,CenterNode_f0_1_0,PaperNode_f0_1_0,PopoverNode_f0_1_0,
     AvatarNode_f0_1_0, DrawerNode_f0_1_0, ModalNode_f0_1_0,
-    CarouselNode_f0_1_0, PopoverNode_f0_1_0, GridNode_f0_1_0,
+    CarouselNode_f0_1_0, GridNode_f0_1_0,
     ScrollAreaNode_f0_1_0,
     //// elements
     // buttons
     // ActionIconNode_f0_1_0,ButtonNode_f0_1_0,UnstyledButtonNode_f0_1_0
     // dataDisplay
-    // BadgeNode_f0_1_0,IconNode_f0_1_0,
-    QRCodeNode_f0_1_0,
+    // BadgeNode_f0_1_0,IconNode_f0_1_0,QRCodeNode_f0_1_0,    
     // feedback
     BarLoaderNode_f0_1_0, LoaderNode_f0_1_0, IndicatorNode_f0_1_0,
     // inputs TextInputNode_f0_1_0 MaskedInputNode_f0_1_0 SelectNode_f0_1_0 TextareaNode_f0_1_0 DateTimePickerNode_f0_1_0
     // SegmentedControlNode_f0_1_0 CheckboxGroupNode_f0_1_0 CheckboxNode_f0_1_0 MultiSelectNode_f0_1_0 DatePickerInputNode_f0_1_0     
     // NumberInputNode_f0_1_0,
     // miscellaneous
-    WebCameraNode_f0_1_0, DividerNode_f0_1_0, QRScannerNode_f0_1_0, DropZoneNode_f0_1_0,
-    // navigation
-    NavLinkNode_f0_1_0,
+    //QRScannerNode_f0_1_0,
+    WebCameraNode_f0_1_0, DividerNode_f0_1_0, DropZoneNode_f0_1_0,
+    // navigation NavLinkNode_f0_1_0,
     // typography 
     // HighlightNode_f0_1_0,TextNode_f0_1_0, TitleNode_f0_1_0, ListNode_f0_1_0,
 ]

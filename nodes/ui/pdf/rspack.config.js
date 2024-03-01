@@ -6,7 +6,7 @@ const manifestPlugin = require('rspack-manifest-plugin').WebpackManifestPlugin
 
 var path = require('path')
 const pJson = require('./package.json')
-var outputPath = path.resolve(__dirname, `./dist`)
+var outputPath = path.resolve(__dirname, `../../../build/pdf`)
 
 const fetchRemote  = require('fetch-remote')
 const mfConf = {
@@ -17,7 +17,7 @@ const mfConf = {
 module.exports = {
     context: __dirname,
     stats: { preset: 'errors-only', timings: true },
-    entry: { [pJson.name]: `./pdfNode.ts` },
+    entry: { [pJson.name]: `./pdf.ts` },
     resolve: {
         extensions: ['...', '.tsx', '.ts']
     },

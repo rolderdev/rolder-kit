@@ -13,7 +13,7 @@ export default forwardRef(function (props: Props, ref) {
     const Icon = props.iconName && R.libs.icons[props.iconName]
     const formHook = useFormScope()
 
-    const [value, setValue] = useState<string | number>('')
+    const [value, setValue] = useState<string | number>(formHook?.values?.[props.formField] || '')
     const typingDelay = props.debouncedTyping ? props.typingDelay || 350 : 0
     const [debouncedTyping] = useDebouncedValue(value, typingDelay)
 

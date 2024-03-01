@@ -42,7 +42,14 @@
     "@nodes/box": "workspace:*",
     "@nodes/flex": "workspace:*",
     "@nodes/center": "workspace:*",
-    "@nodes/paper": "workspace:*"
+    "@nodes/paper": "workspace:*",
+    "@nodes/nav-link": "workspace:*",
+    "@nodes/hover-card": "workspace:*",
+    "@nodes/hover-card-target": "workspace:*",
+    "@nodes/hover-card-dropdown": "workspace:*",
+    "@nodes/popover": "workspace:*",
+    "@nodes/popover-target": "workspace:*",
+    "@nodes/popover-dropdown": "workspace:*"
   },
   "devDependencies": {
     "@rspack/core": "0.5.5",

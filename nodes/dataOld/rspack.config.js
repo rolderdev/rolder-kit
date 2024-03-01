@@ -6,7 +6,7 @@ const manifestPlugin = require('rspack-manifest-plugin').WebpackManifestPlugin
 
 var path = require('path')
 const pJson = require('./package.json')
-var outputPath = path.resolve(__dirname, `./dist`)
+var outputPath = path.resolve(__dirname, `../../build/dataOld`)
 
 module.exports = {
     context: __dirname,
