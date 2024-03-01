@@ -17,6 +17,7 @@ export default reactNode('UnstyledButton', {
                 //@ts-ignore
                 'remote/ui/mantine/elements/buttons/unstyled-button-v1.0.0')),
         },
+        inputs: getPorts('input', ['customProps']),
         outputs: getPorts('output', ['clicked'])
     }
 }, { moduleName: 'mantine', allowChildren: true })

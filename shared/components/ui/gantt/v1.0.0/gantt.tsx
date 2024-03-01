@@ -8,7 +8,11 @@ export default forwardRef(function (props: Props) {
     const { noodlNode, ganttTasks: tasks, ganttViewMode, showTaskList } = props
 
     return props.ganttTasks?.length
-        ? <div className="Wrapper">
+        ? <div
+            className="Wrapper"
+            {...props}
+            {...props.customProps}
+        >
             <Gantt
                 tasks={tasks}
                 viewMode={ganttViewMode}

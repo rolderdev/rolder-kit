@@ -1,5 +1,5 @@
 {
-  "name": "@nodes/pdf",
+  "name": "pdf",
   "scripts": {
     "build": "rspack build --mode=production",
     "dev": "rspack build --mode=development --env=noodlDev",

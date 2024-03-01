@@ -1,0 +1,36 @@
+import { reactNode } from '@shared/node'
+import { getPorts, getPort } from '@shared/port'
+import { lazy } from 'react'
+
+const qrLevels = [
+    { value: 'L', label: 'Lowest' }, { value: 'M', label: 'Medium' }, { value: 'Q', label: 'Quality' }, { value: 'H', label: 'Highest' }
+]
+
+export default reactNode('QRScanner', {
+    'v1.0.0': {
+        module: {
+            default: 'remote',
+            dynamic: lazy(() => import(
+                /* webpackPrefetch: true */
+                /* webpackPreload: true */
+                '@shared/qr-scanner-v1.0.0')),
+            //@ts-ignore
+            remote: lazy(() => import(
+                /* webpackPrefetch: true */
+                /* webpackPreload: true */
+                //@ts-ignore
+                `remote/ui/qr-code/qr-scanner-v1.0.0`)),
+        },
+        inputs: [
+            ...getPorts('input', ['customProps']),
+            getPort({
+                plug: 'input', name: 'maxScansPerSecond', displayName: 'Max scans per second', group: 'Params', type: 'number',
+                default: 25, customs: { required: 'both' }
+            })
+        ],
+        outputs: [
+            getPort({ plug: 'output', name: 'qrScanned', displayName: 'Scanned', group: 'Signals', type: 'signal' }),
+            getPort({ plug: 'output', name: 'qrString', displayName: 'QR string', group: 'Data', type: 'string' })
+        ]
+    }
+}, { moduleName: 'mantine' })

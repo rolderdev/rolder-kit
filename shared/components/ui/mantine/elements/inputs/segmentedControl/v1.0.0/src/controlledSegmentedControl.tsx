@@ -22,16 +22,18 @@ export default forwardRef(function (props: Props) {
 
     const [value, setValue] = useState<string | undefined>()
     useEffect(() => { if (defaultValue) setValue(defaultValue) }, [defaultValue])
+    useEffect(() => {
+        if (value) {
+            const selectedItem = inputItems?.find(i => value && [i.value, i.id, i.label].includes(value))
+            sendOutput(noodlNode, 'selectedItem', selectedItem)
+            sendSignal(noodlNode, 'selected')
+        }
+    }, [value])
 
     return <SegmentedControl
         data={data}
         value={value}
-        onChange={(v) => {
-            setValue(v)
-            const selectedItem = inputItems?.find((i: any) => v && [i.value, i.id, i.label].includes(v))
-            sendOutput(noodlNode, 'selectedItem', selectedItem)
-            sendSignal(noodlNode, 'selected')
-        }}
+        onChange={setValue}
         {...props}
         {...props.customProps}
     />

@@ -7,7 +7,7 @@ import { Button } from "@mantine/core"
 import convertColor from "@shared/convert-color"
 import { sendSignal } from "@shared/port-send"
 
-export default forwardRef(function (props: Props) {
+export default forwardRef(function (props: Props, ref: any) {
     const item = useTableCellScope()
     const p = { ...getCompProps(props, item) } as Props
 
@@ -21,6 +21,7 @@ export default forwardRef(function (props: Props) {
             e.stopPropagation()
             sendSignal(props.noodlNode, 'clicked')
         }}
+        ref={ref}
         {...p}
         {...p.customProps}
     >

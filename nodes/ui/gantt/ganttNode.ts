@@ -25,6 +25,7 @@ const GanttNode = reactNode('Gantt', {
                 'remote/ui/gantt/gantt-v1.0.0')),
         },
         inputs: [
+            ...getPorts('input', ['customProps']),
             getPort({ plug: 'input', name: 'ganttTasks', displayName: 'Tasks', group: 'Data', type: getType('array', 'connection') }),
             getPort({
                 plug: 'input', name: 'ganttViewMode', displayName: 'View mode', group: 'Params', default: 'Day',

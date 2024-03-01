@@ -14,6 +14,7 @@ export default [
     { name: 'resetSelected', displayName: 'Reset selected', group: 'Signals', type: 'signal' },
     { name: 'changed', displayName: 'Changed', group: 'Signals', type: 'signal' },
     { name: 'checked', displayName: 'Checked', group: 'Signals', type: 'signal' },
+    { name: 'open', displayName: 'Open', group: 'Signals', type: 'signal' },
     { name: 'close', displayName: 'Close', group: 'Signals', type: 'signal' },
     { name: 'closed', displayName: 'Closed', group: 'Signals', type: 'signal' },
     { name: 'clicked', displayName: 'Clicked', group: 'Signals', type: 'signal' },

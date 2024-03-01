@@ -5,11 +5,11 @@ import { enums } from "../collections/enums";
 export default [
     { name: 'maw', displayName: 'Max width', group: 'Dimensions', type: getUnitType(defaultUnits, '%') },
     { name: 'w', displayName: 'Width', group: 'Dimensions', type: getUnitType(defaultUnits, '%') },
-    //{ name: 'w100', displayName: 'Width', group: 'Dimensions', type: getUnitType(defaultUnits, '%'), default: 100 },
+    { name: 'width', displayName: 'Width', group: 'Dimensions', type: getUnitType(defaultUnits, '%') },
     { name: 'h', displayName: 'Height', group: 'Dimensions', type: getUnitType(defaultUnits, '%') },
     { name: 'height', displayName: 'Height', group: 'Dimensions', type: getUnitType(defaultUnits, 'px') },
     { name: 'maxDropdownHeight', displayName: 'Max dropdown height', group: 'Dimensions', type: getUnitType(defaultUnits, 'rem') },
-    { name: 'size', displayName: 'Size', group: 'Dimensions', type: getEnumType(enums.sizes), default: 'sm' },
+    { name: 'size', displayName: 'Size', group: 'Dimensions', type: getEnumType(enums.sizes), default: 'sm' },    
     { name: 'fullWidth', displayName: 'Full width', group: 'Dimensions', type: 'boolean', default: false },
     { name: 'grow', displayName: 'Grow', group: 'Dimensions', type: 'boolean', default: false },
     // Margins
