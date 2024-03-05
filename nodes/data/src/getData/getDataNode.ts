@@ -1,7 +1,7 @@
 import { jsNode } from '@shared/node'
 import { getPort, getPorts } from '@shared/port'
 
-export default jsNode('getData', 'data', {
+export default jsNode('getData', {
     'v1.0.0': {
         module: {
             default: 'remote',

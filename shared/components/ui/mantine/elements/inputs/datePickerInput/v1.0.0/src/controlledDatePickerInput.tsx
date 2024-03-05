@@ -16,7 +16,7 @@ export default forwardRef(function (props: Props, ref) {
     useImperativeHandle(ref, () => ({ reset() { setDateValue(undefined) } }), [])
 
     return <DatePickerInput
-        value={isEmpty(dateValue) ? [] : dateValue}
+        value={dateValue}
         error={props.inputError || false}
         icon={Icon
             ? <Icon size={props.iconSize} stroke={props.iconStroke} color={convertColor(props.iconColor)} />

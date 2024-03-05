@@ -17,7 +17,7 @@ const mfConf = {
 module.exports = {
     context: __dirname,
     stats: { preset: 'errors-only', timings: true },
-    entry: { [pJson.name]: `./dataNode.ts` },
+    entry: { [pJson.name]: `./data.ts` },
     resolve: {
         extensions: ['...', '.tsx', '.ts']
     },

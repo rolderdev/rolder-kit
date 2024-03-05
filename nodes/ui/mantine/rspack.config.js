@@ -17,7 +17,7 @@ const mfConf = {
 module.exports = {
     context: __dirname,
     stats: { preset: 'errors-only', timings: true },
-    entry: { [pJson.name]: `./mantineNode.ts` },
+    entry: { [pJson.name]: `./mantine.ts` },
     resolve: {
         extensions: ['...', '.tsx', '.ts']
     },

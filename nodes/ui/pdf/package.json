@@ -18,8 +18,8 @@
     "@nodes/pdf-table": "workspace:*"
   },
   "devDependencies": {
-    "@rspack/core": "0.5.5",
-    "@rspack/cli": "0.5.5",
+    "@rspack/core": "0.5.6",
+    "@rspack/cli": "0.5.6",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "@shared/typescript-config": "workspace:*",
     "fetch-remote": "workspace:*"

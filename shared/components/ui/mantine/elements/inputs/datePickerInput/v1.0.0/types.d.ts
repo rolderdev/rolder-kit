@@ -1,3 +1,4 @@
+import { DatePickerType, DateValue, DatesRangeValue } from '@mantine/dates'
 import { BaseReactProps } from '@shared/node'
 import { Scope } from '@shared/scope'
 

@@ -5,7 +5,7 @@ const qrLevels = [
     { value: 'L', label: 'Lowest' }, { value: 'M', label: 'Medium' }, { value: 'Q', label: 'Quality' }, { value: 'H', label: 'Highest' }
 ]
 
-export default jsNode('getQrCode', 'qrCode', {
+export default jsNode('getQrCode', {
     'v1.0.0': {
         module: {
             default: 'remote',

@@ -39,4 +39,5 @@ export default [
     { name: 'min', group: 'Params', type: 'number', displayName: 'Min' },
     { name: 'max', group: 'Params', type: 'number', displayName: 'Max' },
     { name: 'step', group: 'Params', type: 'number', displayName: 'Step', default: 1, customs: { required: 'connection' } },
+    { name: 'fileName', group: 'Params', type: 'string', displayName: 'File name', customs: { required: 'connection' } },
 ] as const satisfies readonly NodePort[]

@@ -1,0 +1,15 @@
+{
+  "name": "@shared/logout-v1.0.0",
+  "main": "logout.ts",
+  "types": "logout.ts",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.1.0@*"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*"
+  }
+}

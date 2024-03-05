@@ -1,5 +1,5 @@
 {
-  "name": "@nodes/mantine-old",
+  "name": "mantine-old",
   "scripts": {
     "build": "rspack build --mode=production",
     "lint": "eslint . --max-warnings 0",
