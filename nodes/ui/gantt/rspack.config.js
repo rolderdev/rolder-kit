@@ -30,9 +30,6 @@ module.exports = {
         react: 'React',
         'react-dom': 'ReactDOM'
     },
-    builtins: {
-        css: { modules: { exportsOnly: true } }
-    },
     plugins: [
         new manifestPlugin({
             writeToFileEmit: true,

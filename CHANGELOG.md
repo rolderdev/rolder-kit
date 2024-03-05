@@ -1,5 +1,11 @@
 # Changelog
 
+## 2024-03-05 v1.0.0-beta8
+
+### gantt
+
+* Не подгружался CSS
+
 ## 2024-03-05 v1.0.0-beta7
 
 ### mantine
