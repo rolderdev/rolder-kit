@@ -12,17 +12,11 @@ const ganttViewModes = [
 const GanttNode = reactNode('Gantt', {
     'v1.0.0': {
         module: {
-            default: 'remote',
+            default: 'dynamic',            
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/gantt-v1.0.0')),
-            //@ts-ignore
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                'remote/ui/gantt/gantt-v1.0.0')),
+                '@shared/gantt-v1.0.0')),            
         },
         inputs: [
             ...getPorts('input', ['customProps']),
