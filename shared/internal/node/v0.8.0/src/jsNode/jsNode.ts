@@ -33,11 +33,10 @@ function getModule(version: JsDefinition, moduleName: string) {
     }
 }
 
-export const jsNode = (nodeName: string, category: string, versions: JsVersions, params: Params) => {
+export const jsNode = (nodeName: string, versions: JsVersions, params: Params) => {
     return {
         name: `rolder-kit.${nodeName}`,
         displayName: nodeName,
-        category,
         color: params?.color || 'green',
         initialize: function () { this.outputPropValues = {} },
         methods: {

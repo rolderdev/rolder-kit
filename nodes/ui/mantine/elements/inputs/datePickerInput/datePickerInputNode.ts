@@ -20,8 +20,7 @@ export default reactNode('DatePickerInput', {
         inputs: [
             ...getPorts('input', [
                 'customProps', 'propsFunction', 'useScope', 'label', 'placeholder', 'disabled', 'withAsterisk', 'w',
-                'inputError', 'reset','radius', 'clearable', 'limitMinDate', 'minDateOffset',
-                'defaultDate', 'formField', 'dropdownType'
+                'inputError', 'reset', 'radius', 'clearable', 'limitMinDate', 'minDateOffset', 'formField', 'dropdownType'
             ]),
             getPort({
                 plug: 'input', name: 'valueFormat', displayName: 'Date format', group: 'Params', default: 'YYYY.MM.DD HH:mm',
@@ -30,7 +29,7 @@ export default reactNode('DatePickerInput', {
             getPort({ plug: 'input', name: 'dateValue', displayName: 'Date value', group: 'Data', type: '*' }),
             getPort({
                 plug: 'input', name: 'datePickerType', displayName: 'Type', group: 'Params', default: 'default',
-                type: getCustomEnumType(['default', 'range', 'multiple']), customs: {required: 'connection'}
+                type: getCustomEnumType(['default', 'range', 'multiple']), customs: { required: 'connection' }
             }),
             ...inputGroups.Icon,
             getPort({
@@ -43,7 +42,7 @@ export default reactNode('DatePickerInput', {
         ],
         outputs: [
             ...getPorts('output', ['changed', 'reseted']),
-            getPort({ plug: 'input', name: 'dateValue', displayName: 'Date value', group: 'Data', type: '*' }),
+            getPort({ plug: 'output', name: 'dateValue', displayName: 'Date value', group: 'Data', type: '*' }),
         ]
     }
 }, { moduleName: 'mantine' })

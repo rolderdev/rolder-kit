@@ -1,5 +1,5 @@
 {
-  "name": "@nodes/data",
+  "name": "data",
   "scripts": {
     "build": "rspack build --mode=production",
     "dev": "rspack build --mode=production --env=noodlDev",
@@ -14,11 +14,14 @@
     "@nodes/auth": "workspace:*",
     "@nodes/data-context": "workspace:*",
     "@nodes/use-data": "workspace:*",
-    "@nodes/get-data": "workspace:*"
+    "@nodes/get-data": "workspace:*",
+    "@nodes/logout": "workspace:*",
+    "@nodes/nodered": "workspace:*",
+    "@nodes/save-as": "workspace:*"
   },
   "devDependencies": {
-    "@rspack/core": "0.5.5",
-    "@rspack/cli": "0.5.5",
+    "@rspack/core": "0.5.6",
+    "@rspack/cli": "0.5.6",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "@shared/typescript-config": "workspace:*",
     "fetch-remote": "workspace:*"

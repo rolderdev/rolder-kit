@@ -8,16 +8,16 @@ var path = require('path')
 const pJson = require('./package.json')
 var outputPath = path.resolve(__dirname, `../../../build/gantt`)
 
-const fetchRemote  = require('fetch-remote')
+const fetchRemote = require('fetch-remote')
 const mfConf = {
-    name: 'pdf',
+    name: 'gantt',
     remotes: { remote: `promise new Promise(${fetchRemote.toString()})` },
 }
 
 module.exports = {
     context: __dirname,
     stats: { preset: 'errors-only', timings: true },
-    entry: { [pJson.name]: `./ganttNode.ts` },
+    entry: { [pJson.name]: `./gantt.ts` },
     resolve: {
         extensions: ['...', '.tsx', '.ts']
     },
@@ -29,6 +29,9 @@ module.exports = {
     externals: {
         react: 'React',
         'react-dom': 'ReactDOM'
+    },
+    builtins: {
+        css: { modules: { exportsOnly: true } }
     },
     plugins: [
         new manifestPlugin({

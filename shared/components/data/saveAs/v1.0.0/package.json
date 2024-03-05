@@ -1,0 +1,17 @@
+{
+  "name": "@shared/save-as-v1.0.0",
+  "main": "saveAs.ts",
+  "types": "saveAs.ts",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "file-saver": "2.0.5"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@types/file-saver": "2.0.7"
+  }
+}

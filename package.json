@@ -1,6 +1,6 @@
 {
   "name": "rolder-kit",
-  "version": "v1.0.0-beta6",
+  "version": "v1.0.0-beta7",
   "private": true,
   "scripts": {
     "build": "turbo run build",

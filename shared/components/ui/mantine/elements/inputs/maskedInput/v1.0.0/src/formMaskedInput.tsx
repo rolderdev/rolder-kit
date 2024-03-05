@@ -77,8 +77,7 @@ export default forwardRef(function (props: Props, ref) {
             }}
             icon={Icon && <Icon size={props.iconSize} stroke={props.iconStroke} color={convertColor(props.iconColor)} />}
             rightSection={<CloseButton tabIndex={props.focusRightSection ? 0 : -1} onClick={() => {
-                sendOutput(props.noodlNode, 'typedValue', '')
-                sendSignal(props.noodlNode, 'reseted')
+                setValue('')
             }} />}
             onBlurCapture={() => {
                 if (props.validationType === 'onBlur' && props.scope === 'form') formHook?.validateField(props.formField)

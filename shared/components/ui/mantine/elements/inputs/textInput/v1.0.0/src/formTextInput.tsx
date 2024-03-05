@@ -40,6 +40,7 @@ export default forwardRef(function (props: Props, ref) {
     return <TextInput
         icon={Icon && <Icon size={props.iconSize} stroke={props.iconStroke} color={convertColor(props.iconColor)} />}
         rightSection={<CloseButton tabIndex={props.focusRightSection ? 0 : -1} onClick={() => {
+            formHook?.validateField('')
             sendOutput(props.noodlNode, 'typedValue', '')
             sendSignal(props.noodlNode, 'reseted')
         }} />}

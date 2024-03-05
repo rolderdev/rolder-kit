@@ -73,8 +73,7 @@ export type ReactNodeDef = {
 
 export type JsNodeDef = {
     name: string
-    displayName: string
-    category: string
+    displayName: string    
     color?: NodeColor
     nodeName?: string
     _inputValues?: any

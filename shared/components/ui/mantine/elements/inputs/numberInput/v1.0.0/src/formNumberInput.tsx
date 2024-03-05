@@ -2,7 +2,7 @@ import { NumberInput, NumberInputHandlers } from "@mantine/core"
 import { forwardRef, useImperativeHandle, useRef } from "react"
 import { Props } from "../types"
 import React from "react"
-import { sendOutput } from '@shared/port-send'
+import { sendOutput, sendSignal } from '@shared/port-send'
 import { useFormScope } from "@shared/scope"
 import convertColor from "@shared/convert-color"
 
@@ -31,6 +31,7 @@ export default forwardRef(function (props: Props, ref) {
             formHook?.setFieldValue(props.formField, e)
             //@ts-ignore
             sendOutput(props.noodlNode, 'value', e)
+            sendSignal(props.noodlNode, 'changed')
         }}
         handlersRef={handlers}
         {...props}
