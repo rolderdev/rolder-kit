@@ -1,7 +1,7 @@
 {
   "extends": "@shared/typescript-config/base.json",
   "include": [
-    "../../../../global.d.ts",
+    "../../../../../global.d.ts",
     "src/**/*",
     "*.d.ts",
     "*.ts",

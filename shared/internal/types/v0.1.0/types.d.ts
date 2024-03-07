@@ -51,7 +51,7 @@ export type DbClass = {
 
 declare global {
     type Rolder = {
-        states: {            
+        states: {
             online?: boolean
             debug: number
             signedIn?: boolean

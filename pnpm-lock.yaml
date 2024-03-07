@@ -1591,8 +1591,8 @@ importers:
   remote:
     devDependencies:
       '@rsbuild/core':
-        specifier: 0.4.11
-        version: 0.4.11
+        specifier: 0.4.12
+        version: 0.4.12
       '@rspack/core':
         specifier: 0.5.6
         version: 0.5.6(@swc/helpers@0.5.3)
@@ -1617,6 +1617,9 @@ importers:
       '@shared/port-send':
         specifier: workspace:@shared/port-send-v0.2.0@*
         version: link:../../../internal/utils/portSend/v0.2.0
+      workbox-window:
+        specifier: 7.0.0
+        version: 7.0.0
     devDependencies:
       '@capacitor/core':
         specifier: next
@@ -1634,8 +1637,8 @@ importers:
   shared/components/data/auth/v1.0.0:
     dependencies:
       '@capacitor/preferences':
-        specifier: 5.0.7
-        version: 5.0.7(@capacitor/core@5.7.0)
+        specifier: next
+        version: 6.0.0-rc.0(@capacitor/core@6.0.0-rc.0)
       '@mantine/hooks':
         specifier: 6.0.21
         version: 6.0.21(react@18.2.0)
@@ -1655,6 +1658,9 @@ importers:
         specifier: 2.1.3
         version: 2.1.3
     devDependencies:
+      '@capacitor/core':
+        specifier: next
+        version: 6.0.0-rc.0
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
         version: link:../../../../internal/node/v0.8.0
@@ -3298,6 +3304,9 @@ importers:
 
   shared/internal/kuzzle/prepData/v0.1.0:
     dependencies:
+      '@capacitor/preferences':
+        specifier: next
+        version: 6.0.0-rc.0(@capacitor/core@6.0.0-rc.0)
       '@shared/get-dbclass-version':
         specifier: workspace:@shared/get-dbclass-version-v0.6.0@*
         version: link:../../../utils/getDbClassVersion/v0.6.0
@@ -3305,6 +3314,9 @@ importers:
         specifier: workspace:@shared/get-kuzzle-v0.1.0@*
         version: link:../../../utils/getKuzzle/v0.1.0
     devDependencies:
+      '@capacitor/core':
+        specifier: next
+        version: 6.0.0-rc.0
       '@shared/types':
         specifier: workspace:@shared/types-v0.1.0@*
         version: link:../../../types/v0.1.0
@@ -3784,12 +3796,6 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
 
-  /@capacitor/core@5.7.0:
-    resolution: {integrity: sha512-wa9Fao+Axa1t2ZERMyQD9r0xyfglQyC4DHQKintzKaIqcRuVe9J31TmfD3IxROYi9LGpY4X8cq4m4bjb0W94Qg==}
-    dependencies:
-      tslib: 2.6.2
-    dev: false
-
   /@capacitor/core@6.0.0-rc.0:
     resolution: {integrity: sha512-qokde8OZFpzUPccoOAd90xD+vyEcAV90ISg96RLMc1l4Hdk/F79bdsslyaaWU/4azLhiEDBwSuk9Kxn+q5WyfA==}
     dependencies:
@@ -3801,14 +3807,6 @@ packages:
       '@capacitor/core': next
     dependencies:
       '@capacitor/core': 6.0.0-rc.0
-    dev: false
-
-  /@capacitor/preferences@5.0.7(@capacitor/core@5.7.0):
-    resolution: {integrity: sha512-JvfGP1m8nITWEFdBpKR9HXNeBjLKwO0q1pry7Z5lYrYmCrbyRBLWzaGZGll8py4KmGWL3F5+PZvhrpT4gPoeAQ==}
-    peerDependencies:
-      '@capacitor/core': ^5.0.0
-    dependencies:
-      '@capacitor/core': 5.7.0
     dev: false
 
   /@capacitor/preferences@6.0.0-rc.0(@capacitor/core@6.0.0-rc.0):
@@ -4714,12 +4712,12 @@ packages:
       postcss: 8.4.33
     dev: false
 
-  /@rsbuild/core@0.4.11:
-    resolution: {integrity: sha512-xSqXXEZSOEPvb8zAK9sFOJ4ugSOFIQlPDbt/T9YN1eQDbdVJ5s0KlMw/lweVktjEsRyZijV2XxADZPGCbNLlEg==}
+  /@rsbuild/core@0.4.12:
+    resolution: {integrity: sha512-OIRHXEAugbEtnw22tdos6Hiep2i8CIa1DdHU1HVVIf+WeTbVvWplW2JcsPgjbY31S3z0tg6xn3QaVT8uTzrz5w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
-      '@rsbuild/shared': 0.4.11(@swc/helpers@0.5.3)
+      '@rsbuild/shared': 0.4.12(@swc/helpers@0.5.3)
       '@rspack/core': 0.5.6(@swc/helpers@0.5.3)
       '@swc/helpers': 0.5.3
       core-js: 3.32.2
@@ -4769,8 +4767,8 @@ packages:
       - '@swc/helpers'
     dev: false
 
-  /@rsbuild/shared@0.4.11(@swc/helpers@0.5.3):
-    resolution: {integrity: sha512-5akvSBxmQrKcJ85Ks/6UyFRiLWTAQhLXFha7unmGf9rkQ4k0xx0npzKLN8+wTnTVIRlpLqo3GFkLLZ++dFSjSA==}
+  /@rsbuild/shared@0.4.12(@swc/helpers@0.5.3):
+    resolution: {integrity: sha512-2lPbqcLNjUoHfdQCB6XdoqCqiLwpVeXcydv8cvTeiNCGseLY1WWTSn14b/L6Aj72TJbWWCqAAsm7YVL7Oibqvg==}
     dependencies:
       '@rspack/core': 0.5.6(@swc/helpers@0.5.3)
       caniuse-lite: 1.0.30001591
@@ -5964,6 +5962,10 @@ packages:
     dependencies:
       '@types/node': 16.18.74
     dev: true
+
+  /@types/trusted-types@2.0.7:
+    resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
+    dev: false
 
   /@types/unist@2.0.10:
     resolution: {integrity: sha512-IfYcSBWE3hLpBg8+X2SEa8LVkJdJEkT2Ese2aaLs3ptGdVtABxndrMaxuFlQ1qdFf9Q5rDvDpxI3WwgvKFAsQA==}
@@ -11173,6 +11175,17 @@ packages:
       string-width: 4.2.3
     dev: false
     optional: true
+
+  /workbox-core@7.0.0:
+    resolution: {integrity: sha512-81JkAAZtfVP8darBpfRTovHg8DGAVrKFgHpOArZbdFd78VqHr5Iw65f2guwjE2NlCFbPFDoez3D3/6ZvhI/rwQ==}
+    dev: false
+
+  /workbox-window@7.0.0:
+    resolution: {integrity: sha512-j7P/bsAWE/a7sxqTzXo3P2ALb1reTfZdvVp6OJ/uLr/C2kZAMvjeWGm8V4htQhor7DOvYg0sSbFN2+flT5U0qA==}
+    dependencies:
+      '@types/trusted-types': 2.0.7
+      workbox-core: 7.0.0
+    dev: false
 
   /wrap-ansi@6.2.0:
     resolution: {integrity: sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==}

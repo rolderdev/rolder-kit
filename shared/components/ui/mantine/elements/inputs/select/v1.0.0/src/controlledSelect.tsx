@@ -23,19 +23,20 @@ export default forwardRef(function (props: Props, ref) {
     }, [inputItems, labelField])
 
     const [value, setValue] = useState<string | null>(null)
-    useEffect(() => { if (defaultValue) setValue(defaultValue) }, [defaultValue])
     useEffect(() => {
-        if (!value) {
-            sendOutput(noodlNode, 'selectedItem', null)
-            //sendSignal(noodlNode, 'reseted')
-        } else {
-            const selectedItem = inputItems?.find((i: any) => value && [i.value, i.id, i.label].includes(value))
+        if (defaultValue) {
+            setValue(defaultValue)
+            const selectedItem = inputItems?.find(i => defaultValue && [i.value, i.id, i.label].includes(defaultValue))
             sendOutput(noodlNode, 'selectedItem', selectedItem)
-            sendSignal(noodlNode, 'selected')
         }
-    }, [value])
+    }, [defaultValue])
 
-    useImperativeHandle(ref, () => ({ resetSelected() { setValue(null) } }), [])
+    useImperativeHandle(ref, () => ({
+        resetSelected() {
+            setValue(null)
+            sendSignal(noodlNode, 'reseted')
+        }
+    }), [])
 
     return <Select
         nothingFound="Не найдено"
@@ -49,7 +50,18 @@ export default forwardRef(function (props: Props, ref) {
         value={value}
         icon={Icon && <Icon size={props.iconSize} stroke={props.iconStroke} color={convertColor(props.iconColor)} />}
         error={props.inputError || false}
-        onChange={setValue}
+        onChange={(v) => {
+            if (!v) {
+                setValue(null)
+                sendOutput(noodlNode, 'selectedItem', null)
+                sendSignal(noodlNode, 'reseted')
+            } else {
+                setValue(v)
+                const selectedItem = inputItems?.find(i => v && [i.value, i.id, i.label].includes(v))
+                sendOutput(noodlNode, 'selectedItem', selectedItem)
+                sendSignal(noodlNode, 'selected')
+            }
+        }}
         styles={() => ({
             item: {
                 '&[data-selected]': { '&, &:hover': { backgroundColor: convertColor(props.backgroundColor) }, },

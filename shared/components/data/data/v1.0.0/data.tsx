@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from "react"
+import { forwardRef, useEffect, useMemo, useState } from "react"
 import { QueryClient, QueryClientProvider, onlineManager } from "@tanstack/react-query"
 import React from "react"
 import { Kuzzle, WebSocket } from 'kuzzle-sdk'
@@ -19,65 +19,80 @@ const queryClient = new QueryClient({
 
 export default forwardRef(function (props: Props) {
     const { backendVersion, dbName, backendDevMode, backendUrl, backendPort } = props
-    const { project } = Noodl.getProjectSettings()
+    const { project, serviceWorker } = Noodl.getProjectSettings()
 
     R.env.backendVersion = backendVersion
     R.env.dbName = dbName
     R.libs.queryClient = queryClient
 
-    const [online, setOnline] = useState(onlineManager.isOnline())
     useEffect(() => {
-        R.states.online = online
+        R.states.online = onlineManager.isOnline()
         //@ts-ignore
-        sendOutput(props.noodlNode, 'isOnline', online)
-    }, [online])
-
-    useEffect(() => {
+        sendOutput(props.noodlNode, 'isOnline', onlineManager.isOnline())
         Network.addListener('networkStatusChange', status => {
+            R.states.online = status.connected
+            //@ts-ignore
+            sendOutput(props.noodlNode, 'isOnline', status.connected)
             log.info('Network status changed', status)
-            setOnline(status.connected)
         })
         return () => { Network.removeAllListeners() }
     }, [])
 
     const [backendInited, setBackendInited] = useState(false)
 
+    Noodl.Events.on('backendInited', () => {
+        setBackendInited(true)
+    })
+
     useEffect(() => {
         if (!R.libs.Kuzzle) {
-            if (online) {
-                if (project && backendVersion) {
-                    const startTime = log.start()
+            if (project && backendVersion) {
+                const startTime = log.start()
 
-                    const kuzzle = new Kuzzle(
-                        new WebSocket(
-                            backendDevMode
-                                ? backendUrl
-                                : `${project}.kuzzle.${backendVersion}.rolder.app`,
-                            { port: backendDevMode ? backendPort : 443 }
-                        )
+                const kuzzle = new Kuzzle(
+                    new WebSocket(
+                        backendDevMode
+                            ? backendUrl
+                            : `${project}.kuzzle.${backendVersion}.rolder.app`,
+                        { port: backendDevMode ? backendPort : 443 }
                     )
+                )
 
+                if (onlineManager.isOnline()) {
                     kuzzle.connect().then(async () => {
                         R.libs.Kuzzle = kuzzle
 
-                        Noodl.Events.emit("backendInited")
-                        setBackendInited(true)
+                        if (!serviceWorker) {
+                            Noodl.Events.emit("backendInited")
+                            //setBackendInited(true)
+                        } /* else if (R.states.serviceWorkerActivated) {
+                            Noodl.Events.emit("backendInited")
+                            //setBackendInited(true)
+                        } */
 
-                        log.end('Kuzzle init', startTime)
+                        log.end('Kuzzle online init', startTime)
                         log.info('R', R)
                     })
+                } else {
+                    R.libs.Kuzzle = kuzzle
 
-                    let reconnectTime = 0
-                    kuzzle.on('disconnected', (...args: any) => {
-                        reconnectTime = log.start()
-                        log.info('Kuzzle disconnected', args)
-                    })
-                    kuzzle.on('reconnected', () => { log.end('Kuzzle reconnected', reconnectTime) })
+                    Noodl.Events.emit("backendInited")
+                    //setBackendInited(true)
 
-                } else log.error('Kuzzle init: empty required props', { project, backendVersion })
-            }
-        } else setBackendInited(true)
-    }, [project, backendVersion, online])
+                    log.end('Kuzzle offline init', startTime)
+                    log.info('R', R)
+                }
+
+                let reconnectTime = 0
+                kuzzle.on('disconnected', (...args: any) => {
+                    reconnectTime = log.start()
+                    log.info('Kuzzle disconnected', args)
+                })
+                kuzzle.on('reconnected', () => { log.end('Kuzzle reconnected', reconnectTime) })
+
+            } else log.error('Kuzzle init: empty required props', { project, backendVersion })
+        } else Noodl.Events.emit("backendInited")//setBackendInited(true)
+    }, [project, backendVersion])
 
     return <QueryClientProvider client={queryClient}>
         {backendInited
