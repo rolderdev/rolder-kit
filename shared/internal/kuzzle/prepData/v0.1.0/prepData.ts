@@ -1,6 +1,7 @@
 import { DbClass, User } from "@shared/types"
 import { dbClassVersion } from '@shared/get-dbclass-version'
 import { getKuzzle } from '@shared/get-kuzzle'
+import { Preferences } from '@capacitor/preferences'
 
 export async function prepData() {
     const { dbName } = R.env
@@ -16,6 +17,7 @@ export async function prepData() {
         const dbClasses: { [name: string]: DbClass } = {}
         dbClassesResp.hits.map(i => { dbClasses[i._source.name] = i._source as any })
         window.R.dbClasses = dbClasses
+        await Preferences.set({ key: 'dbClasses', value: JSON.stringify(dbClasses) })
         log.info('DB classes', dbClasses)
     } catch (e) { log.error('Get DB classes error', e) }
 

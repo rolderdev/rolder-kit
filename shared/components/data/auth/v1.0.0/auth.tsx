@@ -35,6 +35,8 @@ focusManager.setEventListener(handleFocus => {
 export default forwardRef(function (props: Props, ref) {
     R.params.sessionTimeout = props.sessionTimeout
 
+    const online = R.states.online
+
     const [signedIn, setSignedIn] = useState<boolean | undefined>(R.states.signedIn)
 
     useEffect(() => {
@@ -46,37 +48,51 @@ export default forwardRef(function (props: Props, ref) {
             }
 
             const K = getKuzzle()
-            if (!K) { return }
+            if (!K) return
 
             Preferences.get({ key: 'userSessionToken' }).then(r => {
                 const userSessionToken = r.value
                 if (userSessionToken) {
-                    K.auth.checkToken(userSessionToken).then(async tokenValidation => {
-                        if (tokenValidation.expiresAt) {
-                            const startTime = log.start()
+                    if (online) {
+                        K.auth.checkToken(userSessionToken).then(async tokenValidation => {
+                            if (tokenValidation.expiresAt) {
+                                const startTime = log.start()
 
-                            K.jwt = userSessionToken
-                            await Preferences.set({ key: 'userSessionToken', value: userSessionToken })
+                                K.jwt = userSessionToken
+                                await Preferences.set({ key: 'userSessionToken', value: userSessionToken })
 
-                            tokenRefresh.start()
+                                tokenRefresh.start()
 
-                            prepData().then(user => {
-                                sendOutput(props.noodlNode, 'userRole', user?.user?.role?.value || null)
+                                prepData().then(async user => {
+                                    if (user?.user?.role?.value) await Preferences.set({ key: 'userRole', value: user?.user?.role?.value })
+                                    sendOutput(props.noodlNode, 'userRole', user?.user?.role?.value || null)
+                                    sendSignal(props.noodlNode, 'signedIn')
+                                    R.states.signedIn = true
+                                    setSignedIn(true)
+
+                                    log.end('Session restored', startTime)
+                                })
+                            } else {
+                                R.states.signedIn = false
+                                setSignedIn(false)
+                                sendOutput(props.noodlNode, 'userRole', null)
+                                sendSignal(props.noodlNode, 'signedOut')
+                                Preferences.remove({ key: 'userSessionToken' })
+                                log.info('Session restore: token is not valid, signed out', tokenValidation)
+                            }
+                        })
+                    } else {
+                        K.jwt = userSessionToken
+                        Preferences.get({ key: 'userRole' }).then(role => {
+                            Preferences.get({ key: 'dbClasses' }).then(v => {
+                                if (v.value) window.R.dbClasses = JSON.parse(v.value)
+                                sendOutput(props.noodlNode, 'userRole', role.value || null)
                                 sendSignal(props.noodlNode, 'signedIn')
                                 R.states.signedIn = true
                                 setSignedIn(true)
-
-                                log.end('Session restored', startTime)
                             })
-                        } else {
-                            R.states.signedIn = false
-                            setSignedIn(false)
-                            sendOutput(props.noodlNode, 'userRole', null)
-                            sendSignal(props.noodlNode, 'signedOut')
-                            Preferences.remove({ key: 'userSessionToken' })
-                            log.info('Session restore: token is not valid, signed out', tokenValidation)
-                        }
-                    })
+                        })
+                    }
                 } else {
                     R.states.signedIn = false
                     setSignedIn(false)
@@ -142,6 +158,7 @@ export default forwardRef(function (props: Props, ref) {
 
                     tokenRefresh.start()
                     const user = await prepData()
+                    if (user?.user?.role?.value) await Preferences.set({ key: 'userRole', value: user?.user?.role?.value })
                     R.states.signedIn = true
                     setSignedIn(true)
                     sendOutput(props.noodlNode, 'userRole', user?.user?.role?.value || null)

@@ -9,7 +9,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "devDependencies": {
-    "@rsbuild/core": "0.4.11",
+    "@rsbuild/core": "0.4.12",
     "@rspack/core": "0.5.6",
     "@shared/typescript-config": "workspace:*"
   }

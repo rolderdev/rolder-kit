@@ -8,11 +8,13 @@
   },
   "dependencies": {
     "@shared/get-dbclass-version": "workspace:@shared/get-dbclass-version-v0.6.0@*",
-    "@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.1.0@*"
+    "@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.1.0@*",
+    "@capacitor/preferences": "next"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
     "@shared/types": "workspace:@shared/types-v0.1.0@*",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "@capacitor/core": "next"
   }
 }
