@@ -9,7 +9,7 @@ export async function subscribe(noodlNodeId: string, dataScheme: DataScheme) {
     const { dbName } = window.R.env
     const { dbClass, filters } = dataScheme
 
-    const K = getKuzzle()
+    const K = await getKuzzle()
     if (!K) { return }
 
     const dbClassV = dbClassVersion(dbClass)
@@ -29,7 +29,7 @@ export async function subscribe(noodlNodeId: string, dataScheme: DataScheme) {
 }
 
 export async function unSubscribe(noodlNodeId: string, dbClass: string) {
-    const K = getKuzzle()
+    const K = await getKuzzle()
     if (!K) { return }
     else {
         try {

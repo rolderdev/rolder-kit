@@ -7,7 +7,7 @@ export async function prepData() {
     const { dbName } = R.env
     if (!dbName) { log.error('DB name is empty'); return }
 
-    const K = getKuzzle()
+    const K = await getKuzzle()
     if (!K) { return }
 
     const startTime = log.start()
@@ -61,7 +61,7 @@ export async function prepData() {
     } catch (e) { log.error('Get user system DB class error', e) }
 
     R.user = resultUser
-    return resultUser
-
     log.end('Prepare data', startTime)
+
+    return resultUser
 }

@@ -4,7 +4,7 @@ import { sendOutput, sendSignal } from '@shared/port-send';
 import fetch from './src/fetch';
 
 export default {
-  async getData(props: Props) {
+  async execute(props: Props) {
     const { project, backendVersion } = window.R.env
     const { noodlNode, flowEndpoint, flowData } = props
 

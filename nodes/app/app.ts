@@ -80,7 +80,6 @@ Noodl.defineModule({
         { name: 'projectVersion', type: 'string', displayName: 'Project version', group: 'Rolder' },
         { name: 'projectDefaults', type: 'array', displayName: 'Project defaults', group: 'Rolder' },
         { name: 'mantineTheme', type: 'array', displayName: 'Mantine theme', group: 'Rolder' },
-        { name: 'modules', type: 'array', displayName: 'Modules', group: 'Rolder' },
-        { name: 'serviceWorker', type: 'boolean', displayName: 'Service worker #experimental', group: 'Rolder', default: false },
+        { name: 'modules', type: 'array', displayName: 'Modules', group: 'Rolder' }        
     ]
 })

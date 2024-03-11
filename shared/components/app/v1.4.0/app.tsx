@@ -7,11 +7,8 @@ import { sendOutput, sendSignal } from '@shared/port-send'
 import React from "react"
 import { Preferences } from '@capacitor/preferences'
 
-// =====================================================
-import { Workbox } from 'workbox-window'
-
 export default forwardRef(function (props: CompProps, ref) {
-  const { project, projectVersion, projectDefaults, serviceWorker } = Noodl.getProjectSettings()
+  const { project, projectVersion, projectDefaults } = Noodl.getProjectSettings()
 
   useEffect(() => {
     if (projectVersion) {
@@ -21,20 +18,6 @@ export default forwardRef(function (props: CompProps, ref) {
           Preferences.set({ key: 'projectVersion', value: projectVersion })
           window.location.reload()
         }
-      })
-    }
-
-    if (serviceWorker && 'serviceWorker' in navigator) {
-      const wb = new Workbox('/sw.js')
-
-      wb.addEventListener('activated', event => {
-        if (!event.isUpdate) window.location.reload()
-      })
-
-      wb.register()
-
-      wb.active.then(sw => {
-        if (sw.state === 'activated') Noodl.Events.emit("backendInited")
       })
     }
   }, [])

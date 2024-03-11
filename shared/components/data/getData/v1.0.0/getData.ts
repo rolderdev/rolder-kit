@@ -18,7 +18,7 @@ function useFetchScheme(fetchScheme: FetchScheme) {
 
 export default {
   async getData(props: Props) {
-    const K = getKuzzle()
+    const K = await getKuzzle()
     if (!K) { return null }
 
     const { dbName } = R.env

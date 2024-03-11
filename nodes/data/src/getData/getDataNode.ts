@@ -19,21 +19,22 @@ export default jsNode('getData', {
             getPort({
                 plug: 'input', name: 'outputDbClasses', displayName: 'Output DB classes', group: 'Output DB classes*',
                 type: 'proplist', customs: {
-                    required: 'both',
                     addNodePorts(dbClasses) {
-                        const itemsOutputs = dbClasses.map((i: any) => ({
-                            plug: 'output', name: `${i}Items`, group: 'Data', type: 'array', displayName: `${i}Items`
-                        }))
-                        const fetchedOutputs = dbClasses.map((i: any) => ({
-                            plug: 'output', name: `${i}Fetched`, group: 'Data', type: 'number', displayName: `${i}Fetched`
-                        }))
-                        const totalOutputs = dbClasses.map((i: any) => ({
-                            plug: 'output', name: `${i}Total`, group: 'Data', type: 'number', displayName: `${i}Total`
-                        }))
-                        const aggsOutputs = dbClasses.map((i: any) => ({
-                            plug: 'output', name: `${i}Aggregations`, group: 'Data', type: 'object', displayName: `${i}Aggregations`
-                        }))
-                        return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs]
+                        if (dbClasses) {
+                            const itemsOutputs = dbClasses.map((i: any) => ({
+                                plug: 'output', name: `${i}Items`, group: 'Data', type: 'array', displayName: `${i}Items`
+                            }))
+                            const fetchedOutputs = dbClasses.map((i: any) => ({
+                                plug: 'output', name: `${i}Fetched`, group: 'Data', type: 'number', displayName: `${i}Fetched`
+                            }))
+                            const totalOutputs = dbClasses.map((i: any) => ({
+                                plug: 'output', name: `${i}Total`, group: 'Data', type: 'number', displayName: `${i}Total`
+                            }))
+                            const aggsOutputs = dbClasses.map((i: any) => ({
+                                plug: 'output', name: `${i}Aggregations`, group: 'Data', type: 'object', displayName: `${i}Aggregations`
+                            }))
+                            return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs]
+                        } else return []
                     }
                 }
             }),

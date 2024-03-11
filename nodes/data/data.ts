@@ -26,6 +26,9 @@ const dataNode = reactNode('Data', {
                 customs: { required: 'both' }
             }),
             getPort({
+                plug: 'input', name: 'persistData', displayName: 'Persist data', group: 'Params', type: 'boolean', default: false
+            }),
+            getPort({
                 plug: 'input', name: 'backendDevMode', displayName: 'Backend dev mode', group: 'Params', type: 'boolean',
                 default: false
             }),

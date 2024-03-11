@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { FetchScheme, PagesSearchAfter, Props, Sorts } from './types';
-import { useQuery } from '@tanstack/react-query';
+import { onlineManager, useQuery } from '@tanstack/react-query';
 import { getKuzzle } from '@shared/get-kuzzle';
 import { dbClassVersion } from '@shared/get-dbclass-version';
 import clone from 'just-clone';
@@ -12,6 +12,7 @@ import { Item } from '@shared/types';
 import getValue from '@shared/get-value';
 import queryFn from './src/queryFn';
 import deepEqual from 'fast-deep-equal'
+
 
 function getScheme(fetchScheme: FetchScheme, paginationScheme?: FetchScheme[number], searchAfter?: string[]) {
   let hasErrors = false
@@ -36,8 +37,6 @@ function getSearchAfter(items?: Item[], sorts?: Sorts) {
 }
 
 export default forwardRef(function (props: Props, ref) {
-  const K = getKuzzle()
-  if (!K) { return null }
   const { dbName } = R.env
   if (!dbName) {
     R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`)
@@ -101,7 +100,11 @@ export default forwardRef(function (props: Props, ref) {
     }
   }, [data])
 
-  useEffect(() => { for (const fs of fetchScheme) { if (fs.dbClass) subscribe(fs.dbClass) } }, fetchScheme?.map(i => i.dbClass))
+  useEffect(() => {
+    for (const fs of fetchScheme) {
+      if (fs.dbClass && onlineManager.isOnline()) subscribe(fs.dbClass)
+    }
+  }, [fetchScheme?.map(i => i.dbClass), onlineManager.isOnline()])
 
   useImperativeHandle(ref, () => ({
     nextFetch() {

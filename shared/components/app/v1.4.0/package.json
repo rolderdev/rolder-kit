@@ -8,13 +8,13 @@
     "@mantine/core": "6.0.21",
     "@mantine/hooks": "6.0.21",
     "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*",
-    "@capacitor/preferences": "next",
+    "@capacitor/preferences": "5.0.7",
     "workbox-window": "7.0.0"
   },
   "devDependencies": {
     "@shared/node": "workspace:@shared/node-v0.8.0@*",
     "@shared/types": "workspace:@shared/types-v0.1.0@*",
     "@shared/typescript-config": "workspace:*",
-    "@capacitor/core": "next"
+    "@capacitor/core": "5.7.2"
   }
 }

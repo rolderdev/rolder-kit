@@ -13,7 +13,8 @@ export async function subscribe(noodlNodeId: string, dataScheme: DataScheme, que
     else {
         await unSubscribe(noodlNodeId, dbClass)
         setTimeout(() => {
-            if (dbName) Kuzzle.realtime.subscribe(dbName, dbClassVersion(dbClass), filters || {}, notif => {
+            const dbClassV = dbClassVersion(dbClass)
+            if (dbName && dbClassV) Kuzzle.realtime.subscribe(dbName, dbClassV, filters || {}, notif => {
                 if (notif.type !== 'document') return
                 queryClient.invalidateQueries({ queryKey: [dataScheme] })
                 log.info(`Subscribe - ${notif.action} ${dbClass}: `, notif.result)
