@@ -36,7 +36,6 @@ export default forwardRef(function (props: Props, ref) {
     R.params.sessionTimeout = props.sessionTimeout
 
     const online = R.states.online
-
     const [signedIn, setSignedIn] = useState<boolean | undefined>(R.states.signedIn)
 
     useEffect(() => {

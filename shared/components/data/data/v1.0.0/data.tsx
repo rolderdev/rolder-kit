@@ -48,7 +48,7 @@ export default forwardRef(function (props: Props) {
     R.libs.queryClient = queryClient
 
     const [backendInited, setBackendInited] = useState(false)
-    const [online, setOnline] = useState<boolean | undefined>()
+    const [online, setOnline] = useState<boolean | undefined>(undefined)
 
     useEffect(() => {
         Network.getStatus().then(state => {
@@ -70,7 +70,7 @@ export default forwardRef(function (props: Props) {
     }, [])
 
     useEffect(() => {
-        if (!R.libs.Kuzzle) {
+        if (!R.libs.Kuzzle && online !== undefined) {
             if (project && backendVersion) {
                 const startTime = log.start()
 
@@ -83,7 +83,7 @@ export default forwardRef(function (props: Props) {
                     )
                 )
 
-                if (online === true) {
+                if (online) {
                     kuzzle.connect().then(async () => {
                         R.libs.Kuzzle = kuzzle
 
@@ -110,7 +110,7 @@ export default forwardRef(function (props: Props) {
 
             } else log.error('Kuzzle init: empty required props', { project, backendVersion })
         }
-    }, [project, backendVersion])
+    }, [project, backendVersion, online])
 
     return persistData ?
         <PersistQueryClientProvider
