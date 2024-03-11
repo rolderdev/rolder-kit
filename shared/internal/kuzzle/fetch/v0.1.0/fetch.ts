@@ -9,7 +9,7 @@ export async function kuzzleFetch(props: Props): Promise<{ items: Item[], total:
     const { dbName } = R.env
     const { dbClass, filters, sorts, querySize: size, searchAfter, getUsers, aggQuery: aggregations } = props
 
-    const Kuzzle = getKuzzle()
+    const Kuzzle = await getKuzzle()
     if (!Kuzzle) { return }
     const dbClassV = dbClassVersion(dbClass)
     if (!dbClassV) { return }
