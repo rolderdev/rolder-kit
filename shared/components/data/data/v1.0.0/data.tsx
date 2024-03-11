@@ -47,15 +47,22 @@ export default forwardRef(function (props: Props) {
     R.env.dbName = dbName
     R.libs.queryClient = queryClient
 
-    const [backendInited, setBackendInited] = useState(false)
-    const [online, setOnline] = useState<boolean | undefined>(undefined)
+    const [online, setOnline] = useState(R.states.online)
+    const [initState, setInitState] = useState<typeof R.states.backend>(R.states.backend)
+
+    console.log('initState', initState)
+    console.log('online', online)
 
     useEffect(() => {
         Network.getStatus().then(state => {
             R.states.online = state.connected
-            setOnline(state.connected)
-            //@ts-ignore
-            sendOutput(props.noodlNode, 'isOnline', state.connected)
+            if (initState === 'notInitialized') {
+                R.states.backend = 'initializing'
+                setOnline(state.connected)
+                setInitState('initializing')
+                //@ts-ignore
+                sendOutput(props.noodlNode, 'isOnline', state.connected)
+            }
         })
 
         Network.addListener('networkStatusChange', async state => {
@@ -70,8 +77,13 @@ export default forwardRef(function (props: Props) {
     }, [])
 
     useEffect(() => {
-        if (!R.libs.Kuzzle && online !== undefined) {
-            if (project && backendVersion) {
+        if (!project || !backendVersion) {
+            log.error('Kuzzle init: empty required props', { project, backendVersion })
+            return
+        }
+
+        if (!R.libs.Kuzzle) {
+            if (initState === 'initializing') {
                 const startTime = log.start()
 
                 const kuzzle = new Kuzzle(
@@ -82,20 +94,19 @@ export default forwardRef(function (props: Props) {
                         { port: backendDevMode ? backendPort : 443 }
                     )
                 )
+                R.libs.Kuzzle = kuzzle
 
                 if (online) {
-                    kuzzle.connect().then(async () => {
-                        R.libs.Kuzzle = kuzzle
-
-                        setBackendInited(true)
+                    kuzzle.connect().then(() => {
+                        R.states.backend = 'initialized'
+                        setInitState('initialized')
 
                         log.end('Kuzzle online init', startTime)
                         log.info('R', R)
                     })
                 } else {
-                    R.libs.Kuzzle = kuzzle
-
-                    setBackendInited(true)
+                    R.states.backend = 'initialized'
+                    setInitState('initialized')
 
                     log.end('Kuzzle offline init', startTime)
                     log.info('R', R)
@@ -107,10 +118,9 @@ export default forwardRef(function (props: Props) {
                     log.info('Kuzzle disconnected', args)
                 })
                 kuzzle.on('reconnected', () => { log.end('Kuzzle reconnected', reconnectTime) })
-
-            } else log.error('Kuzzle init: empty required props', { project, backendVersion })
+            }
         }
-    }, [project, backendVersion, online])
+    }, [project, backendVersion, initState])
 
     return persistData ?
         <PersistQueryClientProvider
@@ -121,7 +131,7 @@ export default forwardRef(function (props: Props) {
                 buster: R.env.projectVersion,
             }}
         >
-            {backendInited
+            {initState === 'initialized'
                 ? props.children
                 : <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-28px', marginLeft: '-28px' }}>
                     <Loader color="dark" size='xl' />
@@ -133,7 +143,7 @@ export default forwardRef(function (props: Props) {
         : <QueryClientProvider
             client={queryClient}
         >
-            {backendInited
+            {initState === 'initialized'
                 ? props.children
                 : <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-28px', marginLeft: '-28px' }}>
                     <Loader color="dark" size='xl' />

@@ -4,7 +4,7 @@ import rKitJson from '../../package.json'
 
 globalThis.R = {
     //@ts-ignore
-    states: { debug: d, devMode: DEVMODE },
+    states: { backend: 'notInitialized', online: false, debug: d, devMode: DEVMODE },
     env: { rolderKit: rKitJson.version },
     params: {},
     libs: {},
@@ -80,6 +80,6 @@ Noodl.defineModule({
         { name: 'projectVersion', type: 'string', displayName: 'Project version', group: 'Rolder' },
         { name: 'projectDefaults', type: 'array', displayName: 'Project defaults', group: 'Rolder' },
         { name: 'mantineTheme', type: 'array', displayName: 'Mantine theme', group: 'Rolder' },
-        { name: 'modules', type: 'array', displayName: 'Modules', group: 'Rolder' }        
+        { name: 'modules', type: 'array', displayName: 'Modules', group: 'Rolder' }
     ]
 })

@@ -8,6 +8,6 @@ import noderedNode_f0_1_0 from "./nodered/fabricVersions/v0.1.0/noderedNode"
 import saveAsNode_f0_1_0 from "./saveAs/fabricVersions/v0.1.0/saveAsNode"
 
 export default [
-    //logoutNode_f0_1_0, saveAsNode_f0_1_0, noderedNode_f0_1_0,createXlsxNode_f0_1_0,createNode_f0_1_0, 
-    updateNode_f0_1_0, deleteNode_f0_1_0,
+    //logoutNode_f0_1_0, saveAsNode_f0_1_0, noderedNode_f0_1_0,createXlsxNode_f0_1_0,
+    createNode_f0_1_0, updateNode_f0_1_0, deleteNode_f0_1_0,
 ]
