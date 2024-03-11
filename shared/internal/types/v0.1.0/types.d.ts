@@ -52,7 +52,8 @@ export type DbClass = {
 declare global {
     type Rolder = {
         states: {
-            online?: boolean
+            backend: 'notInitialized' | 'initializing' | 'initialized'
+            online: boolean
             debug: number
             signedIn?: boolean
             devMode: boolean
