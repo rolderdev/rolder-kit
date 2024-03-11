@@ -12,7 +12,7 @@ module.exports = function (env) {
     return {
         context: __dirname,
         stats: { preset: 'errors-only', timings: true },
-        entry: { [pJson.name]: `./appNode.ts` },
+        entry: { [pJson.name]: `./app.ts` },
         resolve: {
             extensions: ['...', '.tsx', '.ts']
         },
@@ -34,7 +34,7 @@ module.exports = function (env) {
             }),
             new rspack.DefinePlugin({
                 DEVMODE: env.noodlDev ? true : false
-            }),           
+            }),
         ],
         module: {
             rules: [

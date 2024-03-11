@@ -30,6 +30,10 @@ export default reactNode('TextInput', {
                     dependsOn(p) { return p.useScope ? true : false }
                 }
             }),
+            getPort({
+                plug: 'input', name: 'inputValue', displayName: 'Value', group: 'Data', type: 'string',
+                customs: { dependsOn(p) { return p.useScope ? false : true }, }
+            }),
         ],
         outputs: getPorts('output', ['typedValue', 'reseted'])
     }

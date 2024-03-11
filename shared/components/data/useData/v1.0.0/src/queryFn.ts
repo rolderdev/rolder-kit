@@ -5,7 +5,7 @@ export default async function (p: { fetchScheme: FetchScheme, props: Props }) {
     const { fetchScheme, props } = p
     const { searchEnabled, searchString } = props
 
-    const K = getKuzzle()
+    const K = await getKuzzle()
     if (!K) { return null }
     const { dbName } = R.env
     if (!dbName) {

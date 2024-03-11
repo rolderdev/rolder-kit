@@ -7,7 +7,7 @@ export async function subscribe(dbClass: string) {
     const { dbName } = window.R.env
     if (!dbName) { return }
 
-    const K = getKuzzle()
+    const K = await getKuzzle()
     if (!K) { return }
 
     if (!subs.get()[dbClass]) K.realtime.subscribe(dbName, dbClass, {}, notif => {

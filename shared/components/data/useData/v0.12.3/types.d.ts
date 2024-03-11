@@ -1,4 +1,5 @@
 import { BaseReactProps } from '@shared/node'
+import { Item } from '@shared/types'
 
 export type Props = BaseReactProps & {
     dbClass: string
@@ -34,7 +35,7 @@ export type PagesSearchAfter = {
 }
 
 export type UseQueryData ={
-    items: RItem[]
+    items: Item[]
     total: number
     aggregations?: any
 }

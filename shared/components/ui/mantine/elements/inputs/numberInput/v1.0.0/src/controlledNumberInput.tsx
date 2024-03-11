@@ -34,9 +34,15 @@ export default forwardRef(function (props: Props, ref) {
         error={props.inputError || false}
         onChange={(e) => {
             setValue(e)
-            //@ts-ignore
-            sendOutput(props.noodlNode, 'value', e)
-            sendSignal(props.noodlNode, 'changed')
+            if (e === '') {
+                //@ts-ignore
+                sendOutput(props.noodlNode, 'value', e)
+                sendSignal(props.noodlNode, 'reseted')
+            } else {
+                //@ts-ignore
+                sendOutput(props.noodlNode, 'value', e)
+                sendSignal(props.noodlNode, 'changed')
+            }
         }}
         handlersRef={handlers}
         {...props}

@@ -34,10 +34,13 @@ export default reactNode('NumberInput', {
                 plug: 'input', name: 'numberInputVariant', displayName: 'Variant', group: 'Style',
                 type: getCustomEnumType(['default', 'filled', 'unstyled']), default: 'default', customs: { required: 'connection' }
             }),
-            getPort({ plug: 'input', name: 'defaultNumberValue', displayName: 'Default value', group: 'Data', type: 'number' }),
+            getPort({
+                plug: 'input', name: 'defaultNumberValue', displayName: 'Default value', group: 'Data', type: 'number',
+                customs: { dependsOn(p) { return p.useScope ? false : true }, }
+            }),
         ],
         outputs: [
-            ...getPorts('output', ['changed']),
+            ...getPorts('output', ['changed', 'reseted']),
             getPort({ plug: 'output', name: 'value', displayName: 'Value', group: 'Data', type: 'number' })
         ]
     }

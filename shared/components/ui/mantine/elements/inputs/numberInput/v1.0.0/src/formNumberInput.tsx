@@ -29,9 +29,15 @@ export default forwardRef(function (props: Props, ref) {
         error={formHook?.errors?.[props.formField]}
         onChange={(e) => {
             formHook?.setFieldValue(props.formField, e)
-            //@ts-ignore
-            sendOutput(props.noodlNode, 'value', e)
-            sendSignal(props.noodlNode, 'changed')
+            if (e === '') {
+                //@ts-ignore
+                sendOutput(props.noodlNode, 'value', e)
+                sendSignal(props.noodlNode, 'reseted')
+            } else {
+                //@ts-ignore
+                sendOutput(props.noodlNode, 'value', e)
+                sendSignal(props.noodlNode, 'changed')
+            }
         }}
         handlersRef={handlers}
         {...props}

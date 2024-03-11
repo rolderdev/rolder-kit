@@ -23,6 +23,10 @@ export default reactNode('Textarea', {
                 'inputError', 'reset', 'focusRightSection', 'debouncedTyping', 'typingDelay', 'radius', 'size', 'autosize'
             ]),
             getPort({
+                plug: 'input', name: 'inputValue', displayName: 'Value', group: 'Data', type: 'string',
+                customs: { dependsOn(p) { return p.useScope ? false : true }, }
+            }),
+            getPort({
                 plug: 'input', name: 'variant', displayName: 'Variant', group: 'Style', default: 'default',
                 type: getCustomEnumType(['default', 'filled', 'unstyled']), customs: { required: 'connection' }
             }),

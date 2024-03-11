@@ -11,7 +11,8 @@ export function subscribe(dataScheme: DataScheme) {
 
     useEffect(() => {
         let roomId = ''
-        if (dbName) Kuzzle.connect().then(() => Kuzzle.realtime.subscribe(dbName, dbClassVersion(dbClass), query || {},
+        const dbClassV = dbClassVersion(dbClass)
+        if (dbName && dbClassV) Kuzzle.connect().then(() => Kuzzle.realtime.subscribe(dbName, dbClassV, query || {},
             notif => {
                 if (notif.type !== 'document') return
                 R.libs.queryClient?.invalidateQueries({ queryKey: [dataScheme] })

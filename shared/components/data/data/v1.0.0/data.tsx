@@ -1,48 +1,73 @@
-import { forwardRef, useEffect, useMemo, useState } from "react"
-import { QueryClient, QueryClientProvider, onlineManager } from "@tanstack/react-query"
+import { forwardRef, useEffect, useState } from "react"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React from "react"
 import { Kuzzle, WebSocket } from 'kuzzle-sdk'
 import { Props } from "./types"
 import { Loader } from "@mantine/core"
 import { sendOutput } from "@shared/port-send"
 import { Network } from "@capacitor/network"
+import { PersistQueryClientProvider, PersistedClient, Persister } from '@tanstack/react-query-persist-client'
+import { get, set, del } from "idb-keyval";
 
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             staleTime: Infinity,
             refetchOnWindowFocus: "always",
-            refetchOnMount: "always",
+            refetchOnMount: "always"
         },
     },
 })
 
+export function createIDBPersister(idbValidKey: IDBValidKey = "reactQuery") {
+    return {
+        persistClient: async (client: PersistedClient) => {
+            set(idbValidKey, client);
+        },
+        restoreClient: async () => {
+            return await get<PersistedClient>(idbValidKey);
+        },
+        removeClient: async () => {
+            await del(idbValidKey);
+        },
+    } as Persister;
+}
+
+const ReactQueryDevtoolsProduction = React.lazy(() =>
+    import('@tanstack/react-query-devtools/production').then((d) => ({
+        default: d.ReactQueryDevtools,
+    })),
+)
+
 export default forwardRef(function (props: Props) {
-    const { backendVersion, dbName, backendDevMode, backendUrl, backendPort } = props
-    const { project, serviceWorker } = Noodl.getProjectSettings()
+    const { backendVersion, dbName, persistData, backendDevMode, backendUrl, backendPort } = props
+    const { project } = Noodl.getProjectSettings()
 
     R.env.backendVersion = backendVersion
     R.env.dbName = dbName
     R.libs.queryClient = queryClient
 
+    const [backendInited, setBackendInited] = useState(false)
+    const [online, setOnline] = useState<boolean | undefined>()
+
     useEffect(() => {
-        R.states.online = onlineManager.isOnline()
-        //@ts-ignore
-        sendOutput(props.noodlNode, 'isOnline', onlineManager.isOnline())
-        Network.addListener('networkStatusChange', status => {
-            R.states.online = status.connected
+        Network.getStatus().then(state => {
+            R.states.online = state.connected
+            setOnline(state.connected)
             //@ts-ignore
-            sendOutput(props.noodlNode, 'isOnline', status.connected)
-            log.info('Network status changed', status)
+            sendOutput(props.noodlNode, 'isOnline', state.connected)
         })
+
+        Network.addListener('networkStatusChange', async state => {
+            R.states.online = state.connected
+            setOnline(state.connected)
+            //@ts-ignore
+            sendOutput(props.noodlNode, 'isOnline', state.connected)
+            log.info('Network status changed', state)
+        })
+
         return () => { Network.removeAllListeners() }
     }, [])
-
-    const [backendInited, setBackendInited] = useState(false)
-
-    Noodl.Events.on('backendInited', () => {
-        setBackendInited(true)
-    })
 
     useEffect(() => {
         if (!R.libs.Kuzzle) {
@@ -58,17 +83,11 @@ export default forwardRef(function (props: Props) {
                     )
                 )
 
-                if (onlineManager.isOnline()) {
+                if (online === true) {
                     kuzzle.connect().then(async () => {
                         R.libs.Kuzzle = kuzzle
 
-                        if (!serviceWorker) {
-                            Noodl.Events.emit("backendInited")
-                            //setBackendInited(true)
-                        } /* else if (R.states.serviceWorkerActivated) {
-                            Noodl.Events.emit("backendInited")
-                            //setBackendInited(true)
-                        } */
+                        setBackendInited(true)
 
                         log.end('Kuzzle online init', startTime)
                         log.info('R', R)
@@ -76,8 +95,7 @@ export default forwardRef(function (props: Props) {
                 } else {
                     R.libs.Kuzzle = kuzzle
 
-                    Noodl.Events.emit("backendInited")
-                    //setBackendInited(true)
+                    setBackendInited(true)
 
                     log.end('Kuzzle offline init', startTime)
                     log.info('R', R)
@@ -91,14 +109,37 @@ export default forwardRef(function (props: Props) {
                 kuzzle.on('reconnected', () => { log.end('Kuzzle reconnected', reconnectTime) })
 
             } else log.error('Kuzzle init: empty required props', { project, backendVersion })
-        } else Noodl.Events.emit("backendInited")//setBackendInited(true)
+        }
     }, [project, backendVersion])
 
-    return <QueryClientProvider client={queryClient}>
-        {backendInited
-            ? props.children
-            : <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-28px', marginLeft: '-28px' }}>
-                <Loader color="dark" size='xl' />
-            </div>}
-    </QueryClientProvider>
+    return persistData ?
+        <PersistQueryClientProvider
+            client={queryClient}
+            persistOptions={{
+                persister: createIDBPersister(),
+                maxAge: 1000 * 60 * 60 * 24,
+                buster: R.env.projectVersion,
+            }}
+        >
+            {backendInited
+                ? props.children
+                : <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-28px', marginLeft: '-28px' }}>
+                    <Loader color="dark" size='xl' />
+                </div>}
+            {R.states.debug && <React.Suspense fallback={null}>
+                <ReactQueryDevtoolsProduction />
+            </React.Suspense>}
+        </PersistQueryClientProvider>
+        : <QueryClientProvider
+            client={queryClient}
+        >
+            {backendInited
+                ? props.children
+                : <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-28px', marginLeft: '-28px' }}>
+                    <Loader color="dark" size='xl' />
+                </div>}
+            {R.states.debug && <React.Suspense fallback={null}>
+                <ReactQueryDevtoolsProduction />
+            </React.Suspense>}
+        </QueryClientProvider>
 })

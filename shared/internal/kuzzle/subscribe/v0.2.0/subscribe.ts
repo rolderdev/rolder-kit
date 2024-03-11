@@ -8,7 +8,7 @@ export async function subscribe(noodlNodeId: string, fetchScheme: FetchScheme) {
     const { dbName } = window.R.env
     if (!dbName) { return }
 
-    const K = getKuzzle()
+    const K = await getKuzzle()
     if (!K) { return }
 
     await unSubscribe(noodlNodeId, fetchScheme)
@@ -28,7 +28,7 @@ export async function subscribe(noodlNodeId: string, fetchScheme: FetchScheme) {
 }
 
 export async function unSubscribe(noodlNodeId: string, fetchScheme: FetchScheme) {
-    const K = getKuzzle()
+    const K = await getKuzzle()
     if (!K) { return }
     else {
         try {

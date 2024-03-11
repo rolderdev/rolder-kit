@@ -1,6 +1,6 @@
-import { RItem } from "@shared/types"
+import { Item } from "@shared/types"
 
-export function setRefs(sourceItems: RItem[], refDbClass: string, refItems: RItem[]) {
+export function setRefs(sourceItems: Item[], refDbClass: string, refItems: Item[]) {
     const items = sourceItems.map((sourceItem: any) => {
         if (Array.isArray(sourceItem[refDbClass])) {
             const refItemsArr = refItems?.filter((i: any) => sourceItem[refDbClass]?.map((i: any) => i.id).includes(i.id))
@@ -14,7 +14,7 @@ export function setRefs(sourceItems: RItem[], refDbClass: string, refItems: RIte
     return items
 }
 
-export function setBackRefs(dbClass: string, sourceItems: RItem[], refDbClass: string, refItems: RItem[]) {
+export function setBackRefs(dbClass: string, sourceItems: Item[], refDbClass: string, refItems: Item[]) {
     const items = sourceItems.map((sourceItem: any) => {
         const refItemsArr = refItems?.filter((i: any) => sourceItem.id === i[dbClass]?.id)
         if (refItemsArr?.length) sourceItem[refDbClass] = refItemsArr.map(i => new Proxy(i, {}))

@@ -4,7 +4,7 @@ import { deepMap } from 'nanostores'
 import { forwardRef, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { DataScheme, Props } from './types'
-import { RItem } from '@shared/types'
+import { Item } from '@shared/types'
 import { sendOutput, sendSignal } from '@shared/port-send'
 import React from 'react'
 
@@ -15,7 +15,7 @@ export const DataContextMolecule = molecule((_, getScope) => {
 
 export const dataNodes = deepMap<{ [contextId: string]: { [dbClass: string]: NoodlNode } }>({})
 export const dataSchemes = deepMap<{ [contextId: string]: { [dbClass: string]: DataScheme } }>({})
-export const dataCache = deepMap<{ [contextId: string]: { [dbClass: string]: RItem[] } }>({})
+export const dataCache = deepMap<{ [contextId: string]: { [dbClass: string]: Item[] } }>({})
 export const dataStates = deepMap<{ [contextId: string]: { [dbClass: string]: boolean } }>({})
 
 export default forwardRef(function (props: Props) {

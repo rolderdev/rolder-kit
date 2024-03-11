@@ -2,9 +2,9 @@ import { dbClassVersion } from "@shared/get-dbclass-version"
 import { DataScheme } from "../../types"
 import fetchUsers from "./fetchUsers"
 import flush from "just-flush"
-import { RItem } from "@shared/types"
+import { Item } from "@shared/types"
 
-export default async function (queryContext: any): Promise<RItem[] | void> {
+export default async function (queryContext: any): Promise<Item[] | void> {
     const { dbName } = window.R.env
     const [dataScheme]: DataScheme[] = queryContext.queryKey
     const { dbClass, query, sort, options, getUsers } = dataScheme
@@ -16,23 +16,23 @@ export default async function (queryContext: any): Promise<RItem[] | void> {
     const startTime = log.start()
 
     await Kuzzle.connect()
-    if (dbName) return Kuzzle.document.search(dbName, dbClassV, { query, sort }, { ...options, lang: 'koncorde' })
+    if (dbName && dbClassV) return Kuzzle.document.search(dbName, dbClassV, { query, sort }, { ...options, lang: 'koncorde' })
         .then(kResponse => {
-            let rItems = kResponse.hits?.map(kItem => ({ id: kItem._id, ...kItem._source })) as RItem[]
+            let Items = kResponse.hits?.map(kItem => ({ id: kItem._id, ...kItem._source })) as Item[]
             if (getUsers) {
-                const userIds = flush(rItems?.filter(i => i.user?.id).map(i => i.user?.id))
+                const userIds = flush(Items?.filter(i => i.user?.id).map(i => i.user?.id))
                 if (userIds?.length) {
-                    return fetchUsers(userIds, rItems).then(rItemsWithUser => {
+                    return fetchUsers(userIds, Items).then(ItemsWithUser => {
                         log.end(`${dbClassV} fetch`, startTime)
-                        return rItemsWithUser
+                        return ItemsWithUser
                     })
                 } else {
                     log.end(`${dbClassV} fetch`, startTime)
-                    return rItems
+                    return Items
                 }
             } else {
                 log.end(`${dbClassV} fetch`, startTime)
-                return rItems
+                return Items
             }
         }).catch((e) => {
             R.libs.mantine?.MantineError('Системная ошибка!', `Fetch ${dbClassV} error: ${e.message}`)

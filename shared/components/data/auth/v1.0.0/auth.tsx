@@ -14,7 +14,7 @@ focusManager.setEventListener(handleFocus => {
     if (typeof window !== 'undefined' && window.addEventListener) {
         window.addEventListener('visibilitychange', async () => {
             if (document.visibilityState === "visible") {
-                const Kuzzle = getKuzzle()
+                const Kuzzle = await getKuzzle()
                 if (!Kuzzle) { return false }
                 const tokenValidation = await Kuzzle.auth.checkToken()
                 if (tokenValidation.expiresAt) handleFocus()
@@ -47,10 +47,10 @@ export default forwardRef(function (props: Props, ref) {
                 return
             }
 
-            const K = getKuzzle()
-            if (!K) return
+            Preferences.get({ key: 'userSessionToken' }).then(async r => {
+                const K = await getKuzzle()
+                if (!K) return
 
-            Preferences.get({ key: 'userSessionToken' }).then(r => {
                 const userSessionToken = r.value
                 if (userSessionToken) {
                     if (online) {
@@ -64,7 +64,7 @@ export default forwardRef(function (props: Props, ref) {
                                 tokenRefresh.start()
 
                                 prepData().then(async user => {
-                                    if (user?.user?.role?.value) await Preferences.set({ key: 'userRole', value: user?.user?.role?.value })
+                                    if (user) await Preferences.set({ key: 'user', value: JSON.stringify(user) })
                                     sendOutput(props.noodlNode, 'userRole', user?.user?.role?.value || null)
                                     sendSignal(props.noodlNode, 'signedIn')
                                     R.states.signedIn = true
@@ -83,10 +83,15 @@ export default forwardRef(function (props: Props, ref) {
                         })
                     } else {
                         K.jwt = userSessionToken
-                        Preferences.get({ key: 'userRole' }).then(role => {
+                        tokenRefresh.start()
+
+                        Preferences.get({ key: 'user' }).then(user => {
                             Preferences.get({ key: 'dbClasses' }).then(v => {
                                 if (v.value) window.R.dbClasses = JSON.parse(v.value)
-                                sendOutput(props.noodlNode, 'userRole', role.value || null)
+                                if (user.value) {
+                                    R.user = JSON.parse(user.value)
+                                    sendOutput(props.noodlNode, 'userRole', JSON.parse(user.value)?.user?.role?.value || null)
+                                }
                                 sendSignal(props.noodlNode, 'signedIn')
                                 R.states.signedIn = true
                                 setSignedIn(true)
@@ -102,13 +107,15 @@ export default forwardRef(function (props: Props, ref) {
                 }
             })
 
-            K.on('tokenExpired', () => {
-                R.states.signedIn = false
-                setSignedIn(false)
-                sendOutput(props.noodlNode, 'userRole', null)
-                sendSignal(props.noodlNode, 'signedOut')
-                Preferences.remove({ key: 'userSessionToken' })
-                log.info('Kuzzle: token expired')
+            getKuzzle().then(K => {
+                if (K) K.on('tokenExpired', () => {
+                    R.states.signedIn = false
+                    setSignedIn(false)
+                    sendOutput(props.noodlNode, 'userRole', null)
+                    sendSignal(props.noodlNode, 'signedOut')
+                    Preferences.remove({ key: 'userSessionToken' })
+                    log.info('Kuzzle: token expired')
+                })
             })
 
             Noodl.Events.on('signOut', () => {
@@ -122,8 +129,8 @@ export default forwardRef(function (props: Props, ref) {
     }, [signedIn])
 
     const tokenRefresh = useInterval(async () => {
-        const K = getKuzzle()
-        if (K) {
+        const K = await getKuzzle()
+        if (K && online) {
             try {
                 const tokenValidation = await K.auth.refreshToken({ expiresIn: props.sessionTimeout || '5d' })
                 await Preferences.set({ key: 'userSessionToken', value: tokenValidation.jwt })
@@ -147,7 +154,7 @@ export default forwardRef(function (props: Props, ref) {
                 return
             }
 
-            const K = getKuzzle()
+            const K = await getKuzzle()
             if (!K) { return }
 
             if (username && password) {
@@ -158,7 +165,7 @@ export default forwardRef(function (props: Props, ref) {
 
                     tokenRefresh.start()
                     const user = await prepData()
-                    if (user?.user?.role?.value) await Preferences.set({ key: 'userRole', value: user?.user?.role?.value })
+                    if (user) await Preferences.set({ key: 'user', value: JSON.stringify(user) })
                     R.states.signedIn = true
                     setSignedIn(true)
                     sendOutput(props.noodlNode, 'userRole', user?.user?.role?.value || null)

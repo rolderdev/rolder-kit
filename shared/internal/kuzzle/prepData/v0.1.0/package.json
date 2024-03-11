@@ -9,12 +9,12 @@
   "dependencies": {
     "@shared/get-dbclass-version": "workspace:@shared/get-dbclass-version-v0.6.0@*",
     "@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.1.0@*",
-    "@capacitor/preferences": "next"
+    "@capacitor/preferences": "5.0.7"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
     "@shared/types": "workspace:@shared/types-v0.1.0@*",
     "typescript": "5.3.3",
-    "@capacitor/core": "next"
+    "@capacitor/core": "5.7.2"
   }
 }

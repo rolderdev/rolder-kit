@@ -17,7 +17,7 @@ type FetchScheme = {
 export default async function (fetchScheme: FetchScheme): Promise<Item[] | void> {
     const { dbName, dbClass, query, sort, options } = fetchScheme
 
-    const K = getKuzzle()
+    const K = await getKuzzle()
     if (!K) return
 
     await K.connect()

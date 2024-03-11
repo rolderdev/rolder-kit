@@ -30,6 +30,10 @@ export default reactNode('MaskedInput', {
                 }
             }),
             getPort({
+                plug: 'input', name: 'inputValue', displayName: 'Value', group: 'Data', type: '*',
+                customs: { dependsOn(p) { return p.useScope ? false : true }, }
+            }),
+            getPort({
                 plug: 'input', name: 'maskType', displayName: 'Type', group: 'Mask params', default: 'pattern',
                 type: getCustomEnumType(['number', 'pattern']), customs: { required: 'connection' }
             }),

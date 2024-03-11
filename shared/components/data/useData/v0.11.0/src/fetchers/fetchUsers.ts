@@ -1,7 +1,7 @@
-import { RItem } from '@shared/types';
+import { Item } from '@shared/types';
 import set from 'just-safe-set'
 
-export default async function (userIds: string[], rItems: RItem[]) {
+export default async function (userIds: string[], rItems: Item[]) {
     const { Kuzzle } = window.R.libs
     if (!Kuzzle) { log.error('No Kuzzle instance'); return }
 

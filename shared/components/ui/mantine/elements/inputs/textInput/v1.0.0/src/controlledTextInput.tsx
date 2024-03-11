@@ -6,13 +6,20 @@ import React from "react"
 import { sendOutput, sendSignal } from '@shared/port-send'
 import convertColor from "@shared/convert-color"
 
-export default forwardRef(function (props: Props, ref) {    
+export default forwardRef(function (props: Props, ref) {
     const Icon = props.iconName && R.libs.icons[props.iconName]
 
     const [value, setValue] = useState<string | number>('')
     const typingDelay = props.debouncedTyping ? props.typingDelay || 350 : 0
     const [debouncedTyping] = useDebouncedValue(value, typingDelay)
     useEffect(() => sendOutput(props.noodlNode, 'typedValue', debouncedTyping), [debouncedTyping])
+
+    useEffect(() => {
+        if (props.inputValue) {
+            setValue(props.inputValue)
+            sendOutput(props.noodlNode, 'typedValue', props.inputValue)
+        }
+    }, [props.inputValue])
 
     useImperativeHandle(ref, () => ({
         reset() {

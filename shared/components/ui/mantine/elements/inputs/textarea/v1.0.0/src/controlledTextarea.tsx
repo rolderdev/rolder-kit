@@ -11,6 +11,13 @@ export default forwardRef(function (props: Props, ref) {
     const [debouncedTyping] = useDebouncedValue(value, typingDelay)
     useEffect(() => sendOutput(props.noodlNode, 'typedValue', debouncedTyping), [debouncedTyping])
 
+    useEffect(() => {
+        if (props.inputValue) {
+            setValue(props.inputValue)
+            sendOutput(props.noodlNode, 'typedValue', props.inputValue)
+        }
+    }, [props.inputValue])
+
     useImperativeHandle(ref, () => ({
         reset() {
             setValue('')
