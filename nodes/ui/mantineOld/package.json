@@ -4,6 +4,7 @@
     "build": "rspack build --mode=production",
     "lint": "eslint . --max-warnings 0",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    
   },
   "dependencies": {
     "@noodl/noodl-sdk": "0.5.4",
