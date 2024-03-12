@@ -4,6 +4,7 @@
   "types": "types.d.ts",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    
   },
   "devDependencies": {
     "@mantine/core": "6.0.21",

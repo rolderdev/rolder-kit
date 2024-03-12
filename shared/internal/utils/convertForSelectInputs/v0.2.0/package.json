@@ -4,6 +4,7 @@
   "types": "convertForSelectInputs.ts",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    
   },
   "dependencies": {
     "@shared/get-value": "workspace:@shared/get-value-v0.8.0@*"

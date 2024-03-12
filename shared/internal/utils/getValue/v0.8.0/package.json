@@ -4,6 +4,7 @@
   "types": "getValue.ts",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    
   },
   "dependencies": {
     "just-template": "2.2.0",

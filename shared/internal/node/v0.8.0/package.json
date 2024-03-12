@@ -4,6 +4,7 @@
   "types": "node.ts",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    
   },
   "dependencies": {
     "@shared/port": "workspace:@shared/port-v0.6.0@*",

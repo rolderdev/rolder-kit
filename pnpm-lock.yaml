@@ -1441,6 +1441,9 @@ importers:
       '@shared/pdf-table-v1.0.0':
         specifier: workspace:*
         version: link:../../../../shared/components/ui/pdf/pdfTable/v1.0.0
+      '@shared/pdf-table-v1.1.0':
+        specifier: workspace:*
+        version: link:../../../../shared/components/ui/pdf/pdfTable/v1.1.0
       '@shared/port':
         specifier: workspace:@shared/port-v0.6.0@*
         version: link:../../../../shared/internal/port/v0.6.0
@@ -3136,6 +3139,28 @@ importers:
         version: link:../../../../../internal/typescript-config
 
   shared/components/ui/pdf/pdfTable/v1.0.0:
+    dependencies:
+      '@react-pdf/renderer':
+        specifier: 3.3.4
+        version: 3.3.4(react@18.2.0)
+      '@shared/get-comp-props':
+        specifier: workspace:@shared/get-comp-props-v0.1.0@*
+        version: link:../../../../../internal/utils/getCompProps/v0.1.0
+      '@shared/get-value':
+        specifier: workspace:@shared/get-value-v0.8.0@*
+        version: link:../../../../../internal/utils/getValue/v0.8.0
+      '@shared/port-send':
+        specifier: workspace:@shared/port-send-v0.2.0@*
+        version: link:../../../../../internal/utils/portSend/v0.2.0
+    devDependencies:
+      '@shared/types':
+        specifier: workspace:@shared/types-v0.1.0@*
+        version: link:../../../../../internal/types/v0.1.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../internal/typescript-config
+
+  shared/components/ui/pdf/pdfTable/v1.1.0:
     dependencies:
       '@react-pdf/renderer':
         specifier: 3.3.4
@@ -9227,6 +9252,7 @@ packages:
 
   /ms@2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
+    requiresBuild: true
 
   /ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
