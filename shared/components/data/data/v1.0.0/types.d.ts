@@ -8,3 +8,8 @@ export type Props = BaseReactProps & {
     backendUrl: string
     backendPort: number
 }
+
+export type MutationFnProps = {
+    action: 'create' | 'update' | 'delete'
+    scheme: any    
+}

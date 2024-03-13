@@ -1,11 +1,57 @@
 # Changelog
+
+## 2024-03-13 v1.0.0-beta13
+
+### data
+
+* dataOld больше не нужен.
+* create - v0.4.0 переехал в новый RK. v1.0.0 - процесс создания по схеме переехал на сервер. Пример схемы: 
+
+```js
+[
+    {
+        dbClass: 'worker',
+        order: 0,
+        items: [{
+            company: { id: "W5XSgIoBj2T-UFOWng5l" },
+            content: { firstName: "Тестовый", lastName: "Аккаунт 6" },
+            user: { id: "kuid-noisy-minstrel-18541" },
+            manager: { "id": "EW7HgIoBAb9VwPpXmhmn" }
+        }],
+    },
+    {
+        dbClass: 'task',
+        order: 1,
+        items: [{content: {name: "Тест"}}], // схема может иметь items и/или itemsFunc
+        itemsFunc: `(items, data) => { // в items передается items этого же объекта строчкой выше. В data передается вся data c предидущих шагов как у UseData
+            return items.map(i => ( // вернуть нужно items в том же формате, что и в ключе items. Они будут переданы в БД
+                { ...i, worker: {id: data['worker'].items[0].id} }
+            ))
+        }`
+    }
+]
+```
+
+* update - v0.3.0 переехал в новый RK. v1.0.0 - процесс обновления по схеме переехал на сервер. Схема как у create, но в items должен быть id.
+* delete - v0.3.0 переехал в новый RK. v1.0.0 - процесс удаления по схеме переехал на сервер. Схема осталась как у v0.4.0
+
+## 2024-03-12 v1.0.0-beta12/pdf-table
+
+### pdf
+
+#### PdfTable v1.1.0
+
+* Добавили возможность передавать стили через функцию.
+* Добавили customProps и propsFunction
+
+
 ## 2024-03-11 v1.0.0-beta12
 
 ### data
 
 * Не работали старые UseData.
 
-## 2024-03-11 v1.0.0-beta12
+## 2024-03-11 v1.0.0-beta11
 
 ### data
 

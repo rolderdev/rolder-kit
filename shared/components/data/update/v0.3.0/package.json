@@ -1,0 +1,24 @@
+{
+  "name": "@shared/update-v0.3.0",
+  "main": "update.ts",
+  "types": "update.ts",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.1.0@*",
+    "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*",
+    "@shared/is-empty": "workspace:@shared/is-empty-v0.1.0@*",
+    "@shared/get-dbclass-version": "workspace:@shared/get-dbclass-version-v0.6.0@*",
+    "just-unique": "4.2.0",
+    "just-map-object": "2.3.0",
+    "just-safe-set": "4.2.1"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@shared/types": "workspace:@shared/types-v0.1.0@*",
+    "kuzzle-sdk": "7.11.2"
+  }
+}

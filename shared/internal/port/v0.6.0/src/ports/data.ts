@@ -45,4 +45,5 @@ export default [
         name: 'valueSource', group: 'Data', type: 'string', displayName: 'Value',
         customs: { dependsOn(p) { return p.dataSource === 'value' } }
     },
+    { name: 'data', displayName: 'Data', group: 'Data', type: 'object' },
 ] as const satisfies readonly NodePort[]

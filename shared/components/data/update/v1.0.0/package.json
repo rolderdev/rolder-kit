@@ -1,0 +1,19 @@
+{
+  "name": "@shared/update-v1.0.0",
+  "main": "update.ts",
+  "types": "update.ts",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*",
+    "@shared/get-dbclass-version": "workspace:@shared/get-dbclass-version-v0.6.0@*",    
+    "just-clone": "6.2.0"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@shared/types": "workspace:@shared/types-v0.1.0@*"    
+  }
+}
