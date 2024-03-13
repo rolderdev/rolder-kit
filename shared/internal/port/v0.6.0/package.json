@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    
   },
   "dependencies": {
     "change-case": "5.4.1",

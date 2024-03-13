@@ -4,6 +4,7 @@
   "types": "isEmpty.ts",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    
   },
   "dependencies": {},
   "devDependencies": {    

@@ -4,6 +4,7 @@
   "types": "maskedInput.tsx",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    
   },
   "dependencies": {
     "@mantine/core": "6.0.21",
