@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    
   },
   "dependencies": {
     "workbox-window": "7.0.0"

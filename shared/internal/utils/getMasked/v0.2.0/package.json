@@ -4,6 +4,7 @@
   "types": "getMasked.ts",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    
   },
   "dependencies": {
     "imask": "7.3.0"

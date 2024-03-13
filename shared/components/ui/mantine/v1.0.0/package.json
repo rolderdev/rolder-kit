@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    
   },
   "dependencies": {
     "@shared/convertColor": "workspace:@shared/convert-color-v0.3.0@*",
