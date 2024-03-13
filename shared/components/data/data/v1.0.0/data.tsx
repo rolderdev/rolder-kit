@@ -1,13 +1,14 @@
-import { forwardRef, useEffect, useState } from "react"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { forwardRef, lazy, useEffect, useState } from "react"
+import { QueryClient, QueryClientProvider, useMutation } from "@tanstack/react-query"
 import React from "react"
 import { Kuzzle, WebSocket } from 'kuzzle-sdk'
-import { Props } from "./types"
+import { MutationFnProps, Props } from "./types"
 import { Loader } from "@mantine/core"
 import { sendOutput } from "@shared/port-send"
 import { Network } from "@capacitor/network"
 import { PersistQueryClientProvider, PersistedClient, Persister } from '@tanstack/react-query-persist-client'
 import { get, set, del } from "idb-keyval";
+import { getKuzzle } from '@shared/get-kuzzle';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -33,11 +34,45 @@ export function createIDBPersister(idbValidKey: IDBValidKey = "reactQuery") {
     } as Persister;
 }
 
-const ReactQueryDevtoolsProduction = React.lazy(() =>
+const ReactQueryDevtoolsProduction = lazy(() =>
     import('@tanstack/react-query-devtools/production').then((d) => ({
         default: d.ReactQueryDevtools,
     })),
 )
+
+function Mutation(props: any) {
+    const mutation = useMutation({
+        mutationFn: async (props: MutationFnProps) => {
+            const K = await getKuzzle()
+            if (!K) return
+
+            const { dbName } = R.env
+            if (!dbName) {
+                R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`)
+                log.error('No dbName', R.env)
+                return
+            }
+
+            const r = await K.query({ controller: 'rolder', action: props.action, dbName, scheme: props.scheme })
+            const data = r.result
+            const dataEntries = Object.entries(data)
+            if (dataEntries.some(i => i[1].error)) {
+                dataEntries.forEach(entry => {
+                    if (entry[1]?.error) {
+                        R.libs.mantine?.MantineError('Системная ошибка!', `create error at "${entry[0]}": ${entry[1]?.error}`)
+                        log.error(`create error at "${entry[0]}": ${entry[1]?.error}`)
+                    }
+                })
+            }
+
+            return data
+        }
+    })
+
+    R.libs.mutate = mutation.mutateAsync
+
+    return <>{props.children}</>
+}
 
 export default forwardRef(function (props: Props) {
     const { backendVersion, dbName, persistData, backendDevMode, backendUrl, backendPort } = props
@@ -49,9 +84,6 @@ export default forwardRef(function (props: Props) {
 
     const [online, setOnline] = useState(R.states.online)
     const [initState, setInitState] = useState<typeof R.states.backend>(R.states.backend)
-
-    console.log('initState', initState)
-    console.log('online', online)
 
     useEffect(() => {
         Network.getStatus().then(state => {
@@ -68,6 +100,7 @@ export default forwardRef(function (props: Props) {
         Network.addListener('networkStatusChange', async state => {
             R.states.online = state.connected
             setOnline(state.connected)
+            if (state.connected) R.libs.queryClient?.invalidateQueries()
             //@ts-ignore
             sendOutput(props.noodlNode, 'isOnline', state.connected)
             log.info('Network status changed', state)
@@ -132,7 +165,7 @@ export default forwardRef(function (props: Props) {
             }}
         >
             {initState === 'initialized'
-                ? props.children
+                ? <Mutation>{props.children}</Mutation>
                 : <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-28px', marginLeft: '-28px' }}>
                     <Loader color="dark" size='xl' />
                 </div>}
@@ -144,7 +177,7 @@ export default forwardRef(function (props: Props) {
             client={queryClient}
         >
             {initState === 'initialized'
-                ? props.children
+                ? <Mutation>{props.children}</Mutation>
                 : <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-28px', marginLeft: '-28px' }}>
                     <Loader color="dark" size='xl' />
                 </div>}

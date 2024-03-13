@@ -65,7 +65,10 @@ import getDataNode from '@nodes/get-data'
 import logoutNode from '@nodes/logout'
 import noderedNode from '@nodes/nodered'
 import saveAsNode from '@nodes/save-as'
+import createNode from '@nodes/create'
+import updateNode from '@nodes/update'
+import deleteNode from '@nodes/delete'
 
-const nodes = [getDataNode, logoutNode, noderedNode, saveAsNode]
+const nodes = [getDataNode, logoutNode, noderedNode, saveAsNode, createNode, updateNode, deleteNode]
 
 Noodl.defineModule({ reactNodes, nodes: nodes.map(i => defineNode(i)) })

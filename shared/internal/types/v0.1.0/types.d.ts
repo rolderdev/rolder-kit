@@ -88,6 +88,7 @@ declare global {
                 MantineError(title: string, message?: string, autoClose?: boolean | number): void
             }
             dayjs?: typeof dayjs
+            mutate?(props: { action: 'create' | 'update' | 'delete', scheme: any }): any
             [name: string]: any
         }
         utils: any

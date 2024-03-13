@@ -1,6 +1,6 @@
 {
   "name": "rolder-kit",
-  "version": "v1.0.0-beta12",
+  "version": "v1.0.0-beta13",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -8,8 +8,8 @@
     "clean": "turbo run clean & rm -rf node_modules"
   },
   "devDependencies": {
-    "turbo": "1.12.4",
-    "typescript": "5.3.3",
+    "turbo": "1.12.5",
+    "typescript": "5.4.2",
     "@types/react": "16.9.49",
     "@types/react-dom": "16.9.8"
   },

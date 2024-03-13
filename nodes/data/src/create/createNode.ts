@@ -23,8 +23,24 @@ export default jsNode('create', {
             })
         ],
         outputs: [
-            ...getPorts('output',['created','creating']),
-            getPort({plug: 'output', name: 'createdData', displayName: 'Created data', group: 'Data', type: 'object'})
+            ...getPorts('output', ['created', 'creating']),
+            getPort({ plug: 'output', name: 'createdData', displayName: 'Created data', group: 'Data', type: 'object' })
         ]
+    },
+    'v1.0.0': {
+        module: {
+            default: 'remote',
+            dynamic: import(
+                /* webpackPrefetch: true */
+                /* webpackPreload: true */
+                '@shared/create-v1.0.0'),
+            remote: import(
+                /* webpackPrefetch: true */
+                /* webpackPreload: true */
+                //@ts-ignore
+                `remote/data/create-v1.0.0`),
+        },
+        inputs: getPorts('input', ['create', 'scheme']),
+        outputs: getPorts('output', ['created', 'creating', 'data'])
     }
 }, { moduleName: 'data' })

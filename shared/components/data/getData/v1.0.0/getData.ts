@@ -4,7 +4,7 @@ import { dbClassVersion } from '@shared/get-dbclass-version';
 import clone from 'just-clone';
 import { sendOutput, sendSignal } from '@shared/port-send';
 
-function useFetchScheme(fetchScheme: FetchScheme) {
+function getFetchScheme(fetchScheme: FetchScheme) {
   let hasErrors = false
   let resultScheme: FetchScheme = clone(fetchScheme)
   resultScheme.forEach(dbClassScheme => {
@@ -28,7 +28,7 @@ export default {
       return null
     }
 
-    const fetchScheme = useFetchScheme(props.fetchScheme)
+    const fetchScheme = getFetchScheme(props.fetchScheme)
     if (!fetchScheme) { return null }
 
     const startTime = log.start()

@@ -11,4 +11,5 @@ export {
   IconKey, IconSend, IconArrowLeft, IconArrowBackUp, IconArrowUp, IconArrowsVertical, IconPrinter, IconRobot,
   IconSun, IconMoon, IconChartBar, IconCaretRight, IconCamera, IconCalendar, IconWifiOff, IconDivide, IconLink,
   IconUnlink, IconCalculator, IconHammer, IconLayoutGrid, IconSend2, IconPlaystationCircle, IconGraph, IconTable,
+  IconUpload,
 } from '@tabler/icons-react'
