@@ -10,21 +10,23 @@ export async function subscribe(dbClass: string) {
     const K = await getKuzzle()
     if (!K) { return }
 
-    if (!subs.get()[dbClass]) K.realtime.subscribe(dbName, dbClass, {}, notif => {
-        if (notif.type !== 'document') return
+    if (!subs.get()[dbClass]) {
+        K.realtime.subscribe(dbName, dbClass, {}, notif => {
+            if (notif.type !== 'document') return
 
-        R.libs.queryClient?.invalidateQueries({
-            predicate: (query: any) => {
-                const dbClasses = query.queryKey[0]?.map((i: any) => i.dbClass)
-                if (dbClasses?.length) return dbClasses.includes(dbClass)
-                else return false
-            }
-        })
+            R.libs.queryClient?.invalidateQueries({
+                predicate: (query: any) => {
+                    const dbClasses = query.queryKey[0]?.map((i: any) => i.dbClass)
+                    if (dbClasses?.length) return dbClasses.includes(dbClass)
+                    else return false
+                }
+            })
 
-        log.info(`Subscribe - ${notif.action} ${dbClass}: `, notif.result)
-    }).then(room => {
-        subs.setKey(dbClass, room)
+            log.info(`Subscribe - ${notif.action} ${dbClass}: `, notif.result)
+        }).then(room => {
+            subs.setKey(dbClass, room)
 
-        log.info(`Subscribed to ${dbClass}`)
-    }).catch((error) => log.error(`Subscribe error`, error))
+            log.info(`Subscribed to ${dbClass}`)
+        }).catch((error) => log.error(`Subscribe error`, error))
+    }
 }

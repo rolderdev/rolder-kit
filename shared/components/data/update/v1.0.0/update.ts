@@ -2,10 +2,14 @@ import { UpdateScheme, Props } from './types';
 import { sendOutput, sendSignal } from '@shared/port-send';
 import clone from 'just-clone';
 import { dbClassVersion } from '@shared/get-dbclass-version';
+import deepMerge from '@shared/deep-merge'
+import { Item } from '@shared/types';
+import { onlineManager } from '@tanstack/react-query';
 
 function getUpdateScheme(updateScheme: UpdateScheme): UpdateScheme | boolean {
   let resultScheme: UpdateScheme = clone(updateScheme)
   resultScheme.forEach(dbClassScheme => {
+    if (dbClassScheme.offlineSilent && !onlineManager.isOnline()) dbClassScheme.silent = true
     const dbClass = dbClassVersion(dbClassScheme.dbClass)
     if (dbClass) dbClassScheme.dbClass = dbClass
     else {
@@ -33,6 +37,34 @@ export default {
     log.info(`update props`, { scheme })
 
     try {
+      if (!onlineManager.isOnline() || props.optimistic) {
+        const queryClient = R.libs.queryClient
+
+        if (queryClient) {
+          // Cancel current queries for the todos list
+          //await queryClient.cancelQueries([])
+
+          // optimistic update
+          if (Array.isArray(scheme)) scheme.map(s => queryClient.setQueriesData([], (old: any) => {
+            const oldCach = old as { [dbClass: string]: { items: Item[] } }
+            const dbClass = s.dbClass.split('_')[0]
+            const newCache = oldCach
+            let oldItems = oldCach[dbClass]?.items
+            if (oldItems?.length) {
+              s.items?.map(newItem => {
+                oldItems = oldItems.map(oldItem => {
+                  if (oldItem.id === newItem.id) oldItem = deepMerge(oldItem, newItem)
+                  return oldItem
+                })
+              })
+
+              newCache[dbClass].items = oldItems
+            }
+          }))
+        }
+        //@ts-ignore
+        sendSignal(props.noodlNode, 'optimisticUpdated')
+      }
       const data = R.libs.mutate && await R.libs.mutate({ action: 'update', scheme })
 
       //@ts-ignore

@@ -1,7 +1,7 @@
 import ky from 'ky'
 import { Props } from './types';
 import { sendOutput, sendSignal } from '@shared/port-send';
-import fetch from './src/fetch';
+import { onlineManager } from '@tanstack/react-query'
 
 export default {
   async execute(props: Props) {
@@ -15,7 +15,6 @@ export default {
       return null
     }
 
-
     if (flowEndpoint) {
       const startTime = log.start()
 
@@ -23,34 +22,30 @@ export default {
       //@ts-ignore
       sendOutput(noodlNode, 'executing', true)
 
-      const credsResp: any = await fetch({ dbName: 'config', dbClass: 'creds_v1', query: { in: { name: ['nodered'] } } })
+      const noderedCreds = R.params.creds.filter(i => i.name === 'nodered')?.[0].data
+      if (noderedCreds) {
+        const formData = new FormData()
+        if (flowData) {
+          if (flowData.params) formData.append('params', JSON.stringify(flowData.params))
+          if (flowData.data) formData.append('data', JSON.stringify(flowData.data))
+          if (flowData.files) flowData.files.map(i => formData.append(i.name, i))
 
-      if (credsResp?.length) {
-        const noderedCreds = credsResp.find((i: any) => i.name === 'nodered')?.data
-        if (noderedCreds) {
-          const formData = new FormData()
-          if (flowData) {
-            if (flowData.params) formData.append('params', JSON.stringify(flowData.params))
-            if (flowData.data) formData.append('data', JSON.stringify(flowData.data))
-            if (flowData.files) flowData.files.map(i => formData.append(i.name, i))
+          const jsonResp = await ky.post(`https://${project}.nodered.${backendVersion}.rolder.app/${flowEndpoint}`, {
+            headers: {
+              Authorization: 'Basic ' + btoa(`${noderedCreds.username}:${noderedCreds.password}`),
+            },
+            body: formData,
+          }).json()
 
-            const json = await ky.post(`https://${project}.nodered.${backendVersion}.rolder.app/${flowEndpoint}`, {
-              headers: {
-                Authorization: 'Basic ' + btoa(`${noderedCreds.username}:${noderedCreds.password}`),
-              },
-              body: formData
-            }).json()
-            //@ts-ignore
-            sendOutput(noodlNode, 'result', json)
-            //@ts-ignore
-            sendOutput(noodlNode, 'executing', false)
-            //@ts-ignore
-            sendSignal(noodlNode, 'executed')
+          //@ts-ignore
+          sendOutput(noodlNode, 'result', jsonResp)
+          //@ts-ignore
+          sendOutput(noodlNode, 'executing', false)
+          //@ts-ignore
+          sendSignal(noodlNode, 'executed')
 
-
-            log.info(`Nodered ${flowEndpoint}`, json)
-            log.end(`Nodered: ${flowEndpoint}`, startTime)
-          }
+          log.info(`Nodered ${flowEndpoint}`, jsonResp)
+          log.end(`Nodered: ${flowEndpoint}`, startTime)
         }
       }
     }

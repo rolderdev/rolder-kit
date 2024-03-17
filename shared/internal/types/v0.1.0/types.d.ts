@@ -53,7 +53,6 @@ declare global {
     type Rolder = {
         states: {
             backend: 'notInitialized' | 'initializing' | 'initialized'
-            online: boolean
             debug: number
             signedIn?: boolean
             devMode: boolean
@@ -66,17 +65,15 @@ declare global {
             dbName?: string
         }
         params: {
-            moduleFedereation?: boolean
-            dbClasses?: {
-                [x: string]: {
-                    version: number
-                }
-            }
             sessionTimeout?: string
             defaults?: {
                 dateFormat: string
             }
             colorScheme?: 'light' | 'dark',
+            creds: {
+                name: string
+                data: any
+            }[]
         }
         dbClasses?: {
             [x: string]: DbClass

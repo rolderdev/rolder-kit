@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    
   },
   "dependencies": {
     "@shared/get-dbclass-version": "workspace:@shared/get-dbclass-version-v0.6.0@*",

@@ -5,6 +5,7 @@ export type Props = BaseReactProps & {
     fetchScheme: FetchScheme
     searchEnabled: boolean    
     searchString?: string
+    paginationEnabled: boolean
     paginationDbClass?: string
 }
 

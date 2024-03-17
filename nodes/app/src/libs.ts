@@ -83,5 +83,8 @@ import generatePassword from "omgopass"; libs.generatePassword = generatePasswor
 //import ms from "ms"; window.R.libs.ms = ms
 import deepEqual from 'fast-deep-equal'; libs.deepEqual = deepEqual
 
-import type from 'kuzzle-sdk'
+import { get, getMany, set, setMany, update, del, delMany, keys } from "idb-keyval"
+libs.indexedDb = { get, getMany, set, setMany, update, del, delMany, keys }
+
+//import type from 'kuzzle-sdk'
 export default libs

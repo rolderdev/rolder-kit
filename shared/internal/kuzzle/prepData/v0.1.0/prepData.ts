@@ -2,6 +2,7 @@ import { DbClass, User } from "@shared/types"
 import { dbClassVersion } from '@shared/get-dbclass-version'
 import { getKuzzle } from '@shared/get-kuzzle'
 import { Preferences } from '@capacitor/preferences'
+import fetchConfig from "./src/fetchConfig"
 
 export async function prepData() {
     const { dbName } = R.env
@@ -16,9 +17,12 @@ export async function prepData() {
         const dbClassesResp = await K.document.search('config', 'dbclass_v1', {}, { size: 100 })
         const dbClasses: { [name: string]: DbClass } = {}
         dbClassesResp.hits.map(i => { dbClasses[i._source.name] = i._source as any })
-        window.R.dbClasses = dbClasses
+        R.dbClasses = dbClasses
         await Preferences.set({ key: 'dbClasses', value: JSON.stringify(dbClasses) })
         log.info('DB classes', dbClasses)
+        const credsResp: any = await fetchConfig()
+        R.params.creds = credsResp
+        await Preferences.set({ key: 'creds', value: JSON.stringify(credsResp) })
     } catch (e) { log.error('Get DB classes error', e) }
 
     let resultUser: User = { user: {} }

@@ -4,7 +4,7 @@ import rKitJson from '../../package.json'
 
 globalThis.R = {
     //@ts-ignore
-    states: { backend: 'notInitialized', online: false, debug: d, devMode: DEVMODE },
+    states: { backend: 'notInitialized', debug: d, devMode: DEVMODE },
     env: { rolderKit: rKitJson.version },
     params: {},
     libs: {},
@@ -25,11 +25,9 @@ globalThis.log = {
     error: (title, ...args) => consola.error(title, ...args)
 }
 
-document.body.insertAdjacentHTML("afterbegin", `
-<div style="position: absolute; top: 50%; left: 50%; margin-top: -28px; margin-left: -64px;">
+document.body.insertAdjacentHTML("afterbegin", `<div style="position: absolute; top: 50%; left: 50%; margin-top: -28px; margin-left: -64px;">
     <h2>LOADING</h2>
-</div>
-`)
+</div>`)
 
 // =====================================================
 import libs from './src/libs'; R.libs = libs

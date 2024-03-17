@@ -1,0 +1,12 @@
+{
+  "name": "@shared/deep-merge-v0.1.0",
+  "main": "deepMerge.ts",
+  "types": "deepMerge.ts",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"    
+  },
+  "dependencies": {},
+  "devDependencies": {    
+    "@shared/typescript-config": "workspace:*"    
+  }
+}

@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { FetchScheme, PagesSearchAfter, Props, Sorts } from './types';
 import { onlineManager, useQuery } from '@tanstack/react-query';
-import { getKuzzle } from '@shared/get-kuzzle';
 import { dbClassVersion } from '@shared/get-dbclass-version';
 import clone from 'just-clone';
 import last from 'just-last'
@@ -12,7 +11,6 @@ import { Item } from '@shared/types';
 import getValue from '@shared/get-value';
 import queryFn from './src/queryFn';
 import deepEqual from 'fast-deep-equal'
-
 
 function getScheme(fetchScheme: FetchScheme, paginationScheme?: FetchScheme[number], searchAfter?: string[]) {
   let hasErrors = false
@@ -52,9 +50,9 @@ export default forwardRef(function (props: Props, ref) {
   const [lastPaginationScheme, setLastPaginationScheme] = useState<FetchScheme[number]>()
   const [lastSearchString, setLastSearchString] = useState<string | undefined>()
   const fetchScheme = getScheme(props.fetchScheme, paginationScheme, pagesSearchAfter.find(i => i.page === page)?.searchAfter)
-  if (!fetchScheme) { return null }
+  if (!fetchScheme) return null
   useEffect(() => {
-    if (!deepEqual(lastPaginationScheme, paginationScheme) || lastSearchString !== props.searchString) {
+    if (props.paginationEnabled && !deepEqual(lastPaginationScheme, paginationScheme) || lastSearchString !== props.searchString) {
       setLastPaginationScheme(paginationScheme)
       setLastSearchString(props.searchString)
       setPagesSearchAfter([{ page: 1 }])
@@ -69,7 +67,7 @@ export default forwardRef(function (props: Props, ref) {
   })
 
   useEffect(() => {
-    if (!props.searchString) refetch()
+    if (props.searchEnabled && !props.searchString) refetch()
   }, [props.searchString])
 
   sendOutput(props.noodlNode, 'fetching', isFetching)
@@ -104,7 +102,7 @@ export default forwardRef(function (props: Props, ref) {
     for (const fs of fetchScheme) {
       if (fs.dbClass && onlineManager.isOnline()) subscribe(fs.dbClass)
     }
-  }, [fetchScheme?.map(i => i.dbClass), onlineManager.isOnline()])
+  }, [fetchScheme?.map(i => i.dbClass)])
 
   useImperativeHandle(ref, () => ({
     nextFetch() {

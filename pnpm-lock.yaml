@@ -94,6 +94,9 @@ importers:
       fast-sort:
         specifier: 3.4.0
         version: 3.4.0
+      idb-keyval:
+        specifier: 6.2.1
+        version: 6.2.1
       just-capitalize:
         specifier: 3.2.0
         version: 3.2.0
@@ -1777,6 +1780,9 @@ importers:
       '@mantine/core':
         specifier: 6.0.21
         version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@shared/deep-merge':
+        specifier: workspace:@shared/deep-merge-v0.1.0@*
+        version: link:../../../../internal/utils/deepMerge/v0.1.0
       '@shared/get-kuzzle':
         specifier: workspace:@shared/get-kuzzle-v0.1.0@*
         version: link:../../../../internal/utils/getKuzzle/v0.1.0
@@ -2061,12 +2067,18 @@ importers:
 
   shared/components/data/update/v1.0.0:
     dependencies:
+      '@shared/deep-merge':
+        specifier: workspace:@shared/deep-merge-v0.1.0@*
+        version: link:../../../../internal/utils/deepMerge/v0.1.0
       '@shared/get-dbclass-version':
         specifier: workspace:@shared/get-dbclass-version-v0.6.0@*
         version: link:../../../../internal/utils/getDbClassVersion/v0.6.0
       '@shared/port-send':
         specifier: workspace:@shared/port-send-v0.2.0@*
         version: link:../../../../internal/utils/portSend/v0.2.0
+      '@tanstack/react-query':
+        specifier: 4.36.1
+        version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
       just-clone:
         specifier: 6.2.0
         version: 6.2.0
@@ -3743,6 +3755,12 @@ importers:
         specifier: workspace:*
         version: link:../../../typescript-config
 
+  shared/internal/utils/deepMerge/v0.1.0:
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../typescript-config
+
   shared/internal/utils/getCompProps/v0.1.0:
     devDependencies:
       '@shared/node':
@@ -3778,6 +3796,10 @@ importers:
         version: link:../../../typescript-config
 
   shared/internal/utils/getKuzzle/v0.1.0:
+    dependencies:
+      '@tanstack/react-query':
+        specifier: 4.36.1
+        version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@shared/types':
         specifier: workspace:@shared/types-v0.1.0@*

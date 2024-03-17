@@ -172,13 +172,6 @@ export default reactNode('UseData', {
             getPort({
                 plug: 'input', name: 'searchEnabled', displayName: 'Enabled', group: 'Search', type: 'boolean', default: false
             }),
-            /* getPort({
-                plug: 'input', name: 'searchScheme', displayName: 'Search scheme', group: 'Search', type: 'array',
-                customs: {
-                    required: 'connection',
-                    dependsOn(p) { return p.searchEnabled ? true : false }
-                }
-            }), */
             getPort({
                 plug: 'input', name: 'searchString', displayName: 'Search string', group: 'Search',
                 type: getType('string', 'connection'), customs: { dependsOn(p) { return p.searchEnabled ? true : false } }

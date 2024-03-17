@@ -8,7 +8,7 @@ export default [
     { name: 'create', displayName: 'Create', group: 'Signals', type: 'signal' },
     { name: 'created', displayName: 'Created', group: 'Signals', type: 'signal' },
     { name: 'update', displayName: 'Update', group: 'Signals', type: 'signal' },
-    { name: 'updated', displayName: 'Updated', group: 'Signals', type: 'signal' },
+    { name: 'updated', displayName: 'Updated', group: 'Signals', type: 'signal' },    
     { name: 'delete', displayName: 'Delete', group: 'Signals', type: 'signal' },
     { name: 'deleted', displayName: 'Deleted', group: 'Signals', type: 'signal' },
     { name: 'nextPage', displayName: 'Next', group: 'Signals', type: 'signal' },

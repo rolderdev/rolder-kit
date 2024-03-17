@@ -1,5 +1,84 @@
 # Changelog
 
+## 2024-03-17 v1.0.0-beta14
+
+### app
+
+* Добавлен R.libs.indexedDb Здесь располагается библиотека для работы с Indexed DB, которую использует React-Query для оффлайн режима - [idb-keyval](https://github.com/jakearchibald/idb-keyval) Библиотека очень простая и легкая. Работает только по одному принципу - записывает/читает/удаляет ключ и его значение. Вот пример из Стартума для сохранения фото:
+
+```js
+const last = R.libs.just.last
+const { get, set, keys, delMany } = R.libs.indexedDb // импортируем методы библиоткеи
+
+const imageUrlToBase64 = async url => { // функция, которая скачивает картику по ссылке и преобразует ее в Data URL (base64)
+  const response = await fetch(url);
+  const blob = await response.blob();
+  return new Promise((onSuccess, onError) => {
+    try {
+      const reader = new FileReader();
+      reader.onload = function () { onSuccess(this.result) };
+      reader.readAsDataURL(blob);
+    } catch (e) {
+      onError(e);
+    }
+  });
+};
+
+await Inputs.tasks?.map(async i => {
+  await i['task-result']?.map(async taskResult => { // перебераем все задачи, где хранятся картинки. Каждая задача - отдельный ключ в Indexed DB.
+    const storeKey = `images:${taskResult.id}` // название ключа в Indexed DB
+    if (taskResult.content?.images) {
+      let newStore = []
+      const imagesStore = await get(storeKey) // качаем данные по ключу
+
+      await Promise.all(taskResult.content.images // подготавливаем формат для записи в IDB, исключая уже имеющиеся записи
+        .filter(i => !imagesStore?.map(i => i.id).includes(last(i.split('/')).split('.jpg')[0]))
+        .map(async i => {
+          const image = {
+            id: last(i.split('/')).split('.jpg')[0],
+            name: last(i.split('/')),
+            contentType: 'image/jpeg',
+            state: 'uploaded'
+          }
+
+          const imageBase64 = await imageUrlToBase64(i) // скачиваем картинку и преобразуем в base64
+          image.data = imageBase64
+          newStore.push(image)
+        })
+      )
+
+      imagesStore?.map(i => {
+        if (!newStore.map(i => i.id).includes(i.id) && i.state !== 'atWebcam') newStore.push(i)
+      })
+
+      if (newStore.length) await set(storeKey, newStore) // записываем подготовленные данные в IDB
+    }
+  })
+})
+
+// чистка IDB
+keys().then(ks => { // берем все ключи IDB
+  let toDeleteStoresKeys = []
+
+  ks.filter(i => i.split(':')?.[0] === 'images').map(key => { // берем только ключи, которые начинаются на images:
+    const taskResultId = key.split(':')?.[1]
+    const taskResultsIds = Inputs.tasks?.map(task => task['task-result']?.map(i => i.id)).flat()
+    if (!taskResultsIds.includes(taskResultId)) toDeleteStoresKeys.push(key) // если в скаченных данных нет айдишников из IDB
+  })
+
+  delMany(toDeleteStoresKeys) // удаляем за раз все данные по названиям ключей
+})
+
+```
+
+### data
+
+* UseData - исправлен баг двойной первичной загрузки.
+* Data - поправлена ошибка зависания при переходи из офлайн в онлайн. При переходе из офлайна в онлайн, если в кеше есть мутации, больше не происходит автобновление данных, т.к. мутация создает событие realtime.
+* update - добавлена опция Optimistic. При включенной опции сразу обновляет кеш данных, не дожидаясь ответа бекенда. При этом данные на выходе всех UseData измененных классов обновятся, но не сработает триггер Fetched. Чтобы управлять таким сценарием, update при включенном Optimistic выдает сигнал Optimistic updated, с помощью которого можно тригернуть обновления данных в нужных местах. Когда нет сети опция Optimistic включается автоматически, т.к. только так можно записать данные без сети.
+* update - добавлена опция silent: true/false в схему. Когда включена не генерирует realtime событие, а значит и автообновление данных. Нужно обновлять сервер.
+* update - добавлена опция offlineSilent: true/false в схему. Когда включена не генерирует realtime событие, если в момент срабатывания приложение было не в сети. Нужно обновлять сервер.
+
 ## 2024-03-13 v1.0.0-beta13
 
 ### data
