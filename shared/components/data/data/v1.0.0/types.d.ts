@@ -1,4 +1,5 @@
 import { BaseReactProps, NoodlNode } from '@shared/node'
+import { Item } from '@shared/types'
 
 export type Props = BaseReactProps & {
     backendVersion: string
@@ -11,5 +12,8 @@ export type Props = BaseReactProps & {
 
 export type MutationFnProps = {
     action: 'create' | 'update' | 'delete'
-    scheme: any    
+    scheme: {
+        dbClass: string
+        items: Item[]
+    }[]
 }

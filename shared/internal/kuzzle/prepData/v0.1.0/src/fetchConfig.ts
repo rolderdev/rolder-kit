@@ -14,14 +14,11 @@ type FetchScheme = {
     }
 }
 
-export default async function (fetchScheme: FetchScheme): Promise<Item[] | void> {
-    const { dbName, dbClass, query, sort, options } = fetchScheme
-
+export default async function (): Promise<Item[] | void> {
     const K = await getKuzzle()
     if (!K) return
 
-    await K.connect()
-    if (dbName) return K.document.search(dbName, dbClass, { query, sort }, { ...options, lang: 'koncorde' })
+    return await K.document.search('config', 'creds_v1', undefined, { size: 100 })
         .then(kResponse => kResponse.hits?.map(kItem => ({ id: kItem._id, ...kItem._source })) as Item[])
         .catch((error) => {
             R.libs.mantine?.MantineError('Системная ошибка!', `Fetch config error"`, error)

@@ -3,7 +3,7 @@ import React from "react"
 import { Props } from "./types"
 import { useInterval } from "@mantine/hooks"
 import ms from "ms";
-import { focusManager } from "@tanstack/react-query";
+import { focusManager, onlineManager } from "@tanstack/react-query";
 import { getKuzzle } from '@shared/get-kuzzle'
 import { sendOutput, sendSignal } from "@shared/port-send";
 import { prepData } from "@shared/prep-data"
@@ -16,12 +16,14 @@ focusManager.setEventListener(handleFocus => {
             if (document.visibilityState === "visible") {
                 const Kuzzle = await getKuzzle()
                 if (!Kuzzle) { return false }
-                const tokenValidation = await Kuzzle.auth.checkToken()
-                if (tokenValidation.expiresAt) handleFocus()
-                else {
-                    Noodl.Events.emit('signOut')
-                    log.info('React-query focus manager: token is not valid, signed out', tokenValidation)
-                    return false
+                if (onlineManager.isOnline()) {
+                    const tokenValidation = await Kuzzle.auth.checkToken()
+                    if (tokenValidation.expiresAt) handleFocus()
+                    else {
+                        Noodl.Events.emit('signOut')
+                        log.info('React-query focus manager: token is not valid, signed out', tokenValidation)
+                        return false
+                    }
                 }
             }
         }, false)
@@ -35,7 +37,7 @@ focusManager.setEventListener(handleFocus => {
 export default forwardRef(function (props: Props, ref) {
     R.params.sessionTimeout = props.sessionTimeout
 
-    const online = R.states.online
+    const online = onlineManager.isOnline()
     const [signedIn, setSignedIn] = useState<boolean | undefined>(R.states.signedIn)
 
     useEffect(() => {
@@ -64,6 +66,7 @@ export default forwardRef(function (props: Props, ref) {
 
                                 prepData().then(async user => {
                                     if (user) await Preferences.set({ key: 'user', value: JSON.stringify(user) })
+                                    R.libs.queryClient?.resumePausedMutations()
                                     sendOutput(props.noodlNode, 'userRole', user?.user?.role?.value || null)
                                     sendSignal(props.noodlNode, 'signedIn')
                                     R.states.signedIn = true
@@ -72,6 +75,7 @@ export default forwardRef(function (props: Props, ref) {
                                     log.end('Session restored', startTime)
                                 })
                             } else {
+                                R.libs.queryClient?.resumePausedMutations()
                                 R.states.signedIn = false
                                 setSignedIn(false)
                                 sendOutput(props.noodlNode, 'userRole', null)
@@ -84,16 +88,19 @@ export default forwardRef(function (props: Props, ref) {
                         K.jwt = userSessionToken
                         tokenRefresh.start()
 
-                        Preferences.get({ key: 'user' }).then(user => {
-                            Preferences.get({ key: 'dbClasses' }).then(v => {
-                                if (v.value) window.R.dbClasses = JSON.parse(v.value)
-                                if (user.value) {
-                                    R.user = JSON.parse(user.value)
-                                    sendOutput(props.noodlNode, 'userRole', JSON.parse(user.value)?.user?.role?.value || null)
-                                }
-                                sendSignal(props.noodlNode, 'signedIn')
-                                R.states.signedIn = true
-                                setSignedIn(true)
+                        Preferences.get({ key: 'user' }).then(userStore => {
+                            Preferences.get({ key: 'dbClasses' }).then(dbClassesStore => {
+                                Preferences.get({ key: 'creds' }).then(credsStore => {
+                                    if (credsStore.value) window.R.params.creds = JSON.parse(credsStore.value)
+                                    if (dbClassesStore.value) window.R.dbClasses = JSON.parse(dbClassesStore.value)
+                                    if (userStore.value) {
+                                        R.user = JSON.parse(userStore.value)
+                                        sendOutput(props.noodlNode, 'userRole', JSON.parse(userStore.value)?.user?.role?.value || null)
+                                    }
+                                    sendSignal(props.noodlNode, 'signedIn')
+                                    R.states.signedIn = true
+                                    setSignedIn(true)
+                                })
                             })
                         })
                     }

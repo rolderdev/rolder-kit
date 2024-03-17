@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    
   },
-  "dependencies": {},
+  "dependencies": {
+    "@tanstack/react-query": "4.36.1"
+  },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
     "@shared/types": "workspace:@shared/types-v0.1.0@*",

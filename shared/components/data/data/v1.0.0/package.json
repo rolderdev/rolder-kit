@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    
   },
   "dependencies": {
     "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*",
@@ -16,7 +15,8 @@
     "@mantine/core": "6.0.21",
     "@capacitor/network": "5.0.7",
     "idb-keyval": "6.2.1",
-    "@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.1.0@*"
+    "@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.1.0@*",
+    "@shared/deep-merge": "workspace:@shared/deep-merge-v0.1.0@*"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",

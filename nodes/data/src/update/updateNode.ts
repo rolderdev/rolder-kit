@@ -16,7 +16,7 @@ export default jsNode('update', {
                 `remote/data/update-v0.3.0`),
         },
         inputs: [
-            ...getPorts('input', ['update', 'scheme']),
+            ...getPorts('input', ['update']),
             getPort({
                 plug: 'input', name: 'updateScheme', displayName: 'Update scheme', group: 'Data', type: 'array',
                 customs: { required: 'connection' }
@@ -40,7 +40,13 @@ export default jsNode('update', {
                 //@ts-ignore
                 `remote/data/update-v1.0.0`),
         },
-        inputs: getPorts('input', ['update', 'scheme']),
-        outputs: getPorts('output', ['updated', 'updating', 'data'])
+        inputs: [
+            ...getPorts('input', ['update', 'scheme']),
+            getPort({ plug: 'input', name: 'optimistic', displayName: 'Optimistic', group: 'Params', type: 'boolean', default: false })            
+        ],
+        outputs: [
+            ...getPorts('output', ['updated', 'updating', 'data']),
+            getPort({ plug: 'output', name: 'optimisticUpdated', displayName: 'Optimistic updated', group: 'Signals', type: 'signal' })
+        ]
     }
 }, { moduleName: 'data' })
