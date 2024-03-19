@@ -1,5 +1,191 @@
 # Changelog
 
+## 2024-03-19 v1.0.0-beta15
+
+### Общее
+
+* Выключен Module Federation. Один баг оказался из-за него.
+
+### app
+
+* Добавлена странница, которая выдается, если все приложение вылетело из-за ошибки. В корень проекта нужно положить error.jpg
+
+### service-worker
+
+* Удален, не пригодился.
+
+### mantine
+
+#### Table v1.1.0
+
+* Исправлен баг - вложенные таблицы дублировали мултиселект.
+* Изменено поведение выбора. Selection и MultiSelection теперь устанавливаются только если поданный выбор есть в поданных items. Таким образом, теперь можно подавать на вход любые items, не боясь, что таблица запомнит выбор от другой таблицы.
+
+### pdf
+
+#### PdfDocument v1.1.0
+
+* Добавлена возможность указывать шрифты и использоать их в других компонентах PDF.
+  * Пример шрифтов:
+
+```js
+[
+    {
+        family: 'Inter',
+        fonts: [
+            {
+                src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeMZhrib2Bg-4.ttf',
+                fontWeight: 100,
+            },
+            {
+                src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyfMZhrib2Bg-4.ttf',
+                fontWeight: 200,
+            },
+            {
+                src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuOKfMZhrib2Bg-4.ttf',
+                fontWeight: 300,
+            },
+            {
+                src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf',
+                fontWeight: 400,
+            },
+            {
+                src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZhrib2Bg-4.ttf',
+                fontWeight: 500,
+            },
+            {
+                src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZhrib2Bg-4.ttf',
+                fontWeight: 600,
+            },
+            {
+                src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf',
+                fontWeight: 700,
+            },
+            {
+                src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyYMZhrib2Bg-4.ttf',
+                fontWeight: 800,
+            },
+            {
+                src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuBWYMZhrib2Bg-4.ttf',
+                fontWeight: 900,
+            },
+        ],
+    },
+    {
+        family: 'Ubuntu',
+        fonts: [
+            {
+                src: "http://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzTt2aMH4V_gg.ttf",
+                fontWeight: 300,
+            },
+            {
+                src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgo6eAT3v02QFg.ttf",
+                fontWeight: 400,
+            },
+            {
+                src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCjC3Tt2aMH4V_gg.ttf",
+                fontWeight: 500,
+            },
+            {
+                src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvTt2aMH4V_gg.ttf",
+                fontWeight: 700,
+            },
+            {
+                src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZftWyIPYBvgpUI.ttf",
+                fontWeight: 300,
+                fontStyle: 'italic'
+            },
+            {
+                src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCu6KVjbNBYlgoKeg7znUiAFpxm.ttf",
+                fontWeight: 400,
+                fontStyle: 'italic'
+            },
+            {
+                src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejYHtGyIPYBvgpUI.ttf",
+                fontWeight: 500,
+                fontStyle: 'italic'
+            },
+            {
+                src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZPsmyIPYBvgpUI.ttf",
+                fontWeight: 700,
+                fontStyle: 'italic'
+            }
+        ],
+    }
+]
+```
+ 
+ * Шрифт можно искать в [гугле](https://fonts.google.com/), русский язык.
+ * Сслыка на шрифт не может быть локальной. Прямые ссылки добываются [здесь](https://developers.google.com/fonts/docs/developer_api?apix_params=%7B%22sort%22%3A%22ALPHA%22%7D&hl=ru)
+ * Нужно нажать справа на попробовать, ввести названия шрифта, найденного ранее. В полученном ответе будут нужные данные.
+ * Если не указывать шрифт, будет автоматически применен такой:
+
+```js
+const defaultFont = {
+    family: 'Roboto',
+    fonts: [
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf",
+            fontWeight: 100,
+        },
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOiCnqEu92Fr1Mu51QrIzcXLsnzjYk.ttf",
+            fontWeight: 100,
+            fontStyle: 'italic'
+        },
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmSU5vAx05IsDqlA.ttf",
+            fontWeight: 300,
+        },
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TjARc9AMX6lJBP.ttf",
+            fontWeight: 300,
+            fontStyle: 'italic'
+        },
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf",
+            fontWeight: 400,
+        },
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1Mu52xPKTM1K9nz.ttf",
+            fontWeight: 400,
+            fontStyle: 'italic'
+        },
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9vAx05IsDqlA.ttf",
+            fontWeight: 500,
+        },
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51S7ABc9AMX6lJBP.ttf",
+            fontWeight: 500,
+            fontStyle: 'italic'
+        },
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlvAx05IsDqlA.ttf",
+            fontWeight: 700,
+        },
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TzBhc9AMX6lJBP.ttf",
+            fontWeight: 700,
+            fontStyle: 'italic'
+        },
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmYUtvAx05IsDqlA.ttf",
+            fontWeight: 900,
+        },
+        {
+            src: "https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TLBBc9AMX6lJBP.ttf",
+            fontWeight: 900,
+            fontStyle: 'italic'
+        },
+    ]
+}
+```
+
+#### PdfTable v1.2.0
+
+* В схему добавлена функция getValue. Работает как в Table.
+
 ## 2024-03-17 v1.0.0-beta14
 
 ### app

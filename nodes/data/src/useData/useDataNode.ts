@@ -5,16 +5,10 @@ import { lazy } from 'react'
 export default reactNode('UseData', {
     'v0.11.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                "@shared/use-data-v0.11.0")),
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/use-data-v0.11.0`)),
+                "@shared/use-data-v0.11.0"))
         },
         inputs: [
             getPort({
@@ -42,16 +36,10 @@ export default reactNode('UseData', {
     },
     'v0.12.3': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                "@shared/use-data-v0.12.3")),
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/use-data-v0.12.3`)),
+                "@shared/use-data-v0.12.3"))
         },
         inputs: [
             ...getPorts('input', ['dbClass', 'filters', 'sorts', 'querySize', 'getUsers', 'searchFields', 'searchString', 'aggQuery']),
@@ -86,16 +74,11 @@ export default reactNode('UseData', {
     },
     'v0.12.4': {
         module: {
-            default: 'remote',
+
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                "@shared/use-data-v0.12.4")),
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/use-data-v0.12.4`)),
+                "@shared/use-data-v0.12.4"))
         },
         inputs: [
             ...getPorts('input', ['dbClass', 'filters', 'sorts', 'querySize', 'getUsers', 'searchFields', 'searchString', 'aggQuery']),
@@ -130,17 +113,10 @@ export default reactNode('UseData', {
     },
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                "@shared/use-data-v1.0.0")),
-
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/use-data-v1.0.0`)),
+                "@shared/use-data-v1.0.0"))
         },
         inputs: [
             getPort({

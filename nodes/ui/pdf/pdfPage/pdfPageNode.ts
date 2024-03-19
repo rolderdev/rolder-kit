@@ -5,10 +5,7 @@ import v100 from '@shared/pdf-page-v1.0.0'
 
 export default reactNode('PdfPage', {
     'v1.0.0': {
-        module: {
-            default: 'static',
-            static: v100
-        },
+        module: { static: v100 },
         inputs: [
             getPort({
                 plug: 'input', name: 'orientation', displayName: 'Orientation', group: 'Params',

@@ -4,16 +4,10 @@ import { getPort, getPorts } from '@shared/port'
 const createXlsxNode = jsNode('createXlsx', {
     'v1.0.0': {
         module: {
-            default: 'dynamic',
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/create-xlsx-v1.0.0'),
-                remote: import(
-                    /* webpackPrefetch: true */
-                    /* webpackPreload: true */
-                    //@ts-ignore
-                    `remote/xlsx/create-xlsx-v1.0.0`),
+                '@shared/create-xlsx-v1.0.0')
         },
         inputs: [
             ...getPorts('input', ['items', 'fileName']),

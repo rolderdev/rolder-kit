@@ -8,12 +8,6 @@ var path = require('path')
 const pJson = require('./package.json')
 var outputPath = path.resolve(__dirname, `../../build/data`)
 
-const fetchRemote  = require('fetch-remote')
-const mfConf = {
-    name: 'data',
-    remotes: { remote: `promise new Promise(${fetchRemote.toString()})` },
-}
-
 module.exports = {
     context: __dirname,
     stats: { preset: 'errors-only', timings: true },
@@ -37,7 +31,6 @@ module.exports = {
                 return { main: files[0].path.replace('auto/', '') }
             }
         }),
-        new rspack.container.ModuleFederationPlugin(mfConf)
     ],
     module: {
         rules: [

@@ -7,16 +7,10 @@ const notifEnum = ['top-left', 'top-right', 'top-center', 'bottom-left', 'bottom
 const mantineNode = reactNode('Mantine', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/mantine-v1.0.0')),
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                'remote/ui/mantine/mantine-v1.0.0')),
+                '@shared/mantine-v1.0.0'))
         },
         inputs: [
             getPort({

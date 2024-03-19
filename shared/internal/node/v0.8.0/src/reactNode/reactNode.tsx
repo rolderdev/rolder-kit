@@ -16,16 +16,10 @@ type Params = {
 
 function getModule(version: CompDefinition, moduleName: string) {
     try {
-        const modulesOverrides: { [name: string]: CompDefinition['module']['default'] }
-            = eval(Noodl.getProjectSettings().modules)?.[0] || {}
-        const moduleType = window.offlineMode && version.module.default !== 'static'
-            ? 'dynamic'
-            : modulesOverrides[moduleName] || version.module.default
-        const module = version.module[moduleType]
+        const module = version.module.dynamic || version.module.static
         if (module) return module
-        else if (version.module[version.module.default]) return version.module[version.module.default]
         else {
-            log.error(`Parse module type error`, { moduleName, moduleType, version })
+            log.error(`getModule error: no module found`, { moduleName, version })
             return null
         }
     } catch (e) {

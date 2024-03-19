@@ -5,17 +5,10 @@ import { lazy } from 'react'
 export default reactNode('NavLink', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/nav-link-v1.0.0')),
-            //@ts-ignore
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                'remote/ui/mantine/elements/navigation/nav-link-v1.0.0')),
+                '@shared/nav-link-v1.0.0'))
         },
         inputs: [
             ...inputGroups.Icon,

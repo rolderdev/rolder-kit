@@ -70,7 +70,7 @@ declare global {
                 dateFormat: string
             }
             colorScheme?: 'light' | 'dark',
-            creds: {
+            creds?: {
                 name: string
                 data: any
             }[]
