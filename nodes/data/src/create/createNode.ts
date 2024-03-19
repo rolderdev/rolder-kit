@@ -4,16 +4,10 @@ import { getPort, getPorts } from '@shared/port'
 export default jsNode('create', {
     'v0.4.0': {
         module: {
-            default: 'remote',
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/create-v0.4.0'),
-            remote: import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/create-v0.4.0`),
+                '@shared/create-v0.4.0')
         },
         inputs: [
             ...getPorts('input', ['create']),
@@ -29,16 +23,10 @@ export default jsNode('create', {
     },
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/create-v1.0.0'),
-            remote: import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/create-v1.0.0`),
+                '@shared/create-v1.0.0')
         },
         inputs: getPorts('input', ['create', 'scheme']),
         outputs: getPorts('output', ['created', 'creating', 'data'])

@@ -8,17 +8,10 @@ const justifies = ['center', 'flex-start', 'flex-end', 'space-between', 'space-a
 export default reactNode('Stack', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/stack-v1.0.0')),
-            //@ts-ignore
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                'remote/ui/mantine/molecules/stack-v1.0.0')),
+                '@shared/stack-v1.0.0'))
         },
         inputs: [
             ...inputGroups.Margins, ...inputGroups.Paddings,

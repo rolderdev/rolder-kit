@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*",    
-    "@react-pdf/renderer": "3.3.4"
+    "@react-pdf/renderer": "3.4.0"
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",

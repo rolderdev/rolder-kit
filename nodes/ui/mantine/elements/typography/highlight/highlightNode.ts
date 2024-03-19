@@ -6,18 +6,11 @@ const variants = ['light', 'filled', 'outline', 'dot', 'gradient']
 
 export default reactNode('Highlight', {
     'v1.0.0': {
-        module: {
-            default: 'remote',
+        module: {            
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/highlight-v1.0.0')),
-            //@ts-ignore
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                'remote/ui/mantine/elements/typography/highlight-v1.0.0')),
+                '@shared/highlight-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', [

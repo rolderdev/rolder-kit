@@ -5,17 +5,10 @@ import { lazy } from 'react'
 export default reactNode('Checkbox', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/checkbox-v1.0.0')),
-            //@ts-ignore
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                'remote/ui/mantine/elements/inputs/checkbox-v1.0.0')),
+                '@shared/checkbox-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', [

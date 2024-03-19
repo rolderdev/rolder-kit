@@ -5,17 +5,10 @@ import { lazy } from 'react'
 export default reactNode('TextInput', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 '@shared/text-input-v1.0.0')),
-            //@ts-ignore
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                'remote/ui/mantine/elements/inputs/text-input-v1.0.0')),
         },
         inputs: [
             ...getPorts('input', [

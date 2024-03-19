@@ -5,16 +5,10 @@ import { lazy } from 'react'
 const dataNode = reactNode('Data', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/data-v1.0.0')),
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/data-v1.0.0`)),
+                '@shared/data-v1.0.0'))
         },
         inputs: [
             getPort({

@@ -7,17 +7,10 @@ const variants = ['light', 'filled', 'outline', 'dot', 'gradient']
 export default reactNode('Badge', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/badge-v1.0.0')),
-            //@ts-ignore
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                'remote/ui/mantine/elements/dataDisplay/badge-v1.0.0')),
+                '@shared/badge-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', [

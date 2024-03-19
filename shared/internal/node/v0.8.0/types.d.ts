@@ -26,10 +26,8 @@ export type CompVersions = {
 
 export type CompDefinition = {
     module: {
-        default: 'static' | 'dynamic' | 'remote'
         static?: any
         dynamic?: any
-        remote?: any
     }
     remote?: any
     hashTag?: 'experimental' | 'deprecated'
@@ -43,10 +41,8 @@ export type JsVersions = {
 
 export type JsDefinition = {
     module: {
-        default: 'static' | 'dynamic' | 'remote'
         static?: any
         dynamic?: any
-        remote?: any
     }
     hashTag?: 'experimental' | 'deprecated'
     inputs?: NodePort[]
@@ -73,7 +69,7 @@ export type ReactNodeDef = {
 
 export type JsNodeDef = {
     name: string
-    displayName: string    
+    displayName: string
     color?: NodeColor
     nodeName?: string
     _inputValues?: any

@@ -10,17 +10,10 @@ const positions = [
 export default reactNode('Popover', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/popover-v1.0.0')),
-            //@ts-ignore
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                'remote/ui/mantine/molecules/popover-v1.0.0')),
+                '@shared/popover-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', ['customProps', 'disabled', 'width', 'radius', 'shadow', 'open', 'close']),

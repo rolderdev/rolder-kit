@@ -4,7 +4,6 @@
   "types": "expansionRowNode.ts",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    
   },
   "dependencies": {
     "@shared/node": "workspace:@shared/node-v0.8.0@*",

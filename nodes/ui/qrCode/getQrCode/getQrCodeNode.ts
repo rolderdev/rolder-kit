@@ -8,16 +8,10 @@ const qrLevels = [
 export default jsNode('getQrCode', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/get-qr-code-v1.0.0'),
-            remote: import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/ui/qr-code/get-qr-code-v1.0.0`),
+                '@shared/get-qr-code-v1.0.0')
         },
         inputs: [
             getPort({

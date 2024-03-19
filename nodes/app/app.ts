@@ -44,7 +44,6 @@ Noodl.defineModule({
     reactNodes: [reactNode('App', {
         'v1.4.0': {
             module: {
-                default: 'static',
                 static: v140
             },
             inputs: [
@@ -77,7 +76,6 @@ Noodl.defineModule({
         { name: 'project', type: 'string', displayName: 'Project name', group: 'Rolder', tooltip: "Examples: rasko, tex" },
         { name: 'projectVersion', type: 'string', displayName: 'Project version', group: 'Rolder' },
         { name: 'projectDefaults', type: 'array', displayName: 'Project defaults', group: 'Rolder' },
-        { name: 'mantineTheme', type: 'array', displayName: 'Mantine theme', group: 'Rolder' },
-        { name: 'modules', type: 'array', displayName: 'Modules', group: 'Rolder' }
+        { name: 'mantineTheme', type: 'array', displayName: 'Mantine theme', group: 'Rolder' },        
     ]
 })

@@ -3,17 +3,11 @@ import { getPort, getPorts } from '@shared/port'
 
 export default jsNode('getData', {
     'v1.0.0': {
-        module: {
-            default: 'remote',
+        module: {            
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/get-data-v1.0.0'),
-            remote: import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/get-data-v1.0.0`),
+                '@shared/get-data-v1.0.0')
         },
         inputs: [
             getPort({

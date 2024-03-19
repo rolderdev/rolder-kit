@@ -7,7 +7,7 @@ import { getCompProps } from "@shared/get-comp-props"
 export default forwardRef(function (props: Props) {
     const p = { ...getCompProps(props) } as Props
 
-    const styles = StyleSheet.create({ text: { fontFamily: "Roboto", ...p.style || {} } })
+    const styles = StyleSheet.create({ text: { fontFamily: 'Roboto', ...p.style || {} } })
 
     return <Text
         wrap={p.wrap}

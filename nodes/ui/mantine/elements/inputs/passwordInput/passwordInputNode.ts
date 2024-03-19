@@ -5,17 +5,10 @@ import { lazy } from 'react'
 export default reactNode('PasswordInput', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
                 '@shared/password-input-v1.0.0')),
-            //@ts-ignore
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                'remote/ui/mantine/elements/inputs/password-input-v1.0.0')),
         },
         inputs: [
             ...getPorts('input', [

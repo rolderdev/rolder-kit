@@ -9,17 +9,10 @@ const qrLevels = [
 export default reactNode('QRScanner', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/qr-scanner-v1.0.0')),
-            //@ts-ignore
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/ui/qr-code/qr-scanner-v1.0.0`)),
+                '@shared/qr-scanner-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', ['customProps']),

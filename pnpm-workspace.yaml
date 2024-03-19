@@ -1,6 +1,4 @@
-packages:    
-  - "remote/**"
-  - "factory/**"
+packages:  
   - "nodes/**"
   - "shared/**"
   - "docs/**"

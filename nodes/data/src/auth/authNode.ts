@@ -6,16 +6,10 @@ import ms from 'ms'
 export default reactNode('Auth', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/auth-v1.0.0')),            
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/auth-v1.0.0`)),
+                '@shared/auth-v1.0.0')),
         },
         inputs: [
             getPort({

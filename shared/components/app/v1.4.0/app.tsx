@@ -6,6 +6,17 @@ import convertColor from "@shared/convertColor"
 import { sendOutput, sendSignal } from '@shared/port-send'
 import React from "react"
 import { Preferences } from '@capacitor/preferences'
+import { ErrorBoundary } from 'react-error-boundary'
+
+function FallbackComponent({ error }: any) {
+  return (
+    <div style={{ width: '100%', height: '100%', backgroundColor: 'white', padding: 64 }}>
+      <h2 style={{ color: 'red' }}>Системная ошибка!</h2>
+      <h3>{error.message}</h3>
+      <img src='error.jpg' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 64, width: '50%' }} />
+    </div>
+  )
+}
 
 export default forwardRef(function (props: CompProps, ref) {
   const { project, projectVersion, projectDefaults } = Noodl.getProjectSettings()
@@ -61,7 +72,9 @@ export default forwardRef(function (props: CompProps, ref) {
     },
   }), [cs, colorScheme, setColorScheme])
 
-  return <div style={{ width: '100%', height: '100%', backgroundColor: convertColor(colorScheme === 'dark' ? 'dark.7' : 'gray.0') }}>
-    {props.children}
-  </div>
+  return <ErrorBoundary FallbackComponent={FallbackComponent}>
+    <div style={{ width: '100%', height: '100%', backgroundColor: convertColor(colorScheme === 'dark' ? 'dark.7' : 'gray.0') }}>
+      {props.children}
+    </div>
+  </ErrorBoundary>
 })

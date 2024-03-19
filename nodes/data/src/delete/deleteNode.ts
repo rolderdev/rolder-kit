@@ -4,16 +4,10 @@ import { getPort, getPorts } from '@shared/port'
 export default jsNode('delete', {
     'v0.3.0': {
         module: {
-            default: 'remote',
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/delete-v0.3.0'),
-            remote: import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/delete-v0.3.0`),
+                '@shared/delete-v0.3.0')
         },
         inputs: [
             ...getPorts('input', ['delete']),
@@ -26,16 +20,10 @@ export default jsNode('delete', {
     },
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/delete-v1.0.0'),
-            remote: import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/delete-v1.0.0`),
+                '@shared/delete-v1.0.0')
         },
         inputs: getPorts('input', ['delete', 'scheme']),
         outputs: getPorts('output', ['deleted', 'deleting'])

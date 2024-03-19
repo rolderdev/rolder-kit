@@ -1,9 +1,0 @@
-{
-  "name": "fetch-remote",
-  "main": "fetchRemote.js",
-  "types": "fetchRemote.js",
-  "scripts": {
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    
-  }
-}

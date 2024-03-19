@@ -4,16 +4,10 @@ import { getPort, getPorts } from '@shared/port'
 export default jsNode('nodered', {
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/nodered-v1.0.0'),
-            remote: import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/nodered-v1.0.0`),
+                '@shared/nodered-v1.0.0')
         },
         inputs: [
             getPort({ plug: 'input', name: 'execute', displayName: 'Execute', group: 'Signals', type: 'signal' }),

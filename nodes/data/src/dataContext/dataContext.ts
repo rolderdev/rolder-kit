@@ -5,16 +5,10 @@ import { lazy } from 'react'
 export default reactNode('DataContext', {
     'v0.1.0': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/data-context-v0.1.0')),
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/data-context-v0.1.0`)),
+                '@shared/data-context-v0.1.0'))
         },
         outputs: [
             getPort({ plug: 'output', name: 'fetched', displayName: 'Fetched', group: 'Signals', type: 'signal' }),
@@ -23,16 +17,10 @@ export default reactNode('DataContext', {
     },
     'v0.1.1': {
         module: {
-            default: 'remote',
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/data-context-v0.1.1')),
-            remote: lazy(() => import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/data-context-v0.1.1`)),
+                '@shared/data-context-v0.1.1'))
         },
         outputs: [
             getPort({ plug: 'output', name: 'fetched', displayName: 'Fetched', group: 'Signals', type: 'signal' }),

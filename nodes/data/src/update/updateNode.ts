@@ -4,16 +4,10 @@ import { getPort, getPorts } from '@shared/port'
 export default jsNode('update', {
     'v0.3.0': {
         module: {
-            default: 'remote',
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/update-v0.3.0'),
-            remote: import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/update-v0.3.0`),
+                '@shared/update-v0.3.0')
         },
         inputs: [
             ...getPorts('input', ['update']),
@@ -29,20 +23,14 @@ export default jsNode('update', {
     },
     'v1.0.0': {
         module: {
-            default: 'remote',
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/update-v1.0.0'),
-            remote: import(
-                /* webpackPrefetch: true */
-                /* webpackPreload: true */
-                //@ts-ignore
-                `remote/data/update-v1.0.0`),
+                '@shared/update-v1.0.0')
         },
         inputs: [
             ...getPorts('input', ['update', 'scheme']),
-            getPort({ plug: 'input', name: 'optimistic', displayName: 'Optimistic', group: 'Params', type: 'boolean', default: false })            
+            getPort({ plug: 'input', name: 'optimistic', displayName: 'Optimistic', group: 'Params', type: 'boolean', default: false })
         ],
         outputs: [
             ...getPorts('output', ['updated', 'updating', 'data']),
