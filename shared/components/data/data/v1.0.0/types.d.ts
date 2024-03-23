@@ -8,6 +8,7 @@ export type Props = BaseReactProps & {
     backendDevMode?: boolean
     backendUrl: string
     backendPort: number
+    downlink: number
 }
 
 export type MutationFnProps = {

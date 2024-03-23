@@ -40,8 +40,15 @@ const dataNode = reactNode('Data', {
                     dependsOn(p) { return p.backendDevMode },
                 }
             }),
+            getPort({
+                plug: 'input', name: 'downlink', displayName: 'Offline threshold', group: 'Network', type: 'number', default: 2,
+                customs: { required: 'both' }
+            }),
         ],
-        outputs: [getPort({ plug: 'output', name: 'isOnline', displayName: 'Online', group: 'States', type: 'boolean' })]
+        outputs: [
+            getPort({ plug: 'output', name: 'isOnline', displayName: 'Online', group: 'States', type: 'boolean' }),
+            getPort({ plug: 'output', name: 'network', displayName: 'Network', group: 'States', type: 'object' })
+        ]
     },
 }, { allowChildren: true, moduleName: 'data' })
 

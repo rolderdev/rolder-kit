@@ -23,8 +23,8 @@
     "@mantine/notifications": "6.0.21"
   },
   "devDependencies": {
-    "@rspack/core": "0.5.7",
-    "@rspack/cli": "0.5.7",
+    "@rspack/core": "0.5.8",
+    "@rspack/cli": "0.5.8",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     
     "@shared/typescript-config": "workspace:*"

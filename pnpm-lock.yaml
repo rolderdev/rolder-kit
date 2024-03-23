@@ -20,11 +20,11 @@ importers:
         specifier: 16.9.8
         version: 16.9.8
       turbo:
-        specifier: 1.12.5
-        version: 1.12.5
+        specifier: 1.13.0
+        version: 1.13.0
       typescript:
-        specifier: 5.4.2
-        version: 5.4.2
+        specifier: 5.4.3
+        version: 5.4.3
 
   docs:
     dependencies:
@@ -145,11 +145,11 @@ importers:
         version: 3.2.1
     devDependencies:
       '@rspack/cli':
-        specifier: 0.5.7
-        version: 0.5.7(@rspack/core@0.5.7)(webpack@5.89.0)
+        specifier: 0.5.8
+        version: 0.5.8(@rspack/core@0.5.8)(webpack@5.89.0)
       '@rspack/core':
-        specifier: 0.5.7
-        version: 0.5.7
+        specifier: 0.5.8
+        version: 0.5.8
       '@shared/types':
         specifier: workspace:@shared/types-v0.1.0@*
         version: link:../../shared/internal/types/v0.1.0
@@ -215,11 +215,11 @@ importers:
         version: link:../../shared/internal/port/v0.6.0
     devDependencies:
       '@rspack/cli':
-        specifier: 0.5.7
-        version: 0.5.7(@rspack/core@0.5.7)(webpack@5.89.0)
+        specifier: 0.5.8
+        version: 0.5.8(@rspack/core@0.5.8)(webpack@5.89.0)
       '@rspack/core':
-        specifier: 0.5.7
-        version: 0.5.7
+        specifier: 0.5.8
+        version: 0.5.8
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../shared/internal/typescript-config
@@ -433,11 +433,11 @@ importers:
         version: link:../../../shared/internal/port/v0.6.0
     devDependencies:
       '@rspack/cli':
-        specifier: 0.5.7
-        version: 0.5.7(@rspack/core@0.5.7)(webpack@5.89.0)
+        specifier: 0.5.8
+        version: 0.5.8(@rspack/core@0.5.8)(webpack@5.89.0)
       '@rspack/core':
-        specifier: 0.5.7
-        version: 0.5.7
+        specifier: 0.5.8
+        version: 0.5.8
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../../shared/internal/typescript-config
@@ -578,11 +578,11 @@ importers:
         version: link:../../../shared/internal/port/v0.6.0
     devDependencies:
       '@rspack/cli':
-        specifier: 0.5.7
-        version: 0.5.7(@rspack/core@0.5.7)(webpack@5.89.0)
+        specifier: 0.5.8
+        version: 0.5.8(@rspack/core@0.5.8)(webpack@5.89.0)
       '@rspack/core':
-        specifier: 0.5.7
-        version: 0.5.7
+        specifier: 0.5.8
+        version: 0.5.8
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../../shared/internal/typescript-config
@@ -1180,6 +1180,9 @@ importers:
       '@shared/table-v1.1.0':
         specifier: workspace:*
         version: link:../../../../../shared/components/ui/mantine/organisms/table/v1.1.0
+      '@shared/table-v1.1.1':
+        specifier: workspace:*
+        version: link:../../../../../shared/components/ui/mantine/organisms/table/v1.1.1
     devDependencies:
       '@shared/typescript-config':
         specifier: workspace:*
@@ -1349,11 +1352,11 @@ importers:
         version: link:../../../shared/internal/port/v0.6.0
     devDependencies:
       '@rspack/cli':
-        specifier: 0.5.7
-        version: 0.5.7(@rspack/core@0.5.7)(webpack@5.89.0)
+        specifier: 0.5.8
+        version: 0.5.8(@rspack/core@0.5.8)(webpack@5.89.0)
       '@rspack/core':
-        specifier: 0.5.7
-        version: 0.5.7
+        specifier: 0.5.8
+        version: 0.5.8
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../../shared/internal/typescript-config
@@ -1426,6 +1429,9 @@ importers:
       '@shared/pdf-table-v1.2.0':
         specifier: workspace:*
         version: link:../../../../shared/components/ui/pdf/pdfTable/v1.2.0
+      '@shared/pdf-table-v1.3.0':
+        specifier: workspace:*
+        version: link:../../../../shared/components/ui/pdf/pdfTable/v1.3.0
       '@shared/port':
         specifier: workspace:@shared/port-v0.6.0@*
         version: link:../../../../shared/internal/port/v0.6.0
@@ -1504,11 +1510,11 @@ importers:
         version: link:../../../shared/internal/port/v0.6.0
     devDependencies:
       '@rspack/cli':
-        specifier: 0.5.7
-        version: 0.5.7(@rspack/core@0.5.7)(webpack@5.89.0)
+        specifier: 0.5.8
+        version: 0.5.8(@rspack/core@0.5.8)(webpack@5.89.0)
       '@rspack/core':
-        specifier: 0.5.7
-        version: 0.5.7
+        specifier: 0.5.8
+        version: 0.5.8
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../../shared/internal/typescript-config
@@ -1580,11 +1586,11 @@ importers:
         version: link:../../shared/internal/port/v0.6.0
     devDependencies:
       '@rspack/cli':
-        specifier: 0.5.7
-        version: 0.5.7(@rspack/core@0.5.7)(webpack@5.89.0)
+        specifier: 0.5.8
+        version: 0.5.8(@rspack/core@0.5.8)(webpack@5.89.0)
       '@rspack/core':
-        specifier: 0.5.7
-        version: 0.5.7
+        specifier: 0.5.8
+        version: 0.5.8
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../shared/internal/typescript-config
@@ -1596,7 +1602,7 @@ importers:
     dependencies:
       '@capacitor/preferences':
         specifier: 5.0.7
-        version: 5.0.7(@capacitor/core@5.7.2)
+        version: 5.0.7(@capacitor/core@5.7.4)
       '@mantine/core':
         specifier: 6.0.21
         version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
@@ -1614,8 +1620,8 @@ importers:
         version: 4.0.13(react@18.2.0)
     devDependencies:
       '@capacitor/core':
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.7.4
+        version: 5.7.4
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
         version: link:../../../internal/node/v0.8.0
@@ -1630,7 +1636,7 @@ importers:
     dependencies:
       '@capacitor/preferences':
         specifier: 5.0.7
-        version: 5.0.7(@capacitor/core@5.7.2)
+        version: 5.0.7(@capacitor/core@5.7.4)
       '@mantine/hooks':
         specifier: 6.0.21
         version: 6.0.21(react@18.2.0)
@@ -1651,8 +1657,8 @@ importers:
         version: 2.1.3
     devDependencies:
       '@capacitor/core':
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.7.4
+        version: 5.7.4
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
         version: link:../../../../internal/node/v0.8.0
@@ -1724,9 +1730,6 @@ importers:
 
   shared/components/data/data/v1.0.0:
     dependencies:
-      '@capacitor/network':
-        specifier: 5.0.7
-        version: 5.0.7(@capacitor/core@5.7.2)
       '@mantine/core':
         specifier: 6.0.21
         version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
@@ -1755,9 +1758,6 @@ importers:
         specifier: 7.11.2
         version: 7.11.2
     devDependencies:
-      '@capacitor/core':
-        specifier: 5.7.2
-        version: 5.7.2
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
         version: link:../../../../internal/node/v0.8.0
@@ -3214,6 +3214,55 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../internal/typescript-config
 
+  shared/components/ui/mantine/organisms/table/v1.1.1:
+    dependencies:
+      '@formkit/auto-animate':
+        specifier: 0.8.1
+        version: 0.8.1
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks':
+        specifier: 6.0.21
+        version: 6.0.21(react@18.2.0)
+      '@mantine/utils':
+        specifier: 6.0.21
+        version: 6.0.21(react@18.2.0)
+      '@shared/convert-color':
+        specifier: workspace:@shared/convert-color-v0.3.0@*
+        version: link:../../../utils/convertColor/v0.3.0
+      '@shared/get-comp-props':
+        specifier: workspace:@shared/get-comp-props-v0.1.0@*
+        version: link:../../../../../../internal/utils/getCompProps/v0.1.0
+      '@shared/port-send':
+        specifier: workspace:@shared/port-send-v0.2.0@*
+        version: link:../../../../../../internal/utils/portSend/v0.2.0
+      '@shared/scope':
+        specifier: workspace:@shared/scope-v0.1.0@*
+        version: link:../../../../../../internal/scope/v0.1.0
+      '@tabler/icons-react':
+        specifier: 3.1.0
+        version: 3.1.0(react@18.2.0)
+      bunshi:
+        specifier: 2.0.2
+        version: 2.0.2(react@18.2.0)
+      fast-deep-equal:
+        specifier: 3.1.3
+        version: 3.1.3
+      nanostores:
+        specifier: 0.10.0
+        version: 0.10.0
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      '@shared/types':
+        specifier: workspace:@shared/types-v0.1.0@*
+        version: link:../../../../../../internal/types/v0.1.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../internal/typescript-config
+
   shared/components/ui/mantine/utils/convertColor/v0.3.0:
     dependencies:
       '@mantine/core':
@@ -3386,6 +3435,31 @@ importers:
       '@shared/port-send':
         specifier: workspace:@shared/port-send-v0.2.0@*
         version: link:../../../../../internal/utils/portSend/v0.2.0
+    devDependencies:
+      '@shared/types':
+        specifier: workspace:@shared/types-v0.1.0@*
+        version: link:../../../../../internal/types/v0.1.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../internal/typescript-config
+
+  shared/components/ui/pdf/pdfTable/v1.3.0:
+    dependencies:
+      '@react-pdf/renderer':
+        specifier: 3.4.0
+        version: 3.4.0(react@18.2.0)
+      '@shared/get-comp-props':
+        specifier: workspace:@shared/get-comp-props-v0.1.0@*
+        version: link:../../../../../internal/utils/getCompProps/v0.1.0
+      '@shared/get-value':
+        specifier: workspace:@shared/get-value-v0.8.0@*
+        version: link:../../../../../internal/utils/getValue/v0.8.0
+      '@shared/port-send':
+        specifier: workspace:@shared/port-send-v0.2.0@*
+        version: link:../../../../../internal/utils/portSend/v0.2.0
+      just-clone:
+        specifier: 6.2.0
+        version: 6.2.0
     devDependencies:
       '@shared/types':
         specifier: workspace:@shared/types-v0.1.0@*
@@ -3596,7 +3670,7 @@ importers:
     dependencies:
       '@capacitor/preferences':
         specifier: 5.0.7
-        version: 5.0.7(@capacitor/core@5.7.2)
+        version: 5.0.7(@capacitor/core@5.7.4)
       '@shared/get-dbclass-version':
         specifier: workspace:@shared/get-dbclass-version-v0.6.0@*
         version: link:../../../utils/getDbClassVersion/v0.6.0
@@ -3605,8 +3679,8 @@ importers:
         version: link:../../../utils/getKuzzle/v0.1.0
     devDependencies:
       '@capacitor/core':
-        specifier: 5.7.2
-        version: 5.7.2
+        specifier: 5.7.4
+        version: 5.7.4
       '@shared/types':
         specifier: workspace:@shared/types-v0.1.0@*
         version: link:../../../types/v0.1.0
@@ -3777,6 +3851,10 @@ importers:
         version: link:../../../typescript-config
 
   shared/internal/utils/deepMerge/v0.1.0:
+    dependencies:
+      just-clone:
+        specifier: 6.2.0
+        version: 6.2.0
     devDependencies:
       '@shared/typescript-config':
         specifier: workspace:*
@@ -3940,25 +4018,17 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
 
-  /@capacitor/core@5.7.2:
-    resolution: {integrity: sha512-/OUtfINmk7ke32VtKIHRAy8NlunbeK+aCqCHOS+fvtr7nUsOJXPkYgbgqZp/CWXET/gSK1xxMecaVBzpE98UKA==}
+  /@capacitor/core@5.7.4:
+    resolution: {integrity: sha512-iZBgvx3o4amzKv5ttA+QHB6i7cxK+/mYpCQd1tnSdipg6ZkvfBhg1HkzhEqHk+I7MNur+QwgYDZho9+ycHRwOw==}
     dependencies:
       tslib: 2.6.2
 
-  /@capacitor/network@5.0.7(@capacitor/core@5.7.2):
-    resolution: {integrity: sha512-g+8SkNmkOyidaHnfKI9Ly8GNcx3VEwboehDXcTs5WU8bPuhCOEzbZnC0kFL5wwix3AoUQl8gEos6MtCey5cUIg==}
-    peerDependencies:
-      '@capacitor/core': ^5.0.0
-    dependencies:
-      '@capacitor/core': 5.7.2
-    dev: false
-
-  /@capacitor/preferences@5.0.7(@capacitor/core@5.7.2):
+  /@capacitor/preferences@5.0.7(@capacitor/core@5.7.4):
     resolution: {integrity: sha512-JvfGP1m8nITWEFdBpKR9HXNeBjLKwO0q1pry7Z5lYrYmCrbyRBLWzaGZGll8py4KmGWL3F5+PZvhrpT4gPoeAQ==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:
-      '@capacitor/core': 5.7.2
+      '@capacitor/core': 5.7.4
     dev: false
 
   /@discoveryjs/json-ext@0.5.7:
@@ -4900,8 +4970,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspack/binding-darwin-arm64@0.5.7:
-    resolution: {integrity: sha512-zYTMILRyrON25MW7ifEhkZ6jL33mz8bAHTOhgR8yMpYVJjrKu60+s1qPa+t+GkaH7nNnVmzkTVGECCvaA75hJQ==}
+  /@rspack/binding-darwin-arm64@0.5.8:
+    resolution: {integrity: sha512-kvz2f9bMoFOEuXJ/fyJzOWuNXq5EvQhA19cqgwrDRQgfc5sQ0qv2vW3qI5v2oVOHccQBwKHkVTHHDn5vWlnRsQ==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
@@ -4924,8 +4994,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspack/binding-darwin-x64@0.5.7:
-    resolution: {integrity: sha512-4THSPWVKPMSSD/y3/TWZ5xlSeh1B33I+YnBu/Y3lDFcFrFPtc3ojIDHw3is6l2wcACX6Rro4RgN6zcUij7eEmQ==}
+  /@rspack/binding-darwin-x64@0.5.8:
+    resolution: {integrity: sha512-TgVtKntzOGcIczogZXMWqqXrvK07XjRnz1ES56RYfsOVvzTEmldvX5S+pQIwYzCt7fNddIMl9muHa9qYswzFbQ==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
@@ -4948,8 +5018,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspack/binding-linux-arm64-gnu@0.5.7:
-    resolution: {integrity: sha512-JB9FAYWjYAeNCPFh0mQu3SZdFHiA+EY37z1AktLDl789SoEec2HPGkvvOs+OIET1pKWgjUGD4Z4Uq4P/r5JFNA==}
+  /@rspack/binding-linux-arm64-gnu@0.5.8:
+    resolution: {integrity: sha512-g+4ddgEpK+R50mqKs6jPr7IiPGpukabbSBSYGGezErHMMAfgSxuRQ1IGP/pOOHQXXmHJbrbqk4Ow56vE0fKZnQ==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
@@ -4972,8 +5042,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspack/binding-linux-arm64-musl@0.5.7:
-    resolution: {integrity: sha512-3fNhPvA9Kj/L7rwr2Pj1bvxWBLBgqfkqSvt91iUxPbxgfTiSBQh0Tfb9+hkHv2VCTyNQI/vytkOH+4i4DNXCBw==}
+  /@rspack/binding-linux-arm64-musl@0.5.8:
+    resolution: {integrity: sha512-MistQCUYkcwb4u3XTnmwGimxD161LlRZqP/7PPrInaBNCpYQYnXI4RX6RhMgusnjaW406N0XBS94Q9QNwujyxg==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
@@ -4996,8 +5066,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspack/binding-linux-x64-gnu@0.5.7:
-    resolution: {integrity: sha512-y/GnXt1hhbKSqzBSy+ALWwievlejQhIIF8FPXL1kKFh60zl7DE+iYHSJ128jIJiph9dQkBnHw0ABJ5D+vbSqdA==}
+  /@rspack/binding-linux-x64-gnu@0.5.8:
+    resolution: {integrity: sha512-DlsCXeSZKKOh7T8uwIcUgbOXLcsoUVCHkWx04GDBi09OYHjrT+dc1Iqpy5uHcIScRWjtVgGnOb6M9EsyABNoAw==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
@@ -5020,8 +5090,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspack/binding-linux-x64-musl@0.5.7:
-    resolution: {integrity: sha512-US/FUv6cvbxbe4nymINwer/EQTvGEgCaAIrvKuAP0yAfK0eyqIHYZj/zCBM2qOS69Mpc2FWVMC/ftRyCvAz/xw==}
+  /@rspack/binding-linux-x64-musl@0.5.8:
+    resolution: {integrity: sha512-B4V5wFGig+WCNbeOwU6O8rvxzu9sONUML6YEe/NiR+e9NLsYemEQG8volZVQ4WM/SDii6G4h9z/2jEoGXcfRsQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
@@ -5044,8 +5114,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspack/binding-win32-arm64-msvc@0.5.7:
-    resolution: {integrity: sha512-g7NWXa5EGvh6j1VPXGOFaWuOVxdPYYLh3wpUl46Skrd6qFZKB2r+yNhuXo6lqezwYvbtHEDrmFOHF2S6epXO5g==}
+  /@rspack/binding-win32-arm64-msvc@0.5.8:
+    resolution: {integrity: sha512-ubWsFoJkUQNOt1w1WDQCk5UvFPOII/dNj/orpEe+NPveEn6i+im2euK+6fKucmDrXAyC1ZhEzjJeFMjcvyS9Dg==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
@@ -5068,8 +5138,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspack/binding-win32-ia32-msvc@0.5.7:
-    resolution: {integrity: sha512-5Udt4pYpPSd1wlbVKTdWzjha8oV+FQ/EXILHhoS9G7l9rbpqhMs6oIqAgEavQS3t6fKtQU837b+MSBNprudTtw==}
+  /@rspack/binding-win32-ia32-msvc@0.5.8:
+    resolution: {integrity: sha512-NPwkNbEe/IY/I93E07q3p7AM4rLDLkpgTzBPFhi6jgNzK8k/eGAUIdaEDJhEkWzsI8o8m7I5XlJyxrmK5/SWFw==}
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
@@ -5092,8 +5162,8 @@ packages:
     dev: false
     optional: true
 
-  /@rspack/binding-win32-x64-msvc@0.5.7:
-    resolution: {integrity: sha512-tB/SB27BBDVV0+GpEUHkl2uanCP4Jk/hlnbvl5u6lSGcIxCFm+da4OsyiGDRE24bSEdMc91dmyWVlx5425je+A==}
+  /@rspack/binding-win32-x64-msvc@0.5.8:
+    resolution: {integrity: sha512-ox+PdrWh5VjI3G2GCLoXJ0eZ/lLgxPQsmGkyjikJyaIuetWtMun8khvaoAspnSw3FzHCEbA62vs0ot8YV3DggQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -5128,18 +5198,18 @@ packages:
       '@rspack/binding-win32-x64-msvc': 0.5.6
     dev: false
 
-  /@rspack/binding@0.5.7:
-    resolution: {integrity: sha512-47MX6wNF1lP/LdShPVhbg689FX1W96Zji7QgbxhRhXmkpOKor7gdajhxqszFHxHYJtqNTLA9BSG38rpIGxJ+fw==}
+  /@rspack/binding@0.5.8:
+    resolution: {integrity: sha512-RDiiBDeIwCPtqQ/CYMXoFqstaJVGZu3KoUKeuJoiN+TO77OAC0fRs7J/BvV+KLoF35SFpe/XnSLCkv+Nkk9/ow==}
     optionalDependencies:
-      '@rspack/binding-darwin-arm64': 0.5.7
-      '@rspack/binding-darwin-x64': 0.5.7
-      '@rspack/binding-linux-arm64-gnu': 0.5.7
-      '@rspack/binding-linux-arm64-musl': 0.5.7
-      '@rspack/binding-linux-x64-gnu': 0.5.7
-      '@rspack/binding-linux-x64-musl': 0.5.7
-      '@rspack/binding-win32-arm64-msvc': 0.5.7
-      '@rspack/binding-win32-ia32-msvc': 0.5.7
-      '@rspack/binding-win32-x64-msvc': 0.5.7
+      '@rspack/binding-darwin-arm64': 0.5.8
+      '@rspack/binding-darwin-x64': 0.5.8
+      '@rspack/binding-linux-arm64-gnu': 0.5.8
+      '@rspack/binding-linux-arm64-musl': 0.5.8
+      '@rspack/binding-linux-x64-gnu': 0.5.8
+      '@rspack/binding-linux-x64-musl': 0.5.8
+      '@rspack/binding-win32-arm64-msvc': 0.5.8
+      '@rspack/binding-win32-ia32-msvc': 0.5.8
+      '@rspack/binding-win32-x64-msvc': 0.5.8
     dev: true
 
   /@rspack/cli@0.5.1(@rspack/core@0.5.1):
@@ -5171,15 +5241,15 @@ packages:
       - webpack-cli
     dev: true
 
-  /@rspack/cli@0.5.7(@rspack/core@0.5.7)(webpack@5.89.0):
-    resolution: {integrity: sha512-pav4JOqesPqsxS7IsikVALib6QRlBjERDD6KpZMdQY+PzGQ8ahBFxpof08RAgjUYsVV44xCe29Pq/c3OZEgdsw==}
+  /@rspack/cli@0.5.8(@rspack/core@0.5.8)(webpack@5.89.0):
+    resolution: {integrity: sha512-LvPRuYfhISXvE/wNa+EU7ZfwF3lvqCeralNMykabFD5Nr/er6wX/wg/KqVKUL2pGBkXolw9hKuTf5C4qVH17bQ==}
     hasBin: true
     peerDependencies:
       '@rspack/core': '>=0.4.0'
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
-      '@rspack/core': 0.5.7
-      '@rspack/dev-server': 0.5.7(@rspack/core@0.5.7)(webpack@5.89.0)
+      '@rspack/core': 0.5.8
+      '@rspack/dev-server': 0.5.8(@rspack/core@0.5.8)(webpack@5.89.0)
       colorette: 2.0.19
       exit-hook: 3.2.0
       interpret: 3.1.1
@@ -5246,8 +5316,8 @@ packages:
       zod-validation-error: 1.3.1(zod@3.22.4)
     dev: false
 
-  /@rspack/core@0.5.7:
-    resolution: {integrity: sha512-gUF0PcanPrC2cVfFA4e+qmG66X7FkEKlRbnaUfB4LKw9JQuwiMOXCAtrBdveDjB89KE/3cw/nuYVQwd106uqWA==}
+  /@rspack/core@0.5.8:
+    resolution: {integrity: sha512-F7NiiLCE//5JXsEmS36DcIUiSyi5sylZZ5MKw9ABSGrtqVDB23oOjUxP1kt/Wo6npf0V2eVuAHpoudwJ1lUmhQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@swc/helpers': '>=0.5.1'
@@ -5256,7 +5326,7 @@ packages:
         optional: true
     dependencies:
       '@module-federation/runtime-tools': 0.0.8
-      '@rspack/binding': 0.5.7
+      '@rspack/binding': 0.5.8
       browserslist: 4.23.0
       enhanced-resolve: 5.12.0
       events: 3.3.0
@@ -5299,12 +5369,12 @@ packages:
       - webpack-cli
     dev: true
 
-  /@rspack/dev-server@0.5.7(@rspack/core@0.5.7)(webpack@5.89.0):
-    resolution: {integrity: sha512-CqPZLRq7QCr6EQqYIBFeIeWemXh1TM2RPc3ZZ1Gap+6/KJuRTMIYv/Q3mSQqLET7dn+HQYSWPSoTciJmPu6zCw==}
+  /@rspack/dev-server@0.5.8(@rspack/core@0.5.8)(webpack@5.89.0):
+    resolution: {integrity: sha512-8Q3tRIIJvYuwRlIC+iYJ1DHJy38z5CbYa3QzqhQ0k1cFNZLzBIAQHOb4JG8lQ4Jfy2yrAbjPOnUGJBkMS2cZTg==}
     peerDependencies:
       '@rspack/core': '*'
     dependencies:
-      '@rspack/core': 0.5.7
+      '@rspack/core': 0.5.8
       chokidar: 3.5.3
       connect-history-api-fallback: 2.0.0
       express: 4.18.1
@@ -10498,64 +10568,64 @@ packages:
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
-  /turbo-darwin-64@1.12.5:
-    resolution: {integrity: sha512-0GZ8reftwNQgIQLHkHjHEXTc/Z1NJm+YjsrBP+qhM/7yIZ3TEy9gJhuogDt2U0xIWwFgisTyzbtU7xNaQydtoA==}
+  /turbo-darwin-64@1.13.0:
+    resolution: {integrity: sha512-ctHeJXtQgBcgxnCXwrJTGiq57HtwF7zWz5NTuSv//5yeU01BtQIt62ArKfjudOhRefWJbX3Z5srn88XTb9hfww==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.12.5:
-    resolution: {integrity: sha512-8WpOLNNzvH6kohQOjihD+gaWL+ZFNfjvBwhOF0rjEzvW+YR3Pa7KjhulrjWyeN2yMFqAPubTbZIGOz1EVXLuQA==}
+  /turbo-darwin-arm64@1.13.0:
+    resolution: {integrity: sha512-/Q9/pNFkF9w83tNxwMpgapwLYdQ12p8mpty2YQRoUiS9ClWkcqe136jR0mtuMqzlNlpREOFZaoyIthjt6Sdo0g==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.12.5:
-    resolution: {integrity: sha512-INit73+bNUpwqGZCxgXCR3I+cQsdkQ3/LkfkgSOibkpg+oGqxJRzeXw3sp990d7SCoE8QOcs3iw+PtiFX/LDAA==}
+  /turbo-linux-64@1.13.0:
+    resolution: {integrity: sha512-hgbT7o020BGV4L7Sd8hhFTd5zVKPKxbsr0dPfel/9NkdTmptz2aGZ0Vb2MAa18SY3XaCQpDxmdYuOzvvRpo5ZA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.12.5:
-    resolution: {integrity: sha512-6lkRBvxtI/GQdGtaAec9LvVQUoRw6nXFp0kM+Eu+5PbZqq7yn6cMkgDJLI08zdeui36yXhone8XGI8pHg8bpUQ==}
+  /turbo-linux-arm64@1.13.0:
+    resolution: {integrity: sha512-WK01i2wDZARrV+HEs495A3hNeGMwQR5suYk7G+ceqqW7b+dOTlQdvUjnI3sg7wAnZPgjafFs/hoBaZdJjVa/nw==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.12.5:
-    resolution: {integrity: sha512-gQYbOhZg5Ww0bQ/bC0w/4W6yQRwBumUUnkB+QPo15VznwxZe2a7bo6JM+9Xy9dKLa/kn+p7zTqme4OEp6M3/Yg==}
+  /turbo-windows-64@1.13.0:
+    resolution: {integrity: sha512-hJgSZJZwlWHNwLEthaqJqJWGm4NqF5X/I7vE0sPE4i/jeDl8f0n1hcOkgJkJiNXVxhj+qy/9+4dzbPLKT9imaQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.12.5:
-    resolution: {integrity: sha512-auvhZ9FrhnvQ4mgBlY9O68MT4dIfprYGvd2uPICba/mHUZZvVy5SGgbHJ0KbMwaJfnnFoPgLJO6M+3N2gDprKw==}
+  /turbo-windows-arm64@1.13.0:
+    resolution: {integrity: sha512-L/ErxYoXeq8tmjU/AIGicC9VyBN1zdYw8JlM4yPmMI0pJdY8E4GaYK1IiIazqq7M72lmQhU/WW7fV9FqEktwrw==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.12.5:
-    resolution: {integrity: sha512-FATU5EnhrYG8RvQJYFJnDd18DpccDjyvd53hggw9T9JEg9BhWtIEoeaKtBjYbpXwOVrJQMDdXcIB4f2nD3QPPg==}
+  /turbo@1.13.0:
+    resolution: {integrity: sha512-r02GtNmkOPcQvUzVE6lg474QVLyU02r3yh3lUGqrFHf5h5ZEjgDGWILsAUqplVqjri1Y/oOkTssks4CObTAaiw==}
     hasBin: true
     optionalDependencies:
-      turbo-darwin-64: 1.12.5
-      turbo-darwin-arm64: 1.12.5
-      turbo-linux-64: 1.12.5
-      turbo-linux-arm64: 1.12.5
-      turbo-windows-64: 1.12.5
-      turbo-windows-arm64: 1.12.5
+      turbo-darwin-64: 1.13.0
+      turbo-darwin-arm64: 1.13.0
+      turbo-linux-64: 1.13.0
+      turbo-linux-arm64: 1.13.0
+      turbo-windows-64: 1.13.0
+      turbo-windows-arm64: 1.13.0
     dev: true
 
   /type-fest@0.21.3:
@@ -10577,8 +10647,8 @@ packages:
     hasBin: true
     dev: true
 
-  /typescript@5.4.2:
-    resolution: {integrity: sha512-+2/g0Fds1ERlP6JsakQQDXjZdZMM+rqpamFZJEKh4kwTIn3iDkgKtby0CeNd5ATNZ4Ry1ax15TMx0W2V+miizQ==}
+  /typescript@5.4.3:
+    resolution: {integrity: sha512-KrPd3PKaCLr78MalgiwJnA25Nm8HAmdwN3mYUYZgG/wizIo9EainNVQI9/yDavtVFRN2h3k8uf3GLHuhDMgEHg==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true

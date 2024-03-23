@@ -13,7 +13,6 @@
     "@tanstack/react-query-devtools": "4.36.1",
     "kuzzle-sdk": "7.11.2",
     "@mantine/core": "6.0.21",
-    "@capacitor/network": "5.0.7",
     "idb-keyval": "6.2.1",
     "@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.1.0@*",
     "@shared/deep-merge": "workspace:@shared/deep-merge-v0.1.0@*"
@@ -21,7 +20,6 @@
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",
     "@shared/node": "workspace:@shared/node-v0.8.0@*",
-    "@shared/types": "workspace:@shared/types-v0.1.0@*",
-    "@capacitor/core": "5.7.2"
+    "@shared/types": "workspace:@shared/types-v0.1.0@*"
   }
 }
