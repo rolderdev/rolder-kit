@@ -4,12 +4,11 @@ import React from "react"
 import { Kuzzle, WebSocket } from 'kuzzle-sdk'
 import { MutationFnProps, Props } from "./types"
 import { Loader } from "@mantine/core"
-import { Network } from "@capacitor/network"
 import { PersistQueryClientProvider, PersistedClient, Persister } from '@tanstack/react-query-persist-client'
 import { get, set, del } from "idb-keyval";
 import { getKuzzle } from '@shared/get-kuzzle';
 import { onlineManager } from '@tanstack/react-query'
-import { sendOutput } from "@shared/port-send"
+import setOnlineState from "./src/setOnlineState"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -83,50 +82,35 @@ function Mutation(props: any) {
 }
 
 export default forwardRef(function (props: Props) {
-    const { backendVersion, dbName, persistData, backendDevMode, backendUrl, backendPort } = props
+    const { backendVersion, dbName, persistData, backendDevMode, backendUrl, backendPort, downlink } = props
     const { project } = Noodl.getProjectSettings()
 
     R.env.backendVersion = backendVersion
     R.env.dbName = dbName
     R.libs.queryClient = queryClient
 
-    const [online, setOnline] = useState(onlineManager.isOnline())
     const [initState, setInitState] = useState<typeof R.states.backend>(R.states.backend)
 
     useEffect(() => {
         if (initState === 'notInitialized') {
-            R.states.backend = 'initializing'
-            onlineManager.setOnline(online)
-            setInitState('initializing')
-            //@ts-ignore
-            sendOutput(props.noodlNode, 'isOnline', online)
+            setOnlineState(props.noodlNode).then(() => {
+                R.states.backend = 'initializing'
+                setInitState('initializing')
+            })
         }
 
-    }, [online])
-
-    useEffect(() => {
-        onlineManager.setEventListener(setQueryOnline => {
-            if (initState === 'notInitialized') return () => Network.addListener('networkStatusChange', state => {
-                if (state.connected) R.libs.Kuzzle?.connect().then(() => {
-                    setTimeout(() => {
-                        setQueryOnline(true)
-                        setOnline(true)
-                        //@ts-ignore
-                        sendOutput(props.noodlNode, 'isOnline', true)
-                        const mc = R.libs.queryClient?.getMutationCache().getAll()
-                        if (mc && mc.length === mc.filter(i => i.state.status === 'success').length)
-                            setTimeout(() => R.libs.queryClient?.invalidateQueries(), 1000)
-                        log.info('Network connected', state)
-                    }, 1000)
-                })
-                else {
-                    setQueryOnline(false)
-                    setOnline(false)
-                    //@ts-ignore
-                    sendOutput(props.noodlNode, 'isOnline', false)
-                    log.info('Network disconnected', state)
+        onlineManager.setEventListener(() => {
+            //@ts-ignore
+            if (initState === 'notInitialized') return () => {
+                //@ts-ignore
+                const connection = navigator.connection
+                if (connection) {
+                    connection.onchange = () => setOnlineState(props.noodlNode)
+                    //if (Capacitor.getPlatform() === 'android') connection.ontypechange = networkQualityCheck
                 }
-            })
+
+                //Network.addListener('networkStatusChange', () => setOnlineState(props.noodlNode))
+            }
         })
     }, [initState])
 
@@ -151,7 +135,7 @@ export default forwardRef(function (props: Props) {
                 kuzzle.autoReconnect = false
                 R.libs.Kuzzle = kuzzle
 
-                if (online) {
+                if (onlineManager.isOnline()) {
                     kuzzle.connect().then(() => {
                         R.states.backend = 'initialized'
                         setInitState('initialized')

@@ -30,7 +30,8 @@ export type GroupName = 'Project' | 'Version' | 'Scope' | 'Data' | 'Signals' | '
   'Dimensions' | 'Placeholder' | 'Advanced' | 'States' | 'Icon' | 'DB classes' | 'Query params' | 'References' |
   'Backward references' | 'Search' | 'Search fields' | 'Pagination' | 'Form' | 'Output DB classes*' | 'Fetch' | 'Mask params' |
   'Checkbox' | 'Margins' | 'Paddings' | 'Enablers' | 'Single selection' | 'Multi selection' | 'Sort' | 'Filter' | 'Expansion' |
-  'Table styles' | 'Row styles' | 'Font' | 'Highlight' | 'Theme icon' | 'Scheme'
+  'Table styles' | 'Row styles' | 'Font' | 'Highlight' | 'Theme icon' | 'Scheme' | 'Network' | 'Columns' | 'Table style' |
+  'Header style' | 'Row style'
 export type OutputName = 'colorScheme' | 'colorSchemeChanged' | 'items' | 'fetching' | 'fetched' | 'userRole' | 'signedIn' |
   'signedOut' | 'reseted' | 'typedValue' | 'aggregations' | 'fetchedPage' | 'fetchedItemsCount' | 'totalItemsCount' | 'width' |
   'height' | 'formHook' | 'submited' | 'screenshot' | 'screenshoted' | 'totalPages' | 'currentPage'

@@ -10,7 +10,7 @@ export type Props = {
     noHeader?: boolean
     style?: Styles['string']
     childrenAccessor?: string
-    isChild?: boolean
+    isChild?: boolean    
 }
 
 export type Cell = {

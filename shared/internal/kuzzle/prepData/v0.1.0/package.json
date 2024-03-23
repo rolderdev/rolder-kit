@@ -15,6 +15,6 @@
     "@shared/typescript-config": "workspace:*",
     "@shared/types": "workspace:@shared/types-v0.1.0@*",
     "typescript": "5.3.3",
-    "@capacitor/core": "5.7.2"
+    "@capacitor/core": "5.7.4"
   }
 }

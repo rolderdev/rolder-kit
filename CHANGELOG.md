@@ -1,5 +1,119 @@
 # Changelog
 
+## 2024-03-23 v1.0.0-beta16
+
+### data
+
+* Правки оффлайн-режима.
+
+### mantine
+
+#### Table v1.1.1
+
+* Не работал выходной Single selected item.
+* Сигналы Expand all и Unexpand all не работали.
+
+### pdf
+
+#### PdfTable v1.3.0
+
+* Добавлена возможность формировать схему колонок функциями:
+  * Нужно подать в параметр Get columns объект с ключем getHeaderColumns и/или getRowColumns.
+  * Первая подает в себя все items и схему из Columns, на выход нужно выдавать схему колонок. Имеет смысл, когда от содержания всех данных нужно менять заголовок таблицы. Если этой функции нет, будет применен стандартный параметр Columns.
+  * Вторая подает в себя item каждой строк и схему из Columns, на выход так же нужно выдавать схему колонок. Если этой функции нет, будет пременен стандартный параметр Columns. Так можно менять состав колонок, их параметры для каждой строки, в зависимости от содержания.
+  * Пример объета с обеими функциями:
+
+```js
+[{
+    getHeaderColumns(columns, items) { // схема и все items
+        if (items.map(i => i.team).includes('Падонки')) columns[0].title = 'Команда (обнаружены падонки)' // можно менять columns, т.к. они подаются клонированные
+        return columns
+    },
+    getRowColumns(columns, item) { // схема и item строки
+        if (item.team === 'Падонки') return [{ // меняем схему полносью по условию
+            // title: 'Заголовок', // нам не важен заголовок, т.к. схему применяет строка
+            accessor: 'team',
+            cellStyle: {
+                cell: { backgroundColor: 'red' },
+                text: { fontSize: 14 }
+            },
+        }]
+        else return columns
+    }
+}]
+```
+
+* Добавлена возможность формировать стили функциями. Стили применяются каскадно - вся таблица, заголовок и ячейка заголовка, строка и ячейка строки:
+  * Вся таблица. Вместо Advanced HTML стили таблицы теперь задаются через параметр Table style, чтобы был один подход для всех стилей таблицы. Для обратной совместимости, Advanced HTML применяется и совмещается с Table style, при этом второй выигрывет, когда есть совпадения. Параметр Get table style принимает стили и items таблицы, должен выдавать стили. Пример:
+
+```js
+[{
+    func(style, items) {
+        if (items.map(i => i.team).includes('Падонки')) return {
+            ...style,
+            border: 6, 
+            borderColor: 'red'
+        }
+        else return style
+    }
+}]
+```
+
+* Заголовок. Добавлены параметры Header style и getHeaderStyle. Первый просто передает стили строке заголовка, вьорой работает как Get table style.
+* Ячейка загловка. В схему нужно добавить функцию headerStyleFunc. Работает так же как вышеперечисленные функции, но style берет из headerStyle схемы.
+* Строка и ячейка строки работают как заголовок, но функция передает один item строки.
+* Пример схемы с функциями ячеек:
+
+```js
+[
+    {
+        title: 'Команда',
+        accessor: 'team',
+        width: 120,
+        headerAlign: 'left',
+        cellAlign: 'left',
+        headerStyle: {
+            cell: { backgroundColor: 'lightblue' },
+            text: { fontSize: 16, fontFamily: 'Ubuntu' }
+        },
+        cellStyle: {
+            cell: { backgroundColor: 'cyan' },
+            text: { fontSize: 14 }
+        },
+    },
+    {
+        title: 'Кэп',
+        accessor: 'name',
+        width: 120,
+        headerAlign: 'left',
+        cellAlign: 'left',
+        headerStyle: {
+            cell: { backgroundColor: 'lightblue' },
+            text: { fontSize: 16 }
+        },
+        headerStyleFunc(style, items) {
+            if (items.map(i => i.name).includes('Гайка')) return {
+                ...style,
+                text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 }
+            }
+            else return style
+        },
+        cellStyle: {
+            cell: { backgroundColor: 'cyan' },
+            text: { fontSize: 14 }
+        },
+        cellStyleFunc(style, item) {
+            if (item.name === 'Гайка') return {
+                ...style,
+                text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 }
+            }
+            else return style
+        },
+    }
+]
+```
+* Применение всего этого показано в проекте-примере PDF.
+
 ## 2024-03-19 v1.0.0-beta15
 
 ### Общее

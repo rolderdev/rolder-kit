@@ -3,10 +3,12 @@
   "main": "deepMerge.ts",
   "types": "deepMerge.ts",
   "scripts": {
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"    
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
-  "dependencies": {},
-  "devDependencies": {    
-    "@shared/typescript-config": "workspace:*"    
+  "dependencies": {
+    "just-clone": "6.2.0"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*"
   }
 }
