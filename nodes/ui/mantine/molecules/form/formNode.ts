@@ -21,4 +21,4 @@ export default reactNode('Form', {
             getPort({ plug: 'output', name: 'submited', displayName: 'Submited', group: 'Signals', type: 'signal' }),
         ]
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

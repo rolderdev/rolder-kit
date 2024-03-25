@@ -28,4 +28,4 @@ export default reactNode('SegmentedControl', {
         ],
         outputs: getPorts('output', ['selected', 'selectedItem'])
     }
-}, { moduleName: 'mantine' })
+})

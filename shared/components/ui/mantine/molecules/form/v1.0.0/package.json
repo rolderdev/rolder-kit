@@ -4,10 +4,10 @@
   "types": "form.tsx",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    
   },
   "dependencies": {
     "@mantine/core": "6.0.21",
+    "@mantine/hooks": "6.0.21",
     "@mantine/form": "6.0.21",
     "bunshi": "2.0.2",
     "@shared/get-comp-props": "workspace:@shared/get-comp-props-v0.1.0@*",

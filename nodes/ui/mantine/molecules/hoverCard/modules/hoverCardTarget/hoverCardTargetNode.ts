@@ -10,4 +10,4 @@ export default reactNode('HoverCardTarget', {
                 '@shared/hover-card-target-v1.0.0'))
         }
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

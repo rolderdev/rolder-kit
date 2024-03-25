@@ -12,11 +12,10 @@ const ganttViewModes = [
 const GanttNode = reactNode('Gantt', {
     'v1.0.0': {
         module: {
-            default: 'dynamic',            
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/gantt-v1.0.0')),            
+                '@shared/gantt-v1.0.0')),
         },
         inputs: [
             ...getPorts('input', ['customProps']),
@@ -42,7 +41,7 @@ const GanttNode = reactNode('Gantt', {
             ...getPorts('input', ['doubleClicked'])
         ]
     }
-}, { moduleName: 'mantine' })
+})
 
 //===================================================================
 

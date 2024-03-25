@@ -26,4 +26,4 @@ export default reactNode('Select', {
         ],
         outputs: getPorts('output', ['selected', 'newValueSubmited', 'selectedItem', 'newValue', 'reseted'])
     }
-}, { moduleName: 'mantine' })
+})

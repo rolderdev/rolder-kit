@@ -19,8 +19,8 @@ export default function (noodlNode: NoodlNode, tableId: string, multiSelection: 
                 sendOutput(noodlNode, 'table2MultiSelectedItems', filteredSelectedItems)
             }
             else if (filteredSelectedItems.length === 0) {
-                sendOutput(noodlNode, 'table2MultiSelectedItems', [])
                 setSelectedRecordsState([])
+                sendOutput(noodlNode, 'table2MultiSelectedItems', [])
             }
             sendSignal(noodlNode, 'table2MultiSelectionChanged')
         }

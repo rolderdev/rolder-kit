@@ -1,0 +1,15 @@
+{
+  "name": "@shared/avatar-v1.0.0",
+  "main": "avatar.tsx",
+  "types": "avatar.tsx",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@mantine/core": "6.0.21"
+  },
+  "devDependencies": {
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@shared/typescript-config": "workspace:*"
+  }
+}

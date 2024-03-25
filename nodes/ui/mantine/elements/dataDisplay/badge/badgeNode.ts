@@ -31,4 +31,4 @@ export default reactNode('Badge', {
             }),
         ]
     }
-}, { moduleName: 'mantine' })
+})

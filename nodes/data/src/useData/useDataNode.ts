@@ -176,5 +176,72 @@ export default reactNode('UseData', {
             getPort({ plug: 'output', name: 'data', displayName: 'Data', group: 'Data', type: 'object' }),
             getPort({ plug: 'output', name: 'fetchedPage', displayName: 'Page', group: 'Pagination', type: 'number' }),
         ]
+    },
+    'v1.1.0': {
+        module: {
+            dynamic: lazy(() => import(
+                /* webpackPrefetch: true */
+                /* webpackPreload: true */
+                "@shared/use-data-v1.1.0"))
+        },
+        inputs: [
+            getPort({
+                plug: 'input', name: 'outputDbClasses', displayName: 'Output DB classes', group: 'Output DB classes*',
+                type: 'proplist', customs: {
+                    addNodePorts(dbClasses) {
+                        if (dbClasses) {
+                            const itemsOutputs = dbClasses.map((i: any) => ({
+                                plug: 'output', name: `${i}Items`, group: 'Data', type: 'array', displayName: `${i}Items`
+                            }))
+                            const fetchedOutputs = dbClasses.map((i: any) => ({
+                                plug: 'output', name: `${i}Fetched`, group: 'Data', type: 'number', displayName: `${i}Fetched`
+                            }))
+                            const totalOutputs = dbClasses.map((i: any) => ({
+                                plug: 'output', name: `${i}Total`, group: 'Data', type: 'number', displayName: `${i}Total`
+                            }))
+                            const aggsOutputs = dbClasses.map((i: any) => ({
+                                plug: 'output', name: `${i}Aggregations`, group: 'Data', type: 'object', displayName: `${i}Aggregations`
+                            }))
+                            return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs]
+                        } else return []
+                    }
+                }
+            }),
+            getPort({
+                plug: 'input', name: 'fetchScheme', displayName: 'Scheme', group: 'Scheme', type: 'array',
+                customs: { required: 'connection' }
+            }),
+            getPort({
+                plug: 'input', name: 'searchEnabled', displayName: 'Enabled', group: 'Search', type: 'boolean', default: false
+            }),
+            getPort({
+                plug: 'input', name: 'searchString', displayName: 'Search string', group: 'Search',
+                type: getType('string', 'connection'), customs: { dependsOn(p) { return p.searchEnabled ? true : false } }
+            }),
+            getPort({
+                plug: 'input', name: 'paginationEnabled', displayName: 'Enabled', group: 'Pagination', type: 'boolean', default: false
+            }),
+            getPort({
+                plug: 'input', name: 'paginationDbClass', displayName: 'Pagination DB class', group: 'Pagination', type: 'string',
+                customs: {
+                    required: 'connection',
+                    dependsOn(p) { return p.paginationEnabled ? true : false }
+                }
+            }),
+            getPort({
+                plug: 'input', name: 'nextFetch', displayName: 'Next', group: 'Pagination', type: 'signal',
+                customs: { dependsOn(p) { return p.paginationEnabled ? true : false } }
+            }),
+            getPort({
+                plug: 'input', name: 'previousFetch', displayName: 'Previous', group: 'Pagination', type: 'signal',
+                customs: { dependsOn(p) { return p.paginationEnabled ? true : false } }
+            }),
+            getPort({ plug: 'input', name: 'refetch', displayName: 'Refetch', group: 'Signals', type: 'signal' }),
+        ],
+        outputs: [
+            ...getPorts('output', ['fetching', 'fetched']),
+            getPort({ plug: 'output', name: 'data', displayName: 'Data', group: 'Data', type: 'object' }),
+            getPort({ plug: 'output', name: 'fetchedPage', displayName: 'Page', group: 'Pagination', type: 'number' }),
+        ]
     }
-}, { moduleName: 'data' })
+})

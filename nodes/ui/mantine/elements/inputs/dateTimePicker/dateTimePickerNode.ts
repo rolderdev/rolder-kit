@@ -31,4 +31,4 @@ export default reactNode('DateTimePicker', {
         ],
         outputs: getPorts('output', ['selected', 'selectedDate'])
     }
-}, { moduleName: 'mantine' })
+})

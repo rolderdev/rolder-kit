@@ -48,4 +48,4 @@ export default reactNode('Flex', {
             ...getPorts('input', ['customProps', 'w', 'h', 'opacity'])
         ],
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

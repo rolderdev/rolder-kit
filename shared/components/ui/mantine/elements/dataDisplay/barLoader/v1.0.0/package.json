@@ -1,0 +1,17 @@
+{
+  "name": "@shared/bar-loader-v1.0.0",
+  "main": "barLoader.tsx",
+  "types": "barLoader.tsx",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@mantine/core": "6.0.21",
+    "@shared/convert-color": "workspace:@shared/convert-color-v0.3.0@*",
+    "react-spinners": "0.13.8"
+  },
+  "devDependencies": {
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
+    "@shared/typescript-config": "workspace:*"
+  }
+}

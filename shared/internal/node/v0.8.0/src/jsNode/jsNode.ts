@@ -8,17 +8,15 @@ import { setNodeParameterDefault } from "../funcs/defaults"
 import { convertAndCheckProp } from "../funcs/convertAndCheckTypes"
 
 type Params = {
-    moduleName: string
     color?: NodeColor
 }
 
-
-function getModule(version: JsDefinition, moduleName: string) {
+function getModule(version: JsDefinition) {
     try {
         const module = version.module.dynamic || version.module.static
         if (module) return module
         else {
-            log.error(`getModule error: no module found`, { moduleName, version })
+            log.error(`getModule error: no module found`, { version })
             return null
         }
     } catch (e) {
@@ -27,7 +25,7 @@ function getModule(version: JsDefinition, moduleName: string) {
     }
 }
 
-export const jsNode = (nodeName: string, versions: JsVersions, params: Params) => {
+export const jsNode = (nodeName: string, versions: JsVersions, params?: Params) => {
     return {
         name: `rolder-kit.${nodeName}`,
         displayName: nodeName,
@@ -53,7 +51,7 @@ export const jsNode = (nodeName: string, versions: JsVersions, params: Params) =
 
                 // signal
                 if (!hasWarings(n) && value) {
-                    const module = getModule(versions[version], params.moduleName)
+                    const module = getModule(versions[version])
                     const type: string = typeOf(module)
                     if (type === 'promise') module.then((s: any) => {
                         if (s.default[inputName]) s.default[inputName](this._internal)

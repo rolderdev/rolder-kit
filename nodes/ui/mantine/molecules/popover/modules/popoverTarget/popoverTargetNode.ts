@@ -10,4 +10,4 @@ export default reactNode('PopoverTarget', {
                 '@shared/popover-target-v1.0.0'))
         }
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

@@ -1,5 +1,5 @@
 export {
-  type TablerIconsProps, type Icon,
+  //type TablerIconsProps, type Icon,
   IconUser, IconHome, IconChevronLeft, IconChevronRight, IconChevronDown, IconEdit, IconSearch,
   IconCalendarEvent, IconListDetails, IconIroning3, IconTrash, IconCheck, IconPlus, IconDeviceFloppy,
   IconBuildingCommunity, IconGhostFilled, IconPointFilled, IconPhoto, IconDatabaseOff, IconAdjustmentsHorizontal,
@@ -11,5 +11,5 @@ export {
   IconKey, IconSend, IconArrowLeft, IconArrowBackUp, IconArrowUp, IconArrowsVertical, IconPrinter, IconRobot,
   IconSun, IconMoon, IconChartBar, IconCaretRight, IconCamera, IconCalendar, IconWifiOff, IconDivide, IconLink,
   IconUnlink, IconCalculator, IconHammer, IconLayoutGrid, IconSend2, IconPlaystationCircle, IconGraph, IconTable,
-  IconUpload,
+  IconUpload, IconCopy,
 } from '@tabler/icons-react'

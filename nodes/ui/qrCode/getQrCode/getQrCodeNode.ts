@@ -25,4 +25,4 @@ export default jsNode('getQrCode', {
         ],
         outputs: [getPort({ plug: 'output', name: 'qrDataUrl', displayName: 'QR data URL', group: 'Data', type: '*' })]
     }
-}, { moduleName: 'qr-code', color: 'purple' })
+}, { color: 'purple' })

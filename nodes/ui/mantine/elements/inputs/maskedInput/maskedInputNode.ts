@@ -57,4 +57,4 @@ export default reactNode('MaskedInput', {
         ],
         outputs: getPorts('output', ['typedValue', 'reseted'])
     }
-}, { moduleName: 'mantine' })
+})

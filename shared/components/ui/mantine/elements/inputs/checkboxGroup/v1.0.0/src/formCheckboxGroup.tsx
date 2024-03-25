@@ -32,7 +32,7 @@ export default forwardRef(function (props: Props) {
     return <Checkbox.Group
         {...props}
         {...props.customProps}
-        {...formHook?.getInputProps(formField)}
+        {...formHook?.getInputProps(formField, { type: 'checkbox' })}
     >
         {props.orientation === 'horizontal'
             ? <Group grow={props.grow} mr='-1rem' mb='1rem' mt={props.withAsterisk ? 8 : 0}>

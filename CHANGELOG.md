@@ -1,5 +1,21 @@
 # Changelog
 
+## 2024-03-25 v1.0.0-beta17
+
+### data
+
+#### Nodered v1.0.1
+
+* Поправлен баг - было невозможно запустить флоу с пустым Flow data.
+
+#### UseData v1.1.0
+
+* Добавлен сигнал Refetch для редких случаев, когда не срабатывает подписка на изменения. Например, при импорте данных.
+
+### mantine
+
+* Переехали ноды - notification, Divider, DropZone, BarLoader, Loader, Indicator, Avatar, ScrollArea.
+
 ## 2024-03-23 v1.0.0-beta16
 
 ### data

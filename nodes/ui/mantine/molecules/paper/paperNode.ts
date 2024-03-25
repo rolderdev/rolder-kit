@@ -15,4 +15,4 @@ export default reactNode('Paper', {
             ...getPorts('input', ['customProps', 'opacity', 'shadow', 'radius', 'withBorder'])
         ]
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

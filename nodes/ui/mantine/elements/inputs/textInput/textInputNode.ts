@@ -30,4 +30,4 @@ export default reactNode('TextInput', {
         ],
         outputs: getPorts('output', ['typedValue', 'reseted'])
     }
-}, { moduleName: 'mantine' })
+})

@@ -30,4 +30,4 @@ export default reactNode('Stack', {
             ...getPorts('input', ['customProps', 'w', 'h', 'opacity'])
         ],
     }
-}, { moduleName: 'mantine', allowChildren: true })    
+}, {  allowChildren: true })    

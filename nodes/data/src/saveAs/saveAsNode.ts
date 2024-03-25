@@ -15,4 +15,4 @@ export default jsNode('saveAs', {
             ...getPorts('input', ['fileName'])
         ],
     }
-}, { moduleName: 'data', color: 'purple' })
+}, { color: 'purple' })

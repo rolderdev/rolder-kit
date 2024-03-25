@@ -16,4 +16,4 @@ export default reactNode('PdfText', {
             }),
         ]
     }
-}, { moduleName: 'pdf' })
+})

@@ -25,4 +25,4 @@ export default reactNode('Icon', {
             }),
         ]
     }
-}, { moduleName: 'mantine' })
+})

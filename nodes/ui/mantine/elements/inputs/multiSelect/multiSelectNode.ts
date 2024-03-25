@@ -26,4 +26,4 @@ export default reactNode('MultiSelect', {
         ],
         outputs: getPorts('output', ['selected', 'newValueSubmited', 'selectedItems', 'newValue', 'reseted', 'closed'])
     }
-}, { moduleName: 'mantine' })
+})

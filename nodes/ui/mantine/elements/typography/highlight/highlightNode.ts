@@ -32,4 +32,4 @@ export default reactNode('Highlight', {
             }),
         ]
     }
-}, { moduleName: 'mantine' })
+})

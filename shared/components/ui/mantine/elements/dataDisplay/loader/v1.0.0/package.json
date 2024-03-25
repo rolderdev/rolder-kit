@@ -1,0 +1,15 @@
+{
+  "name": "@shared/loader-v1.0.0",
+  "main": "loader.tsx",
+  "types": "loader.tsx",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@mantine/core": "6.0.21"
+  },
+  "devDependencies": {
+    "@shared/typescript-config": "workspace:*",
+    "@shared/node": "workspace:@shared/node-v0.8.0@*"
+  }
+}
