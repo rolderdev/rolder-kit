@@ -10,4 +10,4 @@ export default reactNode('PopoverDropdown', {
                 '@shared/popover-dropdown-v1.0.0'))
         }
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

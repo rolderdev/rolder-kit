@@ -1,6 +1,5 @@
 import { PortName } from "./src/funcs/getPort"
 import { ExpandedType, PortType } from "./src/funcs/getType"
-import { } from '@shared/types'
 
 export type NodePort = {
   index?: number
@@ -31,7 +30,7 @@ export type GroupName = 'Project' | 'Version' | 'Scope' | 'Data' | 'Signals' | '
   'Backward references' | 'Search' | 'Search fields' | 'Pagination' | 'Form' | 'Output DB classes*' | 'Fetch' | 'Mask params' |
   'Checkbox' | 'Margins' | 'Paddings' | 'Enablers' | 'Single selection' | 'Multi selection' | 'Sort' | 'Filter' | 'Expansion' |
   'Table styles' | 'Row styles' | 'Font' | 'Highlight' | 'Theme icon' | 'Scheme' | 'Network' | 'Columns' | 'Table style' |
-  'Header style' | 'Row style'
+  'Header style' | 'Row style' | 'Icons'
 export type OutputName = 'colorScheme' | 'colorSchemeChanged' | 'items' | 'fetching' | 'fetched' | 'userRole' | 'signedIn' |
   'signedOut' | 'reseted' | 'typedValue' | 'aggregations' | 'fetchedPage' | 'fetchedItemsCount' | 'totalItemsCount' | 'width' |
   'height' | 'formHook' | 'submited' | 'screenshot' | 'screenshoted' | 'totalPages' | 'currentPage'

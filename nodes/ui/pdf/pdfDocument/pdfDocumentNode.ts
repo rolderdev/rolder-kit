@@ -18,4 +18,4 @@ export default reactNode('PdfDocument', {
         ],
         outputs: getPorts('output', ['creating', 'created', 'blob'])
     }
-}, { moduleName: 'pdf', allowChildren: true })
+}, { allowChildren: true })

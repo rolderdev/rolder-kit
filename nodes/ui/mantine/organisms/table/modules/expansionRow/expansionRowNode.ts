@@ -6,4 +6,4 @@ export default reactNode('ExpansionRow', {
     'v1.0.0': {
         module: { static: v100 }
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

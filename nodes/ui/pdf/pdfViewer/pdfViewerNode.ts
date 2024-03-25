@@ -26,4 +26,4 @@ export default reactNode('PdfViewer', {
             getPort({ plug: 'output', name: 'totalPages', displayName: 'Total pages', group: 'Params', type: 'number' }),
         ]
     }
-}, { moduleName: 'pdf' })
+})

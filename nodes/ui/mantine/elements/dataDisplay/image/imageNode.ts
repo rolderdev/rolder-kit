@@ -35,4 +35,4 @@ export default reactNode('Image', {
             }),
         ]
     }
-}, { moduleName: 'mantine' })
+})

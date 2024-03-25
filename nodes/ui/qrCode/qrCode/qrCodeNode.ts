@@ -34,4 +34,4 @@ export default reactNode('QRCode', {
             }),
         ]
     }
-}, { moduleName: 'mantine' })
+})

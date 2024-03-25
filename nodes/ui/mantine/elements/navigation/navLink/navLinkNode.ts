@@ -29,4 +29,4 @@ export default reactNode('NavLink', {
         ],
         outputs: getPorts('output', ['clicked'])
     }
-}, { moduleName: 'mantine' })
+})

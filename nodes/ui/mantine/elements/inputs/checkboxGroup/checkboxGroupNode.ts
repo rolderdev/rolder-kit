@@ -33,4 +33,4 @@ export default reactNode('CheckboxGroup', {
         ],
         outputs: getPorts('output', ['selected', 'selectedItems'])
     }
-}, { moduleName: 'mantine' })
+})

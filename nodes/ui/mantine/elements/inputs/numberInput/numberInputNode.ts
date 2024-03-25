@@ -37,4 +37,4 @@ export default reactNode('NumberInput', {
             getPort({ plug: 'output', name: 'value', displayName: 'Value', group: 'Data', type: 'number' })
         ]
     }
-}, { moduleName: 'mantine' })
+})

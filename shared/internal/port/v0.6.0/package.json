@@ -5,15 +5,12 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    
   },
   "dependencies": {
     "change-case": "5.4.1",
     "just-clone": "6.2.0"
   },
   "devDependencies": {
-    "@shared/types": "workspace:@shared/types-v0.1.0@*",
-    "@shared/typescript-config": "workspace:*",
-    "typescript": "5.3.3"
+    "@shared/typescript-config": "workspace:*"
   }
 }

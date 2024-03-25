@@ -25,4 +25,4 @@ export default reactNode('Group', {
             ...getPorts('input', ['customProps', 'grow', 'noWrap', 'w', 'h', 'opacity'])
         ],
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

@@ -17,4 +17,4 @@ export default reactNode('PdfView', {
             }),
         ]
     }
-}, { moduleName: 'pdf', allowChildren: true })
+}, { allowChildren: true })

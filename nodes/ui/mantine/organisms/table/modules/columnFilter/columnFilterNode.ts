@@ -15,4 +15,4 @@ export default reactNode('ColumnFilter', {
         ]),
         outputs: getPorts('output', ['table2FilterValue'])
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

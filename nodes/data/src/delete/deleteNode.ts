@@ -28,4 +28,4 @@ export default jsNode('delete', {
         inputs: getPorts('input', ['delete', 'scheme']),
         outputs: getPorts('output', ['deleted', 'deleting'])
     }
-}, { moduleName: 'data' })
+})

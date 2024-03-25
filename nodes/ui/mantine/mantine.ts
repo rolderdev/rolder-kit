@@ -1,6 +1,8 @@
 import { getCustomEnumType, getPort } from '@shared/port'
 import { reactNode } from '@shared/node'
 import { lazy } from 'react'
+// @ts-ignore
+import { defineNode } from '@noodl/noodl-sdk'
 
 const notifEnum = ['top-left', 'top-right', 'top-center', 'bottom-left', 'bottom-right', 'bottom-center']
 
@@ -19,7 +21,7 @@ const mantineNode = reactNode('Mantine', {
             }),
         ],
     }
-}, { allowChildren: true, moduleName: 'mantine' })
+}, { allowChildren: true })
 
 //===================================================================
 // elements
@@ -27,6 +29,9 @@ const mantineNode = reactNode('Mantine', {
 import imageNode from '@nodes/image'
 import badgeNode from '@nodes/badge'
 import iconNode from '@nodes/icon'
+import barLoaderNode from '@nodes/bar-loader'
+import loaderNode from '@nodes/loader'
+import indicatorNode from '@nodes/indicator'
 //// buttons
 import actionIconNode from '@nodes/action-icon'
 import buttonNode from '@nodes/button'
@@ -44,6 +49,9 @@ import checkboxGroupNode from '@nodes/checkbox-group'
 import checkboxNode from "@nodes/checkbox"
 import multiSelectNode from "@nodes/multi-select"
 import datePickerInputNode from '@nodes/date-picker-input'
+//// miscellaneous
+import notificationNode from '@nodes/notification'
+import dividerNode from '@nodes/divider'
 //// typography
 import textNode from '@nodes/text'
 import titleNode from '@nodes/title'
@@ -59,6 +67,8 @@ import boxNode from '@nodes/box'
 import flexNode from '@nodes/flex'
 import centerNode from '@nodes/center'
 import paperNode from '@nodes/paper'
+import avatarNode from '@nodes/avatar'
+import scrollAreaNode from '@nodes/scroll-area'
 //// hoverCard
 import hoverCardNode from '@nodes/hover-card'
 import hoverCardTargetNode from '@nodes/hover-card-target'
@@ -79,18 +89,20 @@ Noodl.defineModule({
         mantineNode,
         // elements
         //// dataDisplay
-        imageNode, badgeNode, iconNode,
+        imageNode, badgeNode, iconNode, barLoaderNode, loaderNode, indicatorNode,
         //// buttons
         actionIconNode, buttonNode, unstyledButtonNode,
         //// inputs
         passwordInputNode, textInputNode, numberInputNode, maskedInputNode, selectNode, textareaNode, dateTimePickerNode,
         segmentedControlNode, checkboxGroupNode, checkboxNode, multiSelectNode, datePickerInputNode,
+        //// miscellaneous
+        dividerNode,
         //// typography
         textNode, titleNode, highlightNode, listNode,
         //// navigation
         navLinkNode,
         // molecules
-        formNode, groupNode, stackNode, boxNode, flexNode, centerNode, paperNode,
+        formNode, groupNode, stackNode, boxNode, flexNode, centerNode, paperNode, avatarNode, scrollAreaNode,
         //// hoverCard
         hoverCardNode, hoverCardTargetNode, hoverCardDropdownNode,
         //// popover
@@ -98,5 +110,6 @@ Noodl.defineModule({
         // organisms
         //// table
         tableNode, columnCellNode, expansionRowNode, columnFilterNode,
-    ]
+    ],
+    nodes: [defineNode(notificationNode)]
 })

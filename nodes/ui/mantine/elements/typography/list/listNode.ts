@@ -31,4 +31,4 @@ export default reactNode('List', {
             getPort({ plug: 'input', name: 'withPadding', displayName: 'With padding', group: 'Layout', type: 'boolean', default: false }),
         ]
     }
-}, { moduleName: 'mantine' })
+})

@@ -13,4 +13,4 @@ export default reactNode('PdfPage', {
             }),
         ]
     }
-}, { moduleName: 'pdf', allowChildren: true })
+}, { allowChildren: true })

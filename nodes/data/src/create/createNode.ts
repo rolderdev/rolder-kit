@@ -31,4 +31,4 @@ export default jsNode('create', {
         inputs: getPorts('input', ['create', 'scheme']),
         outputs: getPorts('output', ['created', 'creating', 'data'])
     }
-}, { moduleName: 'data' })
+})

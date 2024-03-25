@@ -9,17 +9,16 @@ import { setNodeParameterDefault } from "../funcs/defaults"
 import { convertAndCheckProp } from "../funcs/convertAndCheckTypes"
 
 type Params = {
-    moduleName: string
     allowChildren?: boolean
     loaderAnimation?: boolean
 }
 
-function getModule(version: CompDefinition, moduleName: string) {
+function getModule(version: CompDefinition) {
     try {
         const module = version.module.dynamic || version.module.static
         if (module) return module
         else {
-            log.error(`getModule error: no module found`, { moduleName, version })
+            log.error(`getModule error: no module found`, { version })
             return null
         }
     } catch (e) {
@@ -28,12 +27,12 @@ function getModule(version: CompDefinition, moduleName: string) {
     }
 }
 
-export const reactNode = (nodeName: string, versions: CompVersions, params: Params): ReactNodeDef => {
+export const reactNode = (nodeName: string, versions: CompVersions, params?: Params): ReactNodeDef => {
     return {
         name: `rolder-kit.${nodeName}`,
         displayName: nodeName,
         noodlNodeAsProp: true,
-        allowChildren: params.allowChildren || false,
+        allowChildren: params?.allowChildren || false,
         getReactComponent() {
             return forwardRef(function (props: BaseReactProps, ref) {
                 const localRef = useRef<any>(null)
@@ -43,12 +42,12 @@ export const reactNode = (nodeName: string, versions: CompVersions, params: Para
                 const p = version ? getProps(versions, props) : {}
 
                 const Comp = !hasWarings(props.noodlNode) && version
-                    ? getModule(versions[version], params.moduleName)
+                    ? getModule(versions[version])
                     : null
 
                 return Comp
                     ? <Suspense fallback={
-                        params.loaderAnimation
+                        params?.loaderAnimation
                             ? <div style={{ padding: 24, margin: 'auto' }}>Loading...</div>
                             : null}
                     >

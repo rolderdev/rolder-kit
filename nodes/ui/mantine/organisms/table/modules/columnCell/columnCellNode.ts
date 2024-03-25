@@ -8,4 +8,4 @@ export default reactNode('ColumnCell', {
         module: { static: v100 },
         inputs: getPorts('input', ['table2ColumnIndex', 'table2Controlled']),
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

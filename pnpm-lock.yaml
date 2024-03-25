@@ -78,8 +78,8 @@ importers:
         specifier: workspace:@shared/port-v0.6.0@*
         version: link:../../shared/internal/port/v0.6.0
       '@tabler/icons-react':
-        specifier: 3.0.1
-        version: 3.0.1(react@18.2.0)
+        specifier: 3.1.0
+        version: 3.1.0(react@18.2.0)
       consola:
         specifier: 3.2.3
         version: 3.2.3
@@ -349,6 +349,9 @@ importers:
       '@shared/nodered-v1.0.0':
         specifier: workspace:*
         version: link:../../../../shared/components/data/nodered/v1.0.0
+      '@shared/nodered-v1.0.1':
+        specifier: workspace:*
+        version: link:../../../../shared/components/data/nodered/v1.0.1
       '@shared/port':
         specifier: workspace:@shared/port-v0.6.0@*
         version: link:../../../../shared/internal/port/v0.6.0
@@ -412,6 +415,9 @@ importers:
       '@shared/use-data-v1.0.0':
         specifier: workspace:*
         version: link:../../../../shared/components/data/useData/v1.0.0
+      '@shared/use-data-v1.1.0':
+        specifier: workspace:*
+        version: link:../../../../shared/components/data/useData/v1.1.0
     devDependencies:
       '@shared/typescript-config':
         specifier: workspace:*
@@ -450,9 +456,15 @@ importers:
       '@nodes/action-icon':
         specifier: workspace:*
         version: link:elements/buttons/actionIcon
+      '@nodes/avatar':
+        specifier: workspace:*
+        version: link:molecules/avatar
       '@nodes/badge':
         specifier: workspace:*
         version: link:elements/dataDisplay/badge
+      '@nodes/bar-loader':
+        specifier: workspace:*
+        version: link:elements/dataDisplay/barLoader
       '@nodes/box':
         specifier: workspace:*
         version: link:molecules/box
@@ -480,6 +492,9 @@ importers:
       '@nodes/date-time-picker':
         specifier: workspace:*
         version: link:elements/inputs/dateTimePicker
+      '@nodes/divider':
+        specifier: workspace:*
+        version: link:elements/miscellaneous/divider
       '@nodes/expansion-row':
         specifier: workspace:*
         version: link:organisms/table/modules/expansionRow
@@ -510,9 +525,15 @@ importers:
       '@nodes/image':
         specifier: workspace:*
         version: link:elements/dataDisplay/image
+      '@nodes/indicator':
+        specifier: workspace:*
+        version: link:elements/dataDisplay/indicator
       '@nodes/list':
         specifier: workspace:*
         version: link:elements/typography/list
+      '@nodes/loader':
+        specifier: workspace:*
+        version: link:elements/dataDisplay/loader
       '@nodes/masked-input':
         specifier: workspace:*
         version: link:elements/inputs/maskedInput
@@ -522,6 +543,9 @@ importers:
       '@nodes/nav-link':
         specifier: workspace:*
         version: link:elements/navigation/navLink
+      '@nodes/notification':
+        specifier: workspace:*
+        version: link:elements/miscellaneous/notification
       '@nodes/number-input':
         specifier: workspace:*
         version: link:elements/inputs/numberInput
@@ -540,6 +564,9 @@ importers:
       '@nodes/popover-target':
         specifier: workspace:*
         version: link:molecules/popover/modules/popoverTarget
+      '@nodes/scroll-area':
+        specifier: workspace:*
+        version: link:molecules/scrollArea
       '@nodes/segmented-control':
         specifier: workspace:*
         version: link:elements/inputs/segmentedControl
@@ -567,6 +594,9 @@ importers:
       '@nodes/unstyled-button':
         specifier: workspace:*
         version: link:elements/buttons/unstyledButton
+      '@noodl/noodl-sdk':
+        specifier: 0.5.4
+        version: 0.5.4
       '@shared/mantine-v1.0.0':
         specifier: workspace:*
         version: link:../../../shared/components/ui/mantine/v1.0.0
@@ -654,6 +684,22 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../shared/internal/typescript-config
 
+  nodes/ui/mantine/elements/dataDisplay/barLoader:
+    dependencies:
+      '@shared/bar-loader-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../../shared/components/ui/mantine/elements/dataDisplay/barLoader/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../shared/internal/typescript-config
+
   nodes/ui/mantine/elements/dataDisplay/icon:
     dependencies:
       '@shared/icon-v1.0.0':
@@ -675,6 +721,38 @@ importers:
       '@shared/image-v1.0.0':
         specifier: workspace:*
         version: link:../../../../../../shared/components/ui/mantine/elements/dataDisplay/image/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/elements/dataDisplay/indicator:
+    dependencies:
+      '@shared/indicator-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../../shared/components/ui/mantine/elements/dataDisplay/indicator/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/elements/dataDisplay/loader:
+    dependencies:
+      '@shared/loader-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../../shared/components/ui/mantine/elements/dataDisplay/loader/v1.0.0
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
         version: link:../../../../../../shared/internal/node/v0.8.0
@@ -878,6 +956,54 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../shared/internal/typescript-config
 
+  nodes/ui/mantine/elements/miscellaneous/divider:
+    dependencies:
+      '@shared/divider-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../../shared/components/ui/mantine/elements/miscellaneous/divider/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/elements/miscellaneous/dropZone:
+    dependencies:
+      '@shared/drop-zone-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../../shared/components/ui/mantine/elements/miscellaneous/dropZone/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/elements/miscellaneous/notification:
+    dependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../shared/internal/node/v0.8.0
+      '@shared/notification-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../../shared/components/ui/mantine/elements/miscellaneous/notification/v1.0.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../shared/internal/typescript-config
+
   nodes/ui/mantine/elements/navigation/navLink:
     dependencies:
       '@shared/nav-link-v1.0.0':
@@ -957,6 +1083,22 @@ importers:
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/molecules/avatar:
+    dependencies:
+      '@shared/avatar-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../shared/components/ui/mantine/molecules/avatar/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../shared/internal/typescript-config
 
   nodes/ui/mantine/molecules/box:
     dependencies:
@@ -1149,6 +1291,22 @@ importers:
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/molecules/scrollArea:
+    dependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../shared/internal/port/v0.6.0
+      '@shared/scroll-area-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../shared/components/ui/mantine/molecules/scrollArea/v1.0.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../shared/internal/typescript-config
 
   nodes/ui/mantine/molecules/stack:
     dependencies:
@@ -1570,6 +1728,31 @@ importers:
         specifier: workspace:*
         version: link:../../../../shared/internal/typescript-config
 
+  nodes/ui/webCamera:
+    dependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../shared/internal/port/v0.6.0
+      '@shared/web-camera-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../shared/components/ui/webCamera/v1.0.0
+    devDependencies:
+      '@rspack/cli':
+        specifier: 0.5.8
+        version: 0.5.8(@rspack/core@0.5.8)(webpack@5.89.0)
+      '@rspack/core':
+        specifier: 0.5.8
+        version: 0.5.8
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../shared/internal/typescript-config
+      rspack-manifest-plugin:
+        specifier: 5.0.0-alpha0
+        version: 5.0.0-alpha0(webpack@5.89.0)
+
   nodes/xlsx:
     dependencies:
       '@noodl/noodl-sdk':
@@ -1625,9 +1808,6 @@ importers:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
         version: link:../../../internal/node/v0.8.0
-      '@shared/types':
-        specifier: workspace:@shared/types-v0.1.0@*
-        version: link:../../../internal/types/v0.1.0
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../../internal/typescript-config
@@ -1662,9 +1842,6 @@ importers:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
         version: link:../../../../internal/node/v0.8.0
-      '@shared/types':
-        specifier: workspace:@shared/types-v0.1.0@*
-        version: link:../../../../internal/types/v0.1.0
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../../../internal/typescript-config
@@ -1916,6 +2093,28 @@ importers:
         version: link:../../../../internal/typescript-config
 
   shared/components/data/nodered/v1.0.0:
+    dependencies:
+      '@shared/get-kuzzle':
+        specifier: workspace:@shared/get-kuzzle-v0.1.0@*
+        version: link:../../../../internal/utils/getKuzzle/v0.1.0
+      '@shared/port-send':
+        specifier: workspace:@shared/port-send-v0.2.0@*
+        version: link:../../../../internal/utils/portSend/v0.2.0
+      ky:
+        specifier: 1.2.2
+        version: 1.2.2
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../internal/node/v0.8.0
+      '@shared/types':
+        specifier: workspace:@shared/types-v0.1.0@*
+        version: link:../../../../internal/types/v0.1.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../internal/typescript-config
+
+  shared/components/data/nodered/v1.0.1:
     dependencies:
       '@shared/get-kuzzle':
         specifier: workspace:@shared/get-kuzzle-v0.1.0@*
@@ -2242,6 +2441,49 @@ importers:
         specifier: 7.11.2
         version: 7.11.2
 
+  shared/components/data/useData/v1.1.0:
+    dependencies:
+      '@shared/get-dbclass-version':
+        specifier: workspace:@shared/get-dbclass-version-v0.6.0@*
+        version: link:../../../../internal/utils/getDbClassVersion/v0.6.0
+      '@shared/get-kuzzle':
+        specifier: workspace:@shared/get-kuzzle-v0.1.0@*
+        version: link:../../../../internal/utils/getKuzzle/v0.1.0
+      '@shared/get-value':
+        specifier: workspace:@shared/get-value-v0.8.0@*
+        version: link:../../../../internal/utils/getValue/v0.8.0
+      '@shared/kuzzle-subscribe':
+        specifier: workspace:@shared/kuzzle-subscribe-v0.3.0@*
+        version: link:../../../../internal/kuzzle/subscribe/v0.3.0
+      '@shared/port-send':
+        specifier: workspace:@shared/port-send-v0.2.0@*
+        version: link:../../../../internal/utils/portSend/v0.2.0
+      '@tanstack/react-query':
+        specifier: 4.36.1
+        version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
+      fast-deep-equal:
+        specifier: 3.1.3
+        version: 3.1.3
+      just-clone:
+        specifier: 6.2.0
+        version: 6.2.0
+      just-last:
+        specifier: 3.2.0
+        version: 3.2.0
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../internal/node/v0.8.0
+      '@shared/types':
+        specifier: workspace:@shared/types-v0.1.0@*
+        version: link:../../../../internal/types/v0.1.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../internal/typescript-config
+      kuzzle-sdk:
+        specifier: 7.11.2
+        version: 7.11.2
+
   shared/components/ui/gantt/v1.0.0:
     dependencies:
       '@shared/port-send':
@@ -2355,6 +2597,25 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../../internal/typescript-config
 
+  shared/components/ui/mantine/elements/dataDisplay/barLoader/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@shared/convert-color':
+        specifier: workspace:@shared/convert-color-v0.3.0@*
+        version: link:../../../../utils/convertColor/v0.3.0
+      react-spinners:
+        specifier: 0.13.8
+        version: 0.13.8(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../../internal/typescript-config
+
   shared/components/ui/mantine/elements/dataDisplay/icon/v1.0.0:
     dependencies:
       '@mantine/core':
@@ -2388,6 +2649,32 @@ importers:
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
         version: link:../../../../../../../internal/scope/v0.1.0
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../../internal/typescript-config
+
+  shared/components/ui/mantine/elements/dataDisplay/indicator/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../../internal/typescript-config
+
+  shared/components/ui/mantine/elements/dataDisplay/loader/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2753,6 +3040,54 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../../internal/typescript-config
 
+  shared/components/ui/mantine/elements/miscellaneous/divider/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@shared/get-comp-props':
+        specifier: workspace:@shared/get-comp-props-v0.1.0@*
+        version: link:../../../../../../../internal/utils/getCompProps/v0.1.0
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../../internal/typescript-config
+
+  shared/components/ui/mantine/elements/miscellaneous/dropZone/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/dropzone':
+        specifier: 6.0.21
+        version: 6.0.21(@mantine/core@6.0.21)(@mantine/hooks@6.0.21)(react-dom@18.2.0)(react@18.2.0)
+      '@shared/port-send':
+        specifier: workspace:@shared/port-send-v0.2.0@*
+        version: link:../../../../../../../internal/utils/portSend/v0.2.0
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../../internal/typescript-config
+
+  shared/components/ui/mantine/elements/miscellaneous/notification/v1.0.0:
+    dependencies:
+      '@mantine/notifications':
+        specifier: 6.0.21
+        version: 6.0.21(@mantine/core@6.0.21)(@mantine/hooks@6.0.21)(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../../internal/typescript-config
+
   shared/components/ui/mantine/elements/navigation/navLink/v1.0.0:
     dependencies:
       '@mantine/core':
@@ -2863,6 +3198,19 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../../internal/typescript-config
 
+  shared/components/ui/mantine/molecules/avatar/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../internal/typescript-config
+
   shared/components/ui/mantine/molecules/box/v1.0.0:
     dependencies:
       '@mantine/core':
@@ -2908,6 +3256,9 @@ importers:
         specifier: 6.0.21
         version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/form':
+        specifier: 6.0.21
+        version: 6.0.21(react@18.2.0)
+      '@mantine/hooks':
         specifier: 6.0.21
         version: 6.0.21(react@18.2.0)
       '@shared/get-comp-props':
@@ -3029,6 +3380,22 @@ importers:
       '@shared/port-send':
         specifier: workspace:@shared/port-send-v0.2.0@*
         version: link:../../../../../../internal/utils/portSend/v0.2.0
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../internal/typescript-config
+
+  shared/components/ui/mantine/molecules/scrollArea/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks':
+        specifier: 6.0.21
+        version: 6.0.21(react@18.2.0)
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -3593,6 +3960,12 @@ importers:
 
   shared/components/ui/webCamera/v1.0.0:
     dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@shared/convert-color':
+        specifier: workspace:@shared/convert-color-v0.3.0@*
+        version: link:../../mantine/utils/convertColor/v0.3.0
       '@shared/port-send':
         specifier: workspace:@shared/port-send-v0.2.0@*
         version: link:../../../../internal/utils/portSend/v0.2.0
@@ -3785,15 +4158,9 @@ importers:
         specifier: 6.2.0
         version: 6.2.0
     devDependencies:
-      '@shared/types':
-        specifier: workspace:@shared/types-v0.1.0@*
-        version: link:../../types/v0.1.0
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../typescript-config
-      typescript:
-        specifier: 5.3.3
-        version: 5.3.3
 
   shared/internal/scope/v0.1.0:
     dependencies:
@@ -3834,9 +4201,6 @@ importers:
       kuzzle-sdk:
         specifier: 7.11.2
         version: 7.11.2
-      typescript:
-        specifier: 5.3.3
-        version: 5.3.3
 
   shared/internal/typescript-config: {}
 

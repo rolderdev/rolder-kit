@@ -7,6 +7,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
+    "@noodl/noodl-sdk": "0.5.4",
     "@shared/node": "workspace:@shared/node-v0.8.0@*",
     "@shared/port": "workspace:@shared/port-v0.6.0@*",
     "@shared/mantine-v1.0.0": "workspace:*",
@@ -49,7 +50,14 @@
     "@nodes/hover-card-dropdown": "workspace:*",
     "@nodes/popover": "workspace:*",
     "@nodes/popover-target": "workspace:*",
-    "@nodes/popover-dropdown": "workspace:*"
+    "@nodes/popover-dropdown": "workspace:*",
+    "@nodes/notification": "workspace:*",
+    "@nodes/divider": "workspace:*",
+    "@nodes/bar-loader": "workspace:*",
+    "@nodes/loader": "workspace:*",
+    "@nodes/indicator": "workspace:*",
+    "@nodes/avatar": "workspace:*",
+    "@nodes/scroll-area": "workspace:*"
   },
   "devDependencies": {
     "@rspack/core": "0.5.8",

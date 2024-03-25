@@ -37,4 +37,4 @@ export default reactNode('Auth', {
             getPort({ plug: 'output', name: 'error', displayName: 'Error', group: 'Params', type: 'string' }),
         ]
     }
-}, { allowChildren: true, moduleName: 'data' })
+}, { allowChildren: true })

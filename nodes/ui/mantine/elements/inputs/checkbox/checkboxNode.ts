@@ -28,4 +28,4 @@ export default reactNode('Checkbox', {
         ],
         outputs: getPorts('output', ['changed', 'checked'])
     }
-}, { moduleName: 'mantine' })
+})

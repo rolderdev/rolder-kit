@@ -13,4 +13,4 @@ export default reactNode('UnstyledButton', {
         inputs: getPorts('input', ['customProps']),
         outputs: getPorts('output', ['clicked'])
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, { allowChildren: true })

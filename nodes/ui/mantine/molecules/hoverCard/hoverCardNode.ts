@@ -28,4 +28,4 @@ export default reactNode('HoverCard', {
             }),
         ]
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

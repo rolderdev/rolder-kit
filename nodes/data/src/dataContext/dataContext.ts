@@ -27,4 +27,4 @@ export default reactNode('DataContext', {
             getPort({ plug: 'output', name: 'fetching', displayName: 'Fetching', group: 'States', type: 'boolean', default: false }),
         ]
     }
-}, { allowChildren: true, moduleName: 'data' })
+}, { allowChildren: true })

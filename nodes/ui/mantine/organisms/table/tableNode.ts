@@ -153,4 +153,4 @@ export default reactNode('Table', {
             'table2ExpandedItems', 'table2ExpansionChanged',
         ])
     },
-}, { moduleName: 'mantine', allowChildren: true, loaderAnimation: true })
+}, {  allowChildren: true, loaderAnimation: true })

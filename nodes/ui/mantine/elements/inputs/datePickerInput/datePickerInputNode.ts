@@ -38,4 +38,4 @@ export default reactNode('DatePickerInput', {
             getPort({ plug: 'output', name: 'dateValue', displayName: 'Date value', group: 'Data', type: '*' }),
         ]
     }
-}, { moduleName: 'mantine' })
+})

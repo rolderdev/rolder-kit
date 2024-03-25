@@ -43,4 +43,4 @@ export default jsNode('getData', {
             getPort({ plug: 'output', name: 'data', displayName: 'Data', group: 'Data', type: 'object' }),
         ]
     }
-}, { moduleName: 'data' })
+})

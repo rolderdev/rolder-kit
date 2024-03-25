@@ -29,4 +29,4 @@ export default reactNode('Popover', {
         ],
         outputs: getPorts('output', ['opened', 'closed']),
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

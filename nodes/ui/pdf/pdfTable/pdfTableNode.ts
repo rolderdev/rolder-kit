@@ -200,4 +200,4 @@ export default reactNode('PdfTable', {
             }),
         ],
     }
-}, { moduleName: 'pdf', allowChildren: true })
+}, { allowChildren: true })

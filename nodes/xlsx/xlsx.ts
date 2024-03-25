@@ -32,7 +32,7 @@ const createXlsxNode = jsNode('createXlsx', {
         ],
         outputs: getPorts('output', ['creating', 'created']),
     }
-}, { moduleName: 'xlsx', color: 'purple' })
+}, { color: 'purple' })
 
 //===================================================================
 //@ts-ignore

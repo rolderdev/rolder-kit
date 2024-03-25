@@ -12,9 +12,8 @@
     "react-error-boundary": "4.0.13"
   },
   "devDependencies": {
-    "@shared/node": "workspace:@shared/node-v0.8.0@*",
-    "@shared/types": "workspace:@shared/types-v0.1.0@*",
     "@shared/typescript-config": "workspace:*",
+    "@shared/node": "workspace:@shared/node-v0.8.0@*",
     "@capacitor/core": "5.7.4"
   }
 }

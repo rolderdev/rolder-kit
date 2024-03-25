@@ -29,4 +29,4 @@ export default reactNode('Text', {
             }),
         ]
     }
-}, { moduleName: 'mantine' })
+})

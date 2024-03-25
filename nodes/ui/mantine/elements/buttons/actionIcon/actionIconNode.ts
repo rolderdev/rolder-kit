@@ -29,4 +29,4 @@ export default reactNode('ActionIcon', {
         ],
         outputs: getPorts('output', ['clicked'])
     }
-}, { moduleName: 'mantine' })
+})

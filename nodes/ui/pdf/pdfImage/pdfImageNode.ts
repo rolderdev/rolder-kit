@@ -14,4 +14,4 @@ export default reactNode('PdfImage', {
             }),
         ]
     }
-}, { moduleName: 'pdf' })
+})

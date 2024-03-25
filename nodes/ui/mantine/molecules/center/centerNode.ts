@@ -12,4 +12,4 @@ export default reactNode('Center', {
         },
         inputs: getPorts('input', ['customProps', 'opacity', 'inline'])
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

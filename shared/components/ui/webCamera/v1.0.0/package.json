@@ -4,11 +4,12 @@
   "types": "webCamera.tsx",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    
   },
   "dependencies": {
     "react-webcam": "7.2.0",
-    "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*"
+    "@mantine/core": "6.0.21",
+    "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*",
+    "@shared/convert-color": "workspace:@shared/convert-color-v0.3.0@*"
   },
   "devDependencies": {
     "@shared/node": "workspace:@shared/node-v0.8.0@*",

@@ -12,4 +12,4 @@ export default reactNode('Box', {
         },
         inputs: getPorts('input', ['customProps', 'opacity'])
     }
-}, { moduleName: 'mantine', allowChildren: true })
+}, {  allowChildren: true })

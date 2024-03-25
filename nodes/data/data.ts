@@ -50,7 +50,7 @@ const dataNode = reactNode('Data', {
             getPort({ plug: 'output', name: 'network', displayName: 'Network', group: 'States', type: 'object' })
         ]
     },
-}, { allowChildren: true, moduleName: 'data' })
+}, { allowChildren: true })
 
 //===================================================================
 //@ts-ignore

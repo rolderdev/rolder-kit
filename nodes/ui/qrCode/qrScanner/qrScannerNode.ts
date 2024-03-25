@@ -26,4 +26,4 @@ export default reactNode('QRScanner', {
             getPort({ plug: 'output', name: 'qrString', displayName: 'QR string', group: 'Data', type: 'string' })
         ]
     }
-}, { moduleName: 'mantine' })
+})

@@ -37,4 +37,4 @@ export default jsNode('update', {
             getPort({ plug: 'output', name: 'optimisticUpdated', displayName: 'Optimistic updated', group: 'Signals', type: 'signal' })
         ]
     }
-}, { moduleName: 'data' })
+})

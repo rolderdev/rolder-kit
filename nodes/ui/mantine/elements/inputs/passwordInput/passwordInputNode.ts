@@ -27,4 +27,4 @@ export default reactNode('PasswordInput', {
         ],
         outputs: getPorts('output', ['typedValue', 'reseted'])
     }
-}, { moduleName: 'mantine' })
+})

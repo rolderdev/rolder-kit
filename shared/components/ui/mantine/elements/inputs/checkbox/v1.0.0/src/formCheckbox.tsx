@@ -26,10 +26,9 @@ export default forwardRef(function (props: Props, ref) {
     return (
         <Checkbox
             icon={Icon && <Icon size={props.iconSize} stroke={props.iconStroke} color={convertColor(props.iconColor)} />}
-            checked={value}
             {...props}
             {...props.customProps}
-            {...formHook?.getInputProps(props.formField)}
+            {...formHook?.getInputProps(props.formField, { type: 'checkbox' })}
         />
     )
 })

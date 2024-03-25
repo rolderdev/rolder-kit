@@ -34,4 +34,4 @@ export default reactNode('Textarea', {
         ],
         outputs: getPorts('output', ['typedValue', 'reseted'])
     }
-}, { moduleName: 'mantine' })
+})
