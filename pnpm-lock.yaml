@@ -2513,7 +2513,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2541,7 +2541,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2566,7 +2566,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2588,7 +2588,7 @@ importers:
         version: link:../../../../../../../internal/utils/getCompProps/v0.1.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2629,7 +2629,7 @@ importers:
         version: link:../../../../../../../internal/utils/getCompProps/v0.1.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2648,7 +2648,7 @@ importers:
         version: link:../../../../../../../internal/utils/getCompProps/v0.1.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2699,7 +2699,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2730,7 +2730,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2761,7 +2761,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2789,7 +2789,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2817,7 +2817,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
       react-imask:
         specifier: 7.4.0
         version: 7.4.0(react@18.2.0)
@@ -2851,7 +2851,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2885,7 +2885,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2910,7 +2910,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2938,7 +2938,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -2975,7 +2975,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -3006,7 +3006,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -3031,7 +3031,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -3104,7 +3104,7 @@ importers:
         version: link:../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -3126,7 +3126,7 @@ importers:
         version: link:../../../../../../../internal/utils/getCompProps/v0.1.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -3151,7 +3151,7 @@ importers:
         version: link:../../../dataDisplay/icon/v1.0.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -3170,7 +3170,7 @@ importers:
         version: link:../../../../../../../internal/utils/getCompProps/v0.1.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -3189,7 +3189,7 @@ importers:
         version: link:../../../../../../../internal/utils/getCompProps/v0.1.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -3269,7 +3269,7 @@ importers:
         version: link:../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../internal/scope/v0.2.0
       bunshi:
         specifier: 2.0.2
         version: 2.0.2(react@18.2.0)
@@ -3424,7 +3424,7 @@ importers:
         version: link:../../../../../../../../internal/utils/getCompProps/v0.1.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../../internal/scope/v0.2.0
       bunshi:
         specifier: 2.0.2
         version: 2.0.2(react@18.2.0)
@@ -3449,7 +3449,7 @@ importers:
         version: link:../../../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../../internal/scope/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*
@@ -3468,7 +3468,7 @@ importers:
         version: link:../../../../../../../../internal/utils/getCompProps/v0.1.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../../../internal/scope/v0.2.0
       bunshi:
         specifier: 2.0.2
         version: 2.0.2(react@18.2.0)
@@ -3508,7 +3508,7 @@ importers:
         version: link:../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../internal/scope/v0.2.0
       '@tabler/icons-react':
         specifier: 3.0.1
         version: 3.0.1(react@18.2.0)
@@ -3557,7 +3557,7 @@ importers:
         version: link:../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../internal/scope/v0.2.0
       '@tabler/icons-react':
         specifier: 3.1.0
         version: 3.1.0(react@18.2.0)
@@ -3606,7 +3606,7 @@ importers:
         version: link:../../../../../../internal/utils/portSend/v0.2.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../../internal/scope/v0.1.0
+        version: link:../../../../../../internal/scope/v0.2.0
       '@tabler/icons-react':
         specifier: 3.1.0
         version: 3.1.0(react@18.2.0)
@@ -3930,7 +3930,7 @@ importers:
         version: link:../../../../../internal/utils/getCompProps/v0.1.0
       '@shared/scope':
         specifier: workspace:@shared/scope-v0.1.0@*
-        version: link:../../../../../internal/scope/v0.1.0
+        version: link:../../../../../internal/scope/v0.2.0
       qrcode.react:
         specifier: 3.1.0
         version: 3.1.0(react@18.2.0)
@@ -4163,6 +4163,28 @@ importers:
         version: link:../../typescript-config
 
   shared/internal/scope/v0.1.0:
+    dependencies:
+      bunshi:
+        specifier: 2.0.2
+        version: 2.0.2(react@18.2.0)
+      nanostores:
+        specifier: 0.9.5
+        version: 0.9.5
+    devDependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../node/v0.8.0
+      '@shared/types':
+        specifier: workspace:@shared/types-v0.1.0@*
+        version: link:../../types/v0.1.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../typescript-config
+
+  shared/internal/scope/v0.2.0:
     dependencies:
       bunshi:
         specifier: 2.0.2
