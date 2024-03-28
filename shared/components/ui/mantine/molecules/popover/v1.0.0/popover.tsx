@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { Props } from "./types";
 import React from "react";
 import { Box, Popover } from "@mantine/core";
-import { sendOutput, sendSignal } from "../../../../../../internal/utils/portSend/v0.2.0/portSend";
+import { sendOutput, sendSignal } from "@shared/port-send"
 
 const Target = forwardRef((props, ref: any) => <Box ref={ref} {...props} w='fit-content' />)
 

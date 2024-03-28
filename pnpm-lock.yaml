@@ -471,6 +471,9 @@ importers:
       '@nodes/button':
         specifier: workspace:*
         version: link:elements/buttons/button
+      '@nodes/carousel':
+        specifier: workspace:*
+        version: link:molecules/carousel
       '@nodes/center':
         specifier: workspace:*
         version: link:molecules/center
@@ -540,6 +543,9 @@ importers:
       '@nodes/masked-input':
         specifier: workspace:*
         version: link:elements/inputs/maskedInput
+      '@nodes/modal':
+        specifier: workspace:*
+        version: link:molecules/modal
       '@nodes/multi-select':
         specifier: workspace:*
         version: link:elements/inputs/multiSelect
@@ -1122,6 +1128,22 @@ importers:
         specifier: workspace:*
         version: link:../../../../../shared/internal/typescript-config
 
+  nodes/ui/mantine/molecules/carousel:
+    dependencies:
+      '@shared/carousel-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../shared/components/ui/mantine/molecules/carousel/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../shared/internal/typescript-config
+
   nodes/ui/mantine/molecules/center:
     dependencies:
       '@shared/center-v1.0.0':
@@ -1249,6 +1271,22 @@ importers:
       '@shared/typescript-config':
         specifier: workspace:*
         version: link:../../../../../../../shared/internal/typescript-config
+
+  nodes/ui/mantine/molecules/modal:
+    dependencies:
+      '@shared/modal-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../../shared/components/ui/mantine/molecules/modal/v1.0.0
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../shared/internal/node/v0.8.0
+      '@shared/port':
+        specifier: workspace:@shared/port-v0.6.0@*
+        version: link:../../../../../shared/internal/port/v0.6.0
+    devDependencies:
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../shared/internal/typescript-config
 
   nodes/ui/mantine/molecules/paper:
     dependencies:
@@ -3286,6 +3324,19 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../internal/typescript-config
 
+  shared/components/ui/mantine/molecules/carousel/v1.0.0:
+    dependencies:
+      '@mantine/carousel':
+        specifier: 6.0.21
+        version: 6.0.21(@mantine/core@6.0.21)(@mantine/hooks@6.0.21)(embla-carousel-react@7.1.0)(react@18.2.0)
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../internal/typescript-config
+
   shared/components/ui/mantine/molecules/center/v1.0.0:
     dependencies:
       '@mantine/core':
@@ -3400,6 +3451,25 @@ importers:
       '@mantine/core':
         specifier: 6.0.21
         version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@shared/node':
+        specifier: workspace:@shared/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      '@shared/typescript-config':
+        specifier: workspace:*
+        version: link:../../../../../../internal/typescript-config
+
+  shared/components/ui/mantine/molecules/modal/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.1)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks':
+        specifier: 6.0.21
+        version: 6.0.21(react@18.2.0)
+      '@shared/port-send':
+        specifier: workspace:@shared/port-send-v0.2.0@*
+        version: link:../../../../../../internal/utils/portSend/v0.2.0
     devDependencies:
       '@shared/node':
         specifier: workspace:@shared/node-v0.8.0@*

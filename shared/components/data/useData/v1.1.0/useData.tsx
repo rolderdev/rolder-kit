@@ -109,8 +109,8 @@ export default forwardRef(function (props: Props, ref) {
       if (paginationScheme) {
         setPage(old => {
           const newPage = old + 1
-          if (newPage <= maxPage) {
-            let items = data?.task?.items
+          if (props.paginationDbClass && newPage <= maxPage) {
+            let items = data?.[props.paginationDbClass]?.items
             if (items?.length) {
               const searchAfter = getSearchAfter(items, paginationScheme.sorts)
               setPagesSearchAfter(old => {
