@@ -1,13 +1,12 @@
 {
-  "name": "@shared/popover-v1.0.0",
-  "main": "popover.tsx",
-  "types": "popover.tsx",
+  "name": "@shared/carousel-v1.0.0",
+  "main": "carousel.tsx",
+  "types": "carousel.tsx",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
-    "@mantine/core": "6.0.21",
-    "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*"
+    "@mantine/carousel": "6.0.21"
   },
   "devDependencies": {
     "@shared/node": "workspace:@shared/node-v0.8.0@*",

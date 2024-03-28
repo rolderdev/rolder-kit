@@ -58,7 +58,9 @@
     "@nodes/indicator": "workspace:*",
     "@nodes/avatar": "workspace:*",
     "@nodes/scroll-area": "workspace:*",
-    "@nodes/grid": "workspace:*"
+    "@nodes/grid": "workspace:*",
+    "@nodes/carousel": "workspace:*",
+    "@nodes/modal": "workspace:*"
   },
   "devDependencies": {
     "@rspack/core": "0.5.9",

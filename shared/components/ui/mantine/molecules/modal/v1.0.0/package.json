@@ -1,12 +1,13 @@
 {
-  "name": "@shared/popover-v1.0.0",
-  "main": "popover.tsx",
-  "types": "popover.tsx",
+  "name": "@shared/modal-v1.0.0",
+  "main": "modal.tsx",
+  "types": "modal.tsx",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
     "@mantine/core": "6.0.21",
+    "@mantine/hooks": "6.0.21",
     "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*"
   },
   "devDependencies": {
