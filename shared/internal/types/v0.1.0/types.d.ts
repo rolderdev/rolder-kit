@@ -1,4 +1,3 @@
-import { MantineTheme } from '@mantine/core'
 import { Kuzzle, WebSocket } from 'kuzzle-sdk'
 const kuzzle = new Kuzzle(new WebSocket(`rolder.app`, { port: 443 }))
 import { QueryClient } from '@tanstack/react-query'

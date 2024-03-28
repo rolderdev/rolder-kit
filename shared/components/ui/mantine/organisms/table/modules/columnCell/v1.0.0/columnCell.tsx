@@ -11,19 +11,13 @@ export default forwardRef(function (props: Props) {
     const itemAtom = useMolecule(TableCellMolecule, { withScope: [TableCellScope, record?.id] })
     if (!table2Controlled && record) itemAtom.set(record)
 
-    let repeaterRender = null
-    let renderChild = children
-    if (Array.isArray(children) && table2Controlled) {
-        repeaterRender = children[0]
-        renderChild = children.slice(1).find(i => i.props.noodlNode.nodeScope.componentOwner._forEachModel?.id === record?.id)
-    }
-
     return record
         ? <ScopeProvider scope={TableCellScope} value={record?.id}>
-            {table2Controlled ? <>
-                {repeaterRender}
-                {renderChild}
-            </> : children}
+            {table2Controlled
+                ? Array.isArray(children)
+                    ? children.slice(1).find(i => i.props.noodlNode.nodeScope.componentOwner._forEachModel?.id === record?.id)
+                    : children
+                : children}
         </ScopeProvider>
         : null
 })

@@ -57,11 +57,12 @@
     "@nodes/loader": "workspace:*",
     "@nodes/indicator": "workspace:*",
     "@nodes/avatar": "workspace:*",
-    "@nodes/scroll-area": "workspace:*"
+    "@nodes/scroll-area": "workspace:*",
+    "@nodes/grid": "workspace:*"
   },
   "devDependencies": {
-    "@rspack/core": "0.5.8",
-    "@rspack/cli": "0.5.8",
+    "@rspack/core": "0.5.9",
+    "@rspack/cli": "0.5.9",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "@shared/typescript-config": "workspace:*"
   }

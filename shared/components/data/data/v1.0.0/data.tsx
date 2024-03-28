@@ -8,18 +8,19 @@ import { PersistQueryClientProvider, PersistedClient, Persister } from '@tanstac
 import { get, set, del } from "idb-keyval";
 import { getKuzzle } from '@shared/get-kuzzle';
 import { onlineManager } from '@tanstack/react-query'
-import setOnlineState from "./src/setOnlineState"
+import { sendOutput } from "@shared/port-send"
+import { useInterval } from "@mantine/hooks"
+import useNetworkState from "./src/useNetworkState"
 
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             staleTime: Infinity,
-            //refetchOnWindowFocus: "always",
             refetchOnMount: "always"
         },
         mutations: {
             cacheTime: 1000 * 60 * 60 * 72,
-            retry: true,
+            retry: 5,
         },
     },
 })
@@ -82,7 +83,10 @@ function Mutation(props: any) {
 }
 
 export default forwardRef(function (props: Props) {
-    const { backendVersion, dbName, persistData, backendDevMode, backendUrl, backendPort, downlink } = props
+    const {
+        backendVersion, dbName, persistData, backendDevMode, backendUrl, backendPort,
+        detectOffline, measureTimeout, offlineLatancy, offlineJitter, offlineDownload
+    } = props
     const { project } = Noodl.getProjectSettings()
 
     R.env.backendVersion = backendVersion
@@ -90,29 +94,32 @@ export default forwardRef(function (props: Props) {
     R.libs.queryClient = queryClient
 
     const [initState, setInitState] = useState<typeof R.states.backend>(R.states.backend)
+    const { isOnline, measureNetwork } = useNetworkState(props.noodlNode, offlineLatancy, offlineJitter, offlineDownload)
+    const measureConnectionInterval = useInterval(() => measureNetwork(), measureTimeout)
 
     useEffect(() => {
-        if (initState === 'notInitialized') {
-            setOnlineState(props.noodlNode).then(() => {
-                R.states.backend = 'initializing'
-                setInitState('initializing')
-            })
+        if (initState === 'notInitialized' && !detectOffline) {
+            //@ts-ignore
+            sendOutput(props.noodlNode, 'isOnline', onlineManager.isOnline())
+            R.states.backend = 'initializing'
+            setInitState('initializing')
         }
 
-        onlineManager.setEventListener(() => {
-            //@ts-ignore
-            if (initState === 'notInitialized') return () => {
-                //@ts-ignore
-                const connection = navigator.connection
-                if (connection) {
-                    connection.onchange = () => setOnlineState(props.noodlNode)
-                    //if (Capacitor.getPlatform() === 'android') connection.ontypechange = networkQualityCheck
-                }
+        if (initState === 'notInitialized' && detectOffline) {
+            // disable React-Query online events
+            onlineManager.setEventListener(() => () => { })
 
-                //Network.addListener('networkStatusChange', () => setOnlineState(props.noodlNode))
-            }
-        })
-    }, [initState])
+            //@ts-ignore
+            sendOutput(props.noodlNode, 'isOnline', isOnline)
+            //setOnlineState(props.noodlNode, pingTimeout)
+            //            setTimeout(() => {
+            R.states.backend = 'initializing'
+            setInitState('initializing')
+            //          }, pingTimeout)
+        }
+
+        if (initState === 'initialized' && detectOffline) measureConnectionInterval.start()
+    }, [detectOffline, initState])
 
     useEffect(() => {
         if (!project || !backendVersion) {
@@ -135,7 +142,7 @@ export default forwardRef(function (props: Props) {
                 kuzzle.autoReconnect = false
                 R.libs.Kuzzle = kuzzle
 
-                if (onlineManager.isOnline()) {
+                if (!detectOffline && onlineManager.isOnline()) {
                     kuzzle.connect().then(() => {
                         R.states.backend = 'initialized'
                         setInitState('initialized')

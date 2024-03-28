@@ -41,8 +41,24 @@ const dataNode = reactNode('Data', {
                 }
             }),
             getPort({
-                plug: 'input', name: 'downlink', displayName: 'Offline threshold', group: 'Network', type: 'number', default: 2,
+                plug: 'input', name: 'detectOffline', displayName: 'Detect offline', group: 'Network', type: 'boolean', default: false,
                 customs: { required: 'both' }
+            }),
+            getPort({
+                plug: 'input', name: 'measureTimeout', displayName: 'Timeout', group: 'Network', type: 'number', default: 2000,
+                customs: { required: 'both', dependsOn(p) { return p.detectOffline }, }
+            }),
+            getPort({
+                plug: 'input', name: 'offlineLatancy', displayName: 'Latancy', group: 'Network', type: 'number', default: 200,
+                customs: { required: 'both', dependsOn(p) { return p.detectOffline }, }
+            }),
+            getPort({
+                plug: 'input', name: 'offlineJitter', displayName: 'Jitter', group: 'Network', type: 'number', default: 100,
+                customs: { required: 'both', dependsOn(p) { return p.detectOffline }, }
+            }),
+            getPort({
+                plug: 'input', name: 'offlineDownload', displayName: 'Download', group: 'Network', type: 'number', default: 10000,
+                customs: { required: 'both', dependsOn(p) { return p.detectOffline }, }
             }),
         ],
         outputs: [

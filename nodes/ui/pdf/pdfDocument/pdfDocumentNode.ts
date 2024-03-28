@@ -3,6 +3,7 @@ import { getPort, getPorts } from '@shared/port'
 
 import v100 from '@shared/pdf-document-v1.0.0'
 import v110 from '@shared/pdf-document-v1.1.0'
+import v120 from '@shared/pdf-document-v1.2.0'
 
 export default reactNode('PdfDocument', {
     'v1.0.0': {
@@ -17,5 +18,13 @@ export default reactNode('PdfDocument', {
             getPort({ plug: 'input', name: 'fonts', displayName: 'Fonts', group: 'Style', type: 'array' }),
         ],
         outputs: getPorts('output', ['creating', 'created', 'blob'])
+    },
+    'v1.2.0': {
+        module: { static: v120 },
+        inputs: [
+            ...getPorts('input', ['create', 'reset']),
+            getPort({ plug: 'input', name: 'fonts', displayName: 'Fonts', group: 'Style', type: 'array' }),
+        ],
+        outputs: getPorts('output', ['creating', 'created', 'blob', 'reseted'])
     }
 }, { allowChildren: true })
