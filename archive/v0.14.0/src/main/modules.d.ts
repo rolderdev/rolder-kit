@@ -1,1 +1,0 @@
-declare module 'numbro/dist/languages/ru-RU.min.js';

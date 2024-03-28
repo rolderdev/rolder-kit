@@ -10,7 +10,7 @@
   "dependencies": {
     "@shared/port-send": "workspace:@shared/port-send-v0.2.0@*",
     "@shared/get-comp-props": "workspace:@shared/get-comp-props-v0.1.0@*",
-    "@react-pdf/renderer": "3.4.0"    
+    "@react-pdf/renderer": "3.4.2"    
   },
   "devDependencies": {
     "@shared/typescript-config": "workspace:*",

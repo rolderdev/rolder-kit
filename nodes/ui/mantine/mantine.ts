@@ -69,6 +69,7 @@ import centerNode from '@nodes/center'
 import paperNode from '@nodes/paper'
 import avatarNode from '@nodes/avatar'
 import scrollAreaNode from '@nodes/scroll-area'
+import gridNode from '@nodes/grid'
 //// hoverCard
 import hoverCardNode from '@nodes/hover-card'
 import hoverCardTargetNode from '@nodes/hover-card-target'
@@ -102,7 +103,7 @@ Noodl.defineModule({
         //// navigation
         navLinkNode,
         // molecules
-        formNode, groupNode, stackNode, boxNode, flexNode, centerNode, paperNode, avatarNode, scrollAreaNode,
+        formNode, groupNode, stackNode, boxNode, flexNode, centerNode, paperNode, avatarNode, scrollAreaNode, gridNode,
         //// hoverCard
         hoverCardNode, hoverCardTargetNode, hoverCardDropdownNode,
         //// popover

@@ -152,5 +152,5 @@ export default reactNode('Table', {
             // Expansion    
             'table2ExpandedItems', 'table2ExpansionChanged',
         ])
-    },
-}, {  allowChildren: true, loaderAnimation: true })
+    }
+}, { allowChildren: true, loaderAnimation: true })

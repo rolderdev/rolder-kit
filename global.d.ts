@@ -1,7 +1,5 @@
 declare var R: Rolder
 declare var Noodl: any
-declare var offlineMode: boolean
-declare var remote: any
 
 declare var log: {
     start(): number

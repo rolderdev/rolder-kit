@@ -38,8 +38,8 @@
     "idb-keyval": "6.2.1"
   },
   "devDependencies": {
-    "@rspack/core": "0.5.8",
-    "@rspack/cli": "0.5.8",
+    "@rspack/core": "0.5.9",
+    "@rspack/cli": "0.5.9",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "@shared/typescript-config": "workspace:*",
     "@shared/types": "workspace:@shared/types-v0.1.0@*",

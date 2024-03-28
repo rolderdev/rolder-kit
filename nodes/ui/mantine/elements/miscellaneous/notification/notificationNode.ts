@@ -1,5 +1,5 @@
 import { jsNode } from '@shared/node'
-import { getPort } from '@shared/port'
+import { getPort, getPorts } from '@shared/port'
 
 export default jsNode('notification', {
     'v1.0.0': {
@@ -10,6 +10,7 @@ export default jsNode('notification', {
                 '@shared/notification-v1.0.0')
         },
         inputs: [
+            ...getPorts('input', ['color']),
             getPort({ plug: 'input', name: 'send', displayName: 'Send', group: 'Signals', type: 'signal' }),
             getPort({ plug: 'input', name: 'title', displayName: 'Title', group: 'Params', type: 'string' }),
             getPort({
@@ -23,4 +24,4 @@ export default jsNode('notification', {
             })
         ]
     }
-}, {  color: 'purple' })
+}, { color: 'purple' })
