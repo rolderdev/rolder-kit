@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: kuzzle
-          image: cr.yandex/crpdrnml2dc1034r7bn1/kuzzle-rk:v0.1.0
+          image: cr.yandex/crpdrnml2dc1034r7bn1/kuzzle-rk:v0.2.0
           env:
             - name: kuzzle_services__storageEngine__client__node
               value: http://kuzzle-els:9200

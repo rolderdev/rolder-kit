@@ -8,5 +8,10 @@
     "type": "file",
     "name": "update",
     "label": "update"
+  },
+  {
+    "type": "file",
+    "name": "history",
+    "label": "History"
   }
 ]

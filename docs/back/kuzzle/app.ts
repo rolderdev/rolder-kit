@@ -24,7 +24,7 @@ export class Application extends Backend {
 
   async start() {
     await super.start()
-    this.log.info("Rolder Kit backend v0.1.0 started")
+    this.log.info("Rolder Kit backend v0.2.0 started")
   }
 }
 
