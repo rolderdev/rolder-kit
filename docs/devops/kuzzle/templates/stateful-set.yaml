@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kuzzle-redis
+  labels:
+    app: kuzzle-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kuzzle-redis
+  serviceName: kuzzle-redis
+  template:
+    metadata:
+      labels:
+        app: kuzzle-redis
+    spec:
+      containers:
+        - name: kuzzle-redis
+          image: redis:6
+          command: ["redis-server", "--appendonly", "yes"]
+          ports:
+            - name: kuzzle-redis
+              containerPort: 6379
+          volumeMounts:
+            - name: kuzzle-redis-data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: kuzzle-redis-data
+        labels:
+          app: kuzzle-redis
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 500Mi
+        storageClassName: longhorn-r2
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kuzzle-els
+  labels:
+    app: kuzzle-els
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kuzzle-els
+  serviceName: kuzzle-els
+  template:
+    metadata:
+      labels:
+        app: kuzzle-els
+    spec:
+      containers:
+        - name: kuzzle-els
+          image: kuzzleio/elasticsearch:7
+          ports:
+            - name: kuzzle-els
+              containerPort: 9200
+          volumeMounts:
+            - name: kuzzle-els-data
+              mountPath: /usr/share/elasticsearch/data
+      securityContext:
+        fsGroup: 0
+        runAsUser: 1000
+        runAsGroup: 0
+  volumeClaimTemplates:
+    - metadata:
+        name: kuzzle-els-data
+        labels:
+          app: kuzzle-els
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 5Gi
+        storageClassName: longhorn-r2

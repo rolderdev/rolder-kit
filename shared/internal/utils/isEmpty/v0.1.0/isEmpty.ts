@@ -1,3 +1,5 @@
+import isObjectEmpty from 'just-is-empty'
+
 export default function (value: any): boolean {
     if (typeof value === 'boolean') return false
     if (typeof value === 'number') return false
@@ -5,5 +7,6 @@ export default function (value: any): boolean {
         if (value.length > 0) return false
         else return true
     }
+    if (isObjectEmpty(value)) return true
     return !Boolean(value)
 }

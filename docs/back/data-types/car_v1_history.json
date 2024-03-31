@@ -1,0 +1,16 @@
+{
+    "dynamic": "strict",
+    "properties": {
+        "id": {
+            "type": "keyword"
+        },
+        "timestamp": {
+            "type": "date",
+            "format": "epoch_millis"
+        },
+        "item": {
+            "dynamic": true,
+            "type": "object"
+        }
+    }
+}

@@ -1,0 +1,11 @@
+# Node
+*.log
+node_modules/
+
+# Other
+.DS_STORE
+*#
+*~
+
+# Build files
+dist/**/*

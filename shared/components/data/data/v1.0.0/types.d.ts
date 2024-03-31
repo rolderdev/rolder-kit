@@ -6,13 +6,13 @@ export type Props = BaseReactProps & {
     dbName: string
     persistData?: boolean
     backendDevMode?: boolean
-    backendUrl: string
-    backendPort: number
-    detectOffline: boolean
-    measureTimeout: number
-    offlineLatancy: number
-    offlineJitter: number
-    offlineDownload: number
+    backendUrl?: string
+    backendPort?: number
+    detectOffline?: boolean
+    measureTimeout?: number
+    offlineLatancy?: number
+    offlineJitter?: number
+    offlineDownload?: number
 }
 
 export type MutationFnProps = {
