@@ -15,6 +15,7 @@
 
 ### data
 
+* [История изменений данных](http://docs.rolder.app/docs/data/hystory.html)
 * [UseData v1.2.0](http://docs.rolder.app/docs/data/useData.html)
 * [update v1.1.0](http://docs.rolder.app/docs/data/update.html)
 
