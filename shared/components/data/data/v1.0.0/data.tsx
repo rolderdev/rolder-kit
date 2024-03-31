@@ -94,8 +94,8 @@ export default forwardRef(function (props: Props) {
     R.libs.queryClient = queryClient
 
     const [initState, setInitState] = useState<typeof R.states.backend>(R.states.backend)
-    const { isOnline, measureNetwork } = useNetworkState(props.noodlNode, offlineLatancy, offlineJitter, offlineDownload)
-    const measureConnectionInterval = useInterval(() => measureNetwork(), measureTimeout)
+    const { isOnline, measureNetwork } = useNetworkState(props.noodlNode, offlineLatancy || 2000, offlineJitter || 100, offlineDownload || 10000)
+    const measureConnectionInterval = useInterval(() => measureNetwork(), measureTimeout || 2000)
 
     useEffect(() => {
         if (initState === 'notInitialized' && !detectOffline) {
@@ -134,12 +134,12 @@ export default forwardRef(function (props: Props) {
                 const kuzzle = new Kuzzle(
                     new WebSocket(
                         backendDevMode
-                            ? backendUrl
+                            ? backendUrl || 'localhost'
                             : `${project}.kuzzle.${backendVersion}.rolder.app`,
-                        { port: backendDevMode ? backendPort : 443 }
+                        { port: backendDevMode ? backendPort || 7512 : 443 }
                     )
                 )
-                kuzzle.autoReconnect = false
+                if (detectOffline) kuzzle.autoReconnect = false
                 R.libs.Kuzzle = kuzzle
 
                 if (!detectOffline && onlineManager.isOnline()) {

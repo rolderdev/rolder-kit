@@ -30,7 +30,7 @@ export type CompDefinition = {
         dynamic?: any
     }
     remote?: any
-    hashTag?: 'experimental' | 'deprecated'
+    hashTag?: '#pre-release' | '#deprecated'
     inputs?: NodePort[]
     outputs?: NodePort[]
 }
@@ -44,7 +44,7 @@ export type JsDefinition = {
         static?: any
         dynamic?: any
     }
-    hashTag?: 'experimental' | 'deprecated'
+    hashTag?: '#pre-release' | '#deprecated'
     inputs?: NodePort[]
     outputs?: NodePort[]
     signals?: NodePort[]
@@ -102,6 +102,7 @@ export type NoodlNode = {
     dataStore: any
     hasOutput(name: string): boolean
     flagOutputDirty(name: string): boolean
+    flagAllOutputsDirty(): boolean
     sendSignalOnOutput(name: string): void
     ///
     boundingBoxObserver: { isRunning: boolean, numBoundingBoxObservers: number, pollDelay: number, target: any, callback: () => any }

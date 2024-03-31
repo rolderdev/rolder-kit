@@ -12,13 +12,12 @@ export default function (node: GraphModelNode, context: NodeContext, versions: C
         name: 'version', displayName: 'Version*', group: 'Version', plug: 'input', required: true, index: 0,
         type: {
             name: 'enum', allowEditOnly: true, enums: Object.keys(versions).map(i =>
-                ({ value: i, label: i + (versions[i]?.hashTag ? ' #' + versions[i]?.hashTag : '') })
+                ({ value: i, label: i + (versions[i]?.hashTag ? ' ' + versions[i]?.hashTag : '') })
             )
         }
     } as NodePort
 
-    const vs = Object.keys(versions).map(i => i + (versions[i]?.hashTag ? ' #' + versions[i]?.hashTag : ''))
-    if (!vs.includes(node.parameters.version)) {
+    if (!Object.keys(versions).includes(node.parameters.version)) {
         context.editorConnection.clearWarnings(node.component.name, node.id)
         sendWarning(node, context, 'Version', 'Choose version')
     } else clearWarning(node, context, 'Version')

@@ -86,8 +86,7 @@ const rNodesStore = [
     TabsNode_f0_1_0, TabNode_f0_1_0,
     // molecules
     // GroupNode_f0_1_0, StackNode_f0_1_0,BoxNode_f0_1_0,FlexNode_f0_1_0,CenterNode_f0_1_0,PaperNode_f0_1_0,PopoverNode_f0_1_0,
-    // AvatarNode_f0_1_0, ScrollAreaNode_f0_1_0, GridNode_f0_1_0,CarouselNode_f0_1_0, ModalNode_f0_1_0,
-    DrawerNode_f0_1_0, 
+    // AvatarNode_f0_1_0, ScrollAreaNode_f0_1_0, GridNode_f0_1_0,CarouselNode_f0_1_0, ModalNode_f0_1_0,DrawerNode_f0_1_0,     
     //// elements
     // buttons
     // ActionIconNode_f0_1_0,ButtonNode_f0_1_0,UnstyledButtonNode_f0_1_0

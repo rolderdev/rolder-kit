@@ -8,13 +8,20 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "1.14.0",
+    "rspress": "1.16.2",
     "@mantine/core": "6.0.21",
+    "@mantine/hooks": "6.0.21",
     "@mantine/dates": "6.0.21",
     "@mantine/notifications": "6.0.21",
-    "@tabler/icons-react": "3.0.1",
+    "@mantine/prism": "6.0.21",
+    "@tabler/icons-react": "3.1.0",
+    "consola": "3.2.3",
+    "@shared/is-empty": "workspace:@shared/is-empty-v0.1.0@*",
     "@shared/image": "workspace:@shared/image-v1.0.0@*",
-    "@shared/password-input": "workspace:@shared/password-input-v1.0.0@*"
+    "@shared/password-input": "workspace:@shared/password-input-v1.0.0@*",
+    "@shared/data": "workspace:@shared/data-v1.0.0@*",
+    "@shared/use-data": "workspace:@shared/use-data-v1.2.0@*",
+    "@shared/update": "workspace:@shared/update-v1.1.0@*"
   },
   "devDependencies": {
     "@types/node": "^16"

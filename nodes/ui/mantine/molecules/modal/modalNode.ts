@@ -39,8 +39,7 @@ export default reactNode('Modal', {
             }),
             getPort({ plug: 'input', name: 'fullScreen', displayName: 'Fullscreen', group: 'Layout', default: false, type: 'boolean' }),
             getPort({ plug: 'input', name: 'trapFocus', displayName: 'Trap focus', group: 'Params', default: true, type: 'boolean' }),
-            getPort({ plug: 'input', name: 'returnFocus', displayName: 'Return focus', group: 'Params', default: true, type: 'boolean' }),
-            getPort({ plug: 'input', name: 'returnFocus', displayName: 'Return focus', group: 'Params', default: true, type: 'boolean' }),
+            getPort({ plug: 'input', name: 'returnFocus', displayName: 'Return focus', group: 'Params', default: true, type: 'boolean' }),            
             getPort({
                 plug: 'input', name: 'closeOnEscape', displayName: 'Close on escape', group: 'Params', default: false, type: 'boolean'
             }),

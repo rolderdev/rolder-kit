@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kuzzle  
+spec:
+  selector:
+    app: kuzzle
+  ports:
+  - name: kuzzle
+    port: 80
+    targetPort: 7512
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kuzzle-redis  
+spec:
+  selector:
+    app: kuzzle-redis
+  ports:
+  - name: kuzzle-redis
+    port: 6379
+    targetPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kuzzle-els  
+spec:
+  selector:
+    app: kuzzle-els
+  ports:
+  - name: kuzzle-els
+    port: 9200
+    targetPort: 9200

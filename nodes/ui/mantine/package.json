@@ -60,7 +60,8 @@
     "@nodes/scroll-area": "workspace:*",
     "@nodes/grid": "workspace:*",
     "@nodes/carousel": "workspace:*",
-    "@nodes/modal": "workspace:*"
+    "@nodes/modal": "workspace:*",
+    "@nodes/drawer": "workspace:*"
   },
   "devDependencies": {
     "@rspack/core": "0.5.9",

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kuzzle
+  labels:
+    app: kuzzle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kuzzle
+  template:
+    metadata:
+      labels:
+        app: kuzzle
+    spec:
+      containers:
+        - name: kuzzle
+          image: cr.yandex/crpdrnml2dc1034r7bn1/kuzzle-rk:v0.1.0
+          env:
+            - name: kuzzle_services__storageEngine__client__node
+              value: http://kuzzle-els:9200
+            - name: kuzzle_services__internalCache__node__host
+              value: kuzzle-redis
+            - name: kuzzle_services__memoryStorage__node__host
+              value: kuzzle-redis
+            - name: NODE_ENV
+              value: production
+          ports:
+            - name: kuzzle
+              containerPort: 7512          
+          readinessProbe:
+            httpGet:     
+              port: 7512                       
+              path: /_healthcheck              
+            initialDelaySeconds: 30
+          livenessProbe:
+            httpGet:
+              port: 7512                       
+              path: /_healthcheck 
+            initialDelaySeconds: 30
+      imagePullSecrets:
+        - name: yandex-cr-secret

@@ -27,7 +27,7 @@ export type NodePort = {
 export type TypeName = '*' | 'string' | 'number' | 'boolean' | 'array' | 'signal' | 'proplist' | 'color' | 'object'
 export type GroupName = 'Project' | 'Version' | 'Scope' | 'Data' | 'Signals' | 'Params' | 'Style' | 'Loader' | 'Layout' |
   'Dimensions' | 'Placeholder' | 'Advanced' | 'States' | 'Icon' | 'DB classes' | 'Query params' | 'References' |
-  'Backward references' | 'Search' | 'Search fields' | 'Pagination' | 'Form' | 'Output DB classes*' | 'Fetch' | 'Mask params' |
+  'Backward references' | 'Search' | 'Search fields' | 'Pagination' | 'Form' | 'Output DB classes' | 'Fetch' | 'Mask params' |
   'Checkbox' | 'Margins' | 'Paddings' | 'Enablers' | 'Single selection' | 'Multi selection' | 'Sort' | 'Filter' | 'Expansion' |
   'Table styles' | 'Row styles' | 'Font' | 'Highlight' | 'Theme icon' | 'Scheme' | 'Network' | 'Columns' | 'Table style' |
   'Header style' | 'Row style' | 'Icons'
