@@ -1,8 +1,6 @@
 import flush from "just-flush";
 import fetchUsers from "./fetchUsers";
 import { FetchProps, FetchResult, Item } from "src/types";
-import taskHook from "../../hooks/taskHook";
-import companyHook from "../../hooks/companyHook";
 import { sort as fastSort } from 'fast-sort'
 
 export default async function fetch(props: FetchProps): Promise<FetchResult | void> {
@@ -38,8 +36,7 @@ export default async function fetch(props: FetchProps): Promise<FetchResult | vo
     }
 
     //===================================== hooks ===========================================
-    if (dbClass.split('_')[0] === 'task') items = taskHook(dbClass, items, sdk)
-    if (dbClass.split('_')[0] === 'company') items = companyHook(dbClass, items, sdk)
+
     //===================================== hooks ===========================================
 
     if (getUsers) {

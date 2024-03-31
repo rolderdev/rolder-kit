@@ -15,8 +15,8 @@
 
 ### data
 
-* (UseData v1.2.0)[http://rk.rolder.app/docs/data/useData.html]
-* (update v1.1.0)[http://rk.rolder.app/docs/data/update.html]
+* [UseData v1.2.0](http://docs.rolder.app/docs/data/useData.html)
+* [update v1.1.0](http://docs.rolder.app/docs/data/update.html)
 
 ## 2024-03-28 v1.0.0-beta19
 
