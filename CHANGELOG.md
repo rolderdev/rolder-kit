@@ -1,5 +1,13 @@
 # Changelog
 
+## 2024-04-01 v1.0.0-beta21
+
+### mantine
+
+#### Table v1.1.2
+
+* Исправлен баг, когда 2 таблицы прыгали в бесконечность.
+
 ## 2024-04-01 v1.0.0-beta20
 
 ### Rolder Kit
@@ -15,9 +23,9 @@
 
 ### data
 
-* [История изменений данных](http://docs.rolder.app/docs/data/hystory.html)
-* [UseData v1.2.0](http://docs.rolder.app/docs/data/useData.html)
-* [update v1.1.0](http://docs.rolder.app/docs/data/update.html)
+* [История изменений данных](https://docs.rolder.app/docs/data/history.html)
+* [UseData v1.2.0](https://docs.rolder.app/docs/data/useData.html)
+* [update v1.1.0](https://docs.rolder.app/docs/data/update.html)
 
 ## 2024-03-28 v1.0.0-beta19
 
