@@ -27,6 +27,8 @@ export default [
     { name: 'table2Controlled', group: 'Params', type: 'boolean', displayName: 'Controlled', default: false },
     // Data
     { name: 'table2Items', group: 'Data', type: 'array', displayName: 'Items' },
+    { name: 'tableId', group: 'Data', type: 'string', displayName: 'tableId' }, // MD
+    { name: 'parentTableId', group: 'Data', type: 'string', displayName: 'parentTableId' }, // MD
     // Single selection
     {
         name: 'table2SingleSelectedItem', group: 'Single selection', type: 'object', displayName: 'Single selected item',

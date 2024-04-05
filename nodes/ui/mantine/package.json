@@ -61,7 +61,8 @@
     "@nodes/grid": "workspace:*",
     "@nodes/carousel": "workspace:*",
     "@nodes/modal": "workspace:*",
-    "@nodes/drawer": "workspace:*"
+    "@nodes/drawer": "workspace:*",
+    "@nodes/table-selection-scope": "workspace:*"
   },
   "devDependencies": {
     "@rspack/core": "0.5.9",

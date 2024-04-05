@@ -105,7 +105,8 @@ export type Item = {
         createdAt: number
         updater: string | null
         updatedAt: number | null
-    }
+    },
+    parentTableId: string | undefined | null // MD
 }
 
 export type User = {

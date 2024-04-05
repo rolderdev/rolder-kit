@@ -14,5 +14,17 @@ export default reactNode('ColumnFilter', {
             'table2ColumnIndex', 'table2FilterValue', 'table2SetFilterValue', 'table2Filter', 'close', 'reset'
         ]),
         outputs: getPorts('output', ['table2FilterValue'])
+    },
+    'v1.1.0': {
+        module: {
+            dynamic: lazy(() => import(
+                /* webpackPrefetch: true */
+                /* webpackPreload: true */
+                '@shared/column-filter-v1.1.0')),
+        },
+        inputs: getPorts('input', [
+            'table2ColumnIndex', 'table2FilterValue', 'table2SetFilterValue', 'table2Filter', 'close', 'reset'
+        ]),
+        outputs: getPorts('output', ['table2FilterValue'])
     }
 }, {  allowChildren: true })
