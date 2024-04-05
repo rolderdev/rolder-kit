@@ -24,12 +24,12 @@
 ### Rolder Kit
 
 Созданы директории:
-rolder-kit/shared/internal/scope/v0.2.0
-rolder-kit/shared/components/ui/mantine/organisms/table/v1.2.0
-rolder-kit/shared/components/ui/mantine/organisms/table/modules/columnFilter/v1.1.0
-rolder-kit/shared/components/ui/mantine/organisms/table/modules/expansionRow/v1.1.0
-rolder-kit/shared/components/ui/mantine/molecules/tableScope/v1.0.0
-rolder-kit/nodes/ui/mantine/molecules/tableSelectionScope
+* rolder-kit/shared/internal/scope/v0.2.0
+* rolder-kit/shared/components/ui/mantine/organisms/table/v1.2.0
+* rolder-kit/shared/components/ui/mantine/organisms/table/modules/columnFilter/v1.1.0
+* rolder-kit/shared/components/ui/mantine/organisms/table/modules/expansionRow/v1.1.0
+* rolder-kit/shared/components/ui/mantine/molecules/tableScope/v1.0.0
+* rolder-kit/nodes/ui/mantine/molecules/tableSelectionScope
 
 Изменены общие файлы: // MD
 * nodes/ui/mantine/mantine.ts
