@@ -87,6 +87,7 @@ import tableNode from '@nodes/table'
 import columnCellNode from '@nodes/column-cell'
 import expansionRowNode from '@nodes/expansion-row'
 import columnFilterNode from '@nodes/column-filter'
+import tableSelectionScopeNode from "@nodes/table-selection-scope" // MD
 
 Noodl.defineModule({
     reactNodes: [
@@ -114,7 +115,7 @@ Noodl.defineModule({
         popoverNode, popoverTargetNode, popoverDropdownNode,
         // organisms
         //// table
-        tableNode, columnCellNode, expansionRowNode, columnFilterNode,
+        tableNode, columnCellNode, expansionRowNode, columnFilterNode, tableSelectionScopeNode, // MD
     ],
     nodes: [defineNode(notificationNode)]
 })
