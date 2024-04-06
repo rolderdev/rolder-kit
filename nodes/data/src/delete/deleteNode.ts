@@ -1,5 +1,5 @@
-import { jsNode } from '@shared/node'
-import { getPort, getPorts } from '@shared/port'
+import { jsNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
 export default jsNode('delete', {
     'v0.3.0': {
@@ -7,7 +7,7 @@ export default jsNode('delete', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/delete-v0.3.0')
+                '@packages/delete-v0.3.0')
         },
         inputs: [
             ...getPorts('input', ['delete']),
@@ -23,7 +23,7 @@ export default jsNode('delete', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/delete-v1.0.0')
+                '@packages/delete-v1.0.0')
         },
         inputs: getPorts('input', ['delete', 'scheme']),
         outputs: getPorts('output', ['deleted', 'deleting'])

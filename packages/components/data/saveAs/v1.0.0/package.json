@@ -1,0 +1,14 @@
+{
+  "name": "@packages/save-as-v1.0.0",
+  "main": "saveAs.ts",
+  "types": "saveAs.ts",
+  "type": "module",
+  "dependencies": {
+    "file-saver": "2.0.5"
+  },
+  "devDependencies": {
+    "types": "workspace:*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@types/file-saver": "2.0.7"
+  }
+}

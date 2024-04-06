@@ -1,0 +1,9 @@
+---
+node:
+  packageManager: pnpm
+  pnpm: {}
+  syncProjectWorkspaceDependencies: false
+typescript:
+  includeSharedTypes: true
+  includeProjectReferenceSources: false
+  syncProjectReferences: false

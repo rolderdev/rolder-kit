@@ -1,0 +1,12 @@
+{
+  "name": "@packages/convert-color-v0.3.0",
+  "main": "convertColor.ts",
+  "types": "convertColor.ts",
+  "type": "module",
+  "dependencies": {
+    "@mantine/core": "6.0.21"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

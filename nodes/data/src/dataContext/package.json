@@ -2,19 +2,13 @@
   "name": "@nodes/data-context",
   "main": "dataContext.ts",
   "types": "dataContext.ts",
-  "scripts": {
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    
-  },
   "dependencies": {
-    "@shared/node": "workspace:@shared/node-v0.8.0@*",
-    "@shared/port": "workspace:@shared/port-v0.6.0@*",
-    "@shared/data-context-v0.1.0": "workspace:*",
-    "@shared/data-context-v0.1.1": "workspace:*"
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@packages/port": "workspace:@packages/port-v0.6.0@*",
+    "@packages/data-context-v0.1.0": "workspace:*",
+    "@packages/data-context-v0.1.1": "workspace:*"
   },
   "devDependencies": {
-    
-    "@shared/typescript-config": "workspace:*",
-    "@types/react": "16.9.49"
+    "types": "workspace:*"
   }
 }

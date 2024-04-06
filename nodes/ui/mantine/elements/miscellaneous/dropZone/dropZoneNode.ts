@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { defaultUnits, getCustomEnumType, getPort, getPorts, getUnitType, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { defaultUnits, getCustomEnumType, getPort, getPorts, getUnitType, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('DropZone', {
@@ -8,7 +8,7 @@ export default reactNode('DropZone', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/drop-zone-v1.0.0'))
+                '@packages/drop-zone-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', ['customProps', 'disabled', 'radius', 'w', 'h', 'loading', 'reset']),

@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPorts } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPorts } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Box', {
@@ -8,7 +8,7 @@ export default reactNode('Box', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/box-v1.0.0'))
+                '@packages/box-v1.0.0'))
         },
         inputs: getPorts('input', ['customProps', 'opacity'])
     }

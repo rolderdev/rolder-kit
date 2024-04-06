@@ -1,4 +1,4 @@
-import { reactNode } from '@shared/node'
+import { reactNode } from '@packages/node'
 import { lazy } from 'react'
 
 export default reactNode('PopoverDropdown', {
@@ -7,7 +7,7 @@ export default reactNode('PopoverDropdown', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/popover-dropdown-v1.0.0'))
+                '@packages/popover-dropdown-v1.0.0'))
         }
     }
 }, {  allowChildren: true })

@@ -1,6 +1,6 @@
-import { reactNode } from '@shared/node'
+import { reactNode } from '@packages/node'
 
-import v100 from '@shared/expansion-row-v1.0.0'
+import v100 from '@packages/expansion-row-v1.0.0'
 
 export default reactNode('ExpansionRow', {
     'v1.0.0': {

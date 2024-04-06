@@ -1,5 +1,5 @@
-import { jsNode } from '@shared/node'
-import { getPort, getPorts } from '@shared/port'
+import { jsNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
 export default jsNode('create', {
     'v0.4.0': {
@@ -7,7 +7,7 @@ export default jsNode('create', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/create-v0.4.0')
+                '@packages/create-v0.4.0')
         },
         inputs: [
             ...getPorts('input', ['create']),
@@ -26,7 +26,7 @@ export default jsNode('create', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/create-v1.0.0')
+                '@packages/create-v1.0.0')
         },
         inputs: getPorts('input', ['create', 'scheme']),
         outputs: getPorts('output', ['created', 'creating', 'data'])

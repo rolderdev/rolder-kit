@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPorts, getPort, getCustomEnumType, getUnitType, defaultUnits, getMantinePort, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPorts, getPort, getCustomEnumType, getUnitType, defaultUnits, getMantinePort, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 const variants = ['light', 'filled', 'outline', 'dot', 'gradient']
@@ -10,7 +10,7 @@ export default reactNode('Highlight', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/highlight-v1.0.0'))
+                '@packages/highlight-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', [

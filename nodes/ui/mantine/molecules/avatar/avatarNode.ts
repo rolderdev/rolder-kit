@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getCustomEnumType, getPort, getPorts } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Avatar', {
@@ -8,7 +8,7 @@ export default reactNode('Avatar', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/avatar-v1.0.0'))
+                '@packages/avatar-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', ['customProps', 'size', 'radius', 'color']),

@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('DatePickerInput', {
@@ -8,7 +8,7 @@ export default reactNode('DatePickerInput', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/date-picker-input-v1.0.0'))
+                '@packages/date-picker-input-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', [
@@ -43,7 +43,7 @@ export default reactNode('DatePickerInput', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/date-picker-input-v1.0.1'))
+                '@packages/date-picker-input-v1.0.1'))
         },
         inputs: [
             ...getPorts('input', [

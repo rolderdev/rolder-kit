@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPorts, getPort, getUnitType, defaultUnits, getCustomEnumType } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPorts, getPort, getUnitType, defaultUnits, getCustomEnumType } from '@packages/port'
 import { lazy } from 'react'
 
 const positions = ['bottom-end', 'bottom-start', 'top-end', 'top-start', 'bottom-center', 'top-center', 'middle-center',
@@ -11,7 +11,7 @@ export default reactNode('Indicator', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/indicator-v1.0.0'))
+                '@packages/indicator-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', ['customProps', 'color', 'radius', 'withBorder', 'disabled', 'inline', 'label']),

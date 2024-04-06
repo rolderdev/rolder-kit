@@ -1,0 +1,11 @@
+{
+  "name": "@packages/get-formated-date-v0.2.0",
+  "main": "getFormatedDate.ts",
+  "types": "getFormatedDate.ts",
+  "dependencies": {
+    "@packages/get-value": "workspace:@packages/get-value-v0.8.0@*"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPort, getType } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPort, getType } from '@packages/port'
 import { lazy } from 'react'
 import ms from 'ms'
 
@@ -9,7 +9,7 @@ export default reactNode('Auth', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/auth-v1.0.0')),
+                '@packages/auth-v1.0.0')),
         },
         inputs: [
             getPort({

@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 const aligns = ['stretch', 'center', 'flex-start', 'flex-end']
@@ -11,7 +11,7 @@ export default reactNode('Stack', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/stack-v1.0.0'))
+                '@packages/stack-v1.0.0'))
         },
         inputs: [
             ...inputGroups.Margins, ...inputGroups.Paddings,

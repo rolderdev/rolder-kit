@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPorts } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPorts } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('ColumnFilter', {
@@ -8,7 +8,7 @@ export default reactNode('ColumnFilter', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/column-filter-v1.0.0')),
+                '@packages/column-filter-v1.0.0')),
         },
         inputs: getPorts('input', [
             'table2ColumnIndex', 'table2FilterValue', 'table2SetFilterValue', 'table2Filter', 'close', 'reset'

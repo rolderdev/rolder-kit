@@ -1,10 +1,10 @@
-import { reactNode } from '@shared/node'
-import { getPort, getPorts, getType } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPort, getPorts, getType } from '@packages/port'
 
-import v100 from '@shared/pdf-table-v1.0.0'
-import v110 from '@shared/pdf-table-v1.1.0'
-import v120 from '@shared/pdf-table-v1.2.0'
-import v130 from '@shared/pdf-table-v1.3.0'
+import v100 from '@packages/pdf-table-v1.0.0'
+import v110 from '@packages/pdf-table-v1.1.0'
+import v120 from '@packages/pdf-table-v1.2.0'
+import v130 from '@packages/pdf-table-v1.3.0'
 
 export default reactNode('PdfTable', {
     'v1.0.0': {

@@ -1,0 +1,13 @@
+{
+  "name": "@packages/port-v0.6.0",
+  "main": "port.ts",
+  "types": "port.ts",
+  "type": "module",
+  "dependencies": {
+    "change-case": "5.4.1",
+    "just-clone": "6.2.0"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

@@ -1,15 +1,12 @@
 {
-  "extends": "@shared/typescript-config/base.json",
+  "extends": "types",
   "include": [
-    "../../global.d.ts",
-    "src/**/*",
-    "*.d.ts",
-    "*.ts",
-    "*.tsx"
+    "**/*",
+    "../../types/**/*"
   ],
-  "exclude": [
-    "dist",
-    "build",
-    "node_modules"
+  "references": [
+    {
+      "path": "../../types"
+    }
   ]
 }

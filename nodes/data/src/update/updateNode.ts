@@ -1,5 +1,5 @@
-import { jsNode } from '@shared/node'
-import { getPort, getPorts } from '@shared/port'
+import { jsNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
 export default jsNode('update', {
     'v0.3.0': {
@@ -7,7 +7,7 @@ export default jsNode('update', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/update-v0.3.0')
+                '@packages/update-v0.3.0')
         },
         inputs: [
             ...getPorts('input', ['update']),
@@ -26,7 +26,7 @@ export default jsNode('update', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/update-v1.0.0')
+                '@packages/update-v1.0.0')
         },
         inputs: [
             ...getPorts('input', ['update', 'scheme']),
@@ -42,7 +42,7 @@ export default jsNode('update', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/update-v1.1.0')
+                '@packages/update-v1.1.0')
         },
         inputs: [
             ...getPorts('input', ['update']),
@@ -72,4 +72,4 @@ export default jsNode('update', {
             })
         ]
     }
-})
+}, { docs: 'https://docs.rolder.app/docs/data/update.html' })

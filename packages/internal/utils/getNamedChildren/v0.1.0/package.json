@@ -1,0 +1,9 @@
+{
+  "name": "@packages/get-named-children-v0.1.0",
+  "main": "getNamedChildren.ts",
+  "types": "getNamedChildren.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

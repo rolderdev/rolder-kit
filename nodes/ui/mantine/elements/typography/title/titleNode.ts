@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPorts, getPort, getCustomEnumType } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPorts, getPort, getCustomEnumType } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Title', {
@@ -8,7 +8,7 @@ export default reactNode('Title', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/title-v1.0.0')),
+                '@packages/title-v1.0.0')),
         },
         inputs: [
             ...getPorts('input', [

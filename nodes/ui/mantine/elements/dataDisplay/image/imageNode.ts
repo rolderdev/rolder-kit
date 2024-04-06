@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPorts, getPort, getCustomEnumType, getUnitType, defaultUnits, getMantinePort } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPorts, getPort, getCustomEnumType, getUnitType, defaultUnits, getMantinePort } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Image', {
@@ -8,7 +8,7 @@ export default reactNode('Image', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/image-v1.0.0'))
+                '@packages/image-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', ['customProps', 'propsFunction', 'useScope', 'src', 'height']),
@@ -35,4 +35,4 @@ export default reactNode('Image', {
             }),
         ]
     }
-})
+}, { docs: 'https://docs.rolder.app/docs/ui/elements/dataDisplay/image.html' })

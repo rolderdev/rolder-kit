@@ -2,16 +2,13 @@
   "name": "@nodes/group",
   "main": "groupNode.ts",
   "types": "groupNode.ts",
-  "scripts": {
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    
-  },
   "dependencies": {
-    "@shared/node": "workspace:@shared/node-v0.8.0@*",
-    "@shared/port": "workspace:@shared/port-v0.6.0@*",
-    "@shared/group-v1.0.0": "workspace:*"
+    "@packages/group-v1.0.0": "workspace:*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@packages/port": "workspace:@packages/port-v0.6.0@*",
+    "@packages/web-camera-v1.0.0": "workspace:*"
   },
-  "devDependencies": {    
-    "@shared/typescript-config": "workspace:*"    
+  "devDependencies": {
+    "types": "workspace:*"
   }
 }

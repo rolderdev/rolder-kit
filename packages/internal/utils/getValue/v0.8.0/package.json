@@ -1,0 +1,12 @@
+{
+  "name": "@packages/get-value-v0.8.0",
+  "main": "getValue.ts",
+  "types": "getValue.ts",
+  "dependencies": {
+    "just-template": "2.2.0",
+    "just-safe-get": "4.2.0"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

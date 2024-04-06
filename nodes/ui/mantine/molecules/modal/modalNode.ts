@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { defaultUnits, enums, getEnumType, getPort, getPorts, getUnitType } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { defaultUnits, enums, getEnumType, getPort, getPorts, getUnitType } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Modal', {
@@ -8,7 +8,7 @@ export default reactNode('Modal', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/modal-v1.0.0'))
+                '@packages/modal-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', ['customProps', 'open', 'close']),

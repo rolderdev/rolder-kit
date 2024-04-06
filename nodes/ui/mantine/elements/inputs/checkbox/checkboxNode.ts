@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Checkbox', {
@@ -8,7 +8,7 @@ export default reactNode('Checkbox', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/checkbox-v1.0.0'))
+                '@packages/checkbox-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', [

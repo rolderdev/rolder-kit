@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getCustomEnumType, getPort, getPorts } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('ScrollArea', {
@@ -8,7 +8,7 @@ export default reactNode('ScrollArea', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/scroll-area-v1.0.0'))
+                '@packages/scroll-area-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', ['customProps', 'w', 'opacity']),

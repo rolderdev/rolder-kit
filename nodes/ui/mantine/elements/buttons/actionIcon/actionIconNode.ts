@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('ActionIcon', {
@@ -8,7 +8,7 @@ export default reactNode('ActionIcon', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/action-icon-v1.0.0'))
+                '@packages/action-icon-v1.0.0'))
         },
         inputs: [
             ...inputGroups.Margins, ...inputGroups.Icon,

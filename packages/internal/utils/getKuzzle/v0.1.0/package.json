@@ -1,0 +1,12 @@
+{
+  "name": "@packages/get-kuzzle-v0.1.0",
+  "main": "getKuzzle.ts",
+  "types": "getKuzzle.ts",
+  "type": "module",
+  "dependencies": {
+    "@tanstack/react-query": "4.36.1"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

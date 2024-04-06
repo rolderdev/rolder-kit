@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPorts } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPorts } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Table', {
@@ -8,7 +8,7 @@ export default reactNode('Table', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/table-v1.0.0')),
+                '@packages/table-v1.0.0')),
         },
         inputs: getPorts('input', [
             'customProps', 'propsFunction',
@@ -58,7 +58,7 @@ export default reactNode('Table', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/table-v1.1.0')),
+                '@packages/table-v1.1.0')),
         },
         inputs: getPorts('input', [
             'customProps', 'propsFunction',
@@ -108,7 +108,7 @@ export default reactNode('Table', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/table-v1.1.1')),
+                '@packages/table-v1.1.1')),
         },
         inputs: getPorts('input', [
             'customProps', 'propsFunction',
@@ -158,7 +158,7 @@ export default reactNode('Table', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/table-v1.1.2')),
+                '@packages/table-v1.1.2')),
         },
         inputs: getPorts('input', [
             'customProps', 'propsFunction',

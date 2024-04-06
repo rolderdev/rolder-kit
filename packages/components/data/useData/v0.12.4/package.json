@@ -1,0 +1,25 @@
+{
+  "name": "@packages/use-data-v0.12.4",
+  "main": "useData.tsx",
+  "types": "useData.tsx",
+  "type": "module",
+  "dependencies": {
+    "@tanstack/react-query": "4.36.1",
+    "nanostores": "0.9.5",
+    "bunshi": "2.0.2",
+    "just-last": "3.2.0",
+    "just-clone": "6.2.0",
+    "just-is-empty": "3.4.1",
+    "@packages/get-value": "workspace:@packages/get-value-v0.8.0@*",
+    "@packages/data-context": "workspace:@packages/data-context-v0.1.1@*",
+    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+    "@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@*",
+    "@packages/kuzzle-fetch": "workspace:@packages/kuzzle-fetch-v0.1.0@*",
+    "@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*",
+    "@packages/kuzzle-subscribe": "workspace:@packages/kuzzle-subscribe-v0.1.0@*"
+  },
+  "devDependencies": {
+    "types": "workspace:*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@*"
+  }
+}

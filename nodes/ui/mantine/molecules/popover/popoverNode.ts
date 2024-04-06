@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 const positions = [
@@ -13,7 +13,7 @@ export default reactNode('Popover', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/popover-v1.0.0'))
+                '@packages/popover-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', ['customProps', 'disabled', 'width', 'radius', 'shadow', 'open', 'close']),

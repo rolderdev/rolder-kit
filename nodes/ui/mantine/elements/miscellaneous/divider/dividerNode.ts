@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Divider', {
@@ -8,7 +8,7 @@ export default reactNode('Divider', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/divider-v1.0.0'))
+                '@packages/divider-v1.0.0'))
         },
         inputs: [
             ...inputGroups.Margins,

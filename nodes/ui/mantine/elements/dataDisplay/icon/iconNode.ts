@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPorts, getPort, getCustomEnumType, getUnitType, defaultUnits, getMantinePort, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPorts, getPort, getCustomEnumType, getUnitType, defaultUnits, getMantinePort, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Icon', {
@@ -8,7 +8,7 @@ export default reactNode('Icon', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/icon-v1.0.0'))
+                '@packages/icon-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', [

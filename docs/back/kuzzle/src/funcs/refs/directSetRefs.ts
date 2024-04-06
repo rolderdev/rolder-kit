@@ -6,7 +6,7 @@ export default function directSetRefs(
   schemes: BaseFetchScheme[],
 ): Data {
   for (const [dbClass, dbClassData] of Object.entries(data)) {
-    const scheme = schemes.find((i) => i.dbClass.split("_")[0] === dbClass);
+    const scheme = schemes.find((i) => i.dbClass === dbClass);
     let itemsWithRefs = dbClassData?.items;
 
     if (scheme.refs) {

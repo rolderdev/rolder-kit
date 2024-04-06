@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 const positions = ['left', 'center', 'right', 'apart']
@@ -10,7 +10,7 @@ export default reactNode('Group', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/group-v1.0.0'))
+                '@packages/group-v1.0.0'))
         },
         inputs: [
             ...inputGroups.Margins, ...inputGroups.Paddings,

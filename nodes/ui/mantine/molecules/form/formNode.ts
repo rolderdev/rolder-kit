@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPort } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPort } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Form', {
@@ -8,7 +8,7 @@ export default reactNode('Form', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/form-v1.0.0'))
+                '@packages/form-v1.0.0'))
         },
         inputs: [
             getPort({

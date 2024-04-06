@@ -1,0 +1,14 @@
+{
+  "name": "@packages/pdf-document-v1.2.0",
+  "main": "pdfDocument.tsx",
+  "types": "pdfDocument.tsx",
+  "type": "module",
+  "dependencies": {
+    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+    "@react-pdf/renderer": "3.4.2"
+  },
+  "devDependencies": {
+    "types": "workspace:*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@*"
+  }
+}

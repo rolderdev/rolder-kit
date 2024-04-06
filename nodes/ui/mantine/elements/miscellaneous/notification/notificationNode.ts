@@ -1,5 +1,5 @@
-import { jsNode } from '@shared/node'
-import { getPort, getPorts } from '@shared/port'
+import { jsNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
 export default jsNode('notification', {
     'v1.0.0': {
@@ -7,7 +7,7 @@ export default jsNode('notification', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/notification-v1.0.0')
+                '@packages/notification-v1.0.0')
         },
         inputs: [
             ...getPorts('input', ['color']),

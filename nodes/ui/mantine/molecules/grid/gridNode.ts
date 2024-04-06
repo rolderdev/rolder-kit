@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 const justifies = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around']
@@ -11,7 +11,7 @@ export default reactNode('Grid', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/grid-v1.0.0'))
+                '@packages/grid-v1.0.0'))
         },
         inputs: [
             ...inputGroups.Margins, ...inputGroups.Paddings,

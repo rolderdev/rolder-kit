@@ -1,4 +1,4 @@
-import { reactNode } from '@shared/node'
+import { reactNode } from '@packages/node'
 import { lazy } from 'react'
 
 export default reactNode('HoverCardTarget', {
@@ -7,7 +7,7 @@ export default reactNode('HoverCardTarget', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/hover-card-target-v1.0.0'))
+                '@packages/hover-card-target-v1.0.0'))
         }
     }
 }, {  allowChildren: true })

@@ -1,22 +1,12 @@
 {
   "name": "xlsx",
-  "scripts": {
-    "build": "rspack build --mode=production",
-    "dev": "rspack build --mode=development --env=noodlDev",
-    "lint": "eslint . --max-warnings 0",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-    
-  },
   "dependencies": {
     "@noodl/noodl-sdk": "0.5.4",
-    "@shared/node": "workspace:@shared/node-v0.8.0@*",
-    "@shared/port": "workspace:@shared/port-v0.6.0@*",
-    "@shared/create-xlsx-v1.0.0": "workspace:*"
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@packages/port": "workspace:@packages/port-v0.6.0@*",
+    "@packages/create-xlsx-v1.0.0": "workspace:*"
   },
   "devDependencies": {
-    "@rspack/core": "0.5.9",
-    "@rspack/cli": "0.5.9",
-    "rspack-manifest-plugin": "5.0.0-alpha0",
-    "@shared/typescript-config": "workspace:*"
+    "types": "workspace:*"
   }
 }

@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 const aligns = ['flex-start', 'center', 'flex-end']
@@ -13,7 +13,7 @@ export default reactNode('Flex', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/flex-v1.0.0'))
+                '@packages/flex-v1.0.0'))
         },
         inputs: [
             ...inputGroups.Margins, ...inputGroups.Paddings,

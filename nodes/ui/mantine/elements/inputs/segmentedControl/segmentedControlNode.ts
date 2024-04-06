@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('SegmentedControl', {
@@ -8,7 +8,7 @@ export default reactNode('SegmentedControl', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/segmented-control-v1.0.0')),
+                '@packages/segmented-control-v1.0.0')),
         },
         inputs: [
             ...getPorts('input', [

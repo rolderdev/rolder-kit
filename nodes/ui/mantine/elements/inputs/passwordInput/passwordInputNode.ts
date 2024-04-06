@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getCustomEnumType, getMantinePort, getPort, getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getMantinePort, getPort, getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('PasswordInput', {
@@ -8,7 +8,7 @@ export default reactNode('PasswordInput', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/password-input-v1.0.0')),
+                '@packages/password-input-v1.0.0')),
         },
         inputs: [
             ...getPorts('input', [
@@ -27,4 +27,4 @@ export default reactNode('PasswordInput', {
         ],
         outputs: getPorts('output', ['typedValue', 'reseted'])
     }
-})
+}, { docs: 'https://docs.rolder.app/docs/ui/elements/inputs/passwordInput.html' })

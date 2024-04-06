@@ -1,7 +1,7 @@
-import { reactNode } from '@shared/node'
-import { getPorts } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPorts } from '@packages/port'
 
-import v100 from '@shared/column-cell-v1.0.0'
+import v100 from '@packages/column-cell-v1.0.0'
 
 export default reactNode('ColumnCell', {
     'v1.0.0': {

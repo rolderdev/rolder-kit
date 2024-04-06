@@ -1,5 +1,7 @@
-packages:  
-  - "nodes/**"
-  - "shared/**"
-  - "docs/**"
-  - '!docs/back/**'
+---
+packages:
+  - types/**
+  - nodes/**
+  - packages/**
+  - docs/**
+  - '!docs/back/**'  

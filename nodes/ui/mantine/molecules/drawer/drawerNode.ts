@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { defaultUnits, enums, getCustomEnumType, getEnumType, getPort, getPorts, getUnitType } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { defaultUnits, enums, getCustomEnumType, getEnumType, getPort, getPorts, getUnitType } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Drawer', {
@@ -8,7 +8,7 @@ export default reactNode('Drawer', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/drawer-v1.0.0'))
+                '@packages/drawer-v1.0.0'))
         },
         inputs: [
             ...getPorts('input', ['customProps', 'open', 'close']),

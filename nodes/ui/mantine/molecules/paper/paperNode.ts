@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPorts, inputGroups } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPorts, inputGroups } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('Paper', {
@@ -8,7 +8,7 @@ export default reactNode('Paper', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/paper-v1.0.0'))
+                '@packages/paper-v1.0.0'))
         },
         inputs: [
             ...inputGroups.Margins, ...inputGroups.Paddings,

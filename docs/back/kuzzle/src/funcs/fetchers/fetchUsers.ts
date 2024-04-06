@@ -4,7 +4,7 @@ import { Item } from "src/types";
 
 export default async function (sdk: EmbeddedSDK, userIds: string[], rItems: Item[]) {
     const kUsers = await sdk.security.mGetUsers(userIds)
-    let rUsers = kUsers.map(k => ({ ...k._source, id: k._id }))
+    let rUsers = kUsers.map(k => ({ ...k._source, id: k._id, dbClass: 'user' }))
     await Promise.all(rUsers.map(i => sdk.security.getCredentials('local', i.id)))
         .then((r) => rUsers = rUsers.map((i: any, idx: number) => {
             set(i, ['credentials', 'local', 'username'], r[idx].username)

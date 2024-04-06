@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+        "allowJs": false,
+        "allowSyntheticDefaultImports": true,
+        "declaration": false,
+        "esModuleInterop": true,
+        "experimentalDecorators": false,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
+        "resolveJsonModule": true,
+        "lib": [
+            "es2022",
+            "DOM",
+            "DOM.Iterable"
+        ],
+        "module": "esnext",
+        "moduleResolution": "node",
+        "noEmitOnError": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "pretty": true,
+        "removeComments": false,
+        "skipLibCheck": true,
+        "sourceMap": false,
+        "strict": true,
+        "target": "es2022",
+        "verbatimModuleSyntax": true,
+        "jsx": "react"
+    }
+}

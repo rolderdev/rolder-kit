@@ -3,7 +3,7 @@ import mergeFilters from './mergeFilters';
 
 export default function applyFilters(
   scheme: BaseFetchScheme[][number],
-  data: Data,
+  data: Data
 ): BaseFetchScheme {
   let filters = scheme.filters
 

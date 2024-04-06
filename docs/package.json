@@ -2,11 +2,6 @@
   "name": "docs",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "rspress dev --port=9090",
-    "build": "rspress build",
-    "preview": "rspress preview"
-  },
   "dependencies": {
     "rspress": "1.16.2",
     "@mantine/core": "6.0.21",
@@ -16,14 +11,15 @@
     "@mantine/prism": "6.0.21",
     "@tabler/icons-react": "3.1.0",
     "consola": "3.2.3",
-    "@shared/is-empty": "workspace:@shared/is-empty-v0.1.0@*",
-    "@shared/image": "workspace:@shared/image-v1.0.0@*",
-    "@shared/password-input": "workspace:@shared/password-input-v1.0.0@*",
-    "@shared/data": "workspace:@shared/data-v1.0.0@*",
-    "@shared/use-data": "workspace:@shared/use-data-v1.2.0@*",
-    "@shared/update": "workspace:@shared/update-v1.1.0@*"
+    "@packages/is-empty": "workspace:@packages/is-empty-v0.1.0@*",
+    "@packages/image": "workspace:@packages/image-v1.0.0@*",
+    "@packages/password-input": "workspace:@packages/password-input-v1.0.0@*",
+    "@packages/data": "workspace:@packages/data-v1.0.0@*",
+    "@packages/use-data": "workspace:@packages/use-data-v1.3.0@*",
+    "@packages/update": "workspace:@packages/update-v1.1.0@*"
   },
   "devDependencies": {
-    "@types/node": "^16"
+    "@types/node": "^16",
+    "types": "workspace:*"
   }
 }

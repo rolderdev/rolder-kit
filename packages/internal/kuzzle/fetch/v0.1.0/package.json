@@ -1,0 +1,17 @@
+{
+  "name": "@packages/kuzzle-fetch-v0.1.0",
+  "main": "fetch.ts",
+  "types": "fetch.ts",
+  "type": "module",
+  "dependencies": {
+    "nanostores": "0.10.2",
+    "@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@*",
+    "just-flush": "2.3.0",
+    "just-safe-set": "4.2.1",
+    "@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*"
+  },
+  "devDependencies": {
+    "types": "workspace:*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@*"
+  }
+}

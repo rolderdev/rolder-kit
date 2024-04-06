@@ -1,5 +1,26 @@
 # Changelog
 
+## 2024-04-04 v1.0.0-beta22
+
+### Rolder Kit
+
+* Monorepo долетел на [турбо](https://turbo.build/repo) до [луны](https://moonrepo.dev/moon). Обратите внимание, изменились названия пакетов.
+* Утилита isEmpty не верно отрабатывала тип данных blob.
+* Компоненты, у которых есть документация теперь открывают ее по нажаию на вопрос, как в оргинальных компонентах Noodl.
+
+### data
+
+* [UseData v1.3.0](https://docs.rolder.app/docs/data/useData.html#v130-20240404)
+
+### pdf
+
+#### PdfTable v1.4.0
+
+* Добавлено решение для отрисовки кастомной строки. Параметр Use function > Get row. Принимает item текущей строки. Функция должна выдавать тип компоненты строкой:
+  * `Row` - внутренняя стандартная строка таблицы.
+  * `PdfTable` - строка это другая таблица.
+  * `PdfView` - строка это нода PdfView, в которую вложены любые другие ноды класса Pdf. Не принимает на вход item, а значит не может использовать данные текущей строки.
+
 ## 2024-04-01 v1.0.0-beta21
 
 ### mantine
@@ -24,7 +45,7 @@
 ### data
 
 * [История изменений данных](https://docs.rolder.app/docs/data/history.html)
-* [UseData v1.2.0](https://docs.rolder.app/docs/data/useData.html)
+* [UseData v1.2.0](https://docs.rolder.app/docs/data/useData.html#v120-20240401)
 * [update v1.1.0](https://docs.rolder.app/docs/data/update.html)
 
 ## 2024-03-28 v1.0.0-beta19
