@@ -332,7 +332,7 @@ export default reactNode('UseData', {
         ]
     },
     'v1.3.0': {
-        hashTag: '#pre-release',
+        hashTag: '#expreimental',
         module: {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */

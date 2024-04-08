@@ -1,0 +1,24 @@
+{
+  "extends": "@packages/typescript-config/react-library.json",
+  "include": [
+    "*.d.ts",
+    "*.ts",
+    "*.tsx",
+    "../../../../../../../types/**/*",
+    "../../../../../../types/**/*",
+    "src/**/*"
+  ],
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules"
+  ],
+  "references": [
+    {
+      "path": "../../../../../../packages/components/ui/webCamera/v1.0.0"
+    },
+    {
+      "path": "../../../../../../types"
+    }
+  ]
+}

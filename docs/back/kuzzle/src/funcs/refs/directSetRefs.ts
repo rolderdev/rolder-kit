@@ -4,7 +4,7 @@ import { setBackRefs, setRefs } from "./setRefs";
 export default function directSetRefs(
   data: Data,
   schemes: BaseFetchScheme[],
-): Data {
+) {
   for (const [dbClass, dbClassData] of Object.entries(data)) {
     const scheme = schemes.find((i) => i.dbClass === dbClass);
     let itemsWithRefs = dbClassData?.items;
@@ -38,6 +38,4 @@ export default function directSetRefs(
       }
     }
   }
-
-  return data;
 }

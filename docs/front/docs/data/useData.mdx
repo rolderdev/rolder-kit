@@ -267,14 +267,14 @@
         dbClass: 'group',
         filters: { not: { exists: 'group.id' } },
         sorts: [{ 'content.name': 'asc' }],         
-        hierarchyFunc: `(parentItem, level, data) => {
-            if (level === 2) return // отменяем по какой-то логике
+        hierarchyFunc: `(level, parentItem, parentData) => {
+            if (level === 5) return // отменяем по какой-то логике
             else return [ // возвращаем схему, которая скачает нужные данные для каждого родителя
                 {
                     dbClass: 'group',
                     filters: { equals: { 'group.id': parentItem.id } }, // фильтр, который выдает только детей
                     sorts: [{ 'content.name': 'asc' }],
-                    filtersEvalFunc: (data) => { // Обрати внимение на название. Посколькоу все это уже обернуто в текст, 
+                    filtersEvalFunc: (localData, parentIem, parentData) => { // Обрати внимение на название. Посколькоу все это уже обернуто в текст, 
                                                 // нам нужно сказать серверу, что не нужно пытаться это делать снова. 
                                                 // Для этого исползуем filtersEvalFunc вместо filtersFunc.
                                                 // Такое же правило и для hierarchyFunc, если нужно запустить иерархию внутри иерархии
@@ -307,7 +307,7 @@ import UseData from '../../src/wrappers/data/useData'
 * Функции научились возвращать ошибки.
 * Версионность классов БД переехала на сервер.
 * Теперь каждый item выдает в своей структуре dbClass.
-* Добавлен выходной порт Error. Становится true, если прошло три попытки и ошибка не известна.
+* Добавлен выходной порт Error. Становится true при ошибках.
 * Исправлена ошибка, когда данные по каким то причинам не загружались, статус Fetching оставлася true.
 
 ### v1.2.0 `2024.04.01`

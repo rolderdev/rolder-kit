@@ -5,8 +5,7 @@
   "dependencies": {
     "@packages/node": "workspace:@packages/node-v0.8.0@*",
     "@packages/pdf-text-v1.0.0": "workspace:*",
-    "@packages/port": "workspace:@packages/port-v0.6.0@*",
-    "@packages/web-camera-v1.0.0": "workspace:*"
+    "@packages/port": "workspace:@packages/port-v0.6.0@*"
   },
   "devDependencies": {
     "types": "workspace:*"

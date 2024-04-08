@@ -26,6 +26,7 @@ export function convertAndCheckProp(node: GraphModelNode, context: NodeContext, 
 type InputType = TypeName | 'enum'
 type ValueType = 'string' | 'boolean' | 'array' | 'number' | 'object'
 
+//@ts-ignore
 function convertAndCheckType(nodeInput: NodePort, typeOfValue: ValueType, value: any): { value?: any, error?: string } {
     const dn = nodeInput.displayName
     const inputType = (typeof nodeInput.type === 'object' ? nodeInput.type.name : nodeInput.type) as InputType
@@ -94,7 +95,7 @@ function convertAndCheckType(nodeInput: NodePort, typeOfValue: ValueType, value:
                 if (typeOfValue === 'string') return { value }
             } else if (typeOfValue === 'number') return { value }
             else return { error: `Input "${dn}" should be number type, got "${typeOf(value)}"` }
-        }
+        } break;
 
         case 'proplist': {
             if (value[0]?.id) return { value: value.map((i: any) => i.label) }
@@ -102,6 +103,11 @@ function convertAndCheckType(nodeInput: NodePort, typeOfValue: ValueType, value:
         }
 
         case 'color': {
+            if (typeOfValue === 'string') return { value: value }
+            else return { error: `Input "${dn}" should be string type, got "${typeOf(value)}"` }
+        }
+
+        case 'component': {
             if (typeOfValue === 'string') return { value: value }
             else return { error: `Input "${dn}" should be string type, got "${typeOf(value)}"` }
         }

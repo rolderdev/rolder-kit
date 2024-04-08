@@ -1,6 +1,10 @@
 {
   "name": "mantine",
   "dependencies": {
+    "@noodl/noodl-sdk": "0.5.4",
+    "@packages/mantine-v1.0.0": "workspace:*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@packages/port": "workspace:@packages/port-v0.6.0@*",
     "@nodes/action-icon": "workspace:*",
     "@nodes/avatar": "workspace:*",
     "@nodes/badge": "workspace:*",
@@ -52,11 +56,7 @@
     "@nodes/textarea": "workspace:*",
     "@nodes/title": "workspace:*",
     "@nodes/unstyled-button": "workspace:*",
-    "@noodl/noodl-sdk": "0.5.4",
-    "@packages/mantine-v1.0.0": "workspace:*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "@packages/port": "workspace:@packages/port-v0.6.0@*",
-    "@packages/web-camera-v1.0.0": "workspace:*"
+    "@nodes/table-selection-scope": "workspace:*"
   },
   "devDependencies": {
     "types": "workspace:*"

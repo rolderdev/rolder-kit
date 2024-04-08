@@ -52,5 +52,5 @@ export default async function (p: { fetchScheme: FetchScheme, props: Props }) {
     }
 
     if (!hasErrors(response.result)) return response.result
-    else return {}
+    else return { error: true } as any
 }

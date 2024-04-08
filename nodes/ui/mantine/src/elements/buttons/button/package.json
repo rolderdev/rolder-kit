@@ -1,0 +1,14 @@
+{
+  "name": "@nodes/button",
+  "main": "buttonNode.ts",
+  "types": "buttonNode.ts",
+  "dependencies": {
+    "@packages/button-v1.0.0": "workspace:*",
+    "@packages/mantine-v1.0.0": "workspace:*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@packages/port": "workspace:@packages/port-v0.6.0@*"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

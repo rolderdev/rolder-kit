@@ -30,14 +30,14 @@ const dataNode = reactNode('Data', {
                 plug: 'input', name: 'backendUrl', displayName: 'Backend url', group: 'Params', type: 'string', default: 'localhost',
                 customs: {
                     required: 'both',
-                    dependsOn(p) { return p.backendDevMode },
+                    dependsOn(p) { return p.backendDevMode ? true : false },
                 }
             }),
             getPort({
                 plug: 'input', name: 'backendPort', displayName: 'Backend port', group: 'Params', type: 'number', default: 7512,
                 customs: {
                     required: 'both',
-                    dependsOn(p) { return p.backendDevMode },
+                    dependsOn(p) { return p.backendDevMode ? true : false },
                 }
             }),
             getPort({

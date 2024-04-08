@@ -1,0 +1,16 @@
+{
+  "name": "@packages/scope-v0.2.0",
+  "main": "scope.ts",
+  "types": "scope.ts",
+  "type": "module",
+  "dependencies": {
+    "bunshi": "2.0.2",
+    "nanostores": "0.10.0",
+    "jotai": "2.2.2"
+  },
+  "devDependencies": {
+    "types": "workspace:*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@mantine/core": "6.0.21"
+  }
+}

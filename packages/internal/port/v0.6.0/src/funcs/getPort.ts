@@ -1,5 +1,5 @@
 import clone from "just-clone";
-import { type GroupName, type NodePort } from "../../types";
+import { type NodePort } from "../../types";
 import data from "../ports/data";
 import style from "../ports/style";
 import dimensions from "../ports/dimensions";
@@ -63,7 +63,7 @@ export function getPorts(plug: 'input' | 'output', portNames: PortName[]) {
     return resultPorts
 }
 
-export function getGroupedPorts(plug: 'input' | 'output', portNames: PortName[], groupName: GroupName) {
+export function getGroupedPorts(plug: 'input' | 'output', portNames: PortName[], groupName: string) {
     let resultPorts: NodePort[] = []
     portNames.forEach(portName => {
         const p = ports.find(i => i.name === portName) as NodePort

@@ -57,7 +57,7 @@ export default async function search(request: KuzzleRequest, sdk: EmbeddedSDK, d
         ))
       }
 
-      data = directSetRefs(data, initialSchemes)
+      directSetRefs(data, initialSchemes)
     }
 
     await execute()

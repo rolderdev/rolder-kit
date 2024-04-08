@@ -1,25 +1,58 @@
 import { EmbeddedSDK, KuzzleRequest } from "kuzzle"
 import fetch from '../funcs/fetchers/fetch'
 import unique from "just-unique"
-import directSetRefs from "../funcs/refs/directSetRefs"
 import prepareScheme from "../funcs/schemes/prepareFetchScheme"
 import { BaseFetchScheme, Data, DbClasses, HierarchyFunction } from "../types"
 import applyFilters from '../funcs/filters/applyFilters'
+import directSetRefs from "../funcs/refs/directSetRefs"
 
-async function fetchBySchemes(
+async function fetchHierarchy(
   dbName: string,
   sdk: EmbeddedSDK,
   dbClasses: DbClasses,
-  startTime: number,
   level: number,
-  schemes: BaseFetchScheme[],
-  hierarchyEvalFunc?: HierarchyFunction
-): Promise<Data> {
-  const preparedSchemes = prepareScheme(schemes)
+  parentDbClass: string,
+  parentData: Data,
+  hierarchyEvalFunc: HierarchyFunction
+) {
+  await Promise.all(parentData[parentDbClass]?.items?.map(async parentItem => {
+    const hierarchySchemes = hierarchyEvalFunc(level, parentItem, parentData)
+    if (hierarchySchemes && level < 10) {
+      let localData = {} as Data
+
+      const orders = unique(hierarchySchemes.map(i => i.order)).sort()
+      const schemeArrays = orders.map((order) => hierarchySchemes.filter((i) => i.order === order))
+
+      for (const schemeArray of schemeArrays) {
+        await Promise.all(schemeArray.map(async (fs) =>
+          await fetch({ dbName, sdk, ...applyFilters(fs, localData, parentItem, parentData) }, dbClasses)
+            .then(async fetchResult => {
+              if (fetchResult) {
+                localData[fs.dbClass] = fetchResult
+                // next level
+                if (parentDbClass === fs.dbClass && fetchResult.items?.length) await fetchHierarchy(
+                  dbName, sdk, dbClasses, level + 1, parentDbClass, localData, hierarchyEvalFunc
+                )
+              }
+            })
+        ))
+      }
+
+      directSetRefs(localData, hierarchySchemes)
+      parentItem.hierarchyData = localData
+    }
+  }))
+}
+
+export default async function f(request: KuzzleRequest, sdk: EmbeddedSDK, dbClasses: DbClasses) {
+  const dbName = request.getString("dbName")
+  const baseSchemes = request.getArray("fetchScheme") as BaseFetchScheme[]
+  const preparedSchemes = prepareScheme(baseSchemes)
+
   let data = {} as Data
 
   let schemeHasError = false
-  schemes.map(i => {
+  baseSchemes.map(i => {
     preparedSchemes.map(ps => {
       if (ps[i.dbClass]?.error) {
         data[i.dbClass] = { error: ps[i.dbClass].error }
@@ -28,79 +61,64 @@ async function fetchBySchemes(
     })
   })
 
-  if (performance.now() - startTime > 5000) {
-    console.error(`Hierarchy error: 5 seconds timeout has been reached`)
-    data = { any: { error: `Hierarchy error: 5 seconds timeout has been reached` } }
-    schemeHasError = true
-  }
-
   if (!schemeHasError) {
-    const validatedSchemes = preparedSchemes as BaseFetchScheme[]
-    const orders = unique(validatedSchemes.map(i => i.order)).sort()
-    const schemeArrays = orders.map((order) => validatedSchemes.filter((i) => i.order === order))
+    try {
+      const validatedSchemes = preparedSchemes as BaseFetchScheme[]
+      const orders = unique(validatedSchemes.map(i => i.order)).sort()
+      const schemeArrays = orders.map((order) => validatedSchemes.filter((i) => i.order === order))
 
-    for (const schemeArray of schemeArrays) {
-      await Promise.all(schemeArray.map((fs) =>
-        fetch({ dbName, sdk, ...applyFilters(fs, data) }, dbClasses)
-          .then(async (fr) => {
-            if (fr) { data[fs.dbClass] = fr }
+      // level 0
+      for (const schemeArray of schemeArrays) {
+        await Promise.all(schemeArray.map(async (fs) =>
+          await fetch({ dbName, sdk, ...applyFilters(fs, data) }, dbClasses)
+            .then(async fetchResult => { if (fetchResult) data[fs.dbClass] = fetchResult })
+        ))
 
-            if (fr && fr.items.length && level < 10) {
-              // start propogate hierarchy
-              if (fs.hierarchyFunc || fs.hierarchyEvalFunc) {
-                await Promise.all(fr.items.map(async parentItem => {
-                  try {
-                    const hierarchyScheme = fs.hierarchyEvalFunc(parentItem, level, data)
-                    if (hierarchyScheme) {
-                      const sizeDbClasses: string[] = []
-                      hierarchyScheme.map((i: any) => { if (i.size > 1000) sizeDbClasses.push(i.dbClass) })
-                      const historyDbClasses: string[] = []
-                      hierarchyScheme.map((i: any) => { if (i.history > 1000) historyDbClasses.push(i.dbClass) })
-                      if (sizeDbClasses.length) {
-                        console.error(`Hierarchy func error: size should be less or equal 1000. Mismatched DB classes: ${sizeDbClasses.join(', ')}`)
-                        parentItem.hierarchyData = { [fs.dbClass]: { error: `Hierarchy func error: size should be less or equal 1000. Mismatched DB classes: ${sizeDbClasses.join(', ')}` } }
-                      } else if (historyDbClasses.length) {
-                        console.error(`Hierarchy func error: history should be less or equal 1000. Mismatched DB classes: ${historyDbClasses.join(', ')}`)
-                        parentItem.hierarchyData = { [fs.dbClass]: { error: `Hierarchy func error: history should be less or equal 1000. Mismatched DB classes: ${historyDbClasses.join(', ')}` } }
-                      } else parentItem.hierarchyData = await fetchBySchemes(
-                        dbName, sdk, dbClasses, startTime, level + 1, hierarchyScheme, fs.hierarchyEvalFunc
-                      )
-                    }
-                  } catch (error) {
-                    console.error("Hierarchy func error", error)
-                    data[fs.dbClass] = { error: `Hierarchy func error: ${error.message}` }
-                  }
+        directSetRefs(data, validatedSchemes)
+      }
+
+      // level 1        
+      const schemesWithHierarchy = validatedSchemes.filter(i => i.hierarchyFunc)
+      if (schemesWithHierarchy.length) await Promise.all(schemesWithHierarchy.map(async schemeWithHierarchy => {
+        await Promise.all(data[schemeWithHierarchy.dbClass]?.items?.map(async parentItem => {
+          try {
+            const hierarchySchemes = schemeWithHierarchy.hierarchyEvalFunc(1, parentItem, data)
+            if (hierarchySchemes) {
+              let localData = {} as Data
+
+              const orders = unique(hierarchySchemes.map(i => i.order)).sort()
+              const schemeArrays = orders.map((order) => hierarchySchemes.filter((i) => i.order === order))
+
+              for (const schemeArray of schemeArrays) {
+                await Promise.all(schemeArray.map(async (fs) => {
+                  await fetch({ dbName, sdk, ...applyFilters(fs, localData, parentItem, data) }, dbClasses)
+                    .then(async fetchResult => {
+                      if (fetchResult) {
+                        localData[fs.dbClass] = fetchResult
+
+                        // level 2-9
+                        if (schemeWithHierarchy.dbClass === fs.dbClass && fetchResult.items?.length) await fetchHierarchy(
+                          dbName, sdk, dbClasses, 2, schemeWithHierarchy.dbClass, localData, schemeWithHierarchy.hierarchyEvalFunc
+                        )
+                      }
+                    })
                 }))
               }
 
-              // continue propogate hierarchy
-              if (hierarchyEvalFunc) await Promise.all(fr.items.map(async parentItem => {
-                try {
-                  const hierarchyScheme = hierarchyEvalFunc(parentItem, level, data)
-                  if (hierarchyScheme) parentItem.hierarchyData = await fetchBySchemes(
-                    dbName, sdk, dbClasses, startTime, level + 1, hierarchyScheme, hierarchyEvalFunc
-                  )
-                } catch (error) {
-                  console.error("Hierarchy func error", error)
-                  data[fs.dbClass] = { error: `Hierarchy func error: ${error.message}` }
-                }
-              }))
+              directSetRefs(localData, hierarchySchemes)
+              parentItem.hierarchyData = localData
             }
-
-          })
-      ))
-
-      data = directSetRefs(data, validatedSchemes)
+          } catch (error) {
+            console.error("Hierarchy func error", error)
+            data[schemeWithHierarchy.dbClass] = { error: `Hierarchy func error: ${error.message}` }
+          }
+        }))
+      }))
+    } catch (error) {
+      console.error("General error", error)
+      data = { error: `UseData Kuzzle server general error: ${error.message}` } as any
     }
   }
 
   return data
-}
-
-export default async function f(request: KuzzleRequest, sdk: EmbeddedSDK, dbClasses: DbClasses) {
-  const dbName = request.getString("dbName")
-  const baseSchemes = request.getArray("fetchScheme") as BaseFetchScheme[]
-
-  const startTime = performance.now()
-  return fetchBySchemes(dbName, sdk, dbClasses, startTime, 0, baseSchemes)
 }

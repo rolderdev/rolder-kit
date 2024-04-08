@@ -11,8 +11,9 @@ import getValue from '@packages/get-value';
 import queryFn from './src/queryFn';
 import deepEqual from 'fast-deep-equal'
 import isEmpty from '@packages/is-empty'
+import type { NoodlNode } from '@packages/node';
 
-function schemeValid(scheme: FetchScheme[number],): boolean {
+function schemeValid(scheme: FetchScheme[number], noodlNode: NoodlNode): boolean {
   if (!scheme.dbClass) {
     R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbClass at scheme: ${JSON.stringify(scheme)}`)
     log.error('`No dbClass at scheme', scheme)
@@ -40,12 +41,12 @@ function schemeValid(scheme: FetchScheme[number],): boolean {
   return true
 }
 
-function getScheme(fetchScheme: FetchScheme, paginationScheme?: FetchScheme[number], searchAfter?: string[]) {
+function getScheme(noodlNode: NoodlNode, fetchScheme: FetchScheme, paginationScheme?: FetchScheme[number], searchAfter?: string[]) {
   let hasErrors = false
   let resultScheme: FetchScheme = clone(fetchScheme)
   resultScheme.forEach(dbClassScheme => {
     if (paginationScheme && paginationScheme.dbClass === dbClassScheme.dbClass) dbClassScheme.searchAfter = searchAfter
-    hasErrors = !schemeValid(dbClassScheme)
+    hasErrors = !schemeValid(dbClassScheme, noodlNode)
   })
 
   return hasErrors ? false : resultScheme
@@ -61,6 +62,8 @@ function getSearchAfter(items?: Item[], sorts?: Sorts) {
 }
 
 export default forwardRef(function (props: Props, ref) {
+  const { noodlNode } = props
+
   const { dbName } = R.env
   if (!dbName) {
     R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`)
@@ -75,8 +78,12 @@ export default forwardRef(function (props: Props, ref) {
 
   const [lastPaginationScheme, setLastPaginationScheme] = useState<FetchScheme[number]>()
   const [lastSearchString, setLastSearchString] = useState<string | undefined>()
-  const fetchScheme = getScheme(props.fetchScheme, paginationScheme, pagesSearchAfter.find(i => i.page === page)?.searchAfter)
-  if (!fetchScheme) return null
+  const fetchScheme = getScheme(noodlNode, props.fetchScheme, paginationScheme, pagesSearchAfter.find(i => i.page === page)?.searchAfter)
+  if (!fetchScheme) {
+    sendOutputs(noodlNode, [{ portName: 'error', value: true }, { portName: 'fetching', value: false }])
+    return null
+  }
+
   useEffect(() => {
     if (props.paginationEnabled && !deepEqual(lastPaginationScheme, paginationScheme) || lastSearchString !== props.searchString) {
       setLastPaginationScheme(paginationScheme)
@@ -97,14 +104,15 @@ export default forwardRef(function (props: Props, ref) {
   }, [props.searchString])
 
   useEffect(() => {
-    if (isFetching && !isError) sendOutput(props.noodlNode, 'fetching', true)
-    if (isError) {
-      sendOutput(props.noodlNode, 'fetching', false)
-      sendOutput(props.noodlNode, 'error', true)
-    }
+    if (isFetching && !isError) sendOutput(noodlNode, 'fetching', true)
+    if (isError) sendOutputs(noodlNode, [{ portName: 'error', value: true }, { portName: 'fetching', value: false }])    
   }, [isFetching, isError])
 
   useEffect(() => {
+    if (data?.error) {      
+      sendOutputs(noodlNode, [{ portName: 'error', value: true }, { portName: 'fetching', value: false }])
+      return
+    }
     if (data && !isFetching) {
       let ouputs: any = Object.keys(data).map(dbClass => ([
         { portName: `${dbClass}Items`, value: data[dbClass].items },
@@ -124,8 +132,8 @@ export default forwardRef(function (props: Props, ref) {
         if (total && size) setMaxPage(Math.ceil(total / size))
       }
 
-      sendOutputs(props.noodlNode, ouputs)
-      sendSignal(props.noodlNode, 'fetched')
+      sendOutputs(noodlNode, ouputs)
+      sendSignal(noodlNode, 'fetched')
     }
   }, [data, isFetching])
 

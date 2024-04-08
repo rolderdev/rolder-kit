@@ -30,7 +30,7 @@ export type CompDefinition = {
         dynamic?: any
     }
     remote?: any
-    hashTag?: '#pre-release' | '#deprecated'
+    hashTag?: '#expreimental' | '#pre-release' | '#deprecated'
     inputs?: NodePort[]
     outputs?: NodePort[]
 }

@@ -19,7 +19,7 @@ const defaults = {
             size: 1000,
             filters: { not: { exists: 'group.id' } },
             sorts: [{ 'content.name': 'asc' }],
-            hierarchyFunc: `(parentItem, level) => {
+            hierarchyFunc: `(level, parentItem) => {
                 if (level === 5) return
                 return [
                     {
@@ -78,7 +78,7 @@ export default function (props: any) {
     return <Aside>
         <App>
             <Center w='100%' p={16}>
-                <Data backendDevMode={true}>
+                <Data backendDevMode={false}>
                     <Suspense fallback={<div style={{ padding: 8 }}>Mounting...</div>}>
                         {mounted
                             ? <>

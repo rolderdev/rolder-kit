@@ -1,6 +1,6 @@
 # Changelog
 
-## 2024-04-04 v1.0.0-beta22
+## 2024-04-08 v1.0.0-beta22
 
 ### Rolder Kit
 
@@ -8,18 +8,62 @@
 * Утилита isEmpty не верно отрабатывала тип данных blob.
 * Компоненты, у которых есть документация теперь открывают ее по нажаию на вопрос, как в оргинальных компонентах Noodl.
 
+`MD`
+Созданы директории:
+* rolder-kit/packages/internal/scope/v0.2.0
+* rolder-kit/packages/components/ui/mantine/organisms/table/v1.2.0
+* rolder-kit/packages/components/ui/mantine/organisms/table/modules/columnFilter/v1.1.0
+* rolder-kit/packages/components/ui/mantine/organisms/table/modules/expansionRow/v1.1.0
+* rolder-kit/packages/components/ui/mantine/molecules/tableScope/v1.0.0
+* rolder-kit/nodes/ui/mantine/molecules/tableSelectionScope
+
+Изменены общие файлы: // MD
+* nodes/ui/mantine/mantine.ts
+  * ссылка на код: import tableSelectionScopeNode from "@nodes/table-selection-scope"
+  * и название ноды: tableSelectionScopeNode
+  * в rolder-kit/nodes/ui/mantine/package.json добавлена запись "@nodes/table-selection-scope": "workspace:*"
+
+* packages/internal/port/v0.6.0/src/ports/data.ts
+  * Содержимое атома tableSelectionScope; { name: 'selectionScope', displayName: 'selectionScope', group: 'Data', type: 'object' }
+  * Объект, где ключи - tableId, а значения - массив выбранных запсией: { name: 'selectionByTableId', displayName: 'selectionByTableId', group: 'Data', type: 'object' }
+* packages/internal/port/v0.6.0/src/ports/table.ts
+  * id текущей таблицы: { name: 'tableId', group: 'Data', type: 'string', displayName: 'tableId' }
+  * id родительской таблицы: { name: 'parentTableId', group: 'Data', type: 'string', displayName: 'parentTableId' }
+
+* packages/internal/types/v0.1.0/types.d.ts
+  * К типу Item добавлено поле для передачи tableId от родительсмкой таблицы дочерним: parentTableId: string | undefined | null
+* rolder-kit/nodes/ui/mantine/organisms/table/package.jsonrolder-kit/nodes/ui/mantine/organisms/table/package.json
+  * Добавлена ссылка на код с table-1.2.0: "@packages/table-v1.2.0": "workspace:*"
+  * Добавлена соответствующая версия в tableNode.ts
+* rolder-kit/nodes/ui/mantine/organisms/table/modules/expansionRow/package.json
+  * Добавлена ссылка на код с column-filter-v1.1.0: "@packages/column-filter-v1.1.0": "workspace:*"
+  * Добавлена соответствующая версия в columnFilterNode.ts
+* rolder-kit/nodes/ui/mantine/organisms/table/modules/expansionRow/package.json
+  * Добавлена ссылка на код с expansion-row-v1.1.0: "@packages/expansion-row-v1.1.0": "workspace:*"
+  * Добавлена соответствующая версия в expansionRowNode.ts
+
 ### data
 
 * [UseData v1.3.0](https://docs.rolder.app/docs/data/useData.html#v130-20240404)
 
-### pdf
+### mantine
 
-#### PdfTable v1.4.0
+#### Table v1.2.0
 
-* Добавлено решение для отрисовки кастомной строки. Параметр Use function > Get row. Принимает item текущей строки. Функция должна выдавать тип компоненты строкой:
-  * `Row` - внутренняя стандартная строка таблицы.
-  * `PdfTable` - строка это другая таблица.
-  * `PdfView` - строка это нода PdfView, в которую вложены любые другие ноды класса Pdf. Не принимает на вход item, а значит не может использовать данные текущей строки.
+* Теперь при активном expension создается jotai атом и состояния multiSelection обрабатываются специальной функцией. Если обернуть главную таблицу (по сути все дерево таблиц) в tableSelectionScope, то можно будет получать и сбрасывать значение атома.
+* Все статусы обрабатываются с учетом иерархии
+* Изменены названия используемых scope в соответствии scope-0.2.0
+    * Сменились названия компонетов при создании scope 0.2.0
+        * cellScope на tableCellScope (Нода tableCell v1.1.0)
+        * tableScope на tableFilterScope (Нода tableFilter v1.1.0)
+        * Добавился tableCetableSelectionScopellScope
+* Выдает на выход свой id и id родительской таблицы (tableId, parentTableId).
+
+#### TableSelectionScope
+
+* Добавлена нода TableSelectionScope, с помощью которой можно получать значения id и статуса multiSelect всех записей, всех таблиц, которые расположены пол данной нодой (в иерархии). 
+* Можно сбрасывать селекты со всех таблиц иерархии.
+* Выдает на выход объект selectionByTableId, где ключи - tableId, а значения - массив выбранных запсией
 
 ## 2024-04-01 v1.0.0-beta21
 

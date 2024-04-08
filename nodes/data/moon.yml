@@ -9,9 +9,6 @@ tasks:
       - src/**/*
       - /packages/components/data/**/*
       - /packages/internal/**/*
-  clean:
-    command: rm -rf node_modules && rm -rf dist
-    local: true
   dev:
     command: rspack build --mode=development --watch
     inputs:

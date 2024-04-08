@@ -1,13 +1,15 @@
-import { BaseFetchScheme, Data } from '../../types';
+import { BaseFetchScheme, Data, Item } from '../../types';
 import mergeFilters from './mergeFilters';
 
 export default function applyFilters(
   scheme: BaseFetchScheme[][number],
-  data: Data
+  localData: Data,
+  parentItem?: Item,
+  parentData?: Data
 ): BaseFetchScheme {
   let filters = scheme.filters
 
-  if (scheme.filtersEvalFunc) filters = mergeFilters(filters, scheme.filtersEvalFunc(data))
+  if (scheme.filtersEvalFunc) filters = mergeFilters(filters, scheme.filtersEvalFunc(localData, parentItem, parentData))
 
   return { ...scheme, filters }
 }

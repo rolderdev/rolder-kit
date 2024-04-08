@@ -24,4 +24,4 @@ export type NodePort = {
   }
 }
 
-export type TypeName = '*' | 'string' | 'number' | 'boolean' | 'array' | 'signal' | 'proplist' | 'color' | 'object'
+export type TypeName = '*' | 'string' | 'number' | 'boolean' | 'array' | 'signal' | 'proplist' | 'color' | 'object' | 'component'
