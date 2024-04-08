@@ -1,5 +1,14 @@
 # Changelog
 
+## 2024-04-08 v1.0.0-beta22/TableSelectionScope v1.0.1
+
+### mantine
+
+#### TableSelectionScope v1.0.1
+
+* Изменил вид выхода selectionScope. Теперь он выдает только объект с id записи и статусом.
+* Изменил выход selectionByTableId, где ключи - tableId, а значения - массив выбранных записей на selectionByBDClass, где теперь ключи - название класса, а значения массив выбранных записей.
+
 ## 2024-04-08 v1.0.0-beta22
 
 ### Rolder Kit

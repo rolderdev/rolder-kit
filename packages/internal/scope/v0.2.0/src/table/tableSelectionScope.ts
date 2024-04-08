@@ -1,4 +1,4 @@
-import { atom as jotaiAtom, Provider as JotaiProvider, useAtom } from "jotai"
+import { atom as jotaiAtom } from "jotai" // , Provider as JotaiProvider, useAtom
 
 // Задаем тип данных для scope
 // Это для разработки, чтобы не делать ошибки
@@ -14,7 +14,7 @@ export interface TableSelectionScopeValues {
         newTableId: (string | undefined),
         childTableId: (string | undefined)[],
     },
-    selectionByTableId: { [tableId: string]: any },
+    selectionByBDClass: { [tableId: string]: any },
 }
 
 // Присваиваем id самой ноде TableSelectionScope
@@ -31,7 +31,7 @@ const tableSelectionScopeAtom = jotaiAtom<TableSelectionScopeValues>({
         newTableId: undefined,
         childTableId: [],
     },
-    selectionByTableId: {}
+    selectionByBDClass: {}
 })
 
 // Атом, хранящий функции перерендера таблиц
