@@ -2,21 +2,18 @@
   "name": "@nodes/use-data",
   "main": "useDataNode.ts",
   "types": "useDataNode.ts",
-  "scripts": {
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-  },
   "dependencies": {
-    "@shared/node": "workspace:@shared/node-v0.8.0@*",
-    "@shared/port": "workspace:@shared/port-v0.6.0@*",
-    "@shared/use-data-v0.11.0": "workspace:*",
-    "@shared/use-data-v0.12.3": "workspace:*",
-    "@shared/use-data-v0.12.4": "workspace:*",
-    "@shared/use-data-v1.0.0": "workspace:*",
-    "@shared/use-data-v1.1.0": "workspace:*",
-    "@shared/use-data-v1.2.0": "workspace:*"
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@packages/port": "workspace:@packages/port-v0.6.0@*",
+    "@packages/use-data-v0.11.0": "workspace:*",
+    "@packages/use-data-v0.12.3": "workspace:*",
+    "@packages/use-data-v0.12.4": "workspace:*",
+    "@packages/use-data-v1.0.0": "workspace:*",
+    "@packages/use-data-v1.1.0": "workspace:*",
+    "@packages/use-data-v1.2.0": "workspace:*",
+    "@packages/use-data-v1.3.0": "workspace:*"
   },
   "devDependencies": {
-    "@shared/typescript-config": "workspace:*",
-    "@types/react": "16.9.49"
+    "types": "workspace:*"
   }
 }

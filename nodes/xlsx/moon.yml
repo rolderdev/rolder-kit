@@ -1,0 +1,18 @@
+---
+id: node-handlers/xlsx
+tags:
+  - noodl
+tasks:
+  build:
+    command: rspack build --mode=production
+    inputs:
+      - src/**/*
+      - /packages/components/xlsx/**/*
+      - /packages/internal/**/*
+  dev:
+    command: rspack build --mode=development --watch
+    inputs:
+      - src/**/*
+      - /packages/components/xlsx/**/*
+      - /packages/internal/**/*
+    local: true

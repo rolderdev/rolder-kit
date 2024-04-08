@@ -1,0 +1,12 @@
+{
+  "name": "@packages/carousel-v1.0.0",
+  "main": "carousel.tsx",
+  "types": "carousel.tsx",
+  "dependencies": {
+    "@mantine/carousel": "6.0.21"
+  },
+  "devDependencies": {
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "types": "workspace:*"
+  }
+}

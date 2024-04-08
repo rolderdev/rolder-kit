@@ -1,6 +1,6 @@
-import getValue8 from '@shared/get-value-v0.8.0'
-import getMasked2 from '@shared/get-masked-v0.2.0'
-import getFormatedDate2 from '@shared/get-formated-date-v0.2.0'
+import getValue8 from '@packages/get-value-v0.8.0'
+import getMasked2 from '@packages/get-masked-v0.2.0'
+import getFormatedDate2 from '@packages/get-formated-date-v0.2.0'
 
 const utils = {
     getValue: { v8: getValue8 },

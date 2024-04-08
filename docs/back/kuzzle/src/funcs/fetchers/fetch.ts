@@ -1,27 +1,30 @@
 import flush from "just-flush";
 import fetchUsers from "./fetchUsers";
-import { FetchProps, FetchResult, Item } from "src/types";
+import { DbClasses, FetchProps, FetchResult, Item } from "src/types";
 import { sort as fastSort } from 'fast-sort'
 
-export default async function fetch(props: FetchProps): Promise<FetchResult | void> {
+export default async function fetch(props: FetchProps, dbClasses: DbClasses): Promise<FetchResult | void> {
   const { sdk, dbName, dbClass, filters, sorts, size, searchAfter, getUsers, aggregations, history } = props
 
-  const sort = [...(sorts || []), { _id: "asc" }];
+  const dbClassV = dbClass === 'user' ? 'user' : `${dbClass}_v${dbClasses[dbClass].version}`
+  const sort = Array.isArray(sorts)
+    ? [...(sorts || []), { _id: "asc" }]
+    : sorts
 
   try {
     const results = await sdk.document.search(
       dbName,
-      dbClass,
+      dbClassV,
       { aggregations, query: filters, search_after: searchAfter, sort },
       { lang: "koncorde", size },
     )
 
-    let items = results.hits.map((i) => ({ ...i._source, id: i._id, })) as Item[]
+    let items = results.hits.map((i) => ({ ...i._source, id: i._id, dbClass })) as Item[]
 
     if (history) {
       const historyResults = await sdk.document.search(
         'history',
-        dbClass,
+        dbClassV,
         { query: { in: { id: items.map(i => i.id) } } },
         { lang: "koncorde", size: history }
       )
@@ -47,7 +50,7 @@ export default async function fetch(props: FetchProps): Promise<FetchResult | vo
     return { aggregations: results.aggregations, fetched: items.length, items, total: results.total }
 
   } catch (e: any) {
-    console.error(`Fetch ${dbClass} error`, e)
+    console.error(`Fetch ${dbClassV} error`, e)
     return { error: e.message }
   }
 }

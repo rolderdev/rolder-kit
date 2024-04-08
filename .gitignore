@@ -1,35 +1,10 @@
-# Logs
-logs
-*.log
+
+# moon
+.moon/cache
+.moon/docker
 
 node_modules
-*.local
-**/bun.lockb
-**/node_modules
-**/recycle
-.nova
-*.ffs_db
+pnpm-lock.yaml
 build
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-.turbo
-.next
-dist
-dist-ssr
+devBuild
 doc_build
-*.local
-.env
-.cache
-server/dist
-public/dist
-storybook-static/

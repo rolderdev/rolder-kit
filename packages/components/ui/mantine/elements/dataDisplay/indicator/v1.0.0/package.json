@@ -1,0 +1,12 @@
+{
+  "name": "@packages/indicator-v1.0.0",
+  "main": "indicator.tsx",
+  "types": "indicator.tsx",
+  "dependencies": {
+    "@mantine/core": "6.0.21"    
+  },
+  "devDependencies": {
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "types": "workspace:*"
+  }
+}

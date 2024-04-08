@@ -1,5 +1,5 @@
-import { jsNode } from '@shared/node'
-import { getPort } from '@shared/port'
+import { jsNode } from '@packages/node'
+import { getPort } from '@packages/port'
 
 export default jsNode('logout', {
     'v1.0.0': {
@@ -7,7 +7,7 @@ export default jsNode('logout', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/logout-v1.0.0')
+                '@packages/logout-v1.0.0')
         },
         inputs: [getPort({ plug: 'input', name: 'logout', displayName: 'Logout', group: 'Signals', type: 'signal' })],
     }

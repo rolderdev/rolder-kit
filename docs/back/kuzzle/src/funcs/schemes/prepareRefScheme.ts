@@ -2,7 +2,7 @@ import unique from "just-unique";
 import { Data, SearchScheme } from "../../types"
 import mergeFilters from "../filters/mergeFilters";
 
-export default function prepareRefScheme(searchSchemes: SearchScheme[], data: Data,): SearchScheme[] {
+export default function prepareRefScheme(searchSchemes: SearchScheme[], data: Data): SearchScheme[] {
   const refSchemes = [] as SearchScheme[]
 
   for (const searchScheme of searchSchemes) {
@@ -11,10 +11,10 @@ export default function prepareRefScheme(searchSchemes: SearchScheme[], data: Da
 
     if (refs?.length) {
       for (const ref of refs) {
-        const refScheme = searchSchemes.find((i) => i.dbClass.split("_")[0] === ref)
+        const refScheme = searchSchemes.find((i) => i.dbClass === ref)
 
         if (refScheme) {
-          const directItems = data[searchScheme.dbClass.split("_")[0]]?.items
+          const directItems = data[searchScheme.dbClass]?.items
           const refItems = data[ref]?.items
 
           // ref set
@@ -49,10 +49,10 @@ export default function prepareRefScheme(searchSchemes: SearchScheme[], data: Da
 
     if (backRefs?.length) {
       for (const backRef of backRefs) {
-        const refScheme = searchSchemes.find((i) => i.dbClass.split("_")[0] === backRef)
+        const refScheme = searchSchemes.find((i) => i.dbClass === backRef)
 
         if (refScheme) {
-          const directItems = data[searchScheme.dbClass.split("_")[0]]?.items
+          const directItems = data[searchScheme.dbClass]?.items
           const refItems = data[backRef]?.items
 
           // ref set        
@@ -61,7 +61,7 @@ export default function prepareRefScheme(searchSchemes: SearchScheme[], data: Da
               ...refScheme,
               filters: mergeFilters(refScheme.filters, {
                 or: [
-                  { in: { [`${searchScheme.dbClass.split("_")[0]}.id`]: directItems?.map(i => i.id) || [] } },
+                  { in: { [`${searchScheme.dbClass}.id`]: directItems?.map(i => i.id) || [] } },
                   { ids: { values: unique(refItems?.map(i => i.id) || []) } }
                 ]
               })
@@ -76,7 +76,7 @@ export default function prepareRefScheme(searchSchemes: SearchScheme[], data: Da
                 {
                   ids: {
                     values: unique([
-                      ...refItems.filter(i => i[searchScheme.dbClass.split("_")[0]]).map(i => i[searchScheme.dbClass.split("_")[0]].id),
+                      ...refItems.filter(i => i[searchScheme.dbClass]).map(i => i[searchScheme.dbClass].id),
                       ...directItems.map(i => i.id)])
                   }
                 }

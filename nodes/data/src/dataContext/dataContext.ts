@@ -1,5 +1,5 @@
-import { reactNode } from '@shared/node'
-import { getPort } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPort } from '@packages/port'
 import { lazy } from 'react'
 
 export default reactNode('DataContext', {
@@ -8,7 +8,7 @@ export default reactNode('DataContext', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/data-context-v0.1.0'))
+                '@packages/data-context-v0.1.0'))
         },
         outputs: [
             getPort({ plug: 'output', name: 'fetched', displayName: 'Fetched', group: 'Signals', type: 'signal' }),
@@ -20,7 +20,7 @@ export default reactNode('DataContext', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/data-context-v0.1.1'))
+                '@packages/data-context-v0.1.1'))
         },
         outputs: [
             getPort({ plug: 'output', name: 'fetched', displayName: 'Fetched', group: 'Signals', type: 'signal' }),

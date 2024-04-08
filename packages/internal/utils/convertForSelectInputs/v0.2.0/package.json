@@ -1,0 +1,11 @@
+{
+  "name": "@packages/convert-for-select-inputs-v0.2.0",
+  "main": "convertForSelectInputs.ts",
+  "types": "convertForSelectInputs.ts",
+  "dependencies": {
+    "@packages/get-value": "workspace:@packages/get-value-v0.8.0@*"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

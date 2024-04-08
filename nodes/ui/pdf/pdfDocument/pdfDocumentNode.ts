@@ -1,9 +1,9 @@
-import { reactNode } from '@shared/node'
-import { getPort, getPorts } from '@shared/port'
+import { reactNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
-import v100 from '@shared/pdf-document-v1.0.0'
-import v110 from '@shared/pdf-document-v1.1.0'
-import v120 from '@shared/pdf-document-v1.2.0'
+import v100 from '@packages/pdf-document-v1.0.0'
+import v110 from '@packages/pdf-document-v1.1.0'
+import v120 from '@packages/pdf-document-v1.2.0'
 
 export default reactNode('PdfDocument', {
     'v1.0.0': {

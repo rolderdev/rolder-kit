@@ -1,5 +1,70 @@
 # Changelog
 
+## 2024-04-08 v1.0.0-beta22
+
+### Rolder Kit
+
+* Monorepo долетел на [турбо](https://turbo.build/repo) до [луны](https://moonrepo.dev/moon). Обратите внимание, изменились названия пакетов.
+* Утилита isEmpty не верно отрабатывала тип данных blob.
+* Компоненты, у которых есть документация теперь открывают ее по нажаию на вопрос, как в оргинальных компонентах Noodl.
+
+`MD`
+Созданы директории:
+* rolder-kit/packages/internal/scope/v0.2.0
+* rolder-kit/packages/components/ui/mantine/organisms/table/v1.2.0
+* rolder-kit/packages/components/ui/mantine/organisms/table/modules/columnFilter/v1.1.0
+* rolder-kit/packages/components/ui/mantine/organisms/table/modules/expansionRow/v1.1.0
+* rolder-kit/packages/components/ui/mantine/molecules/tableScope/v1.0.0
+* rolder-kit/nodes/ui/mantine/molecules/tableSelectionScope
+
+Изменены общие файлы: // MD
+* nodes/ui/mantine/mantine.ts
+  * ссылка на код: import tableSelectionScopeNode from "@nodes/table-selection-scope"
+  * и название ноды: tableSelectionScopeNode
+  * в rolder-kit/nodes/ui/mantine/package.json добавлена запись "@nodes/table-selection-scope": "workspace:*"
+
+* packages/internal/port/v0.6.0/src/ports/data.ts
+  * Содержимое атома tableSelectionScope; { name: 'selectionScope', displayName: 'selectionScope', group: 'Data', type: 'object' }
+  * Объект, где ключи - tableId, а значения - массив выбранных запсией: { name: 'selectionByTableId', displayName: 'selectionByTableId', group: 'Data', type: 'object' }
+* packages/internal/port/v0.6.0/src/ports/table.ts
+  * id текущей таблицы: { name: 'tableId', group: 'Data', type: 'string', displayName: 'tableId' }
+  * id родительской таблицы: { name: 'parentTableId', group: 'Data', type: 'string', displayName: 'parentTableId' }
+
+* packages/internal/types/v0.1.0/types.d.ts
+  * К типу Item добавлено поле для передачи tableId от родительсмкой таблицы дочерним: parentTableId: string | undefined | null
+* rolder-kit/nodes/ui/mantine/organisms/table/package.jsonrolder-kit/nodes/ui/mantine/organisms/table/package.json
+  * Добавлена ссылка на код с table-1.2.0: "@packages/table-v1.2.0": "workspace:*"
+  * Добавлена соответствующая версия в tableNode.ts
+* rolder-kit/nodes/ui/mantine/organisms/table/modules/expansionRow/package.json
+  * Добавлена ссылка на код с column-filter-v1.1.0: "@packages/column-filter-v1.1.0": "workspace:*"
+  * Добавлена соответствующая версия в columnFilterNode.ts
+* rolder-kit/nodes/ui/mantine/organisms/table/modules/expansionRow/package.json
+  * Добавлена ссылка на код с expansion-row-v1.1.0: "@packages/expansion-row-v1.1.0": "workspace:*"
+  * Добавлена соответствующая версия в expansionRowNode.ts
+
+### data
+
+* [UseData v1.3.0](https://docs.rolder.app/docs/data/useData.html#v130-20240404)
+
+### mantine
+
+#### Table v1.2.0
+
+* Теперь при активном expension создается jotai атом и состояния multiSelection обрабатываются специальной функцией. Если обернуть главную таблицу (по сути все дерево таблиц) в tableSelectionScope, то можно будет получать и сбрасывать значение атома.
+* Все статусы обрабатываются с учетом иерархии
+* Изменены названия используемых scope в соответствии scope-0.2.0
+    * Сменились названия компонетов при создании scope 0.2.0
+        * cellScope на tableCellScope (Нода tableCell v1.1.0)
+        * tableScope на tableFilterScope (Нода tableFilter v1.1.0)
+        * Добавился tableCetableSelectionScopellScope
+* Выдает на выход свой id и id родительской таблицы (tableId, parentTableId).
+
+#### TableSelectionScope
+
+* Добавлена нода TableSelectionScope, с помощью которой можно получать значения id и статуса multiSelect всех записей, всех таблиц, которые расположены пол данной нодой (в иерархии). 
+* Можно сбрасывать селекты со всех таблиц иерархии.
+* Выдает на выход объект selectionByTableId, где ключи - tableId, а значения - массив выбранных запсией
+
 ## 2024-04-01 v1.0.0-beta21
 
 ### mantine
@@ -24,7 +89,7 @@
 ### data
 
 * [История изменений данных](https://docs.rolder.app/docs/data/history.html)
-* [UseData v1.2.0](https://docs.rolder.app/docs/data/useData.html)
+* [UseData v1.2.0](https://docs.rolder.app/docs/data/useData.html#v120-20240401)
 * [update v1.1.0](https://docs.rolder.app/docs/data/update.html)
 
 ## 2024-03-28 v1.0.0-beta19

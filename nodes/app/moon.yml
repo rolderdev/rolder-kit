@@ -1,0 +1,18 @@
+---
+id: node-handlers/app
+tags:
+  - noodl
+tasks:
+  build:
+    command: rspack build --mode=production
+    inputs:
+      - src/**/*
+      - /packages/components/app/**/*
+      - /packages/internal/**/*
+  dev:
+    command: rspack build --mode=development --watch
+    inputs:
+      - src/**/*
+      - /packages/components/app/**/*
+      - /packages/internal/**/*
+    local: true

@@ -1,6 +1,6 @@
 {
-  "name": "kuzzle",
-  "version": "0.2.0",
+  "name": "rolder-kit",
+  "version": "0.4.0",
   "description": "",
   "author": "",
   "scripts": {
@@ -23,7 +23,7 @@
   "dependencies": {
     "dependencies": "^0.0.1",
     "install": "0.13.0",
-    "kuzzle": "2.29.0",
+    "kuzzle": "2.29.1",
     "kuzzle-plugin-prometheus": "4.2.0",
     "just-flush": "2.3.0",
     "just-safe-set": "4.2.1",

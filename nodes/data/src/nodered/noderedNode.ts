@@ -1,5 +1,5 @@
-import { jsNode } from '@shared/node'
-import { getPort } from '@shared/port'
+import { jsNode } from '@packages/node'
+import { getPort } from '@packages/port'
 
 export default jsNode('nodered', {
     'v1.0.0': {
@@ -7,7 +7,7 @@ export default jsNode('nodered', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/nodered-v1.0.0')
+                '@packages/nodered-v1.0.0')
         },
         inputs: [
             getPort({ plug: 'input', name: 'execute', displayName: 'Execute', group: 'Signals', type: 'signal' }),
@@ -28,7 +28,7 @@ export default jsNode('nodered', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/nodered-v1.0.1')
+                '@packages/nodered-v1.0.1')
         },
         inputs: [
             getPort({ plug: 'input', name: 'execute', displayName: 'Execute', group: 'Signals', type: 'signal' }),

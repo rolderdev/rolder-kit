@@ -1,0 +1,14 @@
+{
+  "name": "qr-code",
+  "dependencies": {
+    "@noodl/noodl-sdk": "0.5.4",
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@packages/port": "workspace:@packages/port-v0.6.0@*",
+    "@nodes/get-qr-code": "workspace:*",
+    "@nodes/qr-code": "workspace:*",
+    "@nodes/qr-scanner": "workspace:*"
+  },
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

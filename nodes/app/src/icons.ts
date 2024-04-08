@@ -1,5 +1,4 @@
-export {
-  //type TablerIconsProps, type Icon,
+export {  
   IconUser, IconHome, IconChevronLeft, IconChevronRight, IconChevronDown, IconEdit, IconSearch,
   IconCalendarEvent, IconListDetails, IconIroning3, IconTrash, IconCheck, IconPlus, IconDeviceFloppy,
   IconBuildingCommunity, IconGhostFilled, IconPointFilled, IconPhoto, IconDatabaseOff, IconAdjustmentsHorizontal,

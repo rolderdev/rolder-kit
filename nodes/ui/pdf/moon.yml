@@ -1,0 +1,18 @@
+---
+id: node-handlers/pdf
+tags:
+  - noodl
+tasks:
+  build:
+    command: rspack build --mode=production
+    inputs:
+      - src/**/*
+      - /packages/components/pdf/**/*
+      - /packages/internal/**/*
+  dev:
+    command: rspack build --mode=development --watch
+    inputs:
+      - src/**/*
+      - /packages/components/pdf/**/*
+      - /packages/internal/**/*
+    local: true

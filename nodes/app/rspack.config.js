@@ -6,13 +6,24 @@ const manifestPlugin = require('rspack-manifest-plugin').WebpackManifestPlugin
 
 var path = require('path')
 const pJson = require('./package.json')
-var outputPath = path.resolve(__dirname, `../../build/app`)
+
+const nodeName = pJson.name
+const projectsJson = require('../../projects.json')
+var outputBuildPath = path.resolve(__dirname, `../../build/${nodeName}`)
 
 module.exports = function (env) {
+    var outputPath = outputBuildPath
+    const noodlProject = env.noodlProject
+    if (noodlProject) {
+        const noodlProjectConf = projectsJson.projects[noodlProject]
+        if (noodlProjectConf?.projectDir && noodlProjectConf?.rolderKit?.includes(nodeName))
+            outputPath = path.resolve(__dirname, `${projectsJson.noodlProjectsDir}/${noodlProjectConf.projectDir}/noodl_modules/${nodeName}`)
+    }
+
     return {
         context: __dirname,
         stats: { preset: 'errors-only', timings: true },
-        entry: { [pJson.name]: `./app.ts` },
+        entry: { [pJson.name]: `./src/${nodeName}.ts` },
         resolve: {
             extensions: ['...', '.tsx', '.ts']
         },
@@ -34,7 +45,7 @@ module.exports = function (env) {
             }),
             new rspack.DefinePlugin({
                 DEVMODE: env.noodlDev ? true : false
-            }),
+            })
         ],
         module: {
             rules: [

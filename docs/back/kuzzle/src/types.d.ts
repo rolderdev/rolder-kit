@@ -2,6 +2,7 @@ import { EmbeddedSDK, mDeleteResponse } from "kuzzle";
 
 export type Item = {
   id: string;
+  dbClass?: string
   _id?: string;
   content?: { [key: string]: any };
   states?: { [key: string]: any };
@@ -16,6 +17,7 @@ export type Item = {
     timestamp: number
     item: Item
   }[]
+  hierarchyData?: Data
 };
 
 export type User = {
@@ -71,12 +73,17 @@ export type BaseFetchScheme = {
   aggregations?: any;
   searchFields?: string[];
   searchAfter?: string[];
+  hierarchyFunc?: string
+  hierarchyEvalFunc?: HierarchyFunction
 };
 
 export type Filters = { [key: string]: any }
-export type FiltersFunction = (data: Data) => { [key: string]: any }
+export type FiltersFunction = (localData: Data, parentItem?: Item, parentData?: Data) => { [key: string]: any }
+export type HierarchyFunction = (level: number, parentItem: Item, parentData: Data) => BaseFetchScheme[] | void
 
-export type Data = { [dbClass: string | undefined]: FetchResult }
+export type Data = {
+  [dbClass: string | undefined]: FetchResult
+}
 
 export type FetchResult = {
   items?: Item[];
@@ -129,4 +136,18 @@ export type DeleteResult = {
   response?: mDeleteResponse
   count?: number;
   error?: string
+}
+
+export type DbClasses = { [name: string]: DbClass }
+
+export type DbClass = {
+  version: string,
+  states: {
+    [naem: string]: {
+      value: string,
+      label: string,
+      order?: number,
+      color?: string
+    }
+  }
 }

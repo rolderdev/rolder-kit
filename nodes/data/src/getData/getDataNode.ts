@@ -1,5 +1,5 @@
-import { jsNode } from '@shared/node'
-import { getPort, getPorts } from '@shared/port'
+import { jsNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
 export default jsNode('getData', {
     'v1.0.0': {
@@ -7,11 +7,11 @@ export default jsNode('getData', {
             dynamic: import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@shared/get-data-v1.0.0')
+                '@packages/get-data-v1.0.0')
         },
         inputs: [
             getPort({
-                plug: 'input', name: 'outputDbClasses', displayName: 'Output DB classes', group: 'Output DB classes*',
+                plug: 'input', name: 'outputDbClasses', displayName: 'Output DB classes', group: 'Output DB classes',
                 type: 'proplist', customs: {
                     addNodePorts(dbClasses) {
                         if (dbClasses) {
