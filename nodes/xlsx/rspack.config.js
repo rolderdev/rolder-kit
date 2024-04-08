@@ -9,7 +9,7 @@ const pJson = require('./package.json')
 
 const nodeName = pJson.name
 const projectsJson = require('../../projects.json')
-var outputBuildPath = path.resolve(__dirname, `../../../build/${nodeName}`)
+var outputBuildPath = path.resolve(__dirname, `../../build/${nodeName}`)
 
 module.exports = function (env) {
     var outputPath = outputBuildPath

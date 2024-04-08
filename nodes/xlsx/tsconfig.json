@@ -3,10 +3,5 @@
   "include": [
     "**/*",
     "../../types/**/*"
-  ],
-  "references": [
-    {
-      "path": "../../types"
-    }
   ]
 }
