@@ -424,13 +424,8 @@ export default forwardRef(function (props: Props, ref) {
 
     // Обработчик входящего массива multiSelection
     useEffect(() => {
-        //     tableSelectionScopeInternalValue['forRenderTableId'] = {
-        //         parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
-        //         currentTableId: tableId,
-        //         newTableId: undefined,
-        //         childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
-        //       }
-        // костылим
+
+        // Получаем количество выделенных элементов данной таблицы, из записей в scope
         const selectedCount = items?.filter(item => tableSelectionScopeValue[item.id] === 'selected')?.length
         console.log("@@@@@@@@@@@@@@@ selectedCount", selectedCount)
         console.log("############ selection.multi.selectedItems?.length", selection.multi.selectedItems?.length)
@@ -439,15 +434,28 @@ export default forwardRef(function (props: Props, ref) {
             selectedCount !== selection.multi.selectedItems?.length
             && selection.multi.selectedItems?.length > 0
         ) {
-            // Перебираем записи вносим изменения в scope согласоно массиву извне
+            // Так как в репиттере находится много таблиц, они все будут проверяться
+            // этим массивом и элементов таблиц в нем не окажется и везде снимутся селекты,
+            // кроме нужной таблицы
+            // Сделаем флаг, что если хоть один элемент есть в массиве выбранных
+            // то это та таблица, которой меняем статус
+            let arrayForThisTable = false
             items?.forEach(item => {
                 if (selection.multi.selectedItems.find(fItem => fItem.id === item.id)) {
-                    tableSelectionScopeValue[item.id] = 'selected'
-                }
-                else {
-                    tableSelectionScopeValue[item.id] = 'notSelected'
+                    arrayForThisTable = true
                 }
             })
+            // Перебираем записи вносим изменения в scope согласоно массиву извне
+            if (arrayForThisTable) {
+                items?.forEach(item => {
+                    if (selection.multi.selectedItems.find(fItem => fItem.id === item.id)) {
+                        tableSelectionScopeValue[item.id] = 'selected'
+                    }
+                    else {
+                        tableSelectionScopeValue[item.id] = 'notSelected'
+                    }
+                })
+            }
             // Говорим, что эту таблицу нужно обновить
             tableSelectionScopeInternalValue['forRenderTableId'] = {
                 parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
