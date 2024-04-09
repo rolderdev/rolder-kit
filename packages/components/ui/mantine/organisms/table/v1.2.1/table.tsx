@@ -18,7 +18,12 @@ import { ScopeProvider } from "bunshi/react";
 import { useForceUpdate, useId } from '@mantine/hooks';
 
 import { useAtom } from "jotai"
-import { tableHandlerAtom, tableSelectionScopeAtom } from "@packages/scope"
+import {
+    tableSelectionScopeAtom,
+    tableSelectionByBDClassAtom,
+    tableSelectionScopeInternalAtom,
+    tableHandlerAtom
+} from "@packages/scope";
 
 // Импортируем созданные нами scope из @packages/scope
 import {
@@ -60,8 +65,11 @@ export default forwardRef(function (props: Props, ref) {
     //====Хуки, которые понядобятся при работе с tableSelectionScope====
     // Молекула с родительским item
     const tableCellMol = useTableCellScope()
-    // Атом с tableSelectionScope
+    // Хуки для атомов для tableSelectionScope
     const [tableSelectionScopeValue, setTableSelectionScopeValue] = useAtom(tableSelectionScopeAtom)
+    const [tableSelectionByDBClassValue, settableSelectionByDBClassValue] = useAtom(tableSelectionByBDClassAtom)
+    const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
+    const [tableHandlerAtomValue, setTableHandlerAtomValue] = useAtom(tableHandlerAtom)
 
     // id родительской таблицы
     const parentTableId = tableCellMol?.parentTableId ? tableCellMol.parentTableId : undefined
@@ -72,19 +80,19 @@ export default forwardRef(function (props: Props, ref) {
     // то создаем эту связь
     useEffect(() => {
         if (tableId !== '' && tableId !== undefined) {
-            if (!tableSelectionScopeValue['parentTableIdByTableId'][tableId]) {
+            if (!tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId]) {
                 // Создаем запись в молекулу о том, у какой таблицы какой item является родительским
                 if (tableId && (typeof parentTableId === 'string')) {
-                    tableSelectionScopeValue['parentTableIdByTableId'][tableId] = parentTableId
+                    tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId] = parentTableId
                 }
                 // Создаем запись в молекулу о том, у какой таблицы какой item является родительским
                 if (tableId && parentTableItemId) {
-                    tableSelectionScopeValue['tableParentItemByTableId'][tableId] = parentTableItemId
+                    tableSelectionScopeInternalValue['tableParentItemByTableId'][tableId] = parentTableItemId
                 }
             }
 
-            if (!tableSelectionScopeValue['allTableIdList'].includes(tableId)) {
-                tableSelectionScopeValue['allTableIdList'].push(tableId)
+            if (!tableSelectionScopeInternalValue['allTableIdList'].includes(tableId)) {
+                tableSelectionScopeInternalValue['allTableIdList'].push(tableId)
             }
 
 
@@ -93,42 +101,43 @@ export default forwardRef(function (props: Props, ref) {
                 // Наследуем статус от родителей
                 //console.log("ITEMS в useEffect!!!", items)
                 items.forEach(item => {
-                    if (item && parentTableItemId && tableSelectionScopeValue['tableSelectionScope'][item.id] === undefined) {
+                    if (item && parentTableItemId && tableSelectionScopeValue[item.id] === undefined) {
                         // Если статус родителя не indeterminated
-                        if (tableSelectionScopeValue['tableSelectionScope'][parentTableItemId] !== 'indeterminated') {
-                            tableSelectionScopeValue['tableSelectionScope'][item.id] = tableSelectionScopeValue['tableSelectionScope'][parentTableItemId]
+                        if (tableSelectionScopeValue[parentTableItemId] !== 'indeterminated') {
+                            tableSelectionScopeValue[item.id] = tableSelectionScopeValue[parentTableItemId]
                         }
                         // А если родительский item indeterminated, и нет записи в scope  
                         // а она может быть при повторном разворачивании
                         // то -notSelected
                         else {
-                            if (tableSelectionScopeValue['tableSelectionScope'][item.id] === undefined) {
-                                tableSelectionScopeValue['tableSelectionScope'][item.id] = 'notSelected'
+                            if (tableSelectionScopeValue[item.id] === undefined) {
+                                tableSelectionScopeValue[item.id] = 'notSelected'
                             }
                         }
                     }
                     // Если нет родителя
                     else if (!parentTableItemId) {
                         // И нет записи в scope
-                        if (tableSelectionScopeValue['tableSelectionScope'][item.id] === undefined) {
-                            tableSelectionScopeValue['tableSelectionScope'][item.id] = 'notSelected'
+                        if (tableSelectionScopeValue[item.id] === undefined) {
+                            tableSelectionScopeValue[item.id] = 'notSelected'
                         }
                     }
 
-                    //console.log("??????? Присвоен статус", item.id, ':::::', tableSelectionScopeValue['tableSelectionScope'][item.id])
+                    //console.log("??????? Присвоен статус", item.id, ':::::', tableSelectionScopeValue[item.id])
                 })
             }
 
             // И говорим, что нужно перерендерить эту таблицу, 
             // чтобы записанные в scope статусы обновились у таблицы
-            // tableSelectionScopeValue['forRenderTableId']['currentTableId'] = tableId
-            tableSelectionScopeValue['forRenderTableId'] = {
-                parentTableId: undefined, //tableSelectionScopeValue['parentTableIdByTableId'][tableId],
+            // tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'] = tableId
+            tableSelectionScopeInternalValue['forRenderTableId'] = {
+                parentTableId: undefined, //tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
                 currentTableId: undefined,
                 newTableId: tableId, // Так как таблицу только открыли, нужно перерендерить
-                childTableId: Object.keys(tableSelectionScopeValue['parentTableIdByTableId']).filter(key => tableSelectionScopeValue['parentTableIdByTableId'][key] === tableId),
+                childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
             }
             setTableSelectionScopeValue(tableSelectionScopeValue)
+            setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
 
         }
         sendOutput(props.noodlNode, 'tableId', tableId)
@@ -136,113 +145,22 @@ export default forwardRef(function (props: Props, ref) {
         return () => {
             //console.log('<<<<<<<<<<<<<<Закрыли таблицу', tableId)
             // Удаляем запись из молекулы о том, у какой таблицы какой item является родительским
-            delete tableSelectionScopeValue['parentTableIdByTableId'][tableId]
+            delete tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId]
             // Удаляем запись из молекулы о том, у какой таблицы какой item является родительским
-            delete tableSelectionScopeValue['tableParentItemByTableId'][tableId]
+            delete tableSelectionScopeInternalValue['tableParentItemByTableId'][tableId]
             // Удаляем запись из молекулы о том, нужно ли рендерить таблицу
-            // delete tableSelectionScopeValue['renderByFlag'][tableId]
-            tableSelectionScopeValue['allTableIdList'] = tableSelectionScopeValue['allTableIdList'].filter(iTableId => iTableId !== tableId)
+            // delete tableSelectionScopeInternalValue['renderByFlag'][tableId]
+            tableSelectionScopeInternalValue['allTableIdList'] = tableSelectionScopeInternalValue['allTableIdList'].filter(iTableId => iTableId !== tableId)
 
-            setTableSelectionScopeValue(tableSelectionScopeValue)
+            setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
         }
 
     }, [tableId, items])
 
-
-
-    // useEffect(() => {
-    //     if (tableId !== '' && tableId !== undefined) {
-    //         if (!tableSelectionScopeValue['parentTableIdByTableId'][tableId]) {
-    //             // Создаем запись в молекулу о том, у какой таблицы какой item является родительским
-    //             if (tableId && (typeof parentTableId === 'string')) {
-    //                 tableSelectionScopeValue['parentTableIdByTableId'][tableId] = parentTableId
-    //             }
-    //             // Создаем запись в молекулу о том, у какой таблицы какой item является родительским
-    //             if (tableId && parentTableItemId) {
-    //                 tableSelectionScopeValue['tableParentItemByTableId'][tableId] = parentTableItemId
-    //             }
-    //         }
-
-    //         if (!tableSelectionScopeValue['allTableIdList'].includes(tableId)) {
-    //             tableSelectionScopeValue['allTableIdList'].push(tableId)
-    //         }
-    //         // И говорим, что нужно перерендерить эту таблицу, 
-    //         // чтобы записанные в scope статусы обновились у таблицы
-    //         // tableSelectionScopeValue['forRenderTableId']['currentTableId'] = tableId
-    //         setTableSelectionScopeValue(tableSelectionScopeValue)
-
-    //     }
-    //     sendOutput(props.noodlNode, 'tableId', tableId)
-
-    //     return () => {
-    //         console.log('<<<<<<<<<<<<<<Закрыли таблицу', tableId)
-    //         // Удаляем запись из молекулы о том, у какой таблицы какой item является родительским
-    //         delete tableSelectionScopeValue['parentTableIdByTableId'][tableId]
-    //         // Удаляем запись из молекулы о том, у какой таблицы какой item является родительским
-    //         delete tableSelectionScopeValue['tableParentItemByTableId'][tableId]
-    //         // Удаляем запись из молекулы о том, нужно ли рендерить таблицу
-    //         // delete tableSelectionScopeValue['renderByFlag'][tableId]
-    //         tableSelectionScopeValue['allTableIdList'] = tableSelectionScopeValue['allTableIdList'].filter(iTableId => iTableId !== tableId)
-
-    //         setTableSelectionScopeValue(tableSelectionScopeValue)
-    //     }
-
-    // }, [tableId])
-
-    // console.log("ITEMS!!!", items)
-
-    // // После раскрытия таблицы, items появляются не сразу, поэтому при их изменении, добавляем их в scope
-    // useEffect(() => {
-    //     // так как таблицу открываем заново, то id какое-то время не будет, и чтобы не было косяков
-    //     if (tableId) {
-    //         // Наследуем статус от родителей
-    //         console.log("ITEMS в useEffect!!!", items)
-    //         items.forEach(item => {
-    //             if (item && parentTableItemId && tableSelectionScopeValue['tableSelectionScope'][item.id] === undefined) {
-    //                 // Если статус родителя не indeterminated
-    //                 if (tableSelectionScopeValue['tableSelectionScope'][parentTableItemId] !== 'indeterminated') {
-    //                     tableSelectionScopeValue['tableSelectionScope'][item.id] = tableSelectionScopeValue['tableSelectionScope'][parentTableItemId]
-    //                 }
-    //                 // А если родительский item indeterminated, и нет записи в scope  
-    //                 // а она может быть при повторном разворачивании
-    //                 // то -notSelected
-    //                 else {
-    //                     if (tableSelectionScopeValue['tableSelectionScope'][item.id] === undefined) {
-    //                         tableSelectionScopeValue['tableSelectionScope'][item.id] = 'notSelected'
-    //                     }
-    //                 }
-    //             }
-    //             // Если нет родителя
-    //             else if (!parentTableItemId) {
-    //                 // И нет записи в scope
-    //                 if (tableSelectionScopeValue['tableSelectionScope'][item.id] === undefined) {
-    //                     tableSelectionScopeValue['tableSelectionScope'][item.id] = 'notSelected'
-    //                 }
-    //             }
-
-    //             console.log("??????? Присвоен статус", item.id, ':::::', tableSelectionScopeValue['tableSelectionScope'][item.id])
-    //         })
-    //         console.log("tableSelectionScopeValue В конце useEffect с items:", tableSelectionScopeValue)
-
-    //         // И говорим, что нужно перерендерить эту таблицу, 
-    //         // чтобы записанные в scope статусы обновились у таблицы
-    //         tableSelectionScopeValue['forRenderTableId']['currentTableId'] = tableId
-
-    //         // if (tableId) {
-    //             tableSelectionScopeValue['forRenderTableId'] = {
-    //               parentTableId: undefined, //tableSelectionScopeValue['parentTableIdByTableId'][tableId],
-    //               currentTableId: tableId,
-    //               childTableId: Object.keys(tableSelectionScopeValue['parentTableIdByTableId']).filter(key => tableSelectionScopeValue['parentTableIdByTableId'][key] === tableId),
-    //             }
-    //             setTableSelectionScopeValue(tableSelectionScopeValue)
-    //           }
-    //     // }
-    // },[items])
-
     // Если записи уже попали в scope на этапе выше, при первом их получении с наследованием от родителя,
     // то можно запусать обработку массива выбранных
     const itemsInScope = items.length > 0
-        ? tableSelectionScopeValue['tableSelectionScope'][items[0].id] !== undefined
+        ? tableSelectionScopeValue[items[0].id] !== undefined
             ? true
             : false
         : false
@@ -250,29 +168,36 @@ export default forwardRef(function (props: Props, ref) {
     // Если items нет, то снимаем флаг о том, что нужно перерендеривать селекты
     // Чтобы не сваливался в бесконечный цикл
     if (items.length === 0) {
-        tableSelectionScopeValue['forRenderTableId'] = {
-            parentTableId: tableSelectionScopeValue['forRenderTableId']['parentTableId'],
-            currentTableId: tableId === tableSelectionScopeValue['forRenderTableId']['currentTableId']
+        tableSelectionScopeInternalValue['forRenderTableId'] = {
+            parentTableId: tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'],
+            currentTableId: tableId === tableSelectionScopeInternalValue['forRenderTableId']['currentTableId']
                 ? undefined
-                : tableSelectionScopeValue['forRenderTableId']['currentTableId'],
-            newTableId: tableId === tableSelectionScopeValue['forRenderTableId']['newTableId']
+                : tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'],
+            newTableId: tableId === tableSelectionScopeInternalValue['forRenderTableId']['newTableId']
                 ? undefined
-                : tableSelectionScopeValue['forRenderTableId']['newTableId'],
-            childTableId: tableSelectionScopeValue['forRenderTableId']['childTableId'].includes(tableId)
-                ? tableSelectionScopeValue['forRenderTableId']['childTableId'].filter(childTableId => childTableId !== tableId)
-                : tableSelectionScopeValue['forRenderTableId']['childTableId']
+                : tableSelectionScopeInternalValue['forRenderTableId']['newTableId'],
+            childTableId: tableSelectionScopeInternalValue['forRenderTableId']['childTableId'].includes(tableId)
+                ? tableSelectionScopeInternalValue['forRenderTableId']['childTableId'].filter(childTableId => childTableId !== tableId)
+                : tableSelectionScopeInternalValue['forRenderTableId']['childTableId']
         }
-        setTableSelectionScopeValue(tableSelectionScopeValue)
+        setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
     }
 
     // Флаг о том, что состояния берем из scope
     const useScopeStates = expansion.enabled && selection.multi.enabled && itemsInScope
 
-    //console.log("######################################## сТРЕГИРИЛА ТАБЛИЦА УРОВНЯ :", items?.[0]?.content?.level)
-
-    const [tableHandlerAtomValue, setTableHandlerAtomValue] = useAtom(tableHandlerAtom)
-
-
+    // Обработчик входящего массива multiSelection
+    // const externalMultiSelectionArray = selection.multi.selectedItems
+    // console.log("qfazwsergsredgeadrsgsdrfg externalMultiSelectionArray", externalMultiSelectionArray)
+    // if (
+    //     externalMultiSelectionArray 
+    //     && externalMultiSelectionArray?.length !== 0 
+    //     && externalMultiSelectionArray?.length !== selectedRecords?.length
+    // ) {
+    //     // Говорим, что эту таблицу нужно обновить
+    //     // tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'] = tableId
+    //     forceUpdate()
+    // }
 
     const refreshScopeValuesBySelect = () => {
 
@@ -293,7 +218,7 @@ export default forwardRef(function (props: Props, ref) {
         if (useScopeStates) {
 
             // Если это таблица, в которой было нажатие или её родитель, то не наследуем статусы
-            const getByParent = tableSelectionScopeValue['forRenderTableId']['currentTableId'] === tableId || tableSelectionScopeValue['forRenderTableId']['parentTableId'] === tableId
+            const getByParent = tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'] === tableId || tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'] === tableId
                 ? false
                 : true
 
@@ -304,21 +229,21 @@ export default forwardRef(function (props: Props, ref) {
                 // Если есть родительский item и стоит флаг, что наследуем от родителя
                 if (parentTableItemId && getByParent) {
                     // Если родитель выбран, то наследуем статус
-                    if (tableSelectionScopeValue['tableSelectionScope'][parentTableItemId] === "selected") {
+                    if (tableSelectionScopeValue[parentTableItemId] === "selected") {
                         tableSelectionScopeItem = "selected"
                     }
                     // Если родитель не выбран, то наследуем статус
-                    else if (tableSelectionScopeValue['tableSelectionScope'][parentTableItemId] === "notSelected") {
+                    else if (tableSelectionScopeValue[parentTableItemId] === "notSelected") {
                         tableSelectionScopeItem = "notSelected"
                     }
                     // Иначе (сли родитель indeterminated), то получаем статус записи из scope
                     else {
-                        tableSelectionScopeItem = tableSelectionScopeValue['tableSelectionScope'][item.id]
+                        tableSelectionScopeItem = tableSelectionScopeValue[item.id]
                     }
                 }
                 // Если родительского item нет, то получаем статус записи из scope
                 else {
-                    tableSelectionScopeItem = tableSelectionScopeValue['tableSelectionScope'][item.id]
+                    tableSelectionScopeItem = tableSelectionScopeValue[item.id]
                 }
                 // Если после проверок оказалось, что статус не найден, 
                 // то проверяем по наличию в массиве выбранных
@@ -328,7 +253,7 @@ export default forwardRef(function (props: Props, ref) {
                             ? "selected"
                             : "notSelected"
                         : "notSelected"
-                    tableSelectionScopeValue['tableSelectionScope'][item.id] = tableSelectionScopeItem
+                    tableSelectionScopeValue[item.id] = tableSelectionScopeItem
                     hasChange = true
                 }
 
@@ -336,8 +261,8 @@ export default forwardRef(function (props: Props, ref) {
                 // массива выбранных записей и массива indeterminated
                 if (tableSelectionScopeItem === 'selected') {
                     // Если статус в scope не соответствует полученному
-                    if (tableSelectionScopeValue['tableSelectionScope'][item.id] !== 'selected') {
-                        tableSelectionScopeValue['tableSelectionScope'][item.id] = 'selected'
+                    if (tableSelectionScopeValue[item.id] !== 'selected') {
+                        tableSelectionScopeValue[item.id] = 'selected'
                         hasChange = true
                     }
                     // Если item ещё не в массиве выбранных, то добавляем
@@ -345,15 +270,15 @@ export default forwardRef(function (props: Props, ref) {
                         newSelectedRecords.push(item)
                     }
                     // Если запись в массиве indeterminated, то удаляем из него
-                    if (tableSelectionScopeValue['tableIndeterminatedItemsIdList'].includes(item.id)) {
-                        tableSelectionScopeValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== item.id)
+                    if (tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].includes(item.id)) {
+                        tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== item.id)
                         hasChange = true
                     }
                 }
                 else if (tableSelectionScopeItem === "notSelected") {
                     // Если статус в scope не соответствует полученному
-                    if (tableSelectionScopeValue['tableSelectionScope'][item.id] !== 'notSelected') {
-                        tableSelectionScopeValue['tableSelectionScope'][item.id] = 'notSelected'
+                    if (tableSelectionScopeValue[item.id] !== 'notSelected') {
+                        tableSelectionScopeValue[item.id] = 'notSelected'
                         hasChange = true
                     }
                     // Если item в массиве выбранных, то удаляем
@@ -361,16 +286,16 @@ export default forwardRef(function (props: Props, ref) {
                         newSelectedRecords = newSelectedRecords.filter(record => record.id !== item.id)
                     }
                     // Если запись в массиве indeterminated, то удаляем из него
-                    if (tableSelectionScopeValue['tableIndeterminatedItemsIdList'].includes(item.id)) {
-                        tableSelectionScopeValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== item.id)
+                    if (tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].includes(item.id)) {
+                        tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== item.id)
                         hasChange = true
                     }
                 }
                 // А иначе статус будет indeterminated
                 else {
                     // Если статус в scope не соответствует полученному
-                    if (tableSelectionScopeValue['tableSelectionScope'][item.id] !== 'indeterminated') {
-                        tableSelectionScopeValue['tableSelectionScope'][item.id] = 'indeterminated'
+                    if (tableSelectionScopeValue[item.id] !== 'indeterminated') {
+                        tableSelectionScopeValue[item.id] = 'indeterminated'
                         hasChange = true
                     }
                     // Если item в массиве выбранных, то удаляем
@@ -378,13 +303,13 @@ export default forwardRef(function (props: Props, ref) {
                         newSelectedRecords = newSelectedRecords.filter(record => record.id !== item.id)
                     }
                     // Если itemId ещё нет в массиве indeterminated, то добавляем
-                    if (!tableSelectionScopeValue['tableIndeterminatedItemsIdList'].includes(item.id)) {
-                        tableSelectionScopeValue['tableIndeterminatedItemsIdList'].push(item.id)
+                    if (!tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].includes(item.id)) {
+                        tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].push(item.id)
                         hasChange = true
                     }
                     // Так как у нас хоть один item indeterminated, то и отец indeterminated
                     if (parentTableItemId) {
-                        tableSelectionScopeValue['tableSelectionScope'][parentTableItemId] = "indeterminated"
+                        tableSelectionScopeValue[parentTableItemId] = "indeterminated"
                         hasChange = true
                     }
                     parentIsIndeterminated = true
@@ -397,16 +322,16 @@ export default forwardRef(function (props: Props, ref) {
             if (parentTableItemId && !getByParent && !parentIsIndeterminated) {
                 if (newSelectedRecords.length === items.length) {
                     // Проверяем, не равен ли он уже этому значению
-                    if (!(tableSelectionScopeValue['tableSelectionScope'][parentTableItemId] === 'selected')) {
-                        tableSelectionScopeValue['tableSelectionScope'][parentTableItemId] = 'selected'
+                    if (!(tableSelectionScopeValue[parentTableItemId] === 'selected')) {
+                        tableSelectionScopeValue[parentTableItemId] = 'selected'
                         hasChange = true
                     }
                 }
                 // Если выбраны не все, то indeterminated
                 else if (newSelectedRecords.length !== 0 && newSelectedRecords.length !== items.length) {
                     // console.log(`Установили родительскому item ${parentTableItemId} статус indeterminated`)
-                    if (!(tableSelectionScopeValue['tableSelectionScope'][parentTableItemId] === 'indeterminated')) {
-                        tableSelectionScopeValue['tableSelectionScope'][parentTableItemId] = 'indeterminated'
+                    if (!(tableSelectionScopeValue[parentTableItemId] === 'indeterminated')) {
+                        tableSelectionScopeValue[parentTableItemId] = 'indeterminated'
                         hasChange = true
                     }
                 }
@@ -414,90 +339,203 @@ export default forwardRef(function (props: Props, ref) {
                 // else if (newSelectedRecords.length === 0) {
                 else {
                     // console.log(`Установили родительскому item ${parentTableItemId} статус notSelected`)
-                    if (!(tableSelectionScopeValue['tableSelectionScope'][parentTableItemId] === 'notSelected')) {
-                        tableSelectionScopeValue['tableSelectionScope'][parentTableItemId] = 'notSelected'
+                    if (!(tableSelectionScopeValue[parentTableItemId] === 'notSelected')) {
+                        tableSelectionScopeValue[parentTableItemId] = 'notSelected'
                         hasChange = true
                     }
                 }
             }
             // Исправляем массив id на рендеринг
             // Если id текущей таблицы родительское, то записываем его родителя
-            if (tableSelectionScopeValue['forRenderTableId']['parentTableId'] === tableId) {
+            if (tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'] === tableId) {
                 if (parentTableId) {
-                    tableSelectionScopeValue['forRenderTableId']['parentTableId'] = parentTableId
+                    tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'] = parentTableId
                 }
                 else {
-                    tableSelectionScopeValue['forRenderTableId']['parentTableId'] = undefined
+                    tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'] = undefined
                 }
 
                 hasChange = true
             }
             // Удаляем id текущей таблицы, так как она обработалась только что
-            else if (tableSelectionScopeValue['forRenderTableId']['currentTableId'] === tableId) {
-                tableSelectionScopeValue['forRenderTableId']['currentTableId'] = undefined
+            else if (tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'] === tableId) {
+                tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'] = undefined
                 hasChange = true
             }
             // Удаляем id текущей таблицы, если это новая, так как она обработалась только что
-            else if (tableSelectionScopeValue['forRenderTableId']['newTableId'] === tableId) {
-                tableSelectionScopeValue['forRenderTableId']['newTableId'] = undefined
+            else if (tableSelectionScopeInternalValue['forRenderTableId']['newTableId'] === tableId) {
+                tableSelectionScopeInternalValue['forRenderTableId']['newTableId'] = undefined
                 hasChange = true
             }
             // Если id текущей таблицы дочернее, то записываем дочерние
-            else if (tableSelectionScopeValue['forRenderTableId']['childTableId'].includes(tableId)) {
+            else if (tableSelectionScopeInternalValue['forRenderTableId']['childTableId'].includes(tableId)) {
                 // Удали текущую таблицу из детей, так как она отрендерилась
-                tableSelectionScopeValue['forRenderTableId']['childTableId'] = tableSelectionScopeValue['forRenderTableId']['childTableId']?.filter(iChildTableId => iChildTableId !== tableId)
-                const childIds = Object.keys(tableSelectionScopeValue['parentTableIdByTableId']).filter(key => tableSelectionScopeValue['parentTableIdByTableId'][key] === tableId)
-                tableSelectionScopeValue['forRenderTableId']['childTableId'] = [...tableSelectionScopeValue['forRenderTableId']['childTableId'], ...childIds]
+                tableSelectionScopeInternalValue['forRenderTableId']['childTableId'] = tableSelectionScopeInternalValue['forRenderTableId']['childTableId']?.filter(iChildTableId => iChildTableId !== tableId)
+                const childIds = Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId)
+                tableSelectionScopeInternalValue['forRenderTableId']['childTableId'] = [...tableSelectionScopeInternalValue['forRenderTableId']['childTableId'], ...childIds]
                 hasChange = true
             }
 
             setSelectedRecords(tableId, newSelectedRecords)
 
-            // После того, как мы внесли все необходимые изменения в tableSelectionScopeValue, обновляем его        
+
+            // После того, как мы внесли все необходимые изменения в tableSelectionScopeInternalValue, обновляем его        
             // Только если было изменение, обновляем атом
             if (hasChange) {
-                // запись о том, в какой таблице какие items выбраны
-                tableSelectionScopeValue['selectionByBDClass'][tableId] = newSelectedRecords
+                // // запись о том, в каком классе какие items выбраны
+                // items?.forEach(item => {
+                //     if (item?.dbClass) {
+                //         // Если item выбран
+                //         // if (newSelectedRecords?.find(fItem => fItem.id === item.id)) {
+                //         if (tableSelectionScopeValue[item.id] === 'selected') {
+                //             if (Array.isArray(tableSelectionByDBClassValue[item.dbClass])) {
+                //                 // Если ещё нет в массиве
+                //                 if (!tableSelectionByDBClassValue[item.dbClass]?.find(fItem => fItem.id !== item.id)) {
+                //                     tableSelectionByDBClassValue[item.dbClass].push(item)
+                //                 }
+                //             }
+                //             else {
+                //                 tableSelectionByDBClassValue[item.dbClass] = [item]
+                //             }
+                //         }
+                //         else {
+                //             console.log("Удаление!!!!tableSelectionByDBClassValue[item.dbClass]", tableSelectionByDBClassValue[item.dbClass])
+                //             if (tableSelectionByDBClassValue[item.dbClass]?.length) {
+                //                 tableSelectionByDBClassValue[item.dbClass] = tableSelectionByDBClassValue[item.dbClass]?.filter(fItem => fItem.id !== item.id)
+                //             }
+                //             else {
+                //                 tableSelectionByDBClassValue[item.dbClass] = []
+                //             }
+                //         }
+                //     }
+                // })
+                if (items?.[0]?.dbClass) {
+                    tableSelectionByDBClassValue[items[0].dbClass] = newSelectedRecords
+                }
                 setTableSelectionScopeValue(tableSelectionScopeValue)
+                settableSelectionByDBClassValue(tableSelectionByDBClassValue)
+                setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
             }
 
         }
-        // console.log("tableSelectionScopeValue в конце:", { ...tableSelectionScopeValue })
+        // console.log("tableSelectionScopeInternalValue в конце:", { ...tableSelectionScopeInternalValue })
         // console.log("Конец обработки статусов:", items[0]?.content?.level)
     }
 
+    // Обработчик входящего массива multiSelection
+    useEffect(() => {
+        //     tableSelectionScopeInternalValue['forRenderTableId'] = {
+        //         parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
+        //         currentTableId: tableId,
+        //         newTableId: undefined,
+        //         childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
+        //       }
+        // костылим
+        const selectedCount = items?.filter(item => tableSelectionScopeValue[item.id] === 'selected')?.length
+        console.log("@@@@@@@@@@@@@@@ selectedCount", selectedCount)
+        console.log("############ selection.multi.selectedItems?.length", selection.multi.selectedItems?.length)
+
+        if (
+            selectedCount !== selection.multi.selectedItems?.length
+            && selection.multi.selectedItems?.length > 0
+        ) {
+            // Перебираем записи вносим изменения в scope согласоно массиву извне
+            items?.forEach(item => {
+                if (selection.multi.selectedItems.find(fItem => fItem.id === item.id)) {
+                    tableSelectionScopeValue[item.id] = 'selected'
+                }
+                else {
+                    tableSelectionScopeValue[item.id] = 'notSelected'
+                }
+            })
+            // Говорим, что эту таблицу нужно обновить
+            tableSelectionScopeInternalValue['forRenderTableId'] = {
+                parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
+                currentTableId: tableId,
+                newTableId: undefined,
+                childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
+            }
+            setTableSelectionScopeValue(tableSelectionScopeValue)
+            setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
+            // setSelectedRecords(tableId, selection.multi.selectedItems)
+            // tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'] = tableId
+            // refreshScopeValuesBySelect()
+        }
+    }, [selection.multi.selectedItems])
+
+
+    // // костылим
+    // const selectedCount = items?.filter(item => tableSelectionScopeValue[item.id] === 'selected')?.length
+    // console.log("@@@@@@@@@@@@@@@ selectedCount", selectedCount)
+
+    // if (
+    //     selectedCount !== selectedRecords?.length
+    // ) {
+    //     // Говорим, что эту таблицу нужно обновить
+    //     tableSelectionScopeInternalValue['forRenderTableId'] = {
+    //         parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
+    //         currentTableId: tableId,
+    //         newTableId: undefined,
+    //         childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
+    //     }
+    //     // tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'] = tableId
+    //     refreshScopeValuesBySelect()
+    // }
+
+    // const externalMultiSelectionArray = selection.multi.selectedItems
+    // console.log("qfazwsergsredgeadrsgsdrfg externalMultiSelectionArray", externalMultiSelectionArray)
+    // if (
+    //     externalMultiSelectionArray 
+    //     && externalMultiSelectionArray?.length !== 0 
+    //     && externalMultiSelectionArray?.length !== selectedRecords?.length
+    // ) {
+    //     // Говорим, что эту таблицу нужно обновить
+    //     tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'] = tableId
+    //     refreshScopeValuesBySelect()
+    // }
+
     // Если текущая таблица должна обновить селекты, запускаем
     if (
-        tableSelectionScopeValue['forRenderTableId']['parentTableId'] === tableId
-        || tableSelectionScopeValue['forRenderTableId']['currentTableId'] === tableId
-        || tableSelectionScopeValue['forRenderTableId']['newTableId'] === tableId
-        || tableSelectionScopeValue['forRenderTableId']['childTableId'].includes(tableId)
+        tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'] === tableId
+        || tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'] === tableId
+        || tableSelectionScopeInternalValue['forRenderTableId']['newTableId'] === tableId
+        || tableSelectionScopeInternalValue['forRenderTableId']['childTableId'].includes(tableId)
     ) {
         refreshScopeValuesBySelect()
     }
 
 
     // Если отец есть в списке на перерендеринг, запускаем
-    if (tableSelectionScopeValue['forRenderTableId']['parentTableId'] !== undefined) {
-        tableHandlerAtomValue[tableSelectionScopeValue['forRenderTableId']['parentTableId']]()
+    if (tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'] !== undefined) {
+        tableHandlerAtomValue[tableSelectionScopeInternalValue['forRenderTableId']['parentTableId']]()
     }
     // Если дети есть в очерерди на перерендеринг, запускаем
     // так как дети - это массив, и они могу быть в другой ветке
-    if (tableSelectionScopeValue['forRenderTableId']['childTableId'].length > 0) {
-        tableSelectionScopeValue['forRenderTableId']['childTableId'].forEach(iChildTable => {
+    if (tableSelectionScopeInternalValue['forRenderTableId']['childTableId'].length > 0) {
+        tableSelectionScopeInternalValue['forRenderTableId']['childTableId'].forEach(iChildTable => {
             if (iChildTable) tableHandlerAtomValue[iChildTable]()
         })
     }
 
-    // Создаем отдельную функцию, экземплары которой связаны с компонентоу 
+    // Создаем отдельную функцию, экземплары которой связаны с компонентой 
     // и вызывая эту функцию по id таблицы, мы перерендерим именно её
     // и обновим статусы
     const forceUpdateThisTable = () => {
         forceUpdate()
     }
     // Сохраняем функцию ререндер в атом, под своим tableId
-    if (tableHandlerAtomValue[tableId] === undefined) {
+    if (tableHandlerAtomValue[tableId] === undefined && tableId) {
         setTableHandlerAtomValue((handlers) => ({ ...handlers, [tableId]: forceUpdateThisTable }))
+    }
+
+    // Когда все таблицы обновились, перерендериваем компоненту tableSelectionScope
+    if (
+        tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'] !== tableId
+        || tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'] !== tableId
+        || tableSelectionScopeInternalValue['forRenderTableId']['newTableId'] !== tableId
+        || tableSelectionScopeInternalValue['forRenderTableId']['childTableId'].length === 0
+    ) {
+        tableHandlerAtomValue['selectionScope']()
     }
 
     //========scopeMultiSelection============================================================

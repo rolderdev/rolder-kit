@@ -58,6 +58,7 @@ export type DbClass = {
 
 export type Item = {
     id: string
+    dbClass?: string
     content?: { [key: string]: any }
     states?: { [key: string]: any }
     _kuzzle_info?: {

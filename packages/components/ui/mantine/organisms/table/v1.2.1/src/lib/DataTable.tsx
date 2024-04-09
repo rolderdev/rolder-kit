@@ -41,7 +41,10 @@ import {
 import type { DataTableProps } from './types';
 import { differenceBy, getRecordId, humanize, uniqBy, useIsomorphicLayoutEffect } from './utils';
 import React from 'react';
-import { tableSelectionScopeAtom } from '@packages/scope';
+import {
+  tableSelectionScopeAtom,
+  tableSelectionScopeInternalAtom,
+} from "@packages/scope";
 import { useAtom } from 'jotai';
 
 
@@ -284,12 +287,11 @@ export default function DataTable<T>({
   const [scrolledToRight, setScrolledToRight] = useState(true);
 
   //==========================================================================================
-  // Хука для редактирования состоч=янийц в scope
+  // Хуки для атомов для tableSelectionScope
   const [tableSelectionScopeValue, setTableSelectionScopeValue] = useAtom(tableSelectionScopeAtom)
+  const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
 
-  // const { jotaiAtomMolValue, setJotaiAtomMolValue } = useJotaiAtom()
-  // const newTableSelectionScopeValue = { ...tableSelectionScopeValue }
-
+  
   //==========================================================================================
 
   const { rowContextMenuInfo, setRowContextMenuInfo } = useRowContextMenu<T>(fetching);
@@ -371,7 +373,7 @@ export default function DataTable<T>({
 
   // Если хоть одна запись таблицы indeterminated
   const tableIsIndeterminated = records
-    ? tableSelectionScopeValue['tableIndeterminatedItemsIdList'].find(indItem => records.find(record => getRecordId(record, idAccessor) === indItem))
+    ? tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].find(indItem => records.find(record => getRecordId(record, idAccessor) === indItem))
       ? true
       : false
     : false
@@ -383,7 +385,7 @@ export default function DataTable<T>({
         records?.map((record) => {
           const recordId = getRecordId(record, idAccessor)
           // Меняем статус каждомй записи
-          if (typeof recordId === 'string') tableSelectionScopeValue['tableSelectionScope'][recordId] = 'notSelected'
+          if (typeof recordId === 'string') tableSelectionScopeValue[recordId] = 'notSelected'
         })
         onSelectedRecordsChange(selectedRecords.filter((record) => !selectableRecordIds!.includes(getRecordId(record, idAccessor))))
         // Если все записи не выбраны, то выбираем
@@ -391,21 +393,22 @@ export default function DataTable<T>({
         records?.map((record) => {
           const recordId = getRecordId(record, idAccessor)
           // Меняем статус каждомй записи
-          if (typeof recordId === 'string') tableSelectionScopeValue['tableSelectionScope'][recordId] = 'selected'
+          if (typeof recordId === 'string') tableSelectionScopeValue[recordId] = 'selected'
         })
         if (records) onSelectedRecordsChange(uniqBy([...selectedRecords, ...selectableRecords!], (record) => getRecordId(record, idAccessor)))
       }
 
       // Запишем в массив на рендер id родительской и дочерней таблицы
       if (tableId) {
-        tableSelectionScopeValue['forRenderTableId'] = {
-          parentTableId: tableSelectionScopeValue['parentTableIdByTableId'][tableId],
+        tableSelectionScopeInternalValue['forRenderTableId'] = {
+          parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
           currentTableId: tableId,
           newTableId: undefined,
-          childTableId: Object.keys(tableSelectionScopeValue['parentTableIdByTableId']).filter(key => tableSelectionScopeValue['parentTableIdByTableId'][key] === tableId),
+          childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
         }
       }
       setTableSelectionScopeValue(tableSelectionScopeValue)
+      setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
     }
   }, [
     allSelectableRecordsSelected,
@@ -498,7 +501,7 @@ export default function DataTable<T>({
                 records.map((record, recordIndex) => {
                   const recordId = getRecordId(record, idAccessor);
                   const isSelected = selectedRecordIds?.includes(recordId) || false;
-                  const isIndeterminated = typeof recordId === 'string' ? tableSelectionScopeValue['tableIndeterminatedItemsIdList']?.includes(recordId) : false
+                  const isIndeterminated = typeof recordId === 'string' ? tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList']?.includes(recordId) : false
 
                   let showContextMenuOnClick = false;
                   let showContextMenuOnRightClick = false;
@@ -536,10 +539,10 @@ export default function DataTable<T>({
                       } else {
                         if (isSelected) {  // MD
                           if (typeof recordId === 'string') {
-                            tableSelectionScopeValue['tableSelectionScope'][recordId] = 'notSelected'
+                            tableSelectionScopeValue[recordId] = 'notSelected'
                             // Если запись в массиве indeterminated, то удаляем из него
-                            if (tableSelectionScopeValue['tableIndeterminatedItemsIdList']?.find(itemId => itemId === recordId)) {
-                              tableSelectionScopeValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== recordId)
+                            if (tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList']?.find(itemId => itemId === recordId)) {
+                              tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== recordId)
                             }
                           }
                           // Обновляем массив выбранных
@@ -550,10 +553,10 @@ export default function DataTable<T>({
 
                           if (typeof recordId === 'string') {
                             // console.log("recordId",recordId)
-                            tableSelectionScopeValue['tableSelectionScope'][recordId] = 'selected'
+                            tableSelectionScopeValue[recordId] = 'selected'
                             // Если запись в массиве indeterminated, то удаляем из него
-                            if (tableSelectionScopeValue['tableIndeterminatedItemsIdList']?.find(itemId => itemId === recordId)) {
-                              tableSelectionScopeValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== recordId)
+                            if (tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList']?.find(itemId => itemId === recordId)) {
+                              tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== recordId)
                             }
                           }
                           // Обновляем массив выбранных
@@ -562,14 +565,15 @@ export default function DataTable<T>({
                         }
                         // Запишем в массив на рендер id родительской и дочерней таблицы
                         if (tableId) {
-                          tableSelectionScopeValue['forRenderTableId'] = {
-                            parentTableId: tableSelectionScopeValue['parentTableIdByTableId'][tableId],
+                          tableSelectionScopeInternalValue['forRenderTableId'] = {
+                            parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
                             currentTableId: tableId,
                             newTableId: undefined,
-                            childTableId: Object.keys(tableSelectionScopeValue['parentTableIdByTableId']).filter(key => tableSelectionScopeValue['parentTableIdByTableId'][key] === tableId),
+                            childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
                           }
                         }
                         setTableSelectionScopeValue(tableSelectionScopeValue)
+                        setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
 
                       }
                       setLastSelectionChangeIndex(recordIndex);

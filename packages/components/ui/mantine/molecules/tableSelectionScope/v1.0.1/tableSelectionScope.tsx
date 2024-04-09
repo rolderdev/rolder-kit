@@ -1,49 +1,80 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react"
+import { forwardRef, useImperativeHandle, useRef } from "react" // useEffect
 import type { Props } from "./types";
 import { sendOutput, sendSignal } from "@packages/port-send";
 import React from "react";
-import { tableSelectionScopeAtom, tableHandlerAtom } from "@packages/scope";
+import { useForceUpdate } from '@mantine/hooks';
+import {
+    tableSelectionScopeAtom,
+    tableSelectionByBDClassAtom,
+    tableSelectionScopeInternalAtom,
+    tableHandlerAtom
+} from "@packages/scope";
 import { Provider as JotaiProvider, useAtom } from "jotai"
 
 const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
 
     // Хука дял получения и перезаписывания атома
+
     const [tableSelectionScopeValue, setTableSelectionScopeValue] = useAtom(tableSelectionScopeAtom)
-    const [tableHandlerAtomValue] = useAtom(tableHandlerAtom)
+    const [tableSelectionByDBClassValue, settableSelectionByDBClassValue] = useAtom(tableSelectionByBDClassAtom)
+    const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
+    const [tableHandlerAtomValue, setTableHandlerAtomValue] = useAtom(tableHandlerAtom)
 
     console.log("tableHandlerAtomValue", tableHandlerAtomValue)
-    useEffect(() => {
-        // if (tableSelectionScopeValue['forRenderTableId']['parentTableId'] !== undefined) {
-        //     console.log('PARENT ID IN tableSelectionScope', tableSelectionScopeValue['forRenderTableId']['parentTableId'])
-        //     tableHandlerAtomValue[tableSelectionScopeValue['forRenderTableId']['parentTableId']]()
-        // }
-        // sendOutput(props.noodlNode, 'selectionScope', tableSelectionScopeValue['tableSelectionScope'])
-        sendOutput(props.noodlNode, 'selectionScope', {...tableSelectionScopeValue['tableSelectionScope']})
-        sendOutput(props.noodlNode, 'selectionByBDClass', {...tableSelectionScopeValue['selectionByBDClass']})
-        sendSignal(props.noodlNode, 'changed')
-    }, [
-        tableSelectionScopeValue['tableSelectionScope'],
-        tableSelectionScopeValue['selectionByBDClass']
-    ])
+
+    const forceUpdate = useForceUpdate()
+    const forceUpdateSelectionScope = () => {
+        forceUpdate()
+    }
+    if (tableHandlerAtomValue['selectionScope'] === undefined) {
+        setTableHandlerAtomValue((handlers) => ({ ...handlers, ['selectionScope']: forceUpdateSelectionScope }))
+    }
+
+    
+
+    sendOutput(props.noodlNode, 'selectionScope', tableSelectionScopeValue)
+    sendOutput(props.noodlNode, 'selectionByBDClass', tableSelectionByDBClassValue)
+    sendSignal(props.noodlNode, 'changed')
+
+    // useEffect(() => {
+    //     // if (tableSelectionScopeValue['forRenderTableId']['parentTableId'] !== undefined) {
+    //     console.log("Сработала useEffect123")
+    //     //     tableHandlerAtomValue[tableSelectionScopeValue['forRenderTableId']['parentTableId']]()
+    //     // }
+    //     // sendOutput(props.noodlNode, 'selectionScope', tableSelectionScopeValue['tableSelectionScope'])
+    //     let selectionScope = tableSelectionScopeValue
+    //     sendOutput(props.noodlNode, 'selectionScope', selectionScope)
+
+    //     let selectionByBDClass = tableSelectionByDBClassValue
+    //     sendOutput(props.noodlNode, 'selectionByBDClass', selectionByBDClass)
+
+    //     sendSignal(props.noodlNode, 'changed')
+    // }, [
+    //     // tableSelectionScopeAtom,
+    //     tableSelectionScopeValue,
+    //     tableSelectionByDBClassValue,
+    //     tableSelectionScopeInternalValue
+    // ])
 
     // При внешнем триггере reset очищаем молекулу
     useImperativeHandle(ref, () => ({
+        
         reset() {
             console.log("REF CHILD TRIGGERED")
 
-            setTableSelectionScopeValue({
-                tableSelectionScope: {},
-                parentTableIdByTableId: {},
-                tableParentItemByTableId: {},
-                tableIndeterminatedItemsIdList: [],
-                allTableIdList: [],
-                forRenderTableId: {
+            setTableSelectionScopeValue({})
+            settableSelectionByDBClassValue({})
+            setTableSelectionScopeInternalValue({
+                'parentTableIdByTableId': {},                   // Словарь id родительской таблицы для кажждой таблицы
+                'tableParentItemByTableId': {},                 // Словарь родительских item для кажждой таблицы
+                'tableIndeterminatedItemsIdList': [],           // Массив с id запсией, которые должны быть indeterminated
+                'allTableIdList': [],                           // Массив всех tableId для отладки, так как в объекте они встают по алфовиту
+                'forRenderTableId': {                           // Массив с id таблиц, которые должны пересмотреть свои селекты, но не от родителей
                     parentTableId: undefined,
                     currentTableId: undefined,
                     newTableId: undefined,
                     childTableId: [],
                 },
-                selectionByBDClass: {}
             })
         },
     }), [])

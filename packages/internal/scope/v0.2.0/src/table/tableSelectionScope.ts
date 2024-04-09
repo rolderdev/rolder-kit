@@ -1,9 +1,14 @@
 import { atom as jotaiAtom } from "jotai" // , Provider as JotaiProvider, useAtom
+import type { Item } from "../../../../../../types/types"
+
 
 // Задаем тип данных для scope
 // Это для разработки, чтобы не делать ошибки
-export interface TableSelectionScopeValues { 
-    tableSelectionScope: { [itemId: string]: 'selected' | 'indeterminated' | 'notSelected' },
+export interface TableSelectionScopeValues { [itemId: string]: 'selected' | 'indeterminated' | 'notSelected' }
+
+export interface TableSelectionByBDClass { [tableId: string]: Item[] | undefined }
+
+export interface TableSelectionScopeInternal { 
     parentTableIdByTableId: { [tableId: string]: string | undefined },
     tableParentItemByTableId: { [tableId: string]: string | undefined },
     tableIndeterminatedItemsIdList: string [],
@@ -14,13 +19,20 @@ export interface TableSelectionScopeValues {
         newTableId: (string | undefined),
         childTableId: (string | undefined)[],
     },
-    selectionByBDClass: { [tableId: string]: any },
 }
 
 // Присваиваем id самой ноде TableSelectionScope
 // const tableSelectionScopeId = useId()
-const tableSelectionScopeAtom = jotaiAtom<TableSelectionScopeValues>({
-    'tableSelectionScope': {},                      // Словарь состояний selection для каждого item
+// Словарь состояний selection для каждого item
+const tableSelectionScopeAtom = jotaiAtom<TableSelectionScopeValues>({})
+
+// Присваиваем id самой ноде TableSelectionScope
+// const tableSelectionScopeId = useId()
+const tableSelectionByBDClassAtom = jotaiAtom<TableSelectionByBDClass>({})
+
+// Присваиваем id самой ноде TableSelectionScope
+// const tableSelectionScopeId = useId()
+const tableSelectionScopeInternalAtom = jotaiAtom<TableSelectionScopeInternal>({
     'parentTableIdByTableId': {},                   // Словарь id родительской таблицы для кажждой таблицы
     'tableParentItemByTableId': {},                 // Словарь родительских item для кажждой таблицы
     'tableIndeterminatedItemsIdList': [],           // Массив с id запсией, которые должны быть indeterminated
@@ -31,14 +43,13 @@ const tableSelectionScopeAtom = jotaiAtom<TableSelectionScopeValues>({
         newTableId: undefined,
         childTableId: [],
     },
-    selectionByBDClass: {}
 })
 
 // Атом, хранящий функции перерендера таблиц
 const tableHandlerAtom = jotaiAtom<{ [tableId: string]: any}>({})
 
 // Экспортируем атомы - радиация!!!
-export { tableSelectionScopeAtom, tableHandlerAtom }
+export { tableSelectionScopeAtom, tableSelectionByBDClassAtom, tableSelectionScopeInternalAtom, tableHandlerAtom }
 
 
 
