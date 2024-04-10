@@ -38,7 +38,8 @@ export type Props = BaseReactProps & {
   table2SingleSelectedRowBgColor: MantineColor, table2MutliSelectedRowBgColor: MantineColor,
   // States
   table2Fetching: boolean
-  dataFetchError
+  dataFetchError: boolean
+  dataScopeError: boolean
 }
 
 export type TableProps = {

@@ -74,7 +74,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                     parentTableId: undefined,
                     currentTableId: undefined,
                     newTableId: [],
-                    brotherTableId: [],
                     childTableId: [],
                 },
             })

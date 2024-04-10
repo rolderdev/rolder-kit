@@ -18,7 +18,6 @@ export interface TableSelectionScopeInternal {
         parentTableId: (string | undefined),
         currentTableId: (string | undefined),
         newTableId: (string | undefined)[],
-        brotherTableId: (string | undefined)[],
         childTableId: (string | undefined)[],
     },
 }
@@ -44,7 +43,6 @@ const tableSelectionScopeInternalAtom = jotaiAtom<TableSelectionScopeInternal>({
         parentTableId: undefined,
         currentTableId: undefined,
         newTableId: [],
-        brotherTableId: [],
         childTableId: [],
     },
 })
