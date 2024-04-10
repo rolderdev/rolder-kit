@@ -403,7 +403,8 @@ export default function DataTable<T>({
         tableSelectionScopeInternalValue['forRenderTableId'] = {
           parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
           currentTableId: tableId,
-          newTableId: undefined,
+          newTableId: [],
+          brotherTableId: [],
           childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
         }
       }
@@ -568,7 +569,8 @@ export default function DataTable<T>({
                           tableSelectionScopeInternalValue['forRenderTableId'] = {
                             parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
                             currentTableId: tableId,
-                            newTableId: undefined,
+                            newTableId: [],
+                            brotherTableId: [],
                             childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
                           }
                         }

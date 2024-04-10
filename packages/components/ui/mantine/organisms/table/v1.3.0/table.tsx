@@ -457,7 +457,7 @@ export default forwardRef(function (props: Props, ref) {
             // Только если было изменение, обновляем атом
             if (hasChange) {
                 // запись о том, в какой таблице какие items выбраны
-                tableSelectionScopeValue['selectionByBDClass'][tableId] = newSelectedRecords
+                tableSelectionScopeValue['selectionByDBClass'][tableId] = newSelectedRecords
                 setTableSelectionScopeValue(tableSelectionScopeValue)
             }
 

@@ -2,7 +2,7 @@
 // exportируем наши созданные scope, чтобы можно было использовать их ещё где-нибудь, через import
 export { 
     tableSelectionScopeAtom, 
-    tableSelectionByBDClassAtom, 
+    tableselectionByDBClassAtom, 
     tableSelectionScopeInternalAtom, 
     tableHandlerAtom 
 } from './src/table/tableSelectionScope'
