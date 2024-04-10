@@ -104,7 +104,6 @@ export default forwardRef(function (props: Props, ref) {
             // После раскрытия таблицы, items появляются не сразу, поэтому при их изменении, добавляем их в scope
             if (items.length > 0) {
                 // Наследуем статус от родителей
-                //console.log("ITEMS в useEffect!!!", items)
                 items.forEach(item => {
                     if (item && parentTableItemId && tableSelectionScopeValue[item.id] === undefined) {
                         // Если статус родителя не indeterminated
@@ -144,8 +143,6 @@ export default forwardRef(function (props: Props, ref) {
                     // Записываем в массив голоса всех элементов
                     itemsVotingResults.push(tableSelectionScopeValue[itemId])
                 })
-                console.log("itemsIds", itemsIds)
-                console.log("itemsVotingResults", itemsVotingResults)
                 // Если среди голосов все selected, то и голос от таблицы selected
                 if (
                     !itemsVotingResults.includes("indeterminated")
@@ -203,13 +200,6 @@ export default forwardRef(function (props: Props, ref) {
 
     }, [tableId, items])
 
-    // console.log("//////////////////////////////////////////////")
-    // console.log("tableId", tableId)
-    // console.log("parentTableId", tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'])
-    // console.log("childTableId", tableSelectionScopeInternalValue['forRenderTableId']['childTableId'])
-    // console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
-    // console.log("//////////////////////////////////////////////")
-
     // Если записи уже попали в scope на этапе выше, при первом их получении с наследованием от родителя,
     // то можно запускать обработку массива выбранных
     const itemsInScope = items.length > 0
@@ -224,13 +214,9 @@ export default forwardRef(function (props: Props, ref) {
         // Чтобы не сваливался в бесконечный цикл
         // Но проверяем, что и tableId есть, так как при первом рендере нет его и items
         if (tableId && items.length === 0) {
-            console.log("До удаления из рендера")
-            console.log("parentTableId", tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'])
-            console.log("currentTableId", tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'])
-            console.log("childTableId", tableSelectionScopeInternalValue['forRenderTableId']['childTableId'])
             tableSelectionScopeInternalValue['forRenderTableId'] = {
                 // Если наследовать, то свалится в бесконечный цикл
-                parentTableId: undefined, //tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'], //  tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],// tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId], //
+                parentTableId: tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'], //  undefined, // tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],// tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId], //
                 // Если это был currentTableId, то он выключается из рендера, чтобы не свалитсь в бесконечнцый цикл
                 currentTableId: tableId === tableSelectionScopeInternalValue['forRenderTableId']['currentTableId']
                     ? undefined
@@ -244,10 +230,6 @@ export default forwardRef(function (props: Props, ref) {
                     ? tableSelectionScopeInternalValue['forRenderTableId']['childTableId'].filter(childTableId => childTableId !== tableId)
                     : tableSelectionScopeInternalValue['forRenderTableId']['childTableId']
             }
-            console.log("После удаления из рендера")
-            console.log("parentTableId", tableSelectionScopeInternalValue['forRenderTableId']['parentTableId'])
-            console.log("currentTableId", tableSelectionScopeInternalValue['forRenderTableId']['currentTableId'])
-            console.log("childTableId", tableSelectionScopeInternalValue['forRenderTableId']['childTableId'])
             setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
         }
 
@@ -378,8 +360,6 @@ export default forwardRef(function (props: Props, ref) {
                                 // Записываем в массив голоса всех элементов
                                 itemsVotingResults.push(tableSelectionScopeValue[itemId])
                             })
-                            // console.log("itemsIds", itemsIds)
-                            // console.log("itemsVotingResults", itemsVotingResults)
                             // Если среди голосов все selected, то и голос от таблицы selected
                             if (
                                 !itemsVotingResults.includes("indeterminated")
@@ -432,10 +412,6 @@ export default forwardRef(function (props: Props, ref) {
                                 // Записываем в массив голоса всех братьев
                                 tablesVotingResults.push(tableSelectionScopeInternalValue['parentTableSelectionStateByTableId'][brotherTableId])
                             })
-                            // console.log("brotherTablesIds", brotherTablesIds)
-                            // console.log("tablesVotingResults", tablesVotingResults)
-                            // console.log("newSelectedRecords.length", newSelectedRecords.length)
-                            // console.log("items.length", items.length)
                             // Если среди голосов все selected, то и отец selected
                             if (
                                 !tablesVotingResults.includes("indeterminated")
@@ -564,7 +540,7 @@ export default forwardRef(function (props: Props, ref) {
                 } catch (e) {
                     console.log("У таблиц включен expension и multiselect, но они не оборнуты в selectionScope!")
                     console.log("Разместите иерархичные таблицы под нодой tableSelectionScope!!!")
-                    console.log(e)
+                    console.error(e)
                 }
             }
             // --- Выше находится блок, отвечающий за перерендер таблиц, у которых произошли изменения
