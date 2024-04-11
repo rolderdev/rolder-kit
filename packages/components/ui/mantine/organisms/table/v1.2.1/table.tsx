@@ -200,6 +200,8 @@ export default forwardRef(function (props: Props, ref) {
 
     }, [tableId, items])
 
+    console.log("обрабатываю уровень", items?.[0]?.content?.level)
+
     // Если записи уже попали в scope на этапе выше, при первом их получении с наследованием от родителя,
     // то можно запускать обработку массива выбранных
     const itemsInScope = items.length > 0
@@ -496,7 +498,8 @@ export default forwardRef(function (props: Props, ref) {
                 forceUpdate()
             }
             // Сохраняем функцию ререндер в атом, под своим tableId
-            if (tableHandlerAtomValue[tableId] === undefined && tableId) {
+            // Если items.length>0, чтобы не перерендеривать пустые таблицы
+            if (tableHandlerAtomValue[tableId] === undefined && tableId && items.length>0) {
                 setTableHandlerAtomValue((handlers) => ({ ...handlers, [tableId]: forceUpdateThisTable }))
             }
 
