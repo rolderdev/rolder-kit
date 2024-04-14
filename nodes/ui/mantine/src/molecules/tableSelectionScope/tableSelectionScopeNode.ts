@@ -42,7 +42,7 @@ export default reactNode('TableSelectionScope', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@packages/table-selection-scope-v1.0.1'))
+                '@packages/table-selection-scope-v1.1.0'))
         },
         inputs: [
             ...getPorts('input', ['reset']),

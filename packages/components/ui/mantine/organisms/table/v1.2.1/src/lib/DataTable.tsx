@@ -43,9 +43,11 @@ import { differenceBy, getRecordId, humanize, uniqBy, useIsomorphicLayoutEffect 
 import React from 'react';
 import {
   tableSelectionScopeAtom,
+  tableSelectionClickItemIdAtom,
   tableSelectionScopeInternalAtom,
+  tableHandlerAtom
 } from "@packages/scope";
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 
 
 const EMPTY_OBJECT = {};
@@ -191,6 +193,7 @@ export default function DataTable<T>({
   idAccessor = 'id',
   records,
   tableId,  // MD
+  parentTableItemId, // MD
   selectedRecords,
   onSelectedRecordsChange,
   isRecordSelectable,
@@ -290,8 +293,25 @@ export default function DataTable<T>({
   // Хуки для атомов для tableSelectionScope
   const [tableSelectionScopeValue, setTableSelectionScopeValue] = useAtom(tableSelectionScopeAtom)
   const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
+  const [tableHandlerAtomValue] = useAtom(tableHandlerAtom)
+  // Функция по записи значения в атом
+  const setTableSelectionClickItemIdValue = useSetAtom(tableSelectionClickItemIdAtom)
 
-  
+  function runTableSelectionScope() {
+    // Вызываем перерендер tableSelectionScope, чтобы он пересчитал 
+    // статусы связанных записей и обновил необходимые таблицы
+    try {
+      tableHandlerAtomValue['selectionScope']()
+      console.log("Вызывал перерендер selectionScope")
+      console.log("tableHandlerAtomValue['selectionScope']", tableHandlerAtomValue['selectionScope'])
+
+    } catch (e) {
+      console.log("У таблиц включен expension и multiselect, но они не оборнуты в selectionScope!")
+      console.log("Разместите иерархичные таблицы под нодой tableSelectionScope!!!")
+      console.error(e)
+    }
+  }
+
   //==========================================================================================
 
   const { rowContextMenuInfo, setRowContextMenuInfo } = useRowContextMenu<T>(fetching);
@@ -382,31 +402,35 @@ export default function DataTable<T>({
     if (selectedRecords && onSelectedRecordsChange) {
       // Если все записи выбраны, то снимаем все
       if (allSelectableRecordsSelected) { // MD
-        records?.map((record) => {
-          const recordId = getRecordId(record, idAccessor)
-          // Меняем статус каждомй записи
-          if (typeof recordId === 'string') tableSelectionScopeValue[recordId] = 'notSelected'
-        })
+        // Если включены expension и multiSelection
+        if (
+          true 
+          && typeof parentTableItemId === 'string'
+        ) {
+          // Сменим статус родительского элемента и запишем его в нажатый item
+          tableSelectionScopeValue[parentTableItemId] = 'notSelected'
+          // Запишем в массив на рендер id родительского элемента
+          setTableSelectionClickItemIdValue(parentTableItemId)
+        }
         onSelectedRecordsChange(selectedRecords.filter((record) => !selectableRecordIds!.includes(getRecordId(record, idAccessor))))
-        // Если все записи не выбраны, то выбираем
-      } else {
-        records?.map((record) => {
-          const recordId = getRecordId(record, idAccessor)
-          // Меняем статус каждомй записи
-          if (typeof recordId === 'string') tableSelectionScopeValue[recordId] = 'selected'
-        })
+        
+      }
+      // Если все записи не выбраны, то выбираем 
+      else {
+        // Если включены expension и multiSelection
+        if (
+          true 
+          && typeof parentTableItemId === 'string'
+        ) {
+          // Сменим статус родительского элемента и запишем его в нажатый item
+          tableSelectionScopeValue[parentTableItemId] = 'selected'
+          // Запишем в массив на рендер id родительского элемента
+          setTableSelectionClickItemIdValue(parentTableItemId)
+        }
         if (records) onSelectedRecordsChange(uniqBy([...selectedRecords, ...selectableRecords!], (record) => getRecordId(record, idAccessor)))
       }
-
-      // Запишем в массив на рендер id родительской и дочерней таблицы
-      if (tableId) {
-        tableSelectionScopeInternalValue['forRenderTableId'] = {
-          parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
-          currentTableId: tableId,
-          newTableId: [],
-          childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
-        }
-      }
+      // Запускаем tableSelectionScope
+      runTableSelectionScope()
       setTableSelectionScopeValue(tableSelectionScopeValue)
       setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
     }
@@ -550,7 +574,6 @@ export default function DataTable<T>({
                         }
                         // Если запись не выбрана, то делаем выбранной
                         else {
-
                           if (typeof recordId === 'string') {
                             // console.log("recordId",recordId)
                             tableSelectionScopeValue[recordId] = 'selected'
@@ -564,17 +587,11 @@ export default function DataTable<T>({
 
                         }
                         // Запишем в массив на рендер id родительской и дочерней таблицы
-                        if (tableId) {
-                          tableSelectionScopeInternalValue['forRenderTableId'] = {
-                            parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
-                            currentTableId: tableId,
-                            newTableId: [],
-                            childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
-                          }
-                        }
+                        if (typeof recordId === 'string') setTableSelectionClickItemIdValue(recordId)
                         setTableSelectionScopeValue(tableSelectionScopeValue)
                         setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
-
+                        // Запускаем tableSelectionScope
+                        runTableSelectionScope()
                       }
                       setLastSelectionChangeIndex(recordIndex);
                     };

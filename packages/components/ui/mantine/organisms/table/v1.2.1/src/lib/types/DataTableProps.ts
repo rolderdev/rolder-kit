@@ -22,6 +22,7 @@ export type DataTableProps<T> = {
   loaderOpacity?: any
   tableId?: string  // MD
   parentTableId?: string | undefined; // MD
+  parentTableItemId?: string; // MD
   indeterminatedRecords?: T[]; // MD
 
   /**
