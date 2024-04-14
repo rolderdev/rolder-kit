@@ -18,13 +18,14 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     // Хука дял получения и перезаписывания атома
 
     const [tableSelectionScopeValue, setTableSelectionScopeValue] = useAtom(tableSelectionScopeAtom)
-    const [tableSelectionChildIdsByParentIdValue, setTableSelectionChildIdsByParentIdValue] = useAtom(tableSelectionChildIdsByParentIdAtom)
-    const [tableSelectionClickItemIdValue, settableSelectionClickItemIdValue] = useAtom(tableSelectionClickItemIdAtom)
+    const [tableSelectionChildIdsByParentIdValue] = useAtom(tableSelectionChildIdsByParentIdAtom) // setTableSelectionChildIdsByParentIdValue
+    const [tableSelectionClickItemIdValue, setTableSelectionClickItemIdValue] = useAtom(tableSelectionClickItemIdAtom)
     const [tableSelectionByDBClassValue] = useAtom(tableselectionByDBClassAtom) // , setTableSelectionByDBClassValue
     const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
     const [tableHandlerAtomValue, setTableHandlerAtomValue] = useAtom(tableHandlerAtom)
 
     // console.log("tableHandlerAtomValue", tableHandlerAtomValue)
+    
 
 
     const forceUpdate = useForceUpdate()
@@ -43,7 +44,10 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     const makeZaebato = () => {
         // Обновим статус у всех детей нажатого items и их детей
         // const parentItemId = tableSelectionClickItemIdValue['parentItemId']
-        const clickedItemId = tableSelectionClickItemIdValue
+        const clickedItemsIds = tableSelectionClickItemIdValue
+
+        console.log("Нажатые items!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
 
         // id самого старого предка, которого мы перерендерим, и все его потомки перерендерятся сами
         let grandUltraFatherItemId: string = 'root'
@@ -119,8 +123,13 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                 console.log("tableSelectionScopeValue[parentItemId]",tableSelectionScopeValue[parentItemId])
                 console.log("tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList']",tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'])
 
+                // Если это результат внешнего multiSelect, то тоже ищем отца до самого верха
+                let itisMultiselect = false
+                if (clickedItemsIds?.length > 1) {
+                    itisMultiselect = true
+                }
                 // Если статус отца сменился, то перепроверяем и его отца
-                if (parentSelectionChanged) {
+                if (parentSelectionChanged || itisMultiselect) {
                     // Если это не 1 уровень
                     if (grandUltraFatherItemId !== 'root') reselectParent(parentItemId)
                 }
@@ -143,8 +152,22 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
             })
         }
 
-        reselectParent(clickedItemId)
-        reselectChild(clickedItemId)
+
+        clickedItemsIds?.forEach(clickedItemId => {
+            reselectParent(clickedItemId)
+            reselectChild(clickedItemId)
+        })
+
+
+        console.log("/////////////////////////////////////////////////////////////////////////////////////")
+        console.log("/////////////////////////////////////////////////////////////////////////////////////")
+        console.log("/////////////////////////////////////////////////////////////////////////////////////")
+        console.log("/////////////////////////////////////////////////////////////////////////////////////")
+        console.log("grandUltraFatherItemId", grandUltraFatherItemId)
+        console.log("/////////////////////////////////////////////////////////////////////////////////////")
+        console.log("/////////////////////////////////////////////////////////////////////////////////////")
+        console.log("/////////////////////////////////////////////////////////////////////////////////////")
+        console.log("/////////////////////////////////////////////////////////////////////////////////////")
 
         // Перерендерим самого старого отца
         if (
@@ -157,19 +180,17 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                 tableHandlerAtomValue[tableSelectionScopeInternalValue['tableIdByItemId'][grandUltraFatherItemId]]()
             }
         }
-        // if (
-        //     grandUltraFatherItemId !== 'root' 
-        //     && tableHandlerAtomValue[tableSelectionScopeInternalValue['allTableIdList'][0]] !== undefined
-        // ) {
-        //     tableHandlerAtomValue[tableSelectionScopeInternalValue['allTableIdList'][0]]()
-        // }
-        //grandUltraFatherItemId
+        
     }
 
+    // Обрабатываем селекты
     makeZaebato()
+    // После того, как мы обработали все изменения, очищаем массив с id на изменения
+    if (tableSelectionClickItemIdValue?.length > 0) {
+        setTableSelectionClickItemIdValue([])
+    }
 
-    setTableSelectionChildIdsByParentIdValue(tableSelectionChildIdsByParentIdValue)
-    settableSelectionClickItemIdValue(tableSelectionClickItemIdValue)
+    // setTableSelectionChildIdsByParentIdValue(tableSelectionChildIdsByParentIdValue)
     setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
 
     // useEffect(() => {

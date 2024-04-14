@@ -25,7 +25,7 @@ const tableSelectionChildIdsByParentIdAtom = jotaiAtom<TableSelectionChildIdsByP
     'root': [] // Массив с id items 1 уровня
 })
 
-const tableSelectionClickItemIdAtom = jotaiAtom<string>('')
+const tableSelectionClickItemIdAtom = jotaiAtom<string[]>([])
 
 // Присваиваем id самой ноде TableSelectionScope
 // const tableSelectionScopeId = useId()

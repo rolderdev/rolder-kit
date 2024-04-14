@@ -20,6 +20,7 @@ import { useForceUpdate, useId } from '@mantine/hooks';
 import { useAtom } from "jotai" // useAtom, read as readJotaiAtom, , useAtomValue, useSetAtom
 import {
     tableSelectionScopeAtom,
+    tableSelectionClickItemIdAtom,
     tableSelectionChildIdsByParentIdAtom,
     // tableselectionByDBClassAtom,
     tableSelectionScopeInternalAtom,
@@ -72,6 +73,7 @@ export default forwardRef(function (props: Props, ref) {
     const tableCellMol = useTableCellScope()
     // Хуки для атомов для tableSelectionScope
     const [tableSelectionScopeValue, setTableSelectionScopeValue] = useAtom(tableSelectionScopeAtom)
+    const [tableSelectionClickItemIdValue, setTableSelectionClickItemIdValue] = useAtom(tableSelectionClickItemIdAtom)
     const [tableSelectionChildIdsByParentIdValue, setTableSelectionChildIdsByParentIdValue] = useAtom(tableSelectionChildIdsByParentIdAtom)
     // const [tableSelectionByDBClassValue, setTableSelectionByDBClassValue] = useAtom(tableselectionByDBClassAtom)
     const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
@@ -121,7 +123,7 @@ export default forwardRef(function (props: Props, ref) {
 
                     // Если есть id и его ещё нет в scope
                     if (
-                        item?.id 
+                        item?.id
                         && parentTableItemId !== undefined
                         && parentTableItemId !== 'root'
                         && tableSelectionScopeValue[item.id] === undefined
@@ -217,7 +219,7 @@ export default forwardRef(function (props: Props, ref) {
             }
         }
 
-        refreshScopeValuesBySelect() 
+        refreshScopeValuesBySelect()
 
         // и обновим статусы
         const forceUpdateThisTable = () => {
@@ -230,52 +232,57 @@ export default forwardRef(function (props: Props, ref) {
         }
     }
 
-    // // Обработчик входящего массива multiSelection
-    // useEffect(() => {
+    // Обработчик входящего массива multiSelection
+    useEffect(() => {
 
-    //     if (useScopeStates && items.length > 0) {
+        if (useScopeStates && items.length > 0) {
 
-    //         // Получаем количество выделенных элементов данной таблицы, из записей в scope
-    //         const selectedCount = items?.filter(item => tableSelectionScopeValue[item.id] === 'selected')?.length
+            // if (
+            //     selection.multi.selectedItems?.length > 0
+            // ) {
+            // Так как в репиттере находится много таблиц, они все будут проверяться
+            // этим массивом и элементов таблиц в нем не окажется и везде снимутся селекты,
+            // кроме нужной таблицы
+            // Если хоть один элемент есть в массиве выбранных
+            // то это та таблица, которой меняем статус
+            let arrayForThisTable = false
+            items?.forEach(item => {
+                if (selection.multi.selectedItems?.find(fItem => fItem.id === item.id)) {
+                    arrayForThisTable = true
+                }
+            })
 
-    //         if (
-    //             selectedCount !== selection.multi.selectedItems?.length
-    //             && selection.multi.selectedItems?.length > 0
-    //         ) {
-    //             // Так как в репиттере находится много таблиц, они все будут проверяться
-    //             // этим массивом и элементов таблиц в нем не окажется и везде снимутся селекты,
-    //             // кроме нужной таблицы
-    //             // Сделаем флаг, что если хоть один элемент есть в массиве выбранных
-    //             // то это та таблица, которой меняем статус
-    //             let arrayForThisTable = false
-    //             items?.forEach(item => {
-    //                 if (selection.multi.selectedItems.find(fItem => fItem.id === item.id)) {
-    //                     arrayForThisTable = true
-    //                 }
-    //             })
-    //             // Перебираем записи вносим изменения в scope согласоно массиву извне
-    //             if (arrayForThisTable) {
-    //                 items?.forEach(item => {
-    //                     if (selection.multi.selectedItems.find(fItem => fItem.id === item.id)) {
-    //                         tableSelectionScopeValue[item.id] = 'selected'
-    //                     }
-    //                     else {
-    //                         tableSelectionScopeValue[item.id] = 'notSelected'
-    //                     }
-    //                 })
-    //             }
-    //             // Говорим, что эту таблицу нужно обновить
-    //             tableSelectionScopeInternalValue['forRenderTableId'] = {
-    //                 parentTableId: tableSelectionScopeInternalValue['parentTableIdByTableId'][tableId],
-    //                 currentTableId: tableId,
-    //                 newTableId: [],
-    //                 childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === tableId),
-    //             }
-    //             setTableSelectionScopeValue(tableSelectionScopeValue)
-    //             setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
-    //         }
-    //     }
-    // }, [selection.multi.selectedItems])
+            if (arrayForThisTable) {
+                items?.forEach(item => {
+                    if (selection.multi.selectedItems?.find(fItem => fItem.id === item.id)) {
+                        tableSelectionScopeValue[item.id] = 'selected'
+                    }
+                    else {
+                        tableSelectionScopeValue[item.id] = 'notSelected'
+                    }
+                    // Имитируем нажатие на item, если там ещё нет
+                    if (!tableSelectionClickItemIdValue.includes(item.id)) {
+                        tableSelectionClickItemIdValue.push(item.id)
+                    }
+                    setTableSelectionScopeValue(tableSelectionScopeValue)
+                    setTableSelectionClickItemIdValue(tableSelectionClickItemIdValue)
+                    setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
+                })
+
+                // Запускаем tableSelectionScope
+                try {
+                    tableHandlerAtomValue['selectionScope']()
+                    console.log("Вызывал перерендер selectionScope")
+                    console.log("tableHandlerAtomValue['selectionScope']", tableHandlerAtomValue['selectionScope'])
+              
+                  } catch (e) {
+                    console.log("У таблиц включен expension и multiselect, но они не оборнуты в selectionScope!")
+                    console.log("Разместите иерархичные таблицы под нодой tableSelectionScope!!!")
+                    console.error(e)
+                  }
+            }
+        }
+    }, [selection.multi.selectedItems])
 
     //========scopeMultiSelection============================================================
 

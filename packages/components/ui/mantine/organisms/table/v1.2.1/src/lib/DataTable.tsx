@@ -410,7 +410,7 @@ export default function DataTable<T>({
           // Сменим статус родительского элемента и запишем его в нажатый item
           tableSelectionScopeValue[parentTableItemId] = 'notSelected'
           // Запишем в массив на рендер id родительского элемента
-          setTableSelectionClickItemIdValue(parentTableItemId)
+          setTableSelectionClickItemIdValue([parentTableItemId])
         }
         onSelectedRecordsChange(selectedRecords.filter((record) => !selectableRecordIds!.includes(getRecordId(record, idAccessor))))
         
@@ -425,7 +425,7 @@ export default function DataTable<T>({
           // Сменим статус родительского элемента и запишем его в нажатый item
           tableSelectionScopeValue[parentTableItemId] = 'selected'
           // Запишем в массив на рендер id родительского элемента
-          setTableSelectionClickItemIdValue(parentTableItemId)
+          setTableSelectionClickItemIdValue([parentTableItemId])
         }
         if (records) onSelectedRecordsChange(uniqBy([...selectedRecords, ...selectableRecords!], (record) => getRecordId(record, idAccessor)))
       }
@@ -587,7 +587,7 @@ export default function DataTable<T>({
 
                         }
                         // Запишем в массив на рендер id родительской и дочерней таблицы
-                        if (typeof recordId === 'string') setTableSelectionClickItemIdValue(recordId)
+                        if (typeof recordId === 'string') setTableSelectionClickItemIdValue([recordId])
                         setTableSelectionScopeValue(tableSelectionScopeValue)
                         setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
                         // Запускаем tableSelectionScope
