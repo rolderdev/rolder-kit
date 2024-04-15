@@ -45,7 +45,7 @@ import {
   tableSelectionScopeAtom,
   tableSelectionClickItemIdAtom,
   tableSelectionScopeInternalAtom,
-  tableHandlerAtom
+  // tableHandlerAtom
 } from "@packages/scope";
 import { useAtom, useSetAtom } from 'jotai';
 
@@ -293,24 +293,24 @@ export default function DataTable<T>({
   // Хуки для атомов для tableSelectionScope
   const [tableSelectionScopeValue, setTableSelectionScopeValue] = useAtom(tableSelectionScopeAtom)
   const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
-  const [tableHandlerAtomValue] = useAtom(tableHandlerAtom)
+  // const [tableHandlerAtomValue] = useAtom(tableHandlerAtom)
   // Функция по записи значения в атом
   const setTableSelectionClickItemIdValue = useSetAtom(tableSelectionClickItemIdAtom)
 
-  function runTableSelectionScope() {
+  // function runTableSelectionScope() {
     // Вызываем перерендер tableSelectionScope, чтобы он пересчитал 
     // статусы связанных записей и обновил необходимые таблицы
-    try {
-      tableHandlerAtomValue['selectionScope']()
-      console.log("Вызывал перерендер selectionScope")
-      console.log("tableHandlerAtomValue['selectionScope']", tableHandlerAtomValue['selectionScope'])
+    // try {
+    //   tableHandlerAtomValue['selectionScope']()
+    //   // console.log("Вызывал перерендер selectionScope")
+    //   // console.log("tableHandlerAtomValue['selectionScope']", tableHandlerAtomValue['selectionScope'])
 
-    } catch (e) {
-      console.log("У таблиц включен expension и multiselect, но они не оборнуты в selectionScope!")
-      console.log("Разместите иерархичные таблицы под нодой tableSelectionScope!!!")
-      console.error(e)
-    }
-  }
+    // } catch (e) {
+    //   console.log("У таблиц включен expension и multiselect, но они не оборнуты в selectionScope!")
+    //   console.log("Разместите иерархичные таблицы под нодой tableSelectionScope!!!")
+    //   console.error(e)
+    // }
+  // }
 
   //==========================================================================================
 
@@ -430,7 +430,7 @@ export default function DataTable<T>({
         if (records) onSelectedRecordsChange(uniqBy([...selectedRecords, ...selectableRecords!], (record) => getRecordId(record, idAccessor)))
       }
       // Запускаем tableSelectionScope
-      runTableSelectionScope()
+      // runTableSelectionScope()
       setTableSelectionScopeValue(tableSelectionScopeValue)
       setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
     }
@@ -591,7 +591,7 @@ export default function DataTable<T>({
                         setTableSelectionScopeValue(tableSelectionScopeValue)
                         setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
                         // Запускаем tableSelectionScope
-                        runTableSelectionScope()
+                        // runTableSelectionScope()
                       }
                       setLastSelectionChangeIndex(recordIndex);
                     };

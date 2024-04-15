@@ -50,7 +50,7 @@ export default forwardRef(function (props: Props, ref) {
     useEffect(() => {
         // Если это не разворачиваемая строка с множественным выбором,то хакаем
         if (!expansion.enabled && !selection.multi.enabled) {
-            console.log("setTimeout(() => forceUpdate())")
+            // console.log("setTimeout(() => forceUpdate())")
             setTimeout(() => forceUpdate())
         }
     }, [items])
@@ -77,7 +77,7 @@ export default forwardRef(function (props: Props, ref) {
     const [tableSelectionChildIdsByParentIdValue, setTableSelectionChildIdsByParentIdValue] = useAtom(tableSelectionChildIdsByParentIdAtom)
     // const [tableSelectionByDBClassValue, setTableSelectionByDBClassValue] = useAtom(tableselectionByDBClassAtom)
     const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
-    const [tableHandlerAtomValue, setTableHandlerAtomValue] = useAtom(tableHandlerAtom)
+    const [tableHandlerAtomValue] = useAtom(tableHandlerAtom) //setTableHandlerAtomValue
 
     // id родительской таблицы
     // const parentTableId = tableCellMol?.parentTableId ? tableCellMol.parentTableId : undefined
@@ -97,8 +97,8 @@ export default forwardRef(function (props: Props, ref) {
     // Если в молекуле ещё нет связки id текущей таблицы и id родительской таблицы
     // то создаем эту связь
     useEffect(() => {
-        console.log("******************************************************")
-        console.log("Сработал useEffect(() => { на tableId и Items")
+        // console.log("******************************************************")
+        // console.log("Сработал useEffect(() => { на tableId и Items")
 
         if (useScopeStates && tableId !== '' && tableId !== undefined) {
             if (!tableSelectionScopeInternalValue['allTableIdList'].includes(tableId)) {
@@ -221,15 +221,15 @@ export default forwardRef(function (props: Props, ref) {
 
         refreshScopeValuesBySelect()
 
-        // и обновим статусы
-        const forceUpdateThisTable = () => {
-            forceUpdate()
-        }
-        // Сохраняем функцию ререндер в атом, под своим tableId
+        // // и обновим статусы
+        // const forceUpdateThisTable = () => {
+        //     forceUpdate()
+        // }
+        // // Сохраняем функцию ререндер в атом, под своим tableId
 
-        if (tableHandlerAtomValue[tableId] === undefined && tableId && items.length > 0) { //  && items.length > 0// Если items.length>0, чтобы не перерендеривать пустые таблицы
-            setTableHandlerAtomValue((handlers) => ({ ...handlers, [tableId]: forceUpdateThisTable }))
-        }
+        // if (tableHandlerAtomValue[tableId] === undefined && tableId && items.length > 0) { //  && items.length > 0// Если items.length>0, чтобы не перерендеривать пустые таблицы
+        //     setTableHandlerAtomValue((handlers) => ({ ...handlers, [tableId]: forceUpdateThisTable }))
+        // }
     }
 
     // Обработчик входящего массива multiSelection
@@ -272,14 +272,14 @@ export default forwardRef(function (props: Props, ref) {
                 // Запускаем tableSelectionScope
                 try {
                     tableHandlerAtomValue['selectionScope']()
-                    console.log("Вызывал перерендер selectionScope")
-                    console.log("tableHandlerAtomValue['selectionScope']", tableHandlerAtomValue['selectionScope'])
-              
-                  } catch (e) {
+                    // console.log("Вызывал перерендер selectionScope")
+                    // console.log("tableHandlerAtomValue['selectionScope']", tableHandlerAtomValue['selectionScope'])
+
+                } catch (e) {
                     console.log("У таблиц включен expension и multiselect, но они не оборнуты в selectionScope!")
                     console.log("Разместите иерархичные таблицы под нодой tableSelectionScope!!!")
                     console.error(e)
-                  }
+                }
             }
         }
     }, [selection.multi.selectedItems])
