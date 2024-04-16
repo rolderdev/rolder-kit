@@ -42,12 +42,14 @@ import type { DataTableProps } from './types';
 import { differenceBy, getRecordId, humanize, uniqBy, useIsomorphicLayoutEffect } from './utils';
 import React from 'react';
 import {
+  type TableSelectionScopeValues,
+  type TableSelectionScopeInternal,
   tableSelectionScopeAtom,
   tableSelectionClickItemIdAtom,
   tableSelectionScopeInternalAtom,
-  // tableHandlerAtom
+  tableHandlerAtom
 } from "@packages/scope";
-import { useAtom, useSetAtom } from 'jotai';
+import { useStore } from 'jotai'; // useAtom, useSetAtom, 
 
 
 const EMPTY_OBJECT = {};
@@ -291,26 +293,41 @@ export default function DataTable<T>({
 
   //==========================================================================================
   // Хуки для атомов для tableSelectionScope
-  const [tableSelectionScopeValue, setTableSelectionScopeValue] = useAtom(tableSelectionScopeAtom)
-  const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
+  // const [tableSelectionScopeValue, setTableSelectionScopeValue] = useAtom(tableSelectionScopeAtom)
+  // const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
   // const [tableHandlerAtomValue] = useAtom(tableHandlerAtom)
   // Функция по записи значения в атом
-  const setTableSelectionClickItemIdValue = useSetAtom(tableSelectionClickItemIdAtom)
+  // const setTableSelectionClickItemIdValue = useSetAtom(tableSelectionClickItemIdAtom)
 
-  // function runTableSelectionScope() {
+
+
+  const selectionScopeStore = useStore()
+
+  const tableSelectionScopeValue = selectionScopeStore.get(tableSelectionScopeAtom)
+  // const tableSelectionChildIdsByParentIdValue = selectionScopeStore.get(tableSelectionChildIdsByParentIdAtom) // setTableSelectionChildIdsByParentIdValue
+  // const tableSelectionClickItemIdValue = selectionScopeStore.get(tableSelectionClickItemIdAtom)
+  // const tableSelectionByDBClassValue = selectionScopeStore.get(tableselectionByDBClassAtom) // , setTableSelectionByDBClassValue
+  const tableSelectionScopeInternalValue = selectionScopeStore.get(tableSelectionScopeInternalAtom)
+  const tableHandlerAtomValue = selectionScopeStore.get(tableHandlerAtom)
+
+  const setTableSelectionScopeValue = (value: TableSelectionScopeValues) => { selectionScopeStore.set(tableSelectionScopeAtom, value) }
+  // const setTableSelectionChildIdsByParentIdValue = (value: TableSelectionChildIdsByParentId) => { selectionScopeStore.set(tableSelectionChildIdsByParentIdAtom, value) }
+  const setTableSelectionClickItemIdValue = (value: string[]) => { selectionScopeStore.set(tableSelectionClickItemIdAtom, value) }
+  const setTableSelectionScopeInternalValue = (value: TableSelectionScopeInternal) => { selectionScopeStore.set(tableSelectionScopeInternalAtom, value) }
+  // const setTableHandlerAtomValue = (value: { [tableId: string]: () => void }) => { selectionScopeStore.set(tableHandlerAtom, value) }
+
+
+
+  function runTableSelectionScope() {
     // Вызываем перерендер tableSelectionScope, чтобы он пересчитал 
     // статусы связанных записей и обновил необходимые таблицы
-    // try {
-    //   tableHandlerAtomValue['selectionScope']()
-    //   // console.log("Вызывал перерендер selectionScope")
-    //   // console.log("tableHandlerAtomValue['selectionScope']", tableHandlerAtomValue['selectionScope'])
+    try {
+      tableHandlerAtomValue['selectionScope']()
 
-    // } catch (e) {
-    //   console.log("У таблиц включен expension и multiselect, но они не оборнуты в selectionScope!")
-    //   console.log("Разместите иерархичные таблицы под нодой tableSelectionScope!!!")
-    //   console.error(e)
-    // }
-  // }
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   //==========================================================================================
 
@@ -404,7 +421,7 @@ export default function DataTable<T>({
       if (allSelectableRecordsSelected) { // MD
         // Если включены expension и multiSelection
         if (
-          true 
+          true
           && typeof parentTableItemId === 'string'
         ) {
           // Сменим статус родительского элемента и запишем его в нажатый item
@@ -413,13 +430,13 @@ export default function DataTable<T>({
           setTableSelectionClickItemIdValue([parentTableItemId])
         }
         onSelectedRecordsChange(selectedRecords.filter((record) => !selectableRecordIds!.includes(getRecordId(record, idAccessor))))
-        
+
       }
       // Если все записи не выбраны, то выбираем 
       else {
         // Если включены expension и multiSelection
         if (
-          true 
+          true
           && typeof parentTableItemId === 'string'
         ) {
           // Сменим статус родительского элемента и запишем его в нажатый item
@@ -430,7 +447,7 @@ export default function DataTable<T>({
         if (records) onSelectedRecordsChange(uniqBy([...selectedRecords, ...selectableRecords!], (record) => getRecordId(record, idAccessor)))
       }
       // Запускаем tableSelectionScope
-      // runTableSelectionScope()
+      runTableSelectionScope()
       setTableSelectionScopeValue(tableSelectionScopeValue)
       setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
     }
@@ -591,7 +608,7 @@ export default function DataTable<T>({
                         setTableSelectionScopeValue(tableSelectionScopeValue)
                         setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
                         // Запускаем tableSelectionScope
-                        // runTableSelectionScope()
+                        runTableSelectionScope()
                       }
                       setLastSelectionChangeIndex(recordIndex);
                     };

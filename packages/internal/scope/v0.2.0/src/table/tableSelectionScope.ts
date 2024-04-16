@@ -21,10 +21,16 @@ export interface TableSelectionScopeInternal {
 // Словарь состояний selection для каждого item
 const tableSelectionScopeAtom = jotaiAtom<TableSelectionScopeValues>({})
 
+// Словарь, где под id записи лежат все её дочерние записи
+// root - это батя для 1 уровня
 const tableSelectionChildIdsByParentIdAtom = jotaiAtom<TableSelectionChildIdsByParentId>({
     'root': [] // Массив с id items 1 уровня
 })
 
+// Атом, хранящий id записей, которые были нажаты
+// После отработки запсией, они удаляются из массива
+// Массив здесь, так как при подаче внешнего multiSelect
+// нужно отработать каждый выьранный item и его детей
 const tableSelectionClickItemIdAtom = jotaiAtom<string[]>([])
 
 // Присваиваем id самой ноде TableSelectionScope
@@ -40,7 +46,7 @@ const tableSelectionScopeInternalAtom = jotaiAtom<TableSelectionScopeInternal>({
 })
 
 // Атом, хранящий функции перерендера таблиц
-const tableHandlerAtom = jotaiAtom<{ [tableId: string]: any}>({})
+const tableHandlerAtom = jotaiAtom<{ [tableId: string]: () => void}>({})
 
 // Экспортируем атомы - радиация!!!
 export { 
@@ -51,18 +57,6 @@ export {
     tableSelectionScopeInternalAtom, 
     tableHandlerAtom 
 }
-
-// export function useTableSelectionScope() {
-
-//     const 
-
-//     const tableSelectionScopeMol = useMolecule(TableSelectionScopeMolecule)
-    
-//     const [ tableSelectionScopeValue, setTableSelectionScopeValue ] = useAtom(tableSelectionScopeMol)
-
-//     return { tableSelectionScopeValue, setTableSelectionScopeValue }
-// }
-
 
 // // ВЕСЬ ЭТОТ ПАКЕТ - ЭТО ИНСТРУМЕНТ СОЗДАНИЯ SCOPE, ОН САМ НИЧЕГО НЕ ДЕЛАЕТ!!!!
 // // ЭТО БЛЯТЬ - БИБЛИОТЭКА!!!
