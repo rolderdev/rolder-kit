@@ -8,7 +8,7 @@ export default reactNode('DropZone', {
             dynamic: lazy(() => import(
                 /* webpackPrefetch: true */
                 /* webpackPreload: true */
-                '@packages/drop-zone-v1.0.0'))
+                "@packages/drop-zone-v1.0.0"))
         },
         inputs: [
             ...getPorts('input', ['customProps', 'disabled', 'radius', 'w', 'h', 'loading', 'reset']),
@@ -43,6 +43,12 @@ export default reactNode('DropZone', {
                 plug: 'input', name: 'stroke', displayName: 'Stroke', group: 'Icons', type: 'number',
                 default: 2, customs: { required: 'both' }
             })
+        ],
+        outputs: [
+            getPort({ plug: 'output', name: 'fileName', displayName: 'fileName', group: 'Data', type: 'object' }),
+            getPort({ plug: 'output', name: 'file', displayName: 'file', group: 'Data', type: 'object' }),
+            getPort({ plug: 'output', name: 'loaded', displayName: 'loaded', group: 'Signals', type: 'signal' }),
+            getPort({ plug: 'output', name: 'rejected', displayName: 'rejected', group: 'Signals', type: 'signal' }),
         ]
     }
 })

@@ -56,7 +56,8 @@
     "@nodes/textarea": "workspace:*",
     "@nodes/title": "workspace:*",
     "@nodes/unstyled-button": "workspace:*",
-    "@nodes/table-selection-scope": "workspace:*"
+    "@nodes/table-selection-scope": "workspace:*",
+    "@nodes/drop-zone": "workspace:*"
   },
   "devDependencies": {
     "types": "workspace:*"

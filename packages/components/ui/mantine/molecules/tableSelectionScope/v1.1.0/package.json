@@ -12,7 +12,8 @@
     "@mantine/core": "6.0.21",
     "@mantine/hooks": "6.0.21",
     "bunshi": "2.0.2",
-    "jotai": "2.2.2"
+    "jotai": "2.2.2",
+    "jotai-scope": "0.5.1"
     
   },
   "devDependencies": {

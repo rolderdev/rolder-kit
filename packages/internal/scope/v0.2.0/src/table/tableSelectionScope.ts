@@ -52,6 +52,17 @@ export {
     tableHandlerAtom 
 }
 
+// export function useTableSelectionScope() {
+
+//     const 
+
+//     const tableSelectionScopeMol = useMolecule(TableSelectionScopeMolecule)
+    
+//     const [ tableSelectionScopeValue, setTableSelectionScopeValue ] = useAtom(tableSelectionScopeMol)
+
+//     return { tableSelectionScopeValue, setTableSelectionScopeValue }
+// }
+
 
 // // ВЕСЬ ЭТОТ ПАКЕТ - ЭТО ИНСТРУМЕНТ СОЗДАНИЯ SCOPE, ОН САМ НИЧЕГО НЕ ДЕЛАЕТ!!!!
 // // ЭТО БЛЯТЬ - БИБЛИОТЭКА!!!

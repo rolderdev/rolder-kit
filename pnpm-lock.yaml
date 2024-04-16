@@ -501,6 +501,9 @@ importers:
       '@nodes/drawer':
         specifier: workspace:*
         version: link:src/molecules/drawer
+      '@nodes/drop-zone':
+        specifier: workspace:*
+        version: link:src/elements/miscellaneous/dropZone
       '@nodes/expansion-row':
         specifier: workspace:*
         version: link:src/organisms/table/modules/expansionRow
@@ -3767,6 +3770,9 @@ importers:
       jotai:
         specifier: 2.2.2
         version: 2.2.2(react@18.2.0)
+      jotai-scope:
+        specifier: 0.5.1
+        version: 0.5.1(jotai@2.2.2)(react@18.2.0)
     devDependencies:
       '@packages/node':
         specifier: workspace:@packages/node-v0.8.0@*
@@ -8953,6 +8959,16 @@ packages:
       '@types/node': 16.18.95
       merge-stream: 2.0.0
       supports-color: 8.1.1
+
+  /jotai-scope@0.5.1(jotai@2.2.2)(react@18.2.0):
+    resolution: {integrity: sha512-GKaqtCj1Hv36nyl63PVm+s5jo+hQqz+wAb81iqA8VuUXp5ot4eXGOZt4Hc66lFZMP0N/yEOISMlazprmDI6kFA==}
+    peerDependencies:
+      jotai: '>=2.5.0'
+      react: '>=17.0.0'
+    dependencies:
+      jotai: 2.2.2(react@18.2.0)
+      react: 18.2.0
+    dev: false
 
   /jotai@2.2.2(react@18.2.0):
     resolution: {integrity: sha512-Cn8hnBg1sc5ppFwEgVGTfMR5WSM0hbAasd/bdAwIwTaum0j3OUPqBSC4tyk3jtB95vicML+RRWgKFOn6gtfN0A==}

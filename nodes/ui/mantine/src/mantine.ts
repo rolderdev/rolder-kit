@@ -52,6 +52,7 @@ import datePickerInputNode from '@nodes/date-picker-input'
 //// miscellaneous
 import notificationNode from '@nodes/notification'
 import dividerNode from '@nodes/divider'
+import dropZoneNode from '@nodes/drop-zone'
 //// typography
 import textNode from '@nodes/text'
 import titleNode from '@nodes/title'
@@ -101,7 +102,7 @@ Noodl.defineModule({
         passwordInputNode, textInputNode, numberInputNode, maskedInputNode, selectNode, textareaNode, dateTimePickerNode,
         segmentedControlNode, checkboxGroupNode, checkboxNode, multiSelectNode, datePickerInputNode,
         //// miscellaneous
-        dividerNode,
+        dividerNode, dropZoneNode,
         //// typography
         textNode, titleNode, highlightNode, listNode,
         //// navigation

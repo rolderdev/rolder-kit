@@ -77,7 +77,7 @@ export default forwardRef(function (props: Props, ref) {
     const [tableSelectionChildIdsByParentIdValue, setTableSelectionChildIdsByParentIdValue] = useAtom(tableSelectionChildIdsByParentIdAtom)
     // const [tableSelectionByDBClassValue, setTableSelectionByDBClassValue] = useAtom(tableselectionByDBClassAtom)
     const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
-    const [tableHandlerAtomValue] = useAtom(tableHandlerAtom) //setTableHandlerAtomValue
+    const [tableHandlerAtomValue, setTableHandlerAtomValue] = useAtom(tableHandlerAtom) //setTableHandlerAtomValue
 
     // id родительской таблицы
     // const parentTableId = tableCellMol?.parentTableId ? tableCellMol.parentTableId : undefined
@@ -221,16 +221,28 @@ export default forwardRef(function (props: Props, ref) {
 
         refreshScopeValuesBySelect()
 
-        // // и обновим статусы
-        // const forceUpdateThisTable = () => {
-        //     forceUpdate()
-        // }
-        // // Сохраняем функцию ререндер в атом, под своим tableId
+        // Сохраняем функцию ререндер в атом, под своим tableId
+        // и обновим статусы
+        const forceUpdateThisTable = () => {
+            forceUpdate()
+        }
+        //  && items.length > 0
+        console.log("1111111111111111111111111111111111111111111111111111111111111111111")
+        console.log("1111111111111111111111111111111111111111111111111111111111111111111")
+        console.log("1111111111111111111111111111111111111111111111111111111111111111111")
+        console.log("tableHandlerAtomValue[tableId] === undefined", tableHandlerAtomValue[tableId] === undefined)
+        console.log("tableId", tableId)
+        console.log("tableHandlerAtomValue", tableHandlerAtomValue)
+        console.log("tableHandlerAtomValue[tableId]", tableHandlerAtomValue[tableId])
+        console.log("1111111111111111111111111111111111111111111111111111111111111111111")
+        console.log("1111111111111111111111111111111111111111111111111111111111111111111")
+        console.log("1111111111111111111111111111111111111111111111111111111111111111111")
 
-        // if (tableHandlerAtomValue[tableId] === undefined && tableId && items.length > 0) { //  && items.length > 0// Если items.length>0, чтобы не перерендеривать пустые таблицы
-        //     setTableHandlerAtomValue((handlers) => ({ ...handlers, [tableId]: forceUpdateThisTable }))
-        // }
+        if (tableHandlerAtomValue[tableId] === undefined && tableId) { //  && items.length > 0// Если items.length>0, чтобы не перерендеривать пустые таблицы
+            setTableHandlerAtomValue((handlers) => ({ ...handlers, [tableId]: forceUpdateThisTable }))
+        }
     }
+    
 
     // Обработчик входящего массива multiSelection
     useEffect(() => {
