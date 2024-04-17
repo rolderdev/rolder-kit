@@ -21,7 +21,7 @@ import {
 
 const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
 
-    // Получаем store из своег provider
+    // Получаем store из своего provider
     const selectionScopeStore = useStore()
 
     // Получаем значения атомов из store без подписки на их изменения
@@ -38,6 +38,15 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     const setTableSelectionScopeInternalValue = (value: TableSelectionScopeInternal) => { selectionScopeStore.set(tableSelectionScopeInternalAtom, value) }
     const setTableHandlerAtomValue = (value: { [tableId: string]: () => void }) => { selectionScopeStore.set(tableHandlerAtom, value) }
 
+
+    // console.log("tableSelectionScopeValue", tableSelectionScopeValue)
+    // console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
+    // console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
+    // console.log("tableSelectionByDBClassValue", tableSelectionByDBClassValue)
+    // console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
+    // console.log("tableHandlerAtomValue", tableHandlerAtomValue)
+
+
     const forceUpdate = useForceUpdate()
     const forceUpdateSelectionScope = () => {
         forceUpdate()
@@ -50,14 +59,8 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
 
     console.log("/////////////////// уровень: root")
 
-    // Применение useEffect приводит к клишним перерендерам
-    // Возможно стоит задействовать useMemo
-    // useEffect(() => {
-
+    // Обновим статус у всех детей нажатого items и их детей
     const refresScopeSelection = () => {
-        // Обновим статус у всех детей нажатого items и их детей
-        const clickedItemsIds = tableSelectionClickItemIdValue
-
         // id самого старого предка, которого мы перерендерим, и все его потомки перерендерятся сами
         let grandUltraFatherItemId: string = 'root'
 
@@ -129,7 +132,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
 
                 // Если это результат внешнего multiSelect, то тоже ищем отца до самого верха
                 let itisMultiselect = false
-                if (clickedItemsIds?.length > 1) {
+                if (tableSelectionClickItemIdValue?.length > 1) {
                     itisMultiselect = true
                 }
                 // Если статус отца сменился, то перепроверяем и его отца
@@ -157,7 +160,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
         }
 
         // Обрабатываем родителей и детей каждого нажатого item
-        clickedItemsIds?.forEach(clickedItemId => {
+        tableSelectionClickItemIdValue?.forEach(clickedItemId => {
             reselectParent(clickedItemId)
             reselectChild(clickedItemId)
         })
@@ -182,16 +185,36 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
 
     // Подаем на выходы данные
-    sendOutput(props.noodlNode, 'selectionScope', tableSelectionScopeValue)
-    sendOutput(props.noodlNode, 'selectionByDBClass', tableSelectionByDBClassValue)
+    // Чтобы не было мутация атома, подаем через {...obj}
+    sendOutput(props.noodlNode, 'selectionScope', { ...tableSelectionScopeValue })
+    sendOutput(props.noodlNode, 'selectionByDBClass', { ...tableSelectionByDBClassValue })
     sendSignal(props.noodlNode, 'changed')
 
     useEffect(() => {
         if (props.newSelectionScope) {
-            setTableSelectionScopeValue(props.newSelectionScope)
+            // Меняем статусы на полученные
+            for (const itemId in props.newSelectionScope) {
+                // Если статсы в scope и извне не равны, то заменяем, и самый 1й 
+                // item с измененным статусом записываем как будто нажали
+                if (tableSelectionScopeValue[itemId] !== props.newSelectionScope[itemId]) {
+                    tableSelectionScopeValue[itemId] = props.newSelectionScope[itemId]
+                    if (tableSelectionClickItemIdValue?.length === 0) {
+                        setTableSelectionClickItemIdValue([itemId])
+                    }
+                }
+
+            }
+
             sendOutput(props.noodlNode, 'selectionScope', tableSelectionScopeValue)
+            setTableSelectionScopeValue(tableSelectionScopeValue)
+
+            // Если были измененния в статусах, 
+            // то перепроверяем все связанные селекты
+            if (tableSelectionClickItemIdValue?.length !== 0) {
+                // Обрабатываем селекты
+                refresScopeSelection()
+            }
             // Запускаем ререндер с 1 уровня
-            // Перерендеривае самого старшего отца, который сменил статус
             if (tableHandlerAtomValue[tableSelectionScopeInternalValue['allTableIdList'][0]]) {
                 tableHandlerAtomValue[tableSelectionScopeInternalValue['allTableIdList'][0]]()
             }

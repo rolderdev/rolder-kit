@@ -291,46 +291,6 @@ export default function DataTable<T>({
   const [scrolledToLeft, setScrolledToLeft] = useState(true);
   const [scrolledToRight, setScrolledToRight] = useState(true);
 
-  //==========================================================================================
-  // Хуки для атомов для tableSelectionScope
-  // const [tableSelectionScopeValue, setTableSelectionScopeValue] = useAtom(tableSelectionScopeAtom)
-  // const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
-  // const [tableHandlerAtomValue] = useAtom(tableHandlerAtom)
-  // Функция по записи значения в атом
-  // const setTableSelectionClickItemIdValue = useSetAtom(tableSelectionClickItemIdAtom)
-
-
-
-  const selectionScopeStore = useStore()
-
-  const tableSelectionScopeValue = selectionScopeStore.get(tableSelectionScopeAtom)
-  // const tableSelectionChildIdsByParentIdValue = selectionScopeStore.get(tableSelectionChildIdsByParentIdAtom) // setTableSelectionChildIdsByParentIdValue
-  // const tableSelectionClickItemIdValue = selectionScopeStore.get(tableSelectionClickItemIdAtom)
-  // const tableSelectionByDBClassValue = selectionScopeStore.get(tableselectionByDBClassAtom) // , setTableSelectionByDBClassValue
-  const tableSelectionScopeInternalValue = selectionScopeStore.get(tableSelectionScopeInternalAtom)
-  const tableHandlerAtomValue = selectionScopeStore.get(tableHandlerAtom)
-
-  const setTableSelectionScopeValue = (value: TableSelectionScopeValues) => { selectionScopeStore.set(tableSelectionScopeAtom, value) }
-  // const setTableSelectionChildIdsByParentIdValue = (value: TableSelectionChildIdsByParentId) => { selectionScopeStore.set(tableSelectionChildIdsByParentIdAtom, value) }
-  const setTableSelectionClickItemIdValue = (value: string[]) => { selectionScopeStore.set(tableSelectionClickItemIdAtom, value) }
-  const setTableSelectionScopeInternalValue = (value: TableSelectionScopeInternal) => { selectionScopeStore.set(tableSelectionScopeInternalAtom, value) }
-  // const setTableHandlerAtomValue = (value: { [tableId: string]: () => void }) => { selectionScopeStore.set(tableHandlerAtom, value) }
-
-
-
-  function runTableSelectionScope() {
-    // Вызываем перерендер tableSelectionScope, чтобы он пересчитал 
-    // статусы связанных записей и обновил необходимые таблицы
-    try {
-      tableHandlerAtomValue['selectionScope']()
-
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
-  //==========================================================================================
-
   const { rowContextMenuInfo, setRowContextMenuInfo } = useRowContextMenu<T>(fetching);
   const rowExpansionInfo = useRowExpansion<T>({ rowExpansion, records, idAccessor });
 
@@ -408,12 +368,46 @@ export default function DataTable<T>({
   const someRecordsSelected =
     hasRecordsAndSelectedRecords && selectableRecordIds!.some((id) => selectedRecordIds.includes(id));
 
-  // Если хоть одна запись таблицы indeterminated
+
+  //==========================================MD==============================================
+  // Получаем store из своего provider
+  const selectionScopeStore = useStore()
+
+  // Получаем значения атомов из store без подписки на их изменения
+  const tableSelectionScopeValue = selectionScopeStore.get(tableSelectionScopeAtom)
+  const tableSelectionScopeInternalValue = selectionScopeStore.get(tableSelectionScopeInternalAtom)
+  const tableHandlerAtomValue = selectionScopeStore.get(tableHandlerAtom)
+
+  // Задаем функции, по перезаписыванию значений в атомах данного store
+  const setTableSelectionScopeValue = (value: TableSelectionScopeValues) => { selectionScopeStore.set(tableSelectionScopeAtom, value) }
+  const setTableSelectionClickItemIdValue = (value: string[]) => { selectionScopeStore.set(tableSelectionClickItemIdAtom, value) }
+  const setTableSelectionScopeInternalValue = (value: TableSelectionScopeInternal) => { selectionScopeStore.set(tableSelectionScopeInternalAtom, value) }
+
+  // Функция для запуска перерендера tableSelectionScope
+  function runTableSelectionScope() {
+    // Вызываем перерендер tableSelectionScope, чтобы он пересчитал 
+    // статусы связанных записей и обновил необходимые таблицы
+    try {
+      tableHandlerAtomValue['selectionScope']()
+    } catch (e) {
+      console.error("У таблиц включен expension и multiselect, но они не оборнуты в selectionScope!")
+      console.error("Разместите иерархичные таблицы под нодой tableSelectionScope!!!")
+      console.error(e)
+    }
+  }
+
+  // Проверим, включены ли expansion и multiselect и нужно ли брать состояния из scope
+  const useScopeStates = rowExpansion !== undefined && selectionColumnVisible
+
+  // Если хоть одна запись таблицы indeterminated, то отображаем
   const tableIsIndeterminated = records
     ? tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].find(indItem => records.find(record => getRecordId(record, idAccessor) === indItem))
       ? true
       : false
     : false
+
+  //==========================================================================================
+
 
   const handleHeaderSelectionChange = useCallback(() => {
     if (selectedRecords && onSelectedRecordsChange) {
@@ -421,7 +415,7 @@ export default function DataTable<T>({
       if (allSelectableRecordsSelected) { // MD
         // Если включены expension и multiSelection
         if (
-          true
+          useScopeStates
           && typeof parentTableItemId === 'string'
         ) {
           // Сменим статус родительского элемента и запишем его в нажатый item
@@ -430,13 +424,12 @@ export default function DataTable<T>({
           setTableSelectionClickItemIdValue([parentTableItemId])
         }
         onSelectedRecordsChange(selectedRecords.filter((record) => !selectableRecordIds!.includes(getRecordId(record, idAccessor))))
-
       }
       // Если все записи не выбраны, то выбираем 
       else {
         // Если включены expension и multiSelection
         if (
-          true
+          useScopeStates
           && typeof parentTableItemId === 'string'
         ) {
           // Сменим статус родительского элемента и запишем его в нажатый item
@@ -447,9 +440,11 @@ export default function DataTable<T>({
         if (records) onSelectedRecordsChange(uniqBy([...selectedRecords, ...selectableRecords!], (record) => getRecordId(record, idAccessor)))
       }
       // Запускаем tableSelectionScope
-      runTableSelectionScope()
-      setTableSelectionScopeValue(tableSelectionScopeValue)
-      setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
+      if (useScopeStates) {
+        runTableSelectionScope()
+        setTableSelectionScopeValue(tableSelectionScopeValue)
+        setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
+      }
     }
   }, [
     allSelectableRecordsSelected,
@@ -579,7 +574,7 @@ export default function DataTable<T>({
                         );
                       } else {
                         if (isSelected) {  // MD
-                          if (typeof recordId === 'string') {
+                          if (useScopeStates && typeof recordId === 'string') {
                             tableSelectionScopeValue[recordId] = 'notSelected'
                             // Если запись в массиве indeterminated, то удаляем из него
                             if (tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList']?.find(itemId => itemId === recordId)) {
@@ -591,8 +586,7 @@ export default function DataTable<T>({
                         }
                         // Если запись не выбрана, то делаем выбранной
                         else {
-                          if (typeof recordId === 'string') {
-                            // console.log("recordId",recordId)
+                          if (useScopeStates && typeof recordId === 'string') {
                             tableSelectionScopeValue[recordId] = 'selected'
                             // Если запись в массиве indeterminated, то удаляем из него
                             if (tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList']?.find(itemId => itemId === recordId)) {
@@ -603,12 +597,15 @@ export default function DataTable<T>({
                           onSelectedRecordsChange(uniqBy([...selectedRecords, record], (record) => getRecordId(record, idAccessor)))
 
                         }
-                        // Запишем в массив на рендер id родительской и дочерней таблицы
-                        if (typeof recordId === 'string') setTableSelectionClickItemIdValue([recordId])
-                        setTableSelectionScopeValue(tableSelectionScopeValue)
-                        setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
-                        // Запускаем tableSelectionScope
-                        runTableSelectionScope()
+                        // Если включен и expension и multiselect
+                        if (useScopeStates) {
+                          // Запишем в массив на рендер id родительской и дочерней таблицы
+                          if (typeof recordId === 'string') setTableSelectionClickItemIdValue([recordId])
+                          setTableSelectionScopeValue(tableSelectionScopeValue)
+                          setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
+                          // Запускаем tableSelectionScope
+                          runTableSelectionScope()
+                        }
                       }
                       setLastSelectionChangeIndex(recordIndex);
                     };
