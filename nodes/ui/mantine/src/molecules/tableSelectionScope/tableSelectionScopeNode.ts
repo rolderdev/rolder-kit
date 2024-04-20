@@ -47,8 +47,6 @@ export default reactNode('TableSelectionScope', {
         inputs: [
             ...getPorts('input', ['reset']),
             getPort({ plug: 'input', name: 'newSelectionScope', displayName: 'selectionScope', group: 'Data', type: 'object' }),
-            getPort({ plug: 'input', name: 'indeterminatedItems', displayName: 'indeterminatedItems', group: 'Data', type: 'array' }),
-
         ],
         outputs: [
             getPort({ plug: 'output', name: 'selectionScope', displayName: 'selectionScope', group: 'Data', type: 'object' }),

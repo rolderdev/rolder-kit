@@ -38,14 +38,13 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     const setTableSelectionScopeInternalValue = (value: TableSelectionScopeInternal) => { selectionScopeStore.set(tableSelectionScopeInternalAtom, value) }
     const setTableHandlerAtomValue = (value: { [tableId: string]: () => void }) => { selectionScopeStore.set(tableHandlerAtom, value) }
 
-
-    console.log("ROOOOOTTTT")
-    console.log("tableSelectionScopeValue", tableSelectionScopeValue)
-    console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
-    console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
-    console.log("tableSelectionByDBClassValue", tableSelectionByDBClassValue)
-    console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
-    console.log("tableHandlerAtomValue", tableHandlerAtomValue)
+    // console.log("ROOOOOTTTT")
+    // console.log("tableSelectionScopeValue", tableSelectionScopeValue)
+    // console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
+    // console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
+    // console.log("tableSelectionByDBClassValue", tableSelectionByDBClassValue)
+    // console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
+    // console.log("tableHandlerAtomValue", tableHandlerAtomValue)
 
     const forceUpdate = useForceUpdate()
     const forceUpdateSelectionScope = () => {
@@ -65,14 +64,14 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     // Обновим статус у всех детей нажатого items и их детей
     const refresScopeSelection = () => {
 
-        console.log("Запустилась функция по обработке статусов")
-        console.log("Запустилась функция по обработке статусов")
-        console.log("Запустилась функция по обработке статусов")
-        console.log("Запустилась функция по обработке статусов")
-        console.log("Запустилась функция по обработке статусов")
-        console.log("Запустилась функция по обработке статусов")
-        console.log("Запустилась функция по обработке статусов")
-        console.log("Запустилась функция по обработке статусов")
+        // console.log("Запустилась функция по обработке статусов")
+        // console.log("Запустилась функция по обработке статусов")
+        // console.log("Запустилась функция по обработке статусов")
+        // console.log("Запустилась функция по обработке статусов")
+        // console.log("Запустилась функция по обработке статусов")
+        // console.log("Запустилась функция по обработке статусов")
+        // console.log("Запустилась функция по обработке статусов")
+        // console.log("Запустилась функция по обработке статусов")
 
         // id самого старого предка, которого мы перерендерим, и все его потомки перерендерятся сами
         let grandUltraFatherItemId: string = 'root'
@@ -228,7 +227,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
 
                     childItemsIds?.forEach(iChildItemId => {
                         // Наследуем статус родительского item
-                        console.log("Статус бати", tableSelectionScopeValue[parentItemId])
+                        // console.log("Статус бати", tableSelectionScopeValue[parentItemId])
                         tableSelectionScopeValue[iChildItemId] = tableSelectionScopeValue[parentItemId]
 
                         // Передаем его своим детям
@@ -238,21 +237,21 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
             }
         }
 
-        console.log("tableSelectionClickItemIdValue в функции", [...selectionScopeStore.get(tableSelectionClickItemIdAtom)])
+        // console.log("tableSelectionClickItemIdValue в функции", [...selectionScopeStore.get(tableSelectionClickItemIdAtom)])
 
-        console.log("ROOOOOTTTT в конце вункциииии")
-        console.log("tableSelectionScopeValue", tableSelectionScopeValue)
-        console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
-        console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
-        console.log("tableSelectionByDBClassValue", tableSelectionByDBClassValue)
-        console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
-        console.log("tableHandlerAtomValue", tableHandlerAtomValue)
+        // console.log("ROOOOOTTTT в конце вункциииии")
+        // console.log("tableSelectionScopeValue", tableSelectionScopeValue)
+        // console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
+        // console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
+        // console.log("tableSelectionByDBClassValue", tableSelectionByDBClassValue)
+        // console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
+        // console.log("tableHandlerAtomValue", tableHandlerAtomValue)
 
         // Обрабатываем родителей и детей каждого нажатого item
         tableSelectionClickItemIdValue?.forEach(clickedItemId => {
             reselectParent(clickedItemId)
             reselectChild(clickedItemId)
-            console.log(`Обрабатываем ${clickedItemId} для родителей и детей`)
+            // console.log(`Обрабатываем ${clickedItemId} для родителей и детей`)
             // Возвращаем самого отца в массив indeterminated, так как он в таком виде может быть подан извне
             if (
                 tableSelectionScopeValue[clickedItemId] === "indeterminated"
@@ -267,73 +266,51 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
             setTableSelectionClickItemIdValue([])
         }
 
-        console.log("ROOOOOTTTT в конце вункциииии ловим HANDLER")
-        console.log("grandUltraFatherItemId", grandUltraFatherItemId)
-        console.log("tableSelectionScopeInternalValue['tableIdByItemId']", tableSelectionScopeInternalValue['tableIdByItemId'])
-        console.log("tableSelectionScopeInternalValue['tableIdByItemId'][grandUltraFatherItemId]", tableSelectionScopeInternalValue['tableIdByItemId'][grandUltraFatherItemId])
-        console.log("tableHandlerAtomValue[tableSelectionScopeInternalValue['tableIdByItemId'][grandUltraFatherItemId]]", tableHandlerAtomValue[tableSelectionScopeInternalValue['tableIdByItemId'][grandUltraFatherItemId]])
+        // console.log("ROOOOOTTTT в конце вункциииии ловим HANDLER")
+        // console.log("grandUltraFatherItemId", grandUltraFatherItemId)
+        // console.log("tableSelectionScopeInternalValue['tableIdByItemId']", tableSelectionScopeInternalValue['tableIdByItemId'])
+        // console.log("tableSelectionScopeInternalValue['tableIdByItemId'][grandUltraFatherItemId]", tableSelectionScopeInternalValue['tableIdByItemId'][grandUltraFatherItemId])
+        // console.log("tableHandlerAtomValue[tableSelectionScopeInternalValue['tableIdByItemId'][grandUltraFatherItemId]]", tableHandlerAtomValue[tableSelectionScopeInternalValue['tableIdByItemId'][grandUltraFatherItemId]])
 
         // Перерендеривае самого старшего отца, который сменил статус
         if (tableHandlerAtomValue[tableSelectionScopeInternalValue['tableIdByItemId'][grandUltraFatherItemId]]) {
             tableHandlerAtomValue[tableSelectionScopeInternalValue['tableIdByItemId'][grandUltraFatherItemId]]()
         }
 
-        console.log("tableSelectionClickItemIdValue в конце функции", [...selectionScopeStore.get(tableSelectionClickItemIdAtom)])
-        console.log("grandUltraFatherItemId в конце функции", grandUltraFatherItemId)
+        // console.log("tableSelectionClickItemIdValue в конце функции", [...selectionScopeStore.get(tableSelectionClickItemIdAtom)])
+        // console.log("grandUltraFatherItemId в конце функции", grandUltraFatherItemId)
     }
 
     // Обрабатываем селекты
     refresScopeSelection()
-
-    // Чтобы не срабатывал useEffect при каждом перерендере компоненты
-    // const memoizedNewSelectionScope = useMemo(() => props.newSelectionScope, [props.newSelectionScope])
-
-
-    useEffect(() => {
-        console.log("Внешний массив indeterminatedItems", props.indeterminatedItems)
-
-        props.indeterminatedItems?.forEach((itemId: string) => {
-            if (
-                !tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].includes(itemId)
-            ) {
-                tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].push(itemId)
-            }
-
-            tableSelectionScopeValue[itemId] = "indeterminated"
-        })
-        if (tableHandlerAtomValue[tableSelectionScopeInternalValue['allTableIdList'][0]] !== undefined) {
-            tableHandlerAtomValue[tableSelectionScopeInternalValue['allTableIdList'][0]]()
-        }
-
-    }, [props.indeterminatedItems])
 
     // Обработка scope принятого извне     
     // Перебираем полученный объект, и наполняем полученными данными scope || // Перебираем полученный объект, заменяя имеющиеся статусы, если они не равны
     // Если статус indeterminated, и id записи ещё нет в списке indeterminated, то добавляем
     // Вносим записи 1 уровня в массив на обновление, как будто нажали на каждый из них
     // Вызываем функцию обновления статусов всей иерархии, чтобы дети наслевовали статусы
-    console.log("до useEffect")
-    console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    console.log("tableHandlerAtomValue", tableHandlerAtomValue)
-    console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+    // console.log("до useEffect")
+    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+    // console.log("tableHandlerAtomValue", tableHandlerAtomValue)
+    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
     useEffect(() => {
-        console.log("внутри useEffect")
-        console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        console.log("tableHandlerAtomValue", tableHandlerAtomValue)
-        console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+        // console.log("внутри useEffect")
+        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+        // console.log("tableHandlerAtomValue", tableHandlerAtomValue)
+        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
+        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
 
         if (props.newSelectionScope !== undefined) {
-            console.log("tableSelectionClickItemIdValue в НАЧАЛЕ", [...tableSelectionClickItemIdValue])
+            // console.log("tableSelectionClickItemIdValue в НАЧАЛЕ", [...tableSelectionClickItemIdValue])
             // Меняем статусы на полученные
             for (const itemId in props.newSelectionScope) {
                 tableSelectionScopeValue[itemId] = props.newSelectionScope[itemId]
@@ -359,7 +336,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
             setTableSelectionScopeValue(tableSelectionScopeValue)
             setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
 
-            console.log("tableSelectionClickItemIdValue в КОНЦЕ", [...selectionScopeStore.get(tableSelectionClickItemIdAtom)])
+            // console.log("tableSelectionClickItemIdValue в КОНЦЕ", [...selectionScopeStore.get(tableSelectionClickItemIdAtom)])
             // Перерендериваем компоненту, чтобы она получила обновленные значения атомов
 
             forceUpdateSelectionScope()
@@ -386,22 +363,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
         reset() {
             // resetScope()
             console.log("REF CHILD TRIGGERED")
-            console.log("REF CHILD TRIGGERED")
-
-            console.log("REF CHILD TRIGGERED")
-
-            console.log("REF CHILD TRIGGERED")
-
-
-            console.log("REF CHILD TRIGGERED")
-
-            console.log("REF CHILD TRIGGERED")
-
-            console.log("REF CHILD TRIGGERED")
-
-            console.log("REF CHILD TRIGGERED")
-
-
 
             // Сбросим селекты у всех записей
             for (const itemId in tableSelectionScopeValue) {
@@ -453,12 +414,12 @@ export default forwardRef(function (props: Props, ref) {
         selectionScopeStore.set(tableHandlerAtom, {})
     }
 
-    console.log("РЕНДЕРИТСЯ БАТЯ SCOPE")
-    console.log("tableSelectionScopeValue", selectionScopeStore.get(tableSelectionScopeAtom))
-    console.log("tableSelectionChildIdsByParentIdValue", selectionScopeStore.get(tableSelectionChildIdsByParentIdAtom))
-    console.log("tableSelectionClickItemIdValue", selectionScopeStore.get(tableSelectionClickItemIdAtom))
-    console.log("tableSelectionScopeInternalValue", selectionScopeStore.get(tableSelectionScopeInternalAtom))
-    console.log("tableHandlerAtomValue", selectionScopeStore.get(tableHandlerAtom))
+    // console.log("РЕНДЕРИТСЯ БАТЯ SCOPE")
+    // console.log("tableSelectionScopeValue", selectionScopeStore.get(tableSelectionScopeAtom))
+    // console.log("tableSelectionChildIdsByParentIdValue", selectionScopeStore.get(tableSelectionChildIdsByParentIdAtom))
+    // console.log("tableSelectionClickItemIdValue", selectionScopeStore.get(tableSelectionClickItemIdAtom))
+    // console.log("tableSelectionScopeInternalValue", selectionScopeStore.get(tableSelectionScopeInternalAtom))
+    // console.log("tableHandlerAtomValue", selectionScopeStore.get(tableHandlerAtom))
 
 
     // При внешнем триггере reset очищаем молекулу
