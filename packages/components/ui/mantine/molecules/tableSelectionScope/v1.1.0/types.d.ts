@@ -5,4 +5,5 @@ export type Props = BaseReactProps & {
     mounted: bool,
     selectionScope: TableSelectionScopeValues,
     newSelectionScope: TableSelectionScopeValues,
+    indeterminatedItems: string[]
 }

@@ -85,11 +85,12 @@ export default forwardRef(function (props: Props, ref) {
     const tableSelectionScopeInternalValue = selectionScopeStore.get(tableSelectionScopeInternalAtom)
     const tableHandlerAtomValue = selectionScopeStore.get(tableHandlerAtom)
 
-    // console.log("tableSelectionScopeValue", tableSelectionScopeValue)
-    // console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
-    // console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
-    // console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
-    // console.log("tableHandlerAtomValue", tableHandlerAtomValue)
+    console.log("УРОВЕНЬ 1")
+    console.log("tableSelectionScopeValue", tableSelectionScopeValue)
+    console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
+    console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
+    console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
+    console.log("tableHandlerAtomValue", tableHandlerAtomValue)
 
     // Задаем функции, по перезаписыванию значений в атомах данного store
     const setTableSelectionScopeValue = (value: TableSelectionScopeValues) => { selectionScopeStore.set(tableSelectionScopeAtom, value) }
@@ -124,6 +125,7 @@ export default forwardRef(function (props: Props, ref) {
 
     console.log("/////////////////// уровень:", items?.[0]?.content?.level)
     console.log("/////////////////// tableId:", tableId)
+    console.log("tableSelectionScopeValue", tableSelectionScopeValue)
 
     // Отрабатывает при присвоении tableId
     useEffect(() => {
