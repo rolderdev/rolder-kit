@@ -6,6 +6,7 @@ import { useForceUpdate } from '@mantine/hooks';
 import {
     type TableSelectionScopeValues,
     type TableSelectionScopeInternal,
+    selectionScopeStoreAtom,
     tableSelectionScopeAtom,
     tableSelectionChildIdsByParentIdAtom,
     tableSelectionClickItemIdAtom,
@@ -16,10 +17,17 @@ import {
 import {
     Provider as JotaiProvider,
     createStore,
+    useAtom,
     useStore
 } from "jotai"
 
-const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
+
+
+const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) { 
+    
+    console.log("========================================================================")
+    console.log("========================================================================")
+    console.log("========================================================================")
 
     // Получаем store из своего provider
     const selectionScopeStore = useStore()
@@ -309,7 +317,10 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
         // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
         // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
 
-        if (props.newSelectionScope !== undefined) {
+        if (
+            props.newSelectionScope !== undefined
+            // && Object.keys(tableSelectionScopeValue)?.length > 0
+        ) {
             // console.log("tableSelectionClickItemIdValue в НАЧАЛЕ", [...tableSelectionClickItemIdValue])
             // Меняем статусы на полученные
             for (const itemId in props.newSelectionScope) {
@@ -343,7 +354,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
         }
     }, [
         props.newSelectionScope,
-        //memoizedNewSelectionScope
     ])
 
     // Сохраняем изменения в атомах
@@ -393,33 +403,48 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     return <>{props.children}</>
 })
 
+
 // Что за forwardRef и как он работатет
 export default forwardRef(function (props: Props, ref) {
 
-    // Создаем store
-    // Передаем его дочерним нодам и используем, для получения значений из atom
-    const selectionScopeStore = createStore()
+    console.log("props", props)
+    console.log("========================================================================")
+    console.log("========================================================================")
+    console.log("========================================================================")
+    console.log("ID КОМПОНЕНТЫ", props?.noodlNode?.id)
+    
+    const scopeId = props?.noodlNode?.id
+    
+    const [selectionScopeStoreValue, setSelectionScopeStoreValue] = useAtom(selectionScopeStoreAtom)
+    console.log("selectionScopeStoreValue[scopeId]", selectionScopeStoreValue[scopeId])
 
-    // Инициализируем атомы - загружаем атомы в store
-    if (selectionScopeStore.get(tableSelectionScopeAtom) === undefined) {
-        selectionScopeStore.set(tableSelectionScopeAtom, {})
-        selectionScopeStore.set(tableSelectionChildIdsByParentIdAtom, { 'root': [] })
-        selectionScopeStore.set(tableSelectionClickItemIdAtom, [])
-        selectionScopeStore.set(tableselectionByDBClassAtom, {})
-        selectionScopeStore.set(tableSelectionScopeInternalAtom, {
+    // Создаем/получаем store
+    // Передаем его дочерним нодам и используем, для получения значений из atom
+    if (selectionScopeStoreValue[scopeId] === undefined) {
+        selectionScopeStoreValue[scopeId] = createStore()
+        selectionScopeStoreValue[scopeId].set(tableSelectionScopeAtom, {})
+        selectionScopeStoreValue[scopeId].set(tableSelectionChildIdsByParentIdAtom, { 'root': [] })
+        selectionScopeStoreValue[scopeId].set(tableSelectionClickItemIdAtom, [])
+        selectionScopeStoreValue[scopeId].set(tableselectionByDBClassAtom, {})
+        selectionScopeStoreValue[scopeId].set(tableSelectionScopeInternalAtom, {
             'tableIdByItemId': {},                          // Словарь, где ключи - id записей, а значения - id таблиц
             'tableIndeterminatedItemsIdList': [],           // Массив с id запсией, которые должны быть indeterminated
             'allTableIdList': [],                           // Массив всех tableId для отладки, так как в объекте они встают по алфовиту
         })
-        selectionScopeStore.set(tableHandlerAtom, {})
+        selectionScopeStoreValue[scopeId].set(tableHandlerAtom, {})
+        setSelectionScopeStoreValue(selectionScopeStoreValue)
     }
+    console.log("selectionScopeStoreValue[scopeId]", selectionScopeStoreValue[scopeId])
+    // else {
+    //     selectionScopeStoreValue[scopeId] = useStore()
+    // }
 
-    // console.log("РЕНДЕРИТСЯ БАТЯ SCOPE")
-    // console.log("tableSelectionScopeValue", selectionScopeStore.get(tableSelectionScopeAtom))
-    // console.log("tableSelectionChildIdsByParentIdValue", selectionScopeStore.get(tableSelectionChildIdsByParentIdAtom))
-    // console.log("tableSelectionClickItemIdValue", selectionScopeStore.get(tableSelectionClickItemIdAtom))
-    // console.log("tableSelectionScopeInternalValue", selectionScopeStore.get(tableSelectionScopeInternalAtom))
-    // console.log("tableHandlerAtomValue", selectionScopeStore.get(tableHandlerAtom))
+    console.log("РЕНДЕРИТСЯ БАТЯ SCOPE")
+    console.log("tableSelectionScopeValue", selectionScopeStoreValue[scopeId].get(tableSelectionScopeAtom))
+    console.log("tableSelectionChildIdsByParentIdValue", selectionScopeStoreValue[scopeId].get(tableSelectionChildIdsByParentIdAtom))
+    console.log("tableSelectionClickItemIdValue", selectionScopeStoreValue[scopeId].get(tableSelectionClickItemIdAtom))
+    console.log("tableSelectionScopeInternalValue", selectionScopeStoreValue[scopeId].get(tableSelectionScopeInternalAtom))
+    console.log("tableHandlerAtomValue", selectionScopeStoreValue[scopeId].get(tableHandlerAtom))
 
 
     // При внешнем триггере reset очищаем молекулу
@@ -431,7 +456,7 @@ export default forwardRef(function (props: Props, ref) {
         },
     }), [])
 
-    return <JotaiProvider store={selectionScopeStore}>
+    return <JotaiProvider store={selectionScopeStoreValue[scopeId]}>
         <HandlerTableSelectionScope
             ref={localRef}
             {...props}
@@ -440,3 +465,80 @@ export default forwardRef(function (props: Props, ref) {
 
 })
 
+
+
+// // Что за forwardRef и как он работатет
+// export default forwardRef(function (props: Props, ref) {
+
+//     console.log("props", props)
+//     console.log("ID КОМПОНЕНТЫ", props?.noodlNode?.id)
+
+//     const scopeId = props?.noodlNode?.id
+
+//     // Проверяем, есть ли уже store
+//     if (useStore().get(tableSelectionScopeAtom)) {
+
+//         const selectionScopeStore = { [scopeId]: useStore() }
+
+//         // При внешнем триггере reset очищаем молекулу
+//         const localRef = useRef<any>(null)
+//         useImperativeHandle(ref, () => ({
+//             reset() {
+//                 console.log("REF PARENT TRIGGERED")
+//                 localRef.current?.reset()
+//             },
+//         }), [])
+
+//         return <JotaiProvider store={selectionScopeStore[scopeId]}>
+//             <HandlerTableSelectionScope
+//                 ref={localRef}
+//                 {...props}
+//             />
+//         </JotaiProvider>
+//     }
+//     else {
+
+//         // Создаем/получаем store
+//         // Передаем его дочерним нодам и используем, для получения значений из atom
+//         const selectionScopeStore = { [scopeId]: createStore()}
+
+//         // Инициализируем атомы - загружаем атомы в store
+//         // if (selectionScopeStore.get(tableSelectionScopeAtom) === undefined) {
+//         selectionScopeStore[scopeId].set(tableSelectionScopeAtom, {})
+//         selectionScopeStore[scopeId].set(tableSelectionChildIdsByParentIdAtom, { 'root': [] })
+//         selectionScopeStore[scopeId].set(tableSelectionClickItemIdAtom, [])
+//         selectionScopeStore[scopeId].set(tableselectionByDBClassAtom, {})
+//         selectionScopeStore[scopeId].set(tableSelectionScopeInternalAtom, {
+//             'tableIdByItemId': {},                          // Словарь, где ключи - id записей, а значения - id таблиц
+//             'tableIndeterminatedItemsIdList': [],           // Массив с id запсией, которые должны быть indeterminated
+//             'allTableIdList': [],                           // Массив всех tableId для отладки, так как в объекте они встают по алфовиту
+//         })
+//         selectionScopeStore[scopeId].set(tableHandlerAtom, {})
+//         // }
+
+//         // console.log("РЕНДЕРИТСЯ БАТЯ SCOPE")
+//         // console.log("tableSelectionScopeValue", selectionScopeStore.get(tableSelectionScopeAtom))
+//         // console.log("tableSelectionChildIdsByParentIdValue", selectionScopeStore.get(tableSelectionChildIdsByParentIdAtom))
+//         // console.log("tableSelectionClickItemIdValue", selectionScopeStore.get(tableSelectionClickItemIdAtom))
+//         // console.log("tableSelectionScopeInternalValue", selectionScopeStore.get(tableSelectionScopeInternalAtom))
+//         // console.log("tableHandlerAtomValue", selectionScopeStore.get(tableHandlerAtom))
+
+
+//         // При внешнем триггере reset очищаем молекулу
+//         const localRef = useRef<any>(null)
+//         useImperativeHandle(ref, () => ({
+//             reset() {
+//                 console.log("REF PARENT TRIGGERED")
+//                 localRef.current?.reset()
+//             },
+//         }), [])
+
+//         return <JotaiProvider store={selectionScopeStore[scopeId]}>
+//             <HandlerTableSelectionScope
+//                 ref={localRef}
+//                 {...props}
+//             />
+//         </JotaiProvider>
+//     }
+
+// })

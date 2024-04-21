@@ -5,6 +5,7 @@ export {
     type TableSelectionChildIdsByParentId,
     type TableSelectionByDBClass,
     type TableSelectionScopeInternal,
+    selectionScopeStoreAtom,
     tableSelectionScopeAtom,
     tableSelectionChildIdsByParentIdAtom,
     tableSelectionClickItemIdAtom,

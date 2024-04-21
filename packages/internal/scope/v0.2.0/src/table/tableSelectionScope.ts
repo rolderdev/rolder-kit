@@ -16,6 +16,9 @@ export interface TableSelectionScopeInternal {
     allTableIdList: string [],    
 }
 
+// Атом, хранящий store для каждого tableSelectionScope
+const selectionScopeStoreAtom = jotaiAtom<{[scopeId: string]: any}>({})
+
 // Присваиваем id самой ноде TableSelectionScope
 // const tableSelectionScopeId = useId()
 // Словарь состояний selection для каждого item
@@ -49,7 +52,8 @@ const tableSelectionScopeInternalAtom = jotaiAtom<TableSelectionScopeInternal>({
 const tableHandlerAtom = jotaiAtom<{ [tableId: string]: () => void}>({})
 
 // Экспортируем атомы - радиация!!!
-export { 
+export {
+    selectionScopeStoreAtom,
     tableSelectionScopeAtom, 
     tableSelectionChildIdsByParentIdAtom,
     tableSelectionClickItemIdAtom,
