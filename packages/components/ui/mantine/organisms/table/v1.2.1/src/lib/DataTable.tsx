@@ -45,6 +45,7 @@ import {
   type TableSelectionScopeValues,
   type TableSelectionScopeInternal,
   tableSelectionScopeAtom,
+  tableSelectionChildIdsByParentIdAtom,
   tableSelectionClickItemIdAtom,
   tableSelectionScopeInternalAtom,
   tableHandlerAtom
@@ -375,6 +376,7 @@ export default function DataTable<T>({
 
   // Получаем значения атомов из store без подписки на их изменения
   const tableSelectionScopeValue = selectionScopeStore.get(tableSelectionScopeAtom)
+  const tableSelectionChildIdsByParentIdValue = selectionScopeStore.get(tableSelectionChildIdsByParentIdAtom) // setTableSelectionChildIdsByParentIdValue
   const tableSelectionScopeInternalValue = selectionScopeStore.get(tableSelectionScopeInternalAtom)
   const tableHandlerAtomValue = selectionScopeStore.get(tableHandlerAtom)
 
@@ -418,10 +420,13 @@ export default function DataTable<T>({
           useScopeStates
           && typeof parentTableItemId === 'string'
         ) {
-          // Сменим статус родительского элемента и запишем его в нажатый item
-          tableSelectionScopeValue[parentTableItemId] = 'notSelected'
+          // Сменим статусы всех элементов 1 уровня и запишем их в массив измененных
+          const firstLevelItems = tableSelectionChildIdsByParentIdValue['root']
+          firstLevelItems?.forEach(itemId => {
+              tableSelectionScopeValue[itemId] = 'notSelected'
+          })
           // Запишем в массив на рендер id родительского элемента
-          setTableSelectionClickItemIdValue([parentTableItemId])
+          if (firstLevelItems) setTableSelectionClickItemIdValue(firstLevelItems)
         }
         onSelectedRecordsChange(selectedRecords.filter((record) => !selectableRecordIds!.includes(getRecordId(record, idAccessor))))
       }
@@ -432,10 +437,13 @@ export default function DataTable<T>({
           useScopeStates
           && typeof parentTableItemId === 'string'
         ) {
-          // Сменим статус родительского элемента и запишем его в нажатый item
-          tableSelectionScopeValue[parentTableItemId] = 'selected'
+          // Сменим статусы всех элементов 1 уровня и запишем их в массив измененных
+          const firstLevelItems = tableSelectionChildIdsByParentIdValue['root']
+          firstLevelItems?.forEach(itemId => {
+              tableSelectionScopeValue[itemId] = 'selected'
+          })
           // Запишем в массив на рендер id родительского элемента
-          setTableSelectionClickItemIdValue([parentTableItemId])
+          if (firstLevelItems) setTableSelectionClickItemIdValue(firstLevelItems)
         }
         if (records) onSelectedRecordsChange(uniqBy([...selectedRecords, ...selectableRecords!], (record) => getRecordId(record, idAccessor)))
       }

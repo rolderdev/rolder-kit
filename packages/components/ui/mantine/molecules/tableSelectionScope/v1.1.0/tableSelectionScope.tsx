@@ -5,6 +5,7 @@ import React from "react";
 import { useForceUpdate } from '@mantine/hooks';
 import {
     type TableSelectionScopeValues,
+    type TableSelectionChildIdsByParentId,
     type TableSelectionScopeInternal,
     selectionScopeStoreAtom,
     tableSelectionScopeAtom,
@@ -42,6 +43,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
 
     // Задаем функции, по перезаписыванию значений в атомах данного store
     const setTableSelectionScopeValue = (value: TableSelectionScopeValues) => { selectionScopeStore.set(tableSelectionScopeAtom, value) }
+    const setTableSelectionChildIdsByParentIdValue = (value: TableSelectionChildIdsByParentId) => { selectionScopeStore.set(tableSelectionChildIdsByParentIdAtom, value) }
     const setTableSelectionClickItemIdValue = (value: string[]) => { selectionScopeStore.set(tableSelectionClickItemIdAtom, value) }
     const setTableSelectionScopeInternalValue = (value: TableSelectionScopeInternal) => { selectionScopeStore.set(tableSelectionScopeInternalAtom, value) }
     const setTableHandlerAtomValue = (value: { [tableId: string]: () => void }) => { selectionScopeStore.set(tableHandlerAtom, value) }
@@ -297,34 +299,16 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     // Если статус indeterminated, и id записи ещё нет в списке indeterminated, то добавляем
     // Вносим записи 1 уровня в массив на обновление, как будто нажали на каждый из них
     // Вызываем функцию обновления статусов всей иерархии, чтобы дети наслевовали статусы
-    // console.log("до useEffect")
-    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    // console.log("tableHandlerAtomValue", tableHandlerAtomValue)
-    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-    // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
     useEffect(() => {
-        // console.log("внутри useEffect")
-        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        // console.log("tableHandlerAtomValue", tableHandlerAtomValue)
-        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-        // console.log("tableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomValuetableHandlerAtomVal")
-
+        // Обработаем статусы извне
         if (
-            props.newSelectionScope !== undefined
+            props.newSelectionScope?.itemsSelection !== undefined
             // && Object.keys(tableSelectionScopeValue)?.length > 0
         ) {
             // console.log("tableSelectionClickItemIdValue в НАЧАЛЕ", [...tableSelectionClickItemIdValue])
             // Меняем статусы на полученные
-            for (const itemId in props.newSelectionScope) {
-                tableSelectionScopeValue[itemId] = props.newSelectionScope[itemId]
+            for (const itemId in props.newSelectionScope.itemsSelection) {
+                tableSelectionScopeValue[itemId] = props.newSelectionScope.itemsSelection[itemId]
 
                 // Если parentTableItemId ещё нет в массиве indeterminated, то добавляем
                 if (
@@ -334,7 +318,48 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                     tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].push(itemId)
                 }
             }
+        }
+        // Обработаем словарь связей извне
+        if (
+            props.newSelectionScope?.refWithParent !== undefined
+            // && Object.keys(tableSelectionScopeValue)?.length > 0
+        ) {
+            // console.log("tableSelectionClickItemIdValue в НАЧАЛЕ", [...tableSelectionClickItemIdValue])
+            // Меняем статусы на полученные
+            for (const parentItemId in props.newSelectionScope.refWithParent) {
+                // Добавим id детей к имеющимся
+                props.newSelectionScope.refWithParent[parentItemId]?.forEach((iChildItemId: (string)) => {
+                    if (
+                        typeof iChildItemId === 'string'
+                        && !tableSelectionChildIdsByParentIdValue[parentItemId]?.includes(iChildItemId)
+                    ) {
+                        if (
+                            Array.isArray(tableSelectionChildIdsByParentIdValue[parentItemId])
+                        ) {
+                            tableSelectionChildIdsByParentIdValue[parentItemId].push(iChildItemId)
+                        }
+                        else {
+                            tableSelectionChildIdsByParentIdValue[parentItemId] = [iChildItemId]
+                        }
 
+                    }
+                })
+                
+
+                // Если parentTableItemId ещё нет в массиве indeterminated, то добавляем
+                if (
+                    tableSelectionScopeValue[parentItemId] === "indeterminated"
+                    && !tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].includes(parentItemId)
+                ) {
+                    tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].push(parentItemId)
+                }
+            }
+        }
+        // Обновим атомы
+        if (
+            props.newSelectionScope?.itemsSelection !== undefined
+            && props.newSelectionScope?.refWithParent !== undefined
+        ) {
             if (tableSelectionChildIdsByParentIdValue['root']) {
                 setTableSelectionClickItemIdValue(tableSelectionChildIdsByParentIdValue['root'])
                 // Если после внесенных изменений в атом вызвать функцию, то данные не обновялся, так как нужно
@@ -355,6 +380,22 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     }, [
         props.newSelectionScope,
     ])
+
+    useEffect(() => {
+        return () => {
+            // При размонтировании очищаем scope
+            tableSelectionScopeInternalValue['allTableIdList'] = []
+            tableSelectionScopeInternalValue['tableIdByItemId'] = {}
+            tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = []
+
+
+            setTableSelectionScopeValue({})
+            setTableSelectionChildIdsByParentIdValue({})
+            setTableSelectionClickItemIdValue([])
+            setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
+            setTableHandlerAtomValue({})
+        } 
+    },[])
 
     // Сохраняем изменения в атомах
     delete tableSelectionScopeValue['root']
@@ -397,7 +438,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                 tableHandlerAtomValue[tableSelectionScopeInternalValue['allTableIdList'][0]]()
             }
             forceUpdateSelectionScope()
-        },
+        }
     }), [])
 
     return <>{props.children}</>
