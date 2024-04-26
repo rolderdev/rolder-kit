@@ -48,5 +48,5 @@ export default [
     { name: 'data', displayName: 'Data', group: 'Data', type: 'object' },
     // For tableSelectionScope    
     { name: 'selectionScope', displayName: 'selectionScope', group: 'Data', type: 'object' }, // MD
-    { name: 'selectionByTableId', displayName: 'selectionByTableId', group: 'Data', type: 'object' }, // MD
+    { name: 'selectionByDBClass', displayName: 'selectionByDBClass', group: 'Data', type: 'object' }, // MD
 ] as const satisfies readonly NodePort[]

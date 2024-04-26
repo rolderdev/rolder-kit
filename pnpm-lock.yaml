@@ -501,6 +501,9 @@ importers:
       '@nodes/drawer':
         specifier: workspace:*
         version: link:src/molecules/drawer
+      '@nodes/drop-zone':
+        specifier: workspace:*
+        version: link:src/elements/miscellaneous/dropZone
       '@nodes/expansion-row':
         specifier: workspace:*
         version: link:src/organisms/table/modules/expansionRow
@@ -1568,6 +1571,12 @@ importers:
       '@packages/table-selection-scope-v1.0.0':
         specifier: workspace:*
         version: link:../../../../../../packages/components/ui/mantine/molecules/tableSelectionScope/v1.0.0
+      '@packages/table-selection-scope-v1.0.1':
+        specifier: workspace:*
+        version: link:../../../../../../packages/components/ui/mantine/molecules/tableSelectionScope/v1.0.1
+      '@packages/table-selection-scope-v1.1.0':
+        specifier: workspace:*
+        version: link:../../../../../../packages/components/ui/mantine/molecules/tableSelectionScope/v1.1.0
     devDependencies:
       types:
         specifier: workspace:*
@@ -1596,6 +1605,9 @@ importers:
       '@packages/table-v1.2.0':
         specifier: workspace:*
         version: link:../../../../../../packages/components/ui/mantine/organisms/table/v1.2.0
+      '@packages/table-v1.2.1':
+        specifier: workspace:*
+        version: link:../../../../../../packages/components/ui/mantine/organisms/table/v1.2.1
       '@packages/table-v1.3.0':
         specifier: workspace:*
         version: link:../../../../../../packages/components/ui/mantine/organisms/table/v1.3.0
@@ -3707,6 +3719,71 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../../types
 
+  packages/components/ui/mantine/molecules/tableSelectionScope/v1.0.1:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.4)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks':
+        specifier: 6.0.21
+        version: 6.0.21(react@18.2.0)
+      '@packages/get-comp-props':
+        specifier: workspace:@packages/get-comp-props-v0.1.0@*
+        version: link:../../../../../../internal/utils/getCompProps/v0.1.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../../../internal/utils/portSend/v0.3.0
+      '@packages/scope':
+        specifier: workspace:@packages/scope-v0.2.0@*
+        version: link:../../../../../../internal/scope/v0.2.0
+      bunshi:
+        specifier: 2.0.2
+        version: 2.0.2(react@18.2.0)
+      jotai:
+        specifier: 2.2.2
+        version: 2.2.2(react@18.2.0)
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../../../types
+
+  packages/components/ui/mantine/molecules/tableSelectionScope/v1.1.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.4)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks':
+        specifier: 6.0.21
+        version: 6.0.21(react@18.2.0)
+      '@packages/get-comp-props':
+        specifier: workspace:@packages/get-comp-props-v0.1.0@*
+        version: link:../../../../../../internal/utils/getCompProps/v0.1.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../../../internal/utils/portSend/v0.3.0
+      '@packages/scope':
+        specifier: workspace:@packages/scope-v0.2.0@*
+        version: link:../../../../../../internal/scope/v0.2.0
+      bunshi:
+        specifier: 2.0.2
+        version: 2.0.2(react@18.2.0)
+      jotai:
+        specifier: 2.2.2
+        version: 2.2.2(react@18.2.0)
+      jotai-scope:
+        specifier: 0.5.1
+        version: 0.5.1(jotai@2.2.2)(react@18.2.0)
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../../../types
+
   packages/components/ui/mantine/organisms/table/modules/columnCell/v1.0.0:
     dependencies:
       '@packages/get-comp-props':
@@ -3994,6 +4071,55 @@ importers:
       '@mantine/core':
         specifier: 6.0.21
         version: 6.0.21(@emotion/react@11.11.4(@types/react@16.9.49)(react@18.2.0))(@mantine/hooks@6.0.21(react@18.2.0))(@types/react@16.9.49)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@mantine/hooks':
+        specifier: 6.0.21
+        version: 6.0.21(react@18.2.0)
+      '@mantine/utils':
+        specifier: 6.0.21
+        version: 6.0.21(react@18.2.0)
+      '@packages/convert-color':
+        specifier: workspace:@packages/convert-color-v0.3.0@*
+        version: link:../../../../../../internal/utils/convertColor/v0.3.0
+      '@packages/get-comp-props':
+        specifier: workspace:@packages/get-comp-props-v0.1.0@*
+        version: link:../../../../../../internal/utils/getCompProps/v0.1.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../../../internal/utils/portSend/v0.3.0
+      '@packages/scope':
+        specifier: workspace:@packages/scope-v0.2.0@*
+        version: link:../../../../../../internal/scope/v0.2.0
+      '@tabler/icons-react':
+        specifier: 3.1.0
+        version: 3.1.0(react@18.2.0)
+      bunshi:
+        specifier: 2.0.2
+        version: 2.0.2(react@18.2.0)
+      fast-deep-equal:
+        specifier: 3.1.3
+        version: 3.1.3
+      jotai:
+        specifier: 2.2.2
+        version: 2.2.2(react@18.2.0)
+      nanostores:
+        specifier: 0.10.0
+        version: 0.10.0
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../../../types
+
+  packages/components/ui/mantine/organisms/table/v1.2.1:
+    dependencies:
+      '@formkit/auto-animate':
+        specifier: 0.8.1
+        version: 0.8.1
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.4)(@mantine/hooks@6.0.21)(@types/react@16.9.49)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/hooks':
         specifier: 6.0.21
         version: 6.0.21(react@18.2.0)
@@ -11446,8 +11572,30 @@ snapshots:
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
+<<<<<<< HEAD
   jotai@2.2.2(react@18.2.0):
     optionalDependencies:
+=======
+  /jotai-scope@0.5.1(jotai@2.2.2)(react@18.2.0):
+    resolution: {integrity: sha512-GKaqtCj1Hv36nyl63PVm+s5jo+hQqz+wAb81iqA8VuUXp5ot4eXGOZt4Hc66lFZMP0N/yEOISMlazprmDI6kFA==}
+    peerDependencies:
+      jotai: '>=2.5.0'
+      react: '>=17.0.0'
+    dependencies:
+      jotai: 2.2.2(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
+  /jotai@2.2.2(react@18.2.0):
+    resolution: {integrity: sha512-Cn8hnBg1sc5ppFwEgVGTfMR5WSM0hbAasd/bdAwIwTaum0j3OUPqBSC4tyk3jtB95vicML+RRWgKFOn6gtfN0A==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+>>>>>>> v1.0.0-beta22-tableSelectionScope-1.1.0
       react: 18.2.0
 
   js-cookie@3.0.5: {}
