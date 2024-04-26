@@ -1,6 +1,6 @@
 {
-  "deploymentsDir": "/home/decard/noodlDeployments",
-  "noodlProjectsDir": "/home/decard/projects/noodlProjects",
+  "deploymentsDir": "/home/vezdexod/programsVezdexod/Noodl/projects/moonBuild",
+  "noodlProjectsDir": "/home/vezdexod/programsVezdexod/Noodl/projects/",
   "projects": {
     "startum-desktop": {
       "projectDir": "startum-desktop",
@@ -37,7 +37,7 @@
         "mantine",
         "mantine-old",
         "data",
-        "qrCode",
+        "qr-code",
         "web-camera"
       ],
       "dev": {
@@ -59,21 +59,11 @@
     },
     "pdf": {
       "projectDir": "pdf",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "mantine-old",
-        "data",
-        "pdf"
-      ]
+      "rolderKit": ["app", "mantine", "mantine-old", "data", "pdf"]
     },
     "gantt": {
       "projectDir": "gantt",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "gantt"
-      ]
+      "rolderKit": ["app", "mantine", "gantt"]
     },
     "rasko-desktop": {
       "projectDir": "rasko-desktop",
@@ -89,30 +79,24 @@
     },
     "tex": {
       "projectDir": "tex",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "mantine-old",
-        "data",
-        "pdf",
-        "xlsx"
-      ]
+      "rolderKit": ["app", "mantine", "mantine-old", "data", "pdf", "xlsx"]
     },
     "playground": {
       "projectDir": "playground",
       "rolderKit": [
         "app",
-        "mantine"
+        "mantine",
+        "data",
+        "pdf",
+        "xlsx",
+        "gantt",
+        "qr-code",
+        "web-camera"
       ]
     },
     "xcity": {
       "projectDir": "xcity",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "mantine-old",
-        "data"
-      ],
+      "rolderKit": ["app", "mantine", "mantine-old", "data"],
       "dev": {
         "dir": "dev",
         "bucket": "dev.xcity.rolder.app"
@@ -124,12 +108,7 @@
     },
     "cockbot-desktop": {
       "projectDir": "cockbot-desktop",
-      "rolderKit": [
-        "app",
-        "data",
-        "mantine",
-        "mantine-old"
-      ],
+      "rolderKit": ["app", "data", "mantine", "mantine-old"],
       "dev": {
         "dir": "dev",
         "bucket": "dev.xcity.rolder.app"

@@ -50,9 +50,11 @@ const useStyles = createStyles(
     {
       borderColor,
       rowBorderColor,
+      maxWidth // Rolder
     }: {
       borderColor: string | ((theme: MantineTheme) => string);
       rowBorderColor: string | ((theme: MantineTheme) => string);
+      maxWidth?: string | number // Rolder
     }
   ) => {
     const borderColorValue = typeof borderColor === 'function' ? borderColor(theme) : borderColor;
@@ -75,6 +77,7 @@ const useStyles = createStyles(
           'tbody tr td': {
             borderTopColor: rowBorderColorValue,
           },
+          'div:has(>.mantine-ScrollArea-root)': { maxWidth } // Rolder
         },
       },
       lastRowBorderBottomVisible: {
@@ -174,10 +177,9 @@ export default function DataTable<T>({
   height = '100%',
   minHeight,
   // Rolder
-  dynamicHeight,
   maxHeight,
-  width,
-  // -----  
+  maxWidth,
+  // ----
   shadow,
   verticalAlignment = 'center',
   fetching,
@@ -379,7 +381,7 @@ export default function DataTable<T>({
   const { lastSelectionChangeIndex, setLastSelectionChangeIndex } = useLastSelectionChangeIndex(recordIds);
   const selectionVisibleAndNotScrolledToLeft = selectionColumnVisible && !scrolledToLeft;
 
-  const { cx, classes, theme } = useStyles({ borderColor, rowBorderColor });
+  const { cx, classes, theme } = useStyles({ borderColor, rowBorderColor, maxWidth });
   const marginProperties = { m, my, mx, mt, mb, ml, mr };
   const styleProperties = typeof styles === 'function' ? styles(theme, EMPTY_OBJECT, EMPTY_OBJECT) : styles;
 
@@ -417,9 +419,7 @@ export default function DataTable<T>({
           footerHeight={footerHeight}
           onScrollPositionChange={handleScrollPositionChange}
           scrollAreaProps={scrollAreaProps}
-          // Rolder
-          dynamicHeight={dynamicHeight}
-          maxHeight={maxHeight}
+          maxHeight={maxHeight} // Rolder
         >
           <Table
             ref={tableRef}

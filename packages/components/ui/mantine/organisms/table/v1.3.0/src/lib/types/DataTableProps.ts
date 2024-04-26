@@ -40,9 +40,8 @@ export type DataTableProps<T> = {
   minHeight?: string | number;
 
   // Rolder
-  dynamicHeight?: boolean;
   maxHeight?: string | number;
-  width?: string | number;
+  maxWidth?: string | number;
 
   /**
    * `DataTable` component shadow

@@ -65,6 +65,7 @@ export type DbClass = {
 
 export type Item = {
   id: string;
+  dbClass?: string;
   content?: { [key: string]: any };
   states?: { [key: string]: any };
   _kuzzle_info?: {
@@ -75,18 +76,6 @@ export type Item = {
   };
   user?: User["user"];
 };
-    id: string
-    dbClass?: string
-    content?: { [key: string]: any }
-    states?: { [key: string]: any }
-    _kuzzle_info?: {
-        author: string
-        createdAt: number
-        updater: string | null
-        updatedAt: number | null
-    }
-    user?: User['user']
-}
 
 export type User = {
   user: {

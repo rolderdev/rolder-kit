@@ -5,21 +5,20 @@ const inputs130 = [
     "customProps",
     "propsFunction",
     // Enablers
-    "table2SingleSelection",
+    /*  "table2SingleSelection",
     "table2MultiSelection",
     "table2Sort",
-    "table2FilterEnabled",
-    "table2Expansion",
+    "table2FilterEnabled",    
     "table2Layout",
     "table2TableStyles",
     "table2RowStyles",
-    // Params
+    // Params*/
     "table2Columns",
     "table2OnRowClick",
-    "table2TextSelection",
-    // Data
+    /*"table2TextSelection",
+    // Data*/
     "table2Items",
-    // Single selection
+    /*// Single selection
     "table2SingleSelectedItem",
     "table2Unselectable",
     "table2ResetSingleSelection",
@@ -40,13 +39,13 @@ const inputs130 = [
     "table2ExpandAll",
     "table2UnexpandAll",
     // Layout
-    "table2NoHeader",
+    "table2NoHeader", */
     // Dimensions
     "table2HorizontalSpacing",
     "table2VerticalSpacing",
     "table2FontSize",
     // Table styles
-    "table2Shadow",
+    /*  "table2Shadow",
     "table2WithBorder",
     "table2BorderRadius",
     "table2ColumnBorders",
@@ -63,22 +62,8 @@ const inputs130 = [
     "table2SingleSelectedRowBgColor",
     "table2MutliSelectedRowBgColor",
     // States
-    "table2Fetching",
+    "table2Fetching", */
   ]),
-  // Expansion
-  getPort({
-    plug: "input",
-    name: "expansionTemplate",
-    displayName: "Expansion template",
-    group: "Expansion",
-    type: "component",
-    customs: {
-      required: "both",
-      dependsOn(p) {
-        return p.table2Expansion ? true : false;
-      },
-    },
-  }),
   // Dimensions
   getPort({
     plug: "input",
@@ -103,11 +88,11 @@ const inputs130 = [
   }),
   getPort({
     plug: "input",
-    name: "dynamicHeight",
+    name: "maxHeight",
     group: "Dimensions",
-    type: "boolean",
-    displayName: "Dynamic height",
-    default: true,
+    type: { name: "number", units: defaultUnits, defaultUnit: "%" },
+    displayName: "Max height",
+    default: 100,
     customs: {
       dependsOn(p) {
         return p.dimensions ? true : false;
@@ -116,26 +101,57 @@ const inputs130 = [
   }),
   getPort({
     plug: "input",
-    name: "height",
+    name: "fitWidthContent",
     group: "Dimensions",
-    type: { name: "number", units: ["rem", "px"], defaultUnit: "rem" },
-    displayName: "Height",
+    type: "boolean",
+    displayName: "Fit width content",
+    default: true,
+  }),
+  getPort({
+    plug: "input",
+    name: "maxWidth",
+    group: "Dimensions",
+    type: { name: "number", units: defaultUnits, defaultUnit: "%" },
+    displayName: "Max width",
+    default: 100,
     customs: {
       dependsOn(p) {
-        return !p.dynamicHeight && p.dimensions;
+        return p.dimensions && !p.fitWidthContent ? true : false;
+      },
+    },
+  }),
+  // Expansion
+  getPort({
+    plug: "input",
+    name: "expansion",
+    group: "Enablers",
+    type: getType("boolean", "editor"),
+    displayName: "Expansion",
+    default: false,
+  }),
+  getPort({
+    plug: "input",
+    name: "expansionTemplate",
+    displayName: "Template",
+    group: "Expansion",
+    type: "component",
+    customs: {
+      required: "both",
+      dependsOn(p) {
+        return p.expansion ? true : false;
       },
     },
   }),
   getPort({
     plug: "input",
-    name: "maxHeight",
-    group: "Dimensions",
-    type: { name: "number", units: defaultUnits, defaultUnit: "%" },
-    displayName: "Max height",
-    default: 100,
+    name: "allowMultiple",
+    displayName: "Allow multiple",
+    group: "Expansion",
+    type: "boolean",
+    default: false,
     customs: {
       dependsOn(p) {
-        return p.dynamicHeight && p.dimensions;
+        return p.expansion ? true : false;
       },
     },
   }),

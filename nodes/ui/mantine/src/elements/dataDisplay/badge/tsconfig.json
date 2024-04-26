@@ -2,15 +2,6 @@
   "extends": "types",
   "include": [
     "**/*",
-    "../../../../../../../types/**/*",
-    "../../../../../../types/**/*"
-  ],
-  "references": [
-    {
-      "path": "../../../../../../packages/components/ui/webCamera/v1.0.0"
-    },
-    {
-      "path": "../../../../../../types"
-    }
+    "../../../../../../../types/**/*"    
   ]
 }

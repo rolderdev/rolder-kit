@@ -87,9 +87,7 @@ type DataTableScrollAreaProps = {
   viewportRef: Ref<HTMLDivElement>;
   scrollAreaProps?: Omit<ScrollAreaProps, 'classNames' | 'styles' | 'onScrollPositionChange'>;
   children: ReactNode;
-  // Rolder  
-  dynamicHeight?: boolean
-  maxHeight?: string | number;
+  maxHeight?: string | number; // Rolder
 };
 
 export default function DataTableScrollArea({
@@ -103,37 +101,32 @@ export default function DataTableScrollArea({
   children,
   viewportRef,
   scrollAreaProps,
-  // Rolder 
-  dynamicHeight,
-  maxHeight,
+  maxHeight, // Rolder
 }: DataTableScrollAreaProps) {
   const bottom = footerHeight ? footerHeight - 1 : 0;
   const { cx, classes } = useStyles();
+
   return (
-    <ScrollArea w={100}>
-      <ScrollArea.Autosize
-        {...scrollAreaProps}
-        viewportRef={viewportRef}
-        classNames={{ root: classes.root, scrollbar: classes.scrollbar, thumb: classes.thumb, corner: classes.corner }}
-        styles={{ scrollbar: { marginTop: headerHeight, marginBottom: bottom } }}
-        onScrollPositionChange={onScrollPositionChange}
-        mah={dynamicHeight ? maxHeight : undefined}
-        w={100}
-      >
+    <ScrollArea.Autosize
+      {...scrollAreaProps}
+      viewportRef={viewportRef}
+      classNames={{ root: classes.root, scrollbar: classes.scrollbar, thumb: classes.thumb, corner: classes.corner }}
+      styles={{ scrollbar: { marginTop: headerHeight, marginBottom: bottom } }}
+      onScrollPositionChange={onScrollPositionChange}
+      mah={maxHeight} // Rolder
+    >
+      {children}
+      <Box
+        className={cx(classes.shadow, classes.topShadow, { [classes.shadowVisible]: topShadowVisible })}
+        sx={{ top: headerHeight }}
+      />
+      <div className={cx(classes.shadow, classes.leftShadow, { [classes.shadowVisible]: leftShadowVisible })} />
+      <div className={cx(classes.shadow, classes.rightShadow, { [classes.shadowVisible]: rightShadowVisible })} />
+      <Box
+        className={cx(classes.shadow, classes.bottomShadow, { [classes.shadowVisible]: bottomShadowVisible })}
+        sx={{ bottom }}
+      />
 
-        {children}
-        <Box
-          className={cx(classes.shadow, classes.topShadow, { [classes.shadowVisible]: topShadowVisible })}
-          sx={{ top: headerHeight }}
-        />
-        <div className={cx(classes.shadow, classes.leftShadow, { [classes.shadowVisible]: leftShadowVisible })} />
-        <div className={cx(classes.shadow, classes.rightShadow, { [classes.shadowVisible]: rightShadowVisible })} />
-        <Box
-          className={cx(classes.shadow, classes.bottomShadow, { [classes.shadowVisible]: bottomShadowVisible })}
-          sx={{ bottom }}
-        />
-
-      </ScrollArea.Autosize>
-    </ScrollArea>
+    </ScrollArea.Autosize>
   );
 }

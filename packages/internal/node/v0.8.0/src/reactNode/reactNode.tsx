@@ -15,7 +15,6 @@ type Params = {
     allowChildren?: boolean
     loaderAnimation?: boolean
     docs?: string
-    nodeDoubleClickActionPort?: string
 }
 
 function getModule(version: CompDefinition) {
@@ -39,9 +38,6 @@ export const reactNode = (nodeName: string, versions: CompVersions, params?: Par
         docs: params?.docs,
         noodlNodeAsProp: true,
         allowChildren: params?.allowChildren || false,
-        nodeDoubleClickAction: params?.nodeDoubleClickActionPort
-            ? { focusPort: params?.nodeDoubleClickActionPort }
-            : undefined,
         useVariants: false,
         getInspectInfo() {
             const version = this.props.version

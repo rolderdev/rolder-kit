@@ -1,19 +1,11 @@
 import { reactNode } from "@packages/node";
 import { getPorts, getPort, getCustomEnumType } from "@packages/port";
-import { lazy } from "react";
+
+import v100 from "@packages/text-v1.0.0";
 
 export default reactNode("Text", {
   "v1.0.0": {
-    module: {
-      dynamic: lazy(
-        () =>
-          import(
-            /* webpackPrefetch: true */
-            /* webpackPreload: true */
-            "@packages/text-v1.0.0"
-          )
-      ),
-    },
+    module: { static: v100 },
     inputs: [
       ...getPorts("input", [
         "customProps",

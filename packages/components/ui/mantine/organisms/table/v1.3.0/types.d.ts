@@ -1,24 +1,51 @@
-import { MantineColor, MantineNumberSize, MantineShadow } from "@mantine/core";
+import {
+  MantineColor,
+  MantineNumberSize,
+  MantineShadow,
+  type CollapseProps,
+} from "@mantine/core";
 import { BaseReactProps } from "@packages/node";
 import { Item } from "types";
 import { DataTableColumn, DataTableProps } from "./src/lib";
 
 export type Props = BaseReactProps & {
+  // Params
+  table2Columns?: ColumnDef[];
+  table2OnRowClick: "disabled" | "singleSelection" | "expansion";
+  // Data
+  table2Items?: Item[];
+
+  // Dimensions
+  dimensions: boolean;
+  minHeight?: string;
+  maxHeight?: string;
+  fitWidthContent: boolean;
+  maxWidth?: string;
+  /* table2HorizontalSpacing: MantineNumberSize;
+  table2VerticalSpacing: MantineNumberSize;
+  table2FontSize: MantineNumberSize; */
+
+  // Expansion
+  //table2ExpandedItems: Item[];
+  //table2AllowMultiple: boolean;
+  expansionTemplate: string;
+  allowMultiple: boolean;
+
+  /* 
+  
   // Enablers
   table2SingleSelection: boolean;
   table2MultiSelection: boolean;
   table2Sort: boolean;
-  table2FilterEnabled: boolean;
-  table2Expansion: boolean;
+  table2FilterEnabled: boolean;  
   table2Layout: boolean;
   table2TableStyles: boolean;
   table2RowStyles: boolean;
   // Params
-  table2Columns?: ColumnDef[];
+  
   table2OnRowClick: "disabled" | "singleSelection" | "expansion";
   table2TextSelection: boolean;
-  // Data
-  table2Items?: Item[];
+  // Data  
   tableId?: String; // MD
   parentTableId?: String; // MD
   // Single selection
@@ -33,21 +60,11 @@ export type Props = BaseReactProps & {
   // Filter
   table2FilterType: "frontend" | "backend";
   // Expansion
-  table2ExpandedItems: Item[];
-  table2AllowMultiple: boolean;
+  table2ExpandedItems: Item[];  
   expansionTemplate: string;
   // Layout
   table2NoHeader: boolean;
-  // Dimensions
-  dimensions: boolean;
-  width: MantineNumberSize;
-  table2MinHeight: MantineNumberSize;
-  table2DynamicHeight: boolean;
-  table2Height: MantineNumberSize;
-  table2ViewportBOffset: number;
-  table2HorizontalSpacing: MantineNumberSize;
-  table2VerticalSpacing: MantineNumberSize;
-  table2FontSize: MantineNumberSize;
+  
   // Table styles
   table2Shadow: MantineShadow;
   table2WithBorder: boolean;
@@ -67,12 +84,12 @@ export type Props = BaseReactProps & {
   table2MutliSelectedRowBgColor: MantineColor;
   // States
   table2Fetching: boolean;
-  dataFetchError?: boolean;
+  dataFetchError?: boolean; */
 };
 
 export type TableProps = {
   libProps: DataTableProps<Item>;
-  children: any;
+  //children: any;
   columnsDef: ColumnDef[];
   items: Item[];
 
@@ -80,8 +97,17 @@ export type TableProps = {
   noodlNode: NoodlNode;
   onRowClick: "disabled" | "singleSelection" | "expansion";
   customProps?: any;
+
+  expansion: {
+    enabled: boolean;
+    template: string;
+    allowMultiple?: boolean;
+    //expandedItems?: Item[];
+    collapseProps: CollapseProps;
+  };
+
   // Selection
-  selection: {
+  /* selection: {
     single: { enabled: boolean; unselectable: boolean; selectedItem: Item };
     multi: { enabled: boolean; selectedItems: Item[] };
   };
@@ -94,16 +120,10 @@ export type TableProps = {
   };
   // Filter
   filter: { enabled: boolean; type: "frontend" | "backend" };
-  // Expansion
-  expansion: {
-    enabled: boolean;
-    allowMultiple?: boolean;
-    expandedItems?: Item[];
-  };
-  // Dimensions
-  dimensions: { width: MantineNumberSize; height: MantineNumberSize };
+ */
+
   // Table styles
-  tableStyles: { animation: boolean };
+  /*  tableStyles: { animation: boolean };
   // Row styles
   rowStyles: {
     enabled: boolean;
@@ -117,7 +137,7 @@ export type TableProps = {
     mutliSelectedRowBgColor: MantineColor;
   };
   // States
-  fetching: boolean;
+  fetching: boolean; */
 };
 
 export type ColumnDef = DataTableColumn<Item> & {
