@@ -156,24 +156,26 @@ export default forwardRef(function (props: Props, ref) {
     useEffect(() => {
         console.log("ПРИЛЕТЕЛИ ITEMS")
 
-        // Запишем id itemов по id своего родителя
-        // Если запись с родителем отсутсвует, то создаем пустой массив
-        // а если будет, то добавим информацию к данным с братской таблицы
-        if (!tableSelectionChildIdsByParentIdValue[parentTableItemId]) {
-            tableSelectionChildIdsByParentIdValue[parentTableItemId] = []
-        }
-        items?.forEach(item => {
-            if (item?.id) {
-                tableSelectionChildIdsByParentIdValue[parentTableItemId]?.push(item.id)
-                tableSelectionScopeInternalValue['tableIdByItemId'][item.id] = tableId
-                console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'])
-                console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'][item.id])
+        if (useScopeStates && tableId !== '' && tableId !== undefined) {
+            // Запишем id itemов по id своего родителя
+            // Если запись с родителем отсутсвует, то создаем пустой массив
+            // а если будет, то добавим информацию к данным с братской таблицы
+            if (!tableSelectionChildIdsByParentIdValue[parentTableItemId]) {
+                tableSelectionChildIdsByParentIdValue[parentTableItemId] = []
             }
-        })
-        setTableSelectionChildIdsByParentIdValue(tableSelectionChildIdsByParentIdValue)
-        setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
+            items?.forEach(item => {
+                if (item?.id) {
+                    tableSelectionChildIdsByParentIdValue[parentTableItemId]?.push(item.id)
+                    tableSelectionScopeInternalValue['tableIdByItemId'][item.id] = tableId
+                    console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'])
+                    console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'][item.id])
+                }
+            })
+            setTableSelectionChildIdsByParentIdValue(tableSelectionChildIdsByParentIdValue)
+            setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
+        }
         // }
-    },[items])
+    }, [items])
 
     // Отрабатывает при получении items
     // useEffect(() => {
@@ -216,12 +218,12 @@ export default forwardRef(function (props: Props, ref) {
         }
 
         // После раскрытия таблицы, items появляются не сразу, поэтому при их изменении, добавляем их в scope
-        if (items.length > 0 && tableSelectionScopeValue[items[0]?.id] === undefined) {           
+        if (items.length > 0 && tableSelectionScopeValue[items[0]?.id] === undefined) {
 
             // Запишем items, если их ещё нет, и при первом запуске наследуем статусы от своих родителей
             items.forEach(item => {
 
-                if (item?.id) {                  
+                if (item?.id) {
 
                     // Если item.id и ещё нет в scope
                     // а родитель в scope есть
