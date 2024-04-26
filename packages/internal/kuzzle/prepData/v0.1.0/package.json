@@ -6,7 +6,7 @@
   "dependencies": {
     "@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@*",
     "@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*",
-    "@capacitor/preferences": "5.0.7"
+    "@capacitor/preferences": "6.0.0"
   },
   "devDependencies": {
     "types": "workspace:*"

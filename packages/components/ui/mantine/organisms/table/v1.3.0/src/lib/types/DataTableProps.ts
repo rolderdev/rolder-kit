@@ -1,5 +1,18 @@
-import type { DefaultProps, MantineShadow, MantineTheme, ScrollAreaProps, Sx, TableProps } from '@mantine/core';
-import type { CSSProperties, Key, MouseEvent, ReactNode, RefObject } from 'react';
+import type {
+  DefaultProps,
+  MantineShadow,
+  MantineTheme,
+  ScrollAreaProps,
+  Sx,
+  TableProps,
+} from "@mantine/core";
+import type {
+  CSSProperties,
+  Key,
+  MouseEvent,
+  ReactNode,
+  RefObject,
+} from "react";
 import type {
   DataTableCellClickHandler,
   DataTableContextMenuProps,
@@ -11,19 +24,11 @@ import type {
   DataTableSelectionProps,
   DataTableSortProps,
   DataTableVerticalAlignment,
-} from '.';
-import type { DataTableColumnProps } from './DataTableColumnProps';
-import type { DataTableLoaderProps } from './DataTableLoaderProps';
+} from "./";
+import type { DataTableColumnProps } from "./DataTableColumnProps";
+import type { DataTableLoaderProps } from "./DataTableLoaderProps";
 
 export type DataTableProps<T> = {
-
-  // Rolder
-  loaderBgColor?: any
-  loaderOpacity?: any
-  tableId?: string  // MD
-  parentTableId?: string | undefined; // MD
-  indeterminatedRecords?: T[]; // MD
-
   /**
    * Table height; defaults to `100%`
    */
@@ -33,6 +38,11 @@ export type DataTableProps<T> = {
    * Minimum table height
    */
   minHeight?: string | number;
+
+  // Rolder
+  dynamicHeight?: boolean;
+  maxHeight?: string | number;
+  width?: string | number;
 
   /**
    * `DataTable` component shadow
@@ -92,7 +102,11 @@ export type DataTableProps<T> = {
    * A default render function for all columns; accepts the current record, its index in `records`
    * and the column accessor
    */
-  defaultColumnRender?: (record: T, index: number, accesor: string) => ReactNode;
+  defaultColumnRender?: (
+    record: T,
+    index: number,
+    accesor: string
+  ) => ReactNode;
 
   /**
    * Accessor to use as unique record key; can be a string representing a property name
@@ -162,13 +176,17 @@ export type DataTableProps<T> = {
    * Optional class name passed to each row; can be a string or a function
    * receiving the current record and its index as arguments and returning a string
    */
-  rowClassName?: string | ((record: T, recordIndex: number) => string | undefined);
+  rowClassName?:
+    | string
+    | ((record: T, recordIndex: number) => string | undefined);
 
   /**
    * Optional style passed to each row; can be a CSS properties object or
    * a function receiving the current record and its index as arguments and returning a CSS properties object
    */
-  rowStyle?: CSSProperties | ((record: T, recordIndex: number) => CSSProperties | undefined);
+  rowStyle?:
+    | CSSProperties
+    | ((record: T, recordIndex: number) => CSSProperties | undefined);
 
   /**
    * Optional style passed to each row; see https://mantine.dev/styles/sx/
@@ -180,7 +198,10 @@ export type DataTableProps<T> = {
    * Receives the current record and its index as arguments.
    * Useful for adding data attributes, handling middle-clicks, etc.
    */
-  customRowAttributes?: (record: T, recordIndex: number) => Record<string, unknown>;
+  customRowAttributes?: (
+    record: T,
+    recordIndex: number
+  ) => Record<string, unknown>;
 
   /**
    * Ref pointing to the scrollable viewport element; useful for imperative scrolling
@@ -190,15 +211,27 @@ export type DataTableProps<T> = {
   /**
    * Additional props passed to the underlying `ScrollArea` element
    */
-  scrollAreaProps?: Omit<ScrollAreaProps, 'classNames' | 'styles' | 'onScrollPositionChange'>;
+  scrollAreaProps?: Omit<
+    ScrollAreaProps,
+    "classNames" | "styles" | "onScrollPositionChange"
+  >;
   /**
    * Ref pointing to the table body element
    */
-  bodyRef?: ((instance: HTMLTableSectionElement | null) => void) | RefObject<HTMLTableSectionElement>;
-} & Pick<TableProps, 'striped' | 'highlightOnHover' | 'horizontalSpacing' | 'verticalSpacing' | 'fontSize'> &
+  bodyRef?:
+    | ((instance: HTMLTableSectionElement | null) => void)
+    | RefObject<HTMLTableSectionElement>;
+} & Pick<
+  TableProps,
+  | "striped"
+  | "highlightOnHover"
+  | "horizontalSpacing"
+  | "verticalSpacing"
+  | "fontSize"
+> &
   Omit<
-    DefaultProps<'root' | 'header' | 'footer' | 'pagination', CSSProperties>,
-    'unstyled' | 'p' | 'px' | 'py' | 'pt' | 'pb' | 'pl' | 'pr'
+    DefaultProps<"root" | "header" | "footer" | "pagination", CSSProperties>,
+    "unstyled" | "p" | "px" | "py" | "pt" | "pb" | "pl" | "pr"
   > &
   DataTableColumnProps<T> &
   DataTableOuterBorderProps &

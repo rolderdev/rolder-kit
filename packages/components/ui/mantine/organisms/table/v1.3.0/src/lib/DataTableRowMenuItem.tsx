@@ -1,6 +1,5 @@
 import { Box, Text, UnstyledButton, createStyles, px, type MantineColor } from '@mantine/core';
 import type { ReactNode } from 'react';
-import React from 'react';
 
 const useStyles = createStyles((theme, { color }: { color?: MantineColor }) => {
   const verticalPadding = px(theme.spacing.sm) / 2;

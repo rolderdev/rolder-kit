@@ -1,7 +1,6 @@
 import { Box, createStyles, ScrollArea, type ScrollAreaProps } from '@mantine/core';
-import { useViewportSize } from '@mantine/hooks';
+import type { ReactNode, Ref } from 'react';
 import React from 'react';
-import { useEffect, type ReactNode, type Ref, useState } from 'react';
 
 const useStyles = createStyles((theme) => {
   const shadowGradientAlpha = theme.colorScheme === 'dark' ? 0.5 : 0.05;
@@ -88,6 +87,9 @@ type DataTableScrollAreaProps = {
   viewportRef: Ref<HTMLDivElement>;
   scrollAreaProps?: Omit<ScrollAreaProps, 'classNames' | 'styles' | 'onScrollPositionChange'>;
   children: ReactNode;
+  // Rolder  
+  dynamicHeight?: boolean
+  maxHeight?: string | number;
 };
 
 export default function DataTableScrollArea({
@@ -101,42 +103,37 @@ export default function DataTableScrollArea({
   children,
   viewportRef,
   scrollAreaProps,
+  // Rolder 
+  dynamicHeight,
+  maxHeight,
 }: DataTableScrollAreaProps) {
   const bottom = footerHeight ? footerHeight - 1 : 0;
   const { cx, classes } = useStyles();
-
-  // Rolder
-  const { height: viewPortHeight } = useViewportSize()
-  const [scrollHeight, setHeight] = useState(0)
-  useEffect(() => {
-    if (viewPortHeight > 0) {
-      const s = scrollAreaProps as any
-      const offset = s?.scrollAreaBottomOffset
-      const scrollHeight = viewPortHeight - offset
-      setHeight(scrollHeight)
-    }
-  }, [viewPortHeight])
-
   return (
-    <ScrollArea
-      {...scrollAreaProps}
-      viewportRef={viewportRef}
-      classNames={{ root: classes.root, scrollbar: classes.scrollbar, thumb: classes.thumb, corner: classes.corner }}
-      styles={{ scrollbar: { marginTop: headerHeight, marginBottom: bottom } }}
-      onScrollPositionChange={onScrollPositionChange}
-      mah={scrollHeight - 1} //Rolder
-    >
-      {children}
-      <Box
-        className={cx(classes.shadow, classes.topShadow, { [classes.shadowVisible]: topShadowVisible })}
-        sx={{ top: headerHeight }}
-      />
-      <div className={cx(classes.shadow, classes.leftShadow, { [classes.shadowVisible]: leftShadowVisible })} />
-      <div className={cx(classes.shadow, classes.rightShadow, { [classes.shadowVisible]: rightShadowVisible })} />
-      <Box
-        className={cx(classes.shadow, classes.bottomShadow, { [classes.shadowVisible]: bottomShadowVisible })}
-        sx={{ bottom }}
-      />
+    <ScrollArea w={100}>
+      <ScrollArea.Autosize
+        {...scrollAreaProps}
+        viewportRef={viewportRef}
+        classNames={{ root: classes.root, scrollbar: classes.scrollbar, thumb: classes.thumb, corner: classes.corner }}
+        styles={{ scrollbar: { marginTop: headerHeight, marginBottom: bottom } }}
+        onScrollPositionChange={onScrollPositionChange}
+        mah={dynamicHeight ? maxHeight : undefined}
+        w={100}
+      >
+
+        {children}
+        <Box
+          className={cx(classes.shadow, classes.topShadow, { [classes.shadowVisible]: topShadowVisible })}
+          sx={{ top: headerHeight }}
+        />
+        <div className={cx(classes.shadow, classes.leftShadow, { [classes.shadowVisible]: leftShadowVisible })} />
+        <div className={cx(classes.shadow, classes.rightShadow, { [classes.shadowVisible]: rightShadowVisible })} />
+        <Box
+          className={cx(classes.shadow, classes.bottomShadow, { [classes.shadowVisible]: bottomShadowVisible })}
+          sx={{ bottom }}
+        />
+
+      </ScrollArea.Autosize>
     </ScrollArea>
   );
 }

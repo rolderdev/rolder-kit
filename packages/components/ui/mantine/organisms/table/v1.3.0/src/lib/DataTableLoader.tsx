@@ -6,11 +6,9 @@ import {
   type MantineNumberSize,
   type MantineTheme,
 } from '@mantine/core';
-import convertColor from '@packages/convert-color';
 import type { ReactNode } from 'react';
-import React from 'react';
 
-const useStyles = createStyles((theme, { bgColor, opacity }: { bgColor?: DefaultMantineColor, opacity?: number }) => ({ //Rolder
+const useStyles = createStyles((theme) => ({
   root: {
     zIndex: 3,
     position: 'absolute',
@@ -19,7 +17,7 @@ const useStyles = createStyles((theme, { bgColor, opacity }: { bgColor?: Default
     right: 0,
     bottom: 0,
     pointerEvents: 'none',
-    background: theme.fn.rgba(convertColor(bgColor) || theme.colors.dark[0], opacity || 0.75),//Rolder
+    background: theme.fn.rgba(theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white, 0.75),
     opacity: 0,
     transition: 'opacity .15s ease',
   },
@@ -38,8 +36,6 @@ type DataTableLoaderProps = {
   size: MantineNumberSize | undefined;
   variant: MantineTheme['loader'] | undefined;
   color: DefaultMantineColor | undefined;
-  bgColor: DefaultMantineColor | undefined; //Rolder
-  opacity: number | undefined; //Rolder
 };
 
 export default function DataTableLoader({
@@ -51,10 +47,8 @@ export default function DataTableLoader({
   size,
   variant,
   color,
-  bgColor, //Rolder
-  opacity //Rolder
 }: DataTableLoaderProps) {
-  const { classes, cx } = useStyles({ bgColor, opacity }); // Rolder
+  const { classes, cx } = useStyles();
   return (
     <Center
       pt={pt}

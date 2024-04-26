@@ -1,6 +1,6 @@
 import { createSafeContext } from '@mantine/utils';
-import type { Dispatch, SetStateAction } from 'react';
-import type { DataTableColumnToggle } from './hooks';
+import { Dispatch, SetStateAction } from 'react';
+import { DataTableColumnToggle } from './hooks';
 
 interface DataTableDragToggleColumnsContext {
   // accessor of the column which is currently dragged

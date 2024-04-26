@@ -41,9 +41,6 @@ import {
 import type { DataTableProps } from './types';
 import { differenceBy, getRecordId, humanize, uniqBy, useIsomorphicLayoutEffect } from './utils';
 import React from 'react';
-import { tableSelectionScopeAtom } from '@packages/scope';
-import { useAtom } from 'jotai';
-
 
 const EMPTY_OBJECT = {};
 
@@ -176,6 +173,11 @@ export default function DataTable<T>({
   textSelectionDisabled,
   height = '100%',
   minHeight,
+  // Rolder
+  dynamicHeight,
+  maxHeight,
+  width,
+  // -----  
   shadow,
   verticalAlignment = 'center',
   fetching,
@@ -187,7 +189,6 @@ export default function DataTable<T>({
   defaultColumnRender,
   idAccessor = 'id',
   records,
-  tableId,  // MD
   selectedRecords,
   onSelectedRecordsChange,
   isRecordSelectable,
@@ -221,8 +222,6 @@ export default function DataTable<T>({
   loaderSize,
   loaderVariant,
   loaderColor,
-  loaderBgColor, // Rolder
-  loaderOpacity, // Rolder
   loadingText = '...',
   emptyState,
   noRecordsText = 'No records',
@@ -282,15 +281,6 @@ export default function DataTable<T>({
   const [scrolledToBottom, setScrolledToBottom] = useState(true);
   const [scrolledToLeft, setScrolledToLeft] = useState(true);
   const [scrolledToRight, setScrolledToRight] = useState(true);
-
-  //==========================================================================================
-  // Хука для редактирования состоч=янийц в scope
-  const [tableSelectionScopeValue, setTableSelectionScopeValue] = useAtom(tableSelectionScopeAtom)
-
-  // const { jotaiAtomMolValue, setJotaiAtomMolValue } = useJotaiAtom()
-  // const newTableSelectionScopeValue = { ...tableSelectionScopeValue }
-
-  //==========================================================================================
 
   const { rowContextMenuInfo, setRowContextMenuInfo } = useRowContextMenu<T>(fetching);
   const rowExpansionInfo = useRowExpansion<T>({ rowExpansion, records, idAccessor });
@@ -369,43 +359,13 @@ export default function DataTable<T>({
   const someRecordsSelected =
     hasRecordsAndSelectedRecords && selectableRecordIds!.some((id) => selectedRecordIds.includes(id));
 
-  // Если хоть одна запись таблицы indeterminated
-  const tableIsIndeterminated = records
-    ? tableSelectionScopeValue['tableIndeterminatedItemsIdList'].find(indItem => records.find(record => getRecordId(record, idAccessor) === indItem))
-      ? true
-      : false
-    : false
-
   const handleHeaderSelectionChange = useCallback(() => {
     if (selectedRecords && onSelectedRecordsChange) {
-      // Если все записи выбраны, то снимаем все
-      if (allSelectableRecordsSelected) { // MD
-        records?.map((record) => {
-          const recordId = getRecordId(record, idAccessor)
-          // Меняем статус каждомй записи
-          if (typeof recordId === 'string') tableSelectionScopeValue['tableSelectionScope'][recordId] = 'notSelected'
-        })
-        onSelectedRecordsChange(selectedRecords.filter((record) => !selectableRecordIds!.includes(getRecordId(record, idAccessor))))
-        // Если все записи не выбраны, то выбираем
-      } else {
-        records?.map((record) => {
-          const recordId = getRecordId(record, idAccessor)
-          // Меняем статус каждомй записи
-          if (typeof recordId === 'string') tableSelectionScopeValue['tableSelectionScope'][recordId] = 'selected'
-        })
-        if (records) onSelectedRecordsChange(uniqBy([...selectedRecords, ...selectableRecords!], (record) => getRecordId(record, idAccessor)))
-      }
-
-      // Запишем в массив на рендер id родительской и дочерней таблицы
-      if (tableId) {
-        tableSelectionScopeValue['forRenderTableId'] = {
-          parentTableId: tableSelectionScopeValue['parentTableIdByTableId'][tableId],
-          currentTableId: tableId,
-          newTableId: undefined,
-          childTableId: Object.keys(tableSelectionScopeValue['parentTableIdByTableId']).filter(key => tableSelectionScopeValue['parentTableIdByTableId'][key] === tableId),
-        }
-      }
-      setTableSelectionScopeValue(tableSelectionScopeValue)
+      onSelectedRecordsChange(
+        allSelectableRecordsSelected
+          ? selectedRecords.filter((record) => !selectableRecordIds!.includes(getRecordId(record, idAccessor)))
+          : uniqBy([...selectedRecords, ...selectableRecords!], (record) => getRecordId(record, idAccessor))
+      );
     }
   }, [
     allSelectableRecordsSelected,
@@ -457,6 +417,9 @@ export default function DataTable<T>({
           footerHeight={footerHeight}
           onScrollPositionChange={handleScrollPositionChange}
           scrollAreaProps={scrollAreaProps}
+          // Rolder
+          dynamicHeight={dynamicHeight}
+          maxHeight={maxHeight}
         >
           <Table
             ref={tableRef}
@@ -487,7 +450,7 @@ export default function DataTable<T>({
                 onSortStatusChange={onSortStatusChange}
                 selectionVisible={selectionColumnVisible}
                 selectionChecked={allSelectableRecordsSelected}
-                selectionIndeterminate={someRecordsSelected && !allSelectableRecordsSelected || tableIsIndeterminated}
+                selectionIndeterminate={someRecordsSelected && !allSelectableRecordsSelected}
                 onSelectionChange={handleHeaderSelectionChange}
                 selectionCheckboxProps={allRecordsSelectionCheckboxProps}
                 leftShadowVisible={selectionVisibleAndNotScrolledToLeft}
@@ -498,7 +461,6 @@ export default function DataTable<T>({
                 records.map((record, recordIndex) => {
                   const recordId = getRecordId(record, idAccessor);
                   const isSelected = selectedRecordIds?.includes(recordId) || false;
-                  const isIndeterminated = typeof recordId === 'string' ? tableSelectionScopeValue['tableIndeterminatedItemsIdList']?.includes(recordId) : false
 
                   let showContextMenuOnClick = false;
                   let showContextMenuOnRightClick = false;
@@ -534,43 +496,11 @@ export default function DataTable<T>({
                             : uniqBy([...selectedRecords, ...targetRecords], (r) => getRecordId(r, idAccessor))
                         );
                       } else {
-                        if (isSelected) {  // MD
-                          if (typeof recordId === 'string') {
-                            tableSelectionScopeValue['tableSelectionScope'][recordId] = 'notSelected'
-                            // Если запись в массиве indeterminated, то удаляем из него
-                            if (tableSelectionScopeValue['tableIndeterminatedItemsIdList']?.find(itemId => itemId === recordId)) {
-                              tableSelectionScopeValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== recordId)
-                            }
-                          }
-                          // Обновляем массив выбранных
-                          onSelectedRecordsChange(selectedRecords.filter((record) => getRecordId(record, idAccessor) !== recordId))
-                        }
-                        // Если запись не выбрана, то делаем выбранной
-                        else {
-
-                          if (typeof recordId === 'string') {
-                            // console.log("recordId",recordId)
-                            tableSelectionScopeValue['tableSelectionScope'][recordId] = 'selected'
-                            // Если запись в массиве indeterminated, то удаляем из него
-                            if (tableSelectionScopeValue['tableIndeterminatedItemsIdList']?.find(itemId => itemId === recordId)) {
-                              tableSelectionScopeValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== recordId)
-                            }
-                          }
-                          // Обновляем массив выбранных
-                          onSelectedRecordsChange(uniqBy([...selectedRecords, record], (record) => getRecordId(record, idAccessor)))
-
-                        }
-                        // Запишем в массив на рендер id родительской и дочерней таблицы
-                        if (tableId) {
-                          tableSelectionScopeValue['forRenderTableId'] = {
-                            parentTableId: tableSelectionScopeValue['parentTableIdByTableId'][tableId],
-                            currentTableId: tableId,
-                            newTableId: undefined,
-                            childTableId: Object.keys(tableSelectionScopeValue['parentTableIdByTableId']).filter(key => tableSelectionScopeValue['parentTableIdByTableId'][key] === tableId),
-                          }
-                        }
-                        setTableSelectionScopeValue(tableSelectionScopeValue)
-
+                        onSelectedRecordsChange(
+                          isSelected
+                            ? selectedRecords.filter((record) => getRecordId(record, idAccessor) !== recordId)
+                            : uniqBy([...selectedRecords, record], (record) => getRecordId(record, idAccessor))
+                        );
                       }
                       setLastSelectionChangeIndex(recordIndex);
                     };
@@ -606,7 +536,6 @@ export default function DataTable<T>({
                       defaultColumnRender={defaultColumnRender}
                       selectionVisible={selectionColumnVisible}
                       selectionChecked={isSelected}
-                      selectionIndeterminate={isIndeterminated} // MD
                       onSelectionChange={handleSelectionChange}
                       isRecordSelectable={isRecordSelectable}
                       getSelectionCheckboxProps={getRecordSelectionCheckboxProps}
@@ -678,8 +607,6 @@ export default function DataTable<T>({
           size={loaderSize}
           variant={loaderVariant}
           color={loaderColor}
-          bgColor={loaderBgColor} // Rolder
-          opacity={loaderOpacity} // Rolder
         />
         <DataTableEmptyState
           pt={headerHeight}

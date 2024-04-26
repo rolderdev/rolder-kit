@@ -17,10 +17,9 @@ import { useRef, useState, type BaseSyntheticEvent, type CSSProperties, type Rea
 import { useDataTableDragToggleColumnsContext } from './DataTableDragToggleColumns.context';
 import DataTableHeaderCellFilter from './DataTableHeaderCellFilter';
 import { DataTableResizableHeaderHandle } from './DataTableResizableHeaderHandle';
-import type { DataTableColumnToggle } from './hooks';
+import { DataTableColumnToggle } from './hooks';
 import type { DataTableColumn, DataTableSortProps } from './types';
 import { humanize, useMediaQueryStringOrFunction } from './utils';
-import React from 'react';
 
 const useStyles = createStyles((theme) => ({
   sortableColumnHeader: {
@@ -156,18 +155,18 @@ export default function DataTableHeaderCell<T>({
   const sortAction =
     sortable && onSortStatusChange
       ? (e?: BaseSyntheticEvent) => {
-        if (e?.defaultPrevented) return;
+          if (e?.defaultPrevented) return;
 
-        onSortStatusChange({
-          columnAccessor: accessor,
-          direction:
-            sortStatus?.columnAccessor === accessor
-              ? sortStatus.direction === 'asc'
-                ? 'desc'
-                : 'asc'
-              : sortStatus?.direction ?? 'asc',
-        });
-      }
+          onSortStatusChange({
+            columnAccessor: accessor,
+            direction:
+              sortStatus?.columnAccessor === accessor
+                ? sortStatus.direction === 'asc'
+                  ? 'desc'
+                  : 'asc'
+                : sortStatus?.direction ?? 'asc',
+          });
+        }
       : undefined;
 
   const handleColumnDragStart = (e: React.DragEvent) => {

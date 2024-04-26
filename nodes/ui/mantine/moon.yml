@@ -7,12 +7,12 @@ tasks:
     command: rspack build --mode=production
     inputs:
       - src/**/*
-      - /packages/components/mantine/**/*
+      - /packages/components/ui/mantine/**/*
       - /packages/internal/**/*
   dev:
     command: rspack build --mode=development --watch
     inputs:
       - src/**/*
-      - /packages/components/mantine/**/*
+      - /packages/components/ui/mantine/**/*
       - /packages/internal/**/*
     local: true

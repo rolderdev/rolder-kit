@@ -7,11 +7,10 @@ import {
   type MantineNumberSize,
   type MantineTheme,
 } from '@mantine/core';
-import { forwardRef, type CSSProperties, type ReactNode } from 'react';
+import { forwardRef, type CSSProperties, type ForwardedRef, type ReactNode } from 'react';
 import DataTablePageSizeSelector from './DataTablePageSizeSelector';
 import type { DataTablePaginationProps } from './types';
 import type { WithOptional, WithRequired } from './types/utils';
-import React from 'react';
 
 const useStyles = createStyles(
   (
@@ -83,7 +82,7 @@ export default forwardRef(function DataTablePagination(
     paginationWrapBreakpoint,
     getPaginationControlProps,
   }: DataTablePaginationComponentProps,
-  ref: any
+  ref: ForwardedRef<HTMLDivElement>
 ) {
   let paginationTextValue: ReactNode;
   if (fetching) {
@@ -130,4 +129,4 @@ export default forwardRef(function DataTablePagination(
       />
     </Box>
   );
-}) as (props: DataTablePaginationComponentProps & { ref: any }) => JSX.Element;
+}) as (props: DataTablePaginationComponentProps & { ref: ForwardedRef<HTMLDivElement> }) => JSX.Element;

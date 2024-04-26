@@ -1,6 +1,5 @@
 import { Checkbox, createStyles, px } from '@mantine/core';
 import type { ChangeEventHandler } from 'react';
-import React from 'react';
 
 const useStyles = createStyles((theme) => {
   const shadowGradientAlpha = theme.colorScheme === 'dark' ? 0.5 : 0.05;
@@ -47,7 +46,6 @@ type DataTableRowSelectorCellProps<T> = {
   recordIndex: number;
   withRightShadow: boolean;
   checked: boolean;
-  indeterminate: boolean; // MD
   disabled: boolean;
   onChange: ChangeEventHandler<HTMLInputElement> | undefined;
   getCheckboxProps: (record: T, recordIndex: number) => Record<string, unknown>;
@@ -66,10 +64,7 @@ export default function DataTableRowSelectorCell<T>({
       className={cx(classes.root, { [classes.withRightShadow]: withRightShadow })}
       onClick={(e) => e.stopPropagation()}
     >
-      <Checkbox 
-        classNames={{ input: classes.checkbox }} 
-        {...otherProps} 
-        {...getCheckboxProps(record, recordIndex)} />
+      <Checkbox classNames={{ input: classes.checkbox }} {...otherProps} {...getCheckboxProps(record, recordIndex)} />
     </td>
   );
 }

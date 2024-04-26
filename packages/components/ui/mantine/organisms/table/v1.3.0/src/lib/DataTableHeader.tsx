@@ -1,10 +1,9 @@
 import { createStyles, type CSSObject } from '@mantine/core';
-import { forwardRef, type CSSProperties } from 'react';
+import { forwardRef, type CSSProperties, type ForwardedRef } from 'react';
 import DataTableColumnGroupHeaderCell from './DataTableColumnGroupHeaderCell';
 import DataTableHeaderCell from './DataTableHeaderCell';
 import DataTableHeaderSelectorCell from './DataTableHeaderSelectorCell';
 import type { DataTableColumn, DataTableColumnGroup, DataTableSortProps } from './types';
-import React from 'react';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -52,7 +51,7 @@ export default forwardRef(function DataTableHeader<T>(
     selectionCheckboxProps,
     leftShadowVisible,
   }: DataTableHeaderProps<T>,
-  ref: any
+  ref: ForwardedRef<HTMLTableSectionElement>
 ) {
   const { classes, cx } = useStyles();
 
@@ -128,4 +127,4 @@ export default forwardRef(function DataTableHeader<T>(
       </tr>
     </thead>
   );
-}) as <T>(props: DataTableHeaderProps<T> & { ref: any }) => JSX.Element;
+}) as <T>(props: DataTableHeaderProps<T> & { ref: ForwardedRef<HTMLTableSectionElement> }) => JSX.Element;

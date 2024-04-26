@@ -7,12 +7,12 @@ tasks:
     command: rspack build --mode=production
     inputs:
       - src/**/*
-      - /packages/components/web-camera/**/*
+      - /packages/components/ui/web-camera/**/*
       - /packages/internal/**/*
   dev:
     command: rspack build --mode=development --watch
     inputs:
       - src/**/*
-      - /packages/components/web-camera/**/*
+      - /packages/components/ui/web-camera/**/*
       - /packages/internal/**/*
     local: true

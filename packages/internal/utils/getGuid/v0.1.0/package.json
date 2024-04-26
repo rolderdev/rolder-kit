@@ -1,0 +1,10 @@
+{
+  "name": "@packages/get-guid-v0.1.0",
+  "main": "getGuid.ts",
+  "types": "getGuid.ts",
+  "type": "module",
+  "dependencies": {},
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

@@ -2,7 +2,6 @@ import { Box } from '@mantine/core';
 import { useMemo } from 'react';
 import type { DataTableColumnGroup } from './types';
 import { humanize, useMediaQueriesStringOrFunction } from './utils';
-import React from 'react';
 
 type DataTableColumnGroupHeaderCellProps<T> = {
   group: DataTableColumnGroup<T>;

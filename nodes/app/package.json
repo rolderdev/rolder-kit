@@ -6,7 +6,7 @@
     "@packages/get-formated-date-v0.2.0": "workspace:*",
     "@packages/get-masked-v0.2.0": "workspace:*",
     "@packages/get-value-v0.8.0": "workspace:*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",    
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
     "@packages/port": "workspace:@packages/port-v0.6.0@*",
     "@tabler/icons-react": "3.1.0",
     "consola": "3.2.3",

@@ -3,19 +3,5 @@
   "include": [
     "**/*",
     "../../../types/**/*"
-  ],
-  "references": [
-    {
-      "path": "../../../types"
-    },
-    {
-      "path": "getQrCode"
-    },
-    {
-      "path": "qrCode"
-    },
-    {
-      "path": "qrScanner"
-    }
   ]
 }

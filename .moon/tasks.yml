@@ -1,5 +1,7 @@
 ---
-tasks:  
+tasks:
   clean:
-    command: rm -rf node_modules && rm -rf dist
+    command: rm -rf node_modules
     local: true
+    options:
+      runFromWorkspaceRoot: true
