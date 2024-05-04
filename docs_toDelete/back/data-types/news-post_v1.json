@@ -1,0 +1,43 @@
+{
+    "dynamic": "strict",
+    "properties": {
+        "content": {
+            "properties": {
+                "markdown": {
+                    "type": "keyword",
+                    "fields": {
+                        "search": {
+                            "type": "text",
+                            "analyzer": "russian"
+                        }
+                    }
+                },
+                "date": {
+                    "properties": {
+                        "created": {
+                            "type": "date",
+                            "format": "epoch_millis"
+                        },
+                        "changed": {
+                            "type": "date",
+                            "format": "epoch_millis"
+                        }
+                    }
+                },
+                "author": {
+                    "type": "keyword"
+                },
+                "editor": {
+                    "type": "keyword"
+                }
+            }
+        },
+        "states": {
+            "properties": {                
+                "published": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}

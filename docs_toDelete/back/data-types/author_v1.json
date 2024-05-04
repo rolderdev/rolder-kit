@@ -1,0 +1,25 @@
+{
+    "dynamic": "strict",
+    "properties": {
+        "content": {
+            "properties": {
+                "name": {
+                    "type": "keyword",
+                    "fields": {
+                        "search": {
+                            "type": "text",
+                            "analyzer": "russian"
+                        }
+                    }
+                }
+            }
+        },
+        "user": {
+            "properties": {
+                "id": {
+                    "type": "keyword"
+                }
+            }
+        }
+    }
+}

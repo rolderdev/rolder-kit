@@ -2,9 +2,6 @@
   "name": "@packages/table-v1.3.0",
   "main": "table.tsx",
   "types": "table.tsx",
-  "scripts": {
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-  },
   "dependencies": {
     "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
     "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",

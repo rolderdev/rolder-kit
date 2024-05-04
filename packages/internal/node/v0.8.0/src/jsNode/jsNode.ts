@@ -49,7 +49,7 @@ export const jsNode = (
       this.outputPropValues = {};
     },
     getInspectInfo() {
-      const version = this.props.version;
+      const version = this._internal.version;
       let output = undefined;
       const getInspectInfo = versions[version]?.getInspectInfo;
       if (getInspectInfo) output = getInspectInfo(this.model.nodeProps);

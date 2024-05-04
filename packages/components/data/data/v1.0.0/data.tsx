@@ -37,14 +37,14 @@ queryClient.setMutationDefaults([], {
             return
         }
 
-        const r = await K.query({ controller: 'rolder', action: props.action, dbName, scheme: props.scheme })
+        const r = await K.query({ controller: 'rolder', action: props.action, dbName, scheme: props.scheme, silent: props.silent })
         const data = r.result
         const dataEntries = Object.entries(data)
         if (dataEntries.some(i => i[1].error)) {
             dataEntries.forEach(entry => {
                 if (entry[1]?.error) {
-                    R.libs.mantine?.MantineError('Системная ошибка!', `create error at "${entry[0]}": ${entry[1]?.error}`)
-                    log.error(`create error at "${entry[0]}": ${entry[1]?.error}`)
+                    R.libs.mantine?.MantineError('Системная ошибка!', `${props.action} error at "${entry[0]}": ${entry[1]?.error}`)
+                    log.error(`${props.action} error at "${entry[0]}": ${entry[1]?.error}`)
                 }
             })
         }

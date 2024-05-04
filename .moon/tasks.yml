@@ -1,7 +1,7 @@
 ---
 tasks:
   clean:
-    command: rm -rf node_modules
+    command: find . -type d -name "node_modules" -exec rm -rf {} +
     local: true
     options:
       runFromWorkspaceRoot: true

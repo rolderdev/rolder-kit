@@ -1,7 +1,4 @@
 {
-  "extends": "types",
-  "include": [
-    "src/**/*",
-    "../../../types/**/*"
-  ]
+	"extends": "types",
+	"include": ["src/**/*", "../../../types/**/*"]
 }

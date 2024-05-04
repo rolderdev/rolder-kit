@@ -1,0 +1,9 @@
+{
+  "name": "@packages/use-named-children-v0.1.0",
+  "main": "useNamedChildren.ts",
+  "types": "useNamedChildren.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "types": "workspace:*"
+  }
+}

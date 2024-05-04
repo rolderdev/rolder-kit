@@ -1,10 +1,12 @@
 # Changelog
 
-## 2024-04-28 v1.0.0-beta23
+## 2024-05-05 v1.0.0-beta23
 
 ### Разработка
 
-- Добавлена функция getInspectInfo в параметры создания ноды. Функиця должна вернуть массив литералов и специальный массив объектов с 2-мя ключами: type (варианты - value, text, color, image) и value. На входе принимает props. Запускается при загрузке и наведении на ноду. Пример:
+- Наведен порядок в репозитарии - почищены лишние импорты, реорганизована структура пакета mantine, донастроена управляющая репозитарием утилита - moon.
+- Настроен файл `rolder-kit.code-workspace`. Если открыть его в VSCode, то он предложит установить нужные плагины и настройки для них. Главный плагин - `Prettier`. Он форматирует все используемые языкм в репозитарии по единому стандарту. Это чтобы уйти от вкусовщины оформления кода.
+- Добавлена функция `getInspectInfo` в параметры создания ноды. Функиця должна вернуть массив литералов и специальный массив объектов с 2-мя ключами: `type` (варианты - value, text, color, image) и `value`. На входе принимает `props`. Запускается при загрузке и наведении на ноду. Пример:
 
 ```js
 getInspectInfo(props) {
@@ -29,7 +31,7 @@ getInspectInfo(props) {
 
 - Добавлена возможность выводить информацию о состоянии ноды. Пример - таблица показывает скомпилиированную схему.
 - Ноды RK больше не показывают Style variant от Noodl, т.к. на уровне RK они не применяются.
-- Несколько нод переведены на статичную загрузку для решения проблемы разворачивания таблиц: Text, Badge, Group, Stack, Box, Flex, Grid, Paper. Если какие то простые ноды не раскрываются с первого раза, пишите, исправлю. Вложеная таблица раскрывается, т.к. модуль уже загружен для основной таблицы.
+- Все просты ноды переведены на статичную загрузку. Динамичная загрузка показала себя плохо при работе с таблицей (баг, когда не всегда разварачивается вложенная таблица). Тяжелые модули остались динамическими, например, сама таблица, гант, веб-камера, все, что в пакете data.
 
 ### app
 
@@ -37,12 +39,21 @@ getInspectInfo(props) {
 
 ### mantine
 
-- [Table v1.3.0](https://docs.rolder.app/docs/ui/organisms/table.html#v130-20240428)
+- [Table v1.3.0](https://docs.rolder.app/#/table)
+- Перехал AppShell и Tabs. Это последние компоненты, mantine-old больше не нужен.
 
 ### pdf
 
 - Добавлен customProps в PdfText, чтобы можно было применять функцию render.
 - Добавлен параметр fixed в PdfText как у PdfView, чтобы можно было отрисовывать повотряемый элемент на каждой странице.
+
+### data
+
+- delete v1.1.0 - добавлено удаление чанками по 100 штук и новая опция `silent`. Если удаляем много объектов за раз, то нужно включать `silent`, чтобы не срабатывал `realtime`. Он срабатывает при удаление каждой записи в БД, триггеря все UseData, что использую удаляемы классы. Это вешает как сервер, так и клиент.
+
+### markdown
+
+Новый модуль. Состоит из двух братьев нод - MarkdownViewer и MarkdownEditor.
 
 ## 2024-04-08 v1.0.0-beta22/TableSelectionScope v1.0.1
 
@@ -223,30 +234,29 @@ getInspectInfo(props) {
 
 ```js
 [
-  {
-    getHeaderColumns(columns, items) {
-      // схема и все items
-      if (items.map((i) => i.team).includes("Падонки"))
-        columns[0].title = "Команда (обнаружены падонки)"; // можно менять columns, т.к. они подаются клонированные
-      return columns;
-    },
-    getRowColumns(columns, item) {
-      // схема и item строки
-      if (item.team === "Падонки")
-        return [
-          {
-            // меняем схему полносью по условию
-            // title: 'Заголовок', // нам не важен заголовок, т.к. схему применяет строка
-            accessor: "team",
-            cellStyle: {
-              cell: { backgroundColor: "red" },
-              text: { fontSize: 14 },
-            },
-          },
-        ];
-      else return columns;
-    },
-  },
+	{
+		getHeaderColumns(columns, items) {
+			// схема и все items
+			if (items.map((i) => i.team).includes('Падонки')) columns[0].title = 'Команда (обнаружены падонки)'; // можно менять columns, т.к. они подаются клонированные
+			return columns;
+		},
+		getRowColumns(columns, item) {
+			// схема и item строки
+			if (item.team === 'Падонки')
+				return [
+					{
+						// меняем схему полносью по условию
+						// title: 'Заголовок', // нам не важен заголовок, т.к. схему применяет строка
+						accessor: 'team',
+						cellStyle: {
+							cell: { backgroundColor: 'red' },
+							text: { fontSize: 14 }
+						}
+					}
+				];
+			else return columns;
+		}
+	}
 ];
 ```
 
@@ -255,17 +265,17 @@ getInspectInfo(props) {
 
 ```js
 [
-  {
-    func(style, items) {
-      if (items.map((i) => i.team).includes("Падонки"))
-        return {
-          ...style,
-          border: 6,
-          borderColor: "red",
-        };
-      else return style;
-    },
-  },
+	{
+		func(style, items) {
+			if (items.map((i) => i.team).includes('Падонки'))
+				return {
+					...style,
+					border: 6,
+					borderColor: 'red'
+				};
+			else return style;
+		}
+	}
 ];
 ```
 
@@ -276,52 +286,52 @@ getInspectInfo(props) {
 
 ```js
 [
-  {
-    title: "Команда",
-    accessor: "team",
-    width: 120,
-    headerAlign: "left",
-    cellAlign: "left",
-    headerStyle: {
-      cell: { backgroundColor: "lightblue" },
-      text: { fontSize: 16, fontFamily: "Ubuntu" },
-    },
-    cellStyle: {
-      cell: { backgroundColor: "cyan" },
-      text: { fontSize: 14 },
-    },
-  },
-  {
-    title: "Кэп",
-    accessor: "name",
-    width: 120,
-    headerAlign: "left",
-    cellAlign: "left",
-    headerStyle: {
-      cell: { backgroundColor: "lightblue" },
-      text: { fontSize: 16 },
-    },
-    headerStyleFunc(style, items) {
-      if (items.map((i) => i.name).includes("Гайка"))
-        return {
-          ...style,
-          text: { fontSize: 12, fontFamily: "Ubuntu", fontWeight: 700 },
-        };
-      else return style;
-    },
-    cellStyle: {
-      cell: { backgroundColor: "cyan" },
-      text: { fontSize: 14 },
-    },
-    cellStyleFunc(style, item) {
-      if (item.name === "Гайка")
-        return {
-          ...style,
-          text: { fontSize: 12, fontFamily: "Ubuntu", fontWeight: 700 },
-        };
-      else return style;
-    },
-  },
+	{
+		title: 'Команда',
+		accessor: 'team',
+		width: 120,
+		headerAlign: 'left',
+		cellAlign: 'left',
+		headerStyle: {
+			cell: { backgroundColor: 'lightblue' },
+			text: { fontSize: 16, fontFamily: 'Ubuntu' }
+		},
+		cellStyle: {
+			cell: { backgroundColor: 'cyan' },
+			text: { fontSize: 14 }
+		}
+	},
+	{
+		title: 'Кэп',
+		accessor: 'name',
+		width: 120,
+		headerAlign: 'left',
+		cellAlign: 'left',
+		headerStyle: {
+			cell: { backgroundColor: 'lightblue' },
+			text: { fontSize: 16 }
+		},
+		headerStyleFunc(style, items) {
+			if (items.map((i) => i.name).includes('Гайка'))
+				return {
+					...style,
+					text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 }
+				};
+			else return style;
+		},
+		cellStyle: {
+			cell: { backgroundColor: 'cyan' },
+			text: { fontSize: 14 }
+		},
+		cellStyleFunc(style, item) {
+			if (item.name === 'Гайка')
+				return {
+					...style,
+					text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 }
+				};
+			else return style;
+		}
+	}
 ];
 ```
 
@@ -357,88 +367,88 @@ getInspectInfo(props) {
 
 ```js
 [
-  {
-    family: "Inter",
-    fonts: [
-      {
-        src: "http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeMZhrib2Bg-4.ttf",
-        fontWeight: 100,
-      },
-      {
-        src: "http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyfMZhrib2Bg-4.ttf",
-        fontWeight: 200,
-      },
-      {
-        src: "http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuOKfMZhrib2Bg-4.ttf",
-        fontWeight: 300,
-      },
-      {
-        src: "http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf",
-        fontWeight: 400,
-      },
-      {
-        src: "http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZhrib2Bg-4.ttf",
-        fontWeight: 500,
-      },
-      {
-        src: "http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZhrib2Bg-4.ttf",
-        fontWeight: 600,
-      },
-      {
-        src: "http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf",
-        fontWeight: 700,
-      },
-      {
-        src: "http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyYMZhrib2Bg-4.ttf",
-        fontWeight: 800,
-      },
-      {
-        src: "http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuBWYMZhrib2Bg-4.ttf",
-        fontWeight: 900,
-      },
-    ],
-  },
-  {
-    family: "Ubuntu",
-    fonts: [
-      {
-        src: "http://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzTt2aMH4V_gg.ttf",
-        fontWeight: 300,
-      },
-      {
-        src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgo6eAT3v02QFg.ttf",
-        fontWeight: 400,
-      },
-      {
-        src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCjC3Tt2aMH4V_gg.ttf",
-        fontWeight: 500,
-      },
-      {
-        src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvTt2aMH4V_gg.ttf",
-        fontWeight: 700,
-      },
-      {
-        src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZftWyIPYBvgpUI.ttf",
-        fontWeight: 300,
-        fontStyle: "italic",
-      },
-      {
-        src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCu6KVjbNBYlgoKeg7znUiAFpxm.ttf",
-        fontWeight: 400,
-        fontStyle: "italic",
-      },
-      {
-        src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejYHtGyIPYBvgpUI.ttf",
-        fontWeight: 500,
-        fontStyle: "italic",
-      },
-      {
-        src: "https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZPsmyIPYBvgpUI.ttf",
-        fontWeight: 700,
-        fontStyle: "italic",
-      },
-    ],
-  },
+	{
+		family: 'Inter',
+		fonts: [
+			{
+				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeMZhrib2Bg-4.ttf',
+				fontWeight: 100
+			},
+			{
+				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyfMZhrib2Bg-4.ttf',
+				fontWeight: 200
+			},
+			{
+				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuOKfMZhrib2Bg-4.ttf',
+				fontWeight: 300
+			},
+			{
+				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf',
+				fontWeight: 400
+			},
+			{
+				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZhrib2Bg-4.ttf',
+				fontWeight: 500
+			},
+			{
+				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZhrib2Bg-4.ttf',
+				fontWeight: 600
+			},
+			{
+				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf',
+				fontWeight: 700
+			},
+			{
+				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyYMZhrib2Bg-4.ttf',
+				fontWeight: 800
+			},
+			{
+				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuBWYMZhrib2Bg-4.ttf',
+				fontWeight: 900
+			}
+		]
+	},
+	{
+		family: 'Ubuntu',
+		fonts: [
+			{
+				src: 'http://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzTt2aMH4V_gg.ttf',
+				fontWeight: 300
+			},
+			{
+				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgo6eAT3v02QFg.ttf',
+				fontWeight: 400
+			},
+			{
+				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCjC3Tt2aMH4V_gg.ttf',
+				fontWeight: 500
+			},
+			{
+				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvTt2aMH4V_gg.ttf',
+				fontWeight: 700
+			},
+			{
+				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZftWyIPYBvgpUI.ttf',
+				fontWeight: 300,
+				fontStyle: 'italic'
+			},
+			{
+				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCu6KVjbNBYlgoKeg7znUiAFpxm.ttf',
+				fontWeight: 400,
+				fontStyle: 'italic'
+			},
+			{
+				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejYHtGyIPYBvgpUI.ttf',
+				fontWeight: 500,
+				fontStyle: 'italic'
+			},
+			{
+				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZPsmyIPYBvgpUI.ttf',
+				fontWeight: 700,
+				fontStyle: 'italic'
+			}
+		]
+	}
 ];
 ```
 
@@ -448,63 +458,63 @@ getInspectInfo(props) {
 
 ```js
 const defaultFont = {
-  family: "Roboto",
-  fonts: [
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf",
-      fontWeight: 100,
-    },
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOiCnqEu92Fr1Mu51QrIzcXLsnzjYk.ttf",
-      fontWeight: 100,
-      fontStyle: "italic",
-    },
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmSU5vAx05IsDqlA.ttf",
-      fontWeight: 300,
-    },
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TjARc9AMX6lJBP.ttf",
-      fontWeight: 300,
-      fontStyle: "italic",
-    },
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf",
-      fontWeight: 400,
-    },
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1Mu52xPKTM1K9nz.ttf",
-      fontWeight: 400,
-      fontStyle: "italic",
-    },
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9vAx05IsDqlA.ttf",
-      fontWeight: 500,
-    },
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51S7ABc9AMX6lJBP.ttf",
-      fontWeight: 500,
-      fontStyle: "italic",
-    },
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlvAx05IsDqlA.ttf",
-      fontWeight: 700,
-    },
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TzBhc9AMX6lJBP.ttf",
-      fontWeight: 700,
-      fontStyle: "italic",
-    },
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmYUtvAx05IsDqlA.ttf",
-      fontWeight: 900,
-    },
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TLBBc9AMX6lJBP.ttf",
-      fontWeight: 900,
-      fontStyle: "italic",
-    },
-  ],
+	family: 'Roboto',
+	fonts: [
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf',
+			fontWeight: 100
+		},
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOiCnqEu92Fr1Mu51QrIzcXLsnzjYk.ttf',
+			fontWeight: 100,
+			fontStyle: 'italic'
+		},
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmSU5vAx05IsDqlA.ttf',
+			fontWeight: 300
+		},
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TjARc9AMX6lJBP.ttf',
+			fontWeight: 300,
+			fontStyle: 'italic'
+		},
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf',
+			fontWeight: 400
+		},
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1Mu52xPKTM1K9nz.ttf',
+			fontWeight: 400,
+			fontStyle: 'italic'
+		},
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9vAx05IsDqlA.ttf',
+			fontWeight: 500
+		},
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51S7ABc9AMX6lJBP.ttf',
+			fontWeight: 500,
+			fontStyle: 'italic'
+		},
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlvAx05IsDqlA.ttf',
+			fontWeight: 700
+		},
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TzBhc9AMX6lJBP.ttf',
+			fontWeight: 700,
+			fontStyle: 'italic'
+		},
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmYUtvAx05IsDqlA.ttf',
+			fontWeight: 900
+		},
+		{
+			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TLBBc9AMX6lJBP.ttf',
+			fontWeight: 900,
+			fontStyle: 'italic'
+		}
+	]
 };
 ```
 
@@ -523,77 +533,69 @@ const last = R.libs.just.last;
 const { get, set, keys, delMany } = R.libs.indexedDb; // импортируем методы библиоткеи
 
 const imageUrlToBase64 = async (url) => {
-  // функция, которая скачивает картику по ссылке и преобразует ее в Data URL (base64)
-  const response = await fetch(url);
-  const blob = await response.blob();
-  return new Promise((onSuccess, onError) => {
-    try {
-      const reader = new FileReader();
-      reader.onload = function () {
-        onSuccess(this.result);
-      };
-      reader.readAsDataURL(blob);
-    } catch (e) {
-      onError(e);
-    }
-  });
+	// функция, которая скачивает картику по ссылке и преобразует ее в Data URL (base64)
+	const response = await fetch(url);
+	const blob = await response.blob();
+	return new Promise((onSuccess, onError) => {
+		try {
+			const reader = new FileReader();
+			reader.onload = function () {
+				onSuccess(this.result);
+			};
+			reader.readAsDataURL(blob);
+		} catch (e) {
+			onError(e);
+		}
+	});
 };
 
 await Inputs.tasks?.map(async (i) => {
-  await i["task-result"]?.map(async (taskResult) => {
-    // перебераем все задачи, где хранятся картинки. Каждая задача - отдельный ключ в Indexed DB.
-    const storeKey = `images:${taskResult.id}`; // название ключа в Indexed DB
-    if (taskResult.content?.images) {
-      let newStore = [];
-      const imagesStore = await get(storeKey); // качаем данные по ключу
+	await i['task-result']?.map(async (taskResult) => {
+		// перебераем все задачи, где хранятся картинки. Каждая задача - отдельный ключ в Indexed DB.
+		const storeKey = `images:${taskResult.id}`; // название ключа в Indexed DB
+		if (taskResult.content?.images) {
+			let newStore = [];
+			const imagesStore = await get(storeKey); // качаем данные по ключу
 
-      await Promise.all(
-        taskResult.content.images // подготавливаем формат для записи в IDB, исключая уже имеющиеся записи
-          .filter(
-            (i) =>
-              !imagesStore
-                ?.map((i) => i.id)
-                .includes(last(i.split("/")).split(".jpg")[0])
-          )
-          .map(async (i) => {
-            const image = {
-              id: last(i.split("/")).split(".jpg")[0],
-              name: last(i.split("/")),
-              contentType: "image/jpeg",
-              state: "uploaded",
-            };
+			await Promise.all(
+				taskResult.content.images // подготавливаем формат для записи в IDB, исключая уже имеющиеся записи
+					.filter((i) => !imagesStore?.map((i) => i.id).includes(last(i.split('/')).split('.jpg')[0]))
+					.map(async (i) => {
+						const image = {
+							id: last(i.split('/')).split('.jpg')[0],
+							name: last(i.split('/')),
+							contentType: 'image/jpeg',
+							state: 'uploaded'
+						};
 
-            const imageBase64 = await imageUrlToBase64(i); // скачиваем картинку и преобразуем в base64
-            image.data = imageBase64;
-            newStore.push(image);
-          })
-      );
+						const imageBase64 = await imageUrlToBase64(i); // скачиваем картинку и преобразуем в base64
+						image.data = imageBase64;
+						newStore.push(image);
+					})
+			);
 
-      imagesStore?.map((i) => {
-        if (!newStore.map((i) => i.id).includes(i.id) && i.state !== "atWebcam")
-          newStore.push(i);
-      });
+			imagesStore?.map((i) => {
+				if (!newStore.map((i) => i.id).includes(i.id) && i.state !== 'atWebcam') newStore.push(i);
+			});
 
-      if (newStore.length) await set(storeKey, newStore); // записываем подготовленные данные в IDB
-    }
-  });
+			if (newStore.length) await set(storeKey, newStore); // записываем подготовленные данные в IDB
+		}
+	});
 });
 
 // чистка IDB
 keys().then((ks) => {
-  // берем все ключи IDB
-  let toDeleteStoresKeys = [];
+	// берем все ключи IDB
+	let toDeleteStoresKeys = [];
 
-  ks.filter((i) => i.split(":")?.[0] === "images").map((key) => {
-    // берем только ключи, которые начинаются на images:
-    const taskResultId = key.split(":")?.[1];
-    const taskResultsIds = Inputs.tasks
-      ?.map((task) => task["task-result"]?.map((i) => i.id))
-      .flat();
-    if (!taskResultsIds.includes(taskResultId)) toDeleteStoresKeys.push(key); // если в скаченных данных нет айдишников из IDB
-  });
+	ks.filter((i) => i.split(':')?.[0] === 'images').map((key) => {
+		// берем только ключи, которые начинаются на images:
+		const taskResultId = key.split(':')?.[1];
+		const taskResultsIds = Inputs.tasks?.map((task) => task['task-result']?.map((i) => i.id)).flat();
+		if (!taskResultsIds.includes(taskResultId)) toDeleteStoresKeys.push(key); // если в скаченных данных нет айдишников из IDB
+	});
 
-  delMany(toDeleteStoresKeys); // удаляем за раз все данные по названиям ключей
+	delMany(toDeleteStoresKeys); // удаляем за раз все данные по названиям ключей
 });
 ```
 
@@ -614,28 +616,28 @@ keys().then((ks) => {
 
 ```js
 [
-  {
-    dbClass: "worker",
-    order: 0,
-    items: [
-      {
-        company: { id: "W5XSgIoBj2T-UFOWng5l" },
-        content: { firstName: "Тестовый", lastName: "Аккаунт 6" },
-        user: { id: "kuid-noisy-minstrel-18541" },
-        manager: { id: "EW7HgIoBAb9VwPpXmhmn" },
-      },
-    ],
-  },
-  {
-    dbClass: "task",
-    order: 1,
-    items: [{ content: { name: "Тест" } }], // схема может иметь items и/или itemsFunc
-    itemsFunc: `(items, data) => { // в items передается items этого же объекта строчкой выше. В data передается вся data c предидущих шагов как у UseData
+	{
+		dbClass: 'worker',
+		order: 0,
+		items: [
+			{
+				company: { id: 'W5XSgIoBj2T-UFOWng5l' },
+				content: { firstName: 'Тестовый', lastName: 'Аккаунт 6' },
+				user: { id: 'kuid-noisy-minstrel-18541' },
+				manager: { id: 'EW7HgIoBAb9VwPpXmhmn' }
+			}
+		]
+	},
+	{
+		dbClass: 'task',
+		order: 1,
+		items: [{ content: { name: 'Тест' } }], // схема может иметь items и/или itemsFunc
+		itemsFunc: `(items, data) => { // в items передается items этого же объекта строчкой выше. В data передается вся data c предидущих шагов как у UseData
             return items.map(i => ( // вернуть нужно items в том же формате, что и в ключе items. Они будут переданы в БД
                 { ...i, worker: {id: data['worker'].items[0].id} }
             ))
-        }`,
-  },
+        }`
+	}
 ];
 ```
 
@@ -903,31 +905,31 @@ keys().then((ks) => {
 
 ```js
 [
-  {
-    string: "First string",
-    icon: {
-      name: "IconHome",
-      type: "themeIcon",
-      themeIconProps: {
-        size: "sm",
-        color: "red",
-        radius: "md",
-      },
-      iconPprops: {
-        size: "1rem",
-      },
-    },
-  },
-  {
-    string: "Second string",
-    icon: {
-      name: "IconUser",
-      iconPprops: {
-        size: "1rem",
-      },
-    },
-    customProps: { sx: { backgroundColor: "#555" } },
-  },
+	{
+		string: 'First string',
+		icon: {
+			name: 'IconHome',
+			type: 'themeIcon',
+			themeIconProps: {
+				size: 'sm',
+				color: 'red',
+				radius: 'md'
+			},
+			iconPprops: {
+				size: '1rem'
+			}
+		}
+	},
+	{
+		string: 'Second string',
+		icon: {
+			name: 'IconUser',
+			iconPprops: {
+				size: '1rem'
+			}
+		},
+		customProps: { sx: { backgroundColor: '#555' } }
+	}
 ];
 ```
 
@@ -1026,11 +1028,11 @@ listScheme?: {
 
 ```js
 [
-  {
-    accessor: "content.name",
-    expander: true,
-    boxProps: { pl: 28 },
-  },
+	{
+		accessor: 'content.name',
+		expander: true,
+		boxProps: { pl: 28 }
+	}
 ];
 ```
 
@@ -1097,10 +1099,10 @@ listScheme?: {
 
 ```js
 [
-  {
-    color: "gray",
-    backgroundColor: "transparent",
-  },
+	{
+		color: 'gray',
+		backgroundColor: 'transparent'
+	}
 ];
 ```
 
@@ -1108,9 +1110,9 @@ listScheme?: {
 
 ```js
 [
-  {
-    h: (p, i) => ({ ...p, highlight: [i.tasksCount] }),
-  },
+	{
+		h: (p, i) => ({ ...p, highlight: [i.tasksCount] })
+	}
 ];
 ```
 
@@ -1122,17 +1124,17 @@ listScheme?: {
 
   ```js
   [
-    {
-      func(props, item) {
-        if (item?.states.flow.value === "success") {
-          props.variant = "gradient";
-          props.gradient = { from: "green", to: "indigo", deg: 45 };
-        } else {
-          props.color = item?.states.flow.color;
-        }
-        return props;
-      },
-    },
+  	{
+  		func(props, item) {
+  			if (item?.states.flow.value === 'success') {
+  				props.variant = 'gradient';
+  				props.gradient = { from: 'green', to: 'indigo', deg: 45 };
+  			} else {
+  				props.color = item?.states.flow.color;
+  			}
+  			return props;
+  		}
+  	}
   ];
   ```
 
@@ -1263,17 +1265,15 @@ listScheme?: {
 
     ```js
     [
-      {
-        accessor: "#",
-        title: "Имя",
-        render(item) {
-          const { capitalize } = R.libs.just;
-          const { getValue } = R.utils;
-          return capitalize(
-            getValue.v8(item, "{{content.firstName}} {{content.lastName}}")
-          );
-        },
-      },
+    	{
+    		accessor: '#',
+    		title: 'Имя',
+    		render(item) {
+    			const { capitalize } = R.libs.just;
+    			const { getValue } = R.utils;
+    			return capitalize(getValue.v8(item, '{{content.firstName}} {{content.lastName}}'));
+    		}
+    	}
     ];
     ```
 
@@ -1322,21 +1322,21 @@ listScheme?: {
 
         ```js
         [
-          {
-            accessor: "content.name",
-            title: "Название",
-            sort: {
-              default: "asc", // отсоритрует в направлении asc по content.name и повернет икноку при первичном показе
-              func(items, direction) {
-                // название переменных не имеет значение
-                return R.libs.sort(items).by([
-                  // R.libs.sort - библиотека
-                  { [direction]: (i) => i.content.name }, // i.content.name - данные, по которым сортируем
-                  { desc: (i) => i.content.date.start }, // можно добавлять что то свое, например когда на все есть стандартная сортировка, а пользователь сортирует поверх
-                ]);
-              },
-            },
-          },
+        	{
+        		accessor: 'content.name',
+        		title: 'Название',
+        		sort: {
+        			default: 'asc', // отсоритрует в направлении asc по content.name и повернет икноку при первичном показе
+        			func(items, direction) {
+        				// название переменных не имеет значение
+        				return R.libs.sort(items).by([
+        					// R.libs.sort - библиотека
+        					{ [direction]: (i) => i.content.name }, // i.content.name - данные, по которым сортируем
+        					{ desc: (i) => i.content.date.start } // можно добавлять что то свое, например когда на все есть стандартная сортировка, а пользователь сортирует поверх
+        				]);
+        			}
+        		}
+        	}
         ];
         ```
 
@@ -1365,16 +1365,16 @@ listScheme?: {
 
         ```js
         [
-          {
-            accessor: "content.name",
-            title: "Название",
-            filter: {
-              func(items) {
-                // название переменной не имеет значение
-                return items.filter((i) => i.state.flow.value === "active");
-              },
-            },
-          },
+        	{
+        		accessor: 'content.name',
+        		title: 'Название',
+        		filter: {
+        			func(items) {
+        				// название переменной не имеет значение
+        				return items.filter((i) => i.state.flow.value === 'active');
+        			}
+        		}
+        	}
         ];
         ```
 
@@ -1479,23 +1479,23 @@ listScheme?: {
 
 ```ts
 interface Task {
-  id: string;
-  type: TaskType; // "task" | "milestone" | "project"
-  name: string;
-  start: Date;
-  end: Date;
-  progress: number; // от 0 до 100
-  styles?: {
-    backgroundColor?: string;
-    backgroundSelectedColor?: string;
-    progressColor?: string;
-    progressSelectedColor?: string;
-  };
-  isDisabled?: boolean;
-  project?: string;
-  dependencies?: string[];
-  hideChildren?: boolean;
-  displayOrder?: number;
+	id: string;
+	type: TaskType; // "task" | "milestone" | "project"
+	name: string;
+	start: Date;
+	end: Date;
+	progress: number; // от 0 до 100
+	styles?: {
+		backgroundColor?: string;
+		backgroundSelectedColor?: string;
+		progressColor?: string;
+		progressSelectedColor?: string;
+	};
+	isDisabled?: boolean;
+	project?: string;
+	dependencies?: string[];
+	hideChildren?: boolean;
+	displayOrder?: number;
 }
 ```
 
@@ -1687,15 +1687,15 @@ interface Task {
 
 ```json
 {
-  "dynamic": "false",
-  "properties": {
-    "name": {
-      "type": "keyword"
-    },
-    "version": {
-      "type": "short"
-    }
-  }
+	"dynamic": "false",
+	"properties": {
+		"name": {
+			"type": "keyword"
+		},
+		"version": {
+			"type": "short"
+		}
+	}
 }
 ```
 
@@ -1791,32 +1791,29 @@ interface Task {
 
 ```js
 [
-  {
-    dbClass: "company",
-    options: { size: 100 },
-    searchFields: [
-      "content.name.search",
-      "content.contacts.phone.search",
-      "content.contacts.email.search",
-      "content.legal.name.search",
-      "content.legal.address.search",
-    ],
-  },
-  {
-    dbClass: "manager",
-    query: {
-      and: [
-        { not: { equals: { "states.archived": true } } },
-        { equals: { "company.id": R.user?.company.id } },
-      ],
-    },
-    sort: { "_kuzzle_info.createdAt": "desc" },
-    searchFields: ["content.firstName.search", "content.lastName.search"],
-    options: { size: 100 },
-    refs: ["company"],
-    getUsers: true,
-    sendStates: true,
-  },
+	{
+		dbClass: 'company',
+		options: { size: 100 },
+		searchFields: [
+			'content.name.search',
+			'content.contacts.phone.search',
+			'content.contacts.email.search',
+			'content.legal.name.search',
+			'content.legal.address.search'
+		]
+	},
+	{
+		dbClass: 'manager',
+		query: {
+			and: [{ not: { equals: { 'states.archived': true } } }, { equals: { 'company.id': R.user?.company.id } }]
+		},
+		sort: { '_kuzzle_info.createdAt': 'desc' },
+		searchFields: ['content.firstName.search', 'content.lastName.search'],
+		options: { size: 100 },
+		refs: ['company'],
+		getUsers: true,
+		sendStates: true
+	}
 ];
 ```
 
@@ -1857,9 +1854,9 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
 
   ```ts
   type CreateScheme = {
-    dbClass: string;
-    order: number;
-    items: RItem[];
+  	dbClass: string;
+  	order: number;
+  	items: RItem[];
   }[];
   ```
 
@@ -1875,22 +1872,22 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     const formHook = Inputs.formHook;
 
     if (formHook) {
-      const house = {
-        dbClass: "house",
-        items: [
-          {
-            complex: { id: formHook.values.complex },
-            company: { id: R.user.company.id },
-            content: {
-              address: formHook.values.houseAddress,
-              name: formHook.values.houseName,
-            },
-          },
-        ],
-      };
+    	const house = {
+    		dbClass: 'house',
+    		items: [
+    			{
+    				complex: { id: formHook.values.complex },
+    				company: { id: R.user.company.id },
+    				content: {
+    					address: formHook.values.houseAddress,
+    					name: formHook.values.houseName
+    				}
+    			}
+    		]
+    	};
 
-      Outputs.scheme = [house];
-      Outputs.create();
+    	Outputs.scheme = [house];
+    	Outputs.create();
     }
     ```
 
@@ -1900,32 +1897,32 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     const formHook = Inputs.formHook;
 
     if (formHook) {
-      const house = {
-        dbClass: "house",
-        order: 0,
-        items: [
-          {
-            complex: { id: formHook.values.complex },
-            company: { id: R.user.company.id },
-            content: {
-              address: formHook.values.houseAddress,
-              name: formHook.values.houseName,
-            },
-          },
-        ],
-      };
+    	const house = {
+    		dbClass: 'house',
+    		order: 0,
+    		items: [
+    			{
+    				complex: { id: formHook.values.complex },
+    				company: { id: R.user.company.id },
+    				content: {
+    					address: formHook.values.houseAddress,
+    					name: formHook.values.houseName
+    				}
+    			}
+    		]
+    	};
 
-      const areas = {
-        dbClass: "area",
-        order: 0,
-        items: formHook.values.areas.map((a) => ({
-          company: { id: R.user.company.id },
-          content: a.content,
-        })),
-      };
+    	const areas = {
+    		dbClass: 'area',
+    		order: 0,
+    		items: formHook.values.areas.map((a) => ({
+    			company: { id: R.user.company.id },
+    			content: a.content
+    		}))
+    	};
 
-      Outputs.scheme = [house, areas];
-      Outputs.create();
+    	Outputs.scheme = [house, areas];
+    	Outputs.create();
     }
     ```
 
@@ -1935,34 +1932,34 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     const formHook = Inputs.formHook;
 
     if (formHook) {
-      const house = {
-        dbClass: "house",
-        order: 0,
-        items: [
-          {
-            refId: 0,
-            complex: { id: formHook.values.complex },
-            company: { id: R.user.company.id },
-            content: {
-              address: formHook.values.houseAddress,
-              name: formHook.values.houseName,
-            },
-          },
-        ],
-      };
+    	const house = {
+    		dbClass: 'house',
+    		order: 0,
+    		items: [
+    			{
+    				refId: 0,
+    				complex: { id: formHook.values.complex },
+    				company: { id: R.user.company.id },
+    				content: {
+    					address: formHook.values.houseAddress,
+    					name: formHook.values.houseName
+    				}
+    			}
+    		]
+    	};
 
-      const areas = {
-        dbClass: "area",
-        order: 1,
-        items: formHook.values.areas.map((a) => ({
-          house: { refId: 0 },
-          company: { id: R.user.company.id },
-          content: a.content,
-        })),
-      };
+    	const areas = {
+    		dbClass: 'area',
+    		order: 1,
+    		items: formHook.values.areas.map((a) => ({
+    			house: { refId: 0 },
+    			company: { id: R.user.company.id },
+    			content: a.content
+    		}))
+    	};
 
-      Outputs.scheme = [house, areas];
-      Outputs.create();
+    	Outputs.scheme = [house, areas];
+    	Outputs.create();
     }
     ```
 
@@ -1972,86 +1969,81 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     const formHook = Inputs.formHook;
 
     if (formHook) {
-      const company = {
-        dbClass: "company",
-        order: 0,
-        items: [
-          {
-            refId: 0,
-            content: {
-              name: formHook.values.companyName,
-              contacts: {
-                phone: formHook.values.companyPhone,
-                email: formHook.values.companyEmail,
-              },
-              legal: {
-                name: formHook.values.legalName,
-                address: formHook.values.legalAddress,
-                rs: formHook.values.legalRs,
-                inn: formHook.values.legalInn,
-                ogrn: formHook.values.legalOgrn,
-                bik: formHook.values.legalBik,
-                ks: formHook.values.legalKs,
-              },
-            },
-            states: {
-              flow: R.dbClasses.company.states.flow.find(
-                (i) => i.value === "created"
-              ),
-              subscription: R.dbClasses.company.states.subscription.find(
-                (i) => i.value === "notRegistered"
-              ),
-            },
-          },
-        ],
-      };
+    	const company = {
+    		dbClass: 'company',
+    		order: 0,
+    		items: [
+    			{
+    				refId: 0,
+    				content: {
+    					name: formHook.values.companyName,
+    					contacts: {
+    						phone: formHook.values.companyPhone,
+    						email: formHook.values.companyEmail
+    					},
+    					legal: {
+    						name: formHook.values.legalName,
+    						address: formHook.values.legalAddress,
+    						rs: formHook.values.legalRs,
+    						inn: formHook.values.legalInn,
+    						ogrn: formHook.values.legalOgrn,
+    						bik: formHook.values.legalBik,
+    						ks: formHook.values.legalKs
+    					}
+    				},
+    				states: {
+    					flow: R.dbClasses.company.states.flow.find((i) => i.value === 'created'),
+    					subscription: R.dbClasses.company.states.subscription.find((i) => i.value === 'notRegistered')
+    				}
+    			}
+    		]
+    	};
 
-      const user = {
-        dbClass: "user",
-        order: 0,
-        items: [
-          {
-            refId: 0,
-            content: {
-              profileIds: ["companyReader", "companyWriter"],
-              role: {
-                value: "companyManager",
-                title: "Менеджер компании",
-              },
-              dbClass: "manager",
-            },
-            credentials: {
-              local: {
-                username: formHook.values.userName,
-                password:
-                  Inputs.selectedManager?.company?.states?.flow?.value ===
-                  "activated"
-                    ? formHook.values.password
-                    : (Math.random() + 1).toString(36).substring(7),
-                notSecret: formHook.values.password,
-              },
-            },
-          },
-        ],
-      };
+    	const user = {
+    		dbClass: 'user',
+    		order: 0,
+    		items: [
+    			{
+    				refId: 0,
+    				content: {
+    					profileIds: ['companyReader', 'companyWriter'],
+    					role: {
+    						value: 'companyManager',
+    						title: 'Менеджер компании'
+    					},
+    					dbClass: 'manager'
+    				},
+    				credentials: {
+    					local: {
+    						username: formHook.values.userName,
+    						password:
+    							Inputs.selectedManager?.company?.states?.flow?.value === 'activated'
+    								? formHook.values.password
+    								: (Math.random() + 1).toString(36).substring(7),
+    						notSecret: formHook.values.password
+    					}
+    				}
+    			}
+    		]
+    	};
 
-      const manager = {
-        dbClass: "manager",
-        order: 1,
-        items: [
-          {
-            company: { refId: 0 },
-            user: { refId: 0 },
-            content: {
-              firstName: formHook.values.firstName,
-              lastName: formHook.values.lastName,
-            },
-          },
-        ],
-      };
+    	const manager = {
+    		dbClass: 'manager',
+    		order: 1,
+    		items: [
+    			{
+    				company: { refId: 0 },
+    				user: { refId: 0 },
+    				content: {
+    					firstName: formHook.values.firstName,
+    					lastName: formHook.values.lastName
+    				}
+    			}
+    		]
+    	};
 
-      Outputs.scheme = [company, user, manager];
-      Outputs.create();
+    	Outputs.scheme = [company, user, manager];
+    	Outputs.create();
     }
     ```
 
@@ -2144,13 +2136,13 @@ Outputs.getDataScheme = [
 
 ```js
 [
-  {
-    span: "auto",
-  },
-  {
-    span: "content",
-    offset: 5,
-  },
+	{
+		span: 'auto'
+	},
+	{
+		span: 'content',
+		offset: 5
+	}
 ];
 ```
 
@@ -2405,8 +2397,8 @@ Outputs.getDataScheme = [
 
 ```ts
 declare type CreateOptions = {
-  refresh?: boolean; // если подать true, то нода будет ждать, когда данные проиндексируются (макс - 1 сек). Это гарантированный вариант. Если не подать wait_for, то данные создаются в БД, но не видны для useData, пока не проиндексировались. Это вариант, когда нам результат не нужен сразу.
-  silent?: boolean; // если true, subscribe в useData не сработает.
+	refresh?: boolean; // если подать true, то нода будет ждать, когда данные проиндексируются (макс - 1 сек). Это гарантированный вариант. Если не подать wait_for, то данные создаются в БД, но не видны для useData, пока не проиндексировались. Это вариант, когда нам результат не нужен сразу.
+	silent?: boolean; // если true, subscribe в useData не сработает.
 };
 ```
 
@@ -2414,81 +2406,77 @@ declare type CreateOptions = {
 
 ```ts
 const company = {
-  dbClass: "company",
-  order: 0,
-  body: {
-    content: {
-      name: formHook.values.companyName,
-      contacts: {
-        phone: formHook.values.companyPhone,
-        email: formHook.values.companyEmail,
-      },
-      legal: {
-        name: formHook.values.legalName,
-        address: formHook.values.legalAddress,
-        rs: formHook.values.legalRs,
-        inn: formHook.values.legalInn,
-        ogrn: formHook.values.legalOgrn,
-        bik: formHook.values.legalBik,
-        ks: formHook.values.legalKs,
-      },
-    },
-    states: {
-      flow: R.params.dbClasses.company.states.flow.find(
-        (i) => i.value === "created"
-      ),
-      subscription: R.params.dbClasses.company.states.subscription.find(
-        (i) => i.value === "notRegistered"
-      ),
-    },
-  },
+	dbClass: 'company',
+	order: 0,
+	body: {
+		content: {
+			name: formHook.values.companyName,
+			contacts: {
+				phone: formHook.values.companyPhone,
+				email: formHook.values.companyEmail
+			},
+			legal: {
+				name: formHook.values.legalName,
+				address: formHook.values.legalAddress,
+				rs: formHook.values.legalRs,
+				inn: formHook.values.legalInn,
+				ogrn: formHook.values.legalOgrn,
+				bik: formHook.values.legalBik,
+				ks: formHook.values.legalKs
+			}
+		},
+		states: {
+			flow: R.params.dbClasses.company.states.flow.find((i) => i.value === 'created'),
+			subscription: R.params.dbClasses.company.states.subscription.find((i) => i.value === 'notRegistered')
+		}
+	}
 };
-if (opType === "update") {
-  delete company.body.states;
-  company.id = Inputs.selectedmanager?.company.id;
+if (opType === 'update') {
+	delete company.body.states;
+	company.id = Inputs.selectedmanager?.company.id;
 }
 
 const user = {
-  dbClass: "user",
-  order: 0,
-  body: {
-    content: {
-      profileIds: ["companyReader", "companyWriter"],
-      role: {
-        value: "companyManager",
-        title: "Менеджер компании",
-      },
-    },
-    credentials: {
-      local: {
-        username: formHook.values.userName,
-        password: (Math.random() + 1).toString(36).substring(7),
-        notSecret: formHook.values.password,
-      },
-    },
-  },
+	dbClass: 'user',
+	order: 0,
+	body: {
+		content: {
+			profileIds: ['companyReader', 'companyWriter'],
+			role: {
+				value: 'companyManager',
+				title: 'Менеджер компании'
+			}
+		},
+		credentials: {
+			local: {
+				username: formHook.values.userName,
+				password: (Math.random() + 1).toString(36).substring(7),
+				notSecret: formHook.values.password
+			}
+		}
+	}
 };
-if (opType === "update") {
-  delete user.content;
-  user.id = Inputs.selectedmanager?.user.id;
+if (opType === 'update') {
+	delete user.content;
+	user.id = Inputs.selectedmanager?.user.id;
 }
 
 const manager = {
-  dbClass: "manager",
-  order: 1,
-  references: ["user", "company"],
-  body: {
-    content: {
-      firstName: formHook.values.firstName,
-      lastName: formHook.values.lastName,
-    },
-  },
+	dbClass: 'manager',
+	order: 1,
+	references: ['user', 'company'],
+	body: {
+		content: {
+			firstName: formHook.values.firstName,
+			lastName: formHook.values.lastName
+		}
+	}
 };
-if (opType === "update") manager.id = Inputs.selectedmanager?.id;
+if (opType === 'update') manager.id = Inputs.selectedmanager?.id;
 
 Outputs.scheme = [company, user, manager];
-if (opType === "create") Outputs.create();
-if (opType === "update") Outputs.update();
+if (opType === 'create') Outputs.create();
+if (opType === 'update') Outputs.update();
 ```
 
 #### sUpdate v0.3.0 `#experimental`
@@ -2518,16 +2506,14 @@ if (opType === "update") Outputs.update();
 - Самая маленькая нода :)
 
 ```ts
-import { sendSignal } from "../../../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/send";
+import { sendSignal } from '../../../../../../../libs/nodesFabric/v0.1.0/send/v0.4.0/send';
 
 export default {
-  signals: {
-    logout: (noodlNode: NoodlNode) => {
-      window.R.libs.Kuzzle.auth
-        .logout()
-        .then(() => sendSignal(noodlNode, "loggedOut"));
-    },
-  },
+	signals: {
+		logout: (noodlNode: NoodlNode) => {
+			window.R.libs.Kuzzle.auth.logout().then(() => sendSignal(noodlNode, 'loggedOut'));
+		}
+	}
 };
 ```
 
@@ -2599,71 +2585,71 @@ export default {
 
 ```ts
 export type DataDef = {
-  // форматирование данных
-  type?: "number" | "date" | "array" | "mask"; // тип форматирования
-  default?: string | number; // дефолтное значение, если его нет в поданом item
-  numberFormat?: { thousandSeparated: boolean }; // форматирование чисел, смотри библиотеку numbro. Дефолтный формат - {thousandSeparated: true}
-  dateFormat?: string; // формат даты библиотеки dayjs, например, 'YYYY-MM-DD'. Дефолтное значение берется из настроект проекта.
-  arrayFormat?: {
-    accessor: string;
-    join?: string;
-    sortFn: (arr: any[]) => any;
-  }; // формат для обработки массива, который нужно преобразовать в строку. accessor - путь к данным, join - символы для склеивания. sortFn - функция для сортировки массива.
-  maskFormat?: string; // формат pattern из библиотеки IMask
-  defaultSort?: "asc" | "desc"; // включить дефлотну сортировку и указать направление
+	// форматирование данных
+	type?: 'number' | 'date' | 'array' | 'mask'; // тип форматирования
+	default?: string | number; // дефолтное значение, если его нет в поданом item
+	numberFormat?: { thousandSeparated: boolean }; // форматирование чисел, смотри библиотеку numbro. Дефолтный формат - {thousandSeparated: true}
+	dateFormat?: string; // формат даты библиотеки dayjs, например, 'YYYY-MM-DD'. Дефолтное значение берется из настроект проекта.
+	arrayFormat?: {
+		accessor: string;
+		join?: string;
+		sortFn: (arr: any[]) => any;
+	}; // формат для обработки массива, который нужно преобразовать в строку. accessor - путь к данным, join - символы для склеивания. sortFn - функция для сортировки массива.
+	maskFormat?: string; // формат pattern из библиотеки IMask
+	defaultSort?: 'asc' | 'desc'; // включить дефлотну сортировку и указать направление
 };
 
 export type CellDef = {
-  // поведение ячейки
-  trancate?: boolean; // обрезать строку до размера ячейки
-  maxSize?: number; // максимальная длина строки
-  lineClamp?: number; // обрезать строки
-  tooltip?: boolean; // включить tooltip
-  tooltipColor?: MantineColor; // цвет tooltip
-  respectLineBreak?: boolean; // переносить строку, если в тексте есть '\n'
-  colorMap?: {
-    // устанавливать цвет текста по схеме
-    accessor: string; // путь к значению, по которому определяется цвет
-    map: { [x: string]: MantineColor }; // ключ - значение из пути выше, занчение - цвет в формате Mantine (red или red.5)
-  };
-  style?: Sx; // любые параметры стиля в формате Sx Mantine
+	// поведение ячейки
+	trancate?: boolean; // обрезать строку до размера ячейки
+	maxSize?: number; // максимальная длина строки
+	lineClamp?: number; // обрезать строки
+	tooltip?: boolean; // включить tooltip
+	tooltipColor?: MantineColor; // цвет tooltip
+	respectLineBreak?: boolean; // переносить строку, если в тексте есть '\n'
+	colorMap?: {
+		// устанавливать цвет текста по схеме
+		accessor: string; // путь к значению, по которому определяется цвет
+		map: { [x: string]: MantineColor }; // ключ - значение из пути выше, занчение - цвет в формате Mantine (red или red.5)
+	};
+	style?: Sx; // любые параметры стиля в формате Sx Mantine
 };
 
 export interface FilterDef {
-  // праметры настройки фильтров
-  dateInputProps?: HTMLPropsRef<HTMLInputElement> & Partial<DateInputProps>; // смотри пример ниже и настройки DateInput в Mantine
+	// праметры настройки фильтров
+	dateInputProps?: HTMLPropsRef<HTMLInputElement> & Partial<DateInputProps>; // смотри пример ниже и настройки DateInput в Mantine
 }
 
 export interface IconProps extends TablerIconsProps {
-  name: string;
+	name: string;
 } // настройки иконки + навзание, по которому выбирается иконка
 
 export interface ActionDef {
-  // схема действий
-  name: string; // название действия
-  type: "ActionIcon"; // тип, сейчас только ActionIcon
-  disabledSource?: string; // путь к данным в объекте, по остутствую которых действие переходит в состояние disabled. Смотри пример ниже.
-  actionIconProps?: ActionIconProps; // любые параметры Mantine для ActionIcon
-  iconProps?: IconProps;
+	// схема действий
+	name: string; // название действия
+	type: 'ActionIcon'; // тип, сейчас только ActionIcon
+	disabledSource?: string; // путь к данным в объекте, по остутствую которых действие переходит в состояние disabled. Смотри пример ниже.
+	actionIconProps?: ActionIconProps; // любые параметры Mantine для ActionIcon
+	iconProps?: IconProps;
 }
 
 export interface GroupScheme extends ColumnDef {
-  // схема сгруппированной строки, расширяет схему колонки
-  groupBy: string; // путь данным, ко которым нужно группировать
-  accessor: string; // путь данным, которые нужно отоброжать в первой ячейке сгруппированной строки
-  multiSelectable?: boolean; // показывать checkbox и вкличать выбор дочерних строк
+	// схема сгруппированной строки, расширяет схему колонки
+	groupBy: string; // путь данным, ко которым нужно группировать
+	accessor: string; // путь данным, которые нужно отоброжать в первой ячейке сгруппированной строки
+	multiSelectable?: boolean; // показывать checkbox и вкличать выбор дочерних строк
 }
 
 export interface ColumnDef extends MRT_ColumnDef<NItem> {
-  // схема колонки
-  accessor: string; // путь к данным для ячейки
-  data?: DataDef;
-  cell?: CellDef;
-  filter?: FilterDef;
-  actions?: ActionDef[];
-  actionsOnly?: boolean; // показывать только действия и центрировать в ячейке
-  hoverableActions?: boolean; // показывать действия при наведении
-  groupScheme?: GroupScheme[];
+	// схема колонки
+	accessor: string; // путь к данным для ячейки
+	data?: DataDef;
+	cell?: CellDef;
+	filter?: FilterDef;
+	actions?: ActionDef[];
+	actionsOnly?: boolean; // показывать только действия и центрировать в ячейке
+	hoverableActions?: boolean; // показывать действия при наведении
+	groupScheme?: GroupScheme[];
 }
 ```
 
@@ -2673,110 +2659,110 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 ```js
 [
-  {
-    accessor: "content.name",
-    header: "ЖК > Объект > Уборка",
-    size: 230,
-    groupScheme: [
-      {
-        groupBy: "complex.id",
-        accessor: "complex.content.name",
-        cell: {
-          trancate: true,
-        },
-      },
-      {
-        groupBy: "house.id",
-        accessor: "house.content.name",
-      },
-    ],
-    hoverableActions: true,
-    actions: [
-      {
-        name: "editTask",
-        type: "ActionIcon",
-        actionIconProps: {
-          variant: "outline",
-          color: "dark",
-          my: -6,
-        },
-        iconProps: {
-          name: "IconEdit",
-        },
-      },
-    ],
-  },
-  {
-    accessor: "area",
-    header: "Зоны",
-    enableColumnFilter: true,
-    size: 180,
-    cell: {
-      trancate: true,
-      tooltip: true,
-    },
-    data: {
-      type: "array",
-      arrayFormat: {
-        accessor: "content.name",
-        sortFn: (arr) => R.libs.just.sortBy(arr, (item) => item.content.name),
-      },
-    },
-  },
-  {
-    accessor: "{{worker.content.firstName}} {{worker.content.lastName}}",
-    header: "Сотрудник",
-    enableColumnFilter: true,
-    filterVariant: "multi-select",
-  },
-  {
-    accessor: "content.schedule.startDate.plan",
-    header: "Дата",
-    data: { type: "date" },
-    enableColumnFilter: true,
-    filterVariant: "date-range",
-    filter: {
-      dateInputProps: {
-        valueFormat: "YYYY-MM-DD",
-        placeholder: "ГГГГ-ММ-ДД",
-      },
-    },
-    enableSorting: true,
-  },
+	{
+		accessor: 'content.name',
+		header: 'ЖК > Объект > Уборка',
+		size: 230,
+		groupScheme: [
+			{
+				groupBy: 'complex.id',
+				accessor: 'complex.content.name',
+				cell: {
+					trancate: true
+				}
+			},
+			{
+				groupBy: 'house.id',
+				accessor: 'house.content.name'
+			}
+		],
+		hoverableActions: true,
+		actions: [
+			{
+				name: 'editTask',
+				type: 'ActionIcon',
+				actionIconProps: {
+					variant: 'outline',
+					color: 'dark',
+					my: -6
+				},
+				iconProps: {
+					name: 'IconEdit'
+				}
+			}
+		]
+	},
+	{
+		accessor: 'area',
+		header: 'Зоны',
+		enableColumnFilter: true,
+		size: 180,
+		cell: {
+			trancate: true,
+			tooltip: true
+		},
+		data: {
+			type: 'array',
+			arrayFormat: {
+				accessor: 'content.name',
+				sortFn: (arr) => R.libs.just.sortBy(arr, (item) => item.content.name)
+			}
+		}
+	},
+	{
+		accessor: '{{worker.content.firstName}} {{worker.content.lastName}}',
+		header: 'Сотрудник',
+		enableColumnFilter: true,
+		filterVariant: 'multi-select'
+	},
+	{
+		accessor: 'content.schedule.startDate.plan',
+		header: 'Дата',
+		data: { type: 'date' },
+		enableColumnFilter: true,
+		filterVariant: 'date-range',
+		filter: {
+			dateInputProps: {
+				valueFormat: 'YYYY-MM-DD',
+				placeholder: 'ГГГГ-ММ-ДД'
+			}
+		},
+		enableSorting: true
+	},
 
-  {
-    header: "Фото",
-    size: 0,
-    actionsOnly: true,
-    actions: [
-      {
-        name: "viewImage",
-        type: "ActionIcon",
-        disabledSource: "content.results.images",
-        actionIconProps: {
-          variant: "outline",
-          color: "dark",
-          my: -6,
-        },
-        iconProps: {
-          name: "IconPhoto",
-        },
-      },
-    ],
-  },
-  {
-    accessor: "states.flow.title",
-    header: "Статус",
-    size: 0,
-    cell: {
-      colorMap: {
-        accessor: "states.flow.value",
-        map: { activated: "green", failed: "red" },
-      },
-    },
-    enableColumnFilter: true,
-    filterVariant: "multi-select",
-  },
+	{
+		header: 'Фото',
+		size: 0,
+		actionsOnly: true,
+		actions: [
+			{
+				name: 'viewImage',
+				type: 'ActionIcon',
+				disabledSource: 'content.results.images',
+				actionIconProps: {
+					variant: 'outline',
+					color: 'dark',
+					my: -6
+				},
+				iconProps: {
+					name: 'IconPhoto'
+				}
+			}
+		]
+	},
+	{
+		accessor: 'states.flow.title',
+		header: 'Статус',
+		size: 0,
+		cell: {
+			colorMap: {
+				accessor: 'states.flow.value',
+				map: { activated: 'green', failed: 'red' }
+			}
+		},
+		enableColumnFilter: true,
+		filterVariant: 'multi-select'
+	}
 ];
 ```
 
@@ -2953,19 +2939,16 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 - Для использования нужно обновить Head Code:
 
   ```html
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <script>
-    window.R = {
-      states: {},
-      env: {},
-      params: {},
-      libs: {},
-      utils: {},
-      items: {},
-    };
+  	window.R = {
+  		states: {},
+  		env: {},
+  		params: {},
+  		libs: {},
+  		utils: {},
+  		items: {}
+  	};
   </script>
   ```
 
@@ -3095,35 +3078,34 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 ```js
 [
-  {
-    accessor: "content.name",
-    header: "Название",
-    size: 30,
-  },
-  {
-    accessor: "states.subscription.label",
-    header: "Статус",
-    size: 20,
-  },
-  {
-    accessor:
-      "{{content.subscription.count.area}} зон. / {{content.subscription.count.worker}} сот.",
-    header: "Тариф",
-    defaultValue: "",
-    size: 20,
-  },
-  {
-    accessor: "content.subscription.balance",
-    header: "Баланс",
-    size: 20,
-  },
-  {
-    accessor: "content.subscription.date.end",
-    header: "Дата окончания",
-    dataType: "date",
-    dataFormat: "YYYY-MM-DD",
-    size: 20,
-  },
+	{
+		accessor: 'content.name',
+		header: 'Название',
+		size: 30
+	},
+	{
+		accessor: 'states.subscription.label',
+		header: 'Статус',
+		size: 20
+	},
+	{
+		accessor: '{{content.subscription.count.area}} зон. / {{content.subscription.count.worker}} сот.',
+		header: 'Тариф',
+		defaultValue: '',
+		size: 20
+	},
+	{
+		accessor: 'content.subscription.balance',
+		header: 'Баланс',
+		size: 20
+	},
+	{
+		accessor: 'content.subscription.date.end',
+		header: 'Дата окончания',
+		dataType: 'date',
+		dataFormat: 'YYYY-MM-DD',
+		size: 20
+	}
 ];
 ```
 
@@ -3260,29 +3242,26 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
   ```js
   const company = {
-    dbClass: "company",
-    items: companyIds?.map((id) => ({
-      id,
-      body: {
-        states: { flow: { value: stateValue, label: stateLabel } },
-      },
-    })),
+  	dbClass: 'company',
+  	items: companyIds?.map((id) => ({
+  		id,
+  		body: {
+  			states: { flow: { value: stateValue, label: stateLabel } }
+  		}
+  	}))
   };
   const user = {
-    dbClass: "user",
-    items: selectedManagers?.map((i) => ({
-      id: i.user.id,
-      body: {
-        credentials: {
-          local: {
-            password:
-              stateValue === "activated"
-                ? i.user.credentials.local.notSecret
-                : (Math.random() + 1).toString(36).substring(7),
-          },
-        },
-      },
-    })),
+  	dbClass: 'user',
+  	items: selectedManagers?.map((i) => ({
+  		id: i.user.id,
+  		body: {
+  			credentials: {
+  				local: {
+  					password: stateValue === 'activated' ? i.user.credentials.local.notSecret : (Math.random() + 1).toString(36).substring(7)
+  				}
+  			}
+  		}
+  	}))
   };
   Outputs.scheme = [company, user];
   ```
@@ -3306,27 +3285,24 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
   ```js
   [
-    {
-      company: {
-        version: 1,
-        defaults: {
-          filters: { equals: { "content.firstName": "Родион" } },
-          sorts: [{ "content.name": "asc" }],
-          options: { size: 100 },
-        },
-      },
-      manager: {
-        version: 1,
-        references: ["company", "user"],
-        defaults: {
-          sorts: [
-            { "content.lastName": "asc" },
-            { "content.firstName": "asc" },
-          ],
-          options: { size: 100 },
-        },
-      },
-    },
+  	{
+  		company: {
+  			version: 1,
+  			defaults: {
+  				filters: { equals: { 'content.firstName': 'Родион' } },
+  				sorts: [{ 'content.name': 'asc' }],
+  				options: { size: 100 }
+  			}
+  		},
+  		manager: {
+  			version: 1,
+  			references: ['company', 'user'],
+  			defaults: {
+  				sorts: [{ 'content.lastName': 'asc' }, { 'content.firstName': 'asc' }],
+  				options: { size: 100 }
+  			}
+  		}
+  	}
   ];
   ```
 
@@ -3344,49 +3320,49 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
   ```js
   const company = {
-    dbClass: "company",
-    order: 0,
-    body: {
-      content: {
-        name: formHook.values.companyName,
-        contacts: {
-          phone: formHook.values.companyPhone,
-          email: formHook.values.companyEmail,
-        },
-      },
-    },
+  	dbClass: 'company',
+  	order: 0,
+  	body: {
+  		content: {
+  			name: formHook.values.companyName,
+  			contacts: {
+  				phone: formHook.values.companyPhone,
+  				email: formHook.values.companyEmail
+  			}
+  		}
+  	}
   };
 
   const user = {
-    dbClass: "user",
-    order: 0,
-    body: {
-      content: {
-        profileIds: ["companyReader", "companyWriter"],
-        role: {
-          value: "companyManager",
-          title: "Менеджер компании",
-        },
-      },
-      credentials: {
-        local: {
-          username: formHook.values.userName,
-          password: formHook.values.password,
-        },
-      },
-    },
+  	dbClass: 'user',
+  	order: 0,
+  	body: {
+  		content: {
+  			profileIds: ['companyReader', 'companyWriter'],
+  			role: {
+  				value: 'companyManager',
+  				title: 'Менеджер компании'
+  			}
+  		},
+  		credentials: {
+  			local: {
+  				username: formHook.values.userName,
+  				password: formHook.values.password
+  			}
+  		}
+  	}
   };
 
   const manager = {
-    dbClass: "manager",
-    order: 1,
-    references: ["user", "company"],
-    body: {
-      content: {
-        firstName: formHook.values.firstName,
-        lastName: formHook.values.lastName,
-      },
-    },
+  	dbClass: 'manager',
+  	order: 1,
+  	references: ['user', 'company'],
+  	body: {
+  		content: {
+  			firstName: formHook.values.firstName,
+  			lastName: formHook.values.lastName
+  		}
+  	}
   };
 
   createScheme = [company, user, manager];
@@ -3404,22 +3380,22 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
   ```js
   userItem = {
-    id: "kuid",
-    body: {
-      content: {
-        profileIds: ["companyReader", "companyWriter"],
-        role: {
-          value: "companyManager",
-          title: "Менеджер компании",
-        },
-      },
-      credentials: {
-        local: {
-          username: "username",
-          password: "password",
-        },
-      },
-    },
+  	id: 'kuid',
+  	body: {
+  		content: {
+  			profileIds: ['companyReader', 'companyWriter'],
+  			role: {
+  				value: 'companyManager',
+  				title: 'Менеджер компании'
+  			}
+  		},
+  		credentials: {
+  			local: {
+  				username: 'username',
+  				password: 'password'
+  			}
+  		}
+  	}
   };
   ```
 
@@ -3583,27 +3559,21 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   const { hasLength, isNotEmpty, isEmail, matches } = FormValidators;
 
   const formScheme = {
-    initialValues: {
-      name: "",
-      job: "",
-      email: "",
-      favoriteColor: "",
-      age: 18,
-    },
+  	initialValues: {
+  		name: '',
+  		job: '',
+  		email: '',
+  		favoriteColor: '',
+  		age: 18
+  	},
 
-    validate: {
-      name: hasLength({ min: 2, max: 10 }, "Name must be 2-10 characters long"),
-      job: isNotEmpty("Enter your current job"),
-      email: isEmail("Invalid email"),
-      favoriteColor: matches(
-        /^#([0-9a-f]{3}){1,2}$/,
-        "Enter a valid hex color"
-      ),
-      age: isInRange(
-        { min: 18, max: 99 },
-        "You must be 18-99 years old to register"
-      ),
-    },
+  	validate: {
+  		name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
+  		job: isNotEmpty('Enter your current job'),
+  		email: isEmail('Invalid email'),
+  		favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/, 'Enter a valid hex color'),
+  		age: isInRange({ min: 18, max: 99 }, 'You must be 18-99 years old to register')
+  	}
   };
   ```
 
@@ -3663,25 +3633,25 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
   ```ts
   export interface Column extends MRT_ColumnDef<Item> {
-    id: string;
-    accessor?: string;
-    groupShceme?: {
-      groupBy: string;
-      accessor: string;
-      cellProps?: {
-        multiselect?: boolean;
-        ml?: number;
-      };
-    }[];
-    dataType?: string;
-    dateFormat?: string;
-    cellProps?: {
-      ml?: number;
-    };
-    filterProps?: {
-      dateFormat: string;
-    };
-    actions: Action[];
+  	id: string;
+  	accessor?: string;
+  	groupShceme?: {
+  		groupBy: string;
+  		accessor: string;
+  		cellProps?: {
+  			multiselect?: boolean;
+  			ml?: number;
+  		};
+  	}[];
+  	dataType?: string;
+  	dateFormat?: string;
+  	cellProps?: {
+  		ml?: number;
+  	};
+  	filterProps?: {
+  		dateFormat: string;
+  	};
+  	actions: Action[];
   }
   ```
 
@@ -3701,93 +3671,93 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
       ```js
       [
-        {
-          accessor: "content.name",
-          header: "ЖК > Объект > Уборка",
-          size: 400,
-          cellProps: {
-            // ml: 24
-          },
-          groupShceme: [
-            {
-              groupBy: "complex.id",
-              accessor: "complex.content.name",
-              /* cellProps: {
+      	{
+      		accessor: 'content.name',
+      		header: 'ЖК > Объект > Уборка',
+      		size: 400,
+      		cellProps: {
+      			// ml: 24
+      		},
+      		groupShceme: [
+      			{
+      				groupBy: 'complex.id',
+      				accessor: 'complex.content.name'
+      				/* cellProps: {
                           multiselect: true
                       } */
-            },
-            {
-              groupBy: "house.id",
-              accessor: "house.content.name",
-              /* cellProps: {
+      			},
+      			{
+      				groupBy: 'house.id',
+      				accessor: 'house.content.name'
+      				/* cellProps: {
                           ml: 42
                       } */
-            },
-          ],
-          actions: [
-            {
-              name: "editTask",
-              type: "ActionIcon",
-              props: {
-                actionIcon: {
-                  variant: "outline",
-                  color: "dark",
-                },
-                icon: {
-                  iconName: "IconEdit",
-                },
-              },
-            },
-          ],
-        },
-        {
-          accessor: "area.content.name",
-          header: "Зона",
-          enableColumnFilter: true,
-          filterVariant: "multi-select",
-        },
-        {
-          accessor: "{{worker.content.firstName}} {{worker.content.lastName}}",
-          header: "Сотрудник",
-          enableColumnFilter: true,
-          filterVariant: "multi-select",
-        },
-        {
-          accessor: "content.schedule.startDate.plan",
-          header: "Дата",
-          dataType: "date",
-          size: 160,
-          enableColumnFilter: true,
-          filterVariant: "date-range",
-          filterProps: { dateFormat: "YYYY-MM-DD" },
-        },
-        {
-          header: "Фото",
-          actions: [
-            {
-              name: "viewImage",
-              type: "ActionIcon",
-              disabledSource: "content.results.images",
-              props: {
-                actionIcon: {
-                  variant: "outline",
-                  color: "dark",
-                },
-                icon: {
-                  iconName: "IconPhoto",
-                },
-              },
-            },
-          ],
-          size: 0,
-        },
-        {
-          accessor: "states.flow.title",
-          header: "Статус",
-          size: 140,
-          enableColumnFilter: true,
-          filterVariant: "multi-select",
-        },
+      			}
+      		],
+      		actions: [
+      			{
+      				name: 'editTask',
+      				type: 'ActionIcon',
+      				props: {
+      					actionIcon: {
+      						variant: 'outline',
+      						color: 'dark'
+      					},
+      					icon: {
+      						iconName: 'IconEdit'
+      					}
+      				}
+      			}
+      		]
+      	},
+      	{
+      		accessor: 'area.content.name',
+      		header: 'Зона',
+      		enableColumnFilter: true,
+      		filterVariant: 'multi-select'
+      	},
+      	{
+      		accessor: '{{worker.content.firstName}} {{worker.content.lastName}}',
+      		header: 'Сотрудник',
+      		enableColumnFilter: true,
+      		filterVariant: 'multi-select'
+      	},
+      	{
+      		accessor: 'content.schedule.startDate.plan',
+      		header: 'Дата',
+      		dataType: 'date',
+      		size: 160,
+      		enableColumnFilter: true,
+      		filterVariant: 'date-range',
+      		filterProps: { dateFormat: 'YYYY-MM-DD' }
+      	},
+      	{
+      		header: 'Фото',
+      		actions: [
+      			{
+      				name: 'viewImage',
+      				type: 'ActionIcon',
+      				disabledSource: 'content.results.images',
+      				props: {
+      					actionIcon: {
+      						variant: 'outline',
+      						color: 'dark'
+      					},
+      					icon: {
+      						iconName: 'IconPhoto'
+      					}
+      				}
+      			}
+      		],
+      		size: 0
+      	},
+      	{
+      		accessor: 'states.flow.title',
+      		header: 'Статус',
+      		size: 140,
+      		enableColumnFilter: true,
+      		filterVariant: 'multi-select'
+      	}
       ];
       ```
 
@@ -3807,10 +3777,10 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
       ```ts
       export interface Action {
-        name: string;
-        type: "ActionIcon";
-        disabledSource?: string;
-        props?: any;
+      	name: string;
+      	type: 'ActionIcon';
+      	disabledSource?: string;
+      	props?: any;
       }
       ```
 
@@ -3888,13 +3858,13 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
   ```js
   [
-    {
-      bool: {
-        must_not: {
-          term: { "states.archived": true },
-        },
-      },
-    },
+  	{
+  		bool: {
+  			must_not: {
+  				term: { 'states.archived': true }
+  			}
+  		}
+  	}
   ];
   ```
 
@@ -4006,14 +3976,14 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
   ```js
   [
-    {
-      value: "option1",
-      label: "Вариант 1",
-    },
-    {
-      value: "option2",
-      label: "Вариант 2",
-    },
+  	{
+  		value: 'option1',
+  		label: 'Вариант 1'
+  	},
+  	{
+  		value: 'option2',
+  		label: 'Вариант 2'
+  	}
   ];
   ```
 
@@ -4033,19 +4003,19 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
     ```js
     [
-      {
-        accessor: "content.name",
-        title: "Название",
-        width: "8rem",
-      },
-      {
-        accessor: "content.description",
-        title: "Описание",
-        width: "8rem",
-        props: {
-          respectLineBreak: true,
-        },
-      },
+    	{
+    		accessor: 'content.name',
+    		title: 'Название',
+    		width: '8rem'
+    	},
+    	{
+    		accessor: 'content.description',
+    		title: 'Описание',
+    		width: '8rem',
+    		props: {
+    			respectLineBreak: true
+    		}
+    	}
     ];
     ```
 
@@ -4053,12 +4023,11 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
     ```js
     [
-      {
-        accessor:
-          "Уважаемый {{content.firstName}} {{content.lastName}}, еще текст...",
-        title: "ФИО",
-        width: "8rem",
-      },
+    	{
+    		accessor: 'Уважаемый {{content.firstName}} {{content.lastName}}, еще текст...',
+    		title: 'ФИО',
+    		width: '8rem'
+    	}
     ];
     ```
 

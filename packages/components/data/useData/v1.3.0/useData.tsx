@@ -11,9 +11,8 @@ import getValue from '@packages/get-value';
 import queryFn from './src/queryFn';
 import deepEqual from 'fast-deep-equal'
 import isEmpty from '@packages/is-empty'
-import type { NoodlNode } from '@packages/node';
 
-function schemeValid(scheme: FetchScheme[number], noodlNode: NoodlNode): boolean {
+function schemeValid(scheme: FetchScheme[number]): boolean {
   if (!scheme.dbClass) {
     R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbClass at scheme: ${JSON.stringify(scheme)}`)
     log.error('`No dbClass at scheme', scheme)
@@ -41,12 +40,12 @@ function schemeValid(scheme: FetchScheme[number], noodlNode: NoodlNode): boolean
   return true
 }
 
-function getScheme(noodlNode: NoodlNode, fetchScheme: FetchScheme, paginationScheme?: FetchScheme[number], searchAfter?: string[]) {
+function getScheme(fetchScheme: FetchScheme, paginationScheme?: FetchScheme[number], searchAfter?: string[]) {
   let hasErrors = false
   let resultScheme: FetchScheme = clone(fetchScheme)
   resultScheme.forEach(dbClassScheme => {
     if (paginationScheme && paginationScheme.dbClass === dbClassScheme.dbClass) dbClassScheme.searchAfter = searchAfter
-    hasErrors = !schemeValid(dbClassScheme, noodlNode)
+    hasErrors = !schemeValid(dbClassScheme)
   })
 
   return hasErrors ? false : resultScheme
@@ -78,7 +77,7 @@ export default forwardRef(function (props: Props, ref) {
 
   const [lastPaginationScheme, setLastPaginationScheme] = useState<FetchScheme[number]>()
   const [lastSearchString, setLastSearchString] = useState<string | undefined>()
-  const fetchScheme = getScheme(noodlNode, props.fetchScheme, paginationScheme, pagesSearchAfter.find(i => i.page === page)?.searchAfter)
+  const fetchScheme = getScheme(props.fetchScheme, paginationScheme, pagesSearchAfter.find(i => i.page === page)?.searchAfter)
   if (!fetchScheme) {
     sendOutputs(noodlNode, [{ portName: 'error', value: true }, { portName: 'fetching', value: false }])
     return null
@@ -105,11 +104,11 @@ export default forwardRef(function (props: Props, ref) {
 
   useEffect(() => {
     if (isFetching && !isError) sendOutput(noodlNode, 'fetching', true)
-    if (isError) sendOutputs(noodlNode, [{ portName: 'error', value: true }, { portName: 'fetching', value: false }])    
+    if (isError) sendOutputs(noodlNode, [{ portName: 'error', value: true }, { portName: 'fetching', value: false }])
   }, [isFetching, isError])
 
   useEffect(() => {
-    if (data?.error) {      
+    if (data?.error) {
       sendOutputs(noodlNode, [{ portName: 'error', value: true }, { portName: 'fetching', value: false }])
       return
     }

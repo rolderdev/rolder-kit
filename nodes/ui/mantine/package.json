@@ -57,7 +57,13 @@
     "@nodes/title": "workspace:*",
     "@nodes/unstyled-button": "workspace:*",
     "@nodes/table-selection-scope": "workspace:*",
-    "@nodes/drop-zone": "workspace:*"
+    "@nodes/drop-zone": "workspace:*",
+    "@nodes/app-shell": "workspace:*",
+    "@nodes/header": "workspace:*",
+    "@nodes/tabs": "workspace:*",
+    "@nodes/tab": "workspace:*",
+    "@nodes/copy-button": "workspace:*",
+    "@nodes/switch": "workspace:*"
   },
   "devDependencies": {
     "types": "workspace:*"

@@ -3,6 +3,7 @@
   "main": "group.tsx",
   "types": "group.tsx",
   "dependencies": {
+    "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
     "@mantine/core": "6.0.21"
   },
   "devDependencies": {

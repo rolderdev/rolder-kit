@@ -1,21 +1,4 @@
 {
-  "extends": "types",
-  "include": [
-    "**/*",
-    "../../../../types/**/*"
-  ],
-  "references": [
-    {
-      "path": "../../../../packages/components/ui/pdf/pdfTable/v1.1.0"
-    },
-    {
-      "path": "../../../../packages/components/ui/pdf/pdfTable/v1.2.0"
-    },
-    {
-      "path": "../../../../packages/components/ui/webCamera/v1.0.0"
-    },
-    {
-      "path": "../../../../types"
-    }
-  ]
+	"extends": "types",
+	"include": ["**/*", "../../../../types/**/*"]
 }

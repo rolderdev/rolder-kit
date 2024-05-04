@@ -26,5 +26,8 @@ export default forwardRef(function (props: Props) {
         }}
         {...navLinkProps}
         {...navLinkProps.customProps}
-    />
+
+    >
+        {props.children}
+    </NavLink>
 })

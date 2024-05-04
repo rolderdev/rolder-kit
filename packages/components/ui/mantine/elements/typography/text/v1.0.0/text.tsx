@@ -13,8 +13,8 @@ export default forwardRef(function (props: Props) {
     const p = { ...getCompProps(props, item) } as Props
 
     const [value, setValue] = useState('')
-    const itemSource = props.useScope && item ? item : props.itemSource
-    const valueSource = props.dataSource === 'item' ? getValue.v8(itemSource, props.sourceField) : props.valueSource
+    const itemSource = p.useScope && item ? item : p.itemSource
+    const valueSource = p.dataSource === 'item' ? getValue.v8(itemSource, p.sourceField) : p.valueSource
 
     useEffect(() => {
         if (valueSource) switch (p.textFormat) {

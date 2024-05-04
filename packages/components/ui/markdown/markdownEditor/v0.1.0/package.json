@@ -1,0 +1,17 @@
+{
+  "name": "@packages/markdown-editor-v0.1.0",
+  "main": "markdownEditor.tsx",
+  "types": "markdownEditor.tsx",
+  "dependencies": {
+    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+    "@toast-ui/editor": "3.2.2",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "3.1.0",
+    "@toast-ui/editor-plugin-uml": "3.0.1",
+    "@toast-ui/react-editor": "3.2.3",
+    "prismjs": "1.29.0"
+  },
+  "devDependencies": {
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "types": "workspace:*"
+  }
+}
