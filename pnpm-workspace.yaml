@@ -2,6 +2,5 @@
 packages:
   - types/**
   - nodes/**
-  - packages/**
-  - docs/**
-  - '!docs/back/**'  
+  - packages/**  
+  - '!docs_toDelete/**'  

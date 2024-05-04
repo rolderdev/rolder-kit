@@ -29,7 +29,7 @@
     "just-safe-set": "4.2.1",
     "just-unique": "4.2.0",
     "fast-sort": "3.4.0",
-    "dayjs": "1.11.10"
+    "dayjs": "1.11.11"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
