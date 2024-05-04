@@ -3,7 +3,6 @@ import { Paper, createStyles, px } from '@mantine/core';
 import { useClickOutside, useMergedRef, useWindowEvent } from '@mantine/hooks';
 import type { ReactNode } from 'react';
 import { useElementOuterSize } from './hooks';
-import React from 'react';
 
 const useStyles = createStyles((theme) => ({
   root: {

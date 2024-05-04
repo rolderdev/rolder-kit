@@ -1,9 +1,8 @@
 import { Box, createStyles, type CSSObject, type MantineTheme } from '@mantine/core';
-import { type CSSProperties, forwardRef } from 'react';
+import { CSSProperties, forwardRef, type ForwardedRef } from 'react';
 import DataTableFooterCell from './DataTableFooterCell';
 import DataTableFooterSelectorPlaceholderCell from './DataTableFooterSelectorPlaceholderCell';
 import type { DataTableColumn, DataTableDefaultColumnProps } from './types';
-import React from 'react';
 
 const useStyles = createStyles(
   (
@@ -55,7 +54,7 @@ export default forwardRef(function DataTableFooter<T>(
     leftShadowVisible,
     scrollDiff,
   }: DataTableFooterProps<T>,
-  ref: any
+  ref: ForwardedRef<HTMLTableSectionElement>
 ) {
   const { cx, classes } = useStyles({ scrollDiff, borderColor });
 
@@ -97,4 +96,4 @@ export default forwardRef(function DataTableFooter<T>(
       </tr>
     </Box>
   );
-}) as <T>(props: DataTableFooterProps<T> & { ref: any }) => JSX.Element;
+}) as <T>(props: DataTableFooterProps<T> & { ref: ForwardedRef<HTMLTableSectionElement> }) => JSX.Element;

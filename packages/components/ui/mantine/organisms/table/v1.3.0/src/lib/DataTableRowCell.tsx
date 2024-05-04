@@ -2,7 +2,6 @@ import { Box, createStyles, type Sx } from '@mantine/core';
 import type { CSSProperties, MouseEventHandler, ReactNode } from 'react';
 import type { DataTableColumn } from './types';
 import { getValueAtPath, useMediaQueryStringOrFunction } from './utils';
-import React from 'react';
 
 const useStyles = createStyles({
   withPointerCursor: {
@@ -79,8 +78,8 @@ export default function DataTableRowCell<T>({
       {render
         ? render(record, recordIndex)
         : defaultRender
-          ? defaultRender(record, recordIndex, accessor)
-          : (getValueAtPath(record, accessor) as ReactNode)}
+        ? defaultRender(record, recordIndex, accessor)
+        : (getValueAtPath(record, accessor) as ReactNode)}
     </Box>
   );
 }

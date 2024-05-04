@@ -7,12 +7,12 @@ tasks:
     command: rspack build --mode=production
     inputs:
       - src/**/*
-      - /packages/components/qr-code/**/*
+      - /packages/components/ui/qr-code/**/*
       - /packages/internal/**/*
   dev:
     command: rspack build --mode=development --watch
     inputs:
       - src/**/*
-      - /packages/components/qr-code/**/*
+      - /packages/components/ui/qr-code/**/*
       - /packages/internal/**/*
     local: true

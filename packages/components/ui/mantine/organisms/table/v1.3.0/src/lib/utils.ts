@@ -1,6 +1,6 @@
 import { useMantineTheme, type MantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { type Key, useEffect, useLayoutEffect, useMemo } from 'react';
+import { Key, useEffect, useLayoutEffect, useMemo } from 'react';
 import { useMediaQueries } from './useMediaQueries';
 
 export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;

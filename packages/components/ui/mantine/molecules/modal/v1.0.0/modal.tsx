@@ -24,7 +24,7 @@ export default forwardRef(function (props: Props, ref) {
         <Modal.Content>
             {props.modalHeaderEnabled && <Modal.Header>
                 {props.modalTitle && <Modal.Title><Title order={props.modalTitleOrder}>{props.modalTitle}</Title></Modal.Title>}
-                {props.closeActionEnabled && <Modal.CloseButton />}
+                {props.closeActionEnabled && <Modal.CloseButton sx={{ alignSelf: 'flex-start' }} />}
             </Modal.Header>}
             <Modal.Body>{props.children}</Modal.Body>
         </Modal.Content>

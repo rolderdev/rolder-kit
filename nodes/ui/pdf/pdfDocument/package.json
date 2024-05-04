@@ -7,8 +7,6 @@
     "@packages/pdf-document-v1.0.0": "workspace:*",
     "@packages/pdf-document-v1.1.0": "workspace:*",
     "@packages/pdf-document-v1.2.0": "workspace:*",
-    "@packages/pdf-table-v1.1.0": "workspace:*",
-    "@packages/pdf-table-v1.2.0": "workspace:*",
     "@packages/port": "workspace:@packages/port-v0.6.0@*"
   },
   "devDependencies": {

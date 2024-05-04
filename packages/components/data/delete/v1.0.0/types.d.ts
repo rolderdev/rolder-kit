@@ -1,11 +1,11 @@
-import { BaseJsProps } from '@packages/node'
+import { BaseJsProps } from '@packages/node';
 
 export type Props = BaseJsProps & {
-    scheme: DeleteScheme
-}
+	scheme: DeleteScheme;
+};
 
 export type DeleteScheme = {
-    dbClass: string
-    ids?: string[]
-    idsFunc?: string
-}[]
+	dbClass: string;
+	ids?: string[];
+	idsFunc?: string;
+}[];

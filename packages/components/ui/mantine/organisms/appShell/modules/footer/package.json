@@ -1,0 +1,13 @@
+{
+  "name": "@packages/footer-v1.0.0",
+  "main": "footer.tsx",
+  "types": "footer.tsx",
+  "dependencies": {
+    "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
+    "@mantine/core": "6.0.21"
+  },
+  "devDependencies": {
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "types": "workspace:*"
+  }
+}

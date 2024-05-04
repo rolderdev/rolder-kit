@@ -102,7 +102,8 @@
       "projectDir": "playground",
       "rolderKit": [
         "app",
-        "mantine"
+        "mantine",
+        "markdown"
       ]
     },
     "xcity": {
@@ -138,6 +139,15 @@
         "dir": "prod",
         "bucket": "xcity.rolder.app"
       }
+    },
+    "rkdocs": {
+      "projectDir": "rkdocs",
+      "rolderKit": [
+        "app",
+        "mantine",
+        "data",
+        "markdown"
+      ]
     }
   }
 }

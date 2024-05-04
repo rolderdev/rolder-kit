@@ -1,0 +1,18 @@
+---
+id: node-handlers/markdown
+tags:
+  - noodl
+tasks:
+  build:
+    command: rspack build --mode=production
+    inputs:
+      - src/**/*
+      - /packages/components/ui/markdown/**/*
+      - /packages/internal/**/*
+  dev:
+    command: rspack build --mode=development --watch
+    inputs:
+      - src/**/*
+      - /packages/components/ui/markdown/**/*
+      - /packages/internal/**/*
+    local: true

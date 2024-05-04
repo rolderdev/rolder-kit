@@ -1,7 +1,6 @@
 import { Center, createStyles, Text } from '@mantine/core';
 import { IconDatabaseOff } from '@tabler/icons-react';
 import type { ReactNode } from 'react';
-import React from 'react';
 
 const useStyles = createStyles((theme) => ({
   root: {

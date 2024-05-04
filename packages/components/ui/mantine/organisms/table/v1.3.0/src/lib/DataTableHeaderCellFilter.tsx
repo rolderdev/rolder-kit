@@ -2,7 +2,6 @@ import { ActionIcon, Popover } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconFilter } from '@tabler/icons-react';
 import type { DataTableColumn } from './types';
-import React from 'react';
 
 type DataTableHeaderCellFilterProps<T> = {
   children: DataTableColumn<T>['filter'];

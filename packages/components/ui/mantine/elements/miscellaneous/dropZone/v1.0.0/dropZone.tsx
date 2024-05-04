@@ -1,6 +1,6 @@
 import { forwardRef } from "react" //
 import { Group, Stack, Text } from '@mantine/core'
-import { Dropzone, DropzoneProps } from '@mantine/dropzone'
+import { Dropzone, type DropzoneProps } from '@mantine/dropzone'
 import type { Props } from "./types"
 import React from "react"
 import { sendOutput, sendSignal } from "@packages/port-send"

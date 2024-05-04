@@ -38,6 +38,14 @@ export const reactNode = (nodeName: string, versions: CompVersions, params?: Par
         docs: params?.docs,
         noodlNodeAsProp: true,
         allowChildren: params?.allowChildren || false,
+        useVariants: false,
+        getInspectInfo() {
+            const version = this.props.version
+            let output = undefined
+            const getInspectInfo = versions[version]?.getInspectInfo
+            if (getInspectInfo) output = getInspectInfo(this.model.nodeProps)
+            return output
+        },
         getReactComponent() {
             return forwardRef(function (props: BaseReactProps, ref) {
                 const localRef = useRef<any>(null)

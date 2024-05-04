@@ -2,7 +2,6 @@ import { Box, createStyles, type MantineTheme, type Sx } from '@mantine/core';
 import type { CSSProperties, ReactNode } from 'react';
 import type { DataTableColumn } from './types';
 import { useMediaQueryStringOrFunction } from './utils';
-import React from 'react';
 
 const useStyles = createStyles({
   noWrap: {

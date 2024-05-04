@@ -1,21 +1,4 @@
 {
-  "extends": "types",
-  "include": [
-    "**/*",
-    "../../../types/**/*"
-  ],
-  "references": [
-    {
-      "path": "../../../types"
-    },
-    {
-      "path": "getQrCode"
-    },
-    {
-      "path": "qrCode"
-    },
-    {
-      "path": "qrScanner"
-    }
-  ]
+	"extends": "types",
+	"include": ["**/*", "../../../types/**/*"]
 }

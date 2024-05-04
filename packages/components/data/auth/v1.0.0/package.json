@@ -10,12 +10,12 @@
     "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
     "@packages/prep-data": "workspace:@packages/prep-data-v0.1.0@*",
     "@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*",
-    "@capacitor/preferences": "5.0.7"
+    "@capacitor/preferences": "6.0.0"
   },
   "devDependencies": {
     "types": "workspace:*",
     "@packages/node": "workspace:@packages/node-v0.8.0@*",
     "@types/ms": "0.7.34",
-    "@capacitor/core": "5.7.4"
+    "@capacitor/core": "6.0.0"
   }
 }

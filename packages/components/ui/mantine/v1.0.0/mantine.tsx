@@ -1,9 +1,9 @@
-import { ColorScheme, MantineProvider } from "@mantine/core"
+import { type ColorScheme, MantineProvider } from "@mantine/core"
 import { DatesProvider } from "@mantine/dates"
 import { Notifications, notifications } from "@mantine/notifications"
 import { forwardRef, useState } from "react"
 import 'dayjs/locale/ru'
-import { CompProps } from "./types"
+import type { CompProps } from "./types"
 import convertColor from '@packages/convertColor'
 import React from "react"
 

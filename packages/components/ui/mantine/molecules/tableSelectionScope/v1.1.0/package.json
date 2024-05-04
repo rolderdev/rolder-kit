@@ -1,0 +1,22 @@
+{
+  "name": "@packages/table-selection-scope-v1.1.0",
+  "main": "tableSelectionScope.tsx",
+  "types": "tableSelectionScope.tsx",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
+    "@packages/scope": "workspace:@packages/scope-v0.2.0@*",
+    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+    "@mantine/core": "6.0.21",
+    "@mantine/hooks": "6.0.21",
+    "bunshi": "2.0.2",
+    "jotai": "2.2.2",
+    "jotai-scope": "0.2.0"
+  },
+  "devDependencies": {
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "types": "workspace:*"
+  }
+}
