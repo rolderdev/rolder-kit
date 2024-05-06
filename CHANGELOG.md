@@ -1,5 +1,7 @@
 # Changelog
 
+## 2024-05-06 v1.0.0-rc0
+
 ## 2024-05-05 v1.0.0-beta23
 
 ### Разработка
@@ -3257,7 +3259,8 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   		body: {
   			credentials: {
   				local: {
-  					password: stateValue === 'activated' ? i.user.credentials.local.notSecret : (Math.random() + 1).toString(36).substring(7)
+  					password:
+  						stateValue === 'activated' ? i.user.credentials.local.notSecret : (Math.random() + 1).toString(36).substring(7)
   				}
   			}
   		}

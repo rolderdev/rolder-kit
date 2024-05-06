@@ -1,14 +1,11 @@
 import type { DeleteScheme, Props } from './types';
 import { sendOutput, sendSignal } from '@packages/port-send';
-import { dbClassVersion } from '@packages/get-dbclass-version';
 import clone from 'just-clone';
 
 function getDeleteScheme(deleteScheme: DeleteScheme): DeleteScheme | boolean {
 	let resultScheme: DeleteScheme = clone(deleteScheme);
 	resultScheme.forEach((dbClassScheme) => {
-		const dbClass = dbClassVersion(dbClassScheme.dbClass);
-		if (dbClass) dbClassScheme.dbClass = dbClass;
-		else {
+		if (!dbClassScheme.dbClass) {
 			R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbClass at scheme: ${JSON.stringify(dbClassScheme)}`);
 			log.error('`No dbClass at scheme', dbClassScheme);
 			return false;
@@ -31,7 +28,7 @@ export default {
 		sendOutput(props.noodlNode, 'deleting', true);
 
 		const startTime = log.start();
-		log.info(`delete props`, { scheme, silent: props.silent });
+		log.info(`delete props`, props);
 
 		try {
 			R.libs.mutate && (await R.libs.mutate({ action: 'delete', scheme, silent: props.silent }));
