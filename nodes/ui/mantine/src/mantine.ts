@@ -110,6 +110,10 @@ import navbarNode from '@nodes/app-shell/modules/navbar';
 import navbarSectionNode from '@nodes/app-shell/modules/navbar/modules/navbarSection';
 import asideNode from '@nodes/app-shell/modules/aside';
 import asideSectionNode from '@nodes/app-shell/modules/aside/modules/asideSection';
+//// menu
+import menuNode from '@nodes/menu';
+import menuTargetNode from '@nodes/menu-target';
+import menuDropdownNode from '@nodes/menu-dropdown';
 
 Noodl.defineModule({
 	reactNodes: [
@@ -189,7 +193,11 @@ Noodl.defineModule({
 		navbarNode,
 		navbarSectionNode,
 		asideNode,
-		asideSectionNode
+		asideSectionNode,
+		//// menu
+		menuNode,
+	    menuTargetNode,
+		menuDropdownNode
 	],
 	nodes: [defineNode(notificationNode)]
 });

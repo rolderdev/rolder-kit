@@ -63,7 +63,10 @@
     "@nodes/tabs": "workspace:*",
     "@nodes/tab": "workspace:*",
     "@nodes/copy-button": "workspace:*",
-    "@nodes/switch": "workspace:*"
+    "@nodes/switch": "workspace:*",
+    "@nodes/menu": "workspace:*",
+    "@nodes/menu-dropdown": "workspace:*",
+    "@nodes/menu-target": "workspace:*"
   },
   "devDependencies": {
     "types": "workspace:*"

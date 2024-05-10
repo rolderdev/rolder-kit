@@ -1,0 +1,12 @@
+{
+  "name": "@packages/menu-dropdown-v1.0.0",
+  "main": "menuDropdown.tsx",
+  "types": "menuDropdown.tsx",
+  "dependencies": {
+    "@mantine/core": "6.0.21"
+  },
+  "devDependencies": {
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "types": "workspace:*"
+  }
+}
