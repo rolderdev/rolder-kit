@@ -89,5 +89,8 @@ export {
 	IconDotsVertical,
 	IconKeyboard,
 	IconRestore,
-	IconForms
+	IconForms,
+	IconTextPlus,			// Vezdexod
+	IconArrowNarrowUp,		// Vezdexod
+	IconArrowNarrowDown, 	// Vezdexod
 } from '@tabler/icons-react';
