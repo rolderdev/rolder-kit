@@ -56,10 +56,10 @@ export default jsNode(
 							else {
 								const sizeDbClasses: string[] = [];
 								p.scheme.map((i: any) => {
-									if (i.items?.length > 1000) sizeDbClasses.push(i.dbClass);
+									if (i.items?.length > 20000) sizeDbClasses.push(i.dbClass);
 								});
 								if (sizeDbClasses.length) {
-									return `You can update 1000 or less documents per request. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
+									return `You can update 20000 or less documents per request. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
 								} else return true;
 							}
 						}
