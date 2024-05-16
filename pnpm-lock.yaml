@@ -211,6 +211,9 @@ importers:
       '@packages/create-v1.0.0':
         specifier: workspace:*
         version: link:../../../../packages/components/data/create/v1.0.0
+      '@packages/create-v1.1.0':
+        specifier: workspace:*
+        version: link:../../../../packages/components/data/create/v1.1.0
       '@packages/node':
         specifier: workspace:@packages/node-v0.8.0@*
         version: link:../../../../packages/internal/node/v0.8.0
@@ -347,6 +350,9 @@ importers:
       '@packages/update-v1.1.0':
         specifier: workspace:*
         version: link:../../../../packages/components/data/update/v1.1.0
+      '@packages/update-v1.2.0':
+        specifier: workspace:*
+        version: link:../../../../packages/components/data/update/v1.2.0
     devDependencies:
       types:
         specifier: workspace:*
@@ -2043,6 +2049,25 @@ importers:
         version: link:../../../../../types
 
   packages/components/data/create/v1.0.0:
+    dependencies:
+      '@packages/get-dbclass-version':
+        specifier: workspace:@packages/get-dbclass-version-v0.6.0@*
+        version: link:../../../../internal/utils/getDbClassVersion/v0.6.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../internal/utils/portSend/v0.3.0
+      just-clone:
+        specifier: 6.2.0
+        version: 6.2.0
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../types
+
+  packages/components/data/create/v1.1.0:
     dependencies:
       '@packages/get-dbclass-version':
         specifier: workspace:@packages/get-dbclass-version-v0.6.0@*

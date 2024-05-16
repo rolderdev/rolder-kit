@@ -83,7 +83,7 @@ export default {
       }
 
       // Запускаем обновление!
-      const data = R.libs.mutate && await R.libs.mutate({ action: 'update', scheme })
+      const data = R.libs.mutate && await R.libs.mutate({ action: 'update', scheme, silent: props.silent })
 
       // Возвращаем результат обновления и выставляем флаг о том, что оно завершилось
       sendOutputs(props.noodlNode, [

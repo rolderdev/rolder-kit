@@ -2,15 +2,12 @@ import { BaseJsProps } from '@packages/node'
 import type { Item } from 'types'
 
 export type Props = BaseJsProps & {
-    scheme: UpdateScheme
-    optimistic?: boolean,
+    scheme: CreateScheme,
     silent?: boolean
 }
 
-export type UpdateScheme = {
-    dbClass: string    
+export type CreateScheme = {
+    dbClass: string
     items?: Item[]
     itemsFunc?: string
-    silent?: boolean
-    offlineSilent?: boolean
 }[]

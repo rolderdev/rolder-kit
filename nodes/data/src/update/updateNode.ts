@@ -56,6 +56,52 @@ export default jsNode(
 							else {
 								const sizeDbClasses: string[] = [];
 								p.scheme.map((i: any) => {
+									if (i.items?.length > 1000) sizeDbClasses.push(i.dbClass);
+								});
+								if (sizeDbClasses.length) {
+									return `You can update 1000 or less documents per request. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
+								} else return true;
+							}
+						}
+					}
+				}),
+				getPort({ plug: 'input', name: 'optimistic', displayName: 'Optimistic', group: 'Params', type: 'boolean', default: false })
+			],
+			outputs: [
+				...getPorts('output', ['updated', 'updating', 'data']),
+				getPort({
+					plug: 'output',
+					name: 'optimisticUpdated',
+					displayName: 'Optimistic updated',
+					group: 'Signals',
+					type: 'signal',
+					customs: {
+						dependsOn(p) {
+							return p.optimistic ? true : false;
+						}
+					}
+				})
+			]
+		},
+		'v1.2.0': {
+			module: {
+				dynamic: import('@packages/update-v1.2.0')
+			},
+			inputs: [
+				...getPorts('input', ['update']),
+				getPort({
+					plug: 'input',
+					name: 'scheme',
+					displayName: 'Scheme',
+					group: 'Params',
+					type: 'array',
+					customs: {
+						required: 'connection',
+						validate(p) {
+							if (!p.scheme) return true;
+							else {
+								const sizeDbClasses: string[] = [];
+								p.scheme.map((i: any) => {
 									if (i.items?.length > 20000) sizeDbClasses.push(i.dbClass);
 								});
 								if (sizeDbClasses.length) {
@@ -65,7 +111,22 @@ export default jsNode(
 						}
 					}
 				}),
-				getPort({ plug: 'input', name: 'optimistic', displayName: 'Optimistic', group: 'Params', type: 'boolean', default: false })
+				getPort({ 
+					plug: 'input', 
+					name: 'optimistic', 
+					displayName: 'Optimistic', 
+					group: 'Params', 
+					type: 'boolean', 
+					default: false 
+				}),
+				getPort({
+					plug: 'input',
+					name: 'silent',
+					displayName: 'Silent',
+					group: 'Params',
+					type: 'boolean',
+					default: false
+				})
 			],
 			outputs: [
 				...getPorts('output', ['updated', 'updating', 'data']),
