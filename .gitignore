@@ -4,5 +4,6 @@
 .moon/docker
 
 node_modules
-pnpm-lock.yaml
 build
+
+pnpm-lock.yaml
