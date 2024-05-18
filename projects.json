@@ -1,6 +1,6 @@
 {
-  "deploymentsDir": "/home/vezdexod/programsVezdexod/Roodl/projects/moonBuild",
-  "noodlProjectsDir": "/home/vezdexod/programsVezdexod/Roodl/projects/",
+  "deploymentsDir": "/home/decard/noodlDeployments",
+  "noodlProjectsDir": "/home/decard/projects/noodlProjects",
   "projects": {
     "startum-desktop": {
       "projectDir": "startum-desktop",
@@ -88,7 +88,7 @@
       ]
     },
     "tex": {
-      "projectDir": "testRKTableSelection",
+      "projectDir": "tex",
       "rolderKit": [
         "app",
         "mantine",
