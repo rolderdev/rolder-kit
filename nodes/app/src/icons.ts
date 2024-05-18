@@ -90,6 +90,8 @@ export {
 	IconKeyboard,
 	IconRestore,
 	IconForms,
-	IconArrowNarrowDown,
-	IconTextPlus
+	IconTextPlus, // Vezdexod
+	IconArrowNarrowUp, // Vezdexod
+	IconArrowNarrowDown, // Vezdexod
+	IconArchiveOff // Vezdexod
 } from '@tabler/icons-react';
