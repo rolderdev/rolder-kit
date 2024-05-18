@@ -1,6 +1,6 @@
 {
   "name": "rolder-kit",
-  "version": "v1.0.0-beta23",
+  "version": "v1.0.0-beta24",
   "private": true,
   "devDependencies": {
     "typescript": "5.4.5",
