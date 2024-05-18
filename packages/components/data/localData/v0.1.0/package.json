@@ -1,0 +1,20 @@
+{
+  "name": "@packages/local-data-v0.1.0",
+  "main": "localData.tsx",
+  "types": "localData.tsx",
+  "type": "module",
+  "dependencies": {
+    "@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*",
+    "rxjs": "^7.8.1",
+    "rxdb": "^15.20.0",
+    "@mantine/core": "6.0.21",
+    "kuzzle-sdk": "7.11.2",
+    "just-flush": "^2.3.0",
+    "just-last": "^3.2.0",
+    "just-map-object": "^2.3.0"
+  },
+  "devDependencies": {
+    "types": "workspace:*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@*"
+  }
+}

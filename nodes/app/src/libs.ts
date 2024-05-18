@@ -65,4 +65,7 @@ libs.deepEqual = deepEqual;
 import { get, getMany, set, setMany, update, del, delMany, keys } from 'idb-keyval';
 libs.indexedDb = { get, getMany, set, setMany, update, del, delMany, keys };
 
+import { nanoid } from 'nanoid';
+libs.nanoid = nanoid;
+
 export default libs;

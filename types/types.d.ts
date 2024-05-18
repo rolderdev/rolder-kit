@@ -1,6 +1,7 @@
-import { Kuzzle } from 'kuzzle-sdk';
-import { QueryClient } from '@tanstack/react-query';
-import { Dayjs } from 'dayjs';
+import type { Kuzzle } from 'kuzzle-sdk';
+import type { QueryClient } from '@tanstack/react-query';
+import type { Dayjs } from 'dayjs';
+import type { RxDatabase } from 'rxdb';
 
 type Rolder = {
 	states: {
@@ -40,6 +41,7 @@ type Rolder = {
 		mutate?(props: { action: 'create' | 'update' | 'delete'; scheme: any; silent?: boolean }): any;
 		[name: string]: any;
 	};
+	db?: RxDatabase;
 	utils: any;
 	user?: any;
 };
@@ -62,6 +64,12 @@ export type Item = {
 	content?: { [key: string]: any };
 	states?: { [key: string]: any };
 	_kuzzle_info?: {
+		author: string;
+		createdAt: number;
+		updater: string | null;
+		updatedAt: number | null;
+	};
+	sysinfo: {
 		author: string;
 		createdAt: number;
 		updater: string | null;

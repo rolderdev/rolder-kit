@@ -1,20 +1,13 @@
 {
   "name": "rolder-kit",
-  "version": "v1.0.0-beta23",
+  "version": "v1.0.0-rc0",
   "private": true,
   "devDependencies": {
     "typescript": "5.4.5",
-    "@rspack/core": "0.6.3",
-    "@rspack/cli": "0.6.3",
-    "rspack-manifest-plugin": "5.0.0-alpha0",
+    "@rspack/core": "0.6.5",
+    "@rspack/cli": "0.6.5",
+    "rspack-manifest-plugin": "5.0.0",
     "@types/react": "16.9.49",
     "@types/react-dom": "16.9.8"
-  },
-  "pnpm": {
-    "overrides": {
-      "docs>react": "18.2.0",
-      "docs>@types/react": "^18.2.48",
-      "docs>@types/react-dom": "^18.2.18"
-    }
-  }
+  }  
 }

@@ -152,8 +152,9 @@ import { defineNode } from '@noodl/noodl-sdk';
 import authNode from '@nodes/auth';
 import dataContext from '@nodes/data-context';
 import useDataNode from '@nodes/use-data';
+import localDataNode from '@nodes/local-data';
 
-const reactNodes = [authNode, dataNode, dataContext, useDataNode];
+const reactNodes = [authNode, dataNode, localDataNode, dataContext, useDataNode];
 
 import getDataNode from '@nodes/get-data';
 import logoutNode from '@nodes/logout';

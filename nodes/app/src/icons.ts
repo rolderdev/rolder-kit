@@ -89,5 +89,7 @@ export {
 	IconDotsVertical,
 	IconKeyboard,
 	IconRestore,
-	IconForms
+	IconForms,
+	IconArrowNarrowDown,
+	IconTextPlus
 } from '@tabler/icons-react';

@@ -17,7 +17,10 @@ module.exports = function (env) {
 	if (noodlProject) {
 		const noodlProjectConf = projectsJson.projects[noodlProject];
 		if (noodlProjectConf?.projectDir && noodlProjectConf?.rolderKit?.includes(nodeName))
-			outputPath = path.resolve(__dirname, `${projectsJson.noodlProjectsDir}/${noodlProjectConf.projectDir}/noodl_modules/${nodeName}`);
+			outputPath = path.resolve(
+				__dirname,
+				`${projectsJson.noodlProjectsDir}/${noodlProjectConf.projectDir}/noodl_modules/${nodeName}`
+			);
 	}
 
 	return {
@@ -46,7 +49,7 @@ module.exports = function (env) {
 				}
 			}),
 			new rspack.DefinePlugin({
-				DEVMODE: env.noodlDev ? true : false
+				DEVMODE: env.devMode ? true : false
 			})
 		],
 		module: {

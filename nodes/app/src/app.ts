@@ -55,6 +55,8 @@ import { getCustomEnumType, getPort } from '@packages/port';
 import { reactNode } from '@packages/node';
 
 import v140 from '@packages/app-v1.4.0';
+import v200 from '@packages/app-v2.0.0';
+import getEnum from '@packages/port/src/funcs/getEnum';
 
 Noodl.defineModule({
 	reactNodes: [
@@ -62,10 +64,81 @@ Noodl.defineModule({
 			'App',
 			{
 				'v1.4.0': {
-					module: {
-						static: v140
-					},
+					module: { static: v140 },
 					inputs: [
+						getPort({
+							plug: 'input',
+							name: 'colorScheme',
+							displayName: 'Color scheme',
+							group: 'Style',
+							type: getCustomEnumType(['light', 'dark', 'auto']),
+							default: 'light',
+							customs: { required: 'connection' }
+						}),
+						getPort({
+							plug: 'input',
+							name: 'setColorScheme',
+							displayName: 'Set color scheme',
+							group: 'Signals',
+							type: 'signal',
+							customs: {
+								dependsOn(props) {
+									return props.colorScheme === 'auto' ? false : true;
+								}
+							}
+						}),
+						getPort({
+							plug: 'input',
+							name: 'toggleColorScheme',
+							displayName: 'Toggle color scheme',
+							group: 'Signals',
+							type: 'signal',
+							customs: {
+								dependsOn(props) {
+									return props.colorScheme === 'auto' ? false : true;
+								}
+							}
+						})
+					],
+					outputs: [
+						getPort({
+							plug: 'output',
+							name: 'colorScheme',
+							displayName: 'Color scheme',
+							group: 'Style',
+							type: 'string',
+							customs: {
+								dependsOn(props) {
+									return props.colorScheme === 'auto' ? false : true;
+								}
+							}
+						}),
+						getPort({
+							plug: 'output',
+							name: 'colorSchemeChanged',
+							displayName: 'Color scheme changed',
+							group: 'Signals',
+							type: 'signal',
+							customs: {
+								dependsOn(props) {
+									return props.colorScheme === 'auto' ? false : true;
+								}
+							}
+						})
+					]
+				},
+				'v2.0.0': {
+					hashTag: '#expreimental',
+					module: { static: v200 },
+					inputs: [
+						getPort({
+							plug: 'input',
+							name: 'multiInstance',
+							displayName: 'Multi local DB instance',
+							group: 'Params',
+							type: 'boolean',
+							default: true
+						}),
 						getPort({
 							plug: 'input',
 							name: 'colorScheme',
@@ -129,8 +202,7 @@ Noodl.defineModule({
 				}
 			},
 			{
-				allowChildren: true,
-				docs: 'https://docs.rolder.app/docs/project/App.html'
+				allowChildren: true
 			}
 		)
 	],
@@ -146,6 +218,16 @@ Noodl.defineModule({
 			name: 'projectVersion',
 			type: 'string',
 			displayName: 'Project version',
+			group: 'Rolder'
+		},
+		{
+			name: 'environment',
+			type: {
+				name: 'enum',
+				enums: getEnum(['d2', 't2', 's2', 'p2'], true)
+			},
+			default: 'd2',
+			displayName: 'Project environment',
 			group: 'Rolder'
 		},
 		{
