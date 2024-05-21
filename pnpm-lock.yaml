@@ -809,6 +809,9 @@ importers:
       '@packages/table-v1.2.1':
         specifier: workspace:*
         version: link:../../../../../../packages/components/ui/mantine/organisms/table/v1.2.1
+      '@packages/table-v1.2.2':
+        specifier: workspace:*
+        version: link:../../../../../../packages/components/ui/mantine/organisms/table/v1.2.2
       '@packages/table-v1.3.0':
         specifier: workspace:*
         version: link:../../../../../../packages/components/ui/mantine/organisms/table/v1.3.0

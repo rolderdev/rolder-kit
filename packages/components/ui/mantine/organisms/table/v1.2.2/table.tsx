@@ -85,12 +85,12 @@ export default forwardRef(function (props: Props, ref) {
     const tableSelectionScopeInternalValue = selectionScopeStore.get(tableSelectionScopeInternalAtom)
     const tableHandlerAtomValue = selectionScopeStore.get(tableHandlerAtom)
 
-    console.log("УРОВЕНЬ 1")
-    console.log("tableSelectionScopeValue", tableSelectionScopeValue)
-    console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
-    console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
-    console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
-    console.log("tableHandlerAtomValue", tableHandlerAtomValue)
+    // console.log("УРОВЕНЬ 1")
+    // console.log("tableSelectionScopeValue", tableSelectionScopeValue)
+    // console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
+    // console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
+    // console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
+    // console.log("tableHandlerAtomValue", tableHandlerAtomValue)
 
     // Задаем функции, по перезаписыванию значений в атомах данного store
     const setTableSelectionScopeValue = (value: TableSelectionScopeValues) => { selectionScopeStore.set(tableSelectionScopeAtom, value) }
@@ -123,9 +123,9 @@ export default forwardRef(function (props: Props, ref) {
     // Флаг о том, что состояния берем из scope
     const useScopeStates = expansion.enabled && selection.multi.enabled
 
-    console.log("/////////////////// уровень:", items?.[0]?.content?.level)
-    console.log("/////////////////// tableId:", tableId)
-    console.log("tableSelectionScopeValue", tableSelectionScopeValue)
+    // console.log("/////////////////// уровень:", items?.[0]?.content?.level)
+    // console.log("/////////////////// tableId:", tableId)
+    // console.log("tableSelectionScopeValue", tableSelectionScopeValue)
 
     // Отрабатывает при присвоении tableId
     useEffect(() => {
@@ -178,13 +178,16 @@ export default forwardRef(function (props: Props, ref) {
     // }, [items])
 
     function checkParentRef(parentTableItemId: string, items: Item[]) {
+        // console.log("function checkParentRef(parentTableItemId: string, items: Item[]) {")
         // Запишем id itemов по id своего родителя
         // Если запись с родителем отсутсвует, то создаем пустой массив
         // а если будет, то добавим информацию к данным с братской таблицы
         if (tableSelectionChildIdsByParentIdValue[parentTableItemId] === undefined) {
+            // console.log("tableSelectionChildIdsByParentIdValue[parentTableItemId] = []")
             tableSelectionChildIdsByParentIdValue[parentTableItemId] = []
         }
 
+        // console.log("items.length", items.length)
         items?.forEach(item => {
             if (item?.id) {
                 if (!tableSelectionChildIdsByParentIdValue[parentTableItemId]?.includes(item?.id)) {
@@ -192,12 +195,16 @@ export default forwardRef(function (props: Props, ref) {
                 }
                 if (tableSelectionScopeInternalValue['tableIdByItemId'][item.id] === undefined) {
                     tableSelectionScopeInternalValue['tableIdByItemId'][item.id] = tableId
-                    console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'])
-                    console.log("tableSelectionScopeInternalValue['tableIdByItemId'][item.id]", tableSelectionScopeInternalValue['tableIdByItemId'][item.id])
+                    // console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'])
+                    // console.log("tableSelectionScopeInternalValue['tableIdByItemId'][item.id]", tableSelectionScopeInternalValue['tableIdByItemId'][item.id])
                 }
             }
         })
     }
+
+    // console.log("useScopeStates", useScopeStates)
+    // console.log("tableId", tableId)
+    // console.log("items", items)
 
     // Отрабатывает при получении items
     // useEffect(() => {
