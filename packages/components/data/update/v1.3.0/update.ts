@@ -85,7 +85,7 @@ export default {
 
       if (Array.isArray(scheme)) {
 
-        const startTime2 = new Date()
+        // const startTime2 = new Date()
 
         // Задаем размер чанка
         const chunkSize = 100
@@ -108,7 +108,7 @@ export default {
         // Отщипываем крайний объект первого класса
         const endItem = scheme?.[0]?.items?.pop()
 
-        let countItems = 0
+        // let countItems = 0
 
         // Перебираем схемы классов
         for (const iScheme of scheme) {
@@ -158,10 +158,10 @@ export default {
             refresh: "false"
           })
 
-          // Для отладки
-          if (true) {
-            console.log(`Обновлено записей ${countItems += 100}`)
-          }
+          // // Для отладки
+          // if (true) {
+          //   console.log(`Обновлено записей ${countItems += 100}`)
+          // }
 
           // Добавляем результаты
           for (const dbClass in data) {
@@ -219,8 +219,8 @@ export default {
         }
 
 
-        const endTime = new Date()
-        console.log(`Продолжительность ${(endTime.getTime() - startTime2.getTime()) / 1000} секунд`)
+        // const endTime = new Date()
+        // console.log(`Продолжительность ${(endTime.getTime() - startTime2.getTime()) / 1000} секунд`)
 
         // Возвращаем результат обновления и выставляем флаг о том, что оно завершилось
         sendOutputs(props.noodlNode, [
