@@ -405,7 +405,6 @@ export default forwardRef(function (props: Props, ref) {
         selectionScopeStoreValue[scopeId].set(tableHandlerAtom, {})
         setSelectionScopeStoreValue(selectionScopeStoreValue)
     }
-    console.log("selectionScopeStoreValue[scopeId]", selectionScopeStoreValue[scopeId])
 
     // При внешнем триггере reset очищаем молекулу
     const localRef = useRef<any>(null)
