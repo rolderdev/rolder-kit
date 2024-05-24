@@ -10,7 +10,7 @@
     "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",    
     "react-error-boundary": "4.0.13",
     "@sentry/browser": "7.112.2",    
-    "rxdb": "^15.20.0",
+    "rxdb": "^15.21.0",
     "@capacitor/network": "^6.0.0"
   },
   "devDependencies": {
