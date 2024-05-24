@@ -26,9 +26,9 @@ import {
 
 const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) { 
     
-    console.log("========================================================================")
-    console.log("========================================================================")
-    console.log("========================================================================")
+    // console.log("========================================================================")
+    // console.log("========================================================================")
+    // console.log("========================================================================")
 
     // Получаем store из своего provider
     const selectionScopeStore = useStore()
@@ -66,9 +66,9 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
         setTableHandlerAtomValue(tableHandlerAtomValue)
     }
 
-    console.log("/////////////////// уровень: root")
-    console.log("tableSelectionScopeValue", tableSelectionScopeValue)
-    console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
+    // console.log("/////////////////// уровень: root")
+    // console.log("tableSelectionScopeValue", tableSelectionScopeValue)
+    // console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
 
 
     // Обновим статус у всех детей нажатого items и их детей
@@ -413,7 +413,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
 
         reset() {
             // resetScope()
-            console.log("REF CHILD TRIGGERED")
+            // console.log("REF CHILD TRIGGERED")
 
             // Сбросим селекты у всех записей
             for (const itemId in tableSelectionScopeValue) {
@@ -448,16 +448,16 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
 // Что за forwardRef и как он работатет
 export default forwardRef(function (props: Props, ref) {
 
-    console.log("props", props)
-    console.log("========================================================================")
-    console.log("========================================================================")
-    console.log("========================================================================")
-    console.log("ID КОМПОНЕНТЫ", props?.noodlNode?.id)
+    // console.log("props", props)
+    // console.log("========================================================================")
+    // console.log("========================================================================")
+    // console.log("========================================================================")
+    // console.log("ID КОМПОНЕНТЫ", props?.noodlNode?.id)
     
     const scopeId = props?.noodlNode?.id
     
     const [selectionScopeStoreValue, setSelectionScopeStoreValue] = useAtom(selectionScopeStoreAtom)
-    console.log("selectionScopeStoreValue[scopeId]", selectionScopeStoreValue[scopeId])
+    // console.log("selectionScopeStoreValue[scopeId]", selectionScopeStoreValue[scopeId])
 
     // Создаем/получаем store
     // Передаем его дочерним нодам и используем, для получения значений из atom
@@ -480,19 +480,19 @@ export default forwardRef(function (props: Props, ref) {
     //     selectionScopeStoreValue[scopeId] = useStore()
     // }
 
-    console.log("РЕНДЕРИТСЯ БАТЯ SCOPE")
-    console.log("tableSelectionScopeValue", selectionScopeStoreValue[scopeId].get(tableSelectionScopeAtom))
-    console.log("tableSelectionChildIdsByParentIdValue", selectionScopeStoreValue[scopeId].get(tableSelectionChildIdsByParentIdAtom))
-    console.log("tableSelectionClickItemIdValue", selectionScopeStoreValue[scopeId].get(tableSelectionClickItemIdAtom))
-    console.log("tableSelectionScopeInternalValue", selectionScopeStoreValue[scopeId].get(tableSelectionScopeInternalAtom))
-    console.log("tableHandlerAtomValue", selectionScopeStoreValue[scopeId].get(tableHandlerAtom))
+    // console.log("РЕНДЕРИТСЯ БАТЯ SCOPE")
+    // console.log("tableSelectionScopeValue", selectionScopeStoreValue[scopeId].get(tableSelectionScopeAtom))
+    // console.log("tableSelectionChildIdsByParentIdValue", selectionScopeStoreValue[scopeId].get(tableSelectionChildIdsByParentIdAtom))
+    // console.log("tableSelectionClickItemIdValue", selectionScopeStoreValue[scopeId].get(tableSelectionClickItemIdAtom))
+    // console.log("tableSelectionScopeInternalValue", selectionScopeStoreValue[scopeId].get(tableSelectionScopeInternalAtom))
+    // console.log("tableHandlerAtomValue", selectionScopeStoreValue[scopeId].get(tableHandlerAtom))
 
 
     // При внешнем триггере reset очищаем молекулу
     const localRef = useRef<any>(null)
     useImperativeHandle(ref, () => ({
         reset() {
-            console.log("REF PARENT TRIGGERED")
+            // console.log("REF PARENT TRIGGERED")
             localRef.current?.reset()
         },
     }), [])
