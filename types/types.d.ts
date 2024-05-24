@@ -37,7 +37,12 @@ type Rolder = {
 			MantineError(title: string, message?: string, autoClose?: boolean | number): void;
 		};
 		dayjs?: Dayjs;
-		mutate?(props: { action: 'create' | 'update' | 'delete'; scheme: any; silent?: boolean }): any;
+		mutate?(props: { 
+			action: 'create' | 'update' | 'delete'; 
+			scheme: any; 
+			silent?: boolean
+			refresh?: "wait_for" | "false" // Vezdexod
+		}): any;
 		[name: string]: any;
 	};
 	utils: any;
