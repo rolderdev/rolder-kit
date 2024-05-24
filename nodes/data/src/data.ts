@@ -6,9 +6,7 @@ const dataNode = reactNode(
 	'Data',
 	{
 		'v1.0.0': {
-			module: {
-				dynamic: lazy(() => import('@packages/data-v1.0.0'))
-			},
+			module: { dynamic: lazy(() => import('@packages/data-v1.0.0')) },
 			inputs: [
 				getPort({
 					plug: 'input',

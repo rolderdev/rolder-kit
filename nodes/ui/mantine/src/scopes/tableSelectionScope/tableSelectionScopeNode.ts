@@ -6,6 +6,7 @@ export default reactNode(
 	'TableSelectionScope',
 	{
 		'v1.0.0': {
+			hashTag: '#pre-release',
 			module: {
 				dynamic: lazy(() => import('@packages/table-selection-scope-v1.0.0'))
 			},
@@ -34,6 +35,7 @@ export default reactNode(
 			]
 		},
 		'v1.1.0': {
+			hashTag: '#pre-release',
 			module: {
 				dynamic: lazy(() => import('@packages/table-selection-scope-v1.1.0'))
 			},

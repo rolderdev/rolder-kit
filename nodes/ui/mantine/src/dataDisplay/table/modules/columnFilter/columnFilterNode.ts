@@ -8,6 +8,7 @@ export default reactNode(
 	'ColumnFilter',
 	{
 		'v1.0.0': {
+			hashTag: '#deprecated',
 			module: { static: v100 },
 			inputs: getPorts('input', [
 				'table2ColumnIndex',

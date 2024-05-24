@@ -7,7 +7,7 @@
     "@tanstack/react-query": "4.36.1",
     "nanostores": "0.10.2",
     "bunshi": "2.0.2",
-    "@mantine/hooks": "6.0.21",
+    "@mantine/hooks": "^6.0.21",
     "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*"
   },
   "devDependencies": {

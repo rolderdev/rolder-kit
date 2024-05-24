@@ -24,6 +24,9 @@ module.exports = function (env) {
 	}
 
 	return {
+		experiments: {
+			css: true
+		},
 		context: __dirname,
 		stats: { preset: 'errors-only', timings: true },
 		entry: { [pJson.name]: `./src/${nodeName}.ts` },
@@ -91,6 +94,15 @@ module.exports = function (env) {
 							}
 						}
 					}
+				},
+				{
+					test: /\.css$/,
+					use: [
+						{
+							loader: 'postcss-loader'
+						}
+					],
+					type: 'css/auto'
 				}
 			]
 		}

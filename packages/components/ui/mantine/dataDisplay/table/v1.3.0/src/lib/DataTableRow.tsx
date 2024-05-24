@@ -5,6 +5,7 @@ import DataTableRowExpansion from './DataTableRowExpansion';
 import DataTableRowSelectorCell from './DataTableRowSelectorCell';
 import { useRowExpansion } from './hooks';
 import type { DataTableCellClickHandler, DataTableColumn, DataTableDefaultColumnProps } from './types';
+import React from 'react';
 
 const useStyles = createStyles((theme) => {
   const baseColor = theme.colors[theme.primaryColor][6];

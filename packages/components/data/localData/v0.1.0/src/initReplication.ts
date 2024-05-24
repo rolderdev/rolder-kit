@@ -1,38 +1,61 @@
 import type { RxCollectionBase, RxReplicationPullStreamItem } from 'rxdb';
 import { Subject } from 'rxjs';
-import { replicateRxCollection } from 'rxdb/plugins/replication';
+import { RxReplicationState, replicateRxCollection } from 'rxdb/plugins/replication';
 import pullHandler from './pullHandler';
 import pushHandler from './pushHandler';
 import map from 'just-map-object';
+import type { Props } from '../types';
 
-export default async function (composedPullsStremUrl: string, collections: Record<string, RxCollectionBase<any>>) {
+let firstTime = true;
+
+export default async function (
+	composedPullsStremUrl: string,
+	collections: Record<string, RxCollectionBase<any>>,
+	collectionsDefinition: Props['collectionsDefinition']
+) {
+	let replicationStates: { [dbClass: string]: RxReplicationState<any, any> } = {};
+
 	const pullStream$ = new Subject<RxReplicationPullStreamItem<any, any>>();
-	//const eventSource = new EventSource('http://localhost:8512/_/pullStream', { withCredentials: true });
 	const eventSource = new EventSource(composedPullsStremUrl);
 	eventSource.onmessage = (event) => {
 		const eventData = JSON.parse(event.data);
 
-		pullStream$.next({
-			documents: eventData.documents,
-			checkpoint: eventData.checkpoint
-		});
+		if (Object.keys(collections).includes(eventData)) setTimeout(() => replicationStates[eventData].reSync(), 2000);
+		else
+			pullStream$.next({
+				documents: eventData.documents,
+				checkpoint: eventData.checkpoint
+			});
 	};
-	eventSource.onerror = () => pullStream$.next('RESYNC');
 
-	map(collections, (_, collection) => {
-		const rs = replicateRxCollection({
+	eventSource.onerror = () => {
+		setTimeout(() => pullStream$.next('RESYNC'), 1000);
+	};
+
+	const connected = R.db?.states.network.connected$;
+	connected.subscribe((connected: boolean) => {
+		if (connected && !firstTime) setTimeout(() => pullStream$.next('RESYNC'), 1000);
+		if (firstTime) firstTime = false;
+	});
+
+	map(collections, async (_, collection) => {
+		const fetchScheme = collectionsDefinition[collection.name].fetchScheme;
+
+		const replicationState = replicateRxCollection({
 			collection,
 			replicationIdentifier: collection.name,
 			pull: {
-				handler: pullHandler,
-				batchSize: 1000,
+				handler: (checkpoint) => pullHandler(checkpoint, collection.name, fetchScheme),
+				batchSize: 1000000,
 				stream$: pullStream$.asObservable()
 			},
 			push: {
-				handler: pushHandler
+				handler: (changeRows) => pushHandler(collection.name, changeRows)
 			}
 		});
 
-		rs.error$.subscribe((err) => console.log('error$', err));
+		replicationStates[collection.name] = replicationState;
+
+		replicationState.error$.subscribe((e) => log.info('Rx replication error', e));
 	});
 }

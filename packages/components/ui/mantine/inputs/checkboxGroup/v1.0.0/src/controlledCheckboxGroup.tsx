@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { Box, Checkbox, Group, Stack, Text } from "@mantine/core"
-import { Props } from "../types"
+import type { Props } from "../types"
 import React from "react"
 import { sendOutput, sendSignal } from '@packages/port-send'
 import convertForSelectInputs from '@packages/convert-for-select-inputs'

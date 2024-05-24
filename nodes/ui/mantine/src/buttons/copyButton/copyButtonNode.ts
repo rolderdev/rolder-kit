@@ -7,11 +7,22 @@ export default reactNode(
 	'CopyButton',
 	{
 		'v0.1.0': {
+			hashTag: '#pre-release',
 			module: { static: v010 },
 			inputs: [
 				...inputGroups.Margins,
 				...inputGroups.Icon,
-				...getPorts('input', ['customProps', 'propsFunction', 'useScope', 'label', 'disabled', 'size', 'radius', 'color', 'loading']),
+				...getPorts('input', [
+					'customProps',
+					'propsFunction',
+					'useScope',
+					'label',
+					'disabled',
+					'size',
+					'radius',
+					'color',
+					'loading'
+				]),
 				getPort({
 					plug: 'input',
 					name: 'scope',
@@ -35,7 +46,13 @@ export default reactNode(
 					default: 'filled',
 					customs: { required: 'connection' }
 				}),
-				getPort({ plug: 'input', name: 'buttonType', displayName: 'Button type', group: 'Params', type: getCustomEnumType(['submit']) }),
+				getPort({
+					plug: 'input',
+					name: 'buttonType',
+					displayName: 'Button type',
+					group: 'Params',
+					type: getCustomEnumType(['submit'])
+				}),
 				getPort({
 					plug: 'input',
 					name: 'copyValue',

@@ -49,7 +49,9 @@ export const reactNode = (nodeName: string, versions: CompVersions, params?: Par
         getReactComponent() {
             return forwardRef(function (props: BaseReactProps, ref) {
                 const localRef = useRef<any>(null)
-                useImperativeHandle(ref, () => ({ signal(name: string) { localRef.current?.[name]() } }))
+                useImperativeHandle(ref, () => ({
+                    signal(name: string) { setTimeout(() => localRef.current?.[name]()) }
+                }))
                 const version = props.version
 
                 const p = version ? getProps(versions, props) : {}

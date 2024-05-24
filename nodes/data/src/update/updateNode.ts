@@ -5,9 +5,8 @@ export default jsNode(
 	'update',
 	{
 		'v0.3.0': {
-			module: {
-				dynamic: import('@packages/update-v0.3.0')
-			},
+			hashTag: '#deprecated',
+			module: { dynamic: import('@packages/update-v0.3.0') },
 			inputs: [
 				...getPorts('input', ['update']),
 				getPort({
@@ -25,16 +24,30 @@ export default jsNode(
 			]
 		},
 		'v1.0.0': {
+			hashTag: '#deprecated',
 			module: {
 				dynamic: import('@packages/update-v1.0.0')
 			},
 			inputs: [
 				...getPorts('input', ['update', 'scheme']),
-				getPort({ plug: 'input', name: 'optimistic', displayName: 'Optimistic', group: 'Params', type: 'boolean', default: false })
+				getPort({
+					plug: 'input',
+					name: 'optimistic',
+					displayName: 'Optimistic',
+					group: 'Params',
+					type: 'boolean',
+					default: false
+				})
 			],
 			outputs: [
 				...getPorts('output', ['updated', 'updating', 'data']),
-				getPort({ plug: 'output', name: 'optimisticUpdated', displayName: 'Optimistic updated', group: 'Signals', type: 'signal' })
+				getPort({
+					plug: 'output',
+					name: 'optimisticUpdated',
+					displayName: 'Optimistic updated',
+					group: 'Signals',
+					type: 'signal'
+				})
 			]
 		},
 		'v1.1.0': {
@@ -65,7 +78,14 @@ export default jsNode(
 						}
 					}
 				}),
-				getPort({ plug: 'input', name: 'optimistic', displayName: 'Optimistic', group: 'Params', type: 'boolean', default: false })
+				getPort({
+					plug: 'input',
+					name: 'optimistic',
+					displayName: 'Optimistic',
+					group: 'Params',
+					type: 'boolean',
+					default: false
+				})
 			],
 			outputs: [
 				...getPorts('output', ['updated', 'updating', 'data']),
@@ -84,9 +104,8 @@ export default jsNode(
 			]
 		},
 		'v1.2.0': {
-			module: {
-				dynamic: import('@packages/update-v1.2.0')
-			},
+			hashTag: '#pre-release',
+			module: { dynamic: import('@packages/update-v1.2.0') },
 			inputs: [
 				...getPorts('input', ['update']),
 				getPort({
@@ -111,13 +130,13 @@ export default jsNode(
 						}
 					}
 				}),
-				getPort({ 
-					plug: 'input', 
-					name: 'optimistic', 
-					displayName: 'Optimistic', 
-					group: 'Params', 
-					type: 'boolean', 
-					default: false 
+				getPort({
+					plug: 'input',
+					name: 'optimistic',
+					displayName: 'Optimistic',
+					group: 'Params',
+					type: 'boolean',
+					default: false
 				}),
 				getPort({
 					plug: 'input',

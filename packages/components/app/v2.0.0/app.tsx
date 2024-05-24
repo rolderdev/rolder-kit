@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle } from "react";
 import { type Props } from "./types";
-import convertColor from "@packages/convertColor";
 import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import * as Sentry from "@sentry/browser";
@@ -39,7 +38,7 @@ export default forwardRef(function (props: Props, ref) {
   const { sentryDsn } = Noodl.getProjectSettings();
   const { noodlNode, multiInstance, colorScheme: colorSchemeProp } = props;
 
-  const localDbInited = initLocalDb(multiInstance)
+  const localDbInited = initLocalDb(noodlNode, multiInstance)
   useEffect(() => {
     // logs
     if (sentryDsn) {
@@ -72,7 +71,7 @@ export default forwardRef(function (props: Props, ref) {
         style={{
           width: '100%',
           height: '100%',
-          backgroundColor: convertColor(colorScheme === "dark" ? "dark.7" : "gray.0"),
+          //backgroundColor: convertColor(colorScheme === "dark" ? "dark.7" : "gray.0"),
         }}
       >
         {localDbInited ? props.children : null}

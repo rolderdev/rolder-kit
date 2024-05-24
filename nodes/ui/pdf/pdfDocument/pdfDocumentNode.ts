@@ -9,11 +9,13 @@ export default reactNode(
 	'PdfDocument',
 	{
 		'v1.0.0': {
+			hashTag: '#deprecated',
 			module: { static: v100 },
 			inputs: getPorts('input', ['create']),
 			outputs: getPorts('output', ['creating', 'created', 'blob'])
 		},
 		'v1.1.0': {
+			hashTag: '#deprecated',
 			module: { static: v110 },
 			inputs: [
 				...getPorts('input', ['create']),

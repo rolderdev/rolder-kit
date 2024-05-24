@@ -3,7 +3,7 @@
   "main": "app.tsx",
   "types": "app.tsx",
   "type": "module",
-  "dependencies": {
+  "dependencies": {    
     "@packages/convertColor": "workspace:@packages/convert-color-v0.3.0@*",
     "@mantine/core": "6.0.21",
     "@mantine/hooks": "6.0.21",

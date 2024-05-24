@@ -3,9 +3,8 @@ import { getPort, getPorts } from '@packages/port';
 
 export default jsNode('create', {
 	'v0.4.0': {
-		module: {
-			dynamic: import('@packages/create-v0.4.0')
-		},
+		hashTag: '#deprecated',
+		module: { dynamic: import('@packages/create-v0.4.0') },
 		inputs: [
 			...getPorts('input', ['create']),
 			getPort({
@@ -23,24 +22,13 @@ export default jsNode('create', {
 		]
 	},
 	'v1.0.0': {
-		module: {
-			dynamic: import(
-				/* webpackPrefetch: true */
-				/* webpackPreload: true */
-				'@packages/create-v1.0.0'
-			)
-		},
+		module: { dynamic: import('@packages/create-v1.0.0') },
 		inputs: getPorts('input', ['create', 'scheme']),
 		outputs: getPorts('output', ['created', 'creating', 'data'])
 	},
 	'v1.1.0': {
-		module: {
-			dynamic: import(
-				/* webpackPrefetch: true */
-				/* webpackPreload: true */
-				'@packages/create-v1.1.0'
-			)
-		},
+		hashTag: '#pre-release',
+		module: { dynamic: import('@packages/create-v1.1.0') },
 		inputs: [
 			...getPorts('input', ['create']),
 			getPort({

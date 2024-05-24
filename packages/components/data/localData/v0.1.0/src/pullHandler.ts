@@ -1,14 +1,17 @@
 import { getKuzzle } from '@packages/get-kuzzle';
-import flush from 'just-flush';
 import last from 'just-last';
 import type { ReplicationPullHandlerResult } from 'rxdb';
 import type { Item } from 'types';
+import { dbClassVersion } from '@packages/get-dbclass-version';
+import clone from 'just-clone';
 
 export default async function pullHandler(
-	checkpoint: { id: string; updatedAt?: number; scrollId?: string } | undefined,
-	batchSize: number
+	checkpoint: { id: string; updatedAt?: number } | undefined,
+	dbClass: string,
+	fetchScheme: any[]
 ): Promise<ReplicationPullHandlerResult<any, any>> {
 	const K = await getKuzzle();
+
 	if (!K) {
 		return Promise.reject();
 	}
@@ -20,62 +23,50 @@ export default async function pullHandler(
 		return Promise.reject();
 	}
 
-	const sort = [{ '_kuzzle_info.updatedAt': 'desc' }, { _id: 'desc' }];
-	let query: any = {};
-	const options = { size: batchSize, sort, lang: 'koncorde', scroll: '60s' };
-	let response: any = {};
+	const dbClassV = dbClassVersion(dbClass);
+	if (!dbClassV) return Promise.reject();
 
-	// first run
-	if (!checkpoint?.scrollId && !checkpoint?.updatedAt) {
-		console.log('first run', checkpoint);
-		response = await K.document.search(dbName, 'task_v5', { query }, options);
-	}
+	const startTime = performance.now();
 
-	// rerun
-	if (!checkpoint?.scrollId && checkpoint?.updatedAt) {
-		console.log('rerun', checkpoint);
-		query.range = { '_kuzzle_info.updatedAt': { gt: checkpoint.updatedAt } };
-		response = await K.document.search(dbName, 'task_v5', { query }, options);
-	}
+	let fs: any = clone(fetchScheme);
 
-	// kuzzle scroll
-	if (checkpoint?.scrollId) {
-		console.log('kuzzle scroll', checkpoint);
-		response = await K.query({
-			controller: 'document',
-			action: 'scroll',
-			scrollId: checkpoint.scrollId
-		});
-	}
+	fs = fs.map((i: any) => {
+		i.sorts = [{ '_kuzzle_info.updatedAt': 'asc' }, { '_kuzzle_info.createdAt': 'asc' }];
 
-	const hits = response.result?.hits || response.hits;
-	const items: Item[] = hits.map((i: any) => {
-		let item = {
-			id: i._id,
-			sysinfo: flush(i._source._kuzzle_info)
-		};
-		delete i._id;
-		delete i._source._kuzzle_info;
-		item = { ...item, ...i._source };
-		return item;
+		if (i.dbClass === dbClass && checkpoint?.updatedAt) {
+			if (i.filters?.and) {
+				i.filters.and.push({
+					or: [
+						{ range: { '_kuzzle_info.updatedAt': { gt: checkpoint.updatedAt } } },
+						{ range: { '_kuzzle_info.createdAt': { gt: checkpoint.updatedAt } } }
+					]
+				});
+			} else {
+				i.filters = {
+					or: [
+						{ range: { '_kuzzle_info.updatedAt': { gt: checkpoint.updatedAt } } },
+						{ range: { '_kuzzle_info.createdAt': { gt: checkpoint.updatedAt } } }
+					]
+				};
+			}
+		}
+
+		return i;
 	});
 
-	console.log('items', items);
+	const response = await K.query({ controller: 'rolder', action: 'fetchAll', dbName, fetchScheme: fs });
+	const items: Item[] = response.result[dbClass].items;
 
-	const newCheckpoint =
-		items.length === 0
-			? {
-					id: checkpoint?.id,
-					updatedAt: checkpoint?.updatedAt,
-					scrollId: undefined
-			  }
-			: {
-					id: last(items).id,
-					updatedAt: last(items).sysinfo.updatedAt || last(items).sysinfo.createdAt,
-					scrollId: response.result?.scrollId as string
-			  };
+	const newCheckpoint = {
+		id: items.length === 0 ? checkpoint?.id : last(items).id,
+		updatedAt: items.length === 0 ? checkpoint?.updatedAt : last(items)?.sysinfo.updatedAt || last(items)?.sysinfo.createdAt
+	};
 
-	console.log('newCheckpoint', newCheckpoint);
+	await R.db?.states.replication.set(dbClass, () => true);
+
+	log.end(`${dbClass} replicated`, startTime);
+	log.info(`${dbClass} replicated`, { newItems: items });
+
 	return {
 		documents: items,
 		checkpoint: newCheckpoint

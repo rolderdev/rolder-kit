@@ -84,6 +84,7 @@ export default reactNode(
 			outputs: [
 				getPort({ plug: 'output', name: 'userRole', displayName: 'User role', group: 'Params', type: 'string' }),
 				getPort({ plug: 'output', name: 'signedIn', displayName: 'Signed in', group: 'Signals', type: 'signal' }),
+				getPort({ plug: 'output', name: 'signingIn', displayName: 'Signing in', group: 'States', type: 'boolean' }),
 				getPort({ plug: 'output', name: 'signedOut', displayName: 'Signed out', group: 'Signals', type: 'signal' }),
 				getPort({ plug: 'output', name: 'signInFailed', displayName: 'Sign in failed', group: 'Signals', type: 'signal' }),
 				getPort({ plug: 'output', name: 'error', displayName: 'Error', group: 'Params', type: 'string' })

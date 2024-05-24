@@ -85,12 +85,12 @@ export default forwardRef(function (props: Props, ref) {
     const tableSelectionScopeInternalValue = selectionScopeStore.get(tableSelectionScopeInternalAtom)
     const tableHandlerAtomValue = selectionScopeStore.get(tableHandlerAtom)
 
-    console.log("УРОВЕНЬ 1")
+    /* console.log("УРОВЕНЬ 1")
     console.log("tableSelectionScopeValue", tableSelectionScopeValue)
     console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
     console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
     console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
-    console.log("tableHandlerAtomValue", tableHandlerAtomValue)
+    console.log("tableHandlerAtomValue", tableHandlerAtomValue) */
 
     // Задаем функции, по перезаписыванию значений в атомах данного store
     const setTableSelectionScopeValue = (value: TableSelectionScopeValues) => { selectionScopeStore.set(tableSelectionScopeAtom, value) }
@@ -123,9 +123,9 @@ export default forwardRef(function (props: Props, ref) {
     // Флаг о том, что состояния берем из scope
     const useScopeStates = expansion.enabled && selection.multi.enabled
 
-    console.log("/////////////////// уровень:", items?.[0]?.content?.level)
+    /* console.log("/////////////////// уровень:", items?.[0]?.content?.level)
     console.log("/////////////////// tableId:", tableId)
-    console.log("tableSelectionScopeValue", tableSelectionScopeValue)
+    console.log("tableSelectionScopeValue", tableSelectionScopeValue) */
 
     // Отрабатывает при присвоении tableId
     useEffect(() => {
@@ -154,7 +154,7 @@ export default forwardRef(function (props: Props, ref) {
     }, [tableId])
 
     useEffect(() => {
-        console.log("ПРИЛЕТЕЛИ ITEMS")
+        /* console.log("ПРИЛЕТЕЛИ ITEMS") */
 
         if (useScopeStates && tableId !== '' && tableId !== undefined) {
             // Запишем id itemов по id своего родителя
@@ -167,8 +167,8 @@ export default forwardRef(function (props: Props, ref) {
                 if (item?.id) {
                     tableSelectionChildIdsByParentIdValue[parentTableItemId]?.push(item.id)
                     tableSelectionScopeInternalValue['tableIdByItemId'][item.id] = tableId
-                    console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'])
-                    console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'][item.id])
+                    /*  console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'])
+                     console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'][item.id]) */
                 }
             })
             setTableSelectionChildIdsByParentIdValue(tableSelectionChildIdsByParentIdValue)

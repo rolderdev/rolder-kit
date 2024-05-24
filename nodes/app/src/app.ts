@@ -176,6 +176,20 @@ Noodl.defineModule({
 					outputs: [
 						getPort({
 							plug: 'output',
+							name: 'networkType',
+							displayName: 'Type',
+							group: 'Network',
+							type: 'string'
+						}),
+						getPort({
+							plug: 'output',
+							name: 'networkConnected',
+							displayName: 'Connected',
+							group: 'Network',
+							type: 'boolean'
+						}),
+						getPort({
+							plug: 'output',
 							name: 'colorScheme',
 							displayName: 'Color scheme',
 							group: 'Style',

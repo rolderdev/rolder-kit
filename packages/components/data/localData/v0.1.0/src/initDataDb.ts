@@ -1,6 +1,7 @@
-import { Http, Kuzzle } from 'kuzzle-sdk';
 import initReplication from './initReplication';
 import type { Props } from '../types';
+import { getKuzzle } from '@packages/get-kuzzle';
+import initCollections from './initCollections';
 
 export default async function (
 	collectionsDefinition: Props['collectionsDefinition'],
@@ -8,26 +9,31 @@ export default async function (
 		environment: string;
 		backendDevMode?: boolean;
 		backendHost?: string;
-		backendPort?: number;
-		multiInstance?: boolean;
 	}
 ) {
 	const { project } = Noodl.getProjectSettings();
-	const { environment, backendDevMode, backendHost, backendPort } = dbParams;
+	const { environment, backendDevMode, backendHost } = dbParams;
 
-	const composedBackendUrl = backendDevMode ? backendHost || 'localhost' : `${project}.kuzzle.${environment}.rolder.app`;
-	const composedBackendPort = backendDevMode ? backendPort || 7512 : 443;
 	const composedPullsStremUrl = backendDevMode
-		? `http://${backendHost}:8512/_/pullStream` || 'http://localhost:8512/_/pullStream'
-		: `${project}.kuzzle.${environment}.rolder.app:8512/_/pullStream`;
+		? `http://${backendHost}:8512` || 'http://localhost:8512'
+		: `https://${project}.pullstream.${environment}.rolder.app`;
 
-	//	const collections = await initCollections(collectionsDefinition);
+	const collections = await initCollections(collectionsDefinition);
 
-	const kuzzle = new Kuzzle(new Http(composedBackendUrl, { port: composedBackendPort }), { cookieAuth: true });
-	R.libs.Kuzzle = kuzzle;
+	const K = await getKuzzle();
+	// online
+	if (K) {
+		log.info('Local data DB started with online mode', collectionsDefinition);
 
-	await kuzzle.connect();
-	//R.states.backend = 'initialized';
+		const intervalId = setInterval(() => {
+			if (K.jwt) {
+				clearInterval(intervalId);
+				initReplication(composedPullsStremUrl, collections, collectionsDefinition);
+			}
+		}, 100);
 
-	//initReplication(composedPullsStremUrl, collections);
+		// offline
+	} else {
+		log.info('Local data DB started with offline mode', collectionsDefinition);
+	}
 }

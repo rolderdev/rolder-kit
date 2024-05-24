@@ -4,9 +4,15 @@ import type { Item } from 'types';
 
 export type Props = BaseReactProps & {
 	dbName: string;
-	collectionsDefinition: Record<string, RxCollectionCreator<any>>;
-	multiInstance?: boolean;
+	collectionsDefinition: Record<
+		string,
+		{
+			order?: number;
+			rxDefinition: RxCollectionCreator<any>;
+			fetchScheme?: any;
+			postSave?: (item: Item) => void;
+		}
+	>;
 	backendDevMode?: boolean;
 	backendHost?: string;
-	backendPort?: number;
 };

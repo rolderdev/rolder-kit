@@ -1,25 +1,26 @@
 import { getKuzzle } from '@packages/get-kuzzle';
 import type { NoodlNode } from '@packages/node';
 import { sendOutput, sendSignal } from '@packages/port-send';
+import fetchUserAndSystemCreds from './fetchUserAndSystemCreds';
 
-export default async function signIn(noodlNode: NoodlNode, sessionTimeout: string, username?: string, password?: string) {
+export default async function (noodlNode: NoodlNode, sessionTimeout: string, username?: string, password?: string) {
 	if (!username || !password) {
 		log.error('Username or password cannot by empty');
 		return;
 	}
 
 	const K = await getKuzzle();
-	if (!K) return;
+	if (!K) {
+		R.libs.mantine?.MantineError?.('Ошибка авторизации!', 'Нет подключения к серверу', 5000);
+		return;
+	}
 
 	const startTime = log.start();
 	try {
-		const connected = R.db?.states.network.connected;
-		if (connected) {
-			await K.auth.login('local', { username, password }, sessionTimeout);
-			await R.db?.states.auth.set('signedIn', () => true);
-		} else {
-			R.libs.mantine?.MantineError?.('Ошибка авторизации!', 'Нет подключения к сети', 5000);
-		}
+		const token = await K.auth.login('local', { username, password }, sessionTimeout);
+		await R.db?.states.auth.set('token', () => token);
+		await fetchUserAndSystemCreds();
+		await R.db?.states.auth.set('state', () => 'signedIn');
 	} catch (e: any) {
 		let errorMessage = 'Неизвестная ошибка';
 
@@ -38,6 +39,10 @@ export default async function signIn(noodlNode: NoodlNode, sessionTimeout: strin
 		R.libs.mantine?.MantineError?.('Ошибка авторизации!', errorMessage, 2000);
 		sendOutput(noodlNode, 'error', errorMessage);
 		sendSignal(noodlNode, 'signInFailed');
+		return;
 	}
+
 	log.end('Sign in', startTime);
+
+	return;
 }

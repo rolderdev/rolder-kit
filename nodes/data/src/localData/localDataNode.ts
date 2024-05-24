@@ -1,5 +1,5 @@
 import { reactNode } from '@packages/node';
-import { getPort } from '@packages/port';
+import { getPort, getType } from '@packages/port';
 import { lazy } from 'react';
 
 export default reactNode(
@@ -24,7 +24,7 @@ export default reactNode(
 					name: 'collectionsDefinition',
 					displayName: 'Collections definition',
 					group: 'Params',
-					type: 'array',
+					type: getType('array', 'connection'),
 					customs: {
 						required: 'connection',
 						isObject: true
@@ -50,19 +50,23 @@ export default reactNode(
 							return p.backendDevMode ? true : false;
 						}
 					}
+				})
+			],
+			outputs: [
+				getPort({
+					plug: 'output',
+					name: 'replicating',
+					displayName: 'Replicating',
+					group: 'States',
+					type: 'boolean',
+					default: true
 				}),
 				getPort({
-					plug: 'input',
-					name: 'backendPort',
-					displayName: 'Port',
-					group: 'Params',
-					type: 'number',
-					default: 7512,
-					customs: {
-						dependsOn(p) {
-							return p.backendDevMode ? true : false;
-						}
-					}
+					plug: 'output',
+					name: 'replicated',
+					displayName: 'Replicated',
+					group: 'Signals',
+					type: 'signal'
 				})
 			]
 		}

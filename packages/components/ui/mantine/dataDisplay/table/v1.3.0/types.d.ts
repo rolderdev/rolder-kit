@@ -1,37 +1,56 @@
-import {
-  MantineColor,
-  MantineNumberSize,
-  MantineShadow,
-  type CollapseProps,
-} from "@mantine/core";
-import { BaseReactProps } from "@packages/node";
-import { Item } from "types";
-import { DataTableColumn, DataTableProps } from "./src/lib";
+import { MantineColor, MantineNumberSize, MantineShadow, type CollapseProps } from '@mantine/core';
+import { BaseReactProps } from '@packages/node';
+import type { DataTableColumn, DataTableProps } from 'mantine-datatable';
+import { Item } from 'types';
 
 export type Props = BaseReactProps & {
-  // Params
-  table2Columns?: ColumnDef[];
-  table2OnRowClick: "disabled" | "singleSelection" | "expansion";
-  // Data
-  table2Items?: Item[];
+	// Base
+	columns?: ColumnDef[];
+	onRowClick?: 'disabled' | 'singleSelection' | 'expansion';
+	items?: Item[];
 
-  // Dimensions
-  dimensions: boolean;
-  minHeight?: string;
-  maxHeight?: string;
-  fitWidthContent: boolean;
-  maxWidth?: string;
-  /* table2HorizontalSpacing: MantineNumberSize;
-  table2VerticalSpacing: MantineNumberSize;
-  table2FontSize: MantineNumberSize; */
+	// States
+	fetching?: boolean;
+	//dataFetchError?: boolean;
 
-  // Expansion
-  //table2ExpandedItems: Item[];
-  //table2AllowMultiple: boolean;
-  expansionTemplate: string;
-  allowMultiple: boolean;
+	// Dimensions
+	minHeight?: string;
+	maxHeight?: string;
+	fitWidthContent?: boolean;
+	maxWidth?: string;
+	horizontalSpacing?: MantineNumberSize;
+	verticalSpacing?: MantineNumberSize;
+	fontSize?: MantineNumberSize;
 
-  /* 
+	// Table styles
+	shadow?: MantineShadow;
+	withBorder?: boolean;
+	borderRadius?: MantineNumberSize;
+	columnBorders?: boolean;
+	animation?: boolean;
+	loaderColor?: MantineColor;
+
+	// Row styles
+	rowStyles?: boolean;
+	rowBorders?: boolean;
+	striped?: boolean;
+	rowBgColor?: MantineColor;
+	oddBgColor?: MantineColor;
+	evenBgColor?: MantineColor;
+	highlightOnHover?: boolean;
+	onHoverBgColor?: MantineColor;
+	/*
+
+table2SingleSelectedRowBgColor: MantineColor;
+table2MutliSelectedRowBgColor: MantineColor;*/
+
+	// Expansion
+	expansion?: boolean;
+	expansionTemplate: string;
+	allowMultiple?: boolean;
+	expandedItems?: Item[];
+
+	/* 
   
   // Enablers
   table2SingleSelection: boolean;
@@ -40,10 +59,10 @@ export type Props = BaseReactProps & {
   table2FilterEnabled: boolean;  
   table2Layout: boolean;
   table2TableStyles: boolean;
-  table2RowStyles: boolean;
+  
   // Params
   
-  table2OnRowClick: "disabled" | "singleSelection" | "expansion";
+  
   table2TextSelection: boolean;
   // Data  
   tableId?: String; // MD
@@ -59,55 +78,53 @@ export type Props = BaseReactProps & {
   table2UnsortedIcon?: string;
   // Filter
   table2FilterType: "frontend" | "backend";
-  // Expansion
-  table2ExpandedItems: Item[];  
-  expansionTemplate: string;
-  // Layout
-  table2NoHeader: boolean;
   
-  // Table styles
-  table2Shadow: MantineShadow;
-  table2WithBorder: boolean;
-  table2BorderRadius: MantineNumberSize;
-  table2ColumnBorders: boolean;
-  table2Animation: boolean;
-  table2LoaderColor: MantineColor;
-  // Row styles
-  table2RowBorders: boolean;
-  table2Striped: boolean;
-  table2OddBgColor: MantineColor;
-  table2EvenBgColor: MantineColor;
-  table2RowBgColor: MantineColor;
-  table2HighlightOnHover: boolean;
-  table2OnHoverBgColor: MantineColor;
-  table2SingleSelectedRowBgColor: MantineColor;
-  table2MutliSelectedRowBgColor: MantineColor;
-  // States
-  table2Fetching: boolean;
-  dataFetchError?: boolean; */
+  // Layout
+  table2NoHeader: boolean;*/
 };
 
 export type TableProps = {
-  libProps: DataTableProps<Item>;
-  //children: any;
-  columnsDef: ColumnDef[];
-  items: Item[];
+	// Base
+	noodlNode: NoodlNode;
+	customProps?: any;
+	columnsDef: ColumnDef[];
+	items: Item[];
+	onRowClick: 'disabled' | 'singleSelection' | 'expansion';
+	libProps: DataTableProps<Item>;
 
-  // Params
-  noodlNode: NoodlNode;
-  onRowClick: "disabled" | "singleSelection" | "expansion";
-  customProps?: any;
+	//children: any;
 
-  expansion: {
-    enabled: boolean;
-    template: string;
-    allowMultiple?: boolean;
-    //expandedItems?: Item[];
-    collapseProps: CollapseProps;
-  };
+	// Table styles
+	tableStyles: {
+		animation: boolean;
+	};
 
-  // Selection
-  /* selection: {
+	// Row styles
+	rowStyles: {
+		enabled: boolean;
+		rowBorders: boolean;
+		striped: boolean;
+		rowBgColor: MantineColor;
+		oddBgColor: MantineColor;
+		evenBgColor: MantineColor;
+		highlightOnHover: boolean;
+		onHoverBgColor: MantineColor;
+
+		//singleSelectedRowBgColor: MantineColor;
+		//mutliSelectedRowBgColor: MantineColor;
+	};
+
+	// Expansion
+	expansion: {
+		enabled: boolean;
+		template: string;
+		allowMultiple: boolean;
+		collapseProps: CollapseProps;
+		expandedItems: Item[];
+	};
+
+	// Selection
+	/* selection: {
     single: { enabled: boolean; unselectable: boolean; selectedItem: Item };
     multi: { enabled: boolean; selectedItems: Item[] };
   };
@@ -121,32 +138,15 @@ export type TableProps = {
   // Filter
   filter: { enabled: boolean; type: "frontend" | "backend" };
  */
-
-  // Table styles
-  /*  tableStyles: { animation: boolean };
-  // Row styles
-  rowStyles: {
-    enabled: boolean;
-    rowBorders: boolean;
-    oddBgColor: MantineColor;
-    evenBgColor: MantineColor;
-    rowBgColor: MantineColor;
-    onHoverBgColor: MantineColor;
-    striped: boolean;
-    singleSelectedRowBgColor: MantineColor;
-    mutliSelectedRowBgColor: MantineColor;
-  };
-  // States
-  fetching: boolean; */
 };
 
 export type ColumnDef = DataTableColumn<Item> & {
-  getValue?(item: Item): any;
-  sort?: {
-    default: "asc" | "desc";
-    func?(items: Item[], direction: "asc" | "desc"): Item[];
-  };
-  filterFunc?(items: Item[], value: any): Item[];
-  expander?: boolean;
-  boxProps?: any;
+	getValue?(item: Item): any;
+	sort?: {
+		default: 'asc' | 'desc';
+		func?(items: Item[], direction: 'asc' | 'desc'): Item[];
+	};
+	filterFunc?(items: Item[], value: any): Item[];
+	expander?: boolean;
+	boxProps?: any;
 };

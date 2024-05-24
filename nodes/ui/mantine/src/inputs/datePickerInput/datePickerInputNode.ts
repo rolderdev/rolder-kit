@@ -6,6 +6,7 @@ import v101 from '@packages/date-picker-input-v1.0.1';
 
 export default reactNode('DatePickerInput', {
 	'v1.0.0': {
+		hashTag: '#deprecated',
 		module: { static: v100 },
 		inputs: [
 			...getPorts('input', [

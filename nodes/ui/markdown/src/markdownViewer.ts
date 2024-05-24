@@ -4,6 +4,7 @@ import { lazy } from 'react';
 
 export default reactNode('MarkdownViewer', {
 	'v0.1.0': {
+		hashTag: '#pre-release',
 		module: { dynamic: lazy(() => import('@packages/markdown-viewer-v0.1.0')) },
 		inputs: [
 			...getPorts('input', ['customProps']),

@@ -1,7 +1,7 @@
 import { getKuzzle } from '@packages/get-kuzzle';
 import type { RxReplicationWriteToMasterRow } from 'rxdb';
 
-export default async function pushHandler(changeRows: RxReplicationWriteToMasterRow<any>[]) {
+export default async function pushHandler(dbClass: string, changeRows: RxReplicationWriteToMasterRow<any>[]) {
 	const K = await getKuzzle();
 	if (!K) {
 		return Promise.reject();
@@ -18,12 +18,12 @@ export default async function pushHandler(changeRows: RxReplicationWriteToMaster
 		controller: 'rolder',
 		action: 'push',
 		dbName,
-		dbClass: 'task',
+		dbClass,
 		changeItems: changeRows
 	});
 
 	const conflicts = response.result as any[];
-	console.log('conflicts', conflicts);
+	log.info('Push conflicts', conflicts);
 
 	return conflicts;
 }

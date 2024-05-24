@@ -7,6 +7,7 @@ export default reactNode(
 	'Switch',
 	{
 		'v0.1.0': {
+			hashTag: '#pre-release',
 			module: { static: v010 },
 			inputs: [
 				...getPorts('input', [

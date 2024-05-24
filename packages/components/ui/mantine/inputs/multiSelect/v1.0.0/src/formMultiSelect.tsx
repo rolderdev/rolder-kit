@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { MultiSelect } from "@mantine/core"
-import { Props } from "../types"
+import type { Props } from "../types"
 import convertColor from "@packages/convert-color"
 import convertForSelectInputs from '@packages/convert-for-select-inputs'
 import getValue from "@packages/get-value"
