@@ -1,5 +1,4 @@
 import { forwardRef, useEffect, useImperativeHandle } from "react"
-import React from "react"
 import type { Props } from "./types"
 import { getCompProps } from '@packages/get-comp-props'
 import { useAppShellStore } from "@packages/app-shell"

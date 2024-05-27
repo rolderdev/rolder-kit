@@ -1,5 +1,5 @@
 import clone from 'just-clone';
-import { type NodePort } from '../../types';
+import type { NodePort } from '../../types';
 import data from '../ports/data';
 import style from '../ports/style';
 import dimensions from '../ports/dimensions';

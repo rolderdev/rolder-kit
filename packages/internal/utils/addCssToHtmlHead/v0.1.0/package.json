@@ -1,0 +1,10 @@
+{
+	"name": "@packages/add-css-to-html-head-v0.1.0",
+	"main": "addCssToHtmlHead.ts",
+	"types": "addCssToHtmlHead.ts",
+	"type": "module",
+	"dependencies": {},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
+}

@@ -1,7 +1,6 @@
 import { ScrollArea } from "@mantine/core"
 import { useShallowEffect, useViewportSize } from "@mantine/hooks"
 import { forwardRef, useImperativeHandle, useRef, useState } from "react"
-import React from "react"
 import type { Props } from "./types"
 
 export default forwardRef(function (props: Props, ref) {

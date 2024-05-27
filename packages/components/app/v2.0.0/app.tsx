@@ -1,10 +1,9 @@
-import { forwardRef, useEffect, useImperativeHandle } from "react";
-import { type Props } from "./types";
-import React from "react";
+import { forwardRef, useEffect } from "react";
+import type { Props } from "./types";;
 import { ErrorBoundary } from "react-error-boundary";
 import * as Sentry from "@sentry/browser";
 import initLocalDb from "./src/initLocalDb";
-import useColorScheme from "./src/useColorScheme";
+import systemLoaderAnimation from "@packages/system-loader-animation";
 
 window.Sentry = Sentry
 
@@ -35,8 +34,8 @@ function FallbackComponent({ error }: any) {
 }
 
 export default forwardRef(function (props: Props, ref) {
-  const { sentryDsn } = Noodl.getProjectSettings();
-  const { noodlNode, multiInstance, colorScheme: colorSchemeProp } = props;
+  const { sentryDsn, stopLoaderAnimationOn = 'dataInitialized' } = Noodl.getProjectSettings();
+  const { noodlNode, multiInstance } = props;
 
   const localDbInited = initLocalDb(noodlNode, multiInstance)
   useEffect(() => {
@@ -50,20 +49,9 @@ export default forwardRef(function (props: Props, ref) {
     }
   }, [])
 
-  const { colorScheme, setColorScheme } = useColorScheme(noodlNode, colorSchemeProp)
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      setColorScheme() {
-        if (colorSchemeProp !== "auto") setColorScheme(colorSchemeProp)
-      },
-      toggleColorScheme() {
-        if (colorSchemeProp !== "auto") setColorScheme(colorScheme === "light" ? "dark" : "light");
-      },
-    }),
-    [colorSchemeProp, colorScheme]
-  );
+  useEffect(() => {
+    if (localDbInited && stopLoaderAnimationOn === 'appInitialized') systemLoaderAnimation.stop()
+  }, [localDbInited])
 
   return (
     <ErrorBoundary FallbackComponent={FallbackComponent}>
@@ -71,7 +59,6 @@ export default forwardRef(function (props: Props, ref) {
         style={{
           width: '100%',
           height: '100%',
-          //backgroundColor: convertColor(colorScheme === "dark" ? "dark.7" : "gray.0"),
         }}
       >
         {localDbInited ? props.children : null}

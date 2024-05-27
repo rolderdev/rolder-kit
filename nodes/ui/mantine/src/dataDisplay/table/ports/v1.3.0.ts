@@ -42,7 +42,7 @@ const inputs130 = [
 	// Base
 	getPort({
 		plug: 'input',
-		name: 'columns',
+		name: 'columnsDefinition',
 		group: 'Base',
 		type: 'array',
 		displayName: 'Columns',
@@ -97,6 +97,19 @@ const inputs130 = [
 			}
 		}
 	}),
+	getPort({
+		plug: 'input',
+		name: 'onRowClickFunc',
+		group: 'Base',
+		displayName: 'On row click function',
+		type: 'array',
+		customs: {
+			isObject: true,
+			dependsOn(p) {
+				return p.expansion ? true : false;
+			}
+		}
+	}),
 	// States
 	getPort({
 		plug: 'input',
@@ -105,6 +118,28 @@ const inputs130 = [
 		type: 'boolean',
 		displayName: 'Fetching',
 		default: true
+	}),
+	// Layout
+	getPort({
+		plug: 'input',
+		name: 'layout',
+		group: 'Layout',
+		type: getType('boolean', 'editor'),
+		displayName: 'Enabled',
+		default: false
+	}),
+	getPort({
+		plug: 'input',
+		name: 'noHeader',
+		group: 'Layout',
+		type: 'boolean',
+		displayName: 'No header',
+		default: false,
+		customs: {
+			dependsOn(p) {
+				return p.layout ? true : false;
+			}
+		}
 	}),
 	// Dimensions
 	getPort({
@@ -119,8 +154,8 @@ const inputs130 = [
 		plug: 'input',
 		name: 'minHeight',
 		group: 'Dimensions',
-		type: { name: 'number', units: ['rem', 'px'], defaultUnit: 'px' },
-		default: 84,
+		type: 'string',
+		default: '84px',
 		displayName: 'Min height',
 		customs: {
 			dependsOn(p) {
@@ -132,38 +167,12 @@ const inputs130 = [
 		plug: 'input',
 		name: 'maxHeight',
 		group: 'Dimensions',
-		type: { name: 'number', units: defaultUnits, defaultUnit: '%' },
+		type: 'string',
 		displayName: 'Max height',
-		default: 100,
+		default: 'calc(100% - 0px)',
 		customs: {
 			dependsOn(p) {
 				return p.dimensions ? true : false;
-			}
-		}
-	}),
-	getPort({
-		plug: 'input',
-		name: 'fitWidthContent',
-		group: 'Dimensions',
-		type: 'boolean',
-		displayName: 'Fit width content',
-		default: true,
-		customs: {
-			dependsOn(p) {
-				return p.dimensions ? true : false;
-			}
-		}
-	}),
-	getPort({
-		plug: 'input',
-		name: 'maxWidth',
-		group: 'Dimensions',
-		type: { name: 'number', units: defaultUnits, defaultUnit: '%' },
-		displayName: 'Max width',
-		default: 100,
-		customs: {
-			dependsOn(p) {
-				return p.dimensions && !p.fitWidthContent ? true : false;
 			}
 		}
 	}),
@@ -195,7 +204,7 @@ const inputs130 = [
 	}),
 	getPort({
 		plug: 'input',
-		name: 'fontSize',
+		name: 'fz',
 		group: 'Dimensions',
 		type: getEnumType(enums.sizes),
 		displayName: 'Font size',
@@ -230,10 +239,10 @@ const inputs130 = [
 	}),
 	getPort({
 		plug: 'input',
-		name: 'withBorder',
+		name: 'withTableBorder',
 		group: 'Table styles',
 		type: 'boolean',
-		displayName: 'With border',
+		displayName: 'Table border',
 		default: false,
 		customs: {
 			dependsOn(p) {
@@ -256,11 +265,24 @@ const inputs130 = [
 	}),
 	getPort({
 		plug: 'input',
-		name: 'columnBorders',
+		name: 'withColumnBorders',
 		group: 'Table styles',
 		type: 'boolean',
 		displayName: 'Column borders',
 		default: false,
+		customs: {
+			dependsOn(p) {
+				return p.tableStyles ? true : false;
+			}
+		}
+	}),
+	getPort({
+		plug: 'input',
+		name: 'loaderColor',
+		group: 'Table styles',
+		type: 'string',
+		displayName: 'Loader color',
+		default: 'blue',
 		customs: {
 			dependsOn(p) {
 				return p.tableStyles ? true : false;
@@ -280,19 +302,6 @@ const inputs130 = [
 			}
 		}
 	}),
-	getPort({
-		plug: 'input',
-		name: 'loaderColor',
-		group: 'Table styles',
-		type: 'string',
-		displayName: 'Loader color',
-		default: 'blue',
-		customs: {
-			dependsOn(p) {
-				return p.tableStyles ? true : false;
-			}
-		}
-	}),
 	// Row styles
 	getPort({
 		plug: 'input',
@@ -304,7 +313,7 @@ const inputs130 = [
 	}),
 	getPort({
 		plug: 'input',
-		name: 'rowBorders',
+		name: 'withRowBorders',
 		group: 'Row styles',
 		type: getType('boolean', 'editor'),
 		displayName: 'Row borders',
@@ -330,7 +339,7 @@ const inputs130 = [
 	}),
 	getPort({
 		plug: 'input',
-		name: 'rowBgColor',
+		name: 'rowBackgroundColor',
 		group: 'Row styles',
 		type: 'string',
 		default: 'white',
@@ -343,24 +352,11 @@ const inputs130 = [
 	}),
 	getPort({
 		plug: 'input',
-		name: 'oddBgColor',
+		name: 'stripedColor',
 		group: 'Row styles',
 		type: 'string',
 		default: 'gray.0',
-		displayName: 'Odd bg color',
-		customs: {
-			dependsOn(p) {
-				return p.rowStyles && p.striped;
-			}
-		}
-	}),
-	getPort({
-		plug: 'input',
-		name: 'evenBgColor',
-		group: 'Row styles',
-		type: 'string',
-		default: 'white',
-		displayName: 'Even bg color',
+		displayName: 'Striped bg color',
 		customs: {
 			dependsOn(p) {
 				return p.rowStyles && p.striped;
@@ -382,7 +378,7 @@ const inputs130 = [
 	}),
 	getPort({
 		plug: 'input',
-		name: 'onHoverBgColor',
+		name: 'highlightOnHoverColor',
 		group: 'Row styles',
 		type: 'string',
 		default: 'gray.1',
@@ -488,6 +484,7 @@ const outputs130 = [
 	'table2MultiSelectionChanged',
 	// Sort
 	'table2SortValue',*/
+
 	// Expansion
 	getPort({
 		plug: 'output',

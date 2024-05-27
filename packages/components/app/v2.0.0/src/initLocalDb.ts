@@ -23,7 +23,7 @@ export default function (noodlNode: NoodlNode, multiInstance?: boolean) {
 		addRxPlugin(RxDBStatePlugin);
 
 		createRxDatabase({ name: `${project}-${environment}`, storage: getRxStorageDexie(), multiInstance }).then(async (db) => {
-			R.db = db;
+			R.db = db as any;
 
 			const params = await db.addState('params');
 			if (projectVersion) {

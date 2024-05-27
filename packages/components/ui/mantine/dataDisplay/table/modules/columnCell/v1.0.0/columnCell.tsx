@@ -1,7 +1,6 @@
 import { forwardRef } from "react"
 import { ScopeProvider, useMolecule } from "bunshi/react"
 import { TableCellMolecule, TableCellScope } from "@packages/scope"
-import React from "react"
 import type { Props } from "./types"
 
 export default forwardRef(function (props: Props) {

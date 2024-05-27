@@ -1,7 +1,6 @@
 import { Text } from "@mantine/core"
 import { forwardRef, useEffect, useState } from "react"
 import type { Props } from "./types"
-import React from "react"
 import { getCompProps } from "@packages/get-comp-props"
 import { useTableCellScope } from "@packages/scope"
 

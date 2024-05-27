@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useState } from "react"
 import { SegmentedControl } from "@mantine/core"
-import { Props } from "../types"
-import React from "react"
+import type { Props } from "../types"
 import { sendOutput, sendSignal } from '@packages/port-send'
 import convertForSelectInputs from '@packages/convert-for-select-inputs'
 import getValue from "@packages/get-value"

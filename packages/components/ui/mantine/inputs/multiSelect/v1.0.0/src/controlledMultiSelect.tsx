@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { MultiSelect } from "@mantine/core"
-import { Props } from "../types"
-import React from "react"
+import type { Props } from "../types"
 import { sendOutput, sendSignal } from '@packages/port-send'
 import convertColor from "@packages/convert-color"
 import convertForSelectInputs from '@packages/convert-for-select-inputs'
@@ -19,7 +18,7 @@ export default forwardRef(function (props: Props, ref) {
             setData(convertedItems.filter(i => i && i.label && i.value))
         }
     }, [inputItems, labelField])
-    
+
     const [value, setValue] = useState<string[]>([])
     useEffect(() => {
         if (defaultItems) {
@@ -57,7 +56,7 @@ export default forwardRef(function (props: Props, ref) {
             } else {
                 const selectedItems = props.inputItems?.filter((i: any) => v.includes(i.value) || v.includes(i.id) || v.includes(i.label))
                 sendOutput(noodlNode, 'selectedItems', selectedItems)
-                setTimeout(() => sendSignal(noodlNode, 'selected'))                
+                setTimeout(() => sendSignal(noodlNode, 'selected'))
             }
         }}
         {...props}

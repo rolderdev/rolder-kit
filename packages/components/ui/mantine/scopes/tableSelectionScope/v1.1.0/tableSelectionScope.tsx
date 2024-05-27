@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react"
 import type { Props } from "./types";
-import { sendOutput, sendSignal } from "@packages/port-send";
-import React from "react";
+import { sendOutput, sendSignal } from "@packages/port-send";;
 import { useForceUpdate } from '@mantine/hooks';
 import {
     type TableSelectionScopeValues,
@@ -24,8 +23,8 @@ import {
 
 
 
-const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) { 
-    
+const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
+
     console.log("========================================================================")
     console.log("========================================================================")
     console.log("========================================================================")
@@ -344,7 +343,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
 
                     }
                 })
-                
+
 
                 // Если parentTableItemId ещё нет в массиве indeterminated, то добавляем
                 if (
@@ -394,8 +393,8 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
             setTableSelectionClickItemIdValue([])
             setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
             setTableHandlerAtomValue({})
-        } 
-    },[])
+        }
+    }, [])
 
     // Сохраняем изменения в атомах
     delete tableSelectionScopeValue['root']
@@ -453,9 +452,9 @@ export default forwardRef(function (props: Props, ref) {
     console.log("========================================================================")
     console.log("========================================================================")
     console.log("ID КОМПОНЕНТЫ", props?.noodlNode?.id)
-    
+
     const scopeId = props?.noodlNode?.id
-    
+
     const [selectionScopeStoreValue, setSelectionScopeStoreValue] = useAtom(selectionScopeStoreAtom)
     console.log("selectionScopeStoreValue[scopeId]", selectionScopeStoreValue[scopeId])
 

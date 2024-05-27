@@ -1,6 +1,5 @@
 import { forwardRef, useImperativeHandle } from "react"
-import type { Props } from "./types";
-import React from "react";
+import type { Props } from "./types";;
 import { useDisclosure } from "@mantine/hooks"
 import { Drawer, Title } from "@mantine/core";
 import { sendSignal } from "@packages/port-send"

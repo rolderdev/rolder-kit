@@ -3,7 +3,8 @@
   "main": "barLoader.tsx",
   "types": "barLoader.tsx",
   "dependencies": {
-    "@mantine/core": "6.0.21",
+        "@mantine/core": "6.0.21",
+    "@mantine/hooks": "6.0.21",
     "@packages/convert-color": "workspace:@packages/convert-color-v0.3.0@*",
     "react-spinners": "0.13.8"
   },

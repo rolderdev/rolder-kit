@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
-import React from "react"
-import { type Props } from "./types"
+import type { Props } from "./types"
 import { useInterval } from "@mantine/hooks"
 import ms from "ms";
 import { focusManager, onlineManager } from "@tanstack/react-query";

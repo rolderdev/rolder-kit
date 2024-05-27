@@ -1,28 +1,29 @@
 import { forwardRef, useImperativeHandle, useMemo } from "react"
 import type { Props } from "./types"
 import type { Item } from "types"
-import React from "react"
 import useProps from "./src/hooks/useProps"
 import useExpansionRows from "./src/hooks/useExpansionRows"
 import { nanoid } from "nanoid"
-import { Box, Button } from "@mantine/core"
 import { DataTable } from "mantine-datatable"
+import { Box } from "@mantine/core"
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
-import '@mantine/core/styles.css';
-//import '@mantine/core/styles/UnstyledButton.css';
-//import '@mantine/core/styles/Button.css';
-/////
-import 'mantine-datatable/styles.layer.css';
+import '@mantine/core/styles/Table.css';
+import 'mantine-datatable/styles.css';
+import tableWrapperClasses from './src/styles/tableWrapper.module.css'
+import useColumns from "./src/hooks/useColumns"
 
 export default forwardRef(function (props: Props, ref) {
-    const p = useProps(props)
-    const { noodlNode, customProps, items, onRowClick, expansion } = p
+    const columns = useColumns(props.noodlNode, props.items, props.columnsDefinition)
+
+    const p = useProps(props, columns)
+    const { noodlNode, customProps, items, onRowClick, onRowClickFunc, dimensions, tableStyles, expansion } = p
 
     // useMemo, чтобы id присваивался только при монтировании
     const tableId = useMemo(() => nanoid(8), [])
 
     // Table styles    
-    //const [bodyRef] = useAutoAnimate<HTMLTableSectionElement>();
+    const [bodyRef] = useAutoAnimate<HTMLTableSectionElement>();
 
     // Row styles
     //const { classes, cx } = useRowStyles(rowStyles)
@@ -41,20 +42,22 @@ export default forwardRef(function (props: Props, ref) {
         unexpandAll() { updateExpansionRows([]) }
     }), [tableId, items, expansionRows])
 
-    console.log('render body', tableId)
+    console.log('render body')
 
-    return <Box h={props.customProps?.mah2} maw={props.maxWidth}>
-        <Button>TEST</Button>
+    return <Box className={tableWrapperClasses.container} mah={dimensions.maxHeight}>
         <DataTable<Item>
             //  Table styles    
             //className=""                
-            // bodyRef={tableStyles.animation ? bodyRef : undefined}
-            // Row styles
+            bodyRef={tableStyles.animation ? bodyRef : undefined}
+            /* // Row styles
+            rowBackgroundColor={() =>
+                ({ dark: rowStyles.rowBgColor, light: rowStyles.rowBgColor })
+            } */
             // rowClassName={({ id }) => (cx(
             //     { [classes.row]: true }, { [classes.striped]: true },
             //     /*{ [classes.multiSelected]: rowStyles.enabled && selection.multi.enabled && selectedRecords?.map(i => i.id).includes(id) },
             //     { [classes.singleSelected]: rowStyles.enabled && selection.single.enabled && selectedRecord?.id === id } */
-            // ))}
+            // ))}        
             // Expansion        
             rowExpansion={
                 expansion.enabled
@@ -75,7 +78,9 @@ export default forwardRef(function (props: Props, ref) {
                         collapseProps: expansion.collapseProps
                     } : undefined
             }
+            onRowClick={onRowClickFunc ? ({ record }) => onRowClickFunc(record) : undefined}
             {...p.libProps}
             {...customProps}
-        /></Box>
+        />
+    </Box>
 })

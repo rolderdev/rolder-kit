@@ -24,18 +24,16 @@ module.exports = function (env) {
 	}
 
 	return {
-		experiments: {
-			css: true
-		},
 		context: __dirname,
-		stats: { preset: 'errors-only', timings: true },
+		//stats: { preset: 'errors-only', timings: true },
 		entry: { [pJson.name]: `./src/${nodeName}.ts` },
 		resolve: {
 			extensions: ['...', '.tsx', '.ts']
 		},
 		output: {
 			path: outputPath,
-			filename: '[contenthash].js',
+			filename: '[name].js',
+			chunkFilename: '[contenthash].js',
 			clean: true
 		},
 		externals: {
@@ -53,11 +51,13 @@ module.exports = function (env) {
 			})
 		],
 		module: {
+			parser: { 'css/auto': { namedExports: false } },
 			rules: [
 				{
 					test: /\.ts$/,
 					exclude: /[\\/]node_modules[\\/]/,
 					loader: 'builtin:swc-loader',
+					/** @type {import('@rspack/core').SwcLoaderOptions} */
 					options: {
 						jsc: {
 							parser: {
@@ -73,6 +73,7 @@ module.exports = function (env) {
 					test: /\.tsx$/,
 					exclude: /[\\/]node_modules[\\/]/,
 					loader: 'builtin:swc-loader',
+					/** @type {import('@rspack/core').SwcLoaderOptions} */
 					options: {
 						jsc: {
 							parser: {
@@ -86,6 +87,7 @@ module.exports = function (env) {
 					test: /\.jsx$/,
 					exclude: /[\\/]node_modules[\\/]/,
 					loader: 'builtin:swc-loader',
+					/** @type {import('@rspack/core').SwcLoaderOptions} */
 					options: {
 						jsc: {
 							parser: {
@@ -100,6 +102,7 @@ module.exports = function (env) {
 					use: [
 						{
 							loader: 'postcss-loader'
+							/** @type {import('@rspack/core').SwcLoaderOptions} */
 						}
 					],
 					type: 'css/auto'

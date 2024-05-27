@@ -1,6 +1,5 @@
 import { forwardRef } from "react"
-import type { Props } from "./types";
-import React from "react";
+import type { Props } from "./types";;
 import { Box, HoverCard } from "@mantine/core";
 
 const Target = forwardRef((props, ref: any) => <Box ref={ref} {...props} w='fit-content' />)

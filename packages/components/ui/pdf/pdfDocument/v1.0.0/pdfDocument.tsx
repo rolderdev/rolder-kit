@@ -1,7 +1,6 @@
 import { createElement, forwardRef, useImperativeHandle } from "react"
 import { Document, Font, pdf } from "@react-pdf/renderer";
-import type { Props } from "./types";
-import React from "react";
+import type { Props } from "./types";;
 import { sendOutput, sendSignal } from "@packages/port-send";
 
 const PdfDocument = (props: Props) => {

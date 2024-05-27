@@ -10,7 +10,8 @@
 			"EditorConfig.EditorConfig",
 			"esbenp.prettier-vscode",
 			"vunguyentuan.vscode-postcss",
-			"vunguyentuan.vscode-css-variables"
+			"vunguyentuan.vscode-css-variables",
+			"clinyong.vscode-css-modules"
 		]
 	},
 	"settings": {
@@ -27,6 +28,7 @@
 			"**/bundles": true,
 			"**/assets/lib": true
 		},
+		"cssVariables.lookupFiles": ["**/*.css", "**/*.scss", "**/*.sass", "**/*.less", "node_modules/@mantine/core/styles.css"],
 		"[markdown]": {
 			"editor.formatOnSave": true,
 			"editor.defaultFormatter": "esbenp.prettier-vscode"

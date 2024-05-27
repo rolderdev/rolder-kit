@@ -1,43 +1,37 @@
-import { createTheme, MantineProvider } from '@mantine/core';
+import { createTheme, MantineProvider, type MantineTheme } from '@mantine/core';
 import { DatesProvider } from "@mantine/dates"
 import { Notifications, notifications } from "@mantine/notifications"
 import { forwardRef } from "react"
-import 'dayjs/locale/ru'
 import type { CompProps } from "./types"
-import React from 'react';
+import addCssToHtmlHead from '@packages/add-css-to-html-head';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru'
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
 
 import '@mantine/core/styles.css';
-//import '@mantine/dates/styles.css';
+import '@mantine/dates/styles.css';
+import '@mantine/notifications/styles.css';
 
-function MantineError(title: string, message?: string, autoClose?: boolean | number): void {
+addCssToHtmlHead(['mantine'])
+
+/* function MantineError(title: string, message?: string, autoClose?: boolean | number): void {
     notifications.show({ title, message, color: 'red', autoClose: autoClose ? autoClose : false })
 }
+R.libs.mantine = { MantineError } */
 
+export default forwardRef(function (props: CompProps, ref) {
+    const { notificationsPosition, defaultColorScheme } = props
 
-export default forwardRef(function (props: CompProps) {
-    const { notificationsPosition } = props
-
-    //const [colorScheme, setColorScheme] = useState<ColorScheme>(R.params.colorScheme || 'light')
-    //Noodl.Events.on("colorSchemeChanged", () => setColorScheme(R.params.colorScheme || 'light'))
-    //const backgroundColor = convertColor(colorScheme === 'dark' ? 'dark.7' : 'gray.0')
-
-    //const mantineTheme = eval(Noodl.getProjectSettings().mantineTheme)?.[0]
-    const theme = createTheme({
-        //datesLocale: 'ru',
-        /* globalStyles: () => ({
-            body: {
-                backgroundColor: backgroundColor,
-            }
-        }), */
-        //...mantineTheme
-    });
-
-    R.libs.mantine = { MantineError }
+    const mantineTheme = eval(Noodl.getProjectSettings().mantineTheme)?.[0] as MantineTheme
+    const theme = createTheme(mantineTheme);
 
     return <MantineProvider
-        theme={theme}>
+        theme={theme}
+        defaultColorScheme={defaultColorScheme}
+    >
+        <Notifications position={notificationsPosition} />
         <DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 1 }} >
-            <Notifications position={notificationsPosition} />
             {props.children}
         </DatesProvider>
     </MantineProvider >

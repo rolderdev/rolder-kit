@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react"
 import type { Props } from "./types";
-import { sendOutput, sendSignal } from "@packages/port-send";
-import React from "react";
+import { sendOutput, sendSignal } from "@packages/port-send";;
 import { useForceUpdate } from '@mantine/hooks';
 import {
     tableSelectionScopeAtom,

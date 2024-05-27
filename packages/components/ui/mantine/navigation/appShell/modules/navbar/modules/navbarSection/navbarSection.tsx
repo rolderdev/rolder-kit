@@ -1,5 +1,4 @@
 import { forwardRef } from "react"
-import React from "react"
 import type { Props } from "./types"
 import { Navbar } from "@mantine/core"
 import { getCompProps } from '@packages/get-comp-props'

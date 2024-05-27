@@ -1,5 +1,4 @@
 import { forwardRef, useEffect, useState } from "react"
-import React from "react"
 import type { Props } from "./types"
 import initDataDb from "./src/initDataDb";
 import { Loader } from "@mantine/core"

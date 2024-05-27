@@ -1,7 +1,6 @@
 import { forwardRef } from "react"
 import type { AppShellState, Props } from "./types"
 import { getCompProps } from '@packages/get-comp-props'
-import React from "react"
 import { create } from 'zustand'
 import { AppShell } from "@mantine/core"
 import useNamedChildren from "@packages/use-named-children"

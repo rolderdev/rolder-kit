@@ -2,8 +2,7 @@ import { Button, Group } from "@mantine/core";
 import { forwardRef, useCallback, useRef, useState } from "react"
 import Webcam from "react-webcam";
 import type { Props } from "./types";
-import { sendOutput, sendSignal } from "@packages/port-send";
-import React from "react";
+import { sendOutput, sendSignal } from "@packages/port-send";;
 import convertColor from "@packages/convert-color";
 
 export default forwardRef(function (props: Props) {

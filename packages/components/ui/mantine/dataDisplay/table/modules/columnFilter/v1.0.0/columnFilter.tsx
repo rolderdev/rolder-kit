@@ -1,7 +1,6 @@
 import { sendOutput } from "@packages/port-send"
 import { forwardRef, useImperativeHandle } from "react"
 import type { Props } from "./types"
-import React from "react"
 import { useTableScope } from "@packages/scope"
 import isEmpty from "@packages/is-empty"
 

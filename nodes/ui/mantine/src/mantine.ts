@@ -5,13 +5,13 @@ import { defineNode } from '@noodl/noodl-sdk';
 
 const notifEnum = ['top-left', 'top-right', 'top-center', 'bottom-left', 'bottom-right', 'bottom-center'];
 
-///import v100 from '@packages/mantine-v1.0.0';
+import v100 from '@packages/mantine-v1.0.0';
 import v200 from '@packages/mantine-v2.0.0';
 
 const mantineNode = reactNode(
 	'Mantine',
 	{
-		/* 		'v1.0.0': {
+		'v1.0.0': {
 			module: { static: v100 },
 			inputs: [
 				getPort({
@@ -24,7 +24,7 @@ const mantineNode = reactNode(
 					customs: { isObject: true, required: 'connection' }
 				})
 			]
-		}, */
+		},
 		'v2.0.0': {
 			hashTag: '#expreimental',
 			module: { static: v200 },
@@ -37,13 +37,22 @@ const mantineNode = reactNode(
 					type: getCustomEnumType(notifEnum),
 					default: 'bottom-right',
 					customs: { isObject: true, required: 'connection' }
+				}),
+				getPort({
+					plug: 'input',
+					name: 'defaultColorScheme',
+					displayName: 'Default color scheme',
+					group: 'Style',
+					type: getCustomEnumType(['light', 'dark', 'auto']),
+					default: 'light',
+					customs: { required: 'connection' }
 				})
 			]
 		}
 	},
 	{
-		allowChildren: true,
-		docs: 'https://docs.rolder.app/docs/project/Mantine.html'
+		allowChildren: true
+		//docs: 'https://docs.rolder.app/docs/project/Mantine.html'
 	}
 );
 

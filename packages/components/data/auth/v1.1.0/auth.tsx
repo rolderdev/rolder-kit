@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle } from "react"
-import React from "react"
 import { Loader } from "@mantine/core"
-import { type Props } from "./types"
+import type { Props } from "./types"
 import useAuth from "./src/useAuth";
 import signIn from "./src/signIn";
 import { sendOutput } from "@packages/port-send";

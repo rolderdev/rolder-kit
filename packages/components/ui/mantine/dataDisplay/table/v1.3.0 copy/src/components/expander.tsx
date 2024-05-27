@@ -1,6 +1,5 @@
 import { ActionIcon, Group } from "@mantine/core"
 import type { TableProps } from "../../types"
-import React from "react"
 import { IconChevronRight } from "@tabler/icons-react"
 
 export function Expander(

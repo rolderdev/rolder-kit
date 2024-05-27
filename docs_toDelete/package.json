@@ -9,7 +9,7 @@
     "@mantine/dates": "6.0.21",
     "@mantine/notifications": "6.0.21",
     "@mantine/prism": "6.0.21",
-    "@tabler/icons-react": "3.2.0",
+    "@tabler/icons-react": "^3.5.0",
     "consola": "3.2.3",
     "@packages/is-empty": "workspace:@packages/is-empty-v0.1.0@*",
     "@packages/image": "workspace:@packages/image-v1.0.0@*",

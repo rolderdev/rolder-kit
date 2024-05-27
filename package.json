@@ -5,7 +5,8 @@
 	"devDependencies": {
 		"typescript": "5.4.5",
 		"@rspack/core": "^0.6.5",
-		"@rspack/cli": "0.6.5",
+		"@rspack/cli": "^0.6.5",		
+		"@vitejs/plugin-react-swc": "^3.7.0",
 		"rspack-manifest-plugin": "5.0.0",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0"

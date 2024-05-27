@@ -4,7 +4,8 @@
   "types": "aside.tsx",
   "dependencies": {
     "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
-    "@mantine/core": "6.0.21"
+        "@mantine/core": "6.0.21",
+    "@mantine/hooks": "6.0.21"
   },
   "devDependencies": {
     "@packages/node": "workspace:@packages/node-v0.8.0@*",

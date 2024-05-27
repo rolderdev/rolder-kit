@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
-import type { Props } from "./types";
-import React from "react";
+import type { Props } from "./types";;
 import { Box, Popover } from "@mantine/core";
 import { sendOutput, sendSignal } from "@packages/port-send"
 

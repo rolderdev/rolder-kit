@@ -1,7 +1,6 @@
 import { PasswordInput } from "@mantine/core"
 import { forwardRef, useImperativeHandle, useState } from "react"
-import { Props } from "../types"
-import React from "react"
+import type { Props } from "../types"
 import { sendOutput, sendSignal } from '@packages/port-send'
 
 export default forwardRef(function (props: Props, ref) {

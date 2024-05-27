@@ -1,4 +1,4 @@
-import { type NodePort } from '../../port';
+import type { NodePort } from '../../port';
 
 export default [
 	{ name: 'fetch', displayName: 'Fetch', group: 'Signals', type: 'signal' },

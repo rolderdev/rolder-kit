@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useRef } from "react";
-import type { Props } from "./types";
-import React from "react";
+import type { Props } from "./types";;
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ru-ru';
 import { Viewer } from '@toast-ui/react-editor';

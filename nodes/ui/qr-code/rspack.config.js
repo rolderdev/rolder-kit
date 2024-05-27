@@ -25,7 +25,7 @@ module.exports = function (env) {
 
 	return {
 		context: __dirname,
-		stats: { preset: 'errors-only', timings: true },
+		//stats: { preset: 'errors-only', timings: true },
 		entry: { [pJson.name]: `./src/${nodeName}.ts` },
 		resolve: {
 			extensions: ['...', '.tsx', '.ts']

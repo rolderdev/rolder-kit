@@ -571,7 +571,7 @@ export default reactNode(
 			inputs: inputs130,
 			outputs: outputs130,
 			getInspectInfo(props) {
-				return props.columns ? { type: 'value', value: props.columns } : '[No table columns]';
+				return props.columnsDefinition ? { type: 'value', value: props.columnsDefinition3 } : '[No table columns]';
 			}
 		}
 	},

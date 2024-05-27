@@ -4,7 +4,6 @@ import { getCompProps } from '@packages/get-comp-props'
 import { useTableCellScope } from "@packages/scope"
 import { UnstyledButton } from "@mantine/core"
 import { sendSignal } from "@packages/port-send"
-import React from "react"
 
 export default forwardRef(function (props: Props) {
     const item = useTableCellScope()

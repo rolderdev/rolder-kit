@@ -35,12 +35,11 @@ window.log = {
 	sentryError: (error) => Sentry.captureException(error)
 };
 
-document.body.insertAdjacentHTML(
-	'afterbegin',
-	`<div style="position: absolute; top: 50%; left: 50%; margin-top: -28px; margin-left: -64px;">
-    <h2>LOADING</h2>
-</div>`
-);
+// css loader
+import addCssToHtmlHead from '@packages/add-css-to-html-head';
+import './loader.css';
+addCssToHtmlHead(['app']);
+systemLoaderAnimation.start();
 
 // =====================================================
 import libs from './libs';
@@ -57,6 +56,7 @@ import { reactNode } from '@packages/node';
 import v140 from '@packages/app-v1.4.0';
 import v200 from '@packages/app-v2.0.0';
 import getEnum from '@packages/port/src/funcs/getEnum';
+import systemLoaderAnimation from '@packages/system-loader-animation';
 
 Noodl.defineModule({
 	reactNodes: [
@@ -138,39 +138,6 @@ Noodl.defineModule({
 							group: 'Params',
 							type: 'boolean',
 							default: true
-						}),
-						getPort({
-							plug: 'input',
-							name: 'colorScheme',
-							displayName: 'Color scheme',
-							group: 'Style',
-							type: getCustomEnumType(['light', 'dark', 'auto']),
-							default: 'light',
-							customs: { required: 'connection' }
-						}),
-						getPort({
-							plug: 'input',
-							name: 'setColorScheme',
-							displayName: 'Set color scheme',
-							group: 'Signals',
-							type: 'signal',
-							customs: {
-								dependsOn(props) {
-									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
-						}),
-						getPort({
-							plug: 'input',
-							name: 'toggleColorScheme',
-							displayName: 'Toggle color scheme',
-							group: 'Signals',
-							type: 'signal',
-							customs: {
-								dependsOn(props) {
-									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
 						})
 					],
 					outputs: [
@@ -187,30 +154,6 @@ Noodl.defineModule({
 							displayName: 'Connected',
 							group: 'Network',
 							type: 'boolean'
-						}),
-						getPort({
-							plug: 'output',
-							name: 'colorScheme',
-							displayName: 'Color scheme',
-							group: 'Style',
-							type: 'string',
-							customs: {
-								dependsOn(props) {
-									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
-						}),
-						getPort({
-							plug: 'output',
-							name: 'colorSchemeChanged',
-							displayName: 'Color scheme changed',
-							group: 'Signals',
-							type: 'signal',
-							customs: {
-								dependsOn(props) {
-									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
 						})
 					]
 				}
@@ -260,6 +203,16 @@ Noodl.defineModule({
 			name: 'sentryDsn',
 			type: 'string',
 			displayName: 'Sentry DSN',
+			group: 'Rolder'
+		},
+		{
+			name: 'stopLoaderAnimationOn',
+			type: {
+				name: 'enum',
+				enums: getEnum(['appInitialized', 'dataInitialized'])
+			},
+			default: 'dataInitialized',
+			displayName: 'Stop loader animation on',
 			group: 'Rolder'
 		}
 	]

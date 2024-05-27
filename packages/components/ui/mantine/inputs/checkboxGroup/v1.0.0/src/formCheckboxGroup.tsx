@@ -5,7 +5,6 @@ import convertForSelectInputs from '@packages/convert-for-select-inputs'
 import getValue from "@packages/get-value"
 import { useFormScope } from "@packages/scope"
 import { sendOutput, sendSignal } from "@packages/port-send"
-import React from "react"
 
 export default forwardRef(function (props: Props) {
     const { noodlNode, inputItems, labelField, formField } = props

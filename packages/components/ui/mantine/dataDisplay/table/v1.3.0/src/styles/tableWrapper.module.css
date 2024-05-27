@@ -1,0 +1,5 @@
+.container {
+	overflow: hidden;
+	padding: 48px;
+	margin: -48px;
+}

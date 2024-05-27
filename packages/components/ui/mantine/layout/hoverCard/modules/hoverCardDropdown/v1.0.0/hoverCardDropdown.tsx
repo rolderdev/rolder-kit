@@ -1,6 +1,5 @@
 import { forwardRef } from "react"
-import type { Props } from "./types";
-import React from "react";
+import type { Props } from "./types";;
 
 export default forwardRef(function (props: Props) {
 

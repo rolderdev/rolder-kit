@@ -1,6 +1,5 @@
 import { forwardRef } from "react"
-import type { Props } from "./types";
-import React from "react";
+import type { Props } from "./types";;
 import { Group } from "@mantine/core";
 import { getCompProps } from '@packages/get-comp-props'
 

@@ -3,7 +3,8 @@
   "main": "popover.tsx",
   "types": "popover.tsx",
   "dependencies": {
-    "@mantine/core": "6.0.21",
+        "@mantine/core": "6.0.21",
+    "@mantine/hooks": "6.0.21",
     "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*"
   },
   "devDependencies": {

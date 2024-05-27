@@ -2,7 +2,6 @@ import { forwardRef } from "react" //
 import { Group, Stack, Text } from '@mantine/core'
 import { Dropzone, type DropzoneProps } from '@mantine/dropzone'
 import type { Props } from "./types"
-import React from "react"
 import { sendOutput, sendSignal } from "@packages/port-send"
 
 export default forwardRef(function (props: Props) {

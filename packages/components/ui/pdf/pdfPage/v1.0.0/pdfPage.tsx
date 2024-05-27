@@ -1,8 +1,7 @@
 import { Page } from "@react-pdf/renderer"
 import { forwardRef } from "react"
 import type { Props } from "./types";
-import { getCompProps } from "@packages/get-comp-props"
-import React from "react";
+import { getCompProps } from "@packages/get-comp-props";
 
 const childrenNames = ['PdfView', 'PdfText', 'PdfImage']
 

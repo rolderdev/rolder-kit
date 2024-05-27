@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
 import { NumberInput, type NumberInputHandlers } from "@mantine/core"
 import type { Props } from "../types"
-import React from "react"
 import { sendOutput, sendSignal } from '@packages/port-send'
 import convertColor from "@packages/convert-color"
 import isEmpty from "@packages/is-empty"

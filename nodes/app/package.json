@@ -1,6 +1,8 @@
 {
 	"name": "app",
 	"dependencies": {
+		"@packages/add-css-to-html-head": "workspace:@packages/add-css-to-html-head-v0.1.0@*",
+		"@packages/system-loader-animation": "workspace:@packages/system-loader-animation-v0.1.0@*",
 		"@mantine/form": "^6.0.21",
 		"@packages/get-formated-date-v0.2.0": "workspace:*",
 		"@packages/get-masked-v0.2.0": "workspace:*",
@@ -8,7 +10,7 @@
 		"@packages/is-empty-v0.1.0": "workspace:*",
 		"@packages/node": "workspace:@packages/node-v0.8.0@*",
 		"@packages/port": "workspace:@packages/port-v0.6.0@*",
-		"@tabler/icons-react": "^3.4.0",
+		"@tabler/icons-react": "^3.5.0",
 		"@packages/app-v1.4.0": "workspace:*",
 		"@packages/app-v2.0.0": "workspace:*",
 		"consola": "^3.2.3",
@@ -35,6 +37,6 @@
 	},
 	"devDependencies": {
 		"types": "workspace:*",
-		"@types/omgopass": "^3.2.3"		
+		"@types/omgopass": "^3.2.3"
 	}
 }

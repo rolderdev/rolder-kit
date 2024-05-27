@@ -1,9 +1,7 @@
-import { forwardRef, lazy, useEffect, useState } from "react"
+import { Suspense, forwardRef, lazy, useEffect, useState } from "react"
 import { QueryClient, QueryClientProvider, useMutation } from "@tanstack/react-query"
-import React from "react"
 import { Kuzzle, WebSocket } from 'kuzzle-sdk'
 import type { MutationFnProps, Props } from "./types"
-import { Loader } from "@mantine/core"
 import { PersistQueryClientProvider, type PersistedClient, type Persister } from '@tanstack/react-query-persist-client'
 import { get, set, del } from "idb-keyval";
 import { getKuzzle } from '@packages/get-kuzzle';
@@ -11,6 +9,7 @@ import { onlineManager } from '@tanstack/react-query'
 import { sendOutput } from "@packages/port-send"
 import { useInterval } from "@mantine/hooks"
 import useNetworkState from "./src/useNetworkState"
+import systemLoaderAnimation from "@packages/system-loader-animation"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -88,7 +87,7 @@ export default forwardRef(function (props: Props) {
         backendVersion, dbName, persistData, backendDevMode, backendUrl, backendPort,
         detectOffline, measureTimeout, offlineLatancy, offlineJitter, offlineDownload
     } = props
-    const { project } = Noodl.getProjectSettings()
+    const { project, stopLoaderAnimationOn = 'dataInitialized' } = Noodl.getProjectSettings()
 
     R.env.backendVersion = backendVersion
     R.env.dbName = dbName
@@ -120,6 +119,7 @@ export default forwardRef(function (props: Props) {
         }
 
         if (initState === 'initialized' && detectOffline) measureConnectionInterval.start()
+        if (initState === 'initialized' && stopLoaderAnimationOn === 'dataInitialized') systemLoaderAnimation.stop()
     }, [detectOffline, initState])
 
     useEffect(() => {
@@ -172,29 +172,21 @@ export default forwardRef(function (props: Props) {
             }}
             onSuccess={() => { if (R.libs.Kuzzle?.authenticated) queryClient.resumePausedMutations() }}
         >
-            {initState === 'initialized'
-                ? <Mutation>{props.children}</Mutation>
-                : <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-28px', marginLeft: '-28px' }}>
-                    <Loader color="dark" size='xl' />
-                </div>}
+            {initState === 'initialized' ? <Mutation>{props.children}</Mutation> : null}
             {R.states.debug
-                ? <React.Suspense fallback={null}>
+                ? <Suspense fallback={null}>
                     <ReactQueryDevtoolsProduction />
-                </React.Suspense>
+                </Suspense>
                 : null}
         </PersistQueryClientProvider>
         : <QueryClientProvider
             client={queryClient}
         >
-            {initState === 'initialized'
-                ? <Mutation>{props.children}</Mutation>
-                : <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-28px', marginLeft: '-28px' }}>
-                    <Loader color="dark" size='xl' />
-                </div>}
+            {initState === 'initialized' ? <Mutation>{props.children}</Mutation> : null}
             {R.states.debug
-                ? <React.Suspense fallback={null}>
+                ? <Suspense fallback={null}>
                     <ReactQueryDevtoolsProduction />
-                </React.Suspense>
+                </Suspense>
                 : null
             }
         </QueryClientProvider>

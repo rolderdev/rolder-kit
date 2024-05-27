@@ -1,44 +1,47 @@
-import { MantineColor, MantineNumberSize, MantineShadow, type CollapseProps } from '@mantine/core';
+import type { CollapseProps, MantineColor, MantineShadow, MantineSize } from '@mantine/core';
 import { BaseReactProps } from '@packages/node';
 import type { DataTableColumn, DataTableProps } from 'mantine-datatable';
-import { Item } from 'types';
+import type { Item } from 'types';
 
 export type Props = BaseReactProps & {
 	// Base
-	columns?: ColumnDef[];
-	onRowClick?: 'disabled' | 'singleSelection' | 'expansion';
+	columnsDefinition?: ColumnDef[];
 	items?: Item[];
+	onRowClick?: 'disabled' | 'singleSelection' | 'expansion';
+	onRowClickFunc?: any;
 
 	// States
 	fetching?: boolean;
 	//dataFetchError?: boolean;
 
+	// Layout
+	noHeader: boolean;
+
 	// Dimensions
 	minHeight?: string;
 	maxHeight?: string;
-	fitWidthContent?: boolean;
-	maxWidth?: string;
-	horizontalSpacing?: MantineNumberSize;
-	verticalSpacing?: MantineNumberSize;
-	fontSize?: MantineNumberSize;
+	horizontalSpacing?: MantineSize;
+	verticalSpacing?: MantineSize;
+	fz?: MantineSize;
 
 	// Table styles
 	shadow?: MantineShadow;
-	withBorder?: boolean;
-	borderRadius?: MantineNumberSize;
-	columnBorders?: boolean;
-	animation?: boolean;
+	withTableBorder?: boolean;
+	borderRadius?: MantineSize;
+	withColumnBorders?: boolean;
 	loaderColor?: MantineColor;
+	animation?: boolean;
 
 	// Row styles
 	rowStyles?: boolean;
-	rowBorders?: boolean;
+	withRowBorders?: boolean;
 	striped?: boolean;
-	rowBgColor?: MantineColor;
-	oddBgColor?: MantineColor;
-	evenBgColor?: MantineColor;
+	rowBackgroundColor?: MantineColor;
+	stripedColor?: MantineColor;
+	//oddBgColor?: MantineColor;
+	//evenBgColor?: MantineColor;
 	highlightOnHover?: boolean;
-	onHoverBgColor?: MantineColor;
+	highlightOnHoverColor?: MantineColor;
 	/*
 
 table2SingleSelectedRowBgColor: MantineColor;
@@ -77,41 +80,26 @@ table2MutliSelectedRowBgColor: MantineColor;*/
   table2SortedIcon?: string;
   table2UnsortedIcon?: string;
   // Filter
-  table2FilterType: "frontend" | "backend";
-  
-  // Layout
-  table2NoHeader: boolean;*/
+  table2FilterType: "frontend" | "backend";*/
 };
 
 export type TableProps = {
 	// Base
 	noodlNode: NoodlNode;
 	customProps?: any;
-	columnsDef: ColumnDef[];
 	items: Item[];
-	onRowClick: 'disabled' | 'singleSelection' | 'expansion';
+	onRowClick: Props['onRowClick'];
+	onRowClickFunc: any;
 	libProps: DataTableProps<Item>;
 
-	//children: any;
+	// Dimensions
+	dimensions: {
+		maxHeight: Props['maxHeight'];
+	};
 
 	// Table styles
 	tableStyles: {
 		animation: boolean;
-	};
-
-	// Row styles
-	rowStyles: {
-		enabled: boolean;
-		rowBorders: boolean;
-		striped: boolean;
-		rowBgColor: MantineColor;
-		oddBgColor: MantineColor;
-		evenBgColor: MantineColor;
-		highlightOnHover: boolean;
-		onHoverBgColor: MantineColor;
-
-		//singleSelectedRowBgColor: MantineColor;
-		//mutliSelectedRowBgColor: MantineColor;
 	};
 
 	// Expansion
@@ -140,8 +128,9 @@ export type TableProps = {
  */
 };
 
-export type ColumnDef = DataTableColumn<Item> & {
+export type ColumnDefinition = DataTableColumn<Item> & {
 	getValue?(item: Item): any;
+	template?: string;
 	sort?: {
 		default: 'asc' | 'desc';
 		func?(items: Item[], direction: 'asc' | 'desc'): Item[];

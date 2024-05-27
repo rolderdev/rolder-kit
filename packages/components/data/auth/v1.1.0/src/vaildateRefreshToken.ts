@@ -1,5 +1,4 @@
 import { getKuzzle } from '@packages/get-kuzzle';
-import { format } from '@formkit/tempo';
 import ms from 'ms';
 
 export default async function (sessionTimeout: string) {
@@ -11,7 +10,7 @@ export default async function (sessionTimeout: string) {
 			await R.db?.states.auth.set('token', () => tokenValidation.jwt);
 
 			log.info('Token refreshed', {
-				expiresAt: format(new Date(tokenValidation.expiresAt), { date: 'short', time: 'short' }),
+				expiresAt: R.libs.dayjs?.(tokenValidation.expiresAt).format('YYYY.MM.DD HH:mm'),
 				ttl: ms(tokenValidation.ttl)
 			});
 		} catch (e: any) {

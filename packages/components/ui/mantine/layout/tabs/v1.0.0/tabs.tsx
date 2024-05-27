@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useState } from "react"
-import type { Props } from "./types";
-import React from "react";
+import type { Props } from "./types";;
 import { Tabs } from "@mantine/core";
 import { getCompProps } from '@packages/get-comp-props'
 

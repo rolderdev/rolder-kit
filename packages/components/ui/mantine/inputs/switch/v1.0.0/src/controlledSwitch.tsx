@@ -1,7 +1,6 @@
 import { forwardRef, useImperativeHandle, useState } from "react"
 import { Switch } from "@mantine/core"
 import type { Props } from "../types"
-import React from "react"
 import { sendOutput, sendSignal } from '@packages/port-send'
 //import convertColor from "@packages/convert-color"
 

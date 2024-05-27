@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useState } from "react"
 import type { Props } from "./types"
-import React from "react"
 import { sendOutput, sendSignal } from "@packages/port-send"
 import { Html5Qrcode, Html5QrcodeFullConfig, Html5QrcodeSupportedFormats } from "html5-qrcode"
 
@@ -14,7 +13,7 @@ export default forwardRef(function (props: Props) {
             //@ts-ignore
             sendOutput(props.noodlNode, 'qrString', qrString)
             //@ts-ignore
-            sendSignal(props.noodlNode, 'qrScanned')            
+            sendSignal(props.noodlNode, 'qrScanned')
         }
     }, [qrString])
 

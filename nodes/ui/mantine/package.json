@@ -1,5 +1,5 @@
 {
-	"name": "mantine",
+	"name": "mantine",	
 	"dependencies": {
 		"@noodl/noodl-sdk": "0.5.4",
 		"@packages/mantine-v1.0.0": "workspace:*",
@@ -71,6 +71,6 @@
 		"postcss": "^8.4.38",
 		"postcss-simple-vars": "^7.0.1",
 		"postcss-loader": "^8.1.1",
-		"postcss-preset-mantine": "^1.15.0"		
+		"postcss-preset-mantine": "^1.15.0"
 	}
 }

@@ -1,7 +1,6 @@
 import BarLoader from "react-spinners/BarLoader"
 import { forwardRef } from "react"
 import type { Props } from "./types"
-import React from "react"
 import convertColor from "@packages/convert-color"
 
 export default forwardRef(function (props: Props) {

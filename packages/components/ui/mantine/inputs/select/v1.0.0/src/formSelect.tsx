@@ -1,12 +1,11 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { Select } from "@mantine/core"
-import { Props } from "../types"
+import type { Props } from "../types"
 import convertColor from "@packages/convert-color"
 import convertForSelectInputs from '@packages/convert-for-select-inputs'
 import getValue from "@packages/get-value"
 import { useFormScope } from "@packages/scope"
 import { sendOutput, sendSignal } from "@packages/port-send"
-import React from "react"
 import { usePrevious } from '@mantine/hooks'
 
 export default forwardRef(function (props: Props, ref) {

@@ -1,7 +1,6 @@
 import { deepMap } from "nanostores"
 import { Text } from "@mantine/core"
-import { Props, TableProps } from "../../types"
-import React from "react"
+import type { Props, TableProps } from "../../types"
 import deepEqual from 'fast-deep-equal'
 
 const propsCache = deepMap<{ [noodlNodeId: string]: any }>({})
