@@ -16,10 +16,10 @@ export default forwardRef(function (props: Props) {
     const itemSource = p.useScope && item ? item : p.itemSource
 
     const valueSource = p.dataSource === 'item'
-        ? getValue.v8(itemSource, p.sourceField)
+        ? typeof getValue.v8(itemSource, p.sourceField) === 'number'
             ? String(getValue.v8(itemSource, p.sourceField))
             : getValue.v8(itemSource, p.sourceField)
-        : p.valueSource
+        : typeof p.valueSource === 'number'
             ? String(p.valueSource)
             : p.valueSource
 
