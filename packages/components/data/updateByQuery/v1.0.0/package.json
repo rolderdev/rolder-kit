@@ -1,7 +1,7 @@
 {
   "name": "@packages/update-by-query-v1.0.0",
-  "main": "update.ts",
-  "types": "update.ts",
+  "main": "updateByQuery.ts",
+  "types": "updateByQuery.ts",
   "type": "module",
   "dependencies": {
     "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",

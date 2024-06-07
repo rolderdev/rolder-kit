@@ -6,7 +6,7 @@ export default jsNode(
 	{
 		'v1.0.0': { // Vezdexod
 			module: {
-				dynamic: import('@packages/update-by-query-v1.0.0')
+				dynamic: import("@packages/update-by-query-v1.0.0")
 			},
 			inputs: [
 				...getPorts('input', ['update']),

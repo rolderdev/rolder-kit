@@ -44,11 +44,14 @@ export default {
     // Получаем схему, у которой класс указан с версией
     const scheme = getUpdateScheme(props.scheme)
 
+    console.log(`Получили схему ${JSON.stringify(scheme)}`)
+
     // Ставим флаг о том, что началось обновление
     sendOutput(props.noodlNode, 'updating', true)
 
-    // Фиксируем время начала
+    // Фиксируем время начала обновления
     const startTime = log.start()
+
     log.info(`update props`, props)
 
     try {
@@ -80,163 +83,22 @@ export default {
       }
 
       // Запускаем обновление!
-      // const data = R.libs.mutate && await R.libs.mutate({ action: 'update', scheme, silent: props.silent })
+      const data = R.libs.mutate && await R.libs.mutate({ action: 'updateByQuery', scheme, silent: props.silent })
 
+      // Возвращаем результат обновления и выставляем флаг о том, что оно завершилось
+      sendOutputs(props.noodlNode, [
+        { portName: 'data', value: data },
+        { portName: 'updating', value: false }
+      ])
+      // Выдаем сигнал о завершении обновления
+      sendSignal(props.noodlNode, 'updated')
 
-      if (Array.isArray(scheme)) {
-
-        // const startTime2 = new Date()
-
-        // Задаем размер чанка
-        const chunkSize = 100
-        // Задаем корзину, в которой будем хранить записи, наполняя до достижения размера чанка
-        const chunkBox: {
-          dbClass: string,
-          history?: boolean,
-          items: any[]
-        }[] = []
-        let chunkData = []
-        // Задаем объект, хранящий результаты создания записей
-        const updateResult: {
-          [dbClass: string]: {
-            count?: number;
-            error?: string;
-            items?: object[];
-          }
-        } = {}
-
-        // Отщипываем крайний объект первого класса
-        const endItem = scheme?.[0]?.items?.pop()
-
-        // let countItems = 0
-
-        // Перебираем схемы классов
-        for (const iScheme of scheme) {
-
-          // Обновляем записи по частям
-          if (iScheme?.items) {
-
-            // Перебираем записи, и при достижении размера чанка создаем запись
-            for (const item of iScheme?.items) {
-              chunkData.push(item)
-              if (chunkData.length === chunkSize) {
-                chunkBox.push({
-                  dbClass: iScheme.dbClass,
-                  history: iScheme.history,
-                  items: chunkData
-                })
-                // Очищаем чанк для следующих записей
-                chunkData = []
-              }
-            }
-
-            // Если после перебора остались не созданные записи
-            if (chunkData.length > 0) {
-              chunkBox.push({
-                dbClass: iScheme.dbClass,
-                history: iScheme.history,
-                items: chunkData
-              })
-              // Очищаем чанк для следующих записей
-              chunkData = []
-            }
-
-          }
-        }
-
-        // После того, как мы нарезали схемы классов на чанки, обновляем их, но асинхронно
-        await Promise.all(chunkBox?.map(async iChunk => {
-          // Создаем записи из chunk
-          const data = R.libs.mutate && await R.libs.mutate({
-            action: 'updateByQuery',
-            scheme: [{
-              dbClass: iChunk.dbClass,
-              history: iChunk.history,
-              items: iChunk.items
-            }],
-            silent: true,
-            refresh: "false"
-          })
-
-          // // Для отладки
-          // if (true) {
-          //   console.log(`Обновлено записей ${countItems += 100}`)
-          // }
-
-          // Добавляем результаты
-          for (const dbClass in data) {
-            if (updateResult?.[dbClass] === undefined) {
-              updateResult[dbClass] = {
-                count: 0,
-                items: []
-              }
-            }
-            const count = updateResult[dbClass]?.count || 0
-            const iCount = data[dbClass]?.count || 0
-            updateResult[dbClass].count = count + iCount
-
-            if (data?.[dbClass]?.items) {
-              updateResult[dbClass].items = updateResult[dbClass]?.items?.concat(data[dbClass].items)
-            }
-
-            if (data?.[dbClass]?.error) {
-              updateResult[dbClass].error = data[dbClass].error
-            }
-          }
-        }))
-
-        // Обновляем крайний item, чтобы затриггерить useData, еслы silent: false
-        const endUpdateReasult = R.libs.mutate && await R.libs.mutate({
-          action: 'updateByQuery',
-          scheme: [{
-            dbClass: scheme?.[0]?.dbClass,
-            history: scheme?.[0]?.history,
-            items: [endItem]
-          }],
-          silent: props.silent, // Крайний silent берем уже из параметров ноды
-          refresh: "wait_for"
-        })
-
-        // Добавляем результаты
-        for (const dbClass in endUpdateReasult) {
-          if (updateResult?.[dbClass]?.count === undefined) {
-            updateResult[dbClass] = {
-              count: 0,
-              items: []
-            }
-          }
-          const count = updateResult[dbClass]?.count || 0
-          const iCount = endUpdateReasult[dbClass]?.count || 0
-          updateResult[dbClass].count = count + iCount
-
-          if (endUpdateReasult?.[dbClass]?.items !== undefined) {
-            updateResult[dbClass].items = updateResult[dbClass]?.items?.concat(endUpdateReasult[dbClass].items)
-          }
-
-          if (endUpdateReasult?.[dbClass]?.error) {
-            updateResult[dbClass].error = endUpdateReasult[dbClass].error
-          }
-        }
-
-
-        // const endTime = new Date()
-        // console.log(`Продолжительность ${(endTime.getTime() - startTime2.getTime()) / 1000} секунд`)
-
-        // Возвращаем результат обновления и выставляем флаг о том, что оно завершилось
-        sendOutputs(props.noodlNode, [
-          { portName: 'data', value: updateResult },
-          { portName: 'updating', value: false }
-        ])
-        // Выдаем сигнал о завершении обновления
-        sendSignal(props.noodlNode, 'updated')
-
-        log.info(`updated`, updateResult)
-        log.end(`update`, startTime)
-      }
+      log.info(`updated`, data)
+      log.end(`update`, startTime)
 
     } catch (error: any) {
-      R.libs.mantine?.MantineError?.('Системная ошибка!', `updateByQuery error: ${error.message}`)
-      log.error('updateByQuery error', error)
+      R.libs.mantine?.MantineError?.('Системная ошибка!', `update error: ${error.message}`)
+      log.error('update error', error)
     }
   }
 }

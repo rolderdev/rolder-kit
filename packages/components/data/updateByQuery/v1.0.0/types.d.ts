@@ -8,10 +8,14 @@ export type Props = BaseJsProps & {
 }
 
 export type UpdateScheme = {
-    dbClass: string    
+    dbClass: string
     items?: Item[]
     itemsFunc?: string
     history?: boolean
     silent?: boolean
     offlineSilent?: boolean
+    query?: {                 // Vezdexod
+        filter: object,
+        newValue: object
+    }
 }[]

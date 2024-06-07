@@ -381,6 +381,9 @@ importers:
       '@packages/update-by-query-v1.0.0':
         specifier: workspace:*
         version: link:../../../../packages/components/data/updateByQuery/v1.0.0
+      '@packages/update-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../packages/components/data/update/v1.0.0
     devDependencies:
       types:
         specifier: workspace:*
