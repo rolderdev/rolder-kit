@@ -161,8 +161,9 @@ import noderedNode from '@nodes/nodered';
 import saveAsNode from '@nodes/save-as';
 import createNode from '@nodes/create';
 import updateNode from '@nodes/update';
+import updateByQueryNode from '@nodes/update-by-query';
 import deleteNode from '@nodes/delete';
 
-const nodes = [getDataNode, logoutNode, noderedNode, saveAsNode, createNode, updateNode, deleteNode];
+const nodes = [getDataNode, logoutNode, noderedNode, saveAsNode, createNode, updateNode, updateByQueryNode, deleteNode];
 
 Noodl.defineModule({ reactNodes, nodes: nodes.map((i) => defineNode(i)) });

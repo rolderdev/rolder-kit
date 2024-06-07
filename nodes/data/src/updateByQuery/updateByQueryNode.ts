@@ -2,7 +2,7 @@ import { jsNode } from '@packages/node';
 import { getPort, getPorts } from '@packages/port';
 
 export default jsNode(
-	'update-by-query',
+	'updateByQuery',
 	{
 		'v1.0.0': { // Vezdexod
 			module: {
