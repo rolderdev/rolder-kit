@@ -39,7 +39,7 @@ function getUpdateScheme(updateScheme: UpdateScheme): UpdateScheme | boolean {
 }
 
 export default {
-  async update(props: Props) {
+  async updateByQuery(props: Props) {
 
     // Получаем схему, у которой класс указан с версией
     const scheme = getUpdateScheme(props.scheme)
@@ -148,7 +148,7 @@ export default {
         await Promise.all(chunkBox?.map(async iChunk => {
           // Создаем записи из chunk
           const data = R.libs.mutate && await R.libs.mutate({
-            action: 'update',
+            action: 'updateByQuery',
             scheme: [{
               dbClass: iChunk.dbClass,
               history: iChunk.history,
@@ -187,7 +187,7 @@ export default {
 
         // Обновляем крайний item, чтобы затриггерить useData, еслы silent: false
         const endUpdateReasult = R.libs.mutate && await R.libs.mutate({
-          action: 'update',
+          action: 'updateByQuery',
           scheme: [{
             dbClass: scheme?.[0]?.dbClass,
             history: scheme?.[0]?.history,
@@ -235,8 +235,8 @@ export default {
       }
 
     } catch (error: any) {
-      R.libs.mantine?.MantineError?.('Системная ошибка!', `update error: ${error.message}`)
-      log.error('update error', error)
+      R.libs.mantine?.MantineError?.('Системная ошибка!', `updateByQuery error: ${error.message}`)
+      log.error('updateByQuery error', error)
     }
   }
 }

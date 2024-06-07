@@ -161,6 +161,9 @@ importers:
       '@nodes/update':
         specifier: workspace:*
         version: link:src/update
+      '@nodes/update-by-query':
+        specifier: workspace:*
+        version: link:src/updateByQuery
       '@nodes/use-data':
         specifier: workspace:*
         version: link:src/useData
@@ -362,6 +365,22 @@ importers:
       '@packages/update-v1.3.0':
         specifier: workspace:*
         version: link:../../../../packages/components/data/update/v1.3.0
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../../../../types
+
+  nodes/data/src/updateByQuery:
+    dependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../packages/internal/node/v0.8.0
+      '@packages/port':
+        specifier: workspace:@packages/port-v0.6.0@*
+        version: link:../../../../packages/internal/port/v0.6.0
+      '@packages/update-by-query-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../packages/components/data/updateByQuery/v1.0.0
     devDependencies:
       types:
         specifier: workspace:*
@@ -2516,6 +2535,31 @@ importers:
         version: link:../../../../../types
 
   packages/components/data/update/v1.3.0:
+    dependencies:
+      '@packages/deep-merge':
+        specifier: workspace:@packages/deep-merge-v0.1.0@*
+        version: link:../../../../internal/utils/deepMerge/v0.1.0
+      '@packages/get-dbclass-version':
+        specifier: workspace:@packages/get-dbclass-version-v0.6.0@*
+        version: link:../../../../internal/utils/getDbClassVersion/v0.6.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../internal/utils/portSend/v0.3.0
+      '@tanstack/react-query':
+        specifier: 4.36.1
+        version: 4.36.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      just-clone:
+        specifier: 6.2.0
+        version: 6.2.0
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../types
+
+  packages/components/data/updateByQuery/v1.0.0:
     dependencies:
       '@packages/deep-merge':
         specifier: workspace:@packages/deep-merge-v0.1.0@*
