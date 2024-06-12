@@ -260,7 +260,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
             props.newSelectionScope?.itemsSelection !== undefined
             // && Object.keys(tableSelectionScopeValue)?.length > 0
         ) {
-            // console.log("tableSelectionClickItemIdValue в НАЧАЛЕ", [...tableSelectionClickItemIdValue])
+            console.log("tableSelectionScopeValue в НАЧАЛЕ", tableSelectionScopeValue)
             // Меняем статусы на полученные
             for (const itemId in props.newSelectionScope.itemsSelection) {
                 tableSelectionScopeValue[itemId] = props.newSelectionScope.itemsSelection[itemId]
@@ -273,6 +273,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                     tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].push(itemId)
                 }
             }
+            console.log("tableSelectionScopeValue в КОНЦЕ", tableSelectionScopeValue)
         }
         // Обработаем словарь связей извне
         if (
@@ -312,7 +313,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
         // Обновим атомы
         if (
             props.newSelectionScope?.itemsSelection !== undefined
-            && props.newSelectionScope?.refWithParent !== undefined
+            || props.newSelectionScope?.refWithParent !== undefined
         ) {
             if (tableSelectionChildIdsByParentIdValue['root']) {
                 setTableSelectionClickItemIdValue(tableSelectionChildIdsByParentIdValue['root'])

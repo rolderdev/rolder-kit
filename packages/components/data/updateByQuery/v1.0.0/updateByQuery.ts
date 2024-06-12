@@ -26,12 +26,12 @@ function getUpdateScheme(updateScheme: UpdateScheme): UpdateScheme | boolean {
       log.error('`No dbClass at scheme', dbClassScheme)
       return false
     }
-    // Если нет записей или функции на обновление, то выдаем ошибку
-    if (!dbClassScheme.items && !dbClassScheme.itemsFunc) {
-      R.libs.mantine?.MantineError?.('Системная ошибка!', `No items or itemsFunc at scheme: ${JSON.stringify(dbClassScheme)}`)
-      log.error('No items or itemsFunc at scheme', dbClassScheme)
-      return false
-    }
+    // // Если нет записей или функции на обновление, то выдаем ошибку
+    // if (!dbClassScheme.items && !dbClassScheme.itemsFunc) {
+    //   R.libs.mantine?.MantineError?.('Системная ошибка!', `No items or itemsFunc at scheme: ${JSON.stringify(dbClassScheme)}`)
+    //   log.error('No items or itemsFunc at scheme', dbClassScheme)
+    //   return false
+    // }
     return
   })
 
