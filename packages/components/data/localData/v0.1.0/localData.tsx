@@ -1,14 +1,15 @@
 import { forwardRef, useEffect, useState } from "react"
 import type { Props } from "./types"
 import initDataDb from "./src/initDataDb";
-import { Loader } from "@mantine/core"
 import { sendOutput, sendSignal } from '@packages/port-send';
+import systemLoaderAnimation from "@packages/system-loader-animation";
+import map from "just-map-object";
 
 let sended = false
 
 export default forwardRef(function (props: Props) {
     const { dbName, backendDevMode, backendHost, collectionsDefinition } = props
-    const { project, environment = 'd2' } = Noodl.getProjectSettings();
+    const { project, environment = 'd2', stopLoaderAnimationOn = 'authInitialized' } = Noodl.getProjectSettings();
 
     R.env.dbName = dbName
 
@@ -18,10 +19,13 @@ export default forwardRef(function (props: Props) {
         const store = replication.$;
 
         store.subscribe((states: Record<string, boolean>) => {
-            const collectionsCount = Object.keys(collectionsDefinition).length
+            let replicationCollectionsCount = 0
+            map(collectionsDefinition, (_, collectionDefinition) => {
+                if (collectionDefinition.replication !== false) replicationCollectionsCount++
+            })
             const initedCount = Object.values(states).filter(i => i === true).length
             // should run once
-            if (collectionsCount === initedCount && !sended) {
+            if (replicationCollectionsCount === initedCount && !sended) {
                 sendOutput(props.noodlNode, 'replicating', false)
                 sendSignal(props.noodlNode, 'replicated')
                 sended = true
@@ -37,14 +41,11 @@ export default forwardRef(function (props: Props) {
         }
 
         initDataDb(collectionsDefinition, { environment, backendDevMode, backendHost })
-            .then(() => setBackendInited(true))
+            .then(() => {
+                setBackendInited(true)
+                if (stopLoaderAnimationOn === 'localDataInitialized') systemLoaderAnimation.stop()
+            })
     }, [])
 
-    return <>{
-        backendInited
-            ? props.children :
-            <div style={{ position: 'absolute', top: '50%', left: '50%', marginTop: '-28px', marginLeft: '-28px' }}>
-                <Loader color="dark" size='xl' />
-            </div>
-    }</>
+    return <>{backendInited ? props.children : null}</>
 })

@@ -47,7 +47,7 @@ export function connectionRequired(noodlNode: NoodlNode, nodeInputs: NodePort[],
 			}
 		}
 
-		if (!hasReqiuredWarnings && nodeInput.customs?.validate) {
+		if (nodeInput.customs?.validate) {
 			const validation = nodeInput.customs?.validate(props);
 			if (typeof validation === 'string') sendWarning(noodlNode.model, noodlNode.context, dn, validation);
 			else clearWarning(noodlNode.model, noodlNode.context, dn);

@@ -1,0 +1,9 @@
+{
+	"dependencies": {
+		"@mantine/core": "^7.10.2",
+		"@mantine/hooks": "^7.10.2",
+		"@mantine/dates": "^7.10.2",
+		"@mantine/notifications": "^7.10.2",
+		"@tabler/icons-react": "^3.6.0"
+	}
+}

@@ -9,6 +9,7 @@ export type Props = BaseReactProps & {
 		{
 			order?: number;
 			rxDefinition: RxCollectionCreator<any>;
+			replication?: boolean;
 			fetchScheme?: any;
 			postSave?: (item: Item) => void;
 		}

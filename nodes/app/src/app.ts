@@ -22,16 +22,21 @@ switch (d) {
 	case 2:
 		consola.level = 3;
 		break;
+	case 3:
+		consola.level = 4;
+		break;
 }
 
 window.log = {
 	start: () => performance.now(),
 	end: (title, startTime) => consola.log(title, Math.round(performance.now() - startTime)),
 	info: (title, ...args) => consola.info(title, ...args),
+	debug: (title, ...args) => consola.debug(title, ...args),
 	error: (title, ...args) => {
 		consola.error(title, ...args);
 		Sentry.captureMessage(`${title} ${JSON.stringify(args)}`);
 	},
+	sentryMessage: (message) => Sentry.captureMessage(message),
 	sentryError: (error) => Sentry.captureException(error)
 };
 
@@ -138,6 +143,26 @@ Noodl.defineModule({
 							group: 'Params',
 							type: 'boolean',
 							default: true
+						}),
+						getPort({
+							plug: 'input',
+							name: 'sentry',
+							displayName: 'Enable Sentry logs',
+							group: 'Params',
+							type: 'boolean',
+							default: false
+						}),
+						getPort({
+							plug: 'input',
+							name: 'sentryDsn',
+							displayName: 'Sentry DSN',
+							group: 'Params',
+							type: 'string',
+							customs: {
+								dependsOn(p) {
+									return p.sentry ? true : false;
+								}
+							}
 						})
 					],
 					outputs: [
@@ -194,24 +219,12 @@ Noodl.defineModule({
 			group: 'Rolder'
 		},
 		{
-			name: 'mantineTheme',
-			type: 'array',
-			displayName: 'Mantine theme',
-			group: 'Rolder'
-		},
-		{
-			name: 'sentryDsn',
-			type: 'string',
-			displayName: 'Sentry DSN',
-			group: 'Rolder'
-		},
-		{
 			name: 'stopLoaderAnimationOn',
 			type: {
 				name: 'enum',
-				enums: getEnum(['appInitialized', 'dataInitialized'])
+				enums: getEnum(['appInitialized', 'dataInitialized', 'authInitialized', 'localDataInitialized'])
 			},
-			default: 'dataInitialized',
+			default: 'authInitialized',
 			displayName: 'Stop loader animation on',
 			group: 'Rolder'
 		}

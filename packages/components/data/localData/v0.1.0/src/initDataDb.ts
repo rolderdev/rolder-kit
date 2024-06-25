@@ -2,6 +2,8 @@ import initReplication from './initReplication';
 import type { Props } from '../types';
 import { getKuzzle } from '@packages/get-kuzzle';
 import initCollections from './initCollections';
+import map from 'just-map-object';
+import type { RxCollection } from 'rxdb';
 
 export default async function (
 	collectionsDefinition: Props['collectionsDefinition'],
@@ -19,6 +21,10 @@ export default async function (
 		: `https://${project}.pullstream.${environment}.rolder.app`;
 
 	const collections = await initCollections(collectionsDefinition);
+	let replicationCollections: { [x: string]: RxCollection<any, {}, {}, {}, any> } = {};
+	map(collectionsDefinition, async (dbClass, collectionDefinition) => {
+		if (collectionDefinition.replication !== false) replicationCollections[dbClass] = collections[dbClass];
+	});
 
 	const K = await getKuzzle();
 	// online
@@ -28,7 +34,7 @@ export default async function (
 		const intervalId = setInterval(() => {
 			if (K.jwt) {
 				clearInterval(intervalId);
-				initReplication(composedPullsStremUrl, collections, collectionsDefinition);
+				initReplication(composedPullsStremUrl, replicationCollections, collectionsDefinition);
 			}
 		}, 100);
 

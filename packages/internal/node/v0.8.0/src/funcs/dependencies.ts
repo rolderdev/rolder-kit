@@ -6,7 +6,7 @@ export function filterPortsByDependencies(allNodePorts: NodePort[], nodeProps: P
 
 	allNodePorts.forEach((nodePort) => {
 		if (nodePort.customs?.dependsOn) {
-			if (nodePort.customs.dependsOn(nodeProps)) resultNodePorts.push(nodePort);
+			if (nodePort.customs.dependsOn(nodeProps, nodePort)) resultNodePorts.push(nodePort);
 		} else resultNodePorts.push(nodePort);
 	});
 

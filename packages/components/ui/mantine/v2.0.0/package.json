@@ -4,14 +4,6 @@
 	"types": "mantine.tsx",
 	"type": "module",
 	"dependencies": {
-		"@packages/add-css-to-html-head": "workspace:@packages/add-css-to-html-head-v0.1.0@*",
-		"dayjs": "^1.11.11",
-		"@mantine/core": "^7.10.0",
-		"@mantine/dates": "^7.10.0",
-		"@mantine/notifications": "^7.10.0"		
-	},
-	"devDependencies": {
-		"types": "workspace:*",
-		"@packages/node": "workspace:@packages/node-v0.8.0@*"
+		"@packages/add-css-to-html-head": "workspace:@packages/add-css-to-html-head-v0.1.0@*"
 	}
 }

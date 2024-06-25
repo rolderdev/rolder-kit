@@ -1,19 +1,20 @@
 {
-  "name": "@packages/app-v1.4.0",
-  "main": "app.tsx",
-  "types": "app.tsx",
-  "type": "module",
-  "dependencies": {
-    "@packages/convertColor": "workspace:@packages/convert-color-v0.3.0@*",
-    "@mantine/core": "6.0.21",
-    "@mantine/hooks": "6.0.21",
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-    "@capacitor/preferences": "6.0.0",
-    "react-error-boundary": "4.0.13",
-    "@sentry/browser": "7.112.2"
-  },
-  "devDependencies": {
-    "types": "workspace:*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@*"
-  }
+	"name": "@packages/app-v1.4.0",
+	"main": "app.tsx",
+	"types": "app.tsx",
+	"type": "module",
+	"dependencies": {
+		"@packages/convertColor": "workspace:@packages/convert-color-v0.3.0@*",
+		"@packages/system-loader-animation": "workspace:@packages/system-loader-animation-v0.1.0@*",
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+		"@mantine/core": "6.0.21",
+		"@mantine/hooks": "6.0.21",
+		"@capacitor/preferences": "6.0.0",
+		"react-error-boundary": "4.0.13",
+		"@sentry/browser": "7.112.2"
+	},
+	"devDependencies": {
+		"types": "workspace:*",
+		"@packages/node": "workspace:@packages/node-v0.8.0@*"
+	}
 }

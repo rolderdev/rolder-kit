@@ -2,14 +2,5 @@
 	"name": "@packages/notification-v2.0.0",
 	"main": "notification.ts",
 	"types": "notification.ts",
-	"type": "module",
-	"dependencies": {
-		"@mantine/core": "^7.10.0",
-		"@mantine/hooks": "^7.10.0",
-		"@mantine/notifications": "^7.10.0"
-	},
-	"devDependencies": {
-		"types": "workspace:*",
-		"@packages/node": "workspace:@packages/node-v0.8.0@*"
-	}
+	"type": "module"
 }

@@ -97,7 +97,9 @@ declare global {
 		start(): number;
 		end(title: string, startTime: number): void;
 		info(title: string, ...args: any): void;
+		debug(title: string, ...args: any): void;
 		error(title: string, ...args: any): void;
+		sentryMessage(message: string): void;
 		sentryError(error: Error): void;
 	};
 }

@@ -1,0 +1,21 @@
+{
+	"name": "@packages/table-v2.0.0",
+	"main": "table.tsx",
+	"types": "table.tsx",
+	"dependencies": {
+		"@formkit/auto-animate": "^0.8.2",
+		"nanoid": "^5.0.7",
+		"clsx": "^2.1.1",
+		"mantine-datatable": "7.10.2",
+		"zod": "^3.23.8",
+		"zustand": "^4.5.2",
+		"just-safe-get": "^4.2.0",
+		"just-map-object": "^2.3.0",
+		"lodash.isequal": "^4.5.0",
+		"lodash.isfunction": "^3.0.9"
+	},
+	"devDependencies": {
+		"@types/lodash.isequal": "^4.5.8",
+		"@types/lodash.isfunction": "^3.0.9"
+	}
+}

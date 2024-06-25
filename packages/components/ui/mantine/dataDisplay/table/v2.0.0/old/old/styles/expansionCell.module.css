@@ -1,0 +1,14 @@
+.icon {
+	width: rem(16px);
+	height: auto;
+	vertical-align: rem(-3px);
+	margin-right: rem(10px);
+}
+
+.expandIcon {
+	transition: transform 0.2s;
+}
+
+.expandIconRotated {
+	transform: rotate(90deg);
+}

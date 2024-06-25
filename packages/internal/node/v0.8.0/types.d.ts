@@ -160,6 +160,7 @@ export type NoodlNode = {
 	_updateIteration: number;
 	_updatedAtIteration: number;
 	_valuesFromConnections: any;
+	removeChild: (reactNode: React.ReactNode) => void;
 };
 
 export type NodeContext = {

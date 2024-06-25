@@ -1,13 +1,5 @@
 {
 	"name": "@packages/stack-v2.0.0",
 	"main": "stack.tsx",
-	"types": "stack.tsx",
-	"dependencies": {
-		"@mantine/core": "^7.10.0",
-		"@mantine/hooks": "^7.10.0"
-	},
-	"devDependencies": {
-		"@packages/node": "workspace:@packages/node-v0.8.0@*",
-		"types": "workspace:*"
-	}
+	"types": "stack.tsx"
 }

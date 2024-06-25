@@ -11,6 +11,6 @@
   "devDependencies": {
     "types": "workspace:*",
     "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "kuzzle-sdk": "7.11.2"
+    "kuzzle-sdk": "^7.11.3"
   }
 }

@@ -1,153 +1,94 @@
 {
-  "deploymentsDir": "/home/decard/noodlDeployments",
-  "noodlProjectsDir": "/home/decard/projects/noodlProjects",
-  "projects": {
-    "startum-desktop": {
-      "projectDir": "startum-desktop",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "mantine-old",
-        "data",
-        "pdf",
-        "qr-code",
-        "xlsx"
-      ],
-      "dev": {
-        "dir": "dev",
-        "bucket": "dev.startum.rolder.app"
-      },
-      "test": {
-        "dir": "test",
-        "bucket": "test.startum.rolder.app"
-      },
-      "stage": {
-        "dir": "stage",
-        "bucket": "stage.startum.rolder.app"
-      },
-      "prod": {
-        "dir": "prod",
-        "bucket": "startum.rolder.app"
-      }
-    },
-    "startum-mobile": {
-      "projectDir": "startum-mobile/noodl",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "mantine-old",
-        "data",
-        "qrCode",
-        "web-camera"
-      ],
-      "dev": {
-        "dir": "dev",
-        "bucket": "dev-m.startum.rolder.app"
-      },
-      "test": {
-        "dir": "test",
-        "bucket": "test-m.startum.rolder.app"
-      },
-      "stage": {
-        "dir": "stage",
-        "bucket": "stage-m.startum.rolder.app"
-      },
-      "prod": {
-        "dir": "prod",
-        "bucket": "m.startum.rolder.app"
-      }
-    },
-    "pdf": {
-      "projectDir": "pdf",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "mantine-old",
-        "data",
-        "pdf"
-      ]
-    },
-    "gantt": {
-      "projectDir": "gantt",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "gantt"
-      ]
-    },
-    "rasko-desktop": {
-      "projectDir": "rasko-desktop",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "mantine-old",
-        "data",
-        "gantt",
-        "pdf",
-        "xlsx"
-      ]
-    },
-    "tex": {
-      "projectDir": "tex",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "mantine-old",
-        "data",
-        "pdf",
-        "xlsx"
-      ]
-    },
-    "playground": {
-      "projectDir": "playground",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "data"
-      ]
-    },
-    "xcity": {
-      "projectDir": "xcity",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "mantine-old",
-        "data"
-      ],
-      "dev": {
-        "dir": "dev",
-        "bucket": "dev.xcity.rolder.app"
-      },
-      "prod": {
-        "dir": "prod",
-        "bucket": "xcity.rolder.app"
-      }
-    },
-    "cockbot-desktop": {
-      "projectDir": "cockbot-desktop",
-      "rolderKit": [
-        "app",
-        "data",
-        "mantine",
-        "mantine-old"
-      ],
-      "dev": {
-        "dir": "dev",
-        "bucket": "dev.xcity.rolder.app"
-      },
-      "prod": {
-        "dir": "prod",
-        "bucket": "xcity.rolder.app"
-      }
-    },
-    "rkdocs": {
-      "projectDir": "rkdocs",
-      "rolderKit": [
-        "app",
-        "mantine",
-        "data",
-        "markdown"
-      ]
-    }
-  }
+	"deploymentsDir": "/home/decard/noodlDeployments",
+	"noodlProjectsDir": "/home/decard/projects/noodlProjects",
+	"projects": {
+		"startum-desktop": {
+			"projectDir": "startum-desktop",
+			"rolderKit": ["app", "mantine", "mantine-old", "data", "pdf", "qr-code", "xlsx"],
+			"dev": {
+				"dir": "dev",
+				"bucket": "dev.startum.rolder.app"
+			},
+			"test": {
+				"dir": "test",
+				"bucket": "test.startum.rolder.app"
+			},
+			"stage": {
+				"dir": "stage",
+				"bucket": "stage.startum.rolder.app"
+			},
+			"prod": {
+				"dir": "prod",
+				"bucket": "startum.rolder.app"
+			}
+		},
+		"startum-mobile": {
+			"projectDir": "startum-mobile/noodl",
+			"rolderKit": ["app", "mantine", "mantine-old", "data", "qr-code"],
+			"dev": {
+				"dir": "dev",
+				"bucket": "dev-m.startum.rolder.app"
+			},
+			"test": {
+				"dir": "test",
+				"bucket": "test-m.startum.rolder.app"
+			},
+			"stage": {
+				"dir": "stage",
+				"bucket": "stage-m.startum.rolder.app"
+			},
+			"prod": {
+				"dir": "prod",
+				"bucket": "m.startum.rolder.app"
+			}
+		},
+		"pdf": {
+			"projectDir": "pdf",
+			"rolderKit": ["app", "mantine", "mantine-old", "data", "pdf"]
+		},
+		"gantt": {
+			"projectDir": "gantt",
+			"rolderKit": ["app", "mantine", "gantt"]
+		},
+		"rasko-desktop": {
+			"projectDir": "rasko-desktop",
+			"rolderKit": ["app", "mantine", "mantine-old", "data", "gantt", "pdf", "xlsx"]
+		},
+		"tex": {
+			"projectDir": "tex",
+			"rolderKit": ["app", "mantine", "mantine-old", "data", "pdf", "xlsx"]
+		},
+		"playground": {
+			"projectDir": "playground",
+			"rolderKit": ["app", "mantine", "data"]
+		},
+		"xcity": {
+			"projectDir": "xcity",
+			"rolderKit": ["app", "mantine", "mantine-old", "data"],
+			"dev": {
+				"dir": "dev",
+				"bucket": "dev.xcity.rolder.app"
+			},
+			"prod": {
+				"dir": "prod",
+				"bucket": "xcity.rolder.app"
+			}
+		},
+		"cockbot-desktop": {
+			"projectDir": "cockbot-desktop",
+			"rolderKit": ["app", "data", "mantine", "mantine-old"],
+			"dev": {
+				"dir": "dev",
+				"bucket": "dev.xcity.rolder.app"
+			},
+			"prod": {
+				"dir": "prod",
+				"bucket": "xcity.rolder.app"
+			}
+		},
+		"rkdocs": {
+			"projectDir": "rkdocs",
+			"rolderKit": ["app", "mantine", "data", "markdown"]
+		}
+	}
 }

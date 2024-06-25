@@ -1,7 +1,7 @@
 import { reactNode } from '@packages/node';
 import { getPort, getPorts, getType } from '@packages/port';
 import { lazy } from 'react';
-import { inputs130, outputs130 } from './ports/v1.3.0';
+import ports200 from './ports/v2.0.0';
 
 export default reactNode(
 	'Table',
@@ -565,18 +565,14 @@ export default reactNode(
 				'parentTableId'
 			])
 		},
-		'v1.3.0': {
-			hashTag: '#pre-release',
-			module: { dynamic: lazy(() => import('@packages/table-v1.3.0')) },
-			inputs: inputs130,
-			outputs: outputs130,
-			getInspectInfo(props) {
-				return props.columnsDefinition ? { type: 'value', value: props.columnsDefinition3 } : '[No table columns]';
-			}
+		'v2.0.0': {
+			hashTag: '#expreimental',
+			module: { dynamic: lazy(() => import('@packages/table-v2.0.0')) },
+			inputs: ports200.inputs,
+			outputs: ports200.outputs
 		}
 	},
 	{
-		allowChildren: true,
-		loaderAnimation: true
+		allowChildren: true
 	}
 );

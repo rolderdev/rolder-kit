@@ -46,6 +46,14 @@ const mantineNode = reactNode(
 					type: getCustomEnumType(['light', 'dark', 'auto']),
 					default: 'light',
 					customs: { required: 'connection' }
+				}),
+				getPort({
+					plug: 'input',
+					name: 'mantineTheme',
+					displayName: 'Mantine theme',
+					group: 'Style',
+					type: 'array',
+					customs: { isObject: true }
 				})
 			]
 		}
@@ -88,6 +96,7 @@ import switchNode from '@nodes/switch';
 import notificationNode from '@nodes/notification';
 import dividerNode from '@nodes/divider';
 import dropZoneNode from '@nodes/drop-zone';
+import webCameraNode from '@nodes/web-camera';
 //// typography
 import textNode from '@nodes/text';
 import titleNode from '@nodes/title';
@@ -169,6 +178,7 @@ Noodl.defineModule({
 		//// miscellaneous
 		dividerNode,
 		dropZoneNode,
+		webCameraNode,
 		//// typography
 		textNode,
 		titleNode,

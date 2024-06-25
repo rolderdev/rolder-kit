@@ -47,9 +47,9 @@ export default reactNode(
 				getPort({ plug: 'output', name: 'error', displayName: 'Error', group: 'Params', type: 'string' })
 			]
 		},
-		'v1.1.0': {
+		'v2.0.0': {
 			hashTag: '#expreimental',
-			module: { dynamic: lazy(() => import('@packages/auth-v1.1.0')) },
+			module: { dynamic: lazy(() => import('@packages/auth-v2.0.0')) },
 			inputs: [
 				getPort({
 					plug: 'input',

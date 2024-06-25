@@ -87,7 +87,7 @@ export default forwardRef(function (props: Props) {
         backendVersion, dbName, persistData, backendDevMode, backendUrl, backendPort,
         detectOffline, measureTimeout, offlineLatancy, offlineJitter, offlineDownload
     } = props
-    const { project, stopLoaderAnimationOn = 'dataInitialized' } = Noodl.getProjectSettings()
+    const { project, stopLoaderAnimationOn = 'authInitialized' } = Noodl.getProjectSettings()
 
     R.env.backendVersion = backendVersion
     R.env.dbName = dbName
@@ -119,7 +119,7 @@ export default forwardRef(function (props: Props) {
         }
 
         if (initState === 'initialized' && detectOffline) measureConnectionInterval.start()
-        if (initState === 'initialized' && stopLoaderAnimationOn === 'dataInitialized') systemLoaderAnimation.stop()
+        if (initState === 'initialized' && stopLoaderAnimationOn === 'authInitialized') systemLoaderAnimation.stop()
     }, [detectOffline, initState])
 
     useEffect(() => {

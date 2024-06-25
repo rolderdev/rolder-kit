@@ -23,6 +23,12 @@ export default async function pushHandler(dbClass: string, changeRows: RxReplica
 	});
 
 	const conflicts = response.result as any[];
+
+	if (conflicts.length)
+		Sentry.withScope((scope: any) => {
+			scope.setExtra('RxDb conflicts', conflicts);
+			Sentry.captureMessage('RxDb conflicts');
+		});
 	log.info('Push conflicts', conflicts);
 
 	return conflicts;

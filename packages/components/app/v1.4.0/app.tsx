@@ -7,6 +7,7 @@ import { sendOutput, sendSignal } from "@packages/port-send";;
 import { Preferences } from "@capacitor/preferences";
 import { ErrorBoundary } from "react-error-boundary";
 import * as Sentry from "@sentry/browser";
+import systemLoaderAnimation from "@packages/system-loader-animation";
 
 window.Sentry = Sentry
 
@@ -37,7 +38,7 @@ function FallbackComponent({ error }: any) {
 }
 
 export default forwardRef(function (props: CompProps, ref) {
-  const { project, projectVersion, projectDefaults, sentryDsn } = Noodl.getProjectSettings();
+  const { project, projectVersion, projectDefaults, sentryDsn, stopLoaderAnimationOn = 'authInitialized', } = Noodl.getProjectSettings();
 
   useEffect(() => {
     if (projectVersion) {
@@ -51,13 +52,13 @@ export default forwardRef(function (props: CompProps, ref) {
       });
     }
     if (sentryDsn) {
-
       Sentry.init({
         dsn: sentryDsn,
         transport: Sentry.makeBrowserOfflineTransport(Sentry.makeFetchTransport),
         tracesSampleRate: 0.01,
       });
     }
+    if (stopLoaderAnimationOn === 'appInitialized') systemLoaderAnimation.stop()
   }, []);
 
   R.env.project = project;

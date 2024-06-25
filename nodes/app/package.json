@@ -3,7 +3,7 @@
 	"dependencies": {
 		"@packages/add-css-to-html-head": "workspace:@packages/add-css-to-html-head-v0.1.0@*",
 		"@packages/system-loader-animation": "workspace:@packages/system-loader-animation-v0.1.0@*",
-		"@mantine/form": "^6.0.21",
+		"@mantine/form": "^7.10.2",
 		"@packages/get-formated-date-v0.2.0": "workspace:*",
 		"@packages/get-masked-v0.2.0": "workspace:*",
 		"@packages/get-value-v0.8.0": "workspace:*",
@@ -27,6 +27,7 @@
 		"just-omit": "^2.2.0",
 		"just-range": "^4.2.0",
 		"just-safe-get": "^4.2.0",
+		"just-safe-set": "^4.2.1",
 		"just-sort-by": "^3.2.0",
 		"just-template": "^2.2.0",
 		"just-typeof": "^3.2.0",

@@ -1,4 +1,4 @@
-import { createTheme, MantineProvider, type MantineTheme } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 import { DatesProvider } from "@mantine/dates"
 import { Notifications, notifications } from "@mantine/notifications"
 import { forwardRef } from "react"
@@ -12,18 +12,18 @@ dayjs.extend(customParseFormat);
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
+import './src/mantine.module.css'
 
 addCssToHtmlHead(['mantine'])
 
-/* function MantineError(title: string, message?: string, autoClose?: boolean | number): void {
+function MantineError(title: string, message?: string, autoClose?: boolean | number): void {
     notifications.show({ title, message, color: 'red', autoClose: autoClose ? autoClose : false })
 }
-R.libs.mantine = { MantineError } */
+R.libs.mantine = { MantineError }
 
-export default forwardRef(function (props: CompProps, ref) {
-    const { notificationsPosition, defaultColorScheme } = props
+export default forwardRef(function (props: CompProps) {
+    const { notificationsPosition, defaultColorScheme, mantineTheme } = props
 
-    const mantineTheme = eval(Noodl.getProjectSettings().mantineTheme)?.[0] as MantineTheme
     const theme = createTheme(mantineTheme);
 
     return <MantineProvider
