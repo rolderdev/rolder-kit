@@ -15,6 +15,7 @@ export default forwardRef(function (props: Props) {
     const [value, setValue] = useState('')
     const itemSource = p.useScope && item ? item : p.itemSource
 
+    // Vezdexod
     const valueSource = p.dataSource === 'item'
         ? typeof getValue.v8(itemSource, p.sourceField) === 'number'
             ? String(getValue.v8(itemSource, p.sourceField))

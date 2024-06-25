@@ -1082,6 +1082,9 @@ importers:
       '@packages/switch-v0.1.0':
         specifier: workspace:*
         version: link:../../../../../../packages/components/ui/mantine/inputs/switch/v1.0.0
+      '@packages/switch-v1.0.1':
+        specifier: workspace:*
+        version: link:../../../../../../packages/components/ui/mantine/inputs/switch/v1.0.1
     devDependencies:
       types:
         specifier: workspace:*
@@ -3675,6 +3678,31 @@ importers:
         version: link:../../../../../../../types
 
   packages/components/ui/mantine/inputs/switch/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.4(@types/react@16.9.49)(react@18.3.1))(@mantine/hooks@6.0.21(react@18.3.1))(@types/react@16.9.49)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@packages/convert-color':
+        specifier: workspace:@packages/convert-color-v0.3.0@*
+        version: link:../../../../../../internal/utils/convertColor/v0.3.0
+      '@packages/get-comp-props':
+        specifier: workspace:@packages/get-comp-props-v0.1.0@*
+        version: link:../../../../../../internal/utils/getCompProps/v0.1.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../../../internal/utils/portSend/v0.3.0
+      '@packages/scope':
+        specifier: workspace:@packages/scope-v0.1.0@*
+        version: link:../../../../../../internal/scope/v0.1.0
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../../../types
+
+  packages/components/ui/mantine/inputs/switch/v1.0.1:
     dependencies:
       '@mantine/core':
         specifier: 6.0.21

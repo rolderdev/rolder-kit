@@ -109,7 +109,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                         parentSelectionChanged = true
                     }
                     // Удаляем отца из массива indeterminated
-                    tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== parentItemId)
+                    tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(fItemId => fItemId !== parentItemId)
                 }
                 // Если среди голосов все notSelected, то и отец notSelected
                 else if (
@@ -122,7 +122,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                         parentSelectionChanged = true
                     }
                     // Удаляем отца из массива indeterminated
-                    tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== parentItemId)
+                    tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(fItemId => fItemId !== parentItemId)
                 }
                 // а если есть и selected, и notSelected, то отец indeterminated
                 else {
@@ -271,6 +271,10 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                     && !tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].includes(itemId)
                 ) {
                     tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].push(itemId)
+                }
+                // Если статус не равен indeterminated, то удаляем
+                else {
+                    tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(fItemId => fItemId !== itemId)
                 }
             }
             console.log("tableSelectionScopeValue в КОНЦЕ", tableSelectionScopeValue)
