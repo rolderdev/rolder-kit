@@ -26,9 +26,6 @@ export default forwardRef(function (props: Props, ref) {
         }
     },[props.inputChecked])
 
-    console.log("props.inputChecked", props.inputChecked)
-    console.log("checked in Switch", checked)
-
     return <Switch
         error={props.inputError || false}
         //icon={Icon && <Icon size={props.iconSize} stroke={props.iconStroke} color={convertColor(props.iconColor)} />}

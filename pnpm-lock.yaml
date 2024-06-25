@@ -926,6 +926,9 @@ importers:
       '@packages/checkbox-group-v1.0.0':
         specifier: workspace:*
         version: link:../../../../../../packages/components/ui/mantine/inputs/checkboxGroup/v1.0.0
+      '@packages/checkbox-group-v1.0.1':
+        specifier: workspace:*
+        version: link:../../../../../../packages/components/ui/mantine/inputs/checkboxGroup/v1.0.1
       '@packages/node':
         specifier: workspace:@packages/node-v0.8.0@*
         version: link:../../../../../../packages/internal/node/v0.8.0
@@ -3352,6 +3355,34 @@ importers:
         version: link:../../../../../../../types
 
   packages/components/ui/mantine/inputs/checkboxGroup/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.4(@types/react@16.9.49)(react@18.3.1))(@mantine/hooks@6.0.21(react@18.3.1))(@types/react@16.9.49)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@packages/convert-for-select-inputs':
+        specifier: workspace:@packages/convert-for-select-inputs-v0.2.0@*
+        version: link:../../../../../../internal/utils/convertForSelectInputs/v0.2.0
+      '@packages/get-comp-props':
+        specifier: workspace:@packages/get-comp-props-v0.1.0@*
+        version: link:../../../../../../internal/utils/getCompProps/v0.1.0
+      '@packages/get-value':
+        specifier: workspace:@packages/get-value-v0.8.0@*
+        version: link:../../../../../../internal/utils/getValue/v0.8.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../../../internal/utils/portSend/v0.3.0
+      '@packages/scope':
+        specifier: workspace:@packages/scope-v0.1.0@*
+        version: link:../../../../../../internal/scope/v0.1.0
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../../../types
+
+  packages/components/ui/mantine/inputs/checkboxGroup/v1.0.1:
     dependencies:
       '@mantine/core':
         specifier: 6.0.21
