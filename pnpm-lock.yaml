@@ -318,6 +318,9 @@ importers:
       '@packages/nodered-v1.1.0':
         specifier: workspace:*
         version: link:../../../../packages/components/data/nodered/v1.1.0
+      '@packages/nodered-v1.2.0':
+        specifier: workspace:*
+        version: link:../../../../packages/components/data/nodered/v1.2.0
       '@packages/port':
         specifier: workspace:@packages/port-v0.6.0@*
         version: link:../../../../packages/internal/port/v0.6.0
@@ -2378,6 +2381,25 @@ importers:
         version: link:../../../../../types
 
   packages/components/data/nodered/v1.1.0:
+    dependencies:
+      '@packages/get-kuzzle':
+        specifier: workspace:@packages/get-kuzzle-v0.1.0@*
+        version: link:../../../../internal/utils/getKuzzle/v0.1.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../internal/utils/portSend/v0.3.0
+      ky:
+        specifier: 1.2.3
+        version: 1.2.3
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../types
+
+  packages/components/data/nodered/v1.2.0:
     dependencies:
       '@packages/get-kuzzle':
         specifier: workspace:@packages/get-kuzzle-v0.1.0@*

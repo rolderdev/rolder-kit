@@ -77,6 +77,44 @@ export default jsNode(
 				getPort({ plug: 'output', name: 'executed', displayName: 'Executed', group: 'Signals', type: 'signal' }),
 				getPort({ plug: 'output', name: 'result', displayName: 'Result', group: 'Data', type: '*' })
 			]
+		},
+		'v1.2.0': { // Vezdexod
+			module: {
+				dynamic: import('@packages/nodered-v1.2.0')
+			},
+			inputs: [
+				getPort({ plug: 'input', name: 'execute', displayName: 'Execute', group: 'Signals', type: 'signal' }),
+				getPort({
+					plug: 'input',
+					name: 'flowEndpoint',
+					displayName: 'Flow endpoint',
+					group: 'Params',
+					type: 'string',
+					customs: { required: 'both' }
+				}),
+				getPort({ 							// Vezdexod
+					plug: 'input',
+					name: 'timeout',
+					displayName: 'timeout',
+					group: 'Params',
+					type: 'number',
+					default: 10000
+				}),
+				getPort({ 							// Vezdexod
+					plug: 'input',
+					name: 'useRadFlow',
+					displayName: 'Use Rad Flow',
+					group: 'Params',
+					type: 'boolean',
+					default: false
+				}),
+				getPort({ plug: 'input', name: 'flowData', displayName: 'Flow data', group: 'Data', type: '*' })
+			],
+			outputs: [
+				getPort({ plug: 'output', name: 'executing', displayName: 'Executing', group: 'States', type: 'boolean', default: false }),
+				getPort({ plug: 'output', name: 'executed', displayName: 'Executed', group: 'Signals', type: 'signal' }),
+				getPort({ plug: 'output', name: 'result', displayName: 'Result', group: 'Data', type: '*' })
+			]
 		}
 	},
 	{ color: 'purple' }
