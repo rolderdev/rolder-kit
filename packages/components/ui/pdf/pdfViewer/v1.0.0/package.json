@@ -1,18 +1,12 @@
 {
-  "name": "@packages/pdf-viewer-v1.0.0",
-  "main": "pdfViewer.tsx",
-  "types": "pdfViewer.tsx",
-  "type": "module",
-  "dependencies": {
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-    "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
-    "@packages/is-empty": "workspace:@packages/is-empty-v0.1.0@*",
-    "react-pdf": "7.7.0",
-    "pdfjs-dist": "3.11.174",
-    "@emotion/styled": "11.11.0"
-  },
-  "devDependencies": {
-    "types": "workspace:*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@*"
-  }
+	"name": "@packages/pdf-viewer-v1.0.0",
+	"main": "pdfViewer.tsx",
+	"types": "pdfViewer.tsx",
+	"type": "module",
+	"dependencies": {
+		"@packages/is-empty": "workspace:@packages/is-empty-v0.1.0@*",
+		"react-pdf": "^9.0.0",
+		"pdfjs-dist": "^4.3.136",
+		"@emotion/styled": "^11.11.5"
+	}
 }

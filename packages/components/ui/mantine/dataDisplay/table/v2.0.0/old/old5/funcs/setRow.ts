@@ -14,7 +14,6 @@ export default function (store: Store, row: Row) {
 				// Создаем кастомную ячейку только когда ее нет.
 				if (!store.getState().rows.get(row.id)?.templateCells.get(column.idx)) {
 					row.ready = false; // Установим стсояние для запуска скелетонов при первом рендере строки.
-					row.state.templateCells = false;
 					setTemplateCell(store, column, row);
 					// Нужно восстановить кастомную ячейку.
 				} else row.templateCells.set(column.idx, store.getState().rows.get(row.id)?.templateCells.get(column.idx));

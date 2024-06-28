@@ -7,7 +7,7 @@
 		"ms": "^2.1.3",
 		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.2.0@*",
 		"@packages/system-loader-animation": "workspace:@packages/system-loader-animation-v0.1.0@*",
-		"@mantine/hooks": "^7.10.2"
+		"@mantine/hooks": "^7.11.0"
 	},
 	"devDependencies": {
 		"@types/ms": "^0.7.34"

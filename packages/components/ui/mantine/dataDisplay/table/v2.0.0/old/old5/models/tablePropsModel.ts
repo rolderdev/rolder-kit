@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import isEqual from 'lodash.isequal';
 import type { Props } from '../../types';
-import type { Store } from '../store';
+import type { Store } from '../store/store';
 import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs';
 
 // Схема задает типы данных и их дефолты.
@@ -63,8 +63,10 @@ export const getTableProps = (p: Props) =>
 	} as TableProps);
 
 // Метод обновляет состояние настроек.
-export const setTableProps = (store: Store, p: Props) => {
-	const newProps = getTableProps(p);
-	if (!isEqual(stringifyObjectFuncs(store.tableProps.get()), stringifyObjectFuncs(newProps)))
-		store.tableProps.assign(getTableProps(p));
-};
+export const setTableProps = (store: Store, p: Props) =>
+	store.setState((s) => {
+		// Сравниваем праметры, включая функции и вложенный customProps.
+		const newProps = getTableProps(p);
+		if (!isEqual(stringifyObjectFuncs(s.tableProps), stringifyObjectFuncs(newProps))) return { tableProps: newProps };
+		else return s;
+	});

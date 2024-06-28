@@ -2,9 +2,9 @@
 
 import { z } from 'zod';
 import isEqual from 'lodash.isequal';
-import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs';
 import type { Props } from '../../types';
-import type { Store } from '../store';
+import type { Store } from '../store/store';
+import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs';
 
 // Схема задает типы данных и их дефолты.
 const libPropsSchema = z.object({
@@ -64,7 +64,10 @@ export const getLibProps = (p: Props) =>
 	});
 
 // Метод обновляет состояние настроек.
-export const setLibProps = (store: Store, p: Props) => {
-	const newProps = getLibProps(p);
-	if (!isEqual(stringifyObjectFuncs(store.libProps.get()), stringifyObjectFuncs(newProps))) store.libProps.assign(getLibProps(p));
-};
+export const setLibProps = (store: Store, p: Props) =>
+	store.setState((s) => {
+		// Сравниваем праметры, включая функции и вложенный customProps.
+		const newProps = getLibProps(p);
+		if (!isEqual(stringifyObjectFuncs(s.libProps), stringifyObjectFuncs(newProps))) return { libProps: newProps };
+		else return s;
+	});

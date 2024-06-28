@@ -21,17 +21,17 @@ module.exports = function (nodeName, context, outputBuildPath, noodlProject) {
 		performance: { hints: false },
 		entry: { [nodeName]: `./src/${nodeName}.ts` },
 		resolve: {
-			extensions: ['...', '.tsx', '.ts']
+			extensions: ['...', '.ts', '.tsx'],
 		},
 		output: {
 			path: outputPath,
 			filename: '[name].js',
 			chunkFilename: '[contenthash].js',
-			clean: true
+			clean: true,
 		},
 		externals: {
 			react: 'React',
-			'react-dom': 'ReactDOM'
+			'react-dom': 'ReactDOM',
 		},
 		plugins: [
 			new manifestPlugin({
@@ -40,8 +40,8 @@ module.exports = function (nodeName, context, outputBuildPath, noodlProject) {
 					const file = files.find((i) => i.name === `${nodeName}.js`);
 					if (file?.path) var fileName = file.path.replace('auto/', '');
 					return { main: fileName };
-				}
-			})
+				},
+			}),
 		],
 		module: {
 			rules: [
@@ -53,13 +53,10 @@ module.exports = function (nodeName, context, outputBuildPath, noodlProject) {
 					options: {
 						jsc: {
 							parser: {
-								syntax: 'typescript'
-							}
+								syntax: 'typescript',
+							},
 						},
-						env: {
-							targets: 'Chrome >= 80'
-						}
-					}
+					},
 				},
 				{
 					test: /\.tsx$/,
@@ -70,26 +67,12 @@ module.exports = function (nodeName, context, outputBuildPath, noodlProject) {
 						jsc: {
 							parser: {
 								syntax: 'typescript',
-								tsx: true
-							}
-						}
-					}
+								tsx: true,
+							},
+						},
+					},
 				},
-				{
-					test: /\.jsx$/,
-					exclude: /[\\/]node_modules[\\/]/,
-					loader: 'builtin:swc-loader',
-					/** @type {import('@rspack/core').SwcLoaderOptions} */
-					options: {
-						jsc: {
-							parser: {
-								syntax: 'ecmascript',
-								jsx: true
-							}
-						}
-					}
-				}
-			]
-		}
+			],
+		},
 	};
 };

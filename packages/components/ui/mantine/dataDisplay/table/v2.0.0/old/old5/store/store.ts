@@ -1,6 +1,5 @@
 import { createContext } from 'react';
 import { createStore } from 'zustand';
-import { subscribeWithSelector } from 'zustand/middleware';
 import { nanoid } from 'nanoid';
 import type { NoodlNode } from '@packages/node';
 import type { Item } from 'types';
@@ -20,8 +19,9 @@ export type State = {
 	tableProps: TableProps;
 	columns: Column[]; // С колонками удобнее работаь через простой массив.
 	rows: Map<string, Row>; // Map - удобнее записывать и брать, забивая на порядок.
+	items: Item[];
 	rowIds: string[]; // Массив id, чтобы не передавать часто меняющиеся items в таблицу и управлять порядком строк.
-	selectedRowId?: string;
+	/* selectedRowId?: string;
 	selectedRowFirstRun: boolean;
 	selectedRowIds: string[];
 	selectedRowsFirstRun: boolean;
@@ -32,46 +32,46 @@ export type State = {
 			columnAccessor: string;
 			direction: 'asc' | 'desc';
 		};
-	};
+	}; */
+	startTime: number;
 };
 
 export type Store = ReturnType<typeof createTableStore>;
 
 export const createTableStore = (p: Props) =>
-	createStore<State>()(
-		//@ts-ignore
-		subscribeWithSelector(() => ({
-			noodlNode: p.noodlNode,
-			tableId: nanoid(8),
-			fetching: true,
-			libProps: getLibProps(p),
-			tableProps: getTableProps(p),
-			columns: getColumns(p.columnsDefinition || []),
-			rows: new Map(),
-			rowIds: p.items?.map((i) => i.id) || [],
-			selectedRowFirstRun: true,
-			selectedRowIds: [],
-			selectedRowsFirstRun: true,
-			expandedRowIds: [],
-			expandedRowsFirstRun: true,
-			sort: {
-				state: (() => {
-					const defaultSortColumn = p.columnsDefinition?.find((i) => i.sort?.default);
-					if (defaultSortColumn && defaultSortColumn.accessor && defaultSortColumn.sort?.default)
-						return {
-							columnAccessor: defaultSortColumn.accessor,
-							direction: defaultSortColumn.sort.default,
-						};
-					else return;
-				})() as DataTableSortStatus<Item> | undefined,
-			},
-		}))
-	);
+	createStore<State>()(() => ({
+		noodlNode: p.noodlNode,
+		tableId: nanoid(8),
+		fetching: true,
+		libProps: getLibProps(p),
+		tableProps: getTableProps(p),
+		columns: getColumns(p.columnsDefinition || []),
+		rows: new Map(),
+		items: [],
+		rowIds: p.items?.map((i) => i.id) || [],
+		/* selectedRowFirstRun: true,
+		selectedRowIds: [],
+		selectedRowsFirstRun: true,
+		expandedRowIds: [],
+		expandedRowsFirstRun: true,
+		sort: {
+			state: (() => {
+				const defaultSortColumn = p.columnsDefinition?.find((i) => i.sort?.default);
+				if (defaultSortColumn && defaultSortColumn.accessor && defaultSortColumn.sort?.default)
+					return {
+						columnAccessor: defaultSortColumn.accessor,
+						direction: defaultSortColumn.sort.default,
+					};
+				else return;
+			})() as DataTableSortStatus<Item> | undefined,
+		}, */
+		startTime: performance.now(),
+	}));
 
 export const TableContext = createContext<Store | null>(null);
 
 // Метод для выбора строки. itemIds нужны для первичной проврке, когда еще нет rows.
-export const setSelectedRowId = (store: Store, itemIds: string[], selectedId?: string) => {
+/* export const setSelectedRowId = (store: Store, itemIds: string[], selectedId?: string) => {
 	const unselectable = store.getState().tableProps.selection.single.unselectable;
 	if (selectedId) {
 		// Не назначаем того, чго нет и не будем изменять состояние, когда не нужно.
@@ -98,3 +98,4 @@ export const setExpandedRowIds = (store: Store, items: Item[], expandedItems: It
 	// Не будем менять состяние, если нет изменений.
 	if (!isEqual(store.getState().expandedRowIds, newExpandedRowIds)) store.setState({ expandedRowIds: newExpandedRowIds });
 };
+ */

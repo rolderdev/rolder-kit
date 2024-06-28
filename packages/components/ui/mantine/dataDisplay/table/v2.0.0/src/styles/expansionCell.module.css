@@ -5,6 +5,11 @@
 	margin-right: rem(10px);
 }
 
+.actionIcon {
+	width: rem(16px);
+	height: auto;
+}
+
 .expandIcon {
 	transition: transform 0.2s;
 }

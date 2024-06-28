@@ -1,82 +1,108 @@
 /* Сама таблица */
 
-import { memo, useContext } from 'react';
-import { useStore } from 'zustand';
+import { memo, useEffect } from 'react';
 import { DataTable } from 'mantine-datatable';
 import { sendOutput, sendSignal } from '@packages/port-send';
 import type { Item } from 'types';
-import { setSelectedRowId } from './store/store';
-import { TableContext } from './store/store';
-import AccessorCell from './render/AccessorCell';
-import GetValueCell from './render/GetValueCell';
-import TemplateCell from './render/TemplateCell';
-import ExpansionRow from './render/ExpansionRow';
-import ExpanderCell from './render/ExpanderCell';
+import { useStore } from './store';
+import AccessorCell from './renders/AccessorCell';
+import GetValueCell from './renders/GetValueCell';
+import TemplateCell from './renders/TemplateCell';
+import ExpanderCell from './renders/ExpanderCell';
+import ExpansionRow from './renders/ExpansionRow';
 import getRowBgColor from './funcs/getRowBgColor';
 
 import rowClasses from './styles/row.module.css';
 
-// memo остановит любой рендер пришедший сверху, т.к. props просто нет.
-export default memo(() => {
-	const store = useContext(TableContext);
+// memo остановит любой рендер пришедший сверху, кроме изменения fetching.
+export default memo((p: { fetching: boolean }) => {
+	const store = useStore();
 	if (!store) return;
 
-	// Можно так - const { libProps, columns, rowIds } = useStore(store), но тогда любые изменения хранилища будут запускать рендер.
-	const noodlNode = useStore(store, (s) => s.noodlNode);
-	const fetching = useStore(store, (s) => s.fetching);
-	const libProps = useStore(store, (s) => s.libProps);
-	const columns = useStore(store, (s) => s.columns);
-	const rowIds = useStore(store, (s) => s.rowIds);
-	const onRowClick = useStore(store, (s) => s.tableProps.onRowClick);
-	const selection = useStore(store, (s) => s.tableProps.selection);
-	const selectedRowIds = useStore(store, (s) => s.selectedRowIds);
-	const expansion = useStore(store, (s) => s.tableProps.expansion);
-	const expandedRowIds = useStore(store, (s) => s.expandedRowIds);
-	const sortState = useStore(store, (s) => s.sort?.state);
+	// Берем состояние по частям для точечной реактивности.
+	const libProps = store.libProps.use();
+	const columns = store.columns.use();
+	const items = store.items.use();
+	const onRowClick = store.tableProps.onRowClick.use();
 
-	console.log('Table render', store.getState().tableId); // Считаем рендеры пока разрабатываем
+	const selection = store.tableProps.selection.use();
+	const selectedIds = store.selectedIds.use();
+
+	const expansion = store.tableProps.expansion.use();
+	const expandedIds = store.expandedIds.use();
+	/* 	
+	const selection = useStore(store, (s) => s.tableProps.selection);	
+	 */
+	//
+	//const sortState = useStore(store, (s) => s.sort?.state);
+
+	// Debugger
+	useEffect(() => {
+		const unsubLibProps = store.libProps.onChange((newVal, oldVal) => console.log('libProps', { oldVal, newVal }));
+		const unsubColumns = store.columns.onChange((newVal, oldVal) => console.log('columns', { oldVal, newVal }));
+		const unsubItems = store.items.onChange((newVal, oldVal) => console.log('items', { oldVal, newVal }));
+		const unsubOnRowClick = store.tableProps.onRowClick.onChange((newVal, oldVal) =>
+			console.log('onRowClick', { oldVal, newVal })
+		);
+		const unsubSelection = store.tableProps.selection.onChange((newVal, oldVal) => console.log('selection', { oldVal, newVal }));
+		const unsubSelectedIds = store.selectedIds.onChange((newVal, oldVal) => console.log('selectedIds', { oldVal, newVal }));
+		const unsubExpansion = store.tableProps.expansion.onChange((newVal, oldVal) => console.log('expansion', { oldVal, newVal }));
+		const unsubExpandedIds = store.expandedIds.onChange((newVal, oldVal) => console.log('expandedIds', { oldVal, newVal }));
+		return () => {
+			unsubLibProps();
+			unsubColumns();
+			unsubItems();
+			unsubOnRowClick();
+			unsubSelection();
+			unsubSelectedIds();
+			unsubExpansion();
+			unsubExpandedIds();
+		};
+	}, []);
+
+	console.log('Table render', store.tableId.get()); // Считаем рендеры пока разрабатываем
 	return (
 		<DataTable<Item>
 			// Base
-			fetching={fetching}
-			columns={columns.map((column) => {
-				// Подставляем свою ячейку.
-				return {
-					...column.libColumn, // Берем из данных только настройки разработчика
-					accessor: column.accessor, // Библиотеке нужен accessor.
-					// Нужно подавать только id строки, чтобы управлять точечной реактивностью в ячейке.
-					render: (row) => {
-						// Если включено разворачивание и разарботчик запросил шеврон, нужно оберунть ячейки в шеврон.
-						if (expansion.enabled && column.expander) {
-							if (column.type === 'accessor' && column.accessor)
-								return <ExpanderCell rowId={row.id} cell={<AccessorCell rowId={row.id} accessor={column.accessor} />} />;
-							if (column.type === 'getValue' && column.getValue)
-								return <ExpanderCell rowId={row.id} cell={<GetValueCell rowId={row.id} columnIdx={column.idx} />} />;
-							if (column.type === 'template' && column.template)
-								return <ExpanderCell rowId={row.id} cell={<TemplateCell rowId={row.id} columnIdx={column.idx} />} />;
-						} else {
-							if (column.type === 'accessor' && column.accessor)
-								return <AccessorCell rowId={row.id} accessor={column.accessor} />;
-							if (column.type === 'getValue' && column.getValue) return <GetValueCell rowId={row.id} columnIdx={column.idx} />;
-							if (column.type === 'template' && column.template) return <TemplateCell rowId={row.id} columnIdx={column.idx} />;
-						}
-						return undefined;
-					},
-				};
-			})}
+			fetching={p.fetching}
+			columns={columns.map((column) => ({
+				// Передадим в колонку только параметры библиотеки, которые задает разработчик и accessor.
+				...column.libColumn,
+				accessor: column.accessor,
+				// Подставляем свою ячейку. В ячейку нужно подавать только id, чтобы управлять точечной реактивностью в ячейке.
+				render: (item) => {
+					if (expansion.enabled && column.expander) {
+						if (column.type === 'accessor' && column.accessor)
+							return <ExpanderCell itemId={item.id} cell={<AccessorCell itemId={item.id} accessor={column.accessor} />} />;
+						if (column.type === 'getValue' && column.getValue)
+							return <ExpanderCell itemId={item.id} cell={<GetValueCell itemId={item.id} columnIdx={column.idx} />} />;
+						if (column.type === 'template' && column.template)
+							return <ExpanderCell itemId={item.id} cell={<TemplateCell itemId={item.id} columnIdx={column.idx} />} />;
+					} else {
+						if (column.type === 'accessor' && column.accessor)
+							return <AccessorCell itemId={item.id} accessor={column.accessor} />;
+						if (column.type === 'getValue' && column.getValue) return <GetValueCell itemId={item.id} columnIdx={column.idx} />;
+						if (column.type === 'template' && column.template) return <TemplateCell itemId={item.id} columnIdx={column.idx} />;
+					}
+					return 'No Cell type';
+				},
+			}))}
 			// Тригерим только на смену id. Остальное решает ячейка.
-			records={fetching ? [] : rowIds.map((i) => store.getState().rows.get(i)?.item as Item)}
+			records={items}
 			onRowClick={
 				onRowClick === 'disabled'
 					? undefined
 					: ({ record }) => {
 							if (onRowClick === 'signal') {
-								// store.getState() позволяет передать item без рендера.
-								sendOutput(noodlNode, 'clickedItem', store.getState().rows.get(record.id)?.item);
-								sendSignal(noodlNode, 'rowClicked');
+								sendOutput(
+									store.noodlNode.get(),
+									'clickedItem',
+									items.find((i) => i.id === record.id)
+								);
+								sendSignal(store.noodlNode.get(), 'rowClicked');
 							}
 							// Single selection
-							if (onRowClick === 'singleSelection') setSelectedRowId(store, rowIds, record.id);
+							//if (onRowClick === 'singleSelection') setSelectedRowId(store, rowIds, record.id);
 					  }
 			}
 			// Row styles
@@ -86,8 +112,8 @@ export default memo(() => {
 			rowBackgroundColor={(record) => (selection.single.enabled || selection.multi ? getRowBgColor(record.id) : 'white')}
 			// Multi selection
 			// Это место заставило передавать весь item в таблицу, чтобы можно было использовать функции встроенную в библиотеку.
-			selectedRecords={selection.multi ? selectedRowIds.map((i) => store.getState().rows.get(i)?.item as Item) : undefined}
-			onSelectedRecordsChange={(selectedRows) => store.setState({ selectedRowIds: selectedRows.map((i) => i.id) })}
+			selectedRecords={selection.multi ? items.filter((i) => selectedIds.includes(i.id)) : undefined}
+			onSelectedRecordsChange={(selectedItems) => store.selectedIds.set(selectedItems.map((i) => i.id))}
 			// Expansion
 			//@ts-ignore Не разобрался с типизацией
 			rowExpansion={
@@ -98,20 +124,20 @@ export default memo(() => {
 							trigger: onRowClick === 'expansion' ? 'click' : 'never',
 							collapseProps: expansion.collapseProps,
 							expanded: {
-								recordIds: expandedRowIds, // Развернутые строки.
-								onRecordIdsChange: (expandedRowIds: string[]) => store.setState({ expandedRowIds }),
+								recordIds: expandedIds, // Развернутые строки.
+								onRecordIdsChange: (expandedIds: string[]) => store.expandedIds.set(expandedIds),
 							},
 							content: ({ record, collapse }) => {
 								// Добавляем функцию collapse прямо в объект, чтбы разработчик мог запустить ее и свернуть вручную
 								Noodl.Objects[record.id].collapse = collapse;
-								return <ExpansionRow rowId={record.id} />;
+								return <ExpansionRow itemId={record.id} />;
 							},
 					  }
 					: undefined
 			}
 			// Sort
-			sortStatus={sortState}
-			onSortStatusChange={(state) => store.setState((s) => ({ sort: { ...s.sort, state } }))}
+			/*sortStatus={sortState}
+			onSortStatusChange={(state) => store.setState((s) => ({ sort: { ...s.sort, state } }))} */
 			{...libProps}
 		/>
 	);

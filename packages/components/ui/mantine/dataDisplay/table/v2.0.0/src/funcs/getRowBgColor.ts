@@ -1,19 +1,17 @@
-import { useContext } from 'react';
-import { useStore } from 'zustand';
-import { TableContext } from '../store/store';
+import { useStore } from '../store';
 
 export default function (rowId: string) {
-	const store = useContext(TableContext);
+	const store = useStore();
 	if (!store) return;
 
-	const rowStyles = useStore(store, (s) => s.tableProps.rowStyles);
-	const selectedRowId = useStore(store, (s) => s.selectedRowId);
-	const selectedRowIds = useStore(store, (s) => s.selectedRowIds);
+	const rowStyles = store.tableProps.rowStyles.use();
+	//const selectedRowId = useStore(store, (s) => s.selectedRowId);
+	const selectedIds = store.selectedIds.use();
 
 	let bgColor = rowStyles.rowBackgroundColor;
-	if (selectedRowIds.includes(rowId)) bgColor = rowStyles.mutliSelectionRowBgColor;
+	if (selectedIds.includes(rowId)) bgColor = rowStyles.mutliSelectionRowBgColor;
 	// Единичный выьор перекрывает мульти-выбор.
-	if (selectedRowId === rowId) bgColor = rowStyles.singleSelectionRowBgColor;
+	//if (selectedRowId === rowId) bgColor = rowStyles.singleSelectionRowBgColor;
 
 	return bgColor;
 }

@@ -1,7 +1,7 @@
 import type { CollapseProps, LoaderProps, MantineColor, MantineShadow, MantineSize } from '@mantine/core';
 import type { BaseReactProps, NoodlNode } from '@packages/node';
 import type { DataTableColumn, DataTableProps } from 'mantine-datatable';
-import type { Column } from './src/models/columnModel';
+import type { Column } from './src/models/columnModel.tsx';
 import type { IconProps } from '@tabler/icons-react';
 
 export type Props = BaseReactProps & {
