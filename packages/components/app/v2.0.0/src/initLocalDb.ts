@@ -4,7 +4,6 @@ import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election';
 import { RxDBCleanupPlugin } from 'rxdb/plugins/cleanup';
 import { RxDBMigrationPlugin } from 'rxdb/plugins/migration-schema';
 import { RxDBStatePlugin } from 'rxdb/plugins/state';
-//import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode';
 import { RxDBAttachmentsPlugin } from 'rxdb/plugins/attachments';
 import { createBlob } from 'rxdb';
 import { Network } from '@capacitor/network';
@@ -19,28 +18,35 @@ export default function (noodlNode: NoodlNode, multiInstance?: boolean) {
 	if (!R.db) {
 		const { project, environment = 'd2', projectVersion, projectDefaults } = Noodl.getProjectSettings();
 
-		//if (R.states.devMode) addRxPlugin(RxDBDevModePlugin);
 		addRxPlugin(RxDBLeaderElectionPlugin);
 		addRxPlugin(RxDBCleanupPlugin);
 		addRxPlugin(RxDBMigrationPlugin);
 		addRxPlugin(RxDBStatePlugin);
 		addRxPlugin(RxDBAttachmentsPlugin);
 
-		const localDbName = `${project}-${environment}`;
-
+		// Зададим название локальной БД так, чтобы разработчик не получал гемор от того, что использует приложение по разным ссылкам.
+		const localDbName = `${project}-${environment}-${location.hostname}`;
 		createRxDatabase({ name: localDbName, storage: getRxStorageDexie(), multiInstance }).then(async (db) => {
 			R.db = db as any;
 			R.libs.rxdb = { createBlob };
-
-			const params = await db.addState('params');
-			if (projectVersion) {
-				if (!params.projectVersion) await params.set('projectVersion', () => projectVersion);
-				else if (projectVersion !== params.projectVersion) {
-					// Удаление локальной БД при смене версии
-					await removeRxDatabase(localDbName, getRxStorageDexie());
-					await params.set('projectVersion', () => projectVersion);
-					window.location.reload();
+			// State в RxDb такая же БД, как и коллекции. Значит могут быть конфликты, которые нет смысла разруливать.
+			// Поэтому пересоздаем всю БД при 2-х сценариях - смене версии приложения и конфликте схемы State.
+			let params: any;
+			try {
+				params = await db.addState('params'); // Здесь может быть конфликт, поэтому обернуто в try-catch
+				if (projectVersion) {
+					if (!params.projectVersion) await params.set('projectVersion', () => projectVersion);
+					else if (projectVersion !== params.projectVersion) {
+						// Удаление локальной БД при смене версии
+						await removeRxDatabase(localDbName, getRxStorageDexie());
+						await params.set('projectVersion', () => projectVersion);
+						window.location.reload();
+					}
 				}
+			} catch (e) {
+				// Удаляем БД и перезапускаем приложение.
+				await removeRxDatabase(localDbName, getRxStorageDexie());
+				window.location.reload();
 			}
 
 			const defaults = projectDefaults && eval(projectDefaults)?.[0];
@@ -53,7 +59,7 @@ export default function (noodlNode: NoodlNode, multiInstance?: boolean) {
 			await network.set('connectionType', () => state.connectionType);
 			sendOutputs(noodlNode, [
 				{ portName: 'networkType', value: state.connectionType },
-				{ portName: 'networkConnected', value: state.connected }
+				{ portName: 'networkConnected', value: state.connected },
 			]);
 
 			Network.addListener('networkStatusChange', async (state) => {
@@ -61,7 +67,7 @@ export default function (noodlNode: NoodlNode, multiInstance?: boolean) {
 				await network.set('connectionType', () => state.connectionType);
 				sendOutputs(noodlNode, [
 					{ portName: 'networkType', value: state.connectionType },
-					{ portName: 'networkConnected', value: state.connected }
+					{ portName: 'networkConnected', value: state.connected },
 				]);
 
 				log.info('Network state changed', state);

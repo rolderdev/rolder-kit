@@ -7,13 +7,13 @@ const pJson = require('./package.json');
 const rspackBaseConfig = require('../../rspackBase.config');
 
 const nodeName = pJson.name;
-var outputBuildPath = path.resolve(__dirname, `../../../build/${nodeName}`);
+var outputBuildPath = path.resolve(__dirname, `../../build/${nodeName}`);
 
 module.exports = function (env) {
 	const config = rspackBaseConfig(nodeName, __dirname, outputBuildPath, env.noodlProject);
 	config.plugins.push(
 		new rspack.DefinePlugin({
-			DEVMODE: env.devMode ? true : false
+			DEVMODE: env.devMode ? true : false,
 		})
 	);
 	// Здесь не нужно добавлять CSS. Он вставляется прямо в HTML с помощью хелпера addCssToHtmlHead

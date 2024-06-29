@@ -23,7 +23,7 @@
 
 ### Rolder-Kit
 
-Добавлена синхронность на прием данных между портами и сигналами. Раньше, в некоторых случаях, приходилось в функциях Noodl добавлять ожидание перед отправкой сигнала.isNil
+Добавлена синхронность на прием данных между портами и сигналами. Раньше, в некоторых случаях, приходилось в функциях Noodl добавлять ожидание перед отправкой сигнала.
 
 ## 2024-05-17 v1.0.0-beta24
 
@@ -287,13 +287,13 @@ getInspectInfo(props) {
 						accessor: 'team',
 						cellStyle: {
 							cell: { backgroundColor: 'red' },
-							text: { fontSize: 14 }
-						}
-					}
+							text: { fontSize: 14 },
+						},
+					},
 				];
 			else return columns;
-		}
-	}
+		},
+	},
 ];
 ```
 
@@ -308,11 +308,11 @@ getInspectInfo(props) {
 				return {
 					...style,
 					border: 6,
-					borderColor: 'red'
+					borderColor: 'red',
 				};
 			else return style;
-		}
-	}
+		},
+	},
 ];
 ```
 
@@ -331,12 +331,12 @@ getInspectInfo(props) {
 		cellAlign: 'left',
 		headerStyle: {
 			cell: { backgroundColor: 'lightblue' },
-			text: { fontSize: 16, fontFamily: 'Ubuntu' }
+			text: { fontSize: 16, fontFamily: 'Ubuntu' },
 		},
 		cellStyle: {
 			cell: { backgroundColor: 'cyan' },
-			text: { fontSize: 14 }
-		}
+			text: { fontSize: 14 },
+		},
 	},
 	{
 		title: 'Кэп',
@@ -346,29 +346,29 @@ getInspectInfo(props) {
 		cellAlign: 'left',
 		headerStyle: {
 			cell: { backgroundColor: 'lightblue' },
-			text: { fontSize: 16 }
+			text: { fontSize: 16 },
 		},
 		headerStyleFunc(style, items) {
 			if (items.map((i) => i.name).includes('Гайка'))
 				return {
 					...style,
-					text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 }
+					text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 },
 				};
 			else return style;
 		},
 		cellStyle: {
 			cell: { backgroundColor: 'cyan' },
-			text: { fontSize: 14 }
+			text: { fontSize: 14 },
 		},
 		cellStyleFunc(style, item) {
 			if (item.name === 'Гайка')
 				return {
 					...style,
-					text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 }
+					text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 },
 				};
 			else return style;
-		}
-	}
+		},
+	},
 ];
 ```
 
@@ -409,83 +409,83 @@ getInspectInfo(props) {
 		fonts: [
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeMZhrib2Bg-4.ttf',
-				fontWeight: 100
+				fontWeight: 100,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyfMZhrib2Bg-4.ttf',
-				fontWeight: 200
+				fontWeight: 200,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuOKfMZhrib2Bg-4.ttf',
-				fontWeight: 300
+				fontWeight: 300,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf',
-				fontWeight: 400
+				fontWeight: 400,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZhrib2Bg-4.ttf',
-				fontWeight: 500
+				fontWeight: 500,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZhrib2Bg-4.ttf',
-				fontWeight: 600
+				fontWeight: 600,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf',
-				fontWeight: 700
+				fontWeight: 700,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyYMZhrib2Bg-4.ttf',
-				fontWeight: 800
+				fontWeight: 800,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuBWYMZhrib2Bg-4.ttf',
-				fontWeight: 900
-			}
-		]
+				fontWeight: 900,
+			},
+		],
 	},
 	{
 		family: 'Ubuntu',
 		fonts: [
 			{
 				src: 'http://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzTt2aMH4V_gg.ttf',
-				fontWeight: 300
+				fontWeight: 300,
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgo6eAT3v02QFg.ttf',
-				fontWeight: 400
+				fontWeight: 400,
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCjC3Tt2aMH4V_gg.ttf',
-				fontWeight: 500
+				fontWeight: 500,
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvTt2aMH4V_gg.ttf',
-				fontWeight: 700
+				fontWeight: 700,
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZftWyIPYBvgpUI.ttf',
 				fontWeight: 300,
-				fontStyle: 'italic'
+				fontStyle: 'italic',
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCu6KVjbNBYlgoKeg7znUiAFpxm.ttf',
 				fontWeight: 400,
-				fontStyle: 'italic'
+				fontStyle: 'italic',
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejYHtGyIPYBvgpUI.ttf',
 				fontWeight: 500,
-				fontStyle: 'italic'
+				fontStyle: 'italic',
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZPsmyIPYBvgpUI.ttf',
 				fontWeight: 700,
-				fontStyle: 'italic'
-			}
-		]
-	}
+				fontStyle: 'italic',
+			},
+		],
+	},
 ];
 ```
 
@@ -499,59 +499,59 @@ const defaultFont = {
 	fonts: [
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf',
-			fontWeight: 100
+			fontWeight: 100,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOiCnqEu92Fr1Mu51QrIzcXLsnzjYk.ttf',
 			fontWeight: 100,
-			fontStyle: 'italic'
+			fontStyle: 'italic',
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmSU5vAx05IsDqlA.ttf',
-			fontWeight: 300
+			fontWeight: 300,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TjARc9AMX6lJBP.ttf',
 			fontWeight: 300,
-			fontStyle: 'italic'
+			fontStyle: 'italic',
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf',
-			fontWeight: 400
+			fontWeight: 400,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1Mu52xPKTM1K9nz.ttf',
 			fontWeight: 400,
-			fontStyle: 'italic'
+			fontStyle: 'italic',
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9vAx05IsDqlA.ttf',
-			fontWeight: 500
+			fontWeight: 500,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51S7ABc9AMX6lJBP.ttf',
 			fontWeight: 500,
-			fontStyle: 'italic'
+			fontStyle: 'italic',
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlvAx05IsDqlA.ttf',
-			fontWeight: 700
+			fontWeight: 700,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TzBhc9AMX6lJBP.ttf',
 			fontWeight: 700,
-			fontStyle: 'italic'
+			fontStyle: 'italic',
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmYUtvAx05IsDqlA.ttf',
-			fontWeight: 900
+			fontWeight: 900,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TLBBc9AMX6lJBP.ttf',
 			fontWeight: 900,
-			fontStyle: 'italic'
-		}
-	]
+			fontStyle: 'italic',
+		},
+	],
 };
 ```
 
@@ -602,7 +602,7 @@ await Inputs.tasks?.map(async (i) => {
 							id: last(i.split('/')).split('.jpg')[0],
 							name: last(i.split('/')),
 							contentType: 'image/jpeg',
-							state: 'uploaded'
+							state: 'uploaded',
 						};
 
 						const imageBase64 = await imageUrlToBase64(i); // скачиваем картинку и преобразуем в base64
@@ -661,9 +661,9 @@ keys().then((ks) => {
 				company: { id: 'W5XSgIoBj2T-UFOWng5l' },
 				content: { firstName: 'Тестовый', lastName: 'Аккаунт 6' },
 				user: { id: 'kuid-noisy-minstrel-18541' },
-				manager: { id: 'EW7HgIoBAb9VwPpXmhmn' }
-			}
-		]
+				manager: { id: 'EW7HgIoBAb9VwPpXmhmn' },
+			},
+		],
 	},
 	{
 		dbClass: 'task',
@@ -673,8 +673,8 @@ keys().then((ks) => {
             return items.map(i => ( // вернуть нужно items в том же формате, что и в ключе items. Они будут переданы в БД
                 { ...i, worker: {id: data['worker'].items[0].id} }
             ))
-        }`
-	}
+        }`,
+	},
 ];
 ```
 
@@ -950,23 +950,23 @@ keys().then((ks) => {
 			themeIconProps: {
 				size: 'sm',
 				color: 'red',
-				radius: 'md'
+				radius: 'md',
 			},
 			iconPprops: {
-				size: '1rem'
-			}
-		}
+				size: '1rem',
+			},
+		},
 	},
 	{
 		string: 'Second string',
 		icon: {
 			name: 'IconUser',
 			iconPprops: {
-				size: '1rem'
-			}
+				size: '1rem',
+			},
 		},
-		customProps: { sx: { backgroundColor: '#555' } }
-	}
+		customProps: { sx: { backgroundColor: '#555' } },
+	},
 ];
 ```
 
@@ -1068,8 +1068,8 @@ listScheme?: {
 	{
 		accessor: 'content.name',
 		expander: true,
-		boxProps: { pl: 28 }
-	}
+		boxProps: { pl: 28 },
+	},
 ];
 ```
 
@@ -1138,8 +1138,8 @@ listScheme?: {
 [
 	{
 		color: 'gray',
-		backgroundColor: 'transparent'
-	}
+		backgroundColor: 'transparent',
+	},
 ];
 ```
 
@@ -1148,8 +1148,8 @@ listScheme?: {
 ```js
 [
 	{
-		h: (p, i) => ({ ...p, highlight: [i.tasksCount] })
-	}
+		h: (p, i) => ({ ...p, highlight: [i.tasksCount] }),
+	},
 ];
 ```
 
@@ -1170,8 +1170,8 @@ listScheme?: {
   				props.color = item?.states.flow.color;
   			}
   			return props;
-  		}
-  	}
+  		},
+  	},
   ];
   ```
 
@@ -1309,8 +1309,8 @@ listScheme?: {
     			const { capitalize } = R.libs.just;
     			const { getValue } = R.utils;
     			return capitalize(getValue.v8(item, '{{content.firstName}} {{content.lastName}}'));
-    		}
-    	}
+    		},
+    	},
     ];
     ```
 
@@ -1369,11 +1369,11 @@ listScheme?: {
         				return R.libs.sort(items).by([
         					// R.libs.sort - библиотека
         					{ [direction]: (i) => i.content.name }, // i.content.name - данные, по которым сортируем
-        					{ desc: (i) => i.content.date.start } // можно добавлять что то свое, например когда на все есть стандартная сортировка, а пользователь сортирует поверх
+        					{ desc: (i) => i.content.date.start }, // можно добавлять что то свое, например когда на все есть стандартная сортировка, а пользователь сортирует поверх
         				]);
-        			}
-        		}
-        	}
+        			},
+        		},
+        	},
         ];
         ```
 
@@ -1409,9 +1409,9 @@ listScheme?: {
         			func(items) {
         				// название переменной не имеет значение
         				return items.filter((i) => i.state.flow.value === 'active');
-        			}
-        		}
-        	}
+        			},
+        		},
+        	},
         ];
         ```
 
@@ -1836,21 +1836,21 @@ interface Task {
 			'content.contacts.phone.search',
 			'content.contacts.email.search',
 			'content.legal.name.search',
-			'content.legal.address.search'
-		]
+			'content.legal.address.search',
+		],
 	},
 	{
 		dbClass: 'manager',
 		query: {
-			and: [{ not: { equals: { 'states.archived': true } } }, { equals: { 'company.id': R.user?.company.id } }]
+			and: [{ not: { equals: { 'states.archived': true } } }, { equals: { 'company.id': R.user?.company.id } }],
 		},
 		sort: { '_kuzzle_info.createdAt': 'desc' },
 		searchFields: ['content.firstName.search', 'content.lastName.search'],
 		options: { size: 100 },
 		refs: ['company'],
 		getUsers: true,
-		sendStates: true
-	}
+		sendStates: true,
+	},
 ];
 ```
 
@@ -1917,10 +1917,10 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     				company: { id: R.user.company.id },
     				content: {
     					address: formHook.values.houseAddress,
-    					name: formHook.values.houseName
-    				}
-    			}
-    		]
+    					name: formHook.values.houseName,
+    				},
+    			},
+    		],
     	};
 
     	Outputs.scheme = [house];
@@ -1943,10 +1943,10 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     				company: { id: R.user.company.id },
     				content: {
     					address: formHook.values.houseAddress,
-    					name: formHook.values.houseName
-    				}
-    			}
-    		]
+    					name: formHook.values.houseName,
+    				},
+    			},
+    		],
     	};
 
     	const areas = {
@@ -1954,8 +1954,8 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     		order: 0,
     		items: formHook.values.areas.map((a) => ({
     			company: { id: R.user.company.id },
-    			content: a.content
-    		}))
+    			content: a.content,
+    		})),
     	};
 
     	Outputs.scheme = [house, areas];
@@ -1979,10 +1979,10 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     				company: { id: R.user.company.id },
     				content: {
     					address: formHook.values.houseAddress,
-    					name: formHook.values.houseName
-    				}
-    			}
-    		]
+    					name: formHook.values.houseName,
+    				},
+    			},
+    		],
     	};
 
     	const areas = {
@@ -1991,8 +1991,8 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     		items: formHook.values.areas.map((a) => ({
     			house: { refId: 0 },
     			company: { id: R.user.company.id },
-    			content: a.content
-    		}))
+    			content: a.content,
+    		})),
     	};
 
     	Outputs.scheme = [house, areas];
@@ -2016,7 +2016,7 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     					name: formHook.values.companyName,
     					contacts: {
     						phone: formHook.values.companyPhone,
-    						email: formHook.values.companyEmail
+    						email: formHook.values.companyEmail,
     					},
     					legal: {
     						name: formHook.values.legalName,
@@ -2025,15 +2025,15 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     						inn: formHook.values.legalInn,
     						ogrn: formHook.values.legalOgrn,
     						bik: formHook.values.legalBik,
-    						ks: formHook.values.legalKs
-    					}
+    						ks: formHook.values.legalKs,
+    					},
     				},
     				states: {
     					flow: R.dbClasses.company.states.flow.find((i) => i.value === 'created'),
-    					subscription: R.dbClasses.company.states.subscription.find((i) => i.value === 'notRegistered')
-    				}
-    			}
-    		]
+    					subscription: R.dbClasses.company.states.subscription.find((i) => i.value === 'notRegistered'),
+    				},
+    			},
+    		],
     	};
 
     	const user = {
@@ -2046,9 +2046,9 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     					profileIds: ['companyReader', 'companyWriter'],
     					role: {
     						value: 'companyManager',
-    						title: 'Менеджер компании'
+    						title: 'Менеджер компании',
     					},
-    					dbClass: 'manager'
+    					dbClass: 'manager',
     				},
     				credentials: {
     					local: {
@@ -2057,11 +2057,11 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     							Inputs.selectedManager?.company?.states?.flow?.value === 'activated'
     								? formHook.values.password
     								: (Math.random() + 1).toString(36).substring(7),
-    						notSecret: formHook.values.password
-    					}
-    				}
-    			}
-    		]
+    						notSecret: formHook.values.password,
+    					},
+    				},
+    			},
+    		],
     	};
 
     	const manager = {
@@ -2073,10 +2073,10 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     				user: { refId: 0 },
     				content: {
     					firstName: formHook.values.firstName,
-    					lastName: formHook.values.lastName
-    				}
-    			}
-    		]
+    					lastName: formHook.values.lastName,
+    				},
+    			},
+    		],
     	};
 
     	Outputs.scheme = [company, user, manager];
@@ -2174,12 +2174,12 @@ Outputs.getDataScheme = [
 ```js
 [
 	{
-		span: 'auto'
+		span: 'auto',
 	},
 	{
 		span: 'content',
-		offset: 5
-	}
+		offset: 5,
+	},
 ];
 ```
 
@@ -2450,7 +2450,7 @@ const company = {
 			name: formHook.values.companyName,
 			contacts: {
 				phone: formHook.values.companyPhone,
-				email: formHook.values.companyEmail
+				email: formHook.values.companyEmail,
 			},
 			legal: {
 				name: formHook.values.legalName,
@@ -2459,14 +2459,14 @@ const company = {
 				inn: formHook.values.legalInn,
 				ogrn: formHook.values.legalOgrn,
 				bik: formHook.values.legalBik,
-				ks: formHook.values.legalKs
-			}
+				ks: formHook.values.legalKs,
+			},
 		},
 		states: {
 			flow: R.params.dbClasses.company.states.flow.find((i) => i.value === 'created'),
-			subscription: R.params.dbClasses.company.states.subscription.find((i) => i.value === 'notRegistered')
-		}
-	}
+			subscription: R.params.dbClasses.company.states.subscription.find((i) => i.value === 'notRegistered'),
+		},
+	},
 };
 if (opType === 'update') {
 	delete company.body.states;
@@ -2481,17 +2481,17 @@ const user = {
 			profileIds: ['companyReader', 'companyWriter'],
 			role: {
 				value: 'companyManager',
-				title: 'Менеджер компании'
-			}
+				title: 'Менеджер компании',
+			},
 		},
 		credentials: {
 			local: {
 				username: formHook.values.userName,
 				password: (Math.random() + 1).toString(36).substring(7),
-				notSecret: formHook.values.password
-			}
-		}
-	}
+				notSecret: formHook.values.password,
+			},
+		},
+	},
 };
 if (opType === 'update') {
 	delete user.content;
@@ -2505,9 +2505,9 @@ const manager = {
 	body: {
 		content: {
 			firstName: formHook.values.firstName,
-			lastName: formHook.values.lastName
-		}
-	}
+			lastName: formHook.values.lastName,
+		},
+	},
 };
 if (opType === 'update') manager.id = Inputs.selectedmanager?.id;
 
@@ -2549,8 +2549,8 @@ export default {
 	signals: {
 		logout: (noodlNode: NoodlNode) => {
 			window.R.libs.Kuzzle.auth.logout().then(() => sendSignal(noodlNode, 'loggedOut'));
-		}
-	}
+		},
+	},
 };
 ```
 
@@ -2705,13 +2705,13 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 				groupBy: 'complex.id',
 				accessor: 'complex.content.name',
 				cell: {
-					trancate: true
-				}
+					trancate: true,
+				},
 			},
 			{
 				groupBy: 'house.id',
-				accessor: 'house.content.name'
-			}
+				accessor: 'house.content.name',
+			},
 		],
 		hoverableActions: true,
 		actions: [
@@ -2721,13 +2721,13 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 				actionIconProps: {
 					variant: 'outline',
 					color: 'dark',
-					my: -6
+					my: -6,
 				},
 				iconProps: {
-					name: 'IconEdit'
-				}
-			}
-		]
+					name: 'IconEdit',
+				},
+			},
+		],
 	},
 	{
 		accessor: 'area',
@@ -2736,21 +2736,21 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 		size: 180,
 		cell: {
 			trancate: true,
-			tooltip: true
+			tooltip: true,
 		},
 		data: {
 			type: 'array',
 			arrayFormat: {
 				accessor: 'content.name',
-				sortFn: (arr) => R.libs.just.sortBy(arr, (item) => item.content.name)
-			}
-		}
+				sortFn: (arr) => R.libs.just.sortBy(arr, (item) => item.content.name),
+			},
+		},
 	},
 	{
 		accessor: '{{worker.content.firstName}} {{worker.content.lastName}}',
 		header: 'Сотрудник',
 		enableColumnFilter: true,
-		filterVariant: 'multi-select'
+		filterVariant: 'multi-select',
 	},
 	{
 		accessor: 'content.schedule.startDate.plan',
@@ -2761,10 +2761,10 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 		filter: {
 			dateInputProps: {
 				valueFormat: 'YYYY-MM-DD',
-				placeholder: 'ГГГГ-ММ-ДД'
-			}
+				placeholder: 'ГГГГ-ММ-ДД',
+			},
 		},
-		enableSorting: true
+		enableSorting: true,
 	},
 
 	{
@@ -2779,13 +2779,13 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 				actionIconProps: {
 					variant: 'outline',
 					color: 'dark',
-					my: -6
+					my: -6,
 				},
 				iconProps: {
-					name: 'IconPhoto'
-				}
-			}
-		]
+					name: 'IconPhoto',
+				},
+			},
+		],
 	},
 	{
 		accessor: 'states.flow.title',
@@ -2794,12 +2794,12 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 		cell: {
 			colorMap: {
 				accessor: 'states.flow.value',
-				map: { activated: 'green', failed: 'red' }
-			}
+				map: { activated: 'green', failed: 'red' },
+			},
 		},
 		enableColumnFilter: true,
-		filterVariant: 'multi-select'
-	}
+		filterVariant: 'multi-select',
+	},
 ];
 ```
 
@@ -2984,7 +2984,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   		params: {},
   		libs: {},
   		utils: {},
-  		items: {}
+  		items: {},
   	};
   </script>
   ```
@@ -3118,31 +3118,31 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 	{
 		accessor: 'content.name',
 		header: 'Название',
-		size: 30
+		size: 30,
 	},
 	{
 		accessor: 'states.subscription.label',
 		header: 'Статус',
-		size: 20
+		size: 20,
 	},
 	{
 		accessor: '{{content.subscription.count.area}} зон. / {{content.subscription.count.worker}} сот.',
 		header: 'Тариф',
 		defaultValue: '',
-		size: 20
+		size: 20,
 	},
 	{
 		accessor: 'content.subscription.balance',
 		header: 'Баланс',
-		size: 20
+		size: 20,
 	},
 	{
 		accessor: 'content.subscription.date.end',
 		header: 'Дата окончания',
 		dataType: 'date',
 		dataFormat: 'YYYY-MM-DD',
-		size: 20
-	}
+		size: 20,
+	},
 ];
 ```
 
@@ -3283,9 +3283,9 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   	items: companyIds?.map((id) => ({
   		id,
   		body: {
-  			states: { flow: { value: stateValue, label: stateLabel } }
-  		}
-  	}))
+  			states: { flow: { value: stateValue, label: stateLabel } },
+  		},
+  	})),
   };
   const user = {
   	dbClass: 'user',
@@ -3295,11 +3295,11 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   			credentials: {
   				local: {
   					password:
-  						stateValue === 'activated' ? i.user.credentials.local.notSecret : (Math.random() + 1).toString(36).substring(7)
-  				}
-  			}
-  		}
-  	}))
+  						stateValue === 'activated' ? i.user.credentials.local.notSecret : (Math.random() + 1).toString(36).substring(7),
+  				},
+  			},
+  		},
+  	})),
   };
   Outputs.scheme = [company, user];
   ```
@@ -3329,18 +3329,18 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   			defaults: {
   				filters: { equals: { 'content.firstName': 'Родион' } },
   				sorts: [{ 'content.name': 'asc' }],
-  				options: { size: 100 }
-  			}
+  				options: { size: 100 },
+  			},
   		},
   		manager: {
   			version: 1,
   			references: ['company', 'user'],
   			defaults: {
   				sorts: [{ 'content.lastName': 'asc' }, { 'content.firstName': 'asc' }],
-  				options: { size: 100 }
-  			}
-  		}
-  	}
+  				options: { size: 100 },
+  			},
+  		},
+  	},
   ];
   ```
 
@@ -3365,10 +3365,10 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   			name: formHook.values.companyName,
   			contacts: {
   				phone: formHook.values.companyPhone,
-  				email: formHook.values.companyEmail
-  			}
-  		}
-  	}
+  				email: formHook.values.companyEmail,
+  			},
+  		},
+  	},
   };
 
   const user = {
@@ -3379,16 +3379,16 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   			profileIds: ['companyReader', 'companyWriter'],
   			role: {
   				value: 'companyManager',
-  				title: 'Менеджер компании'
-  			}
+  				title: 'Менеджер компании',
+  			},
   		},
   		credentials: {
   			local: {
   				username: formHook.values.userName,
-  				password: formHook.values.password
-  			}
-  		}
-  	}
+  				password: formHook.values.password,
+  			},
+  		},
+  	},
   };
 
   const manager = {
@@ -3398,9 +3398,9 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   	body: {
   		content: {
   			firstName: formHook.values.firstName,
-  			lastName: formHook.values.lastName
-  		}
-  	}
+  			lastName: formHook.values.lastName,
+  		},
+  	},
   };
 
   createScheme = [company, user, manager];
@@ -3424,16 +3424,16 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   			profileIds: ['companyReader', 'companyWriter'],
   			role: {
   				value: 'companyManager',
-  				title: 'Менеджер компании'
-  			}
+  				title: 'Менеджер компании',
+  			},
   		},
   		credentials: {
   			local: {
   				username: 'username',
-  				password: 'password'
-  			}
-  		}
-  	}
+  				password: 'password',
+  			},
+  		},
+  	},
   };
   ```
 
@@ -3602,7 +3602,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   		job: '',
   		email: '',
   		favoriteColor: '',
-  		age: 18
+  		age: 18,
   	},
 
   	validate: {
@@ -3610,8 +3610,8 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   		job: isNotEmpty('Enter your current job'),
   		email: isEmail('Invalid email'),
   		favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/, 'Enter a valid hex color'),
-  		age: isInRange({ min: 18, max: 99 }, 'You must be 18-99 years old to register')
-  	}
+  		age: isInRange({ min: 18, max: 99 }, 'You must be 18-99 years old to register'),
+  	},
   };
   ```
 
@@ -3719,18 +3719,18 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
       		groupShceme: [
       			{
       				groupBy: 'complex.id',
-      				accessor: 'complex.content.name'
+      				accessor: 'complex.content.name',
       				/* cellProps: {
                           multiselect: true
                       } */
       			},
       			{
       				groupBy: 'house.id',
-      				accessor: 'house.content.name'
+      				accessor: 'house.content.name',
       				/* cellProps: {
                           ml: 42
                       } */
-      			}
+      			},
       		],
       		actions: [
       			{
@@ -3739,26 +3739,26 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
       				props: {
       					actionIcon: {
       						variant: 'outline',
-      						color: 'dark'
+      						color: 'dark',
       					},
       					icon: {
-      						iconName: 'IconEdit'
-      					}
-      				}
-      			}
-      		]
+      						iconName: 'IconEdit',
+      					},
+      				},
+      			},
+      		],
       	},
       	{
       		accessor: 'area.content.name',
       		header: 'Зона',
       		enableColumnFilter: true,
-      		filterVariant: 'multi-select'
+      		filterVariant: 'multi-select',
       	},
       	{
       		accessor: '{{worker.content.firstName}} {{worker.content.lastName}}',
       		header: 'Сотрудник',
       		enableColumnFilter: true,
-      		filterVariant: 'multi-select'
+      		filterVariant: 'multi-select',
       	},
       	{
       		accessor: 'content.schedule.startDate.plan',
@@ -3767,7 +3767,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
       		size: 160,
       		enableColumnFilter: true,
       		filterVariant: 'date-range',
-      		filterProps: { dateFormat: 'YYYY-MM-DD' }
+      		filterProps: { dateFormat: 'YYYY-MM-DD' },
       	},
       	{
       		header: 'Фото',
@@ -3779,23 +3779,23 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
       				props: {
       					actionIcon: {
       						variant: 'outline',
-      						color: 'dark'
+      						color: 'dark',
       					},
       					icon: {
-      						iconName: 'IconPhoto'
-      					}
-      				}
-      			}
+      						iconName: 'IconPhoto',
+      					},
+      				},
+      			},
       		],
-      		size: 0
+      		size: 0,
       	},
       	{
       		accessor: 'states.flow.title',
       		header: 'Статус',
       		size: 140,
       		enableColumnFilter: true,
-      		filterVariant: 'multi-select'
-      	}
+      		filterVariant: 'multi-select',
+      	},
       ];
       ```
 
@@ -3899,10 +3899,10 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   	{
   		bool: {
   			must_not: {
-  				term: { 'states.archived': true }
-  			}
-  		}
-  	}
+  				term: { 'states.archived': true },
+  			},
+  		},
+  	},
   ];
   ```
 
@@ -4016,12 +4016,12 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   [
   	{
   		value: 'option1',
-  		label: 'Вариант 1'
+  		label: 'Вариант 1',
   	},
   	{
   		value: 'option2',
-  		label: 'Вариант 2'
-  	}
+  		label: 'Вариант 2',
+  	},
   ];
   ```
 
@@ -4044,16 +4044,16 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
     	{
     		accessor: 'content.name',
     		title: 'Название',
-    		width: '8rem'
+    		width: '8rem',
     	},
     	{
     		accessor: 'content.description',
     		title: 'Описание',
     		width: '8rem',
     		props: {
-    			respectLineBreak: true
-    		}
-    	}
+    			respectLineBreak: true,
+    		},
+    	},
     ];
     ```
 
@@ -4064,8 +4064,8 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
     	{
     		accessor: 'Уважаемый {{content.firstName}} {{content.lastName}}, еще текст...',
     		title: 'ФИО',
-    		width: '8rem'
-    	}
+    		width: '8rem',
+    	},
     ];
     ```
 

@@ -1,6 +1,6 @@
 /* Провайдер. Отделяет одну таблицу от другой. Устанавливает первичное состояние. Обслуживает внешние сигналы. */
 
-import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { nanoid } from 'nanoid';
 import { getCompProps } from '@packages/get-comp-props';
 import type { Props } from './types';
@@ -38,7 +38,7 @@ export default forwardRef((props: Props, ref) => {
 		[]
 	);
 
-	console.log('TableProvider run'); // Считаем запуски пока разрабатываем
+	//console.log('TableProvider run'); // Считаем запуски пока разрабатываем
 	return (
 		<Provider
 			// Первичное состояние и установка дефолтов. Здесь релизуется сценарий, когда все, что нужно для отрисовки известно сразу.
@@ -49,8 +49,8 @@ export default forwardRef((props: Props, ref) => {
 				tableProps: getTableProps(p),
 				columns: getColumns(p.columnsDefinition),
 				items: getItems(p),
-				selectedIds: p.selectedItems?.map((i) => i.id) || [],
-				selectedIdsFirstRun: p.selectedItems ? true : false, // Фиксируем, что есть изначально выбранные items.
+				selectedItems: p.selectedItems || [],
+				selectedItemsFirstRun: p.selectedItems ? true : false, // Фиксируем, что есть изначально выбранные items.
 				expandedIds: p.expandedItems?.map((i) => i.id) || [],
 			}}
 		>

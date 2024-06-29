@@ -23,6 +23,6 @@ export default memo((p: { itemId: string; columnIdx: number }) => {
 		getValue, // Чтобы реагировать на изменение самой функции.
 	]);
 
-	console.log('GetValueCell render', value); // Считаем рендеры пока разрабатываем
+	//console.log('GetValueCell render', value); // Считаем рендеры пока разрабатываем
 	return value;
 });

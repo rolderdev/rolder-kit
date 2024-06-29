@@ -12,6 +12,6 @@ export default memo((p: { itemId: string; columnIdx: number }) => {
 		if (!templateCell) getTemplateCell(store, p.itemId, p.columnIdx).then((reactNode) => setTemplateCell(reactNode));
 	}, []);
 
-	console.log('TemplateCell render', p.itemId); // Считаем рендеры пока разрабатываем
+	//console.log('TemplateCell render', p.itemId); // Считаем рендеры пока разрабатываем
 	return templateCell;
 });

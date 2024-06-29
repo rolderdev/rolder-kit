@@ -4,8 +4,8 @@ import { z } from 'zod';
 import type { Item } from 'types';
 import type { Store } from '../store';
 import isArrObjEquals from '../funcs/isArrayEqual';
-import getExpansionRow from '../funcs/getExpansionRow';
 import type { Props } from '../../types';
+import { setSelectedItems } from './multiSelectionModel';
 
 // В item нам важен только id. По сути, эта схема предъявит разработчику требование - item может быть люой структуры, но id обязателен.
 const itemsSchema = z.array(z.object({ id: z.string() }).passthrough());
@@ -18,7 +18,7 @@ export const getItems = (p: Props) => {
 	return itemsSchema.parse(newItems) as Item[];
 };
 
-// Метод обновляет состояние items и expansionRows.
+// Метод обновляет состояние items и зависимости.
 export const setItems = (store: Store, items?: Item[]) => {
 	const newItems = items || [];
 	if (!isArrObjEquals(store.items.get(), newItems)) {
@@ -27,18 +27,7 @@ export const setItems = (store: Store, items?: Item[]) => {
 			// Заменим Noodl-объекты для реактивности в кастомных ячейках или разворачиваемых строках.
 			newItems.map((i) => Noodl.Object.create(i));
 		}
-	}
-};
-
-// Метод создает расширяемые строки для всех items, у которых их еще нет.
-export const setExpansionRows = (store: Store) => {
-	if (store.tableProps.expansion.enabled.get()) {
-		Promise.all(
-			store.items.get().map(async (item) => {
-				if (!store.expansionRows[item.id].get()) {
-					store.expansionRows[item.id].set(await getExpansionRow(store, item.id));
-				}
-			})
-		);
+		// Обновим выбранные строки, если изменение items на это повлияло.
+		setSelectedItems(store, store.selectedItems.get());
 	}
 };

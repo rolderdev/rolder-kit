@@ -1,7 +1,5 @@
 ---
 id: node-handlers/markdown
-tags:
-  - noodl
 tasks:
   build:
     command: rspack build --mode=production

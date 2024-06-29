@@ -1,7 +1,5 @@
 ---
 id: node-handlers/mantine
-tags:
-  - noodl
 tasks:
   build:
     command: rspack build --mode=production

@@ -6,10 +6,10 @@ export default function (rowId: string) {
 
 	const rowStyles = store.tableProps.rowStyles.use();
 	//const selectedRowId = useStore(store, (s) => s.selectedRowId);
-	const selectedIds = store.selectedIds.use();
+	const selectedItems = store.selectedItems.use();
 
 	let bgColor = rowStyles.rowBackgroundColor;
-	if (selectedIds.includes(rowId)) bgColor = rowStyles.mutliSelectionRowBgColor;
+	if (selectedItems.map((i) => i.id).includes(rowId)) bgColor = rowStyles.mutliSelectionRowBgColor;
 	// Единичный выьор перекрывает мульти-выбор.
 	//if (selectedRowId === rowId) bgColor = rowStyles.singleSelectionRowBgColor;
 

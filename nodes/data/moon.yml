@@ -1,7 +1,5 @@
 ---
 id: node-handlers/data
-tags:
-  - noodl
 tasks:
   build:
     command: rspack build --mode=production

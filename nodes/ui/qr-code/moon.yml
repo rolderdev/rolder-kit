@@ -1,7 +1,5 @@
 ---
 id: node-handlers/qr-code
-tags:
-  - noodl
 tasks:
   build:
     command: rspack build --mode=production
