@@ -1,6 +1,6 @@
 {
-  "deploymentsDir": "/home/vezdexod/programsVezdexod/Noodl/projects/moonBuild",
-  "noodlProjectsDir": "/home/vezdexod/programsVezdexod/Noodl/projects/",
+  "deploymentsDir": "/home/vezdexod/programsVezdexod/Roodl/Projects/moonBuild",
+  "noodlProjectsDir": "/home/vezdexod/programsVezdexod/Roodl/Projects/",
   "projects": {
     "startum-desktop": {
       "projectDir": "startum-desktop",
@@ -37,7 +37,7 @@
         "mantine",
         "mantine-old",
         "data",
-        "qr-code",
+        "qrCode",
         "web-camera"
       ],
       "dev": {
@@ -59,11 +59,21 @@
     },
     "pdf": {
       "projectDir": "pdf",
-      "rolderKit": ["app", "mantine", "mantine-old", "data", "pdf"]
+      "rolderKit": [
+        "app",
+        "mantine",
+        "mantine-old",
+        "data",
+        "pdf"
+      ]
     },
     "gantt": {
       "projectDir": "gantt",
-      "rolderKit": ["app", "mantine", "gantt"]
+      "rolderKit": [
+        "app",
+        "mantine",
+        "gantt"
+      ]
     },
     "rasko-desktop": {
       "projectDir": "rasko-desktop",
@@ -78,25 +88,32 @@
       ]
     },
     "tex": {
-      "projectDir": "tex",
-      "rolderKit": ["app", "mantine", "mantine-old", "data", "pdf", "xlsx"]
+      "projectDir": "testRKTableSelection",
+      "rolderKit": [
+        "app",
+        "mantine",
+        "mantine-old",
+        "data",
+        "pdf",
+        "xlsx"
+      ]
     },
     "playground": {
       "projectDir": "playground",
       "rolderKit": [
         "app",
         "mantine",
-        "data",
-        "pdf",
-        "xlsx",
-        "gantt",
-        "qr-code",
-        "web-camera"
+        "markdown"
       ]
     },
     "xcity": {
       "projectDir": "xcity",
-      "rolderKit": ["app", "mantine", "mantine-old", "data"],
+      "rolderKit": [
+        "app",
+        "mantine",
+        "mantine-old",
+        "data"
+      ],
       "dev": {
         "dir": "dev",
         "bucket": "dev.xcity.rolder.app"
@@ -108,7 +125,12 @@
     },
     "cockbot-desktop": {
       "projectDir": "cockbot-desktop",
-      "rolderKit": ["app", "data", "mantine", "mantine-old"],
+      "rolderKit": [
+        "app",
+        "data",
+        "mantine",
+        "mantine-old"
+      ],
       "dev": {
         "dir": "dev",
         "bucket": "dev.xcity.rolder.app"
@@ -117,6 +139,15 @@
         "dir": "prod",
         "bucket": "xcity.rolder.app"
       }
+    },
+    "rkdocs": {
+      "projectDir": "rkdocs",
+      "rolderKit": [
+        "app",
+        "mantine",
+        "data",
+        "markdown"
+      ]
     }
   }
 }

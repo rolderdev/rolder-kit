@@ -15,18 +15,18 @@ export default jsNode(
 					displayName: 'Update scheme',
 					group: 'Data',
 					type: 'array',
-					customs: { required: 'connection' }
-				})
+					customs: { required: 'connection' },
+				}),
 			],
 			outputs: [
 				...getPorts('output', ['updated', 'updating']),
-				getPort({ plug: 'output', name: 'updatedData', displayName: 'Updated data', group: 'Data', type: 'object' })
-			]
+				getPort({ plug: 'output', name: 'updatedData', displayName: 'Updated data', group: 'Data', type: 'object' }),
+			],
 		},
 		'v1.0.0': {
 			hashTag: '#deprecated',
 			module: {
-				dynamic: import('@packages/update-v1.0.0')
+				dynamic: import('@packages/update-v1.0.0'),
 			},
 			inputs: [
 				...getPorts('input', ['update', 'scheme']),
@@ -36,8 +36,8 @@ export default jsNode(
 					displayName: 'Optimistic',
 					group: 'Params',
 					type: 'boolean',
-					default: false
-				})
+					default: false,
+				}),
 			],
 			outputs: [
 				...getPorts('output', ['updated', 'updating', 'data']),
@@ -46,13 +46,13 @@ export default jsNode(
 					name: 'optimisticUpdated',
 					displayName: 'Optimistic updated',
 					group: 'Signals',
-					type: 'signal'
-				})
-			]
+					type: 'signal',
+				}),
+			],
 		},
 		'v1.1.0': {
 			module: {
-				dynamic: import('@packages/update-v1.1.0')
+				dynamic: import('@packages/update-v1.1.0'),
 			},
 			inputs: [
 				...getPorts('input', ['update']),
@@ -75,8 +75,8 @@ export default jsNode(
 									return `You can update 1000 or less documents per request. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
 								} else return true;
 							}
-						}
-					}
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -84,8 +84,8 @@ export default jsNode(
 					displayName: 'Optimistic',
 					group: 'Params',
 					type: 'boolean',
-					default: false
-				})
+					default: false,
+				}),
 			],
 			outputs: [
 				...getPorts('output', ['updated', 'updating', 'data']),
@@ -98,10 +98,10 @@ export default jsNode(
 					customs: {
 						dependsOn(p) {
 							return p.optimistic ? true : false;
-						}
-					}
-				})
-			]
+						},
+					},
+				}),
+			],
 		},
 		'v1.2.0': {
 			hashTag: '#pre-release',
@@ -127,8 +127,8 @@ export default jsNode(
 									return `You can update 20000 or less documents per request. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
 								} else return true;
 							}
-						}
-					}
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -136,7 +136,7 @@ export default jsNode(
 					displayName: 'Optimistic',
 					group: 'Params',
 					type: 'boolean',
-					default: false
+					default: false,
 				}),
 				getPort({
 					plug: 'input',
@@ -144,8 +144,8 @@ export default jsNode(
 					displayName: 'Silent',
 					group: 'Params',
 					type: 'boolean',
-					default: false
-				})
+					default: false,
+				}),
 			],
 			outputs: [
 				...getPorts('output', ['updated', 'updating', 'data']),
@@ -158,11 +158,11 @@ export default jsNode(
 					customs: {
 						dependsOn(p) {
 							return p.optimistic ? true : false;
-						}
-					}
-				})
-			]
-		}
+						},
+					},
+				}),
+			],
+		},
 	},
 	{ docs: 'https://docs.rolder.app/docs/data/update.html' }
 );

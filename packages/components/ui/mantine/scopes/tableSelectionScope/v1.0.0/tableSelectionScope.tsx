@@ -27,7 +27,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     // При внешнем триггере reset очищаем молекулу
     useImperativeHandle(ref, () => ({
         reset() {
-            console.log("REF CHILD TRIGGERED")
+            // console.log("REF CHILD TRIGGERED")
 
             setTableSelectionScopeValue({
                 tableSelectionScope: {},
@@ -56,7 +56,7 @@ export default forwardRef(function (props: Props, ref) {
     const localRef = useRef<any>(null)
     useImperativeHandle(ref, () => ({
         reset() {
-            console.log("REF PARENT TRIGGERED")
+            // console.log("REF PARENT TRIGGERED")
             localRef.current?.reset()
         },
     }), [])

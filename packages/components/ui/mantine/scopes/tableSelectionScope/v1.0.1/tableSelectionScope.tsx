@@ -79,7 +79,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     useImperativeHandle(ref, () => ({
 
         reset() {
-            console.log("REF CHILD TRIGGERED")
+            // console.log("REF CHILD TRIGGERED")
 
             // Сбросим селекты у всех записей
             for (const itemId in tableSelectionScopeValue) {
@@ -129,7 +129,7 @@ export default forwardRef(function (props: Props, ref) {
     const localRef = useRef<any>(null)
     useImperativeHandle(ref, () => ({
         reset() {
-            console.log("REF PARENT TRIGGERED")
+            // console.log("REF PARENT TRIGGERED")
             localRef.current?.reset()
         },
     }), [])
