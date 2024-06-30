@@ -38,7 +38,7 @@ type Rolder = {
 		};
 		dayjs?: Dayjs;
 		mutate?(props: { 
-			action: 'create' | 'update' | 'delete'; 
+			action: 'create' | 'update' | 'delete' | 'updateByQuery'; // Vezdexod: updateByQuery
 			scheme: any; 
 			silent?: boolean
 			refresh?: "wait_for" | "false" // Vezdexod

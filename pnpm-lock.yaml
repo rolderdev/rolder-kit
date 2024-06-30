@@ -161,6 +161,9 @@ importers:
       '@nodes/update':
         specifier: workspace:*
         version: link:src/update
+      '@nodes/update-by-query':
+        specifier: workspace:*
+        version: link:src/updateByQuery
       '@nodes/use-data':
         specifier: workspace:*
         version: link:src/useData
@@ -315,6 +318,9 @@ importers:
       '@packages/nodered-v1.1.0':
         specifier: workspace:*
         version: link:../../../../packages/components/data/nodered/v1.1.0
+      '@packages/nodered-v1.2.0':
+        specifier: workspace:*
+        version: link:../../../../packages/components/data/nodered/v1.2.0
       '@packages/port':
         specifier: workspace:@packages/port-v0.6.0@*
         version: link:../../../../packages/internal/port/v0.6.0
@@ -362,6 +368,25 @@ importers:
       '@packages/update-v1.3.0':
         specifier: workspace:*
         version: link:../../../../packages/components/data/update/v1.3.0
+    devDependencies:
+      types:
+        specifier: workspace:*
+        version: link:../../../../types
+
+  nodes/data/src/updateByQuery:
+    dependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../packages/internal/node/v0.8.0
+      '@packages/port':
+        specifier: workspace:@packages/port-v0.6.0@*
+        version: link:../../../../packages/internal/port/v0.6.0
+      '@packages/update-by-query-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../packages/components/data/updateByQuery/v1.0.0
+      '@packages/update-v1.0.0':
+        specifier: workspace:*
+        version: link:../../../../packages/components/data/update/v1.0.0
     devDependencies:
       types:
         specifier: workspace:*
@@ -904,6 +929,9 @@ importers:
       '@packages/checkbox-group-v1.0.0':
         specifier: workspace:*
         version: link:../../../../../../packages/components/ui/mantine/inputs/checkboxGroup/v1.0.0
+      '@packages/checkbox-group-v1.0.1':
+        specifier: workspace:*
+        version: link:../../../../../../packages/components/ui/mantine/inputs/checkboxGroup/v1.0.1
       '@packages/node':
         specifier: workspace:@packages/node-v0.8.0@*
         version: link:../../../../../../packages/internal/node/v0.8.0
@@ -1060,6 +1088,9 @@ importers:
       '@packages/switch-v0.1.0':
         specifier: workspace:*
         version: link:../../../../../../packages/components/ui/mantine/inputs/switch/v1.0.0
+      '@packages/switch-v1.0.1':
+        specifier: workspace:*
+        version: link:../../../../../../packages/components/ui/mantine/inputs/switch/v1.0.1
     devDependencies:
       types:
         specifier: workspace:*
@@ -2368,6 +2399,25 @@ importers:
         specifier: workspace:*
         version: link:../../../../../types
 
+  packages/components/data/nodered/v1.2.0:
+    dependencies:
+      '@packages/get-kuzzle':
+        specifier: workspace:@packages/get-kuzzle-v0.1.0@*
+        version: link:../../../../internal/utils/getKuzzle/v0.1.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../internal/utils/portSend/v0.3.0
+      ky:
+        specifier: 1.2.3
+        version: 1.2.3
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../types
+
   packages/components/data/saveAs/v1.0.0:
     dependencies:
       file-saver:
@@ -2516,6 +2566,31 @@ importers:
         version: link:../../../../../types
 
   packages/components/data/update/v1.3.0:
+    dependencies:
+      '@packages/deep-merge':
+        specifier: workspace:@packages/deep-merge-v0.1.0@*
+        version: link:../../../../internal/utils/deepMerge/v0.1.0
+      '@packages/get-dbclass-version':
+        specifier: workspace:@packages/get-dbclass-version-v0.6.0@*
+        version: link:../../../../internal/utils/getDbClassVersion/v0.6.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../internal/utils/portSend/v0.3.0
+      '@tanstack/react-query':
+        specifier: 4.36.1
+        version: 4.36.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      just-clone:
+        specifier: 6.2.0
+        version: 6.2.0
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../types
+
+  packages/components/data/updateByQuery/v1.0.0:
     dependencies:
       '@packages/deep-merge':
         specifier: workspace:@packages/deep-merge-v0.1.0@*
@@ -3329,6 +3404,34 @@ importers:
         specifier: workspace:*
         version: link:../../../../../../../types
 
+  packages/components/ui/mantine/inputs/checkboxGroup/v1.0.1:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.4(@types/react@16.9.49)(react@18.3.1))(@mantine/hooks@6.0.21(react@18.3.1))(@types/react@16.9.49)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@packages/convert-for-select-inputs':
+        specifier: workspace:@packages/convert-for-select-inputs-v0.2.0@*
+        version: link:../../../../../../internal/utils/convertForSelectInputs/v0.2.0
+      '@packages/get-comp-props':
+        specifier: workspace:@packages/get-comp-props-v0.1.0@*
+        version: link:../../../../../../internal/utils/getCompProps/v0.1.0
+      '@packages/get-value':
+        specifier: workspace:@packages/get-value-v0.8.0@*
+        version: link:../../../../../../internal/utils/getValue/v0.8.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../../../internal/utils/portSend/v0.3.0
+      '@packages/scope':
+        specifier: workspace:@packages/scope-v0.1.0@*
+        version: link:../../../../../../internal/scope/v0.1.0
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../../../types
+
   packages/components/ui/mantine/inputs/datePickerInput/v1.0.0:
     dependencies:
       '@mantine/core':
@@ -3628,6 +3731,31 @@ importers:
         version: link:../../../../../../../types
 
   packages/components/ui/mantine/inputs/switch/v1.0.0:
+    dependencies:
+      '@mantine/core':
+        specifier: 6.0.21
+        version: 6.0.21(@emotion/react@11.11.4(@types/react@16.9.49)(react@18.3.1))(@mantine/hooks@6.0.21(react@18.3.1))(@types/react@16.9.49)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@packages/convert-color':
+        specifier: workspace:@packages/convert-color-v0.3.0@*
+        version: link:../../../../../../internal/utils/convertColor/v0.3.0
+      '@packages/get-comp-props':
+        specifier: workspace:@packages/get-comp-props-v0.1.0@*
+        version: link:../../../../../../internal/utils/getCompProps/v0.1.0
+      '@packages/port-send':
+        specifier: workspace:@packages/port-send-v0.3.0@*
+        version: link:../../../../../../internal/utils/portSend/v0.3.0
+      '@packages/scope':
+        specifier: workspace:@packages/scope-v0.1.0@*
+        version: link:../../../../../../internal/scope/v0.1.0
+    devDependencies:
+      '@packages/node':
+        specifier: workspace:@packages/node-v0.8.0@*
+        version: link:../../../../../../internal/node/v0.8.0
+      types:
+        specifier: workspace:*
+        version: link:../../../../../../../types
+
+  packages/components/ui/mantine/inputs/switch/v1.0.1:
     dependencies:
       '@mantine/core':
         specifier: 6.0.21

@@ -85,13 +85,6 @@ export default forwardRef(function (props: Props, ref) {
     const tableSelectionScopeInternalValue = selectionScopeStore.get(tableSelectionScopeInternalAtom)
     const tableHandlerAtomValue = selectionScopeStore.get(tableHandlerAtom)
 
-    console.log("УРОВЕНЬ 1")
-    console.log("tableSelectionScopeValue", tableSelectionScopeValue)
-    console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
-    console.log("tableSelectionClickItemIdValue", tableSelectionClickItemIdValue)
-    console.log("tableSelectionScopeInternalValue", tableSelectionScopeInternalValue)
-    console.log("tableHandlerAtomValue", tableHandlerAtomValue)
-
     // Задаем функции, по перезаписыванию значений в атомах данного store
     const setTableSelectionScopeValue = (value: TableSelectionScopeValues) => { selectionScopeStore.set(tableSelectionScopeAtom, value) }
     const setTableSelectionChildIdsByParentIdValue = (value: TableSelectionChildIdsByParentId) => { selectionScopeStore.set(tableSelectionChildIdsByParentIdAtom, value) }
@@ -114,18 +107,11 @@ export default forwardRef(function (props: Props, ref) {
 
     // id родительской записи, а для 1 уровня - root
     const parentTableItemId = tableCellMol?.id || 'root'
-    // console.log("parentTableItemIdparentTableItemIdparentTableItemIdparentTableItemIdparentTableItemIdparentTableItemId")
-    // console.log("parentTableItemId", parentTableItemId)
-    // console.log("parentTableItemIdparentTableItemIdparentTableItemIdparentTableItemIdparentTableItemIdparentTableItemId")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // Самая важная часть - если useScopeStates: false, то модули ниже, не отрабатывают
     // Флаг о том, что состояния берем из scope
     const useScopeStates = expansion.enabled && selection.multi.enabled
-
-    console.log("/////////////////// уровень:", items?.[0]?.content?.level)
-    console.log("/////////////////// tableId:", tableId)
-    console.log("tableSelectionScopeValue", tableSelectionScopeValue)
 
     // Отрабатывает при присвоении tableId
     useEffect(() => {
@@ -154,8 +140,6 @@ export default forwardRef(function (props: Props, ref) {
     }, [tableId])
 
     useEffect(() => {
-        console.log("ПРИЛЕТЕЛИ ITEMS")
-
         if (useScopeStates && tableId !== '' && tableId !== undefined) {
             // Запишем id itemов по id своего родителя
             // Если запись с родителем отсутсвует, то создаем пустой массив
@@ -167,8 +151,6 @@ export default forwardRef(function (props: Props, ref) {
                 if (item?.id) {
                     tableSelectionChildIdsByParentIdValue[parentTableItemId]?.push(item.id)
                     tableSelectionScopeInternalValue['tableIdByItemId'][item.id] = tableId
-                    console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'])
-                    console.log("Установили связь с id таблицы", tableSelectionScopeInternalValue['tableIdByItemId'][item.id])
                 }
             })
             setTableSelectionChildIdsByParentIdValue(tableSelectionChildIdsByParentIdValue)
@@ -254,9 +236,6 @@ export default forwardRef(function (props: Props, ref) {
                 }
             })
 
-            // console.log("tableSelectionChildIdsByParentIdValuetableSelectionChildIdsByParentIdValuetableSelectionChildIdsByParentIdValue")
-            // console.log("tableSelectionChildIdsByParentIdValue", tableSelectionChildIdsByParentIdValue)
-            // console.log("tableSelectionChildIdsByParentIdValuetableSelectionChildIdsByParentIdValuetableSelectionChildIdsByParentIdValue")
 
             // Обновляем статусы записей
             setTableSelectionScopeValue(tableSelectionScopeValue)

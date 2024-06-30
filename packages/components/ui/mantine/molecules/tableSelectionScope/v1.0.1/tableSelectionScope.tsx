@@ -20,8 +20,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     const [tableSelectionScopeInternalValue, setTableSelectionScopeInternalValue] = useAtom(tableSelectionScopeInternalAtom)
     const [tableHandlerAtomValue, setTableHandlerAtomValue] = useAtom(tableHandlerAtom)
 
-    // console.log("tableHandlerAtomValue", tableHandlerAtomValue)
-
     const forceUpdate = useForceUpdate()
     const forceUpdateSelectionScope = () => {
         forceUpdate()
@@ -36,28 +34,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     sendOutput(props.noodlNode, 'selectionByDBClass', tableSelectionByDBClassValue)
     sendSignal(props.noodlNode, 'changed')
 
-    // useEffect(() => {
-    //     // if (tableSelectionScopeValue['forRenderTableId']['parentTableId'] !== undefined) {
-    //     console.log("Сработала useEffect123")
-    //     //     tableHandlerAtomValue[tableSelectionScopeValue['forRenderTableId']['parentTableId']]()
-    //     // }
-    //     // sendOutput(props.noodlNode, 'selectionScope', tableSelectionScopeValue['tableSelectionScope'])
-    //     let selectionScope = tableSelectionScopeValue
-    //     sendOutput(props.noodlNode, 'selectionScope', selectionScope)
-
-    //     let selectionByDBClass = tableSelectionByDBClassValue
-    //     sendOutput(props.noodlNode, 'selectionByDBClass', selectionByDBClass)
-
-    //     sendSignal(props.noodlNode, 'changed')
-    // }, [
-    //     // tableSelectionScopeAtom,
-    //     tableSelectionScopeValue,
-    //     tableSelectionByDBClassValue,
-    //     tableSelectionScopeInternalValue
-    // ])
-
     useEffect(() => {
-        // console.log("Поймали props.newSelectionScope ", props.newSelectionScope)
         if (props.newSelectionScope) {
             setTableSelectionScopeValue(props.newSelectionScope)
             sendOutput(props.noodlNode, 'selectionScope', tableSelectionScopeValue)
@@ -70,8 +47,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                     newTableId: [],
                     childTableId: Object.keys(tableSelectionScopeInternalValue['parentTableIdByTableId']).filter(key => tableSelectionScopeInternalValue['parentTableIdByTableId'][key] === firstTableId),
                 }
-                // if (tableSelectionScopeInternalValue['allTableIdList']?.[0]) tableHandlerAtomValue[tableSelectionScopeInternalValue['allTableIdList'][0]]()
-                // forceUpdateSelectionScope()
             }
         }
     }, [props.newSelectionScope])
@@ -80,8 +55,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     useImperativeHandle(ref, () => ({
 
         reset() {
-            // console.log("REF CHILD TRIGGERED")
-
             // Сбросим селекты у всех записей
             for (const itemId in tableSelectionScopeValue) {
                 tableSelectionScopeValue[itemId] = "notSelected"
@@ -103,20 +76,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                 }
             }
             tableHandlerAtomValue[tableSelectionScopeInternalValue['allTableIdList'][0]]()
-
-            // setTableSelectionScopeInternalValue({
-            //     'parentTableIdByTableId': {},                   // Словарь id родительской таблицы для кажждой таблицы
-            //     'tableParentItemByTableId': {},                 // Словарь родительских item для кажждой таблицы
-            //     'parentTableSelectionStateByTableId': {},       // Словарь со статусами всей таблицы, для принятия статуса отца на основании всех детей
-            //     'tableIndeterminatedItemsIdList': [],           // Массив с id запсией, которые должны быть indeterminated
-            //     'allTableIdList': [],                           // Массив всех tableId для отладки, так как в объекте они встают по алфовиту
-            //     'forRenderTableId': {                           // Массив с id таблиц, которые должны пересмотреть свои селекты, но не от родителей
-            //         parentTableId: undefined,
-            //         currentTableId: undefined,
-            //         newTableId: [],
-            //         childTableId: [],
-            //     },
-            // })
         },
     }), [])
 
@@ -130,7 +89,6 @@ export default forwardRef(function (props: Props, ref) {
     const localRef = useRef<any>(null)
     useImperativeHandle(ref, () => ({
         reset() {
-            // console.log("REF PARENT TRIGGERED")
             localRef.current?.reset()
         },
     }), [])

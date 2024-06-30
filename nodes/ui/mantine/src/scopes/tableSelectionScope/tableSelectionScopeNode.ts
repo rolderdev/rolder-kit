@@ -43,7 +43,7 @@ export default reactNode(
 			],
 			outputs: [
 				getPort({ plug: 'output', name: 'selectionScope', displayName: 'selectionScope', group: 'Data', type: 'object' }),
-				getPort({ plug: 'output', name: 'selectionByDBClass', displayName: 'selectionByDBClass', group: 'Data', type: 'object' }),
+				// getPort({ plug: 'output', name: 'selectionByDBClass', displayName: 'selectionByDBClass', group: 'Data', type: 'object' }),
 				getPort({ plug: 'output', name: 'changed', displayName: 'changed', group: 'Signals', type: 'signal' })
 			]
 		}

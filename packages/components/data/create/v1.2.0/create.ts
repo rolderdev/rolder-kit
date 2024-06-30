@@ -120,11 +120,6 @@ export default {
             refresh: "false"
           })
 
-          // // Для отладки
-          // if (true) {
-          //   console.log(`Создано записей ${countItems += 100}`)
-          // }
-
           // Добавляем результаты
           for (const dbClass in data) {
             if (createResult?.[dbClass] === undefined) {
@@ -178,9 +173,6 @@ export default {
             createResult[dbClass].error = endCreateReasult[dbClass].error
           }
         }
-
-        // const endTime = new Date()
-        // console.log(`Продолжительность ${(endTime.getTime() - startTime2.getTime()) / 1000} секунд`)
 
         // Подаем на выход результат и снимаем флаг о создании записей
         //@ts-ignore

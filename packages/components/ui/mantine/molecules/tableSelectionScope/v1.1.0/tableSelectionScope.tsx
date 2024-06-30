@@ -109,7 +109,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                         parentSelectionChanged = true
                     }
                     // Удаляем отца из массива indeterminated
-                    tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== parentItemId)
+                    tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(fItemId => fItemId !== parentItemId)
                 }
                 // Если среди голосов все notSelected, то и отец notSelected
                 else if (
@@ -122,7 +122,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                         parentSelectionChanged = true
                     }
                     // Удаляем отца из массива indeterminated
-                    tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(itemId => itemId !== parentItemId)
+                    tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(fItemId => fItemId !== parentItemId)
                 }
                 // а если есть и selected, и notSelected, то отец indeterminated
                 else {
@@ -211,7 +211,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
 
                     childItemsIds?.forEach(iChildItemId => {
                         // Наследуем статус родительского item
-                        // console.log("Статус бати", tableSelectionScopeValue[parentItemId])
                         tableSelectionScopeValue[iChildItemId] = tableSelectionScopeValue[parentItemId]
 
                         // Передаем его своим детям
@@ -225,7 +224,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
         tableSelectionClickItemIdValue?.forEach(clickedItemId => {
             reselectParent(clickedItemId)
             reselectChild(clickedItemId)
-            // console.log(`Обрабатываем ${clickedItemId} для родителей и детей`)
             // Возвращаем самого отца в массив indeterminated, так как он в таком виде может быть подан извне
             if (
                 tableSelectionScopeValue[clickedItemId] === "indeterminated"
@@ -260,7 +258,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
             props.newSelectionScope?.itemsSelection !== undefined
             // && Object.keys(tableSelectionScopeValue)?.length > 0
         ) {
-            // console.log("tableSelectionClickItemIdValue в НАЧАЛЕ", [...tableSelectionClickItemIdValue])
             // Меняем статусы на полученные
             for (const itemId in props.newSelectionScope.itemsSelection) {
                 tableSelectionScopeValue[itemId] = props.newSelectionScope.itemsSelection[itemId]
@@ -272,6 +269,10 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
                 ) {
                     tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].push(itemId)
                 }
+                // Если статус не равен indeterminated, то удаляем
+                else {
+                    tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'] = tableSelectionScopeInternalValue['tableIndeterminatedItemsIdList'].filter(fItemId => fItemId !== itemId)
+                }
             }
         }
         // Обработаем словарь связей извне
@@ -279,7 +280,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
             props.newSelectionScope?.refWithParent !== undefined
             // && Object.keys(tableSelectionScopeValue)?.length > 0
         ) {
-            // console.log("tableSelectionClickItemIdValue в НАЧАЛЕ", [...tableSelectionClickItemIdValue])
             // Меняем статусы на полученные
             for (const parentItemId in props.newSelectionScope.refWithParent) {
                 // Добавим id детей к имеющимся
@@ -312,7 +312,7 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
         // Обновим атомы
         if (
             props.newSelectionScope?.itemsSelection !== undefined
-            && props.newSelectionScope?.refWithParent !== undefined
+            || props.newSelectionScope?.refWithParent !== undefined
         ) {
             if (tableSelectionChildIdsByParentIdValue['root']) {
                 setTableSelectionClickItemIdValue(tableSelectionChildIdsByParentIdValue['root'])
@@ -387,7 +387,6 @@ export default forwardRef(function (props: Props, ref) {
     const scopeId = props?.noodlNode?.id
     
     const [selectionScopeStoreValue, setSelectionScopeStoreValue] = useAtom(selectionScopeStoreAtom)
-    // console.log("selectionScopeStoreValue[scopeId]", selectionScopeStoreValue[scopeId])
 
     // Создаем/получаем store
     // Передаем его дочерним нодам и используем, для получения значений из atom
@@ -410,7 +409,6 @@ export default forwardRef(function (props: Props, ref) {
     const localRef = useRef<any>(null)
     useImperativeHandle(ref, () => ({
         reset() {
-            // console.log("REF PARENT TRIGGERED")
             localRef.current?.reset()
         },
     }), [])
