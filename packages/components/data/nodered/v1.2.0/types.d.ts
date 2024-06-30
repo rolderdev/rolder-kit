@@ -7,6 +7,8 @@ export type Props = BaseJsProps & {
         files: File[],
         params: any
     },
-    timeout: number // Vezdexod
-    useRadFlow: boolean // Vezdexod
+    timeout: number         // Vezdexod
+    useServices: boolean    // Vezdexod
+    selectedService: string // Vezdexod
+    serviceVersion: string  // Vezdexod
 }

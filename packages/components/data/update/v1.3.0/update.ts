@@ -158,11 +158,6 @@ export default {
             refresh: "false"
           })
 
-          // // Для отладки
-          // if (true) {
-          //   console.log(`Обновлено записей ${countItems += 100}`)
-          // }
-
           // Добавляем результаты
           for (const dbClass in data) {
             if (updateResult?.[dbClass] === undefined) {
@@ -217,10 +212,6 @@ export default {
             updateResult[dbClass].error = endUpdateReasult[dbClass].error
           }
         }
-
-
-        // const endTime = new Date()
-        // console.log(`Продолжительность ${(endTime.getTime() - startTime2.getTime()) / 1000} секунд`)
 
         // Возвращаем результат обновления и выставляем флаг о том, что оно завершилось
         sendOutputs(props.noodlNode, [

@@ -1,5 +1,5 @@
 import { jsNode } from '@packages/node';
-import { getPort } from '@packages/port';
+import { getCustomEnumType, getPort } from '@packages/port';
 
 export default jsNode(
 	'nodered',
@@ -90,7 +90,13 @@ export default jsNode(
 					displayName: 'Flow endpoint',
 					group: 'Params',
 					type: 'string',
-					customs: { required: 'both' }
+					// customs: { required: 'both' }
+					customs: {
+						required: 'connection',
+						dependsOn(p) {
+							return p.useServices ? false : true;
+						}
+					}
 				}),
 				getPort({ 							// Vezdexod
 					plug: 'input',
@@ -102,11 +108,39 @@ export default jsNode(
 				}),
 				getPort({ 							// Vezdexod
 					plug: 'input',
-					name: 'useRadFlow',
-					displayName: 'Use Rad Flow',
-					group: 'Params',
+					name: 'useServices',
+					displayName: 'Use Services',
+					group: 'Services',
 					type: 'boolean',
 					default: false
+				}),
+				getPort({
+					plug: 'input',
+					name: 'selectedService',
+					displayName: 'Service',
+					group: 'Services',
+					type: getCustomEnumType(['upload-files']),
+					default: 'upload-files',
+					customs: {
+						required: 'connection',
+						dependsOn(p) {
+							return p.useServices ? true : false;
+						}
+					}
+				}),
+				getPort({
+					plug: 'input',
+					name: 'serviceVersion',
+					displayName: 'Version',
+					group: 'Services',
+					type: getCustomEnumType(['d2', 'p2']),
+					default: 'd2',
+					customs: {
+						required: 'connection',
+						dependsOn(p) {
+							return p.useServices ? true : false;
+						}
+					}
 				}),
 				getPort({ plug: 'input', name: 'flowData', displayName: 'Flow data', group: 'Data', type: '*' })
 			],

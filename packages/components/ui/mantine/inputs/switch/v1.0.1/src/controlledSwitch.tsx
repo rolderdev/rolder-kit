@@ -13,7 +13,6 @@ export default forwardRef(function (props: Props, ref) {
 
     useImperativeHandle(ref, () => ({
         reset() {
-            console.log("Сработал reset, cheked =", checked)            
             setChecked(false)
             sendOutput(props.noodlNode, 'checked', false)
         }

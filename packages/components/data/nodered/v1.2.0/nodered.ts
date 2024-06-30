@@ -5,7 +5,7 @@ import { sendOutput, sendSignal } from '@packages/port-send';
 export default {
   async execute(props: Props) {
     const { project, backendVersion } = window.R.env
-    const { noodlNode, flowEndpoint, flowData, timeout, useRadFlow } = props
+    const { noodlNode, flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion } = props
 
     const { dbName } = R.env
     if (!dbName) {
@@ -14,36 +14,47 @@ export default {
       return null
     }
 
-    if (flowEndpoint) {
+    if (flowEndpoint || selectedService) {
       const startTime = log.start()
 
-      log.info(`Nodered ${flowEndpoint} props`, { flowEndpoint, flowData })
+      log.info(`Nodered ${flowEndpoint || selectedService} props`, { flowEndpoint, flowData })
       //@ts-ignore
       sendOutput(noodlNode, 'executing', true)
 
       const noderedCreds = R.params.creds?.filter(i => i.name === 'nodered')?.[0].data
       if (noderedCreds) {
-        const formData = new FormData()
-        if (flowData) {
-          if (flowData.params) formData.append('params', JSON.stringify(flowData.params))
-          if (flowData.data) formData.append('data', JSON.stringify(flowData.data))
-          if (flowData.files) flowData.files.map(i => formData.append(i.name, i))
-        }
 
         let nodeRedUrl = ""
-        console.log("00000000000000000000000000000000000000000000000000000000000000000000000")
-        console.log("nodeRedUrl до проверки", nodeRedUrl)
 
-        
-        // Если флаг useRadFlow, то используем поток из rad
-        if (useRadFlow) {
-          nodeRedUrl = `https://nodered.rad.rolder.app/${flowEndpoint}`
+        // Если флаг useServices, то используем ссылку ссответствующего сервиса
+        if (useServices) {
+          // Получаем ссылку на выбранный сервис
+          switch (selectedService) {
+            // Сервис по загрузке файлов
+            case "upload-files":
+              nodeRedUrl = `https://upload-files.services.${serviceVersion}.rolder.app/uploadFiles`
+              break
+            // Следующий сервис
+            // ...
+          }
         }
         else {
           nodeRedUrl = `https://${project}.nodered.${backendVersion}.rolder.app/${flowEndpoint}`
         }
 
-        console.log("nodeRedUrl после проверки", nodeRedUrl)
+        const formData = new FormData()
+        if (flowData) {
+          if (flowData.params) formData.append('params', JSON.stringify({
+            // Так как запрос будет идти к сервисам, добавляем информацию о среде проекта
+            project,
+            backendVersion,
+
+            ...flowData.params
+          }))
+          if (flowData.data) formData.append('data', JSON.stringify(flowData.data))
+          if (flowData.files) flowData.files.map(i => formData.append(i.name, i))
+        }
+
 
         const jsonResp = await ky.post(nodeRedUrl, {
           headers: {

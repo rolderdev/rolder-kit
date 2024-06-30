@@ -44,8 +44,6 @@ export default {
     // Получаем схему, у которой класс указан с версией
     const scheme = getUpdateScheme(props.scheme)
 
-    console.log(`Получили схему ${JSON.stringify(scheme)}`)
-
     // Ставим флаг о том, что началось обновление
     sendOutput(props.noodlNode, 'updating', true)
 

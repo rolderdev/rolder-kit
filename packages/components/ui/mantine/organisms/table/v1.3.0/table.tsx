@@ -13,8 +13,6 @@ export default forwardRef(function (props: Props, ref) {
     // Expansion    
     const [expansionRowNodes, setExpansionRowNodes] = useState<{ id: string; rowRender: any }[]>([]);
 
-    console.log('render body')
-
     return <DataTable<Item>
         // Expansion
         rowExpansion={
