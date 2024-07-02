@@ -1,0 +1,17 @@
+{
+  "name": "@packages/text-input-v1.1.0",
+  "main": "textInput.tsx",
+  "types": "textInput.tsx",
+  "dependencies": {
+    "@mantine/core": "6.0.21",
+    "@mantine/hooks": "6.0.21",
+    "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
+    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+    "@packages/scope": "workspace:@packages/scope-v0.1.0@*",    
+    "@packages/convert-color": "workspace:@packages/convert-color-v0.3.0@*"
+  },
+  "devDependencies": {
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "types": "workspace:*"    
+  }
+}
