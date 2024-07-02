@@ -18,10 +18,12 @@ export default forwardRef(function (props: Props, ref) {
         }
     }), [])
 
+    
     // Чтобы меняло статус в любой момент при полученнии его
     useEffect(() => {
         if (props.inputChecked !== undefined) {
             setChecked(props.inputChecked)
+            sendOutput(props.noodlNode, 'checked', props.inputChecked)
         }
     },[props.inputChecked])
 
