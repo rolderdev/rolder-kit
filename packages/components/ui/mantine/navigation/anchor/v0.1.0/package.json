@@ -1,0 +1,5 @@
+{
+	"name": "@packages/anchor-v0.1.0",
+	"main": "anchor.tsx",
+	"types": "anchor.tsx"
+}

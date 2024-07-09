@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import type { Item } from 'types';
 import type { Store } from '../store';
-import isArrObjEquals from '../funcs/isArrayEqual';
+import isArrayEqual from '../funcs/isArrayEqual';
 import type { Props } from '../../types';
 import { setSelectedItems } from './multiSelectionModel';
 
@@ -21,12 +21,14 @@ export const getItems = (p: Props) => {
 // Метод обновляет состояние items и зависимости.
 export const setItems = (store: Store, items?: Item[]) => {
 	const newItems = items || [];
-	if (!isArrObjEquals(store.items.get(), newItems)) {
+	if (!isArrayEqual(store.items.get(), newItems)) {
 		store.items.assign(newItems);
 		if (store.columns.get().some((i) => i.type === 'template') || store.tableProps.expansion.enabled.get()) {
 			// Заменим Noodl-объекты для реактивности в кастомных ячейках или разворачиваемых строках.
 			newItems.map((i) => Noodl.Object.create(i));
 		}
+		// Если это корень, инициализируем иерархию дочерних таблиц. В том числе повторно.
+		if (!store.isChild.get()) store.scope.get()?.setHierarchy(store.tableId.get(), newItems);
 		// Обновим выбранные строки, если изменение items на это повлияло.
 		setSelectedItems(store, store.selectedItems.get());
 	}

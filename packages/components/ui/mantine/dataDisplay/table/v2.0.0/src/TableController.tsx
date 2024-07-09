@@ -3,7 +3,8 @@
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import type { Props } from '../types';
 import { useStore } from './store';
-import { sendSelectedItems } from './models/multiSelectionModel';
+import { sendSelectedItem } from './models/singleSelectionModel';
+import { sendSelectedItems, useHeaderCheckboxProps } from './models/multiSelectionModel';
 import TableInstance from './TableInstance';
 
 export default forwardRef((p: Props, ref) => {
@@ -19,20 +20,39 @@ export default forwardRef((p: Props, ref) => {
 		store.setTableProps(p);
 		store.setColumns(p);
 		store.setItems(p);
-		store.setExpansionRows(p);
+		store.setTemplateCells();
+		store.setExpansionRows();
 	}, [p]);
 
-	// Подписка на изменения для отправки в порты.
+	// Реактивность на изменения TableScope.
+	const selectedItems = p.scopeDbClass ? store.scope.get()?.useSelectedItems(store.tableId.get(), p.scopeDbClass) : [];
+
 	useEffect(() => {
-		const unsubSelectedIds =
-			store.tableProps.selection.multi.get() &&
+		if (selectedItems && p.scopeDbClass) store.setSelectedItems(selectedItems);
+	}, [selectedItems, p.scopeDbClass]);
+
+	// Слушаем изменение состояние выбора, если это корневая таблица и устанавливаем состояние чекбокса в заголовке.
+	useHeaderCheckboxProps(store, p);
+
+	useEffect(() => {
+		// Подписка на изменения для отправки в порты.
+		const unsubSelectedItem =
+			store.tableProps.onRowClick.get() === 'singleSelection' &&
+			store.selectedItem.onChange((newSelectedItem) => sendSelectedItem(store, newSelectedItem));
+		const unsubSelectedItems =
+			store.tableProps.multiSelection.get() &&
 			store.selectedItems.onChange((newSelectedItems) => sendSelectedItems(store, newSelectedItems));
+
 		return () => {
-			unsubSelectedIds && unsubSelectedIds();
+			unsubSelectedItem && unsubSelectedItem();
+			unsubSelectedItems && unsubSelectedItems();
 		};
 	}, []);
 
-	//console.log('TableController run'); // Считаем запуски пока разрабатываем
+	// Состояние готовности.
+	const ready = store.ready.use();
+
+	//console.log('TableController run', selectedItems); // Считаем запуски пока разрабатываем
 	// Передаем только состояние готовности. Это еще и хак, так и не смог разобраться почему без этого первая отрисовка запаздывает.
-	return <TableInstance fetching={p.items ? false : true} />;
+	return <TableInstance fetching={p.items ? (p.items.length ? !ready : false) : true} />;
 });

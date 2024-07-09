@@ -5,4 +5,5 @@ export type Props = BaseReactProps & {
 	multiInstance?: boolean;
 	sentry?: boolean;
 	sentryDsn?: string;
+	remoteLogs?: boolean;
 };

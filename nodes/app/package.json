@@ -3,7 +3,7 @@
 	"dependencies": {
 		"@packages/add-css-to-html-head": "workspace:@packages/add-css-to-html-head-v0.1.0@*",
 		"@packages/system-loader-animation": "workspace:@packages/system-loader-animation-v0.1.0@*",
-		"@mantine/form": "^7.11.0",
+		"@mantine/form": "^7.11.1",
 		"@packages/get-formated-date-v0.2.0": "workspace:*",
 		"@packages/get-masked-v0.2.0": "workspace:*",
 		"@packages/get-value-v0.8.0": "workspace:*",
@@ -38,6 +38,7 @@
 	},
 	"devDependencies": {
 		"types": "workspace:*",
-		"@types/omgopass": "^3.2.3"
+		"@types/omgopass": "^3.2.3",
+		"@types/d3-hierarchy": "^3.1.7"
 	}
 }

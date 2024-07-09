@@ -22,7 +22,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'stretch',
 					type: getCustomEnumType(aligns),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -31,7 +31,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'center',
 					type: getCustomEnumType(justifies),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -40,10 +40,10 @@ export default reactNode(
 					group: 'Layout',
 					default: 'md',
 					type: getEnumType(enums.sizes),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
-				...getPorts('input', ['customProps', 'w', 'h', 'opacity'])
-			]
+				...getPorts('input', ['customProps', 'w', 'h', 'opacity']),
+			],
 		},
 		'v2.0.0': {
 			module: { static: v200 },
@@ -53,14 +53,14 @@ export default reactNode(
 					name: 'w',
 					displayName: 'Width',
 					group: 'Dimensions',
-					type: 'string'
+					type: 'string',
 				}),
 				getPort({
 					plug: 'input',
 					name: 'h',
 					displayName: 'Height',
 					group: 'Dimensions',
-					type: 'string'
+					type: 'string',
 				}),
 				getPort({
 					plug: 'input',
@@ -68,7 +68,7 @@ export default reactNode(
 					displayName: 'Align',
 					group: 'Layout',
 					default: 'stretch',
-					type: getCustomEnumType(aligns)
+					type: getCustomEnumType(aligns),
 				}),
 				getPort({
 					plug: 'input',
@@ -76,7 +76,7 @@ export default reactNode(
 					displayName: 'Justify',
 					group: 'Layout',
 					default: 'flex-start',
-					type: getCustomEnumType(justifies)
+					type: getCustomEnumType(justifies),
 				}),
 				getPort({
 					plug: 'input',
@@ -84,13 +84,13 @@ export default reactNode(
 					displayName: 'Gap',
 					group: 'Layout',
 					default: 'md',
-					type: getEnumType(enums.sizes)
+					type: getEnumType([{ value: '0', label: 'none' }, ...enums.sizes]),
 				}),
 				...inputGroups.Margins,
 				...inputGroups.Paddings,
-				...getPorts('input', ['customProps', 'opacity'])
-			]
-		}
+				...getPorts('input', ['customProps', 'opacity']),
+			],
+		},
 	},
 	{ allowChildren: true }
 );

@@ -14,7 +14,9 @@ export default memo((p: { itemId: string; columnIdx: number }) => {
 	const value = useMemo(() => {
 		const items = store.items.get();
 		const item = items.find((item) => item.id === p.itemId);
-		return getValue?.(item || {}, items);
+		const hierarchyNode = store.get((s) => s.scope?.get()?.hierarchy?.find((i) => i.data.id === p.itemId));
+
+		return getValue?.(item || {}, items, hierarchyNode);
 	}, [
 		// Здесь важно в dependencies передавать массив значений, найденных в соотвествующем item.
 		...(accessors?.map((accessor) =>

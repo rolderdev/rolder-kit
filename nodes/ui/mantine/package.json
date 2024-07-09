@@ -65,7 +65,8 @@
 		"@nodes/tab": "workspace:*",
 		"@nodes/copy-button": "workspace:*",
 		"@nodes/switch": "workspace:*",
-		"@nodes/web-camera": "workspace:*"
+		"@nodes/web-camera": "workspace:*",
+		"@nodes/anchor": "workspace:*"
 	},
 	"devDependencies": {
 		"types": "workspace:*",

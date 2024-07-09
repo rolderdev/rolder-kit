@@ -19,17 +19,23 @@ export default async function pushHandler(dbClass: string, changeRows: RxReplica
 		action: 'push',
 		dbName,
 		dbClass,
-		changeItems: changeRows
+		changeItems: changeRows,
 	});
 
 	const conflicts = response.result as any[];
 
-	if (conflicts.length)
-		Sentry.withScope((scope: any) => {
+	if (conflicts.length) {
+		Sentry?.withScope((scope: any) => {
 			scope.setExtra('RxDb conflicts', conflicts);
-			Sentry.captureMessage('RxDb conflicts');
+			Sentry?.captureMessage('RxDb conflicts');
 		});
-	log.info('Push conflicts', conflicts);
+
+		HyperDX?.addAction('RxDb Push conflicts', {
+			conflicts: JSON.stringify(conflicts),
+		});
+
+		log.info('Push conflicts', conflicts);
+	}
 
 	return conflicts;
 }

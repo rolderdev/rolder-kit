@@ -1,0 +1,45 @@
+{
+	"projectsDir": "/home/decard/projects/noodlProjects",
+	"projects": {
+		"startum-desktop": {
+			"projectDir": "startum-desktop",
+			"rolderKit": ["app", "mantine", "data", "pdf", "qr-code", "xlsx"]
+		},
+		"startum-mobile": {
+			"projectDir": "startum-mobile/noodl",
+			"rolderKit": ["app", "mantine", "data", "qrCode", "web-camera"]
+		},
+		"pdf": {
+			"projectDir": "pdf",
+			"rolderKit": ["app", "mantine", "data", "pdf"]
+		},
+		"gantt": {
+			"projectDir": "gantt",
+			"rolderKit": ["app", "mantine", "gantt"]
+		},
+		"rasko-desktop": {
+			"projectDir": "rasko-desktop",
+			"rolderKit": ["app", "mantine", "data", "gantt", "pdf", "xlsx"]
+		},
+		"tex": {
+			"projectDir": "tex",
+			"rolderKit": ["app", "mantine", "data", "pdf", "xlsx"]
+		},
+		"playground": {
+			"projectDir": "playground",
+			"rolderKit": ["app", "mantine", "markdown"]
+		},
+		"xcity": {
+			"projectDir": "xcity",
+			"rolderKit": ["app", "mantine", "data"]
+		},
+		"cockbot-desktop": {
+			"projectDir": "cockbot-desktop",
+			"rolderKit": ["app", "data", "mantine"]
+		},
+		"rkdocs": {
+			"projectDir": "rkdocs",
+			"rolderKit": ["app", "mantine", "data", "markdown"]
+		}
+	}
+}

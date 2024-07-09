@@ -5,6 +5,7 @@ import ms from 'ms';
 import { useEffect, useState } from 'react';
 import vaildateRefreshToken from './vaildateRefreshToken';
 import systemLoaderAnimation from '@packages/system-loader-animation';
+import fetchUserAndSystemCreds from './fetchUserAndSystemCreds';
 
 type AuthStoreState = 'restoring' | 'signedIn' | 'stored' | 'signedOut';
 
@@ -40,8 +41,14 @@ export default function (noodlNode: NoodlNode, sessionTimeout: string) {
 							auth.set('state', () => 'stored');
 							if (stopLoaderAnimationOn === 'authInitialized') systemLoaderAnimation.stop();
 							// Добавим в Sentry контекст пользователя
-							Sentry.setContext('user', R.user);
-							Sentry.setUser({ id: R.user?.id, name: R.user?.user?.id });
+							Sentry?.setContext('user', R.user);
+							Sentry?.setUser({ id: R.user?.id, name: R.user?.user?.id });
+
+							HyperDX?.setGlobalAttributes({
+								userId: R.user?.id,
+								userData: JSON.stringify(R.user),
+							});
+
 							log.info('Signed in');
 						}
 						break;
@@ -56,9 +63,7 @@ export default function (noodlNode: NoodlNode, sessionTimeout: string) {
 
 							const refreshed = await vaildateRefreshToken(sessionTimeout);
 							if (refreshed) {
-								R.params.creds = auth.creds;
-								R.user = auth.user;
-								R.dbClasses = auth.dbClasses;
+								await fetchUserAndSystemCreds();
 
 								log.info('Token restored');
 								auth.set('state', () => 'signedIn');

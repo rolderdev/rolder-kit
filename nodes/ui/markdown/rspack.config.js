@@ -9,7 +9,7 @@ const nodeName = pJson.name;
 var outputBuildPath = path.resolve(__dirname, `../../../build/${nodeName}`);
 
 module.exports = function (env) {
-	const config = rspackBaseConfig(nodeName, __dirname, outputBuildPath, env.noodlProject);
+	const config = rspackBaseConfig(nodeName, __dirname, outputBuildPath, env.developer, env.project);
 
 	return config;
 };

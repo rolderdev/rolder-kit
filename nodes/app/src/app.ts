@@ -8,7 +8,7 @@ window.R = {
 	env: { rolderKit: rKitJson.version },
 	params: {},
 	libs: {},
-	utils: {}
+	utils: {},
 };
 
 import { consola } from 'consola';
@@ -34,10 +34,10 @@ window.log = {
 	debug: (title, ...args) => consola.debug(title, ...args),
 	error: (title, ...args) => {
 		consola.error(title, ...args);
-		Sentry.captureMessage(`${title} ${JSON.stringify(args)}`);
+		Sentry?.captureMessage(`${title} ${JSON.stringify(args)}`);
 	},
-	sentryMessage: (message) => Sentry.captureMessage(message),
-	sentryError: (error) => Sentry.captureException(error)
+	sentryMessage: (message) => Sentry?.captureMessage(message),
+	sentryError: (error) => Sentry?.captureException(error),
 };
 
 // css loader
@@ -78,7 +78,7 @@ Noodl.defineModule({
 							group: 'Style',
 							type: getCustomEnumType(['light', 'dark', 'auto']),
 							default: 'light',
-							customs: { required: 'connection' }
+							customs: { required: 'connection' },
 						}),
 						getPort({
 							plug: 'input',
@@ -89,8 +89,8 @@ Noodl.defineModule({
 							customs: {
 								dependsOn(props) {
 									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
+								},
+							},
 						}),
 						getPort({
 							plug: 'input',
@@ -101,9 +101,9 @@ Noodl.defineModule({
 							customs: {
 								dependsOn(props) {
 									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
-						})
+								},
+							},
+						}),
 					],
 					outputs: [
 						getPort({
@@ -115,8 +115,8 @@ Noodl.defineModule({
 							customs: {
 								dependsOn(props) {
 									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
+								},
+							},
 						}),
 						getPort({
 							plug: 'output',
@@ -127,10 +127,10 @@ Noodl.defineModule({
 							customs: {
 								dependsOn(props) {
 									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
-						})
-					]
+								},
+							},
+						}),
+					],
 				},
 				'v2.0.0': {
 					hashTag: '#expreimental',
@@ -142,15 +142,15 @@ Noodl.defineModule({
 							displayName: 'Multi local DB instance',
 							group: 'Params',
 							type: 'boolean',
-							default: true
+							default: true,
 						}),
 						getPort({
 							plug: 'input',
 							name: 'sentry',
-							displayName: 'Enable Sentry logs',
+							displayName: 'Sentry logs',
 							group: 'Params',
 							type: 'boolean',
-							default: false
+							default: false,
 						}),
 						getPort({
 							plug: 'input',
@@ -161,9 +161,17 @@ Noodl.defineModule({
 							customs: {
 								dependsOn(p) {
 									return p.sentry ? true : false;
-								}
-							}
-						})
+								},
+							},
+						}),
+						getPort({
+							plug: 'input',
+							name: 'remoteLogs',
+							displayName: 'Remote logs',
+							group: 'Params',
+							type: 'boolean',
+							default: false,
+						}),
 					],
 					outputs: [
 						getPort({
@@ -171,22 +179,22 @@ Noodl.defineModule({
 							name: 'networkType',
 							displayName: 'Type',
 							group: 'Network',
-							type: 'string'
+							type: 'string',
 						}),
 						getPort({
 							plug: 'output',
 							name: 'networkConnected',
 							displayName: 'Connected',
 							group: 'Network',
-							type: 'boolean'
-						})
-					]
-				}
+							type: 'boolean',
+						}),
+					],
+				},
 			},
 			{
-				allowChildren: true
+				allowChildren: true,
 			}
-		)
+		),
 	],
 	settings: [
 		{
@@ -194,39 +202,39 @@ Noodl.defineModule({
 			type: 'string',
 			displayName: 'Project name',
 			group: 'Rolder',
-			tooltip: 'Examples: rasko, tex'
+			tooltip: 'Examples: rasko, tex',
 		},
 		{
 			name: 'projectVersion',
 			type: 'string',
 			displayName: 'Project version',
-			group: 'Rolder'
+			group: 'Rolder',
 		},
 		{
 			name: 'environment',
 			type: {
 				name: 'enum',
-				enums: getEnum(['d2', 't2', 's2', 'p2'], true)
+				enums: getEnum(['d2', 't2', 's2', 'p2'], true),
 			},
 			default: 'd2',
 			displayName: 'Project environment',
-			group: 'Rolder'
+			group: 'Rolder',
 		},
 		{
 			name: 'projectDefaults',
 			type: 'array',
 			displayName: 'Project defaults',
-			group: 'Rolder'
+			group: 'Rolder',
 		},
 		{
 			name: 'stopLoaderAnimationOn',
 			type: {
 				name: 'enum',
-				enums: getEnum(['appInitialized', 'dataInitialized', 'authInitialized', 'localDataInitialized'])
+				enums: getEnum(['appInitialized', 'dataInitialized', 'authInitialized', 'localDataInitialized']),
 			},
 			default: 'authInitialized',
 			displayName: 'Stop loader animation on',
-			group: 'Rolder'
-		}
-	]
+			group: 'Rolder',
+		},
+	],
 });

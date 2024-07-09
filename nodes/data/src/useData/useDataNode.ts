@@ -626,7 +626,6 @@ export default reactNode(
 					group: 'Scheme',
 					type: 'array',
 					customs: {
-						required: 'connection',
 						validate(p) {
 							if (!p.fetchScheme) return true;
 							else {
@@ -777,7 +776,6 @@ export default reactNode(
 					group: 'Scheme',
 					type: 'array',
 					customs: {
-						required: 'connection',
 						validate(p) {
 							if (!p.fetchScheme) return true;
 							else {

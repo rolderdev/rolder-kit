@@ -5,7 +5,7 @@ import { getCustomEnumType, getEnumType } from '../funcs/getType';
 const weights = [
 	{ value: '400', label: 'Normal' },
 	{ value: '600', label: 'Medium' },
-	{ value: '700', label: 'Bold' }
+	{ value: '700', label: 'Bold' },
 ];
 
 export default [
@@ -15,7 +15,7 @@ export default [
 		type: getEnumType(enums.sizes),
 		displayName: 'Size',
 		default: 'md',
-		customs: { required: 'connection' }
+		customs: { required: 'connection' },
 	},
 	{
 		name: 'fw',
@@ -23,7 +23,7 @@ export default [
 		type: getEnumType(weights),
 		displayName: 'Weight',
 		default: '400',
-		customs: { required: 'connection' }
+		customs: { required: 'connection' },
 	},
 	{
 		name: 'ta',
@@ -31,47 +31,47 @@ export default [
 		type: getCustomEnumType(['left', 'center', 'right']),
 		displayName: 'Align',
 		default: 'left',
-		customs: { required: 'connection' }
+		customs: { required: 'connection' },
 	},
 	{
 		name: 'highlight',
 		group: 'Highlight',
 		type: 'array',
-		displayName: 'Highlight'
+		displayName: 'Highlight',
 	},
 	{
 		name: 'highlightColor',
 		group: 'Highlight',
 		type: 'string',
-		displayName: 'Color'
+		displayName: 'Color',
 	},
 	{
 		name: 'highlightStyles',
 		group: 'Highlight',
 		type: 'array',
 		displayName: 'Styles',
-		customs: { isObject: true }
+		customs: { isObject: true },
 	},
 	{
 		name: 'inline',
 		group: 'Layout',
 		type: 'boolean',
 		displayName: 'Inline',
-		default: false
+		default: false,
 	},
 	{
 		name: 'fitContent',
 		group: 'Dimensions',
 		type: 'boolean',
 		displayName: 'Fit content',
-		default: false
+		default: false,
 	},
 	{
 		name: 'textFormat',
 		group: 'Params',
 		type: getCustomEnumType(['none', 'number', 'date', 'mask']),
 		displayName: 'Text format',
-		default: 'none'
+		default: 'none',
 	},
 	{
 		name: 'textMask',
@@ -83,8 +83,8 @@ export default [
 			dependsOn(p) {
 				return p.textFormat === 'mask';
 			},
-			required: 'both'
-		}
+			required: 'both',
+		},
 	},
 	{
 		name: 'numberFormat',
@@ -96,7 +96,7 @@ export default [
 				return p.textFormat === 'number';
 			},
 			required: 'both',
-			isObject: true
-		}
-	}
+			isObject: true,
+		},
+	},
 ] as const satisfies readonly NodePort[];

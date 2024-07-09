@@ -11,10 +11,10 @@ type Rolder = {
 		devMode: boolean;
 	};
 	env: {
+		environment?: string;
 		rolderKit?: string;
 		project?: string;
 		projectVersion?: string;
-		backendVersion?: string;
 		dbName?: string;
 	};
 	params: {
@@ -69,7 +69,7 @@ export type Item = {
 		updater: string | null;
 		updatedAt: number | null;
 	};
-	sysinfo: {
+	sysinfo?: {
 		author: string;
 		createdAt: number;
 		updater: string | null;
@@ -93,6 +93,7 @@ declare global {
 	var R: Rolder;
 	var Noodl: any;
 	var Sentry: any;
+	var HyperDX: any;
 	var log: {
 		start(): number;
 		end(title: string, startTime: number): void;

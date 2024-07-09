@@ -1,0 +1,8 @@
+{
+	"name": "@nodes/table-scope",
+	"main": "tableScopeNode.ts",
+	"types": "tableScopeNode.ts",
+	"dependencies": {
+		"@packages/table-scope-v0.1.0": "workspace:*"
+	}
+}

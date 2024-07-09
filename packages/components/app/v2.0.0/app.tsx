@@ -39,8 +39,9 @@ export default forwardRef(function (props: Props, ref) {
 		projectDefaults,
 		environment = 'd2',
 	} = Noodl.getProjectSettings();
-	const { noodlNode, multiInstance, sentry, sentryDsn } = props;
+	const { noodlNode, multiInstance, sentry, sentryDsn, remoteLogs } = props;
 
+	R.env.environment = environment;
 	R.env.project = project;
 	R.env.projectVersion = projectVersion;
 	R.params.defaults = projectDefaults && eval(projectDefaults)?.[0];
@@ -48,6 +49,7 @@ export default forwardRef(function (props: Props, ref) {
 	const localDbInited = initLocalDb(noodlNode, multiInstance);
 	useEffect(() => {
 		// logs
+
 		if (sentry && sentryDsn) {
 			import('@sentry/react').then((Sentry) => {
 				Sentry.init({
@@ -61,7 +63,22 @@ export default forwardRef(function (props: Props, ref) {
 				});
 				window.Sentry = Sentry;
 			});
-		}
+		} else window.Sentry = undefined;
+		if (remoteLogs) {
+			import('@hyperdx/browser').then((HyperDX) => {
+				HyperDX.default.init({
+					apiKey: '5cc47e8f-651a-44a8-a251-bc9b1e3f4e05',
+					service: `${project}-${environment}-${location.hostname}`,
+					//tracePropagationTargets: [/rolder.app/i], // Чет с CORS нужно ковырять.
+					consoleCapture: true,
+					advancedNetworkCapture: true,
+				});
+				// Пересылает логи React в HyperDX.
+				HyperDX.default.attachToReactErrorBoundary(ErrorBoundary);
+				HyperDX.default.setGlobalAttributes({ environment, project, projectVersion, rolderKit: R.env?.rolderKit || 'none' });
+				window.HyperDX = HyperDX.default;
+			});
+		} else window.HyperDX = undefined;
 	}, []);
 
 	useEffect(() => {

@@ -64,7 +64,7 @@ export default {
 								typeErrorColumn.type
 							}" field. </br>Column: ${JSON.stringify(typeErrorColumn)}`;
 					}
-					return false;
+					return true;
 				},
 			},
 		}),
@@ -81,11 +81,11 @@ export default {
 			name: 'onRowClick',
 			group: 'Base',
 			displayName: 'On row click',
-			type: getCustomEnumType(['disabled', 'signal']),
+			type: getCustomEnumType(['disabled', 'signal', 'singleSelection']),
 			default: 'disabled',
 			customs: {
 				dependsOn(p) {
-					return !p.expansion && !p.singleSelection;
+					return !p.expansion;
 				},
 			},
 		}),
@@ -98,43 +98,35 @@ export default {
 			default: 'disabled',
 			customs: {
 				dependsOn(p) {
-					return p.expansion && p.singleSelection;
+					return p.expansion;
 				},
 			},
 		}),
 		getPort({
 			plug: 'input',
-			name: 'onRowClick',
+			name: 'clickFilterFunc',
 			group: 'Base',
-			displayName: 'On row click',
-			type: getCustomEnumType(['disabled', 'signal', 'singleSelection']),
-			default: 'disabled',
+			type: 'array',
+			displayName: 'Click filter func',
 			customs: {
+				isObject: true,
 				dependsOn(p) {
-					return !p.expansion && p.singleSelection;
+					return p.onRowClick === 'signal';
 				},
 			},
 		}),
 		getPort({
 			plug: 'input',
-			name: 'onRowClick',
+			name: 'singleSelectionFilterFunc',
 			group: 'Base',
-			displayName: 'On row click',
-			type: getCustomEnumType(['disabled', 'signal', 'expansion']),
-			default: 'disabled',
+			type: 'array',
+			displayName: 'Single selection filter func',
 			customs: {
+				isObject: true,
 				dependsOn(p) {
-					return p.expansion && !p.singleSelection;
+					return p.onRowClick === 'singleSelection';
 				},
 			},
-		}),
-		getPort({
-			plug: 'input',
-			name: 'isParentTable',
-			group: 'Base',
-			type: getType('boolean', 'editor'),
-			displayName: 'Is parent table',
-			default: false,
 		}),
 		getPort({
 			plug: 'input',
@@ -143,6 +135,28 @@ export default {
 			type: getType('boolean', 'editor'),
 			displayName: 'Disable text selection',
 			default: false,
+		}),
+		// Scope
+		getPort({
+			plug: 'input',
+			name: 'scope',
+			group: 'Scope',
+			type: getType('boolean', 'editor'),
+			displayName: 'Enabled',
+			default: false,
+		}),
+		getPort({
+			plug: 'input',
+			name: 'scopeDbClass',
+			group: 'Scope',
+			type: 'string',
+			displayName: 'DB class',
+			customs: {
+				required: 'connection',
+				dependsOn(p) {
+					return p.scope ? true : false;
+				},
+			},
 		}),
 		// Layout
 		getPort({
@@ -410,7 +424,7 @@ export default {
 			displayName: 'Single selection bg color',
 			customs: {
 				dependsOn(p) {
-					return p.rowStyles && p.singleSelection;
+					return p.rowStyles && p.onRowClick === 'singleSelection';
 				},
 			},
 		}),
@@ -430,34 +444,13 @@ export default {
 		// Single selection
 		getPort({
 			plug: 'input',
-			name: 'singleSelection',
-			group: 'Single selection',
-			type: getType('boolean', 'editor'),
-			displayName: 'Enabled',
-			default: false,
-		}),
-		getPort({
-			plug: 'input',
-			name: 'unselectable',
-			group: 'Single selection',
-			displayName: 'Unselectable',
-			type: 'boolean',
-			default: false,
-			customs: {
-				dependsOn(p) {
-					return p.singleSelection ? true : false;
-				},
-			},
-		}),
-		getPort({
-			plug: 'input',
 			name: 'selectedItem',
 			group: 'Single selection',
 			displayName: 'Selected item',
 			type: 'object',
 			customs: {
 				dependsOn(p) {
-					return p.singleSelection ? true : false;
+					return p.onRowClick === 'singleSelection';
 				},
 			},
 		}),
@@ -469,7 +462,7 @@ export default {
 			type: 'signal',
 			customs: {
 				dependsOn(p) {
-					return p.singleSelection ? true : false;
+					return p.onRowClick === 'singleSelection';
 				},
 			},
 		}),
@@ -536,6 +529,19 @@ export default {
 			type: 'boolean',
 			default: false,
 			customs: {
+				dependsOn(p) {
+					return p.expansion ? true : false;
+				},
+			},
+		}),
+		getPort({
+			plug: 'input',
+			name: 'expansionFilterFunc',
+			group: 'Expansion',
+			type: 'array',
+			displayName: 'Filter func',
+			customs: {
+				isObject: true,
 				dependsOn(p) {
 					return p.expansion ? true : false;
 				},
@@ -641,7 +647,18 @@ export default {
 		}),
 	],
 	outputs: [
+		/*
+	// Table Id and parentTableId
+	'tableId',
+	'parentTableId' */
 		// Base
+		getPort({
+			plug: 'output',
+			name: 'level',
+			group: 'Base',
+			type: 'number',
+			displayName: 'Level',
+		}),
 		getPort({
 			plug: 'output',
 			name: 'clickedItem',
@@ -675,7 +692,7 @@ export default {
 			displayName: 'Selected item',
 			customs: {
 				dependsOn(p) {
-					return p.singleSelection ? true : false;
+					return p.onRowClick === 'singleSelection';
 				},
 			},
 		}),
@@ -687,7 +704,7 @@ export default {
 			displayName: 'Selected item changed',
 			customs: {
 				dependsOn(p) {
-					return p.singleSelection ? true : false;
+					return p.onRowClick === 'singleSelection';
 				},
 			},
 		}),
@@ -754,9 +771,5 @@ export default {
 				},
 			},
 		}),
-		/*
-	// Table Id and parentTableId
-	'tableId',
-	'parentTableId' */
 	],
 };

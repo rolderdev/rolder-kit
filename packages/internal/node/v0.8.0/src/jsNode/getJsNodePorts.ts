@@ -20,9 +20,9 @@ export default function (node: GraphModelNode, context: NodeContext, versions: J
 			allowEditOnly: true,
 			enums: Object.keys(versions).map((i) => ({
 				value: i,
-				label: i + (versions[i]?.hashTag ? ' #' + versions[i]?.hashTag : '')
-			}))
-		}
+				label: i + (versions[i]?.hashTag ? ' ' + versions[i]?.hashTag : ''),
+			})),
+		},
 	} as NodePort;
 
 	if (!node.parameters.version) {

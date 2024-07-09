@@ -3,17 +3,19 @@ import type { BaseReactProps, NoodlNode } from '@packages/node';
 import type { DataTableColumn, DataTableProps } from 'mantine-datatable';
 import type { Column } from './src/models/columnModel.tsx';
 import type { IconProps } from '@tabler/icons-react';
+import type { Item } from 'types';
 
 export type Props = BaseReactProps & {
 	// Base
 	customProps?: {
-		lib: DataTableProps;
+		lib: DataTableProps<Item>;
 		collapse: CollapseProps;
 		// Multi selection
-		selectionCheckboxProps: DataTableProps['selectionCheckboxProps'];
-		getRecordSelectionCheckboxProps: DataTableProps['getRecordSelectionCheckboxProps'];
-		selectionColumnStyle: DataTableProps['selectionColumnStyle'];
-		isRecordSelectable: DataTableProps['isRecordSelectable'];
+		allRecordsSelectionCheckboxProps: DataTableProps<Item>['allRecordsSelectionCheckboxProps'];
+		selectionCheckboxProps: DataTableProps<Item>['selectionCheckboxProps'];
+		getRecordSelectionCheckboxProps: DataTableProps<Item>['getRecordSelectionCheckboxProps'];
+		selectionColumnStyle: DataTableProps<Item>['selectionColumnStyle'];
+		isRecordSelectable: DataTableProps<Item>['isRecordSelectable'];
 		// Sort
 		sortedIcon: IconProps;
 		unsortedIcon: IconProps;
@@ -21,10 +23,11 @@ export type Props = BaseReactProps & {
 	columnsDefinition?: Column[];
 	items?: Item[];
 	onRowClick: 'disabled' | 'signal' | 'function' | 'singleSelection' | 'expansion';
-	onRowClickFunc?: any;
-	isParentTable?: boolean;
-	renderDelay?: number;
+	clickFilterFunc?: any;
 	textSelectionDisabled?: boolean;
+
+	// Scope
+	scopeDbClass?: string;
 
 	// States
 	//	fetching?: boolean;
@@ -59,9 +62,8 @@ export type Props = BaseReactProps & {
 	mutliSelectionRowBgColor?: MantineColor;
 
 	// Single selection
-	singleSelection?: boolean;
-	unselectable?: boolean;
 	selectedItem?: Item;
+	singleSelectionFilterFunc: any;
 
 	// Multi selection
 	multiSelection?: boolean;
@@ -73,6 +75,7 @@ export type Props = BaseReactProps & {
 	expansionTemplate: string;
 	allowMultiple?: boolean;
 	expandedItems?: Item[];
+	expansionFilterFunc?: any;
 
 	// Sort
 	sort: boolean;

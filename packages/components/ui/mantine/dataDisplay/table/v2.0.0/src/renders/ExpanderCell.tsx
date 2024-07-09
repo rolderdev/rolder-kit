@@ -2,7 +2,7 @@
 Шеврон - иконка, если onRowClick = expansion, actionIcon, если onRowClick !== expansion. */
 
 import { memo } from 'react';
-import { ActionIcon, Box } from '@mantine/core';
+import { ActionIcon, Box, Group } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
 import clsx from 'clsx';
 
@@ -24,27 +24,40 @@ export default memo((p: { cell: React.ReactNode; itemId: string }) => {
 	// Вытягиваем реактивное состояние развернутости для анимации шеврона.
 	const expanded = store.expandedIds.use((expandedIds) => expandedIds.includes(p.itemId));
 
+	// Определим, исключена ли строка из развертывния разработчиком.
+	const filterFunc = store.tableProps.expansion.filterFunc?.get();
+	const item = store.items.get((items) => items.find((i) => i.id === p.itemId));
+	const disabled = item && filterFunc ? !filterFunc(item) : false;
+
 	if (onRowClick === 'expansion')
 		return (
-			<Box style={{ display: 'flex', flexDirection: 'row' }}>
-				<IconChevronRight
-					className={clsx(classes.icon, classes.expandIcon, {
-						[classes.expandIconRotated]: expanded,
-					})}
-				/>
+			<Group wrap="nowrap" gap={6}>
+				<Box mt={1} ml={1} my={-1} mr={-1}>
+					<IconChevronRight
+						color={disabled ? '#adb5bd' : '#2e2e2e'}
+						className={clsx(classes.icon, classes.expandIcon, {
+							[classes.expandIconRotated]: expanded,
+						})}
+					/>
+				</Box>
 				{p.cell}
-			</Box>
+			</Group>
 		);
 	else
 		return (
-			<Box style={{ display: 'flex', flexDirection: 'row' }}>
+			<Group wrap="nowrap" gap={6}>
 				<ActionIcon
 					variant="subtle"
 					color="dark"
 					my={-3.5}
 					ml={-5.5}
 					mr={3.5}
-					onClick={() => store.expandedIds.set(getExpandedIds())}
+					onClick={(e) => {
+						e.stopPropagation();
+						store.expandedIds.set(getExpandedIds());
+					}}
+					disabled={disabled}
+					style={{ background: disabled ? 'transparent' : undefined }}
 				>
 					<IconChevronRight
 						className={clsx(classes.actionIcon, classes.expandIcon, {
@@ -53,6 +66,6 @@ export default memo((p: { cell: React.ReactNode; itemId: string }) => {
 					/>
 				</ActionIcon>
 				{p.cell}
-			</Box>
+			</Group>
 		);
 });

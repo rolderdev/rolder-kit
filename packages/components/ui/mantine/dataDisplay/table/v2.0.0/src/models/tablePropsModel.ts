@@ -10,6 +10,18 @@ import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs';
 const tablePropsSchema = z.object({
 	// Base
 	onRowClick: z.enum(['disabled', 'signal', 'singleSelection', 'expansion']),
+	clickFilterFunc: z
+		.function()
+		.args(z.object({ id: z.string() }).passthrough())
+		.returns(z.boolean())
+		.optional(),
+	singleSelectionFilterFunc: z
+		.function()
+		.args(z.object({ id: z.string() }).passthrough())
+		.returns(z.boolean())
+		.optional(),
+	// Scope
+	scope: z.object({ dbClass: z.string() }).optional(),
 	// Row styles
 	rowStyles: z
 		.object({
@@ -18,18 +30,8 @@ const tablePropsSchema = z.object({
 			mutliSelectionRowBgColor: z.string().default('white'),
 		})
 		.default({}),
-	// Selection
-	selection: z
-		.object({
-			single: z
-				.object({
-					enabled: z.boolean().default(false),
-					unselectable: z.boolean().default(false),
-				})
-				.default({}),
-			multi: z.boolean().default(false),
-		})
-		.default({}),
+	// Multi selection
+	multiSelection: z.boolean().default(false),
 	// Expansion
 	expansion: z.object({
 		enabled: z.boolean().default(false),
@@ -42,6 +44,11 @@ const tablePropsSchema = z.object({
 				animateOpacity: z.boolean().default(true),
 			})
 			.default({}), // Дефолтные значения подставтся из типов выше.
+		filterFunc: z
+			.function()
+			.args(z.object({ id: z.string() }).passthrough())
+			.returns(z.boolean())
+			.optional(),
 	}),
 	// Sort
 	sort: z.object({
@@ -56,15 +63,21 @@ export type TableProps = z.infer<typeof tablePropsSchema>;
 export const getTableProps = (p: Props) =>
 	tablePropsSchema.parse({
 		...p,
+		scope: p.scopeDbClass ? { dbClass: p.scopeDbClass } : undefined,
 		rowStyles: { ...p }, // ...p - Zod сам проставит совпадающие значения.
-		expansion: { ...p, enabled: p.expansion, template: p.expansionTemplate, collapseProps: p.customProps?.collapse },
-		selection: { single: { enabled: p.singleSelection, unselectable: p.unselectable }, multi: p.multiSelection },
+		expansion: {
+			...p,
+			enabled: p.expansion,
+			template: p.expansionTemplate,
+			collapseProps: p.customProps?.collapse,
+			filterFunc: p.expansionFilterFunc,
+		},
+		multiSelection: p.multiSelection,
 		sort: { enabled: p.sort, type: p.sortType },
 	} as TableProps);
 
 // Метод обновляет состояние настроек.
 export const setTableProps = (store: Store, p: Props) => {
 	const newProps = getTableProps(p);
-	if (!isEqual(stringifyObjectFuncs(store.tableProps.get()), stringifyObjectFuncs(newProps)))
-		store.tableProps.assign(getTableProps(p));
+	if (!isEqual(stringifyObjectFuncs(store.tableProps.get()), stringifyObjectFuncs(newProps))) store.tableProps.assign(newProps);
 };
