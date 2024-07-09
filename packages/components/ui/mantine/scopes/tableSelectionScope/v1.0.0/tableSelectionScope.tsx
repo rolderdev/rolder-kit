@@ -11,11 +11,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     const [tableHandlerAtomValue] = useAtom(tableHandlerAtom)
 
     useEffect(() => {
-        // if (tableSelectionScopeValue['forRenderTableId']['parentTableId'] !== undefined) {
-        //     console.log('PARENT ID IN tableSelectionScope', tableSelectionScopeValue['forRenderTableId']['parentTableId'])
-        //     tableHandlerAtomValue[tableSelectionScopeValue['forRenderTableId']['parentTableId']]()
-        // }
-        // sendOutput(props.noodlNode, 'selectionScope', tableSelectionScopeValue['tableSelectionScope'])
         sendOutput(props.noodlNode, 'selectionByTableId', tableSelectionScopeValue['selectionByTableId'])
         sendOutput(props.noodlNode, 'selectionScope', tableSelectionScopeValue)
         sendSignal(props.noodlNode, 'changed')
@@ -27,8 +22,6 @@ const HandlerTableSelectionScope = forwardRef(function (props: Props, ref) {
     // При внешнем триггере reset очищаем молекулу
     useImperativeHandle(ref, () => ({
         reset() {
-            // console.log("REF CHILD TRIGGERED")
-
             setTableSelectionScopeValue({
                 tableSelectionScope: {},
                 parentTableIdByTableId: {},
@@ -56,7 +49,6 @@ export default forwardRef(function (props: Props, ref) {
     const localRef = useRef<any>(null)
     useImperativeHandle(ref, () => ({
         reset() {
-            // console.log("REF PARENT TRIGGERED")
             localRef.current?.reset()
         },
     }), [])

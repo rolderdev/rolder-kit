@@ -95,4 +95,6 @@ export {
 	IconArrowNarrowDown, // Vezdexod
 	IconArchiveOff, // Vezdexod
 	IconLockOpen, // Vezdexod
+	IconLinkPlus, // Vezdexod 11.06
+	IconCopyPlus, // Vezdexod 11.06
 } from '@tabler/icons-react';

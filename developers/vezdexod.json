@@ -88,7 +88,7 @@
       ]
     },
     "tex": {
-      "projectDir": "testRKTableSelection",
+      "projectDir": "tex-desktop",
       "rolderKit": [
         "app",
         "mantine",
