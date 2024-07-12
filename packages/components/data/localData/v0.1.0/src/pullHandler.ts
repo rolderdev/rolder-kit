@@ -38,15 +38,15 @@ export default async function pullHandler(
 				i.filters.and.push({
 					or: [
 						{ range: { '_kuzzle_info.updatedAt': { gt: checkpoint.updatedAt } } },
-						{ range: { '_kuzzle_info.createdAt': { gt: checkpoint.updatedAt } } }
-					]
+						{ range: { '_kuzzle_info.createdAt': { gt: checkpoint.updatedAt } } },
+					],
 				});
 			} else {
 				i.filters = {
 					or: [
 						{ range: { '_kuzzle_info.updatedAt': { gt: checkpoint.updatedAt } } },
-						{ range: { '_kuzzle_info.createdAt': { gt: checkpoint.updatedAt } } }
-					]
+						{ range: { '_kuzzle_info.createdAt': { gt: checkpoint.updatedAt } } },
+					],
 				};
 			}
 		}
@@ -59,7 +59,7 @@ export default async function pullHandler(
 
 	const newCheckpoint = {
 		id: items.length === 0 ? checkpoint?.id : last(items).id,
-		updatedAt: items.length === 0 ? checkpoint?.updatedAt : last(items)?.sysinfo.updatedAt || last(items)?.sysinfo.createdAt
+		updatedAt: items.length === 0 ? checkpoint?.updatedAt : last(items)?.sysinfo?.updatedAt || last(items)?.sysinfo?.createdAt,
 	};
 
 	await R.db?.states.replication.set(dbClass, () => true);
@@ -69,6 +69,6 @@ export default async function pullHandler(
 
 	return {
 		documents: items,
-		checkpoint: newCheckpoint
+		checkpoint: newCheckpoint,
 	};
 }

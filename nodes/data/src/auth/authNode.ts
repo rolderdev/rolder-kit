@@ -20,32 +20,32 @@ export default reactNode(
 						required: 'both',
 						validate(p) {
 							return ms(p.sessionTimeout as string) >= 360000 ? true : 'Session timeout must 1 hour or greater';
-						}
-					}
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
 					name: 'username',
 					displayName: 'Username',
 					group: 'Params',
-					type: getType('string', 'connection')
+					type: getType('string', 'connection'),
 				}),
 				getPort({
 					plug: 'input',
 					name: 'password',
 					displayName: 'Password',
 					group: 'Params',
-					type: getType('string', 'connection')
+					type: getType('string', 'connection'),
 				}),
-				getPort({ plug: 'input', name: 'signIn', displayName: 'Sign in', group: 'Signals', type: 'signal' })
+				getPort({ plug: 'input', name: 'signIn', displayName: 'Sign in', group: 'Signals', type: 'signal' }),
 			],
 			outputs: [
 				getPort({ plug: 'output', name: 'userRole', displayName: 'User role', group: 'Params', type: 'string' }),
 				getPort({ plug: 'output', name: 'signedIn', displayName: 'Signed in', group: 'Signals', type: 'signal' }),
 				getPort({ plug: 'output', name: 'signedOut', displayName: 'Signed out', group: 'Signals', type: 'signal' }),
 				getPort({ plug: 'output', name: 'signInFailed', displayName: 'Sign in failed', group: 'Signals', type: 'signal' }),
-				getPort({ plug: 'output', name: 'error', displayName: 'Error', group: 'Params', type: 'string' })
-			]
+				getPort({ plug: 'output', name: 'error', displayName: 'Error', group: 'Params', type: 'string' }),
+			],
 		},
 		'v2.0.0': {
 			hashTag: '#expreimental',
@@ -62,34 +62,32 @@ export default reactNode(
 						required: 'both',
 						validate(p) {
 							return ms(p.sessionTimeout as string) >= 360000 ? true : 'Session timeout must 1 hour or greater';
-						}
-					}
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
 					name: 'username',
 					displayName: 'Username',
 					group: 'Params',
-					type: getType('string', 'connection')
+					type: getType('string', 'connection'),
 				}),
 				getPort({
 					plug: 'input',
 					name: 'password',
 					displayName: 'Password',
 					group: 'Params',
-					type: getType('string', 'connection')
+					type: getType('string', 'connection'),
 				}),
-				getPort({ plug: 'input', name: 'signIn', displayName: 'Sign in', group: 'Signals', type: 'signal' })
+				getPort({ plug: 'input', name: 'signIn', displayName: 'Sign in', group: 'Signals', type: 'signal' }),
 			],
 			outputs: [
 				getPort({ plug: 'output', name: 'userRole', displayName: 'User role', group: 'Params', type: 'string' }),
-				getPort({ plug: 'output', name: 'signedIn', displayName: 'Signed in', group: 'Signals', type: 'signal' }),
 				getPort({ plug: 'output', name: 'signingIn', displayName: 'Signing in', group: 'States', type: 'boolean' }),
+				getPort({ plug: 'output', name: 'signedIn', displayName: 'Signed in', group: 'Signals', type: 'signal' }),
 				getPort({ plug: 'output', name: 'signedOut', displayName: 'Signed out', group: 'Signals', type: 'signal' }),
-				getPort({ plug: 'output', name: 'signInFailed', displayName: 'Sign in failed', group: 'Signals', type: 'signal' }),
-				getPort({ plug: 'output', name: 'error', displayName: 'Error', group: 'Params', type: 'string' })
-			]
-		}
+			],
+		},
 	},
 	{ allowChildren: true }
 );

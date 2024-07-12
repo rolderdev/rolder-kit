@@ -1,4 +1,5 @@
 import map from 'just-map-object';
+import type { RxCollection } from 'rxdb';
 import type { Props } from '../types';
 
 export default async function (collectionsDefinition: Props['collectionsDefinition']) {
@@ -15,7 +16,14 @@ export default async function (collectionsDefinition: Props['collectionsDefiniti
 		rxDefinitions[name] = def.rxDefinition;
 	});
 
-	const collections = await db.addCollections(rxDefinitions);
+	// Нужно взять существующие коллекции на случай, когда они уже есть, например при сбросе авторизации без перезагрузки приложения.
+	const existsCollections: { [x: string]: RxCollection<any, {}, {}, {}, any> } = {};
+	Object.keys(rxDefinitions).map((i) => (existsCollections[i] = db.collections[i]));
+
+	const collections = Object.values(existsCollections).some((i) => i)
+		? existsCollections
+		: await db.addCollections(rxDefinitions);
+
 	map(collections, (_, collection) => {
 		// kuzzle will overwrite it to be one point of proof
 		collection.preSave(function (plainData) {

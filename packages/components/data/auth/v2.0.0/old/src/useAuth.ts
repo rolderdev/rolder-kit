@@ -92,7 +92,7 @@ export default function (noodlNode: NoodlNode, sessionTimeout: string) {
 		Noodl.Events.on('signOut', () => R.db?.states.auth.set('signedIn', () => false));
 	}, []);
 
-	const refreshTokenInterval = useInterval(async () => vaildateRefreshToken(sessionTimeout), ms('10m'));
+	const refreshTokenInterval = useInterval(() => vaildateRefreshToken(sessionTimeout), ms('10m'));
 
 	return { signedIn };
 }

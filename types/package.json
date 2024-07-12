@@ -6,6 +6,6 @@
 		"kuzzle-sdk": "^7.11.3",
 		"@tanstack/react-query": "4.36.1",
 		"dayjs": "^1.11.11",
-		"rxdb": "^15.24.0"
+		"rxdb": "^15.28.0"
 	}
 }

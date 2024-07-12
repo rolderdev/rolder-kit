@@ -8,7 +8,7 @@
 		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.2.0@*",
 		"@packages/system-loader-animation": "workspace:@packages/system-loader-animation-v0.1.0@*",
 		"@mantine/hooks": "^7.11.1",
-		"@hyperdx/browser": "^0.21.0"
+		"@davstack/store": "^1.4.6"
 	},
 	"devDependencies": {
 		"@types/ms": "^0.7.34"
