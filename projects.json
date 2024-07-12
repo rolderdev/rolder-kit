@@ -75,6 +75,14 @@
         "gantt"
       ]
     },
+    "code-editor": {
+      "projectDir": "code-editor",
+      "rolderKit": [
+        "app",
+        "mantine",
+        "code-editor"
+      ]
+    },
     "rasko-desktop": {
       "projectDir": "rasko-desktop",
       "rolderKit": [
@@ -92,10 +100,10 @@
       "rolderKit": [
         "app",
         "mantine",
-        "mantine-old",
         "data",
         "pdf",
-        "xlsx"
+        "xlsx",
+        "code-editor"
       ]
     },
     "playground": {
