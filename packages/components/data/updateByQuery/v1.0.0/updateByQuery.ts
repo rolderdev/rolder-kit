@@ -95,7 +95,7 @@ export default {
       log.end(`update`, startTime)
 
     } catch (error: any) {
-      R.libs.mantine?.MantineError?.('Системная ошибка!', `update error: ${error.message}`)
+      R.libs.mantine?.MantineError?.('Системная ошибка!', `updateByQuery error: ${error.message}`)
       log.error('update error', error)
     }
   }
