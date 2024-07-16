@@ -56,9 +56,8 @@ export default {
             ...flowData.params
           }))
           if (flowData.data) formData.append('data', JSON.stringify(flowData.data))
-          if (flowData.files) flowData.files.map(i => formData.append(i.name, i))
+          if (flowData.files) flowData.files.map(i => formData.append(encodeURIComponent(i.name), i))
         }
-
 
         const jsonResp = await ky.post(nodeRedUrl, {
           headers: {
