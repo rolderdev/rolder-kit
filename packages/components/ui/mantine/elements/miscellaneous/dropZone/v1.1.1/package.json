@@ -1,0 +1,14 @@
+{
+  "name": "@packages/drop-zone-v1.1.1",
+  "main": "dropZone.tsx",
+  "types": "dropZone.tsx",
+  "dependencies": {
+    "@mantine/core": "6.0.21",
+    "@mantine/dropzone": "6.0.21",
+    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*"
+  },
+  "devDependencies": {
+    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "types": "workspace:*"
+  }
+}
