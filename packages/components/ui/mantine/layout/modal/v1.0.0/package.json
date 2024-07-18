@@ -1,14 +1,14 @@
 {
-  "name": "@packages/modal-v1.0.0",
-  "main": "modal.tsx",
-  "types": "modal.tsx",
-  "dependencies": {
-    "@mantine/core": "6.0.21",
-    "@mantine/hooks": "6.0.21",
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*"
-  },
-  "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "types": "workspace:*"
-  }
+	"name": "@packages/modal-v1.0.0",
+	"main": "modal.tsx",
+	"types": "modal.tsx",
+	"dependencies": {
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22",
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"types": "workspace:*"
+	}
 }

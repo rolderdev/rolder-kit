@@ -27,6 +27,7 @@ const tableScopeStore = store({
 		return store.tablesSelectedItems[tableId].get((s) => s?.filter((i) => i.dbClass === dbClass) || []);
 	},
 	useSelectedItems: (tableId: string, dbClass: string) => {
+		// Эта хука выдает ошибку при включении/выключении Scope в таблице. Не смог разобраться почему, даже trycatch не ловит ее.
 		return store.tablesSelectedItems[tableId].use((s) => s?.filter((i) => i.dbClass === dbClass) || []);
 	},
 	//// Установщики состояния.

@@ -8,9 +8,9 @@ module.exports = function (nodeName, context, outputBuildPath, developer, projec
 	var outputPath = outputBuildPath;
 	if (developer && project) {
 		const projectsJson = require(`./developers/${developer}.json`);
-		const projectConf = projectsJson.projects[project];
-		if (projectConf?.projectDir && projectConf?.rolderKit?.includes(nodeName))
-			outputPath = path.resolve(__dirname, `${projectsJson.projectsDir}/${projectConf.projectDir}/noodl_modules/${nodeName}`);
+		const projectConf = projectsJson[project];
+		if (projectConf?.rolderKit?.includes(nodeName))
+			outputPath = path.resolve(__dirname, `${projectConf.projectDir}/noodl_modules/${nodeName}`);
 	}
 
 	return {
@@ -22,8 +22,9 @@ module.exports = function (nodeName, context, outputBuildPath, developer, projec
 		},
 		output: {
 			path: outputPath,
-			filename: '[name].js',
-			chunkFilename: '[contenthash].js',
+			filename: '[name]-[contenthash].js',
+			chunkFilename: '[name]-[contenthash].js',
+			cssFilename: '[name].css',
 			clean: true,
 		},
 		externals: {

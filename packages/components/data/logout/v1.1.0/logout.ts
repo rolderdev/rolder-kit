@@ -7,7 +7,7 @@ export default {
 			return;
 		}
 
-		K.auth.logout().then(() => window.location.replace(window.location.origin));
+		await R.db?.states.auth?.set('signedIn', () => false);
 		return;
 	},
 };

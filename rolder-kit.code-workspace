@@ -6,13 +6,7 @@
 		}
 	],
 	"extensions": {
-		"recommendations": [
-			"EditorConfig.EditorConfig",
-			"esbenp.prettier-vscode",
-			"vunguyentuan.vscode-postcss",
-			"vunguyentuan.vscode-css-variables",
-			"clinyong.vscode-css-modules"
-		]
+		"recommendations": ["EditorConfig.EditorConfig", "esbenp.prettier-vscode"]
 	},
 	"settings": {
 		"files.eol": "\r\n",

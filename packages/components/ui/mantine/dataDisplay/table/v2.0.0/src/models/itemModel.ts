@@ -5,7 +5,6 @@ import type { Item } from 'types';
 import type { Store } from '../store';
 import isArrayEqual from '../funcs/isArrayEqual';
 import type { Props } from '../../types';
-import { setSelectedItems } from './multiSelectionModel';
 
 // В item нам важен только id. По сути, эта схема предъявит разработчику требование - item может быть люой структуры, но id обязателен.
 const itemsSchema = z.array(z.object({ id: z.string() }).passthrough());
@@ -30,6 +29,6 @@ export const setItems = (store: Store, items?: Item[]) => {
 		// Если это корень, инициализируем иерархию дочерних таблиц. В том числе повторно.
 		if (!store.isChild.get()) store.scope.get()?.setHierarchy(store.tableId.get(), newItems);
 		// Обновим выбранные строки, если изменение items на это повлияло.
-		setSelectedItems(store, store.selectedItems.get());
+		store.setSelectedItems(store.selectedItems.get());
 	}
 };

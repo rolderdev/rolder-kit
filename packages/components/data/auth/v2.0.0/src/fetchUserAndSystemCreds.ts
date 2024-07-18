@@ -1,5 +1,4 @@
 import { getKuzzle } from '@packages/get-kuzzle';
-import setParams from './setParams';
 
 export default async function () {
 	const { dbName } = R.env;
@@ -34,8 +33,6 @@ export default async function () {
 		await R.db?.states.auth.set('creds', () => r.result.creds);
 		await R.db?.states.auth.set('user', () => r.result.user);
 		await R.db?.states.auth.set('dbClasses', () => r.result.dbClasses);
-
-		await setParams();
 	} catch (error) {
 		console.error('fetchUserAndSystemCreds error', error);
 	}

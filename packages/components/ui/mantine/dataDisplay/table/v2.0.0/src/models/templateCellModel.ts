@@ -9,22 +9,24 @@ export const setTemplateCells = async (store: Store) => {
 	const templateColumns = store.columns.get().filter((i) => i.type && i.template);
 	if (templateColumns.length) {
 		// Нужно добыть новые ячейки разом, чтобы записать в хранилище один раз.
-		const newTemplateCells: Record<number, Record<string, React.ReactNode>> = {};
 		await Promise.all(
 			templateColumns.map((column) =>
 				Promise.all(
 					store.items.get().map(async (item) => {
 						if (!store.templateCells.get()[column.idx]?.[item.id]) {
-							set(newTemplateCells, `${column.idx}.${item.id}`, await getTemplateCell(store, item.id, column.idx));
+							// Запишем новое состояние для каждого item. Это не порождает рендеры.
+							const reactNode = await getTemplateCell(store, item.id, column.idx);
+							store.set((s) => {
+								set(s.templateCells, `${column.idx}.${item.id}`, reactNode);
+							});
 						}
 					})
 				)
 			)
 		);
 
-		store.templateCells.assign(newTemplateCells); // assign тригернет только изменения.
 		// Установим готовность для первого рендера.
-		if (!store.templateCellsReady.get() && templateColumns.length === Object.keys(newTemplateCells).length)
+		if (!store.templateCellsReady.get() && templateColumns.length === Object.keys(store.templateCells.get()).length)
 			store.templateCellsReady.set(true);
 	}
 };

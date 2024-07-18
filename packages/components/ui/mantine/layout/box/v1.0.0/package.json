@@ -1,13 +1,13 @@
 {
-  "name": "@packages/box-v1.0.0",
-  "main": "box.tsx",
-  "types": "box.tsx",
-  "dependencies": {
-        "@mantine/core": "6.0.21",
-    "@mantine/hooks": "6.0.21"
-  },
-  "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "types": "workspace:*"
-  }
+	"name": "@packages/box-v1.0.0",
+	"main": "box.tsx",
+	"types": "box.tsx",
+	"dependencies": {
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"types": "workspace:*"
+	}
 }

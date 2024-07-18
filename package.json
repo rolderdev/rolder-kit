@@ -1,22 +1,22 @@
 {
-  "name": "rolder-kit",
-  "version": "v1.0.0-rc0",
-  "private": true,
-  "devDependencies": {
-    "typescript": "^5.5.3",
-    "@rspack/core": "^0.7.5",
-    "@rspack/cli": "^0.7.5",
-    "rspack-manifest-plugin": "^5.0.0",
-    "postcss": "^8.4.39",
-    "postcss-loader": "^8.1.1",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "types": "workspace:*",
-    "@hyperdx/cli": "^0.1.0"
-  },
-  "scripts": {
-    "sentry:sourcemaps:startum": "sentry-cli sourcemaps inject --org startum --project smartclean ./build && sentry-cli --url https://glitchtip.cf.rolder.app/ sourcemaps upload --org startum --project smartclean --release v0.23.2 ./build"
-  }
+	"name": "rolder-kit",
+	"version": "v1.0.0-rc0",
+	"private": true,
+	"devDependencies": {
+		"typescript": "^5.5.3",
+		"@rspack/core": "^0.7.5",
+		"@rspack/cli": "^0.7.5",
+		"rspack-manifest-plugin": "^5.0.0",
+		"postcss": "^8.4.39",
+		"postcss-loader": "^8.1.1",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"types": "workspace:*",
+		"@hyperdx/cli": "^0.1.0"
+	},
+	"scripts": {
+		"sentry:sourcemaps:startum": "sentry-cli sourcemaps inject --org startum --project smartclean ./build && sentry-cli --url https://glitchtip.cf.rolder.app/ sourcemaps upload --org startum --project smartclean --release v0.23.2 ./build"
+	}
 }

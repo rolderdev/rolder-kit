@@ -3,6 +3,8 @@
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { nanoid } from 'nanoid';
 import { getCompProps } from '@packages/get-comp-props';
+import { sendOutput } from '@packages/port-send';
+import { useTableScopeStore } from '@packages/table-scope-v0.1.0/src/store';
 import type { Props } from './types';
 import { Provider, type Store } from './src/store';
 import { getLibProps } from './src/models/libPropsModel';
@@ -14,8 +16,7 @@ import TableController from './src/TableController';
 // Стили загружаем здесь, чтобы разные TableInstance использовали уже загржунный css.
 import '@mantine/core/styles/Table.css';
 import 'mantine-datatable/styles.css';
-import { useTableScopeStore } from '@packages/table-scope-v0.1.0/src/store';
-import { sendOutput } from '@packages/port-send';
+import { sendSelectedItems } from './src/models/multiSelectionModel';
 
 export default forwardRef((props: Props, ref) => {
 	// Даем разработчику извращаться, если он смелый.
@@ -38,7 +39,13 @@ export default forwardRef((props: Props, ref) => {
 			resetSelectedItems() {
 				const store = tableControllerRef.current?.store;
 				// Сбрасываем только если уже не сброшено.
-				if (store?.selectedItems.get().length) store.selectedItems.set([]);
+				if (store?.selectedItems.get().length) {
+					store.setSelectedItems(selectedItems);
+					// Установим состояние выбора для всей иерархии, если есть TableScope.
+					// Здесь мы устанавливаем TableScope, а useSelectedItems в TableController использует TableScope.
+					const scopeDbClass = store.tableProps.scope?.get((s) => s?.dbClass);
+					if (scopeDbClass) store.scope.get()?.setMultiSelection(store.tableId.get(), scopeDbClass, selectedItems);
+				}
 			},
 		}),
 		[]
@@ -78,6 +85,12 @@ export default forwardRef((props: Props, ref) => {
 				if (level) sendOutput(props.noodlNode, 'level', level);
 			}
 		}
+
+		// Отправим в порт поданные разработчиком выбранные items при первом проходе.
+		if (p.selectedItems?.length) {
+			const store = tableControllerRef.current?.store;
+			if (store) sendSelectedItems(store, p.selectedItems);
+		}
 	}, []);
 
 	//console.log('TableProvider run'); // Считаем запуски пока разрабатываем
@@ -97,7 +110,7 @@ export default forwardRef((props: Props, ref) => {
 				selectedItem: p.selectedItem || null,
 				selectedItemFirstRun: p.selectedItem ? true : false,
 				selectedItems,
-				selectedItemsFirstRun: selectedItems ? true : false, // Фиксируем, что есть изначально выбранные items.
+				selectedItemsFirstRun: selectedItems.length ? true : false, // Фиксируем, что есть изначально выбранные items.
 				expandedIds: p.expandedItems?.map((i) => i.id) || [],
 			}}
 		>

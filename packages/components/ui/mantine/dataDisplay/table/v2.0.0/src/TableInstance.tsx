@@ -6,7 +6,6 @@ import type { Item } from 'types';
 import { useStore } from './store';
 import ExpansionRow from './renders/ExpansionRow';
 import getRowBgColor from './funcs/getRowBgColor';
-import { setSelectedItems } from './models/multiSelectionModel';
 import onRowClickHandler from './funcs/onRowClickHandler';
 
 import rowClasses from './styles/row.module.css';
@@ -65,7 +64,7 @@ export default memo((p: { fetching: boolean }) => {
 			// Это место заставило передавать весь item в таблицу, чтобы можно было использовать функции встроенную в библиотеку.
 			selectedRecords={multiSelection ? selectedItems : undefined}
 			onSelectedRecordsChange={(selectedItems) => {
-				setSelectedItems(store, selectedItems);
+				store.setSelectedItems(selectedItems);
 				// Установим состояние выбора для всей иерархии, если есть TableScope.
 				// Здесь мы устанавливаем TableScope, а useSelectedItems в TableController использует TableScope.
 				const scopeDbClass = store.tableProps.scope?.get((s) => s?.dbClass);

@@ -10,7 +10,6 @@ const columnSchema = z.object({
 	idx: z.number(),
 	type: z.enum(['accessor', 'getValue', 'template']),
 	accessor: z.string(),
-	accessors: z.array(z.string()).optional(),
 	getValue: z
 		.function()
 		// Важно не проверять иерархию, т.к. проверка ломает ее, поэтому z.any()

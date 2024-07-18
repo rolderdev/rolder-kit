@@ -1,15 +1,15 @@
 {
-  "name": "@packages/image-v1.0.0",
-  "main": "image.tsx",
-  "types": "image.tsx",
-  "dependencies": {
-        "@mantine/core": "6.0.21",
-    "@mantine/hooks": "6.0.21",
-    "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
-    "@packages/scope": "workspace:@packages/scope-v0.1.0@*"
-  },
-  "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "types": "workspace:*"
-  }
+	"name": "@packages/image-v1.0.0",
+	"main": "image.tsx",
+	"types": "image.tsx",
+	"dependencies": {
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22",
+		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
+		"@packages/scope": "workspace:@packages/scope-v0.1.0@*"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"types": "workspace:*"
+	}
 }

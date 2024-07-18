@@ -1,20 +1,19 @@
 {
-  "name": "@packages/mantine-v1.0.0",
-  "main": "mantine.tsx",
-  "types": "mantine.tsx",
-  "type": "module",
-  "dependencies": {
-    "@packages/convertColor": "workspace:@packages/convert-color-v0.3.0@*",
-        "@mantine/core": "6.0.21",
-    "@mantine/hooks": "6.0.21",
-    "@mantine/dates": "6.0.21",
-    "@mantine/notifications": "6.0.21",
-    "dayjs": "1.11.11"
-  },
-  "devDependencies": {
-    "types": "workspace:*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    
-    "typescript": "5.3.3"
-  }
+	"name": "@packages/mantine-v1.0.0",
+	"main": "mantine.tsx",
+	"types": "mantine.tsx",
+	"type": "module",
+	"dependencies": {
+		"@packages/convertColor": "workspace:@packages/convert-color-v0.3.0@*",
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22",
+		"@mantine/dates": "6.0.22",
+		"@mantine/notifications": "6.0.22",
+		"dayjs": "1.11.11"
+	},
+	"devDependencies": {
+		"types": "workspace:*",
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"typescript": "5.3.3"
+	}
 }

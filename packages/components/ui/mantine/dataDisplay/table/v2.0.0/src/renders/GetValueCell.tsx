@@ -1,29 +1,19 @@
-import { memo, useMemo } from 'react';
-import get from 'just-safe-get';
+import { memo } from 'react';
 import { useStore } from '../store';
 
 export default memo((p: { itemId: string; columnIdx: number }) => {
 	const store = useStore();
 	if (!store) return;
 
-	// Рекативность на изменение функции getValue и accessors
+	// Подпишемся на изменение самой функции.
 	const getValue = store.columns.use((columns) => columns[p.columnIdx].getValue);
-	const accessors = store.columns.use((columns) => columns[p.columnIdx].accessors);
 
-	// Рекативность на изменение данных в item по путям из accessors.
-	const value = useMemo(() => {
-		const items = store.items.get();
-		const item = items.find((item) => item.id === p.itemId);
+	// Здесь важно делать вычисления внутри use, тогда рендеринг будет точечный.
+	const value = store.items.use((i) => {
+		const item = i.find((i) => i.id === p.itemId);
 		const hierarchyNode = store.get((s) => s.scope?.get()?.hierarchy?.find((i) => i.data.id === p.itemId));
-
-		return getValue?.(item || {}, items, hierarchyNode);
-	}, [
-		// Здесь важно в dependencies передавать массив значений, найденных в соотвествующем item.
-		...(accessors?.map((accessor) =>
-			store.items.use((items) => get(items.find((item) => item.id === p.itemId) || {}, accessor))
-		) || []),
-		getValue, // Чтобы реагировать на изменение самой функции.
-	]);
+		return getValue?.(item || {}, store.items.get(), hierarchyNode);
+	});
 
 	//console.log('GetValueCell render', value); // Считаем рендеры пока разрабатываем
 	return value;

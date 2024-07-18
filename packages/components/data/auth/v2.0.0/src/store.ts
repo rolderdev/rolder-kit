@@ -1,88 +1,84 @@
 import { store } from '@davstack/store';
-import ms from 'ms';
-import { sendOutput, sendSignal } from '@packages/port-send';
 import type { NoodlNode } from '@packages/node';
-import vaildateRefreshToken from './vaildateRefreshToken';
-import handleInit from './handleInit';
-import handleSignIn from './handleSignIn';
+import { sendOutput, sendSignal } from '@packages/port-send';
 import systemLoaderAnimation from '@packages/system-loader-animation';
-import fetchUserAndSystemCreds from './fetchUserAndSystemCreds';
+import { getKuzzle } from '@packages/get-kuzzle';
 
 export const authStore = store({
 	noodlNode: {} as NoodlNode,
-	signedIn: undefined as boolean | undefined,
 	isLeader: false,
+	signedIn: undefined as boolean | undefined,
 	sessionTimeout: '5d',
-	refreshTokenIntervalId: undefined as any,
-	inited: false, // Нужен, чтобы не тригерить проверку при первичном онлайн состоянии.
-})
-	.actions((store) => {
-		// Восстанавливает сессию с проверкой токена по данным с диска.
-		const init = async (noodlNode: NoodlNode, sessionTimeout: string) => {
-			// Запишем нужные параметры для удоства.
-			store.noodlNode.set(noodlNode);
-			store.sessionTimeout.set(sessionTimeout);
-			// Выделим инициализацию в отдельную функцию.
-			handleInit(store as any);
-			console.log('init action', store.get(), await R.db?.states.auth.get());
-		};
+}).actions((store) => {
+	/* Функция берет текущее состояние авторизации с диска, отправляет результат в порты и меняет состояние signedIn. */
+	const handleAuth = async () => {
+		const signedIn = R.db?.states.auth.signedIn;
 
-		const signIn = async (username?: string, password?: string) => {
-			sendOutput(store.noodlNode.get(), 'signingIn', true);
-			const signedIn = await handleSignIn(store.noodlNode.get(), store.sessionTimeout.get(), username, password);
-			if (signedIn) await fetchUserAndSystemCreds();
-			store.signedIn.set(signedIn);
-			sendOutput(store.noodlNode.get(), 'signingIn', false);
-		};
+		if (signedIn) {
+			// Добавим информацию о пользователе в логи.
+			Sentry?.setContext('user', R.user);
+			Sentry?.setUser({ id: R.user?.id, name: R.user?.user?.id });
 
-		// Запускает обновление токена и сохраняет id setInterval для последующей остановки.
-		const setRefreshTokenInterval = () => {
-			const refreshTokenIntervalId = setInterval(async () => {
-				if (R.db?.states.network.connected && authStore.isLeader.get()) {
-					const token = await vaildateRefreshToken(store as any);
-					if (!token) store.signedIn.set(false);
-				}
-			}, ms('10s'));
-			store.refreshTokenIntervalId.set(refreshTokenIntervalId);
-		};
+			HyperDX?.setGlobalAttributes({
+				userId: R.user?.id,
+				userData: JSON.stringify(R.user),
+			});
 
-		return { init, signIn, setRefreshTokenInterval };
-	})
-	.effects((store) => ({
-		// Срабатывает при смене статуса авторищованности. Записывает новый статус на диск.
-		// Запускает/останавливает обновление токена. Отправляет данные в порты.
-		signedInChanged: () =>
-			store.signedIn.onChange((signedIn) => {
-				console.log('signedInChanged', signedIn);
-				if (signedIn) {
-					// Сохраним состояние на диске.
-					R.db?.states.auth.set('signedIn', () => true);
-					// Запустим обновление, если еще не запущено с перехвата лидерства.
-					if (!store.refreshTokenIntervalId.get()) store.setRefreshTokenInterval();
-					// Уберем анимацию загрузки, если указано в параметрах приложения.
-					const { stopLoaderAnimationOn = 'authInitialized' } = Noodl.getProjectSettings();
-					if (stopLoaderAnimationOn === 'authInitialized') systemLoaderAnimation.stop();
-					// Отправим в порты сигнал и роль авторизованного пользователя.
-					sendOutput(store.noodlNode.get(), 'userRole', R.user?.user?.role?.value || null);
-					sendSignal(store.noodlNode.get(), 'signedIn');
-				} else {
-					R.db?.states.auth.set('signedIn', () => false);
-					clearInterval(store.refreshTokenIntervalId.get());
-					store.refreshTokenIntervalId.set(undefined);
-					systemLoaderAnimation.stop(); // Выключаем лоадер при любой настройке, если не авторизован
-					sendOutput(store.noodlNode.get(), 'userRole', null);
-					sendSignal(store.noodlNode.get(), 'signedOut');
-				}
-			}),
+			sendOutput(store.noodlNode.get(), 'userRole', R.user?.user?.role?.value || null);
+			sendSignal(store.noodlNode.get(), 'signedIn');
+			// Уберем анимацию загрузки, если указано в параметрах приложения.
+			const { stopLoaderAnimationOn = 'authInitialized' } = Noodl.getProjectSettings();
+			if (stopLoaderAnimationOn === 'authInitialized') systemLoaderAnimation.stop();
+			store.signedIn.set(true);
+		} else {
+			sendOutput(store.noodlNode.get(), 'userRole', null);
+			sendSignal(store.noodlNode.get(), 'signedOut');
+			systemLoaderAnimation.stop(); // Выключаем лоадер при любой настройке, если не авторизован
+			store.signedIn.set(false);
+		}
+	};
 
-		/* // Запускает обновление токена, когда текущая вкладка становится лидером.
-		leaderChanged: () =>
-			// Срабатывает когда лидерство перехвачено, но не срабатывает когда потеряно.
-			// Поэтому при авторизованности просто запускаем обновление токена.
-			store.isLeader.onChange(() => {
-				console.log('leaderChanged');
-				if (store.signedIn.get()) store.setRefreshTokenInterval();
-			}), */
-	}));
+	const signIn = async (username?: string, password?: string) => {
+		if (!username || !password) {
+			log.error('Username or password cannot by empty');
+			return false;
+		}
+
+		const K = await getKuzzle();
+		if (!K) {
+			R.libs.mantine?.MantineError?.('Ошибка авторизации!', 'Нет подключения к серверу', 5000);
+			return false;
+		}
+
+		const startTime = log.start();
+		try {
+			const token = await K.auth.login('local', { username, password }, store.sessionTimeout.get());
+			await R.db?.states.auth.set('token', () => token);
+		} catch (e: any) {
+			let errorMessage = 'Неизвестная ошибка';
+
+			switch (e.code) {
+				case 67305492:
+					errorMessage = 'Неверный логин или пароль';
+					break;
+				case 33685517:
+					errorMessage = 'Слишком много неуспешных попыток';
+					break;
+				default:
+					log.error('Sign in failed', e);
+					break;
+			}
+
+			R.libs.mantine?.MantineError?.('Ошибка авторизации!', errorMessage, 2000);
+			return false;
+		}
+
+		log.end('Sign in', startTime);
+
+		return true;
+	};
+
+	return { handleAuth, signIn };
+});
 
 export type Store = typeof authStore;

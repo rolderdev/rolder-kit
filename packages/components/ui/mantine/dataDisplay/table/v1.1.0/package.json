@@ -1,23 +1,23 @@
 {
-  "name": "@packages/table-v1.1.0",
-  "main": "table.tsx",
-  "types": "table.tsx",
-  "dependencies": {
-    "@mantine/core": "6.0.21",
-    "@mantine/hooks": "6.0.21",
-    "@mantine/utils": "6.0.21",
-    "bunshi": "2.0.2",
-    "@packages/scope": "workspace:@packages/scope-v0.1.0@*",
-    "nanostores": "0.10.0",
-    "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-    "@formkit/auto-animate": "0.8.1",
-    "fast-deep-equal": "3.1.3",
-    "@tabler/icons-react": "^3.5.0",
-    "@packages/convert-color": "workspace:@packages/convert-color-v0.3.0@*"    
-  },
-  "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "types": "workspace:*"
-  }
+	"name": "@packages/table-v1.1.0",
+	"main": "table.tsx",
+	"types": "table.tsx",
+	"dependencies": {
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22",
+		"@mantine/utils": "6.0.22",
+		"bunshi": "2.0.2",
+		"@packages/scope": "workspace:@packages/scope-v0.1.0@*",
+		"nanostores": "0.10.0",
+		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+		"@formkit/auto-animate": "0.8.1",
+		"fast-deep-equal": "3.1.3",
+		"@tabler/icons-react": "^3.5.0",
+		"@packages/convert-color": "workspace:@packages/convert-color-v0.3.0@*"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"types": "workspace:*"
+	}
 }

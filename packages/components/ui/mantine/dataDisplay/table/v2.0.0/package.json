@@ -7,7 +7,7 @@
 		"@formkit/auto-animate": "^0.8.2",
 		"nanoid": "^5.0.7",
 		"clsx": "^2.1.1",
-		"mantine-datatable": "^7.11.1",
+		"mantine-datatable": "^7.11.2",
 		"zod": "^3.23.8",
 		"@davstack/store": "^1.4.6",
 		"just-safe-get": "^4.2.0",
