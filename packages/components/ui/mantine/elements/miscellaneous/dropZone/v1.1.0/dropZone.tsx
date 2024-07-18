@@ -50,7 +50,7 @@ export default forwardRef(function (props: Props) {
                 sendSignal(props.noodlNode, 'rejected')
                 log.info('rejected files by DropZone', files)
             }}
-            maxSize={3 * 1024 ** 2}                                     // Размер файла в байтах
+            maxSize={20 * 1024 ** 2}                                     // Размер файла в байтах
             accept={handleFileType(props.acceptedType)}                 // Тип принимаемого файла
             {...props}                                                  // porops от родителя
             {...props.customProps}
