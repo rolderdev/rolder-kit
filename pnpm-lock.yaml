@@ -1449,9 +1449,6 @@ importers:
       '@packages/drop-zone-v1.1.0':
         specifier: workspace:*
         version: link:../../../../../../packages/components/ui/mantine/elements/miscellaneous/dropZone/v1.1.0
-      '@packages/drop-zone-v1.1.1':
-        specifier: workspace:*
-        version: link:../../../../../../packages/components/ui/mantine/elements/miscellaneous/dropZone/v1.1.1
       '@packages/node':
         specifier: workspace:@packages/node-v0.8.0@*
         version: link:../../../../../../packages/internal/node/v0.8.0
@@ -3288,25 +3285,6 @@ importers:
         version: link:../../../../../../../../types
 
   packages/components/ui/mantine/elements/miscellaneous/dropZone/v1.1.0:
-    dependencies:
-      '@mantine/core':
-        specifier: 6.0.21
-        version: 6.0.21(@emotion/react@11.11.4(@types/react@16.9.49)(react@18.3.1))(@mantine/hooks@6.0.21(react@18.3.1))(@types/react@16.9.49)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@mantine/dropzone':
-        specifier: 6.0.21
-        version: 6.0.21(@mantine/core@6.0.21(@emotion/react@11.11.4(@types/react@16.9.49)(react@18.3.1))(@mantine/hooks@6.0.21(react@18.3.1))(@types/react@16.9.49)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@6.0.21(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@packages/port-send':
-        specifier: workspace:@packages/port-send-v0.3.0@*
-        version: link:../../../../../../../internal/utils/portSend/v0.3.0
-    devDependencies:
-      '@packages/node':
-        specifier: workspace:@packages/node-v0.8.0@*
-        version: link:../../../../../../../internal/node/v0.8.0
-      types:
-        specifier: workspace:*
-        version: link:../../../../../../../../types
-
-  packages/components/ui/mantine/elements/miscellaneous/dropZone/v1.1.1:
     dependencies:
       '@mantine/core':
         specifier: 6.0.21
