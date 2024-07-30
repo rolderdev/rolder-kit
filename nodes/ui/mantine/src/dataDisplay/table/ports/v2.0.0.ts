@@ -6,8 +6,7 @@ export default {
 			'customProps',
 			'propsFunction',
 			// Enablers
-			/*
-    "table2Sort",
+			/*    
     "table2FilterEnabled",        
     
     // Params*/
@@ -32,37 +31,35 @@ export default {
 			plug: 'input',
 			name: 'columnsDefinition',
 			group: 'Base',
-			// Только через подключение. Реактивность MobX построена на reference, а настройки в редакторе - это текст.
-			type: getType('array', 'connection'),
+			type: 'array',
 			displayName: 'Columns',
 			default: `/*[
 	{
 		title: 'ЖК > Объект',
+		type: 'accessor',
 		accessor: 'content.name',
-		width: '100%'
 	},
 	{
-		title: 'Объектов',
-		accessor: 'housesCount',
+		title: 'Количество зон',
+		type: 'getValue',
+		getValue: (item, items, hierarchyNode) => item.content.houseCount * item.content.areaCount,
 		width: 120
-	},
-	{
-		title: 'Зон',
-		accessor: 'areasCount',
-		width: 120
-	}
+	}	
 ]*/
 `,
 			customs: {
-				validate(props) {
-					if (props.columnsDefinition) {
-						const noTypeErrorColumn = props.columnsDefinition?.find((i: any) => !i.type);
+				validate(p) {
+					if (p.columnsDefinition) {
+						const noTypeErrorColumn = p.columnsDefinition?.find((i: any) => !i.type);
 						if (noTypeErrorColumn) return `Column must have the type. </br>Column: ${JSON.stringify(noTypeErrorColumn)}`;
-						const typeErrorColumn = props.columnsDefinition?.find((i: any) => !i[i.type]);
+						const typeErrorColumn = p.columnsDefinition?.find((i: any) => !i[i.type]);
 						if (typeErrorColumn)
 							return `Column type "${typeErrorColumn.type}" must have  "${
 								typeErrorColumn.type
 							}" field. </br>Column: ${JSON.stringify(typeErrorColumn)}`;
+						const noSortAccessorErrorColumn = p.columnsDefinition?.find((i: any) => i.sort && !i.accessor);
+						if (p.sortType === 'frontend' && noSortAccessorErrorColumn)
+							return `Column must have accessor. </br>Column: ${JSON.stringify(noSortAccessorErrorColumn)}`;
 					}
 					return true;
 				},
@@ -72,7 +69,7 @@ export default {
 			plug: 'input',
 			name: 'items',
 			group: 'Base',
-			// Только через подключение. Реактивность MobX построена на reference, а настройки в редакторе - это текст.
+			// Только через подключение, иначе нельзя сделать хорошую реактивность, т.к. массив в редакторе это текст, а не js-код.
 			type: getType('array', 'connection'),
 			displayName: 'Items',
 		}),
@@ -132,7 +129,7 @@ export default {
 			plug: 'input',
 			name: 'textSelectionDisabled',
 			group: 'Base',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Disable text selection',
 			default: false,
 		}),
@@ -141,7 +138,7 @@ export default {
 			plug: 'input',
 			name: 'scope',
 			group: 'Scope',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Enabled',
 			default: false,
 		}),
@@ -163,7 +160,7 @@ export default {
 			plug: 'input',
 			name: 'layout',
 			group: 'Layout',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Enabled',
 			default: false,
 		}),
@@ -185,7 +182,7 @@ export default {
 			plug: 'input',
 			name: 'dimensions',
 			group: 'Dimensions',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Enabled',
 			default: false,
 		}),
@@ -246,7 +243,7 @@ export default {
 			plug: 'input',
 			name: 'tableStyles',
 			group: 'Table styles',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Enabled',
 			default: false,
 		}),
@@ -315,25 +312,12 @@ export default {
 				},
 			},
 		}),
-		getPort({
-			plug: 'input',
-			name: 'animation',
-			group: 'Table styles',
-			type: 'boolean',
-			displayName: 'Animation',
-			default: true,
-			customs: {
-				dependsOn(p) {
-					return p.tableStyles && !p.expansion;
-				},
-			},
-		}),
 		// Row styles
 		getPort({
 			plug: 'input',
 			name: 'rowStyles',
 			group: 'Row styles',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Enabled',
 			default: false,
 		}),
@@ -341,7 +325,7 @@ export default {
 			plug: 'input',
 			name: 'withRowBorders',
 			group: 'Row styles',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Row borders',
 			default: true,
 			customs: {
@@ -354,7 +338,7 @@ export default {
 			plug: 'input',
 			name: 'striped',
 			group: 'Row styles',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Striped',
 			default: false,
 			customs: {
@@ -393,7 +377,7 @@ export default {
 			plug: 'input',
 			name: 'highlightOnHover',
 			group: 'Row styles',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Highlight on hover',
 			default: false,
 			customs: {
@@ -444,10 +428,34 @@ export default {
 		// Single selection
 		getPort({
 			plug: 'input',
+			name: 'defaultSelectedItem',
+			group: 'Single selection',
+			displayName: 'Default selected item',
+			type: 'object',
+			customs: {
+				dependsOn(p) {
+					return p.onRowClick === 'singleSelection';
+				},
+			},
+		}),
+		getPort({
+			plug: 'input',
 			name: 'selectedItem',
 			group: 'Single selection',
 			displayName: 'Selected item',
 			type: 'object',
+			customs: {
+				dependsOn(p) {
+					return p.onRowClick === 'singleSelection';
+				},
+			},
+		}),
+		getPort({
+			plug: 'input',
+			name: 'setSelectedItem',
+			displayName: 'Set selected item',
+			group: 'Single selection',
+			type: 'signal',
 			customs: {
 				dependsOn(p) {
 					return p.onRowClick === 'singleSelection';
@@ -471,9 +479,34 @@ export default {
 			plug: 'input',
 			name: 'multiSelection',
 			group: 'Multi selection',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Enabled',
 			default: false,
+		}),
+		getPort({
+			plug: 'input',
+			name: 'multiSelectionFilterFunc',
+			group: 'Multi selection',
+			type: 'array',
+			displayName: 'Filter func',
+			customs: {
+				isObject: true,
+				dependsOn(p) {
+					return p.multiSelection ? true : false;
+				},
+			},
+		}),
+		getPort({
+			plug: 'input',
+			name: 'defaultSelectedItems',
+			displayName: 'Default selected items',
+			group: 'Multi selection',
+			type: getType('array', 'connection'),
+			customs: {
+				dependsOn(p) {
+					return p.multiSelection ? true : false;
+				},
+			},
 		}),
 		getPort({
 			plug: 'input',
@@ -481,6 +514,18 @@ export default {
 			displayName: 'Selected items',
 			group: 'Multi selection',
 			type: getType('array', 'connection'),
+			customs: {
+				dependsOn(p) {
+					return p.multiSelection ? true : false;
+				},
+			},
+		}),
+		getPort({
+			plug: 'input',
+			name: 'setSelectedItems',
+			displayName: 'Set selected items',
+			group: 'Multi selection',
+			type: 'signal',
 			customs: {
 				dependsOn(p) {
 					return p.multiSelection ? true : false;
@@ -504,7 +549,7 @@ export default {
 			plug: 'input',
 			name: 'expansion',
 			group: 'Expansion',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Enabled',
 			default: false,
 		}),
@@ -549,6 +594,43 @@ export default {
 		}),
 		getPort({
 			plug: 'input',
+			name: 'paddingLeft',
+			group: 'Expansion',
+			type: 'number',
+			displayName: 'Left padding',
+			default: 16,
+			customs: {
+				dependsOn(p) {
+					return p.expansion ? true : false;
+				},
+			},
+		}),
+		getPort({
+			plug: 'input',
+			name: 'defaultExpandedItems',
+			group: 'Expansion',
+			type: getType('array', 'connection'),
+			displayName: 'Default expanded items',
+			customs: {
+				dependsOn(p) {
+					return p.expansion ? true : false;
+				},
+			},
+		}),
+		getPort({
+			plug: 'input',
+			name: 'setExpandedItems',
+			group: 'Expansion',
+			type: 'signal',
+			displayName: 'Set expanded items',
+			customs: {
+				dependsOn(p) {
+					return p.expansion && p.allowMultiple;
+				},
+			},
+		}),
+		getPort({
+			plug: 'input',
 			name: 'expandedItems',
 			group: 'Expansion',
 			type: getType('array', 'connection'),
@@ -588,7 +670,7 @@ export default {
 			plug: 'input',
 			name: 'sort',
 			group: 'Sort',
-			type: getType('boolean', 'editor'),
+			type: 'boolean',
 			displayName: 'Enabled',
 			default: false,
 		}),
@@ -639,6 +721,18 @@ export default {
 			group: 'Sort',
 			type: 'signal',
 			displayName: 'Reset sort',
+			customs: {
+				dependsOn(p) {
+					return p.sort ? true : false;
+				},
+			},
+		}),
+		getPort({
+			plug: 'input',
+			name: 'restoreDefaultSort',
+			group: 'Sort',
+			type: 'signal',
+			displayName: 'Restore default',
 			customs: {
 				dependsOn(p) {
 					return p.sort ? true : false;

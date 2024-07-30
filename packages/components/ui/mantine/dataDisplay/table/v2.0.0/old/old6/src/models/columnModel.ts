@@ -5,7 +5,7 @@ import type { Store } from '../store';
 import isArrayEqual from '../funcs/isArrayEqual';
 
 // Схема задает типы данных и их дефолты.
-const columnSchema = z.object({
+export const columnSchema = z.object({
 	libColumn: z.object({}).passthrough(), // Здесь храним стандартные настройки библиотеки.
 	idx: z.number(),
 	type: z.enum(['accessor', 'getValue', 'template']),
@@ -19,16 +19,7 @@ const columnSchema = z.object({
 	template: z.string().optional(),
 	expander: z.boolean().default(false),
 	width: z.union([z.string(), z.number()]).optional(),
-	sort: z
-		.object({
-			default: z.enum(['asc', 'desc']).optional(),
-			func: z
-				.function()
-				.args(z.array(z.object({}).passthrough()), z.enum(['asc', 'desc']))
-				.returns(z.array(z.object({ id: z.string() }).passthrough()))
-				.optional(),
-		})
-		.optional(),
+	sort: z.union([z.boolean(), z.enum(['asc', 'desc'])]).optional(),
 });
 
 export type Column = z.infer<typeof columnSchema>;

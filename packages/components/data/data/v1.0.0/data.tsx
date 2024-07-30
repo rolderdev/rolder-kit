@@ -99,6 +99,7 @@ export default forwardRef(function (props: Props) {
 	const { project, stopLoaderAnimationOn = 'authInitialized' } = Noodl.getProjectSettings();
 
 	R.env.backendVersion = backendVersion;
+	R.env.environment = backendVersion; //обратная совместимость
 	R.env.dbName = dbName;
 	R.libs.queryClient = queryClient;
 

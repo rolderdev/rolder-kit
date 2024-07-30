@@ -8,6 +8,7 @@
 		"@packages/get-masked-v0.2.0": "workspace:*",
 		"@packages/get-value-v0.8.0": "workspace:*",
 		"@packages/is-empty-v0.1.0": "workspace:*",
+		"@packages/natural-sort-v0.1.0": "workspace:*",
 		"@packages/node": "workspace:@packages/node-v0.8.0@*",
 		"@packages/port": "workspace:@packages/port-v0.6.0@*",
 		"@tabler/icons-react": "^3.5.0",

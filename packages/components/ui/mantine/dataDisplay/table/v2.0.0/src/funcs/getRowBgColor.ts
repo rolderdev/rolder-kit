@@ -1,16 +1,16 @@
-import { useStore } from '../store';
+import { useStore } from '../store/store';
 
 export default function (itemId: string) {
-	const store = useStore();
-	if (!store) return;
+	const s = useStore();
+	if (!s) return;
 
-	const rowStyles = store.tableProps.rowStyles.use();
-	const selectedItem = store.selectedItem.use();
-	const selectedItems = store.selectedItems.use();
+	const rowStyles = s.cold.tableProps.rowStyles.use();
+	const selectedItem = s.selectedItem.use();
+	const selectedItems = s.cold.selectedItems.use();
 
 	let bgColor = rowStyles.rowBackgroundColor;
 	if (selectedItems.map((i) => i.id).includes(itemId)) bgColor = rowStyles.mutliSelectionRowBgColor;
-	// Единичный выьор перекрывает мульти-выбор.
+	// Единичный выбор перекрывает мульти-выбор.
 	if (selectedItem?.id === itemId) bgColor = rowStyles.singleSelectionRowBgColor;
 
 	return bgColor;

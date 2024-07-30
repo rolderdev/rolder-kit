@@ -1,10 +1,9 @@
 {
 	"name": "@packages/table-v2.0.0",
-	"main": "table.tsx",
-	"types": "table.tsx",
+	"main": "TableProvider.tsx",
+	"types": "TableProvider.tsx",
 	"dependencies": {
 		"@packages/table-scope-v0.1.0": "workspace:*",
-		"@formkit/auto-animate": "^0.8.2",
 		"nanoid": "^5.0.7",
 		"clsx": "^2.1.1",
 		"mantine-datatable": "^7.11.2",

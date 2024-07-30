@@ -1,22 +1,22 @@
 import type { Item } from 'types';
-import type { Store } from '../store';
+import type { Store } from '../store/store';
 
-export default function (store: Store, item: Item): string {
-	const onRowClick = store.tableProps.onRowClick.get();
+export default function (s: Store, item: Item): string {
+	const onRowClick = s.cold.tableProps.onRowClick.get();
 
 	switch (onRowClick) {
 		case 'signal': {
-			const clickFilterFunc = store.tableProps.clickFilterFunc?.get();
+			const clickFilterFunc = s.cold.tableProps.clickFilterFunc?.get();
 			if (clickFilterFunc && !clickFilterFunc(item)) return 'unset';
 			return 'pointer';
 		}
 		case 'singleSelection': {
-			const singleSelectionFilterFunc = store.tableProps.singleSelectionFilterFunc?.get();
+			const singleSelectionFilterFunc = s.cold.tableProps.singleSelectionFilterFunc?.get();
 			if (singleSelectionFilterFunc && !singleSelectionFilterFunc(item)) return 'unset';
 			return 'pointer';
 		}
 		case 'expansion': {
-			const filterFunc = store.tableProps.expansion.filterFunc?.get();
+			const filterFunc = s.cold.tableProps.expansionFilterFunc?.get();
 			if (filterFunc && !filterFunc(item)) return 'unset';
 			return 'pointer';
 		}

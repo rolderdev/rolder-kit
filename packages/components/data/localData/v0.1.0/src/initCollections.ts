@@ -29,16 +29,16 @@ export default async function (collectionsDefinition: Props['collectionsDefiniti
 		collection.preSave(function (plainData) {
 			plainData.sysinfo.updatedAt = new Date().valueOf();
 		}, false);
-		collection.postSave(function (plainData) {
+		/* collection.postSave(function (plainData) {
 			//@ts-ignore
 			const postSave = collectionsDefinition[this.name].postSave;
 			if (postSave) {
 				//plainData = postSave(plainData);
-				plainData['task-result'] = undefined;
-				delete plainData['task-result'];
-				console.log(plainData);
+				//plainData['task-result'] = undefined;
+				//delete plainData['task-result'];
+				//console.log(plainData);
 			}
-		}, false);
+		}, false) */
 	});
 
 	return collections;

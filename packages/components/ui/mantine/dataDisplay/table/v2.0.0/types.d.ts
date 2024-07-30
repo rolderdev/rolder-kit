@@ -1,21 +1,18 @@
 import type { CollapseProps, LoaderProps, MantineColor, MantineShadow, MantineSize } from '@mantine/core';
 import type { BaseReactProps, NoodlNode } from '@packages/node';
 import type { DataTableColumn, DataTableProps } from 'mantine-datatable';
-import type { Column } from './src/models/columnModel.tsx';
+import type { Column } from './src/models/columnModel';
 import type { IconProps } from '@tabler/icons-react';
 import type { Item } from 'types';
 
 export type Props = BaseReactProps & {
 	// Base
 	customProps?: {
-		lib: DataTableProps<Item>;
 		collapse: CollapseProps;
 		// Multi selection
 		allRecordsSelectionCheckboxProps: DataTableProps<Item>['allRecordsSelectionCheckboxProps'];
 		selectionCheckboxProps: DataTableProps<Item>['selectionCheckboxProps'];
 		getRecordSelectionCheckboxProps: DataTableProps<Item>['getRecordSelectionCheckboxProps'];
-		selectionColumnStyle: DataTableProps<Item>['selectionColumnStyle'];
-		isRecordSelectable: DataTableProps<Item>['isRecordSelectable'];
 		// Sort
 		sortedIcon: IconProps;
 		unsortedIcon: IconProps;
@@ -48,7 +45,6 @@ export type Props = BaseReactProps & {
 	borderRadius?: MantineSize;
 	withColumnBorders?: boolean;
 	loaderColor?: MantineColor;
-	animation?: boolean;
 
 	// Row styles
 	rowStyles?: boolean;
@@ -62,19 +58,23 @@ export type Props = BaseReactProps & {
 	mutliSelectionRowBgColor?: MantineColor;
 
 	// Single selection
+	defaultSelectedItem?: Item;
 	selectedItem?: Item;
 	singleSelectionFilterFunc: any;
 
 	// Multi selection
 	multiSelection?: boolean;
-	selectionTrigger?: DataTableProps<Item>['selectionTrigger'];
+	defaultSelectedItems?: Item[];
 	selectedItems?: Item[];
+	multiSelectionFilterFunc: any;
 
 	// Expansion
 	expansion?: boolean;
 	expansionTemplate: string;
 	allowMultiple?: boolean;
+	defaultExpandedItems?: Item[];
 	expandedItems?: Item[];
+	paddingLeft?: number;
 	expansionFilterFunc?: any;
 
 	// Sort

@@ -16,7 +16,6 @@ import TableController from './src/TableController';
 // Стили загружаем здесь, чтобы разные TableInstance использовали уже загржунный css.
 import '@mantine/core/styles/Table.css';
 import 'mantine-datatable/styles.css';
-import { sendSelectedItems } from './src/models/multiSelectionModel';
 
 export default forwardRef((props: Props, ref) => {
 	// Даем разработчику извращаться, если он смелый.
@@ -40,11 +39,11 @@ export default forwardRef((props: Props, ref) => {
 				const store = tableControllerRef.current?.store;
 				// Сбрасываем только если уже не сброшено.
 				if (store?.selectedItems.get().length) {
-					store.setSelectedItems(selectedItems);
+					store.setSelectedItems([]);
 					// Установим состояние выбора для всей иерархии, если есть TableScope.
-					// Здесь мы устанавливаем TableScope, а useSelectedItems в TableController использует TableScope.
+					// Здесь мы устанавливаем TableScope, useSelectedItems в TableController использует его.
 					const scopeDbClass = store.tableProps.scope?.get((s) => s?.dbClass);
-					if (scopeDbClass) store.scope.get()?.setMultiSelection(store.tableId.get(), scopeDbClass, selectedItems);
+					if (scopeDbClass) store.scope.get()?.setMultiSelection(store.tableId.get(), scopeDbClass, []);
 				}
 			},
 		}),
@@ -79,19 +78,19 @@ export default forwardRef((props: Props, ref) => {
 				sendOutput(props.noodlNode, 'level', 0);
 
 				// Если это дочернаяя таблица, нужно установить уровнь.
-				// Уровень нужен, чтобы разработчик мог запрограмировать разное поведение подтаблиц.
+				// Уровень нужен, чтобы разработчик мог запрограммировать разное поведение подтаблиц.
 			} else {
-				const level = tableScopeStore?.hierarchy.get((s) => s?.find((i) => i.data.id === tableId)?.depth);
-				if (level) sendOutput(props.noodlNode, 'level', level);
+				const level = tableScopeStore.hierarchy.get((s) => s?.find((i) => i.data.id === tableId)?.depth);
+				if (level) {
+					tableControllerRef.current?.store.level.set(level);
+					sendOutput(props.noodlNode, 'level', level);
+				}
 			}
 		}
-
-		// Отправим в порт поданные разработчиком выбранные items при первом проходе.
-		if (p.selectedItems?.length) {
-			const store = tableControllerRef.current?.store;
-			if (store) sendSelectedItems(store, p.selectedItems);
-		}
 	}, []);
+
+	// Найдем дефолтную сортировку
+	const defaultSortColumn = p.columnsDefinition.find((i) => i.sort === 'asc' || i.sort === 'desc');
 
 	//console.log('TableProvider run'); // Считаем запуски пока разрабатываем
 	return (
@@ -112,6 +111,10 @@ export default forwardRef((props: Props, ref) => {
 				selectedItems,
 				selectedItemsFirstRun: selectedItems.length ? true : false, // Фиксируем, что есть изначально выбранные items.
 				expandedIds: p.expandedItems?.map((i) => i.id) || [],
+				expandedIdsFirstRun: p.expandedItems?.length ? true : false,
+				sortState: defaultSortColumn
+					? { columnAccessor: defaultSortColumn.accessor, direction: (defaultSortColumn.sort as 'asc' | 'desc') || 'asc' }
+					: undefined,
 			}}
 		>
 			<TableController {...p} ref={tableControllerRef} />

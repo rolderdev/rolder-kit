@@ -66,6 +66,7 @@ export default jsNode('create', {
 	},
 	'v1.2.0': {
 		// Vezdexod
+		hashTag: '#pre-release',
 		module: {
 			dynamic: import(
 				/* webpackPrefetch: true */

@@ -7,31 +7,43 @@ import { IconChevronRight } from '@tabler/icons-react';
 import clsx from 'clsx';
 
 import classes from '../styles/expansionCell.module.css';
-import { useStore } from '../store';
+import { useStore } from '../store/store';
+import { setExpandedItems, toggleRowExpansion } from '../models/expansionModel';
 
 export default memo((p: { cell: React.ReactNode; itemId: string }) => {
-	const store = useStore();
-	if (!store) return;
+	const s = useStore();
+	if (!s) return;
 
-	const getExpandedIds = () => {
-		const allowMultiple = store.tableProps.expansion.allowMultiple.get();
-		if (expanded) return allowMultiple ? store.expandedIds.get().filter((i) => i !== p.itemId) : [];
-		else return allowMultiple ? [...store.expandedIds.get(), p.itemId] : [p.itemId];
-	};
-
-	const onRowClick = store.tableProps.onRowClick.use();
+	const onRowClick = s.hot.tableProps.onRowClick.use();
 
 	// Вытягиваем реактивное состояние развернутости для анимации шеврона.
-	const expanded = store.expandedIds.use((expandedIds) => expandedIds.includes(p.itemId));
+	let expanded = s.hot.expandedIds.use((expandedIds) => expandedIds?.includes(p.itemId));
 
 	// Определим, исключена ли строка из развертывния разработчиком.
-	const filterFunc = store.tableProps.expansion.filterFunc?.get();
-	const item = store.items.get((items) => items.find((i) => i.id === p.itemId));
+	const filterFunc = s.cold.tableProps.expansionFilterFunc?.get();
+	const item = s.hot.items.get((items) => items?.find((i) => i.id === p.itemId));
+	// Свернем строку, если у нее больше нет детей.
+	if (item) {
+		const node = s.scopeStore
+			.get()
+			?.hierarchy.get()
+			?.find((i) => i.data.id === item.id);
+		if (!node?.children && expanded) {
+			expanded = false;
+			setExpandedItems(
+				s,
+				s.cold.expandedItems.get().filter((i) => i.id !== item.id)
+			);
+		}
+	}
 	const disabled = item && filterFunc ? !filterFunc(item) : false;
+
+	const paddingLeft = s.cold.tableProps.expansion.paddingLeft.use();
+	const level = s.level.use();
 
 	if (onRowClick === 'expansion')
 		return (
-			<Group wrap="nowrap" gap={6}>
+			<Group pl={paddingLeft.position === 'expander' ? paddingLeft.value * level : undefined} wrap="nowrap" gap={6}>
 				<Box mt={1} ml={1} my={-1} mr={-1}>
 					<IconChevronRight
 						color={disabled ? '#adb5bd' : '#2e2e2e'}
@@ -45,7 +57,7 @@ export default memo((p: { cell: React.ReactNode; itemId: string }) => {
 		);
 	else
 		return (
-			<Group wrap="nowrap" gap={6}>
+			<Group pl={paddingLeft.position === 'expander' ? paddingLeft.value * level : undefined} wrap="nowrap" gap={6}>
 				<ActionIcon
 					variant="subtle"
 					color="dark"
@@ -54,7 +66,7 @@ export default memo((p: { cell: React.ReactNode; itemId: string }) => {
 					mr={3.5}
 					onClick={(e) => {
 						e.stopPropagation();
-						store.expandedIds.set(getExpandedIds());
+						if (item) toggleRowExpansion(s, item);
 					}}
 					disabled={disabled}
 					style={{ background: disabled ? 'transparent' : undefined }}

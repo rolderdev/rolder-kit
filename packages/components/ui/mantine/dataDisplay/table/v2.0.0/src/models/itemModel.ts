@@ -1,34 +1,35 @@
 /* Модель item. */
 
 import { z } from 'zod';
+import isEqual from 'lodash.isequal';
 import type { Item } from 'types';
-import type { Store } from '../store';
-import isArrayEqual from '../funcs/isArrayEqual';
 import type { Props } from '../../types';
+import type { Store } from '../store/store';
+import isArrayEqual from '../funcs/isArrayEqual';
 
-// В item нам важен только id. По сути, эта схема предъявит разработчику требование - item может быть люой структуры, но id обязателен.
+// В item нам важен только id. По сути, эта схема предъявит разработчику требование - item может быть любой структуры, но id обязателен.
 const itemsSchema = z.array(z.object({ id: z.string() }).passthrough());
 
-// Метод проверки item на id.
-export const getItems = (p: Props) => {
-	const newItems = p.items || [];
-	// Создадим Noodl-объекты для реактивности в кастомных ячейках или разворачиваемых строках.
-	if (p.columnsDefinition?.some((i) => i.type === 'template') || p.expansion) newItems.map((i) => Noodl.Object.create(i));
-	return itemsSchema.parse(newItems) as Item[];
+// Метод проверки на наличие id.
+export const getItems = (items: Item[]) => itemsSchema.parse(items) as Item[];
+
+// Метод проверки изменения содержани items.
+export const itemsContentChanged = (s: Store, items: Item[]) => {
+	const newItems = getItems(items); // Проверим на id.
+	if (!isArrayEqual(s.cold.items.get() || [], newItems)) return true;
+	else return false;
 };
 
-// Метод обновляет состояние items и зависимости.
-export const setItems = (store: Store, items?: Item[]) => {
-	const newItems = items || [];
-	if (!isArrayEqual(store.items.get(), newItems)) {
-		store.items.assign(newItems);
-		if (store.columns.get().some((i) => i.type === 'template') || store.tableProps.expansion.enabled.get()) {
-			// Заменим Noodl-объекты для реактивности в кастомных ячейках или разворачиваемых строках.
-			newItems.map((i) => Noodl.Object.create(i));
-		}
-		// Если это корень, инициализируем иерархию дочерних таблиц. В том числе повторно.
-		if (!store.isChild.get()) store.scope.get()?.setHierarchy(store.tableId.get(), newItems);
-		// Обновим выбранные строки, если изменение items на это повлияло.
-		store.setSelectedItems(store.selectedItems.get());
-	}
+// Метод проверки изменения состава items.
+export const itemsChanged = (s: Store, items: Item[]) => {
+	const newItems = getItems(items);
+	const oldIds = s.cold.items.get()?.map((i) => i.id) || [];
+	const newIds = newItems.map((i) => i.id) || [];
+	if (!isEqual(oldIds.sort(), newIds.sort())) return true;
+	return false;
+};
+
+export const setItems = (s: Store, p: Props) => {
+	const newItems = p.items;
+	s.cold.items.set(newItems);
 };

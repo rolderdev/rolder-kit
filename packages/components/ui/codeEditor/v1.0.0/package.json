@@ -1,14 +1,9 @@
 {
-  "name": "@packages/code-editor-v1.0.0",
-  "main": "codeEditor.tsx",
-  "types": "codeEditor.tsx",
-  "dependencies": {
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-    "codemirror": "6.0.1",
-    "react-codemirror2": "8.0.0"
-  },
-  "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "types": "workspace:*"
-  }
+	"name": "@packages/code-editor-v0.1.0",
+	"main": "codeEditor.tsx",
+	"types": "codeEditor.tsx",
+	"dependencies": {
+		"codemirror": "6.0.1",
+		"react-codemirror2": "8.0.0"
+	}
 }

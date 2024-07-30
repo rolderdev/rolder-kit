@@ -4,7 +4,7 @@
 		"rolderKit": ["app", "mantine", "data", "pdf", "qr-code", "xlsx"]
 	},
 	"startum-mobile": {
-		"projectDir": "startum-mobile/noodl",
+		"projectDir": "/home/decard/projects/clients/startum/noodl/mobile",
 		"rolderKit": ["app", "mantine", "data", "qrCode", "web-camera"]
 	},
 	"rasko-desktop": {

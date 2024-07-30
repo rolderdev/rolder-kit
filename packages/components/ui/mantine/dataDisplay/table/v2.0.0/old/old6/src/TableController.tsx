@@ -3,8 +3,7 @@
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import type { Props } from '../types';
 import { useStore } from './store';
-import { sendSelectedItem } from './models/singleSelectionModel';
-import { sendSelectedItems, useHeaderCheckboxProps } from './models/multiSelectionModel';
+import { useHeaderCheckboxProps } from './models/multiSelectionModel';
 import TableInstance from './TableInstance';
 
 export default forwardRef((p: Props, ref) => {
@@ -21,33 +20,18 @@ export default forwardRef((p: Props, ref) => {
 		store.setColumns(p);
 		store.setItems(p);
 		store.setTemplateCells();
+		store.setSelectedItems(p.selectedItems || []);
 		store.setExpansionRows();
 	}, [p]);
 
 	// Реактивность на изменения TableScope.
 	const selectedItems = p.scopeDbClass ? store.scope.get()?.useSelectedItems(store.tableId.get(), p.scopeDbClass) : [];
-
 	useEffect(() => {
 		if (selectedItems && p.scopeDbClass) store.setSelectedItems(selectedItems);
 	}, [selectedItems, p.scopeDbClass]);
 
 	// Слушаем изменение состояние выбора, если это корневая таблица и устанавливаем состояние чекбокса в заголовке.
 	useHeaderCheckboxProps(store, p);
-
-	useEffect(() => {
-		// Подписка на изменения для отправки в порты.
-		const unsubSelectedItem =
-			store.tableProps.onRowClick.get() === 'singleSelection' &&
-			store.selectedItem.onChange((newSelectedItem) => sendSelectedItem(store, newSelectedItem));
-		const unsubSelectedItems =
-			store.tableProps.multiSelection.get() &&
-			store.selectedItems.onChange((newSelectedItems) => sendSelectedItems(store, newSelectedItems));
-
-		return () => {
-			unsubSelectedItem && unsubSelectedItem();
-			unsubSelectedItems && unsubSelectedItems();
-		};
-	}, []);
 
 	// Состояние готовности.
 	const ready = store.ready.use();

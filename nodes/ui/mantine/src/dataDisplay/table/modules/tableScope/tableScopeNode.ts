@@ -12,8 +12,8 @@ export default reactNode(
 			inputs: [
 				getPort({
 					plug: 'input',
-					name: 'isRecordSelectable',
-					displayName: 'Selection filter func',
+					name: 'multiSelectionFilterFunc',
+					displayName: 'Multi selection filter func',
 					group: 'Selection',
 					type: 'array',
 					customs: { isObject: true },

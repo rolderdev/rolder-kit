@@ -4,7 +4,7 @@ import { sendOutput, sendSignal } from '@packages/port-send';
 
 export default {
 	async execute(props: Props) {
-		const { project, environment = 'd2' } = window.R.env;
+		const { project, backendVersion, environment } = window.R.env;
 		const { noodlNode, flowEndpoint, flowData, timeout } = props;
 
 		const { dbName } = R.env;
@@ -31,7 +31,7 @@ export default {
 				}
 
 				const jsonResp = await ky
-					.post(`https://${project}.nodered.${environment}.rolder.app/${flowEndpoint}`, {
+					.post(`https://${project}.nodered.${environment || backendVersion}.rolder.app/${flowEndpoint}`, {
 						headers: {
 							Authorization: 'Basic ' + btoa(`${noderedCreds.username}:${noderedCreds.password}`),
 						},

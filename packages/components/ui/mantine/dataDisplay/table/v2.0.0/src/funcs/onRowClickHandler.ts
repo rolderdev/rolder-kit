@@ -1,29 +1,29 @@
 import { sendOutput, sendSignal } from '@packages/port-send';
-import type { Store } from '../store';
+import type { Store } from '../store/store';
 import type { Item } from 'types';
-import { setExpanedIds } from '../models/expansionModel';
 import { setSelectedItem } from '../models/singleSelectionModel';
+import { toggleRowExpansion } from '../models/expansionModel';
 
-export default function (store: Store) {
-	const onRowClick = store.tableProps.onRowClick.get();
+export default function (s: Store) {
+	const onRowClick = s.hot.tableProps.onRowClick.get();
 	if (onRowClick === 'disabled') return undefined;
 
 	return ({ record }: { record: Item }) => {
 		switch (onRowClick) {
 			case 'signal': {
-				const clickFilterFunc = store.tableProps.clickFilterFunc?.get();
+				const clickFilterFunc = s.hot.tableProps.clickFilterFunc?.get();
 				// Если разработчик добавил проверку и она false, отменяем отправку.
 				if (clickFilterFunc && !clickFilterFunc(record)) return;
-				sendOutput(store.noodlNode.get(), 'clickedItem', record);
-				sendSignal(store.noodlNode.get(), 'rowClicked');
+				sendOutput(s.noodlNode.get(), 'clickedItem', record);
+				sendSignal(s.noodlNode.get(), 'rowClicked');
 				return;
 			}
 			case 'singleSelection': {
-				setSelectedItem(store, record);
+				setSelectedItem(s, record);
 				return;
 			}
 			case 'expansion': {
-				setExpanedIds(store, record);
+				toggleRowExpansion(s, record);
 				return;
 			}
 			default:

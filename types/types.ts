@@ -1,7 +1,7 @@
 import type { Kuzzle } from 'kuzzle-sdk';
 import type { QueryClient } from '@tanstack/react-query';
 import type { RxDatabase } from 'rxdb';
-import type dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
 
 type Rolder = {
 	states: {
@@ -12,6 +12,7 @@ type Rolder = {
 	};
 	env: {
 		environment?: string;
+		backendVersion?: string;
 		rolderKit?: string;
 		project?: string;
 		projectVersion?: string;
