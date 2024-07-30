@@ -1,7 +1,7 @@
 import type { Kuzzle } from 'kuzzle-sdk';
 import type { QueryClient } from '@tanstack/react-query';
 import type { RxDatabase } from 'rxdb';
-import type { Dayjs } from 'dayjs';
+import Dayjs from 'dayjs';
 
 type Rolder = {
 	states: {
@@ -28,6 +28,10 @@ type Rolder = {
 			name: string;
 			data: any;
 		}[];
+		backendOptions?: {
+			name: string;
+			data: any;
+		}[];
 	};
 	dbClasses?: {
 		[x: string]: DbClass;
@@ -38,7 +42,7 @@ type Rolder = {
 		mantine?: {
 			MantineError(title: string, message?: string, autoClose?: boolean | number): void;
 		};
-		dayjs?: Dayjs;
+		dayjs?: typeof Dayjs;
 		mutate?(props: {
 			action: 'create' | 'update' | 'delete' | 'updateByQuery'; // Vezdexod: updateByQuery
 			scheme: any;
@@ -98,7 +102,6 @@ export type User = {
 declare global {
 	var R: Rolder;
 	var Noodl: any;
-	var Sentry: any;
 	var HyperDX: any;
 	var log: {
 		start(): number;
@@ -106,7 +109,5 @@ declare global {
 		info(title: string, ...args: any): void;
 		debug(title: string, ...args: any): void;
 		error(title: string, ...args: any): void;
-		sentryMessage(message: string): void;
-		sentryError(error: Error): void;
 	};
 }

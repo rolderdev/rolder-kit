@@ -16,12 +16,10 @@ export const authStore = store({
 
 		if (signedIn) {
 			// Добавим информацию о пользователе в логи.
-			Sentry?.setContext('user', R.user);
-			Sentry?.setUser({ id: R.user?.id, name: R.user?.user?.id });
-
 			HyperDX?.setGlobalAttributes({
 				userId: R.user?.id,
 				userData: JSON.stringify(R.user),
+				userEmail: R.user?.id,
 			});
 
 			sendOutput(store.noodlNode.get(), 'userRole', R.user?.user?.role?.value || null);

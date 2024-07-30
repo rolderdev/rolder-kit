@@ -5,15 +5,9 @@
 	"type": "module",
 	"dependencies": {
 		"@packages/system-loader-animation": "workspace:@packages/system-loader-animation-v0.1.0@*",
-		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-		"react-error-boundary": "4.0.13",
-		"@sentry/react": "^8.15.0",
+		"react-error-boundary": "^4.0.13",
 		"@hyperdx/browser": "^0.21.0",
 		"rxdb": "^15.28.0",
 		"@capacitor/network": "^6.0.1"
-	},
-	"devDependencies": {
-		"types": "workspace:*",
-		"@packages/node": "workspace:@packages/node-v0.8.0@*"
 	}
 }

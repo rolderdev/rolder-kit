@@ -3,9 +3,9 @@ import type { Props } from './types';
 import { ErrorBoundary } from 'react-error-boundary';
 import initLocalDb from './src/initLocalDb';
 import systemLoaderAnimation from '@packages/system-loader-animation';
+import hyperdx from './src/hyperdx';
 
 function FallbackComponent({ error }: any) {
-	log.sentryError(error);
 	return (
 		<div
 			style={{
@@ -39,7 +39,7 @@ export default forwardRef(function (props: Props, ref) {
 		projectDefaults,
 		environment = 'd2',
 	} = Noodl.getProjectSettings();
-	const { noodlNode, multiInstance, sentry, sentryDsn, remoteLogs } = props;
+	const { noodlNode, multiInstance } = props;
 
 	R.env.environment = environment;
 	R.env.project = project;
@@ -48,41 +48,12 @@ export default forwardRef(function (props: Props, ref) {
 
 	const localDbInited = initLocalDb(noodlNode, multiInstance);
 	useEffect(() => {
-		// logs
-
-		if (sentry && sentryDsn) {
-			import('@sentry/react').then((Sentry) => {
-				Sentry.init({
-					dsn: sentryDsn,
-					release: R.env.projectVersion,
-					environment,
-					transport: Sentry.makeBrowserOfflineTransport(Sentry.makeFetchTransport),
-					tracesSampleRate: 0.01,
-					attachStacktrace: true,
-					normalizeDepth: 6,
-				});
-				window.Sentry = Sentry;
-			});
-		} else window.Sentry = undefined;
-		if (remoteLogs) {
-			import('@hyperdx/browser').then((HyperDX) => {
-				HyperDX.default.init({
-					apiKey: '5cc47e8f-651a-44a8-a251-bc9b1e3f4e05',
-					service: `${project}-${environment}-${location.hostname}`,
-					//tracePropagationTargets: [/rolder.app/i], // Чет с CORS нужно ковырять.
-					consoleCapture: true,
-					advancedNetworkCapture: true,
-				});
-				// Пересылает логи React в HyperDX.
-				HyperDX.default.attachToReactErrorBoundary(ErrorBoundary);
-				HyperDX.default.setGlobalAttributes({ environment, project, projectVersion, rolderKit: R.env?.rolderKit || 'none' });
-				window.HyperDX = HyperDX.default;
-			});
-		} else window.HyperDX = undefined;
-	}, []);
-
-	useEffect(() => {
-		if (localDbInited && stopLoaderAnimationOn === 'appInitialized') systemLoaderAnimation.stop();
+		if (localDbInited) {
+			// Запустим мониторинг настроек. Когда бекенд скачает настройки, каждая функция поймает их и примет соотвествующие решения.
+			hyperdx(ErrorBoundary);
+			// Остановим анимацию, если так настроено.
+			if (stopLoaderAnimationOn === 'appInitialized') systemLoaderAnimation.stop();
+		}
 	}, [localDbInited]);
 
 	return (
