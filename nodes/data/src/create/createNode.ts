@@ -67,13 +67,7 @@ export default jsNode('create', {
 	'v1.2.0': {
 		// Vezdexod
 		hashTag: '#pre-release',
-		module: {
-			dynamic: import(
-				/* webpackPrefetch: true */
-				/* webpackPreload: true */
-				'@packages/create-v1.2.0'
-			),
-		},
+		module: { dynamic: import('@packages/create-v1.2.0') },
 		inputs: [
 			...getPorts('input', ['create']),
 			getPort({
@@ -111,13 +105,7 @@ export default jsNode('create', {
 	},
 	'v1.2.1': {
 		// Vezdexod
-		module: {
-			dynamic: import(
-				/* webpackPrefetch: true */
-				/* webpackPreload: true */
-				'@packages/create-v1.2.1'
-			),
-		},
+		module: { dynamic: import('@packages/create-v1.2.1') },
 		inputs: [
 			...getPorts('input', ['create']),
 			getPort({
