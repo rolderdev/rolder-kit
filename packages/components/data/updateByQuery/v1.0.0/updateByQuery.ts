@@ -50,7 +50,7 @@ export default {
     // Фиксируем время начала обновления
     const startTime = log.start()
 
-    log.info(`update props`, props)
+    log.info(`updateByQuery props`, props)
 
     try {
       // Если мы используем оптимистичное обновление
@@ -91,12 +91,12 @@ export default {
       // Выдаем сигнал о завершении обновления
       sendSignal(props.noodlNode, 'updated')
 
-      log.info(`updated`, data)
-      log.end(`update`, startTime)
+      log.info(`updateByQuery`, data)
+      log.end(`updateByQuery`, startTime)
 
     } catch (error: any) {
-      R.libs.mantine?.MantineError?.('Системная ошибка!', `update error: ${error.message}`)
-      log.error('update error', error)
+      R.libs.mantine?.MantineError?.('Системная ошибка!', `updateByQuery error: ${error.message}`)
+      log.error('updateByQuery error', error)
     }
   }
 }
