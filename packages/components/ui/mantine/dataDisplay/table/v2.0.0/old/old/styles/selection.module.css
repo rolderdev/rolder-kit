@@ -1,0 +1,7 @@
+.single {
+	cursor: pointer;
+}
+
+.multi {
+	--mantine-primary-color-light: 'white';
+}

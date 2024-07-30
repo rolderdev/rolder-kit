@@ -1,10 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle } from "react"
 import { Checkbox } from "@mantine/core"
-import { Props } from "../types"
+import type { Props } from "../types"
 import convertColor from "@packages/convert-color"
 import { useFormScope } from "@packages/scope"
 import { sendOutput, sendSignal } from "@packages/port-send"
-import React from "react"
 
 export default forwardRef(function (props: Props, ref) {
     const Icon = props.iconName && R.libs.icons[props.iconName]

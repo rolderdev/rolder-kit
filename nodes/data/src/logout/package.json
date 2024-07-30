@@ -1,13 +1,9 @@
 {
-  "name": "@nodes/logout",
-  "main": "logoutNode.ts",
-  "types": "logoutNode.ts",
-  "dependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "@packages/port": "workspace:@packages/port-v0.6.0@*",
-    "@packages/logout-v1.0.0": "workspace:*"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@nodes/logout",
+	"main": "logoutNode.ts",
+	"types": "logoutNode.ts",
+	"dependencies": {
+		"@packages/logout-v1.0.0": "workspace:*",
+		"@packages/logout-v1.1.0": "workspace:*"
+	}
 }

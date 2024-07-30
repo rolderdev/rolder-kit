@@ -40,7 +40,9 @@ import range from 'just-range';
 import last from 'just-last';
 import unique from 'just-unique';
 import sortBy from 'just-sort-by';
-libs.just = { typeOf, clone, flush, omit, insert, map, capitalize, range, last, unique, sortBy };
+import safeGet from 'just-safe-get';
+import safeSet from 'just-safe-set';
+libs.just = { typeOf, clone, flush, omit, insert, map, capitalize, range, last, unique, sortBy, get: safeGet, set: safeSet };
 
 // form
 import { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField } from '@mantine/form';
@@ -64,5 +66,8 @@ libs.deepEqual = deepEqual;
 
 import { get, getMany, set, setMany, update, del, delMany, keys } from 'idb-keyval';
 libs.indexedDb = { get, getMany, set, setMany, update, del, delMany, keys };
+
+import { nanoid } from 'nanoid';
+libs.nanoid = nanoid;
 
 export default libs;

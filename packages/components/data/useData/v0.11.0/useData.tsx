@@ -6,8 +6,7 @@ import getSearchResults from "./src/search/getSearchResults";
 import sendUseDataOutput from "./src/sendUseDataOutput";
 import type { Props } from "./types"
 import mapObject from 'just-map-object'
-import { sendSignal } from '@packages/port-send'
-import React from "react";
+import { sendSignal } from '@packages/port-send';
 
 export const searchCount = map<{ [noodleNodeId: string]: number }>({})
 const searchListeners = map<{ [noodleNodeId: string]: boolean }>({})

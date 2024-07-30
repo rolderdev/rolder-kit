@@ -7,7 +7,7 @@
 		"esModuleInterop": true,
 		"experimentalDecorators": false,
 		"forceConsistentCasingInFileNames": true,
-		"isolatedModules": true,
+		"isolatedModules": true,		
 		"resolveJsonModule": true,
 		"lib": ["es2022", "DOM", "DOM.Iterable"],
 		"module": "esnext",
@@ -24,6 +24,6 @@
 		"strict": true,
 		"target": "es2022",
 		"verbatimModuleSyntax": true,
-		"jsx": "react"
+		"jsx": "react-jsx"
 	}
 }

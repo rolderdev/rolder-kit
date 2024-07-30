@@ -1,12 +1,9 @@
 {
-  "name": "@packages/logout-v1.0.0",
-  "main": "logout.ts",
-  "types": "logout.ts",
-  "type": "module",
-  "dependencies": {
-    "@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@packages/logout-v1.0.0",
+	"main": "logout.ts",
+	"types": "logout.ts",
+	"type": "module",
+	"dependencies": {
+		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*"
+	}
 }

@@ -1,0 +1,8 @@
+{
+	"name": "@packages/natural-sort-v0.1.0",
+	"main": "naturalSort.ts",
+	"types": "naturalSort.ts",
+	"dependencies": {
+		"just-safe-get": "^4.2.0"
+	}
+}

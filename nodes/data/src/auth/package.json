@@ -6,7 +6,8 @@
     "@packages/node": "workspace:@packages/node-v0.8.0@*",
     "@packages/port": "workspace:@packages/port-v0.6.0@*",
     "@packages/auth-v1.0.0": "workspace:*",
-    "ms": "2.1.3"
+    "@packages/auth-v2.0.0": "workspace:*",
+    "ms": "^2.1.3"
   },
   "devDependencies": {
     "types": "workspace:*",

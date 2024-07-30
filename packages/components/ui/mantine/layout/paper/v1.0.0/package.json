@@ -1,0 +1,13 @@
+{
+	"name": "@packages/paper-v1.0.0",
+	"main": "paper.tsx",
+	"types": "paper.tsx",
+	"dependencies": {
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"types": "workspace:*"
+	}
+}

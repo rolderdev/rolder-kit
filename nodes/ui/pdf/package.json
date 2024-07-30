@@ -1,17 +1,14 @@
 {
-  "name": "pdf",
-  "dependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "@packages/port": "workspace:@packages/port-v0.6.0@*",
-    "@nodes/pdf-document": "workspace:*",
-    "@nodes/pdf-page": "workspace:*",
-    "@nodes/pdf-view": "workspace:*",
-    "@nodes/pdf-text": "workspace:*",
-    "@nodes/pdf-image": "workspace:*",
-    "@nodes/pdf-viewer": "workspace:*",
-    "@nodes/pdf-table": "workspace:*"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "pdf",
+	"dependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"@packages/port": "workspace:@packages/port-v0.6.0@*",
+		"@nodes/pdf-document": "workspace:*",
+		"@nodes/pdf-page": "workspace:*",
+		"@nodes/pdf-view": "workspace:*",
+		"@nodes/pdf-text": "workspace:*",
+		"@nodes/pdf-image": "workspace:*",
+		"@nodes/pdf-viewer": "workspace:*",
+		"@nodes/pdf-table": "workspace:*"
+	}
 }

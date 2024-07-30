@@ -15,9 +15,7 @@ const ganttViewModes = [
 
 const GanttNode = reactNode('Gantt', {
 	'v1.0.0': {
-		module: {
-			dynamic: lazy(() => import('@packages/gantt-v1.0.0'))
-		},
+		module: { dynamic: lazy(() => import('@packages/gantt-v1.0.0')) },
 		inputs: [
 			...getPorts('input', ['customProps']),
 			getPort({ plug: 'input', name: 'ganttTasks', displayName: 'Tasks', group: 'Data', type: getType('array', 'connection') }),
@@ -30,7 +28,14 @@ const GanttNode = reactNode('Gantt', {
 				type: getEnumType(ganttViewModes),
 				customs: { required: 'connection' }
 			}),
-			getPort({ plug: 'input', name: 'showTaskList', displayName: 'Show task list', group: 'Params', type: 'boolean', default: false }),
+			getPort({
+				plug: 'input',
+				name: 'showTaskList',
+				displayName: 'Show task list',
+				group: 'Params',
+				type: 'boolean',
+				default: false
+			}),
 			getPort({ plug: 'input', name: 'ganttHeight', displayName: 'Height', group: 'Dimensions', type: 'boolean', default: false })
 		],
 		outputs: [

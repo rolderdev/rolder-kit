@@ -1,0 +1,10 @@
+{
+	"name": "@packages/system-loader-animation-v0.1.0",
+	"main": "systemLoaderAnimation.ts",
+	"types": "systemLoaderAnimation.ts",
+	"type": "module",
+	"dependencies": {},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
+}

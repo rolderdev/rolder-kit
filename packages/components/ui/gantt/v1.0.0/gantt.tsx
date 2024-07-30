@@ -1,6 +1,5 @@
 import { forwardRef } from "react"
 import type { Props } from "./types"
-import React from "react"
 import { sendOutput, sendSignal } from "@packages/port-send"
 import { Gantt, ViewMode } from "./src/lib"
 

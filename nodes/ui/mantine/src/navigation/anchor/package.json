@@ -1,0 +1,8 @@
+{
+	"name": "@nodes/anchor",
+	"main": "anchorNode.ts",
+	"types": "anchorNode.ts",
+	"dependencies": {
+		"@packages/anchor-v0.1.0": "workspace:*"
+	}
+}

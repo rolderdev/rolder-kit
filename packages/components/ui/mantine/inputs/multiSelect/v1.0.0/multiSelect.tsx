@@ -1,6 +1,5 @@
 import { forwardRef, lazy, useImperativeHandle, useRef } from "react"
 import type { Props } from "./types"
-import React from "react"
 import { getCompProps } from '@packages/get-comp-props'
 
 const FormMultiSelect = lazy(() => import("./src/formMultiSelect"))

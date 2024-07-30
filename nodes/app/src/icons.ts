@@ -90,13 +90,13 @@ export {
 	IconKeyboard,
 	IconRestore,
 	IconForms,
-	IconTextPlus,			// Vezdexod
-	IconArrowNarrowUp,		// Vezdexod
-	IconArrowNarrowDown, 	// Vezdexod
-	IconArchiveOff,			// Vezdexod
-	IconLockOpen,			// Vezdexod
-	IconLinkPlus,			// Vezdexod 11.06
-	IconCopyPlus,			// Vezdexod 11.06
-	IconFilter,				// Vezdexod 04.07
-	IconSpeakerphone		// Vezdexod 17.07
+	IconTextPlus, // Vezdexod
+	IconArrowNarrowUp, // Vezdexod
+	IconArrowNarrowDown, // Vezdexod
+	IconArchiveOff, // Vezdexod
+	IconLockOpen, // Vezdexod
+	IconLinkPlus, // Vezdexod 11.06
+	IconCopyPlus, // Vezdexod 11.06
+	IconFilter, // Vezdexod 04.07
+	IconSpeakerphone, // Vezdexod 17.07
 } from '@tabler/icons-react';

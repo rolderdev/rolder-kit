@@ -1,0 +1,15 @@
+{
+	"name": "@packages/bar-loader-v1.0.0",
+	"main": "barLoader.tsx",
+	"types": "barLoader.tsx",
+	"dependencies": {
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22",
+		"@packages/convert-color": "workspace:@packages/convert-color-v0.3.0@*",
+		"react-spinners": "0.13.8"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"types": "workspace:*"
+	}
+}

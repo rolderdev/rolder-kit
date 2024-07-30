@@ -10,6 +10,7 @@ export default reactNode(
 	'PdfTable',
 	{
 		'v1.0.0': {
+			hashTag: '#deprecated',
 			module: { static: v100 },
 			inputs: [
 				getPort({
@@ -65,6 +66,7 @@ export default reactNode(
 			]
 		},
 		'v1.1.0': {
+			hashTag: '#deprecated',
 			module: { static: v110 },
 			inputs: [
 				getPort({
@@ -120,6 +122,7 @@ export default reactNode(
 			]
 		},
 		'v1.2.0': {
+			hashTag: '#deprecated',
 			module: { static: v120 },
 			inputs: [
 				getPort({

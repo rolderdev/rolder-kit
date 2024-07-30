@@ -1,17 +1,18 @@
 {
-  "name": "@packages/checkbox-group-v1.0.0",
-  "main": "checkboxGroup.tsx",
-  "types": "checkboxGroup.tsx",
-  "dependencies": {
-    "@mantine/core": "6.0.21",
-    "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-    "@packages/scope": "workspace:@packages/scope-v0.1.0@*",
-    "@packages/get-value": "workspace:@packages/get-value-v0.8.0@*",
-    "@packages/convert-for-select-inputs": "workspace:@packages/convert-for-select-inputs-v0.2.0@*"
-  },
-  "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "types": "workspace:*"
-  }
+	"name": "@packages/checkbox-group-v1.0.0",
+	"main": "checkboxGroup.tsx",
+	"types": "checkboxGroup.tsx",
+	"dependencies": {
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22",
+		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+		"@packages/scope": "workspace:@packages/scope-v0.1.0@*",
+		"@packages/get-value": "workspace:@packages/get-value-v0.8.0@*",
+		"@packages/convert-for-select-inputs": "workspace:@packages/convert-for-select-inputs-v0.2.0@*"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"types": "workspace:*"
+	}
 }

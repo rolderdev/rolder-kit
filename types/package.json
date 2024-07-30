@@ -1,11 +1,11 @@
 {
-  "name": "types",
-  "main": "types.d.ts",
-  "types": "types.d.ts",
-  "devDependencies": {
-    "@mantine/core": "6.0.21",
-    "kuzzle-sdk": "7.11.2",
-    "@tanstack/react-query": "4.36.1",
-    "dayjs": "1.11.11"
-  }
+	"name": "types",
+	"main": "types.ts",
+	"types": "types.ts",
+	"devDependencies": {
+		"kuzzle-sdk": "^7.11.3",
+		"@tanstack/react-query": "4.36.1",
+		"dayjs": "^1.11.11",
+		"rxdb": "^15.28.0"
+	}
 }

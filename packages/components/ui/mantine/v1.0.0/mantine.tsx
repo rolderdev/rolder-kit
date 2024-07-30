@@ -5,7 +5,6 @@ import { forwardRef, useState } from "react"
 import 'dayjs/locale/ru'
 import type { CompProps } from "./types"
 import convertColor from '@packages/convertColor'
-import React from "react"
 
 function MantineError(title: string, message?: string, autoClose?: boolean | number): void {
     notifications.show({ title, message, color: 'red', autoClose: autoClose ? autoClose : false })

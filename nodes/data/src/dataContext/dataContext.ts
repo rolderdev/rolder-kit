@@ -6,6 +6,7 @@ export default reactNode(
 	'DataContext',
 	{
 		'v0.1.0': {
+			hashTag: '#deprecated',
 			module: {
 				dynamic: lazy(() => import('@packages/data-context-v0.1.0'))
 			},
@@ -15,6 +16,7 @@ export default reactNode(
 			]
 		},
 		'v0.1.1': {
+			hashTag: '#deprecated',
 			module: {
 				dynamic: lazy(() => import('@packages/data-context-v0.1.1'))
 			},

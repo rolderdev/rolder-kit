@@ -1,0 +1,8 @@
+{
+	"name": "@packages/web-camera-v1.0.0",
+	"main": "webCamera.tsx",
+	"types": "webCamera.tsx",
+	"dependencies": {
+		"react-webcam": "^7.2.0"
+	}
+}

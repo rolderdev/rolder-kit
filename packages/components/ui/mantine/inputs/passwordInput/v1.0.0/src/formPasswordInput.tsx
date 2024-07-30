@@ -1,7 +1,6 @@
 import { PasswordInput } from "@mantine/core"
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
-import { Props } from "../types"
-import React from "react"
+import type { Props } from "../types"
 import { sendOutput, sendSignal } from '@packages/port-send'
 import { useFormScope } from "@packages/scope"
 import { useDebouncedValue } from '@mantine/hooks'

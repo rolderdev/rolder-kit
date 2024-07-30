@@ -1,57 +1,163 @@
 # Changelog
 
-## 2024-06-30 v1.0.0-beta27-Vezdexod
+## 2024-07-30 v1.0.0-rc0
+
+## Внутренние изменения RK
+
+- Первый Release Candidate. Наведен порядок в нодах, рефакторинг внутренней структуры репозитария.
+- Rspack научился использовать общий конфиг. Теперь разработчег RK может:
+  - Сделать билд всего RK в папку build командой `moon :build` для последующей публикации версии.
+  - Сделать билд одного пакета в папку build командой `moon pdf:build`.
+  - Запускать команды выше в указанный Roodl-проект `moon :build -- --env developer=decard project=startum-desktop`. Где developer - ник разработчика, project - название проекта. В папке developers должен лежать файл ${ник разработчика}.json с описанием проектов. В файле указывается `projectDir` - полный путь к Roodl-проекту и `rolderKit` - список пакетов, которые должны копироваться в проект. Смотри пример `decard.json`.
+  - Использовать режим разработки, чтобы получать новые файлы в Roodl-проекте с любым измененеим кода. Для этого используется команда `moon пакет:dev -- --env developer=decard project=startum-desktop`. Без указания проекта и пакета будет работать, но смысла не имеет и легко накосячить сбилдив тяжелую dev-версию в билд для выпуска. dev-версия - это не ужатая версия кода (с комментариями, пробелами и т.д.), плюс некторые библиотеки в такой версии включают более подробные отчеты об ошибках. Исключение - React и сам Roodl, т.к. они прилетают уже сжатые. Раньше такой финт ушами не прокатывал. У меня это работает в Roodl c версии beta1, то ли React 18 помог, то ли то, что я закрываю предпросмотр в Roodl.
+  - Логи и трассировка. Теперь можно отправлять логи, трассировку действий пользователя и запись экрана в [hyperdx](https://www.hyperdx.io). Мне очень сильно помогло с мобильным приложением. Не умеет ловить ошибки в функциях Roodl, но можно отлавливать ошибки и отправлять вручную. Для включения в `App 2.0.0` есть настройка `Remote logs`. Это сервис, а значит платим за объем, имейте ввиду. Имеет смысл не включать в dev-версии.
+  - Мониоринг бекенда. Установлен сервер, который мониторит разные параметры Kuzzle.
+
+### Хештеги
+
+Поскольку весь RK был бетой, хештеги не имели сильного значения. С этого момента будем использовать хештеги у нод в более строгом виде, напомню их значение:
+
+- Нет тега - стабильная, проверенная версия.
+- `#preRelease` - добавили новые фичи в ноду или сама нода новая. Разработчики ноды сам решает. Бывает так, что простой параметр добавлен и есть уверенность, что багов быть не может, тогда и не ставит тег. Если же есть что-то серьезное и любой шанс на баг - ставит. RK сделан так, что можно снять тег не ломая проекты. Разработчик проекта обычно использует такие версии, когда есть потребность в новой фиче.
+- `#experimental` - проверка гипотезы. Когда нет уверенности, что это вообще взлетит.
+- `#deprecated` - ноду планируется удалить. Наш подход к версионности нод удобен, но есть минус - каждая версия занимает место, нужно подчищать.
+
+### Ноды
+
+Проведена ревизия всех нод, расставлены соответсвующие хештеги, изменена внтуренняя структура расположения.
+
+### Local-First
+
+Добавлена новая нода LocalData для проверки гипотезы `Local-First`.
+
+### Rolder-Kit
+
+Добавлена синхронность на прием данных между портами и сигналами. Раньше, в некоторых случаях, приходилось в функциях Roodl добавлять ожидание перед отправкой сигнала.
+
+### utils
+
+- addCssToHtmlHead - метод добавления в HEAD загрузки CSS файлов.
+- systemLoaderAnimation - анимация загрузки приложения. Два метода - для старта и остановки анимации. Работает поверх всего (ZIndex 10000). Используется вставка/удаления ноды DOM-дерева. Чистый HTML/CSS. Т.е. эта штука не зависит от Noodl или React.
+
+## app
+
+### App v2.0.0 `#experimental`
+
+#### RxDb
+
+Добавлен RxDb для хранения состояния приложения на диске. Раньше приходилось это делать вручную через библиотеки обертки вокруг IndexeDB. RxDb тоже обертка, но с ключевыми отличиями:
+
+- Реактивность - Rx в названии намекает на реактивность. Под капотом RxJS - это такой фреймфорк, который позволяет все что угодно сделать реактивным. Для нас это означает более легкую интеграцию с Noodl. Т.к. Noodl - это больше просто JS, а уже потом реактивный React.
+- Можно менять хранилище. За деньги быстрые - SQLite, OPFS. Т.е. сделали кучу всяких хороших стейтов, локальных БД, не хватает скорости, платим, пользуемся.
+
+Нам он нужен для оффлайна, но грех не воспользоваться его возможностями. В будущем, планирую сделать галочку на компонентах - "сохранить на диск". Например на текстовый инпут, чтобы пользователь не вводил логин каждый раз.
+
+Сейчас он используется для хранения состояния сети и сессии пользователя.
+
+#### Network
+
+Так как состояние сети влияет не только на подключение к бекенду, ее статус переехал из Data в App.
+Статус теперь хранится в RxDb, чтобы при запуске приложения знать последнее состояние сети.
+На выходе выдает: connected - есть сеть или нет, type - тип сети.
+Под капотом это Capacitor, а значит одинаково работает на телефонах и в браузере.
+
+#### Анимация загрузки
+
+Новые знания о CSS позволили воткнуть нормальную анимацию, а не статичный "LOADING". Добавлена настройка в проект для управления анимацией - "Stop loader animation on". Четыре варианта - App initialized (когда нет бекенда и нужно дождаться только загрузки файлов приложения), Data initialized (когда бекенд подключен), Auth initialized (дефолт, когда проверена сессия пользователя и его данные загружены, если он залогинен), Local data initialized (для оффлайн режима, когда оффлайн БД запустилась и классы инициализированы). Если лоадер бесконечно крутиться, значит или не верная настройка ли что-то пошло не так )
+
+## data
+
+### Auth v2.0.0 `#experimental`
+
+Рефакторинг процесса авторизации и обновления JWT. Сессия, ее статус теперь хранятся в RxDb.
+
+## mantine
+
+### Mantine v2.0.0 `#experimental`
+
+Обновлен до Mantine v7.
+Чудесным образом старые компоненты работают.
+
+### notification v2.0.0
+
+Обновлен до Mantine v7
+
+### Table v2.0.0 `#experimental`
+
+- Обновлен до Mantine v7 и Mantine Datatable v7.
+- Пересобрана с ноля, но с сохранением логики использования. Параметры внутренне все переделаны, но внешне многие остались такими же, чтобы разработчику проще было мигрировать.
+- Задрочился до беспамятсва над реактивностью. Везде, где это возможно или где смог, одно изменение - один рендер. Например, при добавлении новой строки, старые ячейки не рендерятся заново, как это было в старой версии.
+- Шаблоны. Вырезан старый способ модульности. Свою работу он сделал - доказал, что так удобно и можно покрыть много сценариев. Но глюков много. Теперь таблица сама прикидывается Repeater из Noodl. Делает это она для разворачиваемых строк, кастомных ячеек и фильтров. Нативный способ проверен другими разработчиками Noodl и много раз нами. Технически используется тот же repeater, что мы вставляли раньше руками, но теперь это осмысленный и управляемый процесс, например, теперь включается анимация загрузки, когда есть что-то, использующее этот подход. Соответственно, ExpansionRow, ColumnCell и ColumnFilter уйдут в историю, а так же Table scope в компонентах теперь не имеет смысла.
+- Ширина и высота. Стало понятно, что все извраты в старой таблице с этими параметрами не от ограничения библиотеки, а от ограничения ума :)) Убрал их полностью для соответствия рекомендациям самой библиотеки и чтобы у всех отросло понимание этого момента. Оба параметра внутри в самой библиотеке выставлены в 100%. Это значит, что управлять поведением таблицы нужно извне, практика показала, что удобнее всего через стек.
+- На данный момент не готова сортировка и фильтрация. Нет документации.
+
+### TableScope v0.1.0 `#experimental`
+
+- У новой таблицы под капотом все собрано на других принципах. Поэтому пересобрал и Scope.
+- Миша проверил гипотезу, что это работает для иерархичного выбора для кучи таблиц. Здесь это повторено.
+- Основная плюшка прилетевшая с этой нодой - автоматически создаваемая и обновляемая иерархия на фронте на основе иерархии с UseData. Работает на базе утилитки из большой библиотеки `D3` - [https://d3js.org/d3-hierarchy/hierarchy](https://d3js.org/d3-hierarchy/hierarchy). Магия в том, что из любого места иерархии можно дотянуться до любого другого места, вытянуть детей, предков, наследников, соседей. Конкретное место иерархии (нода) подается в getValue, что позволяет посчитать в ячейке таблицы любые данные не только с соседних ячеек или строк, но и с любых таблиц этой же иерархии.
+- Передает в таблицы их уровень в иерархии. Полезно, когда таблицы рекурсивно повторяются.
+- Не успел сделать, но уже понятно как организовать единую сортировку для иерархии таблиц.
+- Так же задрочился над рендером - если обновление прилетело с какой то таблицы в TableScope, то обновятся только те таблицы, которые этого требуют.
+- Добавлена фича, которую кажется мы и не пытались делать в старых версиях таблицы. TableScope понимает как должен измениться выбор строк при изменении состава. Т.е. теперь, если все выделено и где-то в иерархии добавилась строка (и не важно, свернуто или на экране) выделение коректно измениться под новую ситуацию. Однако, мы привыкли везде сбрасывать выделение, теперь есть такой вариант.
+
+### Stack v2.0.0
+
+- Обновлен до Mantine v7
+- Инпуты ширины и высоты сделаны строкой чтобы можно было использовать функцию CSS calc.
+
+## Инструкция по обновлению
+
+- Нужен Roodl v1.0.0.
+- Связанные компоненты, которые нужно обновить все разом до псомледней версии - App, Mantine, Auth, logout и notification.
+- Настройка версии бекенда переехала в настройки проекта.
+- R.env.backendVersion теперь называется R.env.evironment.
+
+## 2024-07-18 v1.0.0-beta27-Vezdexod
 
 ### mantine
+
 - textInput v1.1.0 - добавлен сигнал о том, что значение изменилось.
 - table v1.2.3 - теперь при активном фильтре, иконка становится синей. Больше как частный случай.
 - dropZone v1.1.0 - теперь можно подавать несколько типов файлов, а из размер увеличен с 3х до 20 Мб.
 - text v1.0.2 - пофиксил: не работал перенос на новую строку "\n".
 
 ### data
-- updateByQuery v1.0.0 - поправил вывод ошибки. В тексте было "update", изменил на "updateByQuery".
-- nodered v1.3.0 - добавлен сервис copyDBClass и при передаче файлов они кодируются корректно для создания url.
 
-### xlsx
-- createXlsx v1.1.0 - начато добавление функционала по выравниванию и переносу текста.
-
-### codeEditor
-- Начат процесс создания редактора кода.
-
-
-## 2024-06-30 v1.0.0-beta26-Vezdexod
-
-### data
 - updateByQuery v1.0.0 - добавлена нода, позволяющая обновлять данные по фильтру, без получения самих данных. Поддерживает функции как у последний версий create и update:
-	* объекты обрабатываются в режиме silent = true и без индексирования refresh = "false". 
-	* последний объект, обрабатывается с silent, заданным в параметрах ноды и с индексированием refresh = "wait_for".
+
+  - объекты обрабатываются в режиме silent = true и без индексирования refresh = "false".
+  - последний объект, обрабатывается с silent, заданным в параметрах ноды и с индексированием refresh = "wait_for".
 
 - nodered v1.2.0 - добавлена работа с нашими общими сервисами. Если включен Use Services, то можно выбрать nodered-сервис, в который будут пеерданы данные и среду d2 или p2. Других сред нет.
 
 ### mantine
+
 - switch v1.0.1 - исправлен баг, не реагировал на принимаемое извне значение cheked, а принимал его только при монтировании.
 - checkBoxGroup v1.0.1 - исправлен баг, не выдавал массив выбранных элементов.
 
 ## 2024-05-29 v1.0.0-beta25-Vezdexod
 
 ### data
+
 - create v1.2.0 и update v1.3.0 - данные режутся на чанки теперь на фронте. Повысилось число запросов, но теперь можно обрабатывать тяжелые объекты, в которых много полей. Из всех поданных схем, у первой схемы вырезается последний item. Все остальные объекты обрабатываются в режиме silent = true и без индексирования refresh = "false". Последний объект, обрабатывается с silent, заданным в параметрах ноды и с индексированием refresh = "wait_for".
 
 ### mantine
+
 - table v1.2.2 - исправлена обработка связей items, чтобы поправить баг, когда ломалась сввязь родительских и дочерних таблиц.
 - text v1.0.1 - исправлен баг. Не отображало число 0. Теперь все входящие данные приводятся к типу String, если они являются числом.
-
 
 ## 2024-05-17 v1.0.0-beta24-Vezdexod
 
 ### data
-- create v1.1.0 - добавлено создание чанками по 100 штук и новая опция `silent`. 
-- update v1.2.0 - добавлено изменение чанками по 100 штук и новая опция `silent`. 
-В обоих случаях, можно подавать записи до 20000 штук, они будут созданы/обновлены чанками по 100 штук, а опцией `silent` мы регулируем, обновлять ли useData по окончании обновления. 
-`silent` = true - не обновлять useData
-`silent` = false - обновлять useData
 
-- nodered v1.1.0 - добавлена возможность задавать timeout ожидания ответа от nodeRed сервера. Стандартное значение 10000 мс = 10 с, его может быть не достаточно для различных случаев. 
+- create v1.1.0 - добавлено создание чанками по 100 штук и новая опция `silent`.
+- update v1.2.0 - добавлено изменение чанками по 100 штук и новая опция `silent`.
+  В обоих случаях, можно подавать записи до 20000 штук, они будут созданы/обновлены чанками по 100 штук, а опцией `silent` мы регулируем, обновлять ли useData по окончании обновления.
+  `silent` = true - не обновлять useData
+  `silent` = false - обновлять useData
+
+- nodered v1.1.0 - добавлена возможность задавать timeout ожидания ответа от nodeRed сервера. Стандартное значение 10000 мс = 10 с, его может быть не достаточно для различных случаев.
 
 ## 2024-05-05 v1.0.0-beta23
 
@@ -83,7 +189,7 @@ getInspectInfo(props) {
 ### Rolder Kit
 
 - Добавлена возможность выводить информацию о состоянии ноды. Пример - таблица показывает скомпилиированную схему.
-- Ноды RK больше не показывают Style variant от Noodl, т.к. на уровне RK они не применяются.
+- Ноды RK больше не показывают Style variant от Roodl, т.к. на уровне RK они не применяются.
 - Все просты ноды переведены на статичную загрузку. Динамичная загрузка показала себя плохо при работе с таблицей (баг, когда не всегда разварачивается вложенная таблица). Тяжелые модули остались динамическими, например, сама таблица, гант, веб-камера, все, что в пакете data.
 
 ### app
@@ -123,7 +229,7 @@ getInspectInfo(props) {
 
 - Monorepo долетел на [турбо](https://turbo.build/repo) до [луны](https://moonrepo.dev/moon). Обратите внимание, изменились названия пакетов.
 - Утилита isEmpty не верно отрабатывала тип данных blob.
-- Компоненты, у которых есть документация теперь открывают ее по нажаию на вопрос, как в оргинальных компонентах Noodl.
+- Компоненты, у которых есть документация теперь открывают ее по нажаию на вопрос, как в оргинальных компонентах Roodl.
 
 `MD`
 Созданы директории:
@@ -303,13 +409,13 @@ getInspectInfo(props) {
 						accessor: 'team',
 						cellStyle: {
 							cell: { backgroundColor: 'red' },
-							text: { fontSize: 14 }
-						}
-					}
+							text: { fontSize: 14 },
+						},
+					},
 				];
 			else return columns;
-		}
-	}
+		},
+	},
 ];
 ```
 
@@ -324,11 +430,11 @@ getInspectInfo(props) {
 				return {
 					...style,
 					border: 6,
-					borderColor: 'red'
+					borderColor: 'red',
 				};
 			else return style;
-		}
-	}
+		},
+	},
 ];
 ```
 
@@ -347,12 +453,12 @@ getInspectInfo(props) {
 		cellAlign: 'left',
 		headerStyle: {
 			cell: { backgroundColor: 'lightblue' },
-			text: { fontSize: 16, fontFamily: 'Ubuntu' }
+			text: { fontSize: 16, fontFamily: 'Ubuntu' },
 		},
 		cellStyle: {
 			cell: { backgroundColor: 'cyan' },
-			text: { fontSize: 14 }
-		}
+			text: { fontSize: 14 },
+		},
 	},
 	{
 		title: 'Кэп',
@@ -362,29 +468,29 @@ getInspectInfo(props) {
 		cellAlign: 'left',
 		headerStyle: {
 			cell: { backgroundColor: 'lightblue' },
-			text: { fontSize: 16 }
+			text: { fontSize: 16 },
 		},
 		headerStyleFunc(style, items) {
 			if (items.map((i) => i.name).includes('Гайка'))
 				return {
 					...style,
-					text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 }
+					text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 },
 				};
 			else return style;
 		},
 		cellStyle: {
 			cell: { backgroundColor: 'cyan' },
-			text: { fontSize: 14 }
+			text: { fontSize: 14 },
 		},
 		cellStyleFunc(style, item) {
 			if (item.name === 'Гайка')
 				return {
 					...style,
-					text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 }
+					text: { fontSize: 12, fontFamily: 'Ubuntu', fontWeight: 700 },
 				};
 			else return style;
-		}
-	}
+		},
+	},
 ];
 ```
 
@@ -425,83 +531,83 @@ getInspectInfo(props) {
 		fonts: [
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeMZhrib2Bg-4.ttf',
-				fontWeight: 100
+				fontWeight: 100,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyfMZhrib2Bg-4.ttf',
-				fontWeight: 200
+				fontWeight: 200,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuOKfMZhrib2Bg-4.ttf',
-				fontWeight: 300
+				fontWeight: 300,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf',
-				fontWeight: 400
+				fontWeight: 400,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZhrib2Bg-4.ttf',
-				fontWeight: 500
+				fontWeight: 500,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYMZhrib2Bg-4.ttf',
-				fontWeight: 600
+				fontWeight: 600,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf',
-				fontWeight: 700
+				fontWeight: 700,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyYMZhrib2Bg-4.ttf',
-				fontWeight: 800
+				fontWeight: 800,
 			},
 			{
 				src: 'http://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuBWYMZhrib2Bg-4.ttf',
-				fontWeight: 900
-			}
-		]
+				fontWeight: 900,
+			},
+		],
 	},
 	{
 		family: 'Ubuntu',
 		fonts: [
 			{
 				src: 'http://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzTt2aMH4V_gg.ttf',
-				fontWeight: 300
+				fontWeight: 300,
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgo6eAT3v02QFg.ttf',
-				fontWeight: 400
+				fontWeight: 400,
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCjC3Tt2aMH4V_gg.ttf',
-				fontWeight: 500
+				fontWeight: 500,
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvTt2aMH4V_gg.ttf',
-				fontWeight: 700
+				fontWeight: 700,
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZftWyIPYBvgpUI.ttf',
 				fontWeight: 300,
-				fontStyle: 'italic'
+				fontStyle: 'italic',
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCu6KVjbNBYlgoKeg7znUiAFpxm.ttf',
 				fontWeight: 400,
-				fontStyle: 'italic'
+				fontStyle: 'italic',
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejYHtGyIPYBvgpUI.ttf',
 				fontWeight: 500,
-				fontStyle: 'italic'
+				fontStyle: 'italic',
 			},
 			{
 				src: 'https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZPsmyIPYBvgpUI.ttf',
 				fontWeight: 700,
-				fontStyle: 'italic'
-			}
-		]
-	}
+				fontStyle: 'italic',
+			},
+		],
+	},
 ];
 ```
 
@@ -515,59 +621,59 @@ const defaultFont = {
 	fonts: [
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1MmgWxPKTM1K9nz.ttf',
-			fontWeight: 100
+			fontWeight: 100,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOiCnqEu92Fr1Mu51QrIzcXLsnzjYk.ttf',
 			fontWeight: 100,
-			fontStyle: 'italic'
+			fontStyle: 'italic',
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmSU5vAx05IsDqlA.ttf',
-			fontWeight: 300
+			fontWeight: 300,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TjARc9AMX6lJBP.ttf',
 			fontWeight: 300,
-			fontStyle: 'italic'
+			fontStyle: 'italic',
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf',
-			fontWeight: 400
+			fontWeight: 400,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOkCnqEu92Fr1Mu52xPKTM1K9nz.ttf',
 			fontWeight: 400,
-			fontStyle: 'italic'
+			fontStyle: 'italic',
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9vAx05IsDqlA.ttf',
-			fontWeight: 500
+			fontWeight: 500,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51S7ABc9AMX6lJBP.ttf',
 			fontWeight: 500,
-			fontStyle: 'italic'
+			fontStyle: 'italic',
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlvAx05IsDqlA.ttf',
-			fontWeight: 700
+			fontWeight: 700,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TzBhc9AMX6lJBP.ttf',
 			fontWeight: 700,
-			fontStyle: 'italic'
+			fontStyle: 'italic',
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmYUtvAx05IsDqlA.ttf',
-			fontWeight: 900
+			fontWeight: 900,
 		},
 		{
 			src: 'https://fonts.gstatic.com/s/roboto/v30/KFOjCnqEu92Fr1Mu51TLBBc9AMX6lJBP.ttf',
 			fontWeight: 900,
-			fontStyle: 'italic'
-		}
-	]
+			fontStyle: 'italic',
+		},
+	],
 };
 ```
 
@@ -618,7 +724,7 @@ await Inputs.tasks?.map(async (i) => {
 							id: last(i.split('/')).split('.jpg')[0],
 							name: last(i.split('/')),
 							contentType: 'image/jpeg',
-							state: 'uploaded'
+							state: 'uploaded',
 						};
 
 						const imageBase64 = await imageUrlToBase64(i); // скачиваем картинку и преобразуем в base64
@@ -677,9 +783,9 @@ keys().then((ks) => {
 				company: { id: 'W5XSgIoBj2T-UFOWng5l' },
 				content: { firstName: 'Тестовый', lastName: 'Аккаунт 6' },
 				user: { id: 'kuid-noisy-minstrel-18541' },
-				manager: { id: 'EW7HgIoBAb9VwPpXmhmn' }
-			}
-		]
+				manager: { id: 'EW7HgIoBAb9VwPpXmhmn' },
+			},
+		],
 	},
 	{
 		dbClass: 'task',
@@ -689,8 +795,8 @@ keys().then((ks) => {
             return items.map(i => ( // вернуть нужно items в том же формате, что и в ключе items. Они будут переданы в БД
                 { ...i, worker: {id: data['worker'].items[0].id} }
             ))
-        }`
-	}
+        }`,
+	},
 ];
 ```
 
@@ -966,23 +1072,23 @@ keys().then((ks) => {
 			themeIconProps: {
 				size: 'sm',
 				color: 'red',
-				radius: 'md'
+				radius: 'md',
 			},
 			iconPprops: {
-				size: '1rem'
-			}
-		}
+				size: '1rem',
+			},
+		},
 	},
 	{
 		string: 'Second string',
 		icon: {
 			name: 'IconUser',
 			iconPprops: {
-				size: '1rem'
-			}
+				size: '1rem',
+			},
 		},
-		customProps: { sx: { backgroundColor: '#555' } }
-	}
+		customProps: { sx: { backgroundColor: '#555' } },
+	},
 ];
 ```
 
@@ -1069,7 +1175,7 @@ listScheme?: {
 
 #### convertColor v0.2.0
 
-Утилита конвертирует цвет формата Mantine с шейдом в стандартный хеш-формат. Нужна для компонентов не поддерживающих цвет Mantine. Или чтобы вытащить оттенок цвета в Noodl. Запускается просто convertColor.v2('red.6')
+Утилита конвертирует цвет формата Mantine с шейдом в стандартный хеш-формат. Нужна для компонентов не поддерживающих цвет Mantine. Или чтобы вытащить оттенок цвета в Roodl. Запускается просто convertColor.v2('red.6')
 
 ### Изменения нод
 
@@ -1084,8 +1190,8 @@ listScheme?: {
 	{
 		accessor: 'content.name',
 		expander: true,
-		boxProps: { pl: 28 }
-	}
+		boxProps: { pl: 28 },
+	},
 ];
 ```
 
@@ -1154,8 +1260,8 @@ listScheme?: {
 [
 	{
 		color: 'gray',
-		backgroundColor: 'transparent'
-	}
+		backgroundColor: 'transparent',
+	},
 ];
 ```
 
@@ -1164,8 +1270,8 @@ listScheme?: {
 ```js
 [
 	{
-		h: (p, i) => ({ ...p, highlight: [i.tasksCount] })
-	}
+		h: (p, i) => ({ ...p, highlight: [i.tasksCount] }),
+	},
 ];
 ```
 
@@ -1173,7 +1279,7 @@ listScheme?: {
 
 ### Общие изменения
 
-- Добавлен глобальный параметр Props function. У каждой ноды его нужно добавлять, пока есть у Text v0.6.0 Идея возникла из проблемы с таблицей. Проблема в том, что, когда начинаешь повторять компоненты (клонировать) на уровне React, это не синхронизируется на уровне Noodl. В результате, мы видим данные только последнего склонированного компонента React. Для таких сулчаев нашел решение - увести обработку на уровень ниже, т.е. в React. По сути это function Нудла, встроенный в ноду. Вот пример:
+- Добавлен глобальный параметр Props function. У каждой ноды его нужно добавлять, пока есть у Text v0.6.0 Идея возникла из проблемы с таблицей. Проблема в том, что, когда начинаешь повторять компоненты (клонировать) на уровне React, это не синхронизируется на уровне Roodl. В результате, мы видим данные только последнего склонированного компонента React. Для таких сулчаев нашел решение - увести обработку на уровень ниже, т.е. в React. По сути это function Нудла, встроенный в ноду. Вот пример:
 
   ```js
   [
@@ -1186,8 +1292,8 @@ listScheme?: {
   				props.color = item?.states.flow.color;
   			}
   			return props;
-  		}
-  	}
+  		},
+  	},
   ];
   ```
 
@@ -1325,8 +1431,8 @@ listScheme?: {
     			const { capitalize } = R.libs.just;
     			const { getValue } = R.utils;
     			return capitalize(getValue.v8(item, '{{content.firstName}} {{content.lastName}}'));
-    		}
-    	}
+    		},
+    	},
     ];
     ```
 
@@ -1338,10 +1444,10 @@ listScheme?: {
         - Ноды берущие данные должны поддерживать контекст таблицы.
         - Ноды, которые должны уметь изменять свои настройки в зависимости от данных, должны поддерживать контекст и Props function.
         - Сейчас сделаны ноды Text v0.6.0 и Badge v0.3.0 Доработка типизирована, можно достаточно быстро накидать нод.
-        - Нельзя вставлять реакции, действия и т.д, т.к. нет возможности вытащить на уровень Noodl текущий item.
+        - Нельзя вставлять реакции, действия и т.д, т.к. нет возможности вытащить на уровень Roodl текущий item.
       - Контролируемый.
         - Медленный, но и самый гибкий.
-        - В основе лежит Repeater Noodl-а, а значит можно делать все, что можно делать в Repeater.
+        - В основе лежит Repeater Roodl-а, а значит можно делать все, что можно делать в Repeater.
         - Repeater штука специфичная, при первой загрузке дает лаг в пол секунды, потом работает вполне быстро.
     - Дабы меньше использовать тяжелый контроллируемый режим, придумал новую фичу для нод - Props function. В начале пример и в Playground.
     - Инструкция:
@@ -1385,11 +1491,11 @@ listScheme?: {
         				return R.libs.sort(items).by([
         					// R.libs.sort - библиотека
         					{ [direction]: (i) => i.content.name }, // i.content.name - данные, по которым сортируем
-        					{ desc: (i) => i.content.date.start } // можно добавлять что то свое, например когда на все есть стандартная сортировка, а пользователь сортирует поверх
+        					{ desc: (i) => i.content.date.start }, // можно добавлять что то свое, например когда на все есть стандартная сортировка, а пользователь сортирует поверх
         				]);
-        			}
-        		}
-        	}
+        			},
+        		},
+        	},
         ];
         ```
 
@@ -1425,9 +1531,9 @@ listScheme?: {
         			func(items) {
         				// название переменной не имеет значение
         				return items.filter((i) => i.state.flow.value === 'active');
-        			}
-        		}
-        	}
+        			},
+        		},
+        	},
         ];
         ```
 
@@ -1653,7 +1759,7 @@ interface Task {
 
 #### Grid v0.3.0
 
-- Решена проблема взаимодействия с Repeater Noodl. Оказалось Repeater подает сначала себя в компоненту, а потом своих детей, оставляя себя в массиве на первом месте. Из-за этого Grid работал странно. Для решения проблемы добавлена опция childIsRepeater. Когда она включена, нода удаляет из массива Repeater, оставляя только его детей.
+- Решена проблема взаимодействия с Repeater Roodl. Оказалось Repeater подает сначала себя в компоненту, а потом своих детей, оставляя себя в массиве на первом месте. Из-за этого Grid работал странно. Для решения проблемы добавлена опция childIsRepeater. Когда она включена, нода удаляет из массива Repeater, оставляя только его детей.
 - Изменено поведение на более понятное. Если в Grid подан не массив, то он отрисовывает такую дочернюю ноду в первой колонке своей схемы. Раньше это выдавало ошибку или пустоту. Иными словами, теперь не нужно париться, что подавать в Grid, кроме случая с Repeater.
 - Если решение хорошо себя зарекомендует, можно будет применить его и к другим подобным нодам - Stack, Group, Flex.
 
@@ -1754,7 +1860,7 @@ interface Task {
 
 Так же нужно добавить этот класс в профиль безопасности на чтение, если применяется. Каждый класс должен иметь соотвествующую запись в этом классе.
 
-- Production клиниг развернут на Yandex. Готовимся к Noodle open source. При этом возникло новое требование - в настрйоках проекта URL path type должен быть hash. Последние версии Rolder Kit не имеют с этим проблем.
+- Production клиниг развернут на Yandex. Готовимся к Roodle open source. При этом возникло новое требование - в настрйоках проекта URL path type должен быть hash. Последние версии Rolder Kit не имеют с этим проблем.
 
 ### Новые ноды
 
@@ -1852,21 +1958,21 @@ interface Task {
 			'content.contacts.phone.search',
 			'content.contacts.email.search',
 			'content.legal.name.search',
-			'content.legal.address.search'
-		]
+			'content.legal.address.search',
+		],
 	},
 	{
 		dbClass: 'manager',
 		query: {
-			and: [{ not: { equals: { 'states.archived': true } } }, { equals: { 'company.id': R.user?.company.id } }]
+			and: [{ not: { equals: { 'states.archived': true } } }, { equals: { 'company.id': R.user?.company.id } }],
 		},
 		sort: { '_kuzzle_info.createdAt': 'desc' },
 		searchFields: ['content.firstName.search', 'content.lastName.search'],
 		options: { size: 100 },
 		refs: ['company'],
 		getUsers: true,
-		sendStates: true
-	}
+		sendStates: true,
+	},
 ];
 ```
 
@@ -1933,10 +2039,10 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     				company: { id: R.user.company.id },
     				content: {
     					address: formHook.values.houseAddress,
-    					name: formHook.values.houseName
-    				}
-    			}
-    		]
+    					name: formHook.values.houseName,
+    				},
+    			},
+    		],
     	};
 
     	Outputs.scheme = [house];
@@ -1959,10 +2065,10 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     				company: { id: R.user.company.id },
     				content: {
     					address: formHook.values.houseAddress,
-    					name: formHook.values.houseName
-    				}
-    			}
-    		]
+    					name: formHook.values.houseName,
+    				},
+    			},
+    		],
     	};
 
     	const areas = {
@@ -1970,8 +2076,8 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     		order: 0,
     		items: formHook.values.areas.map((a) => ({
     			company: { id: R.user.company.id },
-    			content: a.content
-    		}))
+    			content: a.content,
+    		})),
     	};
 
     	Outputs.scheme = [house, areas];
@@ -1995,10 +2101,10 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     				company: { id: R.user.company.id },
     				content: {
     					address: formHook.values.houseAddress,
-    					name: formHook.values.houseName
-    				}
-    			}
-    		]
+    					name: formHook.values.houseName,
+    				},
+    			},
+    		],
     	};
 
     	const areas = {
@@ -2007,8 +2113,8 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     		items: formHook.values.areas.map((a) => ({
     			house: { refId: 0 },
     			company: { id: R.user.company.id },
-    			content: a.content
-    		}))
+    			content: a.content,
+    		})),
     	};
 
     	Outputs.scheme = [house, areas];
@@ -2032,7 +2138,7 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     					name: formHook.values.companyName,
     					contacts: {
     						phone: formHook.values.companyPhone,
-    						email: formHook.values.companyEmail
+    						email: formHook.values.companyEmail,
     					},
     					legal: {
     						name: formHook.values.legalName,
@@ -2041,15 +2147,15 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     						inn: formHook.values.legalInn,
     						ogrn: formHook.values.legalOgrn,
     						bik: formHook.values.legalBik,
-    						ks: formHook.values.legalKs
-    					}
+    						ks: formHook.values.legalKs,
+    					},
     				},
     				states: {
     					flow: R.dbClasses.company.states.flow.find((i) => i.value === 'created'),
-    					subscription: R.dbClasses.company.states.subscription.find((i) => i.value === 'notRegistered')
-    				}
-    			}
-    		]
+    					subscription: R.dbClasses.company.states.subscription.find((i) => i.value === 'notRegistered'),
+    				},
+    			},
+    		],
     	};
 
     	const user = {
@@ -2062,9 +2168,9 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     					profileIds: ['companyReader', 'companyWriter'],
     					role: {
     						value: 'companyManager',
-    						title: 'Менеджер компании'
+    						title: 'Менеджер компании',
     					},
-    					dbClass: 'manager'
+    					dbClass: 'manager',
     				},
     				credentials: {
     					local: {
@@ -2073,11 +2179,11 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     							Inputs.selectedManager?.company?.states?.flow?.value === 'activated'
     								? formHook.values.password
     								: (Math.random() + 1).toString(36).substring(7),
-    						notSecret: formHook.values.password
-    					}
-    				}
-    			}
-    		]
+    						notSecret: formHook.values.password,
+    					},
+    				},
+    			},
+    		],
     	};
 
     	const manager = {
@@ -2089,10 +2195,10 @@ cell: { align: 'center' } // 'left' | 'center' | 'right'
     				user: { refId: 0 },
     				content: {
     					firstName: formHook.values.firstName,
-    					lastName: formHook.values.lastName
-    				}
-    			}
-    		]
+    					lastName: formHook.values.lastName,
+    				},
+    			},
+    		],
     	};
 
     	Outputs.scheme = [company, user, manager];
@@ -2190,12 +2296,12 @@ Outputs.getDataScheme = [
 ```js
 [
 	{
-		span: 'auto'
+		span: 'auto',
 	},
 	{
 		span: 'content',
-		offset: 5
-	}
+		offset: 5,
+	},
 ];
 ```
 
@@ -2279,18 +2385,18 @@ Outputs.getDataScheme = [
     - Событие "пользователь вернулся" >>> обновление данных.
     - UseData больше не активна >>> подписка отключена.
     - Цикл перезапускается при любом изменении параметров запроса.
-  - Выдает данные всегда локально - больше не будет Noodl-объекта с названием класса БД. Это решение сильно потрепало нервы. Но Noodl-объекты по своей природе глобальны, это используем.
-  - Любой item пришедьший в любой UseData пересоздает Noodl-объект со всеми связями. Именно это позволяет сделать приложение реактивным. Но есть и побочные эффект - если есть две UseData, которые загрузил один и тот же объект, последняя загрузившая пересоздаст Noodl-объект. Редкий сценарий, но бывает.
-  - Usedata хранит данные в сыром виде, но на выход всегда подает Noodl-объекты. Так совмещается глобальность и локальность данных.
-  - Связь - всегда ссылка на Noodl-объект. Исключение Get users, т.к. на системные записи пользователя нельзя подписаться и нет смысла.
+  - Выдает данные всегда локально - больше не будет Roodl-объекта с названием класса БД. Это решение сильно потрепало нервы. Но Roodl-объекты по своей природе глобальны, это используем.
+  - Любой item пришедьший в любой UseData пересоздает Roodl-объект со всеми связями. Именно это позволяет сделать приложение реактивным. Но есть и побочные эффект - если есть две UseData, которые загрузил один и тот же объект, последняя загрузившая пересоздаст Roodl-объект. Редкий сценарий, но бывает.
+  - Usedata хранит данные в сыром виде, но на выход всегда подает Roodl-объекты. Так совмещается глобальность и локальность данных.
+  - Связь - всегда ссылка на Roodl-объект. Исключение Get users, т.к. на системные записи пользователя нельзя подписаться и нет смысла.
   - Свзяи теперь будут прямые и обратные. Прямые - когда в item есть ссылка на id другого item. Обратные - когда нам нужно положить массив item в загруженный item. Обратные связи оказались очень удобны. Есть ограничение - нельзя просить оба вида связи, если они ссылаются друг на друга.
   - UseData пока не поддерживает пагинацию.
 - Изменения в использовании:
   - Нет опции subscribe - всегда включена под капотом.
-  - Нет Noodl-объекта с items. Items нужно брать прямо c UseData.
+  - Нет Roodl-объекта с items. Items нужно брать прямо c UseData.
   - Нет runQuery - запускается всегда при монтировании. Но есть Refetch.
   - Больше не использует defaults.
-  - Поиск работает так же. Можно как и раньше просить искать по связям. Результат выдается в таком же виде как и основные данные - Noodl-объекты со сзязями. Нужно помнить, что поиск не применяет фильтры. Их нужно накладывать самостоятельно. Поиск не подписывется на изменения в БД. Но остается активной подписка на основные данные. Если по результатам поиска на экране есть item, который хочет обновить подписка, он обновится. Но новые/удаленные/не попадающие в фильтры основного запроса items не изменят результат уже сделаного поиска.
+  - Поиск работает так же. Можно как и раньше просить искать по связям. Результат выдается в таком же виде как и основные данные - Roodl-объекты со сзязями. Нужно помнить, что поиск не применяет фильтры. Их нужно накладывать самостоятельно. Поиск не подписывется на изменения в БД. Но остается активной подписка на основные данные. Если по результатам поиска на экране есть item, который хочет обновить подписка, он обновится. Но новые/удаленные/не попадающие в фильтры основного запроса items не изменят результат уже сделаного поиска.
   - Статусы:
     - Pending - первичная загрузка.
     - Fetching - обновление данных. Не срабатывает при первичной загрузке.
@@ -2304,7 +2410,7 @@ Outputs.getDataScheme = [
 
 #### logout v0.2.0
 
-- Есть глюки на уровне Noodl, из-за которых не достаточно сделать logout() и перейти к окну авторизации. Поэтому теперь после logout() перезагружается приложение.
+- Есть глюки на уровне Roodl, из-за которых не достаточно сделать logout() и перейти к окну авторизации. Поэтому теперь после logout() перезагружается приложение.
 - Убран сигнал Logged out.
 
 #### ActionIcon v0.3.0
@@ -2332,13 +2438,13 @@ Outputs.getDataScheme = [
 #### sUpdate v0.4.0
 
 - Нода научилась обновлять учетные данные в первую очередь. Если в схеме есть класс user, сначала обновится он, потом все остальные разом.
-- Теперь выдает обновленные Noodl-объекты.
+- Теперь выдает обновленные Roodl-объекты.
 
 ### Новые ноды
 
 #### getData v0.1.0
 
-- Запрашивает данные как UseData. Но делает это в простом виде - только по сигналу, без связей, без поиска, без getUsers и главное - без Noodl-объектов. Т.е. это сугубо локальные данные никак не связанные с другими данными.
+- Запрашивает данные как UseData. Но делает это в простом виде - только по сигналу, без связей, без поиска, без getUsers и главное - без Roodl-объектов. Т.е. это сугубо локальные данные никак не связанные с другими данными.
 - Потребовалась, т.к. пока нет решения как корректно подтягивать данные во временных местах - попапы, drawer и.т.д.
 - Подходит для сценариев, когда данные точно нужны только по месту.
 
@@ -2354,7 +2460,7 @@ Outputs.getDataScheme = [
 
 ### Общее
 
-- Поправлен баг - если в ноде нет опций, не срабатывал встроенный в Noodl статус Mounted.
+- Поправлен баг - если в ноде нет опций, не срабатывал встроенный в Roodl статус Mounted.
 
 ### Изменения нод
 
@@ -2426,7 +2532,7 @@ Outputs.getDataScheme = [
 #### useData v0.2.0 `#experimental`
 
 - Вернулась системная ошибка.
-- R.items больше не используется. Нода снова выдает Noodl-объекты, но теперь в них есть все системные поля, как были в R.items.
+- R.items больше не используется. Нода снова выдает Roodl-объекты, но теперь в них есть все системные поля, как были в R.items.
 - Доработаны статусы и сигналы. Теперь их 3 вида:
   - Fetch. Основной сигнал, который нужно использовать при первичной загрузке данных в ручном режиме. На выходе выдает статус Fetching и сигнал Fetched.
   - Refetch. Делает ровно то же самое что и Fetch - запрашивает данные у сервера. На выходе выдает статус Refetching и сигнал Refetched. Разделение на Fetch и Refetch нужно по двум причинам:
@@ -2466,7 +2572,7 @@ const company = {
 			name: formHook.values.companyName,
 			contacts: {
 				phone: formHook.values.companyPhone,
-				email: formHook.values.companyEmail
+				email: formHook.values.companyEmail,
 			},
 			legal: {
 				name: formHook.values.legalName,
@@ -2475,14 +2581,14 @@ const company = {
 				inn: formHook.values.legalInn,
 				ogrn: formHook.values.legalOgrn,
 				bik: formHook.values.legalBik,
-				ks: formHook.values.legalKs
-			}
+				ks: formHook.values.legalKs,
+			},
 		},
 		states: {
 			flow: R.params.dbClasses.company.states.flow.find((i) => i.value === 'created'),
-			subscription: R.params.dbClasses.company.states.subscription.find((i) => i.value === 'notRegistered')
-		}
-	}
+			subscription: R.params.dbClasses.company.states.subscription.find((i) => i.value === 'notRegistered'),
+		},
+	},
 };
 if (opType === 'update') {
 	delete company.body.states;
@@ -2497,17 +2603,17 @@ const user = {
 			profileIds: ['companyReader', 'companyWriter'],
 			role: {
 				value: 'companyManager',
-				title: 'Менеджер компании'
-			}
+				title: 'Менеджер компании',
+			},
 		},
 		credentials: {
 			local: {
 				username: formHook.values.userName,
 				password: (Math.random() + 1).toString(36).substring(7),
-				notSecret: formHook.values.password
-			}
-		}
-	}
+				notSecret: formHook.values.password,
+			},
+		},
+	},
 };
 if (opType === 'update') {
 	delete user.content;
@@ -2521,9 +2627,9 @@ const manager = {
 	body: {
 		content: {
 			firstName: formHook.values.firstName,
-			lastName: formHook.values.lastName
-		}
-	}
+			lastName: formHook.values.lastName,
+		},
+	},
 };
 if (opType === 'update') manager.id = Inputs.selectedmanager?.id;
 
@@ -2563,10 +2669,10 @@ import { sendSignal } from '../../../../../../../libs/nodesFabric/v0.1.0/send/v0
 
 export default {
 	signals: {
-		logout: (noodlNode: NoodlNode) => {
+		logout: (noodlNode: RoodlNode) => {
 			window.R.libs.Kuzzle.auth.logout().then(() => sendSignal(noodlNode, 'loggedOut'));
-		}
-	}
+		},
+	},
 };
 ```
 
@@ -2583,7 +2689,7 @@ export default {
   - Прямые. Это те связи, которые есть непостредственно в данных БД. Т.е. в данных мы имеем запись id или массив объектов с id. Параметр для установки - References. Если установить нода попытается заменить объект с одним полем id, на Proxy объект класса, указанного в параметре. Если такого объекта нет, связи не установится.
   - Обратные. Иногда мы знаем что на этот объект ссылается несколько других, нам удобно их иметь в этом объекте, по месту. Такой случай будем называть обратной связью. Пример. Есть работник и работа. В каждой работе прописана ссылка на работника. Нам хочется иметь все работы работника в самом работнике. Добавляем обратную связь (Backward references) на работу работнику. Нода найдет все работы, в которых есть ссылка на работника и добавит их в массив.
 - Ноды useData помогают друг другу. Если в момент загрузки ноды не было данных для связи, то свзяь проставит та нода, что имеет эти данные когда загрузится. Т.е. теперь не нужно выстравивать порядок загрузки нод, они сами договорятся.
-- Любой item можно найти в R.items. Это объект, где ключ - id, а значение - сам item, в котором id пвоторяется. item имеет системные скрытые поля. Их не видно в Noodl, но можно посмотреть в консоле. Поля такие:
+- Любой item можно найти в R.items. Это объект, где ключ - id, а значение - сам item, в котором id пвоторяется. item имеет системные скрытые поля. Их не видно в Roodl, но можно посмотреть в консоле. Поля такие:
   - dbClass - класс в БД, к которому принадлежит item.
   - storeKey - сериализванные параметры запроса из useData и дефолтов из Database classes в настройках приложения. Используются как id для поиска экземпларов нод useData. По этому параметру какждый item знает откуда он пришел и как себя обновлять.
   - refs - список классов для прямых связей.
@@ -2604,16 +2710,16 @@ export default {
 
 - Обновлено описание Rolder Kit.
 - Добавлен хештег к нодам, на которых проверяются гипотезы - `#experimental`. Здесь так же будут пометки с этим хештегом на новых, не проверенных функциях.
-- `#experimental`. Новый способ работы с данными. Накопилось достаточно опыта и требований, чтобы сделать первое решение, отвечающее требованиям. useData заменит UseData. По названию видно, что новая нода работает не на React уровне. Это js-нода. Т.о. идем по следам Noodl, отделяя логику работы с данными от рендеринга.
+- `#experimental`. Новый способ работы с данными. Накопилось достаточно опыта и требований, чтобы сделать первое решение, отвечающее требованиям. useData заменит UseData. По названию видно, что новая нода работает не на React уровне. Это js-нода. Т.о. идем по следам Roodl, отделяя логику работы с данными от рендеринга.
 - Добавлена возможность передавать любые настройки Maintine через customProps. Например, во второй TextInput в Drawer установить [{'data-autofocus': true}], чтобы автофокуировка выставялась во второй инпут. Будем искать баланс между тем, чтобы не нагромождать панель настроек, но и иметь все возможности Mantine.
-- Теперь параметры на панели в Noodl отображаются в заданом в Rolder Kit порядке. `#experimental`
+- Теперь параметры на панели в Roodl отображаются в заданом в Rolder Kit порядке. `#experimental`
 - FormValidators переехали в R.libs.form. Старый путь рабочий.
 - Monorepo.
 
   - Убран из названия пакетов rolder-kit, т.к. пакеты имеют свою версию.
   - data-service переменован в data.
   - react-layer переименован в mantine. TanStack Query переведен в data.
-  - Добавлен новый пакет utils. Нужно обновить в параметрах Noodl в Head code:
+  - Добавлен новый пакет utils. Нужно обновить в параметрах Roodl в Head code:
 
     ```HTML
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -2721,13 +2827,13 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 				groupBy: 'complex.id',
 				accessor: 'complex.content.name',
 				cell: {
-					trancate: true
-				}
+					trancate: true,
+				},
 			},
 			{
 				groupBy: 'house.id',
-				accessor: 'house.content.name'
-			}
+				accessor: 'house.content.name',
+			},
 		],
 		hoverableActions: true,
 		actions: [
@@ -2737,13 +2843,13 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 				actionIconProps: {
 					variant: 'outline',
 					color: 'dark',
-					my: -6
+					my: -6,
 				},
 				iconProps: {
-					name: 'IconEdit'
-				}
-			}
-		]
+					name: 'IconEdit',
+				},
+			},
+		],
 	},
 	{
 		accessor: 'area',
@@ -2752,21 +2858,21 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 		size: 180,
 		cell: {
 			trancate: true,
-			tooltip: true
+			tooltip: true,
 		},
 		data: {
 			type: 'array',
 			arrayFormat: {
 				accessor: 'content.name',
-				sortFn: (arr) => R.libs.just.sortBy(arr, (item) => item.content.name)
-			}
-		}
+				sortFn: (arr) => R.libs.just.sortBy(arr, (item) => item.content.name),
+			},
+		},
 	},
 	{
 		accessor: '{{worker.content.firstName}} {{worker.content.lastName}}',
 		header: 'Сотрудник',
 		enableColumnFilter: true,
-		filterVariant: 'multi-select'
+		filterVariant: 'multi-select',
 	},
 	{
 		accessor: 'content.schedule.startDate.plan',
@@ -2777,10 +2883,10 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 		filter: {
 			dateInputProps: {
 				valueFormat: 'YYYY-MM-DD',
-				placeholder: 'ГГГГ-ММ-ДД'
-			}
+				placeholder: 'ГГГГ-ММ-ДД',
+			},
 		},
-		enableSorting: true
+		enableSorting: true,
 	},
 
 	{
@@ -2795,13 +2901,13 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 				actionIconProps: {
 					variant: 'outline',
 					color: 'dark',
-					my: -6
+					my: -6,
 				},
 				iconProps: {
-					name: 'IconPhoto'
-				}
-			}
-		]
+					name: 'IconPhoto',
+				},
+			},
+		],
 	},
 	{
 		accessor: 'states.flow.title',
@@ -2810,12 +2916,12 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 		cell: {
 			colorMap: {
 				accessor: 'states.flow.value',
-				map: { activated: 'green', failed: 'red' }
-			}
+				map: { activated: 'green', failed: 'red' },
+			},
 		},
 		enableColumnFilter: true,
-		filterVariant: 'multi-select'
-	}
+		filterVariant: 'multi-select',
+	},
 ];
 ```
 
@@ -2885,7 +2991,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 - Поправлен баг - форма не обновлялась, если изменить схему у существующей, примантированной форме.
 - `Правила работы с formHook` в функциях:
   - Можно не использовать Run функции, если formHook используется как источник данных и не изменяется. Хороший вариант для отлавливания любых изменений в форме.
-  - Обязательно нужно использовать Run, если мы зпускаем любые функции formHook (valdate(), setValues() и т.д.). Иначе функция зациклится и повешает Noodl.
+  - Обязательно нужно использовать Run, если мы зпускаем любые функции formHook (valdate(), setValues() и т.д.). Иначе функция зациклится и повешает Roodl.
 
 #### TextInput v0.5.0
 
@@ -2927,7 +3033,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 - Нода переведена на новый формат.
 - У этой ноды очень много [настроек](https://v6.mantine.dev/dates/date-picker/). Оставил их как в старой версии, добавив толькоу ключевые. Можно установить любые через customProps.
-- dateFormat теперь берет дефолтное значение из настроект проекта, иначе ставит 'YYYY-MM-DD'. Остался не решенный глюк - параметр в Noodl исчезает при изменении любого праметра, включая его. Значение устанавливается нормально, после обновления появляется.
+- dateFormat теперь берет дефолтное значение из настроект проекта, иначе ставит 'YYYY-MM-DD'. Остался не решенный глюк - параметр в Roodl исчезает при изменении любого праметра, включая его. Значение устанавливается нормально, после обновления появляется.
 - Добавлена возможность устанавливать иконку, как у других инпутов. Если не задать, установится иконка календаря.
 - Нода теперь работает как другие инпуты с тем отличием, что выдает на выходе дату в формате JS:
   - Можно подать на вход дефолтную дату в формате JS.
@@ -2967,7 +3073,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 #### useData v0.1.0 `#experimental`
 
-- Нода по своему поведению похожа на старую UseData. Название с маленькой буквы означает, что это js-нода. И это главная новость - весь слой работы с данными теперь отделен от React, как это сделано в Noodl.
+- Нода по своему поведению похожа на старую UseData. Название с маленькой буквы означает, что это js-нода. И это главная новость - весь слой работы с данными теперь отделен от React, как это сделано в Roodl.
 - Спасибо нужно говорить [злым марсианам](https://evilmartians.com) :)) Новое решение основано на их библиотеке [Nano Stores](https://github.com/nanostores) и их же библиотеке-дочке [Nano Stores Query](https://github.com/nanostores/query).
 - Перебрал несколько вариантов UseData. Последний показал, что направление верное, но у него один серьезный минус - жрет ресурсов как слон. В результате тормоза. Причина такой истории в том, что приходится по пять раз обновлять данные при каждом изменении из-за того, что они на уровне React.
 - Предполагается два режима работы - Query и Scheme. Сейчас реализован первый.
@@ -3000,7 +3106,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   		params: {},
   		libs: {},
   		utils: {},
-  		items: {}
+  		items: {},
   	};
   </script>
   ```
@@ -3016,20 +3122,20 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 ### Общие изменения
 
-- Monorepo. Монорепозитарий - принцип организации кода, когда мы разделаем приложение на автономные микросервисы, но в одном репозитарии. Технически это означает не один пакет на приложение, а несколько. В последних обновлениях объем Rolder kit вырос до 3 Мб. Это становится проблемой, учитывая, что половина из этого используется редко, а сам Noodl вешает 800 Kb c версии 2.9.1
+- Monorepo. Монорепозитарий - принцип организации кода, когда мы разделаем приложение на автономные микросервисы, но в одном репозитарии. Технически это означает не один пакет на приложение, а несколько. В последних обновлениях объем Rolder kit вырос до 3 Мб. Это становится проблемой, учитывая, что половина из этого используется редко, а сам Roodl вешает 800 Kb c версии 2.9.1
 
   - Взяв на вооружение принцип Monorepo, удалось разрезать Rolder kit на несколько пакетов:
-    - react-layer - основной пакет с Mantine и всеми React-нодами. Включает в себя UseData, а значит и весь стек TanStack Query. С новыми и переведенными нодаме получилось 280 Kb. Цель оставаться в размерах, не превышающих размеры Noodl.
+    - react-layer - основной пакет с Mantine и всеми React-нодами. Включает в себя UseData, а значит и весь стек TanStack Query. С новыми и переведенными нодаме получилось 280 Kb. Цель оставаться в размерах, не превышающих размеры Roodl.
     - data-service - все те JS-ноды, что оборачиваю Kuzzle. Create, update, initBackend и т.д. Размер расти сильно не должен, т.к. прирост будет только за счет внутренних функций, которые очень легкие. Сейчас 114 Kb.
-    - libs - все библиотеки, что используются в Rolder kit + нами написанные библиотеки. Например, набор утилит из Just или Lodash, dayjs, fast-sort и т.д. Раньше мы часть из них подавали в Noodl, например dayjs. Теперь они все будут лежать по такому пути: R.libs[название библиотеки]. Можно вывести в лог R.libs и увидеть все. Сейчас там самые базовые библиоткеи. Вешает 114 Kb.
+    - libs - все библиотеки, что используются в Rolder kit + нами написанные библиотеки. Например, набор утилит из Just или Lodash, dayjs, fast-sort и т.д. Раньше мы часть из них подавали в Roodl, например dayjs. Теперь они все будут лежать по такому пути: R.libs[название библиотеки]. Можно вывести в лог R.libs и увидеть все. Сейчас там самые базовые библиоткеи. Вешает 114 Kb.
     - Другие - редко ипользуемые ноды, за которыми стоят те или иные тяжелые библиотеки. Например, AWS S3 вешает все 300 Kb, а нужна только в случаях загрузки файлов в Yandex. Сейчас там нет нод.
   - Таким образом, Rolder kit теперь на одна папка с кучей файлов, а несколько папок с 3-мя файлами в каждой.
-  - За счет того, что каждый пакет имеет свое название, в дебагере в Network можно анализировать скорость загрузки и видеть порядок загрузки, а главное, видеть, что наши пакеты загружаются быстрее Noodl, что и подтверждает достижение цели - оставаться на скорости, которую дает Noodl.
+  - За счет того, что каждый пакет имеет свое название, в дебагере в Network можно анализировать скорость загрузки и видеть порядок загрузки, а главное, видеть, что наши пакеты загружаются быстрее Roodl, что и подтверждает достижение цели - оставаться на скорости, которую дает Roodl.
   - Чтобы начать пользоваться нужно:
 
     - Заменить папку Rolder kit на новые папки.
     - Реорганизвать главный экран по примеру СмартКлин.
-    - Добавить в параметрах Noodl в Head code:
+    - Добавить в параметрах Roodl в Head code:
 
       ```HTML
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> // стандартная настройка любого React-проекта
@@ -3043,7 +3149,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
       </script>
       ```
 
-- Версионность. Раньше приходилось добавлять первый номер из версии в название ноды на уровне Noodl. Теперь это не нужно. Все обновленные ноды будут называться, не включая номер версии. Это нужно, чтобы версионность полностью переехала в саму ноду и чтобы больше не пладить кучу нод. Со временем придумаем как замерять использование нод и будем уберать старые. Может придумаем какой триггер, чтобы сообщать разработчику, что нужно бы заменить старые ноды.
+- Версионность. Раньше приходилось добавлять первый номер из версии в название ноды на уровне Roodl. Теперь это не нужно. Все обновленные ноды будут называться, не включая номер версии. Это нужно, чтобы версионность полностью переехала в саму ноду и чтобы больше не пладить кучу нод. Со временем придумаем как замерять использование нод и будем уберать старые. Может придумаем какой триггер, чтобы сообщать разработчику, что нужно бы заменить старые ноды.
 - Начиная с этой версии будем развивать респонсивность: [responsive-styles](https://v6.mantine.dev/styles/style-props/#responsive-styles)
 
 ### Изменения нод
@@ -3083,9 +3189,9 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 #### Box v0.1.0
 
-- Нода-кастомный элемент. По своей сути это базовый элемент всех других элементов в Mantine. В HTML это div. Мы его используем как замену Group в Noodl.
-- [style-props](https://v6.mantine.dev/styles/style-props/) принимает как и другие ноды - через аналоги в интерфейсе Noodl.
-- [style](https://v6.mantine.dev/styles/style/), который в Noodl называется CSS Style в группе Advanced HTML, теперь можно использовать. Он и раньше работал, но то было случайно, теперь же это вводится как поддерживаемая функция. Со временем эта возможность будет на всех элементах.
+- Нода-кастомный элемент. По своей сути это базовый элемент всех других элементов в Mantine. В HTML это div. Мы его используем как замену Group в Roodl.
+- [style-props](https://v6.mantine.dev/styles/style-props/) принимает как и другие ноды - через аналоги в интерфейсе Roodl.
+- [style](https://v6.mantine.dev/styles/style/), который в Roodl называется CSS Style в группе Advanced HTML, теперь можно использовать. Он и раньше работал, но то было случайно, теперь же это вводится как поддерживаемая функция. Со временем эта возможность будет на всех элементах.
 - Таким образом можно реализовывать все то, что не поддерживают наши ноды с точки зрения CSS. Нужна особая тень, оборачиваем элемент в Box, вставляем CSS. Нужна хитрая анимация, оборачиваем...
 - Ограничение: изменение CSS Style не обновляет ноду динамически, как это происходит с другими параметрами. Нужно или перезагрузить экран или "потрогать" другой параметр.
 
@@ -3094,14 +3200,14 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 - По сути похожа на кнопку, но имеет два важных отличия, которые превращают ноду в хороший вариант для меню навигации:
   - Растягивает подсветку во всю ширину.
   - Имеет статус active.
-- Наша доработка под навигацию Noodl. Page Router умеет передавать Current Page Title. Поскольку NavLink нормально выглядет только с label, сделал дополнительный статус activateLabel. В него нужно передавать значение Current Page Title. Label в Navlink нужно выставить равный Title в Page. Navlink сравнит actvateLabel с label и выставит статус active = true, если они равны. По нажатию на NavLink выдается сигнал, который можно передать в Navigate и выбрать нужную странницу.
+- Наша доработка под навигацию Roodl. Page Router умеет передавать Current Page Title. Поскольку NavLink нормально выглядет только с label, сделал дополнительный статус activateLabel. В него нужно передавать значение Current Page Title. Label в Navlink нужно выставить равный Title в Page. Navlink сравнит actvateLabel с label и выставит статус active = true, если они равны. По нажатию на NavLink выдается сигнал, который можно передать в Navigate и выбрать нужную странницу.
 - Не подходит для варианта меню с иконками без подписей. Смотри Tabs.
 - Пример в СмартКлин, рабочее место Admin.
 
 #### Tabs v0.1.0
 
 - Табы для навигации. Это мулти-компонентая нода, состоящая из Tabs и Tab. Tabs организует табы, устанавливает активный, некторые опции передает в Tab. Tab похож на ActionIcon.
-- Как использовать с навигацией Noodl.
+- Как использовать с навигацией Roodl.
   - Передаем Current Page Title из Page Router в value.
   - В каждом Tab прописываем Value в соответсвии с Title нужной Page.
   - От каждого Tab протягиваем сигнал к Navigate. В Navigate выбираем нужную странницу.
@@ -3134,31 +3240,31 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 	{
 		accessor: 'content.name',
 		header: 'Название',
-		size: 30
+		size: 30,
 	},
 	{
 		accessor: 'states.subscription.label',
 		header: 'Статус',
-		size: 20
+		size: 20,
 	},
 	{
 		accessor: '{{content.subscription.count.area}} зон. / {{content.subscription.count.worker}} сот.',
 		header: 'Тариф',
 		defaultValue: '',
-		size: 20
+		size: 20,
 	},
 	{
 		accessor: 'content.subscription.balance',
 		header: 'Баланс',
-		size: 20
+		size: 20,
 	},
 	{
 		accessor: 'content.subscription.date.end',
 		header: 'Дата окончания',
 		dataType: 'date',
 		dataFormat: 'YYYY-MM-DD',
-		size: 20
-	}
+		size: 20,
+	},
 ];
 ```
 
@@ -3190,7 +3296,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 ### Общие изменения
 
-- Рефакторинг интеграции с Noodl. Здесь описание: [NODES.md](NODES.md)
+- Рефакторинг интеграции с Roodl. Здесь описание: [NODES.md](NODES.md)
 
 ### Изменения нод
 
@@ -3299,9 +3405,9 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   	items: companyIds?.map((id) => ({
   		id,
   		body: {
-  			states: { flow: { value: stateValue, label: stateLabel } }
-  		}
-  	}))
+  			states: { flow: { value: stateValue, label: stateLabel } },
+  		},
+  	})),
   };
   const user = {
   	dbClass: 'user',
@@ -3310,11 +3416,12 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   		body: {
   			credentials: {
   				local: {
-  					password: stateValue === 'activated' ? i.user.credentials.local.notSecret : (Math.random() + 1).toString(36).substring(7)
-  				}
-  			}
-  		}
-  	}))
+  					password:
+  						stateValue === 'activated' ? i.user.credentials.local.notSecret : (Math.random() + 1).toString(36).substring(7),
+  				},
+  			},
+  		},
+  	})),
   };
   Outputs.scheme = [company, user];
   ```
@@ -3332,7 +3439,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 - Схема классов БД переехала из App в параметры приложения. Нужно это для поддержки выбора класса из списка, а не ввода руками. Старая схема используется старыми нодами, новая новыми, начиная с UsaeData v1.
 - Теперь подписываться на обновления данных нужно в UseData а не в схеме классов БД. Это позволит уменьшить нагрузку как на сервер, так и на фронт. Стараый принип генерировал много событий, это могло привести к тормозам при большом количестве пользователей.
 - Добавлена возможность задавать дефолтные настройки не только для сортировок и опций, но и для фильтров.
-- Формат фильтров Elastic заменен на Koncorde: <https://docs.kuzzle.io/core/2/api/koncorde-filters-syntax/clauses/> Такой формат ощутимо проще, но и достаточно функционален. В многом напоминает формат Noodl.
+- Формат фильтров Elastic заменен на Koncorde: <https://docs.kuzzle.io/core/2/api/koncorde-filters-syntax/clauses/> Такой формат ощутимо проще, но и достаточно функционален. В многом напоминает формат Roodl.
 - Сортировки теперь задаются массивом, что дает возможность сортировать по нескольким ключам.
 - Формат схемы изменился:
 
@@ -3344,18 +3451,18 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   			defaults: {
   				filters: { equals: { 'content.firstName': 'Родион' } },
   				sorts: [{ 'content.name': 'asc' }],
-  				options: { size: 100 }
-  			}
+  				options: { size: 100 },
+  			},
   		},
   		manager: {
   			version: 1,
   			references: ['company', 'user'],
   			defaults: {
   				sorts: [{ 'content.lastName': 'asc' }, { 'content.firstName': 'asc' }],
-  				options: { size: 100 }
-  			}
-  		}
-  	}
+  				options: { size: 100 },
+  			},
+  		},
+  	},
   ];
   ```
 
@@ -3380,10 +3487,10 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   			name: formHook.values.companyName,
   			contacts: {
   				phone: formHook.values.companyPhone,
-  				email: formHook.values.companyEmail
-  			}
-  		}
-  	}
+  				email: formHook.values.companyEmail,
+  			},
+  		},
+  	},
   };
 
   const user = {
@@ -3394,16 +3501,16 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   			profileIds: ['companyReader', 'companyWriter'],
   			role: {
   				value: 'companyManager',
-  				title: 'Менеджер компании'
-  			}
+  				title: 'Менеджер компании',
+  			},
   		},
   		credentials: {
   			local: {
   				username: formHook.values.userName,
-  				password: formHook.values.password
-  			}
-  		}
-  	}
+  				password: formHook.values.password,
+  			},
+  		},
+  	},
   };
 
   const manager = {
@@ -3413,9 +3520,9 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   	body: {
   		content: {
   			firstName: formHook.values.firstName,
-  			lastName: formHook.values.lastName
-  		}
-  	}
+  			lastName: formHook.values.lastName,
+  		},
+  	},
   };
 
   createScheme = [company, user, manager];
@@ -3439,16 +3546,16 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   			profileIds: ['companyReader', 'companyWriter'],
   			role: {
   				value: 'companyManager',
-  				title: 'Менеджер компании'
-  			}
+  				title: 'Менеджер компании',
+  			},
   		},
   		credentials: {
   			local: {
   				username: 'username',
-  				password: 'password'
-  			}
-  		}
-  	}
+  				password: 'password',
+  			},
+  		},
+  	},
   };
   ```
 
@@ -3494,7 +3601,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 ### Общие изменения
 
 - Добавлена функция, которая проверяет есть ли у ноды выход.
-- Прикручены контексты React. Для нас это означает, что теперь можно передавать данные в иерархии React-нод от родителей к детям без свзяей на уровне Noodl. Первый пример, это Form и ее дети - TextInput, MaskedInput. Теперь не жуно каждому инпуту передавать formHook.
+- Прикручены контексты React. Для нас это означает, что теперь можно передавать данные в иерархии React-нод от родителей к детям без свзяей на уровне Roodl. Первый пример, это Form и ее дети - TextInput, MaskedInput. Теперь не жуно каждому инпуту передавать formHook.
 - Вернулся тип инпута array, снова можно выставлять схемы в праметрах или передавать их снаружи ноды.
 - Добавлен новый тип инпута propList. Позволяет задать произвольный список текстовых параметров.
 - Добавлена проверка типа данных для нод нового формата.
@@ -3617,7 +3724,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   		job: '',
   		email: '',
   		favoriteColor: '',
-  		age: 18
+  		age: 18,
   	},
 
   	validate: {
@@ -3625,8 +3732,8 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   		job: isNotEmpty('Enter your current job'),
   		email: isEmail('Invalid email'),
   		favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/, 'Enter a valid hex color'),
-  		age: isInRange({ min: 18, max: 99 }, 'You must be 18-99 years old to register')
-  	}
+  		age: isInRange({ min: 18, max: 99 }, 'You must be 18-99 years old to register'),
+  	},
   };
   ```
 
@@ -3638,9 +3745,9 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 - Добавлена группа настроек приложения 'Defaults' и первый параметр в ней 'DateFormat'. Постепенно, все ноды, которые форматируют дату внтури (пока только Table) будут форматировать ее по заданному формату из настроек ноды, если не задано, то из Defaults-настроек приложения.
 - Изменен прицип работы с цветами. Теперь его нужно указывать текстом как описано в документации Mantine. Пример: 'red.5', где число - shade от 0 до 9. 0 - совсем блеклый, 9 - темный. Можно указать просто цвет, тогда shade будет равен 6. Пока только в Table v1.0.0
 - `Большое изменение в принципе разработки нод`. Теперь параметры нод можно назначать динамически. Это решило ряд проблем, добавило плюшек, но внесло и свои ограничения:
-  - Версионность. Ноды как и раньше будут называться с первой цифрой версии. Но теперь нужно выбирать в параметрах ноды версию, после чего появятся все настройки этой версии. Выбранный параметр версии сохраняется в Noodl, поэтому при апгрейде ноды все старые версии будут работать. Пока версия не выбрана, нода не отрисовывает React-компоненту.
-  - Обязательные параметры. Теперь ноды будут ругаться в самом Noodl, если не хватает каких-то обязательных параметров.
-  - Зависымые параметры. Как и раньше по некоторым галочкам будут появляться/исчезать параметры. Но теперь данные у исчезнувших параметров не будут передоваться в ноду, что исключит не понятное поведение. При этом вбитые руками параметры будут сохраняться на уровне Noodl.
+  - Версионность. Ноды как и раньше будут называться с первой цифрой версии. Но теперь нужно выбирать в параметрах ноды версию, после чего появятся все настройки этой версии. Выбранный параметр версии сохраняется в Roodl, поэтому при апгрейде ноды все старые версии будут работать. Пока версия не выбрана, нода не отрисовывает React-компоненту.
+  - Обязательные параметры. Теперь ноды будут ругаться в самом Roodl, если не хватает каких-то обязательных параметров.
+  - Зависымые параметры. Как и раньше по некоторым галочкам будут появляться/исчезать параметры. Но теперь данные у исчезнувших параметров не будут передоваться в ноду, что исключит не понятное поведение. При этом вбитые руками параметры будут сохраняться на уровне Roodl.
   - Сигналы для React-нод. Теперь можно отправлять нормальные сигналы в React-ноды.
   - Все это доступно для Table v1. По мере багфикосв, доработок, переедут и остальные ноды.
   - Ограничения:
@@ -3656,7 +3763,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 - На входе все фнкции FilterBy теперь ждут объект вместо списка параметров. Так нагляднее.
 - Добавлена новая функция FilterBy.reference
 
-  - В отличии от FilterBy.values и FilterBy.dateRange, эта функция не ждет объектов 'items', а сама находит их в Noodl-объектах.
+  - В отличии от FilterBy.values и FilterBy.dateRange, эта функция не ждет объектов 'items', а сама находит их в Roodl-объектах.
   - На входе ждет объект { dbClass: string, refDbClass: string, reversedRef: boolean }, где:
     - dbClass: название фильтруемого класса
     - refDbClass: название класса, которым фильтруем
@@ -3734,18 +3841,18 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
       		groupShceme: [
       			{
       				groupBy: 'complex.id',
-      				accessor: 'complex.content.name'
+      				accessor: 'complex.content.name',
       				/* cellProps: {
                           multiselect: true
                       } */
       			},
       			{
       				groupBy: 'house.id',
-      				accessor: 'house.content.name'
+      				accessor: 'house.content.name',
       				/* cellProps: {
                           ml: 42
                       } */
-      			}
+      			},
       		],
       		actions: [
       			{
@@ -3754,26 +3861,26 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
       				props: {
       					actionIcon: {
       						variant: 'outline',
-      						color: 'dark'
+      						color: 'dark',
       					},
       					icon: {
-      						iconName: 'IconEdit'
-      					}
-      				}
-      			}
-      		]
+      						iconName: 'IconEdit',
+      					},
+      				},
+      			},
+      		],
       	},
       	{
       		accessor: 'area.content.name',
       		header: 'Зона',
       		enableColumnFilter: true,
-      		filterVariant: 'multi-select'
+      		filterVariant: 'multi-select',
       	},
       	{
       		accessor: '{{worker.content.firstName}} {{worker.content.lastName}}',
       		header: 'Сотрудник',
       		enableColumnFilter: true,
-      		filterVariant: 'multi-select'
+      		filterVariant: 'multi-select',
       	},
       	{
       		accessor: 'content.schedule.startDate.plan',
@@ -3782,7 +3889,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
       		size: 160,
       		enableColumnFilter: true,
       		filterVariant: 'date-range',
-      		filterProps: { dateFormat: 'YYYY-MM-DD' }
+      		filterProps: { dateFormat: 'YYYY-MM-DD' },
       	},
       	{
       		header: 'Фото',
@@ -3794,23 +3901,23 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
       				props: {
       					actionIcon: {
       						variant: 'outline',
-      						color: 'dark'
+      						color: 'dark',
       					},
       					icon: {
-      						iconName: 'IconPhoto'
-      					}
-      				}
-      			}
+      						iconName: 'IconPhoto',
+      					},
+      				},
+      			},
       		],
-      		size: 0
+      		size: 0,
       	},
       	{
       		accessor: 'states.flow.title',
       		header: 'Статус',
       		size: 140,
       		enableColumnFilter: true,
-      		filterVariant: 'multi-select'
-      	}
+      		filterVariant: 'multi-select',
+      	},
       ];
       ```
 
@@ -3882,7 +3989,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 ### Общие изменения
 
-- Utils. Внутри Rolder Kit есть простые функции, которые часто нужно использовать, они выделены в отдельную папку. Часть из них есть смысл использовать на уровне Noodl. Добавил одну такую утилитку: FilterBy. Это объект, ключами которого сделаны функции. Пока их две: values и dateRange. Возвращает объект с двумя ключами: r - true, если что-то отфильтровалось и i - сами отфильтрованные объекты. Такие утлилиты сидят в объекте window, а значит их можно вызывать напрямую. Поэтому называются с большой буквы, чтобы не путать с локальными функциями.
+- Utils. Внутри Rolder Kit есть простые функции, которые часто нужно использовать, они выделены в отдельную папку. Часть из них есть смысл использовать на уровне Roodl. Добавил одну такую утилитку: FilterBy. Это объект, ключами которого сделаны функции. Пока их две: values и dateRange. Возвращает объект с двумя ключами: r - true, если что-то отфильтровалось и i - сами отфильтрованные объекты. Такие утлилиты сидят в объекте window, а значит их можно вызывать напрямую. Поэтому называются с большой буквы, чтобы не путать с локальными функциями.
   - FilterBy.values(items: any[], values: string[], field: string). Фильтрует поданные объекты по списку значений, чаще всего это id. Field умеет принимать dot notation.
   - FilterBy.dateRange(items: any[], dateRange: [Date, Date], field: string). Фильтрует поданные объекты по дате, попадающий в диапазон двух дат. Первая дата округляется на начало дня, вторая на конец. Поле даты в items может быть в любом формате: Date, Dayjs, string.
 
@@ -3914,10 +4021,10 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   	{
   		bool: {
   			must_not: {
-  				term: { 'states.archived': true }
-  			}
-  		}
-  	}
+  				term: { 'states.archived': true },
+  			},
+  		},
+  	},
   ];
   ```
 
@@ -3925,10 +4032,10 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 ### Общие изменения
 
-- Версионность. Теперь про ноды. Наработался опыт изменения версий нод, стало понятно, что не удобно из-за каждого изменения создавать новую ноду в Noodl. Слишком муторно их менять. С другой стороны, нужно как то обезапаситься от ошибок. Берем на вооружение такой принципЖ
-  - На уровне Noodl все ноды будут иметь только первую цифру версии, т.е. v0, v1 и т.д.
+- Версионность. Теперь про ноды. Наработался опыт изменения версий нод, стало понятно, что не удобно из-за каждого изменения создавать новую ноду в Roodl. Слишком муторно их менять. С другой стороны, нужно как то обезапаситься от ошибок. Берем на вооружение такой принципЖ
+  - На уровне Roodl все ноды будут иметь только первую цифру версии, т.е. v0, v1 и т.д.
   - На уровне Rolder Kit, т.е. при его рахработке остаются полные версии из 3-х цифр. Нужно чтобы сохранялась история, чтобы откатиться, если что.
-  - Таким образом, версия в Noodlбудет меняться только если есть изменения, которые нельзя совместить с предыдущей версией, которые ломают существующие ноды. Например, если переименован существующий порт, сама нода или изменился формат данных. Переходить будем постепенно. Первая нода: Select v0.
+  - Таким образом, версия в Roodlбудет меняться только если есть изменения, которые нельзя совместить с предыдущей версией, которые ломают существующие ноды. Например, если переименован существующий порт, сама нода или изменился формат данных. Переходить будем постепенно. Первая нода: Select v0.
 
 ### Изменения нод
 
@@ -3949,12 +4056,12 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 ### Общие изменения
 
 - Версионность. Разобрался с версионностью. Теперь она приведена к общему подходу. К слову, это так же и для всех проектов, не только Rolder Kit. Принцип верисонирования:
-  - Первая цифра: глобальные изменения. Например, переводя Раско на Noodl появится версия 2 как только выдадим клиенту первый набор функций. При этом, начинаем мы с цифры 0, как сейчас со Стартумом, а цифра 1 появится с полным выполнением ТЗ заказчика.
+  - Первая цифра: глобальные изменения. Например, переводя Раско на Roodl появится версия 2 как только выдадим клиенту первый набор функций. При этом, начинаем мы с цифры 0, как сейчас со Стартумом, а цифра 1 появится с полным выполнением ТЗ заказчика.
   - Вторая цифра: новые функции, доработки функций.
   - Третья цифра: исправление багов.
   - Соответсвенно, если исправили баги и добавили функйии, растет вторая цифра, если только баги, только последняя.
-- В настроки Noodl добавлена версия проекта: Project version. Сейчас просто для удобства, когда Noodl прикрутит Github, будем использовать там. Удобство в том, что при debug=2, версия видна в консоли в объекте Rolder, что помогает не запутаться между вуерсиями dev, stage, prod.
-- Уложился принцип использования сторонних библиотек. Все библиотеки называются с большой буквы, чтобы не путать с функциями. Внутри Rolder Kit они импортируются стнадартным способом. В Noodl часть из них подаются в объект window, что позволяет их вызывать напрямую. Сейчас это три библиотеки: Dayjs для работы с датами, Clone для глубоко клонирования объектов и Mustache для работы с шаблонами. Таким образом вызывать их нужно напрямую: Clone(), Dayjs() и т.д.
+- В настроки Roodl добавлена версия проекта: Project version. Сейчас просто для удобства, когда Roodl прикрутит Github, будем использовать там. Удобство в том, что при debug=2, версия видна в консоли в объекте Rolder, что помогает не запутаться между вуерсиями dev, stage, prod.
+- Уложился принцип использования сторонних библиотек. Все библиотеки называются с большой буквы, чтобы не путать с функциями. Внутри Rolder Kit они импортируются стнадартным способом. В Roodl часть из них подаются в объект window, что позволяет их вызывать напрямую. Сейчас это три библиотеки: Dayjs для работы с датами, Clone для глубоко клонирования объектов и Mustache для работы с шаблонами. Таким образом вызывать их нужно напрямую: Clone(), Dayjs() и т.д.
 
 ### Изменения нод
 
@@ -3962,7 +4069,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 - Доработана авторизация. Раньше авторизация обновлялась только с обновлением всей старнницы, сейчас обновляется каждый раз при активации вкладки или всего браузера. Принцип работы:
   - При авторизации Kuzzle возвращает JWT, который записываетсяв куки.
-  - При некторых событиях JWT проверяется на актуальность и обновляется. Сравнивается время его жизни (в найстройках Noodl Session timout). Время еще есть, JWT из куки проверяется Kuzzle на валидность. Если JWT валидный и время не вышло, ползователь попадает в приложение, иначе в окно авторизации.
+  - При некторых событиях JWT проверяется на актуальность и обновляется. Сравнивается время его жизни (в найстройках Roodl Session timout). Время еще есть, JWT из куки проверяется Kuzzle на валидность. Если JWT валидный и время не вышло, ползователь попадает в приложение, иначе в окно авторизации.
   - Есть три события, когда обрабатывается JWT: при авторизации он первый раз попадает в куки, при нициализации бекенда и активации окна он валидируется и обновляется.
   - Таким образом, если установить Session timout, скажем на 8 часов, то пользователь будет видеть окно авторизации каждое утро, т.к. за ночь JWT ни разу не обновится. Если же поставить на 24 часа, то пользователь будет проходить авторизацию после выходных.
 
@@ -4009,14 +4116,14 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 #### UseData
 
-- Добавлен статус loading. Он есть у самой UseData и у объекта Noodl, в который UseData записывает данные.
+- Добавлен статус loading. Он есть у самой UseData и у объекта Roodl, в который UseData записывает данные.
 - Поправлен баг, из-за которого не обновлялись данные при subcribe: true
 - Убрана опция Set references
 
 #### UseSearch v0.2.0
 
 - За счет нового подхода к связям теперь проделывает такую работу с найденными данными:
-  - Заменяет найденные объекты объектами Noodl, тем самым восстанавливая связи.
+  - Заменяет найденные объекты объектами Roodl, тем самым восстанавливая связи.
   - В соответсвии с параметром Database classes, добавляет в реузльтааты поиска свзязанные данные.
 
 #### Шаблоны Mustache
@@ -4031,12 +4138,12 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
   [
   	{
   		value: 'option1',
-  		label: 'Вариант 1'
+  		label: 'Вариант 1',
   	},
   	{
   		value: 'option2',
-  		label: 'Вариант 2'
-  	}
+  		label: 'Вариант 2',
+  	},
   ];
   ```
 
@@ -4049,7 +4156,7 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
 
 ### Новые молекулы
 
-- Box. Box - единственная молекула, которая не имеет праметров в Mantine. Она принимает только sx. Для этого и создана - прикручивать любой css. Очень похожа на Group в Noodl. В нашем случае добавлены параметры высоты, ширины и автовысоты. Эта нода появилась из-за потребности упралять скролом, когда скрол всей странницы не подходит. Чтобы скрол заработал, нужно, чтобы дочерние ноды поддерживали скрол или нужно обернуть дочерние ноды Box в ScrollArea. Сейчас проверено на Table v0.2.0 Как использовать: нужно включить параметра Autoheigth и указать Bottom offset. Работает так: Box берет высоту экрана (portview), отнимает Bottom offset и задает фиксированную высоту, что и является требованием для включения скрола.
+- Box. Box - единственная молекула, которая не имеет праметров в Mantine. Она принимает только sx. Для этого и создана - прикручивать любой css. Очень похожа на Group в Roodl. В нашем случае добавлены параметры высоты, ширины и автовысоты. Эта нода появилась из-за потребности упралять скролом, когда скрол всей странницы не подходит. Чтобы скрол заработал, нужно, чтобы дочерние ноды поддерживали скрол или нужно обернуть дочерние ноды Box в ScrollArea. Сейчас проверено на Table v0.2.0 Как использовать: нужно включить параметра Autoheigth и указать Bottom offset. Работает так: Box берет высоту экрана (portview), отнимает Bottom offset и задает фиксированную высоту, что и является требованием для включения скрола.
 - Table v0.2.0:
 
   - Добавлена опция 'respectLineBreak' в схему таблицы. Эта опция нужна, если требуется сохранить переносы строк исходного текста. Пример использования:
@@ -4059,16 +4166,16 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
     	{
     		accessor: 'content.name',
     		title: 'Название',
-    		width: '8rem'
+    		width: '8rem',
     	},
     	{
     		accessor: 'content.description',
     		title: 'Описание',
     		width: '8rem',
     		props: {
-    			respectLineBreak: true
-    		}
-    	}
+    			respectLineBreak: true,
+    		},
+    	},
     ];
     ```
 
@@ -4079,8 +4186,8 @@ export interface ColumnDef extends MRT_ColumnDef<NItem> {
     	{
     		accessor: 'Уважаемый {{content.firstName}} {{content.lastName}}, еще текст...',
     		title: 'ФИО',
-    		width: '8rem'
-    	}
+    		width: '8rem',
+    	},
     ];
     ```
 

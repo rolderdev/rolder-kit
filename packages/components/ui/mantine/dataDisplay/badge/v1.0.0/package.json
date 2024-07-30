@@ -1,0 +1,15 @@
+{
+	"name": "@packages/badge-v1.0.0",
+	"main": "badge.tsx",
+	"types": "badge.tsx",
+	"dependencies": {
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22",
+		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
+		"@packages/scope": "workspace:@packages/scope-v0.1.0@*"
+	},
+	"devDependencies": {
+		"types": "workspace:*",
+		"@packages/node": "workspace:@packages/node-v0.8.0@*"
+	}
+}

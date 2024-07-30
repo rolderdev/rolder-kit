@@ -1,5 +1,4 @@
-import { StyleSheet, type Styles, View } from "@react-pdf/renderer";
-import React from "react";
+import { StyleSheet, type Styles, View } from "@react-pdf/renderer";;
 import Cell from "./cell";
 import type { RowT } from "../types";
 import utils from "./utils";

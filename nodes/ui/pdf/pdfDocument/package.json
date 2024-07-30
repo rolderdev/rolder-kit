@@ -1,15 +1,15 @@
 {
-  "name": "@nodes/pdf-document",
-  "main": "pdfDocumentNode.ts",
-  "types": "pdfDocumentNode.ts",
-  "dependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "@packages/pdf-document-v1.0.0": "workspace:*",
-    "@packages/pdf-document-v1.1.0": "workspace:*",
-    "@packages/pdf-document-v1.2.0": "workspace:*",
-    "@packages/port": "workspace:@packages/port-v0.6.0@*"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@nodes/pdf-document",
+	"main": "pdfDocumentNode.ts",
+	"types": "pdfDocumentNode.ts",
+	"dependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"@packages/pdf-document-v1.0.0": "workspace:*",
+		"@packages/pdf-document-v1.1.0": "workspace:*",
+		"@packages/pdf-document-v1.2.0": "workspace:*",
+		"@packages/port": "workspace:@packages/port-v0.6.0@*"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }

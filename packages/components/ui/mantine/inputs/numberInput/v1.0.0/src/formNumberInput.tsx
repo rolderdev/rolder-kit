@@ -1,7 +1,6 @@
 import { NumberInput, NumberInputHandlers } from "@mantine/core"
 import { forwardRef, useImperativeHandle, useRef } from "react"
-import { Props } from "../types"
-import React from "react"
+import type { Props } from "../types"
 import { sendOutput, sendSignal } from '@packages/port-send'
 import { useFormScope } from "@packages/scope"
 import convertColor from "@packages/convert-color"

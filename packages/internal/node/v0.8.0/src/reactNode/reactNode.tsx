@@ -1,12 +1,8 @@
-import {
-    type BaseReactProps, type CompDefinition, type CompVersions, type GraphModel, type GraphModelNode, type NodeContext,
-    type ReactNodeDef
-} from "../../types"
+import type { BaseReactProps, CompDefinition, CompVersions, GraphModel, GraphModelNode, NodeContext, ReactNodeDef } from "../../types"
 import { hasWarings } from "../funcs/warnings"
 import { Suspense, forwardRef, useImperativeHandle, useRef } from "react"
 import getReactNodePorts from "./getReactNodePorts"
-import React from "react"
-import { type NodePort } from "@packages/port"
+import type { NodePort } from "@packages/port"
 import getProps from "../funcs/getProps"
 import { setNodeParameterDefault } from "../funcs/defaults"
 import { convertAndCheckProp } from "../funcs/convertAndCheckTypes"
@@ -49,7 +45,9 @@ export const reactNode = (nodeName: string, versions: CompVersions, params?: Par
         getReactComponent() {
             return forwardRef(function (props: BaseReactProps, ref) {
                 const localRef = useRef<any>(null)
-                useImperativeHandle(ref, () => ({ signal(name: string) { localRef.current?.[name]() } }))
+                useImperativeHandle(ref, () => ({
+                    signal(name: string) { setTimeout(() => localRef.current?.[name]()) }
+                }))
                 const version = props.version
 
                 const p = version ? getProps(versions, props) : {}

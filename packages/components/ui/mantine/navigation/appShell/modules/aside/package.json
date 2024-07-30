@@ -1,0 +1,14 @@
+{
+	"name": "@packages/aside-v1.0.0",
+	"main": "aside.tsx",
+	"types": "aside.tsx",
+	"dependencies": {
+		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"types": "workspace:*"
+	}
+}

@@ -7,6 +7,7 @@ export default reactNode(
 	'ExpansionRow',
 	{
 		'v1.0.0': {
+			hashTag: '#deprecated',
 			module: { static: v100 }
 		},
 		'v1.1.0': {

@@ -1,8 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { useDebouncedValue } from "@mantine/hooks"
 import { CloseButton, TextInput } from "@mantine/core"
-import { Props } from "../types"
-import React from "react"
+import type { Props } from "../types"
 import { sendOutput, sendSignal } from '@packages/port-send'
 import convertColor from "@packages/convert-color"
 

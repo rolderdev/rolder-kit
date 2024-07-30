@@ -6,9 +6,7 @@ const dataNode = reactNode(
 	'Data',
 	{
 		'v1.0.0': {
-			module: {
-				dynamic: lazy(() => import('@packages/data-v1.0.0'))
-			},
+			module: { dynamic: lazy(() => import('@packages/data-v1.0.0')) },
 			inputs: [
 				getPort({
 					plug: 'input',
@@ -16,7 +14,7 @@ const dataNode = reactNode(
 					displayName: 'Backend version',
 					group: 'Params',
 					type: 'string',
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -24,7 +22,7 @@ const dataNode = reactNode(
 					displayName: 'DB name',
 					group: 'Params',
 					type: 'string',
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -32,7 +30,7 @@ const dataNode = reactNode(
 					displayName: 'Persist data',
 					group: 'Params',
 					type: 'boolean',
-					default: false
+					default: false,
 				}),
 				getPort({
 					plug: 'input',
@@ -40,7 +38,7 @@ const dataNode = reactNode(
 					displayName: 'Backend dev mode',
 					group: 'Params',
 					type: 'boolean',
-					default: false
+					default: false,
 				}),
 				getPort({
 					plug: 'input',
@@ -53,8 +51,8 @@ const dataNode = reactNode(
 						required: 'both',
 						dependsOn(p) {
 							return p.backendDevMode ? true : false;
-						}
-					}
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -67,8 +65,8 @@ const dataNode = reactNode(
 						required: 'both',
 						dependsOn(p) {
 							return p.backendDevMode ? true : false;
-						}
-					}
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -77,7 +75,7 @@ const dataNode = reactNode(
 					group: 'Network',
 					type: 'boolean',
 					default: false,
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -90,8 +88,8 @@ const dataNode = reactNode(
 						required: 'both',
 						dependsOn(p) {
 							return p.detectOffline;
-						}
-					}
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -104,8 +102,8 @@ const dataNode = reactNode(
 						required: 'both',
 						dependsOn(p) {
 							return p.detectOffline;
-						}
-					}
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -118,8 +116,8 @@ const dataNode = reactNode(
 						required: 'both',
 						dependsOn(p) {
 							return p.detectOffline;
-						}
-					}
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -132,15 +130,65 @@ const dataNode = reactNode(
 						required: 'both',
 						dependsOn(p) {
 							return p.detectOffline;
-						}
-					}
-				})
+						},
+					},
+				}),
 			],
 			outputs: [
 				getPort({ plug: 'output', name: 'isOnline', displayName: 'Online', group: 'States', type: 'boolean' }),
-				getPort({ plug: 'output', name: 'network', displayName: 'Network', group: 'States', type: 'object' })
-			]
-		}
+				getPort({ plug: 'output', name: 'network', displayName: 'Network', group: 'States', type: 'object' }),
+			],
+		},
+		'v1.1.0': {
+			hashTag: '#expreimental',
+			module: { dynamic: lazy(() => import('@packages/data-v1.1.0')) },
+			inputs: [
+				getPort({
+					plug: 'input',
+					name: 'dbName',
+					displayName: 'DB name',
+					group: 'Params',
+					type: 'string',
+					customs: { required: 'both' },
+				}),
+				getPort({
+					plug: 'input',
+					name: 'backendDevMode',
+					displayName: 'Backend dev mode',
+					group: 'Params',
+					type: 'boolean',
+					default: false,
+				}),
+				getPort({
+					plug: 'input',
+					name: 'backendUrl',
+					displayName: 'Backend url',
+					group: 'Params',
+					type: 'string',
+					default: 'localhost',
+					customs: {
+						required: 'both',
+						dependsOn(p) {
+							return p.backendDevMode ? true : false;
+						},
+					},
+				}),
+				getPort({
+					plug: 'input',
+					name: 'backendPort',
+					displayName: 'Backend port',
+					group: 'Params',
+					type: 'number',
+					default: 7512,
+					customs: {
+						required: 'both',
+						dependsOn(p) {
+							return p.backendDevMode ? true : false;
+						},
+					},
+				}),
+			],
+		},
 	},
 	{ allowChildren: true }
 );
@@ -152,8 +200,9 @@ import { defineNode } from '@noodl/noodl-sdk';
 import authNode from '@nodes/auth';
 import dataContext from '@nodes/data-context';
 import useDataNode from '@nodes/use-data';
+import localDataNode from '@nodes/local-data';
 
-const reactNodes = [authNode, dataNode, dataContext, useDataNode];
+const reactNodes = [authNode, dataNode, localDataNode, dataContext, useDataNode];
 
 import getDataNode from '@nodes/get-data';
 import logoutNode from '@nodes/logout';

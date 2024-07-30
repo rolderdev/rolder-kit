@@ -1,5 +1,4 @@
-import { Image, Link, StyleSheet, Styles, Text, View } from "@react-pdf/renderer";
-import React from "react";
+import { Image, Link, StyleSheet, Styles, Text, View } from "@react-pdf/renderer";;
 import utils from "./utils";
 import { Cell } from "../types";
 

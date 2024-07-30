@@ -1,0 +1,22 @@
+{
+	"name": "@packages/local-data-v0.1.0",
+	"main": "localData.tsx",
+	"types": "localData.tsx",
+	"type": "module",
+	"dependencies": {
+		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.2.0@*",
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+		"@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@*",
+		"@packages/system-loader-animation": "workspace:@packages/system-loader-animation-v0.1.0@*",
+		"rxjs": "^7.8.1",
+		"rxdb": "^15.28.0",
+		"kuzzle-sdk": "^7.11.3",
+		"just-last": "^3.2.0",
+		"just-clone": "^6.2.0",
+		"just-map-object": "^2.3.0"
+	},
+	"devDependencies": {
+		"types": "workspace:*",
+		"@packages/node": "workspace:@packages/node-v0.8.0@*"
+	}
+}

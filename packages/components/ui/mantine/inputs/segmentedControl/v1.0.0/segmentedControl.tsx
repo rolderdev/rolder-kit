@@ -1,6 +1,5 @@
 import { forwardRef, lazy } from "react"
 import type { Props } from "./types"
-import React from "react"
 import { getCompProps } from '@packages/get-comp-props'
 
 const FormSegmentedControl = lazy(() => import("./src/formSegmentedControl"))

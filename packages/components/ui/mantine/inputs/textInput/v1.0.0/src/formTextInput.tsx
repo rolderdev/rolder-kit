@@ -1,7 +1,6 @@
 import { CloseButton, TextInput } from "@mantine/core"
 import { forwardRef, useEffect, useImperativeHandle } from "react"
 import type { Props } from "../types"
-import React from "react"
 import { sendOutput, sendSignal } from '@packages/port-send'
 import { useFormScope } from "@packages/scope"
 import { useDebouncedValue } from '@mantine/hooks'

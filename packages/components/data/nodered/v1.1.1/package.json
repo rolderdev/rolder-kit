@@ -1,0 +1,10 @@
+{
+	"name": "@packages/nodered-v1.1.1",
+	"main": "nodered.ts",
+	"types": "nodered.ts",
+	"type": "module",
+	"dependencies": {
+		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*",
+		"ky": "^1.4.0"
+	}
+}

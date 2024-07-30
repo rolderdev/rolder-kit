@@ -3,15 +3,29 @@ import { reactNode } from '@packages/node';
 import { lazy } from 'react';
 
 const CodeEditorNode = reactNode('CodeEditor', {
-	'v1.0.0': {
+	'v0.1.0': {
 		module: {
-			dynamic: lazy(() => import('@packages/code-editor-v1.0.0'))
+			dynamic: lazy(() => import('@packages/code-editor-v0.1.0')),
 		},
 		inputs: [
 			...getPorts('input', ['customProps']),
 			getPort({ plug: 'input', name: 'ganttTasks', displayName: 'Tasks', group: 'Data', type: getType('array', 'connection') }),
-			getPort({ plug: 'input', name: 'showTaskList', displayName: 'Show task list', group: 'Params', type: 'boolean', default: false }),
-			getPort({ plug: 'input', name: 'ganttHeight', displayName: 'Height', group: 'Dimensions', type: 'boolean', default: false })
+			getPort({
+				plug: 'input',
+				name: 'showTaskList',
+				displayName: 'Show task list',
+				group: 'Params',
+				type: 'boolean',
+				default: false,
+			}),
+			getPort({
+				plug: 'input',
+				name: 'ganttHeight',
+				displayName: 'Height',
+				group: 'Dimensions',
+				type: 'boolean',
+				default: false,
+			}),
 		],
 		outputs: [
 			getPort({
@@ -19,11 +33,11 @@ const CodeEditorNode = reactNode('CodeEditor', {
 				name: 'codeText',
 				displayName: 'Task progress changed',
 				group: 'Signals',
-				type: 'signal'
+				type: 'signal',
 			}),
-			...getPorts('input', ['doubleClicked'])
-		]
-	}
+			...getPorts('input', ['doubleClicked']),
+		],
+	},
 });
 
 //===================================================================

@@ -8,7 +8,7 @@ window.R = {
 	env: { rolderKit: rKitJson.version },
 	params: {},
 	libs: {},
-	utils: {}
+	utils: {},
 };
 
 import { consola } from 'consola';
@@ -22,25 +22,29 @@ switch (d) {
 	case 2:
 		consola.level = 3;
 		break;
+	case 3:
+		consola.level = 4;
+		break;
 }
 
 window.log = {
 	start: () => performance.now(),
 	end: (title, startTime) => consola.log(title, Math.round(performance.now() - startTime)),
 	info: (title, ...args) => consola.info(title, ...args),
+	debug: (title, ...args) => consola.debug(title, ...args),
 	error: (title, ...args) => {
 		consola.error(title, ...args);
-		Sentry.captureMessage(`${title} ${JSON.stringify(args)}`);
+		Sentry?.captureMessage(`${title} ${JSON.stringify(args)}`);
 	},
-	sentryError: (error) => Sentry.captureException(error)
+	sentryMessage: (message) => Sentry?.captureMessage(message),
+	sentryError: (error) => Sentry?.captureException(error),
 };
 
-document.body.insertAdjacentHTML(
-	'afterbegin',
-	`<div style="position: absolute; top: 50%; left: 50%; margin-top: -28px; margin-left: -64px;">
-    <h2>LOADING</h2>
-</div>`
-);
+// css loader
+import addCssToHtmlHead from '@packages/add-css-to-html-head';
+import './loader.css';
+addCssToHtmlHead(['app']);
+systemLoaderAnimation.start();
 
 // =====================================================
 import libs from './libs';
@@ -55,6 +59,9 @@ import { getCustomEnumType, getPort } from '@packages/port';
 import { reactNode } from '@packages/node';
 
 import v140 from '@packages/app-v1.4.0';
+import v200 from '@packages/app-v2.0.0';
+import getEnum from '@packages/port/src/funcs/getEnum';
+import systemLoaderAnimation from '@packages/system-loader-animation';
 
 Noodl.defineModule({
 	reactNodes: [
@@ -62,9 +69,7 @@ Noodl.defineModule({
 			'App',
 			{
 				'v1.4.0': {
-					module: {
-						static: v140
-					},
+					module: { static: v140 },
 					inputs: [
 						getPort({
 							plug: 'input',
@@ -73,7 +78,7 @@ Noodl.defineModule({
 							group: 'Style',
 							type: getCustomEnumType(['light', 'dark', 'auto']),
 							default: 'light',
-							customs: { required: 'connection' }
+							customs: { required: 'connection' },
 						}),
 						getPort({
 							plug: 'input',
@@ -84,8 +89,8 @@ Noodl.defineModule({
 							customs: {
 								dependsOn(props) {
 									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
+								},
+							},
 						}),
 						getPort({
 							plug: 'input',
@@ -96,9 +101,9 @@ Noodl.defineModule({
 							customs: {
 								dependsOn(props) {
 									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
-						})
+								},
+							},
+						}),
 					],
 					outputs: [
 						getPort({
@@ -110,8 +115,8 @@ Noodl.defineModule({
 							customs: {
 								dependsOn(props) {
 									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
+								},
+							},
 						}),
 						getPort({
 							plug: 'output',
@@ -122,17 +127,74 @@ Noodl.defineModule({
 							customs: {
 								dependsOn(props) {
 									return props.colorScheme === 'auto' ? false : true;
-								}
-							}
-						})
-					]
-				}
+								},
+							},
+						}),
+					],
+				},
+				'v2.0.0': {
+					hashTag: '#expreimental',
+					module: { static: v200 },
+					inputs: [
+						getPort({
+							plug: 'input',
+							name: 'multiInstance',
+							displayName: 'Multi local DB instance',
+							group: 'Params',
+							type: 'boolean',
+							default: true,
+						}),
+						getPort({
+							plug: 'input',
+							name: 'sentry',
+							displayName: 'Sentry logs',
+							group: 'Params',
+							type: 'boolean',
+							default: false,
+						}),
+						getPort({
+							plug: 'input',
+							name: 'sentryDsn',
+							displayName: 'Sentry DSN',
+							group: 'Params',
+							type: 'string',
+							customs: {
+								dependsOn(p) {
+									return p.sentry ? true : false;
+								},
+							},
+						}),
+						getPort({
+							plug: 'input',
+							name: 'remoteLogs',
+							displayName: 'Remote logs',
+							group: 'Params',
+							type: 'boolean',
+							default: false,
+						}),
+					],
+					outputs: [
+						getPort({
+							plug: 'output',
+							name: 'networkType',
+							displayName: 'Type',
+							group: 'Network',
+							type: 'string',
+						}),
+						getPort({
+							plug: 'output',
+							name: 'networkConnected',
+							displayName: 'Connected',
+							group: 'Network',
+							type: 'boolean',
+						}),
+					],
+				},
 			},
 			{
 				allowChildren: true,
-				docs: 'https://docs.rolder.app/docs/project/App.html'
 			}
-		)
+		),
 	],
 	settings: [
 		{
@@ -140,31 +202,39 @@ Noodl.defineModule({
 			type: 'string',
 			displayName: 'Project name',
 			group: 'Rolder',
-			tooltip: 'Examples: rasko, tex'
+			tooltip: 'Examples: rasko, tex',
 		},
 		{
 			name: 'projectVersion',
 			type: 'string',
 			displayName: 'Project version',
-			group: 'Rolder'
+			group: 'Rolder',
+		},
+		{
+			name: 'environment',
+			type: {
+				name: 'enum',
+				enums: getEnum(['d2', 't2', 's2', 'p2'], true),
+			},
+			default: 'd2',
+			displayName: 'Project environment',
+			group: 'Rolder',
 		},
 		{
 			name: 'projectDefaults',
 			type: 'array',
 			displayName: 'Project defaults',
-			group: 'Rolder'
+			group: 'Rolder',
 		},
 		{
-			name: 'mantineTheme',
-			type: 'array',
-			displayName: 'Mantine theme',
-			group: 'Rolder'
+			name: 'stopLoaderAnimationOn',
+			type: {
+				name: 'enum',
+				enums: getEnum(['appInitialized', 'dataInitialized', 'authInitialized', 'localDataInitialized']),
+			},
+			default: 'authInitialized',
+			displayName: 'Stop loader animation on',
+			group: 'Rolder',
 		},
-		{
-			name: 'sentryDsn',
-			type: 'string',
-			displayName: 'Sentry DSN',
-			group: 'Rolder'
-		}
-	]
+	],
 });

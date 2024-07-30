@@ -4,5 +4,9 @@
 .moon/docker
 
 node_modules
-pnpm-lock.yaml
 build
+
+pnpm-lock.yaml
+
+# Sentry Config File
+.sentryclirc

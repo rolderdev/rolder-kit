@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { Select } from "@mantine/core"
-import { Props } from "../types"
-import React from "react"
+import type { Props } from "../types"
 import { sendOutput, sendSignal } from '@packages/port-send'
 import convertColor from "@packages/convert-color"
 import convertForSelectInputs from '@packages/convert-for-select-inputs'

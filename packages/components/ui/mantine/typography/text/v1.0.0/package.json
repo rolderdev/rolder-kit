@@ -1,0 +1,10 @@
+{
+	"name": "@packages/text-v1.0.0",
+	"main": "text.tsx",
+	"types": "text.tsx",
+	"dependencies": {
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22",
+		"@packages/scope": "workspace:@packages/scope-v0.1.0@*"
+	}
+}

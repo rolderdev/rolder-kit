@@ -3,6 +3,7 @@ import { getPort, getPorts } from '@packages/port';
 
 export default jsNode('delete', {
 	'v0.3.0': {
+		hashTag: '#deprecated',
 		module: { dynamic: import('@packages/delete-v0.3.0') },
 		inputs: [
 			...getPorts('input', ['delete']),
@@ -23,6 +24,7 @@ export default jsNode('delete', {
 		outputs: getPorts('output', ['deleted', 'deleting'])
 	},
 	'v1.1.0': {
+		hashTag: '#pre-release',
 		module: { dynamic: import('@packages/delete-v1.1.0') },
 		inputs: [
 			...getPorts('input', ['delete', 'scheme']),

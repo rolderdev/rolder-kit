@@ -1,8 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
 import { Indicator } from "@mantine/core"
 import { DatePickerInput, DateValue, DatesRangeValue } from '@mantine/dates'
-import { Props } from "../types"
-import React from "react"
+import type { Props } from "../types"
 import { sendOutput, sendSignal } from '@packages/port-send'
 import convertColor from "@packages/convert-color"
 import { isEmpty } from "../datePickerInput"
