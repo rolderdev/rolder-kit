@@ -2,7 +2,7 @@ import { forwardRef, memo, useEffect, useImperativeHandle } from 'react';
 import type { Props } from './types';
 import { authStore as store } from './src/store';
 import setParams from './src/setParams';
-import fetchUserAndSystemCreds from './src/fetchUserAndSystemCreds';
+import fetchUser from './src/fetchUser';
 import vaildateRefreshToken from './src/vaildateRefreshToken';
 import { useInterval } from '@mantine/hooks';
 import ms from 'ms';
@@ -63,8 +63,8 @@ export default memo(
 						// Авторизуем пользователя
 						const signedIn = await store.signIn(persistentState.username, persistentState.password);
 						if (signedIn) {
-							// Скачаем системные данные и данные пользователя
-							await fetchUserAndSystemCreds();
+							// Скачаем системные данные пользователя.
+							await fetchUser();
 							// Установим их глобально.
 							setParams();
 							// Запустим обновление токена.

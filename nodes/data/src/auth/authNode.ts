@@ -48,7 +48,7 @@ export default reactNode(
 			],
 		},
 		'v2.0.0': {
-			hashTag: '#expreimental',
+			hashTag: '#pre-release',
 			module: { dynamic: lazy(() => import('@packages/auth-v2.0.0')) },
 			inputs: [
 				getPort({

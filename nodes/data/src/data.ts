@@ -140,8 +140,58 @@ const dataNode = reactNode(
 			],
 		},
 		'v1.1.0': {
-			hashTag: '#expreimental',
+			hashTag: '#deprecated',
 			module: { dynamic: lazy(() => import('@packages/data-v1.1.0')) },
+			inputs: [
+				getPort({
+					plug: 'input',
+					name: 'dbName',
+					displayName: 'DB name',
+					group: 'Params',
+					type: 'string',
+					customs: { required: 'both' },
+				}),
+				getPort({
+					plug: 'input',
+					name: 'backendDevMode',
+					displayName: 'Backend dev mode',
+					group: 'Params',
+					type: 'boolean',
+					default: false,
+				}),
+				getPort({
+					plug: 'input',
+					name: 'backendUrl',
+					displayName: 'Backend url',
+					group: 'Params',
+					type: 'string',
+					default: 'localhost',
+					customs: {
+						required: 'both',
+						dependsOn(p) {
+							return p.backendDevMode ? true : false;
+						},
+					},
+				}),
+				getPort({
+					plug: 'input',
+					name: 'backendPort',
+					displayName: 'Backend port',
+					group: 'Params',
+					type: 'number',
+					default: 7512,
+					customs: {
+						required: 'both',
+						dependsOn(p) {
+							return p.backendDevMode ? true : false;
+						},
+					},
+				}),
+			],
+		},
+		'v2.0.0': {
+			hashTag: '#pre-release',
+			module: { dynamic: lazy(() => import('@packages/data-v2.0.0')) },
 			inputs: [
 				getPort({
 					plug: 'input',
@@ -210,7 +260,7 @@ import noderedNode from '@nodes/nodered';
 import saveAsNode from '@nodes/save-as';
 import createNode from '@nodes/create';
 import updateNode from '@nodes/update';
-import updateByQueryNode from "@nodes/update-by-query"; // Vezdexod
+import updateByQueryNode from '@nodes/update-by-query'; // Vezdexod
 import deleteNode from '@nodes/delete';
 
 const nodes = [getDataNode, logoutNode, noderedNode, saveAsNode, createNode, updateNode, updateByQueryNode, deleteNode];

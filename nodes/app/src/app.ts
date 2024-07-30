@@ -32,12 +32,7 @@ window.log = {
 	end: (title, startTime) => consola.log(title, Math.round(performance.now() - startTime)),
 	info: (title, ...args) => consola.info(title, ...args),
 	debug: (title, ...args) => consola.debug(title, ...args),
-	error: (title, ...args) => {
-		consola.error(title, ...args);
-		Sentry?.captureMessage(`${title} ${JSON.stringify(args)}`);
-	},
-	sentryMessage: (message) => Sentry?.captureMessage(message),
-	sentryError: (error) => Sentry?.captureException(error),
+	error: (title, ...args) => consola.error(title, ...args),
 };
 
 // css loader
@@ -133,7 +128,7 @@ Noodl.defineModule({
 					],
 				},
 				'v2.0.0': {
-					hashTag: '#expreimental',
+					hashTag: '#pre-release',
 					module: { static: v200 },
 					inputs: [
 						getPort({
@@ -143,34 +138,6 @@ Noodl.defineModule({
 							group: 'Params',
 							type: 'boolean',
 							default: true,
-						}),
-						getPort({
-							plug: 'input',
-							name: 'sentry',
-							displayName: 'Sentry logs',
-							group: 'Params',
-							type: 'boolean',
-							default: false,
-						}),
-						getPort({
-							plug: 'input',
-							name: 'sentryDsn',
-							displayName: 'Sentry DSN',
-							group: 'Params',
-							type: 'string',
-							customs: {
-								dependsOn(p) {
-									return p.sentry ? true : false;
-								},
-							},
-						}),
-						getPort({
-							plug: 'input',
-							name: 'remoteLogs',
-							displayName: 'Remote logs',
-							group: 'Params',
-							type: 'boolean',
-							default: false,
 						}),
 					],
 					outputs: [

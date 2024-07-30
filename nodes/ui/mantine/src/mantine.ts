@@ -26,7 +26,7 @@ const mantineNode = reactNode(
 			],
 		},
 		'v2.0.0': {
-			hashTag: '#expreimental',
+			hashTag: '#pre-release',
 			module: { static: v200 },
 			inputs: [
 				getPort({
