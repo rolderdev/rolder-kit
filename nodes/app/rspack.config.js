@@ -16,7 +16,6 @@ module.exports = function (env) {
 			DEVMODE: env.devMode ? true : false,
 		})
 	);
-	// Здесь не нужно добавлять CSS. Он вставляется прямо в HTML с помощью хелпера addCssToHtmlHead
 
 	return config;
 };

@@ -89,7 +89,7 @@ export const getTableProps = (p: Props) =>
 			collapseProps: p.customProps?.collapse,
 			paddingLeft: {
 				position: p.multiSelection ? 'checkbox' : p.expansion ? 'expander' : 'cell',
-				value: p.paddingLeft,
+				value: p.levelPaddingLeft,
 			},
 		},
 		multiSelection: p.multiSelection,
