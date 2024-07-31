@@ -15,13 +15,6 @@ export const authStore = store({
 		const signedIn = R.db?.states.auth.signedIn;
 
 		if (signedIn) {
-			// Добавим информацию о пользователе в логи.
-			HyperDX?.setGlobalAttributes({
-				userId: R.user?.id,
-				userData: JSON.stringify(R.user),
-				userEmail: R.user?.id,
-			});
-
 			sendOutput(store.noodlNode.get(), 'userRole', R.user?.user?.role?.value || null);
 			sendSignal(store.noodlNode.get(), 'signedIn');
 			// Уберем анимацию загрузки, если указано в параметрах приложения.

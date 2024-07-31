@@ -10,17 +10,6 @@ var outputBuildPath = path.resolve(__dirname, `../../../build/${nodeName}`);
 
 module.exports = function (env) {
 	const config = rspackBaseConfig(nodeName, __dirname, outputBuildPath, env.developer, env.project);
-	config.module.parser = { 'css/auto': { namedExports: false } };
-	config.module.rules.push({
-		test: /\.css$/,
-		use: [
-			{
-				loader: 'postcss-loader',
-				/** @type {import('@rspack/core').SwcLoaderOptions} */
-			},
-		],
-		type: 'css/auto',
-	});
 
 	return config;
 };

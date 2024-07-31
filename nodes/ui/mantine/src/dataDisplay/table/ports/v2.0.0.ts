@@ -425,6 +425,19 @@ export default {
 				},
 			},
 		}),
+		getPort({
+			plug: 'input',
+			name: 'levelPaddingLeft',
+			group: 'Row styles',
+			type: 'number',
+			displayName: 'Level * left padding',
+			default: 16,
+			customs: {
+				dependsOn(p) {
+					return p.rowStyles ? true : false;
+				},
+			},
+		}),
 		// Single selection
 		getPort({
 			plug: 'input',
@@ -587,19 +600,6 @@ export default {
 			displayName: 'Filter func',
 			customs: {
 				isObject: true,
-				dependsOn(p) {
-					return p.expansion ? true : false;
-				},
-			},
-		}),
-		getPort({
-			plug: 'input',
-			name: 'paddingLeft',
-			group: 'Expansion',
-			type: 'number',
-			displayName: 'Left padding',
-			default: 16,
-			customs: {
 				dependsOn(p) {
 					return p.expansion ? true : false;
 				},

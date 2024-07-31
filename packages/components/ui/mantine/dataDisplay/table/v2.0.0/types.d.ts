@@ -56,6 +56,7 @@ export type Props = BaseReactProps & {
 	highlightOnHoverColor?: MantineColor;
 	singleSelectionRowBgColor?: MantineColor;
 	mutliSelectionRowBgColor?: MantineColor;
+	levelPaddingLeft?: number;
 
 	// Single selection
 	defaultSelectedItem?: Item;
@@ -74,7 +75,6 @@ export type Props = BaseReactProps & {
 	allowMultiple?: boolean;
 	defaultExpandedItems?: Item[];
 	expandedItems?: Item[];
-	paddingLeft?: number;
 	expansionFilterFunc?: any;
 
 	// Sort
