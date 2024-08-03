@@ -5,7 +5,7 @@
 	"type": "module",
 	"dependencies": {
 		"bunshi": "2.0.2",
-		"nanostores": "0.10.2"
+		"nanostores": "0.10.3"
 	},
 	"devDependencies": {
 		"types": "workspace:*",

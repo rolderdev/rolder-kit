@@ -5,7 +5,7 @@
 	"type": "module",
 	"dependencies": {
 		"bunshi": "2.0.2",
-		"nanostores": "0.10.0",
+		"nanostores": "0.10.3",
 		"jotai": "2.2.2"
 	},
 	"devDependencies": {

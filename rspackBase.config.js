@@ -1,7 +1,7 @@
 /**
  * @type {import('@rspack/cli').Configuration}
  */
-const { rspack, optimize } = require('@rspack/core');
+const { RsdoctorRspackPlugin } = require('@rsdoctor/rspack-plugin');
 const manifestPlugin = require('rspack-manifest-plugin').WebpackManifestPlugin;
 var path = require('path');
 
@@ -41,12 +41,13 @@ module.exports = function (nodeName, context, outputBuildPath, developer, projec
 					return { main: fileName };
 				},
 			}),
-		],
+			process.env.RSDOCTOR && new RsdoctorRspackPlugin({ generateTileGraph: true }),
+		].filter(Boolean),
 		// Почему то минимайзер CSS наоборот увеличивает в нашем случае.
 		//optimization: { minimizer: [new rspack.LightningCssMinimizerRspackPlugin()] },
-		//experiments: { css: true }, // С версии 1.0.0
+		experiments: { css: true }, // С версии 1.0.0
 		module: {
-			//parser: { 'css/auto': { namedExports: false } },
+			parser: { 'css/auto': { namedExports: false } },
 			rules: [
 				{
 					test: /\.ts$/,

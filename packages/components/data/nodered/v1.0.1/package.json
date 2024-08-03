@@ -4,12 +4,6 @@
 	"types": "nodered.ts",
 	"type": "module",
 	"dependencies": {
-		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*",
-		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-		"ky": "^1.4.0"
-	},
-	"devDependencies": {
-		"types": "workspace:*",
-		"@packages/node": "workspace:@packages/node-v0.8.0@*"
+		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*"
 	}
 }

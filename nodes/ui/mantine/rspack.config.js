@@ -12,7 +12,6 @@ module.exports = function (env) {
 	const config = rspackBaseConfig(nodeName, __dirname, outputBuildPath, env.developer, env.project);
 
 	// postcss
-	config.parser = { 'css/auto': { namedExports: false } };
 	config.module.rules.push({
 		test: /\.css$/,
 		use: [

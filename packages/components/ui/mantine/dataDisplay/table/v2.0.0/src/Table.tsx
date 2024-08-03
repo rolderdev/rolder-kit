@@ -23,7 +23,7 @@ export default memo(() => {
 	const { libProps, tableProps, columns, items, selectedItems, expandedIds } = s.hot.use();
 	const sortState = s.sortState.use();
 
-	console.log('Table render >>>>>'); // Считаем рендеры пока разрабатываем
+	//console.log('Table render >>>>>'); // Считаем рендеры пока разрабатываем
 	return (
 		<DataTable<Item>
 			// Base

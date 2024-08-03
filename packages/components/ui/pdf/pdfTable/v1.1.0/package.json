@@ -1,15 +1,9 @@
 {
-  "name": "@packages/pdf-table-v1.1.0",
-  "main": "pdfTable.tsx",
-  "types": "pdfTable.tsx",
-  "type": "module",
-  "dependencies": {
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-    "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
-    "@packages/get-value": "workspace:@packages/get-value-v0.8.0@*",
-    "@react-pdf/renderer": "3.4.2"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@packages/pdf-table-v1.1.0",
+	"main": "pdfTable.tsx",
+	"types": "pdfTable.tsx",
+	"type": "module",
+	"dependencies": {
+		"@packages/get-value": "workspace:@packages/get-value-v0.8.0@*"
+	}
 }

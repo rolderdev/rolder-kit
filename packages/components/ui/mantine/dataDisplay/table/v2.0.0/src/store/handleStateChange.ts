@@ -7,7 +7,7 @@ import type { ChangeState, Store } from './store';
 export default async (s: Store, changeState: ChangeState) => {
 	// Пропустим выполнение функции, когда все состояния помечены false.
 	if (!Object.values(changeState).includes(true)) return;
-	console.log('stateChganged', Noodl.Objects[s.tableId.get()].content?.name, changeState);
+	//console.log('stateChganged', Noodl.Objects[s.tableId.get()].content?.name, changeState);
 
 	const resetState = {
 		libProps: false,

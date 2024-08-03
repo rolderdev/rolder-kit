@@ -45,12 +45,7 @@ const tablePropsSchema = z.object({
 			rowBackgroundColor: z.string().default('white'),
 			singleSelectionRowBgColor: z.string().default('white'),
 			mutliSelectionRowBgColor: z.string().default('white'),
-			paddingLeft: z
-				.object({
-					position: z.enum(['checkbox', 'expander', 'cell']).default('expander'),
-					value: z.number().default(0),
-				})
-				.default({}),
+			paddingLeftPostion: z.enum(['checkbox', 'expander', 'cell']).default('expander'),
 		})
 		.default({}),
 	// Multi selection
@@ -88,10 +83,7 @@ export const getTableProps = (p: Props) =>
 		scope: p.scopeDbClass ? { dbClass: p.scopeDbClass } : undefined,
 		rowStyles: {
 			...p, // ...p - Zod сам проставит совпадающие значения.
-			paddingLeft: {
-				position: p.multiSelection ? 'checkbox' : p.expansion ? 'expander' : 'cell',
-				value: 0,
-			},
+			paddingLeftPostion: p.multiSelection ? 'checkbox' : p.expansion ? 'expander' : 'cell',
 		},
 		expansion: {
 			...p,

@@ -94,10 +94,16 @@ export const getLibProps = (s: Store, p: Props) => {
 			// Реактивность только на строку.
 			const indeterminate = s.scopeStore.get()?.selectionState[record.id].use((s) => s === 'indeterminate');
 			checkBoxProps.indeterminate = indeterminate;
-			// Установим оступ, если в развернутой строке.
-			/* const paddingLeft = s.hot.tableProps.expansion.paddingLeft.use();
+			// Расчет отсупа функцией разработчика.
+			const paddingLeftPostion = s.hot.tableProps.rowStyles.paddingLeftPostion.use();
 			const level = s.level.use();
-			checkBoxProps.pl = paddingLeft.position === 'checkbox' ? paddingLeft.value * level : undefined; */
+			const pl = s.hot.tableProps.use((state) =>
+				state.paddingLeftFunc?.(
+					level,
+					s.hot.items.get((i) => i.find((i) => i.id === record.id))
+				)
+			);
+			checkBoxProps.pl = paddingLeftPostion === 'checkbox' ? pl : undefined;
 
 			return checkBoxProps;
 		};

@@ -431,7 +431,6 @@ export default {
 			group: 'Row styles',
 			type: 'array',
 			displayName: 'Left padding func',
-			default: 16,
 			customs: {
 				isObject: true,
 				dependsOn(p) {

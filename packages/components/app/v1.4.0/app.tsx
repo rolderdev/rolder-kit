@@ -2,7 +2,6 @@ import { type ColorScheme } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { type CompProps } from './types';
-import convertColor from '@packages/convertColor';
 import { sendOutput, sendSignal } from '@packages/port-send';
 import { Preferences } from '@capacitor/preferences';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -99,7 +98,7 @@ export default forwardRef(function (props: CompProps, ref) {
 				style={{
 					width: '100%',
 					height: '100%',
-					backgroundColor: convertColor(colorScheme === 'dark' ? 'dark.7' : 'gray.0'),
+					backgroundColor: '#FFFFFF',
 				}}
 			>
 				{props.children}

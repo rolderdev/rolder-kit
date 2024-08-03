@@ -9,10 +9,16 @@ export default memo((p: { itemId: string; columnIdx: number }) => {
 	// Применим реактивность только к изменению кастомной ячейки.
 	const templateCell = s.templateCells.use((s) => s[p.columnIdx]?.[p.itemId]);
 
-	//const paddingLeft = s.hot.tableProps.expansion.paddingLeft.use();
-	const paddingLeft = { value: 0, position: '0' };
+	// Расчет отсупа функцией разработчика.
+	const paddingLeftPostion = s.hot.tableProps.rowStyles.paddingLeftPostion.use();
 	const level = s.level.use();
+	const pl = s.hot.tableProps.use((state) =>
+		state.paddingLeftFunc?.(
+			level,
+			s.hot.items.get((i) => i.find((i) => i.id === p.itemId))
+		)
+	);
 
 	//console.log('TemplateCell render', p.itemId); // Считаем рендеры пока разрабатываем
-	return <Box pl={paddingLeft.position === 'cell' ? paddingLeft.value * level : undefined}>{templateCell}</Box>;
+	return <Box pl={paddingLeftPostion === 'cell' && !p.columnIdx ? pl : undefined}>{templateCell}</Box>;
 });

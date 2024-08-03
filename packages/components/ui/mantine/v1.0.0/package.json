@@ -9,10 +9,5 @@
 		"@mantine/hooks": "6.0.22",
 		"@mantine/dates": "6.0.22",
 		"@mantine/notifications": "6.0.22"
-	},
-	"devDependencies": {
-		"types": "workspace:*",
-		"@packages/node": "workspace:@packages/node-v0.8.0@*",
-		"typescript": "5.3.3"
 	}
 }
