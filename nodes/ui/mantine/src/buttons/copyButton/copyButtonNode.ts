@@ -7,22 +7,39 @@ export default reactNode(
 	'CopyButton',
 	{
 		'v0.1.0': {
-			hashTag: '#pre-release',
 			module: { static: v010 },
 			inputs: [
-				...inputGroups.Margins,
-				...inputGroups.Icon,
-				...getPorts('input', [
-					'customProps',
-					'propsFunction',
-					'useScope',
-					'label',
-					'disabled',
-					'size',
-					'radius',
-					'color',
-					'loading'
-				]),
+				getPort({
+					plug: 'input',
+					name: 'copyValue',
+					displayName: 'Copy value',
+					group: 'Data',
+					type: 'string',
+					customs: { required: 'connection' },
+				}),
+				getPort({
+					plug: 'input',
+					name: 'copiedLabel',
+					displayName: 'Copied label',
+					group: 'Params',
+					type: 'string',
+					default: 'Скопировано',
+				}),
+				getPort({
+					plug: 'input',
+					name: 'timeout',
+					displayName: 'Timeout',
+					group: 'Params',
+					type: 'number',
+					default: 500,
+				}),
+				getPort({
+					plug: 'input',
+					name: 'buttonType',
+					displayName: 'Button type',
+					group: 'Params',
+					type: getCustomEnumType(['submit']),
+				}),
 				getPort({
 					plug: 'input',
 					name: 'scope',
@@ -34,8 +51,8 @@ export default reactNode(
 						required: 'connection',
 						dependsOn(p) {
 							return p.useScope ? true : false;
-						}
-					}
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -44,22 +61,7 @@ export default reactNode(
 					group: 'Style',
 					type: getCustomEnumType(['default', 'filled', 'subtle', 'outline', 'light', 'gradient', 'white']),
 					default: 'filled',
-					customs: { required: 'connection' }
-				}),
-				getPort({
-					plug: 'input',
-					name: 'buttonType',
-					displayName: 'Button type',
-					group: 'Params',
-					type: getCustomEnumType(['submit'])
-				}),
-				getPort({
-					plug: 'input',
-					name: 'copyValue',
-					displayName: 'Copy value',
-					group: 'Data',
-					type: 'string',
-					customs: { required: 'connection' }
+					customs: { required: 'connection' },
 				}),
 				getPort({
 					plug: 'input',
@@ -67,27 +69,24 @@ export default reactNode(
 					displayName: 'Copied color',
 					group: 'Style',
 					type: 'string',
-					default: 'teal'
+					default: 'teal',
 				}),
-				getPort({
-					plug: 'input',
-					name: 'copiedLabel',
-					displayName: 'Copied label',
-					group: 'Params',
-					type: 'string',
-					default: 'Скопировано'
-				}),
-				getPort({
-					plug: 'input',
-					name: 'timeout',
-					displayName: 'Timeout',
-					group: 'Params',
-					type: 'number',
-					default: 500
-				})
+				...inputGroups.Margins,
+				...inputGroups.Icon,
+				...getPorts('input', [
+					'customProps',
+					'propsFunction',
+					'useScope',
+					'label',
+					'disabled',
+					'size',
+					'radius',
+					'color',
+					'loading',
+				]),
 			],
-			outputs: getPorts('output', ['clicked'])
-		}
+			outputs: getPorts('output', ['clicked']),
+		},
 	},
 	{ docs: 'https://docs.rolder.app/#/copybutton' }
 );

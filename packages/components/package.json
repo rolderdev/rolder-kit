@@ -1,6 +1,6 @@
 {
 	"dependencies": {
 		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
-		"dayjs": "^1.11.11"
+		"dayjs": "^1.11.12"
 	}
 }

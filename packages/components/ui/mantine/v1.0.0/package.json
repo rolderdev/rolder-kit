@@ -8,8 +8,7 @@
 		"@mantine/core": "6.0.22",
 		"@mantine/hooks": "6.0.22",
 		"@mantine/dates": "6.0.22",
-		"@mantine/notifications": "6.0.22",
-		"dayjs": "1.11.11"
+		"@mantine/notifications": "6.0.22"
 	},
 	"devDependencies": {
 		"types": "workspace:*",

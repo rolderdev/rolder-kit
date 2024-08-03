@@ -1,5 +1,6 @@
 import { reactNode } from '@packages/node';
-import { getPort, getPorts, getType } from '@packages/port';
+import { getEnumType, getPort, getPorts, getType } from '@packages/port';
+import getEnum from '@packages/port/src/funcs/getEnum';
 import { lazy } from 'react';
 
 export default reactNode(
@@ -870,6 +871,164 @@ export default reactNode(
 				getPort({ plug: 'output', name: 'error', displayName: 'Error', group: 'State', type: 'boolean' }),
 			],
 		},
+		'v1.4.0': {
+			hashTag: '#expreimental',
+			module: { dynamic: lazy(() => import('@packages/use-data-v1.4.0')) },
+			inputs: [
+				getPort({
+					plug: 'input',
+					name: 'apiVersion',
+					displayName: 'API',
+					group: 'Version',
+					default: 'v1',
+					type: getEnumType([
+						{ label: 'v0', value: 'v0' },
+						{ label: 'v1', value: 'v1' },
+					]),
+				}),
+				getPort({
+					plug: 'input',
+					name: 'outputDbClasses',
+					displayName: 'Output DB classes',
+					group: 'Output DB classes',
+					type: 'proplist',
+					customs: {
+						addNodePorts(dbClasses) {
+							if (dbClasses) {
+								const itemsOutputs = dbClasses.map((i: any) => ({
+									plug: 'output',
+									name: `${i}Items`,
+									group: 'Data',
+									type: 'array',
+									displayName: `${i}Items`,
+								}));
+								const fetchedOutputs = dbClasses.map((i: any) => ({
+									plug: 'output',
+									name: `${i}Fetched`,
+									group: 'Data',
+									type: 'number',
+									displayName: `${i}Fetched`,
+								}));
+								const totalOutputs = dbClasses.map((i: any) => ({
+									plug: 'output',
+									name: `${i}Total`,
+									group: 'Data',
+									type: 'number',
+									displayName: `${i}Total`,
+								}));
+								const aggsOutputs = dbClasses.map((i: any) => ({
+									plug: 'output',
+									name: `${i}Aggregations`,
+									group: 'Data',
+									type: 'object',
+									displayName: `${i}Aggregations`,
+								}));
+								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs];
+							} else return [];
+						},
+					},
+				}),
+				getPort({
+					plug: 'input',
+					name: 'fetchScheme',
+					displayName: 'Scheme',
+					group: 'Scheme',
+					type: 'array',
+					customs: {
+						validate(p) {
+							if (!p.fetchScheme) return true;
+							else {
+								const sizeDbClasses: string[] = [];
+								p.fetchScheme.map((i: any) => {
+									if (i.size > 1000) sizeDbClasses.push(i.dbClass);
+								});
+								const historyDbClasses: string[] = [];
+								p.fetchScheme.map((i: any) => {
+									if (i.history > 1000) historyDbClasses.push(i.dbClass);
+								});
+								if (sizeDbClasses.length) {
+									return `Size should be less or equal 1000. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
+								} else if (historyDbClasses.length) {
+									return `History should be less or equal 1000. Mismatched DB classes: ${historyDbClasses.join(', ')}`;
+								} else return true;
+							}
+						},
+					},
+				}),
+				getPort({
+					plug: 'input',
+					name: 'searchEnabled',
+					displayName: 'Enabled',
+					group: 'Search',
+					type: 'boolean',
+					default: false,
+				}),
+				getPort({
+					plug: 'input',
+					name: 'searchString',
+					displayName: 'Search string',
+					group: 'Search',
+					type: getType('string', 'connection'),
+					customs: {
+						dependsOn(p) {
+							return p.searchEnabled ? true : false;
+						},
+					},
+				}),
+				getPort({
+					plug: 'input',
+					name: 'paginationEnabled',
+					displayName: 'Enabled',
+					group: 'Pagination',
+					type: 'boolean',
+					default: false,
+				}),
+				getPort({
+					plug: 'input',
+					name: 'paginationDbClass',
+					displayName: 'Pagination DB class',
+					group: 'Pagination',
+					type: 'string',
+					customs: {
+						required: 'connection',
+						dependsOn(p) {
+							return p.paginationEnabled ? true : false;
+						},
+					},
+				}),
+				getPort({
+					plug: 'input',
+					name: 'nextFetch',
+					displayName: 'Next',
+					group: 'Pagination',
+					type: 'signal',
+					customs: {
+						dependsOn(p) {
+							return p.paginationEnabled ? true : false;
+						},
+					},
+				}),
+				getPort({
+					plug: 'input',
+					name: 'previousFetch',
+					displayName: 'Previous',
+					group: 'Pagination',
+					type: 'signal',
+					customs: {
+						dependsOn(p) {
+							return p.paginationEnabled ? true : false;
+						},
+					},
+				}),
+				getPort({ plug: 'input', name: 'refetch', displayName: 'Refetch', group: 'Signals', type: 'signal' }),
+			],
+			outputs: [
+				...getPorts('output', ['fetching', 'fetched']),
+				getPort({ plug: 'output', name: 'data', displayName: 'Data', group: 'Data', type: 'object' }),
+				getPort({ plug: 'output', name: 'fetchedPage', displayName: 'Page', group: 'Pagination', type: 'number' }),
+				getPort({ plug: 'output', name: 'error', displayName: 'Error', group: 'State', type: 'boolean' }),
+			],
+		},
 	},
-	{ docs: 'https://docs.rolder.app/docs/data/useData.html' }
+	{ docs: 'https://docs.rolder.app/#/usedata' }
 );

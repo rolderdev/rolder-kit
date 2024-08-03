@@ -31,6 +31,11 @@ const tablePropsSchema = z.object({
 		.args(z.object({ id: z.string() }).passthrough())
 		.returns(z.boolean())
 		.optional(),
+	paddingLeftFunc: z
+		.function()
+		.args(z.number(), z.object({ id: z.string() }).passthrough().optional())
+		.returns(z.number())
+		.optional(),
 	needsNoodlObjects: z.boolean().default(false), // Флаг для определения нужно ли создавать Noodl-объекты.
 	// Scope
 	scope: z.object({ dbClass: z.string() }).optional(),
@@ -40,6 +45,12 @@ const tablePropsSchema = z.object({
 			rowBackgroundColor: z.string().default('white'),
 			singleSelectionRowBgColor: z.string().default('white'),
 			mutliSelectionRowBgColor: z.string().default('white'),
+			paddingLeft: z
+				.object({
+					position: z.enum(['checkbox', 'expander', 'cell']).default('expander'),
+					value: z.number().default(0),
+				})
+				.default({}),
 		})
 		.default({}),
 	// Multi selection
@@ -57,12 +68,6 @@ const tablePropsSchema = z.object({
 					animateOpacity: z.boolean().default(true),
 				})
 				.default({}), // Дефолтные значения подставтся из типов выше.
-			paddingLeft: z
-				.object({
-					position: z.enum(['checkbox', 'expander', 'cell']).default('expander'),
-					value: z.number().default(0),
-				})
-				.default({}),
 		})
 		.default({}),
 	// Sort
@@ -81,16 +86,18 @@ export const getTableProps = (p: Props) =>
 		...p,
 		needsNoodlObjects: p.expansion || p.columnsDefinition?.some((i) => i.type === 'template'), // Определим нужны ли Noodl-объекты.
 		scope: p.scopeDbClass ? { dbClass: p.scopeDbClass } : undefined,
-		rowStyles: { ...p }, // ...p - Zod сам проставит совпадающие значения.
+		rowStyles: {
+			...p, // ...p - Zod сам проставит совпадающие значения.
+			paddingLeft: {
+				position: p.multiSelection ? 'checkbox' : p.expansion ? 'expander' : 'cell',
+				value: 0,
+			},
+		},
 		expansion: {
 			...p,
 			enabled: p.expansion,
 			template: p.expansionTemplate,
 			collapseProps: p.customProps?.collapse,
-			paddingLeft: {
-				position: p.multiSelection ? 'checkbox' : p.expansion ? 'expander' : 'cell',
-				value: p.levelPaddingLeft,
-			},
 		},
 		multiSelection: p.multiSelection,
 		sort: { enabled: p.sort, type: p.sortType },

@@ -13,11 +13,13 @@ export default memo((p: { itemId: string; columnIdx: number }) => {
 	const value = s.hot.items.use((i) => {
 		const item = i.find((i) => i.id === p.itemId);
 		const hierarchyNode = s.get((s) => s.scopeStore?.get()?.hierarchy?.find((i) => i.data.id === p.itemId));
-		return getValue?.(item || {}, s.hot.items.get(), hierarchyNode);
+		if (item) return getValue?.(item, s.hot.items.get(), hierarchyNode);
+		return;
 	});
 
-	const paddingLeft = s.hot.tableProps.expansion.paddingLeft.use();
+	//	const paddingLeft = s.hot.tableProps.expansion.paddingLeft.use();
 	const level = s.level.use();
+	const paddingLeft = { value: 0, position: '0' };
 
 	//console.log('GetValueCell render', value); // Считаем рендеры пока разрабатываем
 	return <Box pl={paddingLeft.position === 'cell' ? paddingLeft.value * level : undefined}>{value}</Box>;

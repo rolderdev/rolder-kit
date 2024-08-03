@@ -95,9 +95,9 @@ export const getLibProps = (s: Store, p: Props) => {
 			const indeterminate = s.scopeStore.get()?.selectionState[record.id].use((s) => s === 'indeterminate');
 			checkBoxProps.indeterminate = indeterminate;
 			// Установим оступ, если в развернутой строке.
-			const paddingLeft = s.hot.tableProps.expansion.paddingLeft.use();
+			/* const paddingLeft = s.hot.tableProps.expansion.paddingLeft.use();
 			const level = s.level.use();
-			checkBoxProps.pl = paddingLeft.position === 'checkbox' ? paddingLeft.value * level : undefined;
+			checkBoxProps.pl = paddingLeft.position === 'checkbox' ? paddingLeft.value * level : undefined; */
 
 			return checkBoxProps;
 		};

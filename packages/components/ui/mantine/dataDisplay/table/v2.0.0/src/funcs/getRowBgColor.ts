@@ -9,6 +9,7 @@ export default function (itemId: string) {
 	const selectedItems = s.cold.selectedItems.use();
 
 	let bgColor = rowStyles.rowBackgroundColor;
+
 	if (selectedItems.map((i) => i.id).includes(itemId)) bgColor = rowStyles.mutliSelectionRowBgColor;
 	// Единичный выбор перекрывает мульти-выбор.
 	if (selectedItem?.id === itemId) bgColor = rowStyles.singleSelectionRowBgColor;

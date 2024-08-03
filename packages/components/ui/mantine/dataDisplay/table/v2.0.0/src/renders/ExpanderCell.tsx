@@ -38,7 +38,7 @@ export default memo((p: { cell: React.ReactNode; itemId: string }) => {
 	}
 	const disabled = item && filterFunc ? !filterFunc(item) : false;
 
-	const paddingLeft = s.cold.tableProps.expansion.paddingLeft.use();
+	const paddingLeft = { value: 0, position: '0' }; //s.cold.tableProps.expansion.paddingLeft.use();
 	const level = s.level.use();
 
 	if (onRowClick === 'expansion')

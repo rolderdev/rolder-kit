@@ -9,7 +9,8 @@ export default memo((p: { itemId: string; columnIdx: number }) => {
 	// Применим реактивность только к изменению кастомной ячейки.
 	const templateCell = s.templateCells.use((s) => s[p.columnIdx]?.[p.itemId]);
 
-	const paddingLeft = s.hot.tableProps.expansion.paddingLeft.use();
+	//const paddingLeft = s.hot.tableProps.expansion.paddingLeft.use();
+	const paddingLeft = { value: 0, position: '0' };
 	const level = s.level.use();
 
 	//console.log('TemplateCell render', p.itemId); // Считаем рендеры пока разрабатываем
