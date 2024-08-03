@@ -2,8 +2,5 @@
 	"name": "@packages/pdf-page-v1.0.0",
 	"main": "pdfPage.tsx",
 	"types": "pdfPage.tsx",
-	"type": "module",
-	"dependencies": {
-		"@react-pdf/renderer": "^3.4.4"
-	}
+	"type": "module"
 }

@@ -1,0 +1,5 @@
+{
+	"name": "@packages/paper-v2.0.0",
+	"main": "paper.tsx",
+	"types": "paper.tsx"
+}

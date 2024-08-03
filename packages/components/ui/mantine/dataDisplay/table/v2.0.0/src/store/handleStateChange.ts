@@ -1,6 +1,7 @@
 // Функция обработки изменений холодного хранилища и обновления горячего.
 
 import { getHotColumns } from '../models/columnModel';
+import { frontSortItems } from '../models/sortModel';
 import type { ChangeState, Store } from './store';
 
 export default async (s: Store, changeState: ChangeState) => {
@@ -22,8 +23,15 @@ export default async (s: Store, changeState: ChangeState) => {
 	s.set((state) => {
 		if (changeState.libProps) state.hot.libProps = state.cold.libProps;
 		if (changeState.tableProps) state.hot.tableProps = state.cold.tableProps;
-		if (changeState.columns) state.hot.columns = getHotColumns(s as any);
-		if (changeState.items || changeState.itemsContent) state.hot.items = state.cold.items || [];
+		if (changeState.columns) state.hot.columns = getHotColumns(s);
+		if (changeState.items || changeState.itemsContent) {
+			// Установим items в горячее хранилище, учитывая сортировку.
+			if (state.cold.items) {
+				const sort = state.cold.tableProps.sort;
+				if (sort.enabled && sort.type === 'frontend') state.hot.items = frontSortItems(s); // Только фронт.
+				else state.hot.items = state.cold.items;
+			}
+		}
 		if (changeState.selectedItems) state.hot.selectedItems = state.cold.selectedItems;
 		if (changeState.expandedItems) state.hot.expandedIds = state.cold.expandedItems?.map((i) => i.id);
 

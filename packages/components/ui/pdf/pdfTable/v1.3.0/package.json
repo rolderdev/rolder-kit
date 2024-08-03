@@ -4,13 +4,7 @@
 	"types": "pdfTable.tsx",
 	"type": "module",
 	"dependencies": {
-		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
 		"@packages/get-value": "workspace:@packages/get-value-v0.8.0@*",
-		"@react-pdf/renderer": "^3.4.4",
-		"just-clone": "6.2.0"
-	},
-	"devDependencies": {
-		"types": "workspace:*"
+		"just-clone": "^6.2.0"
 	}
 }

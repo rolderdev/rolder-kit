@@ -780,5 +780,6 @@ export default reactNode(
 	},
 	{
 		allowChildren: true,
+		docs: 'https://docs.rolder.app/#/table',
 	}
 );

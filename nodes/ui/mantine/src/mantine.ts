@@ -69,8 +69,6 @@ const mantineNode = reactNode(
 import imageNode from '@nodes/image';
 import badgeNode from '@nodes/badge';
 import iconNode from '@nodes/icon';
-import barLoaderNode from '@nodes/bar-loader';
-import loaderNode from '@nodes/loader';
 import indicatorNode from '@nodes/indicator';
 //// table
 import tableNode from '@nodes/table';
@@ -79,6 +77,9 @@ import expansionRowNode from '@nodes/expansion-row';
 import columnFilterNode from '@nodes/column-filter';
 import tableSelectionScopeNode from '@nodes/table-selection-scope'; // MD
 import tableScopeNode from '@nodes/table/modules/tableScope';
+// feedback
+import barLoaderNode from '@nodes/bar-loader';
+import loaderNode from '@nodes/loader';
 // buttons
 import actionIconNode from '@nodes/action-icon';
 import buttonNode from '@nodes/button';

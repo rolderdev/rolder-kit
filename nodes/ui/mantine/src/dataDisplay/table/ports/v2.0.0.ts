@@ -427,12 +427,12 @@ export default {
 		}),
 		getPort({
 			plug: 'input',
-			name: 'levelPaddingLeft',
+			name: 'paddingLeftFunc',
 			group: 'Row styles',
-			type: 'number',
-			displayName: 'Level * left padding',
-			default: 16,
+			type: 'array',
+			displayName: 'Left padding func',
 			customs: {
+				isObject: true,
 				dependsOn(p) {
 					return p.rowStyles ? true : false;
 				},
@@ -855,10 +855,22 @@ export default {
 		// Sort
 		getPort({
 			plug: 'output',
-			name: 'sortValue',
+			name: 'sortState',
 			group: 'Sort',
 			type: 'object',
-			displayName: 'Sort value',
+			displayName: 'Sort state',
+			customs: {
+				dependsOn(p) {
+					return p.sort ? true : false;
+				},
+			},
+		}),
+		getPort({
+			plug: 'output',
+			name: 'sortStateChanged',
+			group: 'Sort',
+			type: 'signal',
+			displayName: 'Sort state changed',
 			customs: {
 				dependsOn(p) {
 					return p.sort ? true : false;

@@ -6,7 +6,7 @@
 		"@packages/table-scope-v0.1.0": "workspace:*",
 		"nanoid": "^5.0.7",
 		"clsx": "^2.1.1",
-		"mantine-datatable": "^7.11.2",
+		"mantine-datatable": "7.11.2",
 		"zod": "^3.23.8",
 		"@davstack/store": "^1.4.6",
 		"just-safe-get": "^4.2.0",

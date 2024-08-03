@@ -21,11 +21,15 @@ export const itemsContentChanged = (s: Store, items: Item[]) => {
 };
 
 // Метод проверки изменения состава items.
-export const itemsChanged = (s: Store, items: Item[]) => {
-	const newItems = getItems(items);
-	const oldIds = s.cold.items.get()?.map((i) => i.id) || [];
-	const newIds = newItems.map((i) => i.id) || [];
-	if (!isEqual(oldIds.sort(), newIds.sort())) return true;
+export const itemsChanged = (s: Store, items?: Item[]) => {
+	// Не будем устанавливать items, пока они не прилетели
+	if (items) {
+		const newItems = getItems(items);
+		const oldIds = s.cold.items.get()?.map((i) => i.id);
+		const newIds = newItems.map((i) => i.id);
+		if (!oldIds) return true; // Считаем, что изменились, если в холодном хранилище еще не было items.
+		if (!isEqual(oldIds.sort(), newIds.sort())) return true;
+	}
 	return false;
 };
 

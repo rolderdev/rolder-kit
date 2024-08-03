@@ -3,8 +3,8 @@
 	"main": "dropZone.tsx",
 	"types": "dropZone.tsx",
 	"dependencies": {
-		"@mantine/core": "6.0.21",
-		"@mantine/hooks": "6.0.21",
-		"@mantine/dropzone": "6.0.21"
+		"@mantine/core": "6.0.22",
+		"@mantine/hooks": "6.0.22",
+		"@mantine/dropzone": "6.0.22"
 	}
 }

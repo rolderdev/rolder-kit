@@ -38,12 +38,19 @@ export default memo((p: { cell: React.ReactNode; itemId: string }) => {
 	}
 	const disabled = item && filterFunc ? !filterFunc(item) : false;
 
-	const paddingLeft = s.cold.tableProps.expansion.paddingLeft.use();
+	// Расчет отсупа функцией разработчика.
+	const paddingLeftPostion = s.hot.tableProps.rowStyles.paddingLeftPostion.use();
 	const level = s.level.use();
+	const pl = s.hot.tableProps.use((state) =>
+		state.paddingLeftFunc?.(
+			level,
+			s.hot.items.get((i) => i.find((i) => i.id === p.itemId))
+		)
+	);
 
 	if (onRowClick === 'expansion')
 		return (
-			<Group pl={paddingLeft.position === 'expander' ? paddingLeft.value * level : undefined} wrap="nowrap" gap={6}>
+			<Group pl={paddingLeftPostion === 'expander' ? pl : undefined} wrap="nowrap" gap={6}>
 				<Box mt={1} ml={1} my={-1} mr={-1}>
 					<IconChevronRight
 						color={disabled ? '#adb5bd' : '#2e2e2e'}
@@ -57,7 +64,7 @@ export default memo((p: { cell: React.ReactNode; itemId: string }) => {
 		);
 	else
 		return (
-			<Group pl={paddingLeft.position === 'expander' ? paddingLeft.value * level : undefined} wrap="nowrap" gap={6}>
+			<Group pl={paddingLeftPostion === 'expander' ? pl : undefined} wrap="nowrap" gap={6}>
 				<ActionIcon
 					variant="subtle"
 					color="dark"

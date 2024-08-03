@@ -11,17 +11,19 @@ import { setSelectedItemsFromTable } from './models/multiSelectionModel';
 
 import rowClasses from './styles/row.module.css';
 import getRowBgColor from './funcs/getRowBgColor';
+import { frontSortItems, sendSortState } from './models/sortModel';
 
 // memo остановит любой рендер пришедший сверху, кроме изменения fetching.
-export default memo((_, ref) => {
+export default memo(() => {
 	const s = useStore();
 	if (!s) return;
 
 	const fetching = s.fetching.use();
 	// Поскольку обновляем состояние для талицы разом, норм здесь использовать деструктуризацию.
 	const { libProps, tableProps, columns, items, selectedItems, expandedIds } = s.hot.use();
+	const sortState = s.sortState.use();
 
-	//console.log('Table render >>>>>', Noodl.Objects[s.tableId.get()].content?.name); // Считаем рендеры пока разрабатываем
+	//console.log('Table render >>>>>'); // Считаем рендеры пока разрабатываем
 	return (
 		<DataTable<Item>
 			// Base
@@ -42,9 +44,7 @@ export default memo((_, ref) => {
 				//['--mantine-primary-color-light']: 'transparent', // Сброс встроенных стилей включенного чекбокса.
 				cursor: getCursorState(s, record), // Управление состоянием курсора.
 			})}
-			rowBackgroundColor={(record) =>
-				tableProps.onRowClick === 'singleSelection' || tableProps.multiSelection ? getRowBgColor(record.id) : 'white'
-			}
+			rowBackgroundColor={(record) => (libProps.striped ? undefined : getRowBgColor(record.id))}
 			// Multi selection
 			selectedRecords={tableProps.multiSelection ? selectedItems || [] : undefined}
 			onSelectedRecordsChange={(selectedItems) => setSelectedItemsFromTable(s, selectedItems)}
@@ -78,8 +78,12 @@ export default memo((_, ref) => {
 					: undefined
 			}
 			// Sort
-			/* sortStatus={sortState}
-			onSortStatusChange={(state) => s.sortState.set(state)} */
+			sortStatus={sortState}
+			onSortStatusChange={(state) => {
+				s.sortState.set(state);
+				if (tableProps.sort.enabled && tableProps.sort.type === 'frontend') s.hot.items.set(frontSortItems(s));
+				sendSortState(s);
+			}}
 			{...(libProps as any)} // Ломает типизацию
 			{...libProps.customProps}
 		/>

@@ -56,7 +56,7 @@ export type Props = BaseReactProps & {
 	highlightOnHoverColor?: MantineColor;
 	singleSelectionRowBgColor?: MantineColor;
 	mutliSelectionRowBgColor?: MantineColor;
-	levelPaddingLeft?: number;
+	paddingLeftFunc?: any;
 
 	// Single selection
 	defaultSelectedItem?: Item;

@@ -1,14 +1,14 @@
 {
-  "name": "@packages/kuzzle-subscribe-v0.4.0",
-  "main": "subscribe.ts",
-  "types": "subscribe.ts",
-  "type": "module",
-  "dependencies": {
-    "nanostores": "0.10.2",
-    "@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@*",
-    "@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@packages/kuzzle-subscribe-v0.4.0",
+	"main": "subscribe.ts",
+	"types": "subscribe.ts",
+	"type": "module",
+	"dependencies": {
+		"nanostores": "0.10.3",
+		"@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@*",
+		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }
