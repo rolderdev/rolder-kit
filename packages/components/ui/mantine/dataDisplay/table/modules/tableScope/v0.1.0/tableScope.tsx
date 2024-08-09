@@ -8,7 +8,7 @@ export default forwardRef(function (props: Props) {
 			initialState={{
 				noodlNode: props.noodlNode,
 				selectionDbClasses: props.selectionDbClasses || [],
-				isRecordSelectable: props.isRecordSelectable,
+				multiSelectionFilterFunc: props.multiSelectionFilterFunc,
 			}}
 		>
 			{props.children}

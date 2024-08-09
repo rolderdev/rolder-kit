@@ -6,6 +6,7 @@ import type { Props } from '../types';
 import { useStore } from './store/store';
 import Table from './Table';
 import { setSelectedItemsFromScope } from './models/multiSelectionModel';
+import { frontSortItems, sendSortState } from './models/sortModel';
 
 export default forwardRef((p: Props, ref) => {
 	const s = useStore();
@@ -24,6 +25,17 @@ export default forwardRef((p: Props, ref) => {
 	useShallowEffect(() => {
 		if (selectedItems) setSelectedItemsFromScope(s, selectedItems);
 	}, selectedItems);
+	// Сортировка.
+	const sortState = scopeStore?.sortState.use();
+	useShallowEffect(() => {
+		const sort = s.cold.tableProps.sort.get();
+		if (sort && sortState && s.isChild.get() && sort.enabled) {
+			const newState = { ...(s.sortState.get() as any), direction: sortState.direction };
+			s.sortState.set(newState);
+			if (sort.type === 'frontend') s.hot.items.set(frontSortItems(s));
+			sendSortState(s);
+		}
+	}, [sortState]);
 
 	//// Обновление состояния с портов.
 	useEffect(() => {

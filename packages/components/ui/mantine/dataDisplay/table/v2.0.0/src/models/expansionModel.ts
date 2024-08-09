@@ -100,7 +100,6 @@ export const toggleRowExpansion = (s: Store, item: Item) => {
 	if (s.cold.tableProps.expansion.enabled.get()) {
 		const filterFunc = s.cold.tableProps.expansionFilterFunc?.get();
 		if (filterFunc && !filterFunc(item)) return;
-
 		s.set((state) => {
 			let expandedItems = state.cold.expandedItems;
 			if (state.cold.tableProps.expansion.allowMultiple) {

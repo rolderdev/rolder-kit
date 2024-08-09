@@ -10,6 +10,11 @@ export default function (s: Store, item: Item): string {
 			if (clickFilterFunc && !clickFilterFunc(item)) return 'unset';
 			return 'pointer';
 		}
+		case 'function': {
+			const clickFilterFunc = s.cold.tableProps.clickFilterFunc?.get();
+			if (clickFilterFunc && !clickFilterFunc(item)) return 'unset';
+			return 'pointer';
+		}
 		case 'singleSelection': {
 			const singleSelectionFilterFunc = s.cold.tableProps.singleSelectionFilterFunc?.get();
 			if (singleSelectionFilterFunc && !singleSelectionFilterFunc(item)) return 'unset';

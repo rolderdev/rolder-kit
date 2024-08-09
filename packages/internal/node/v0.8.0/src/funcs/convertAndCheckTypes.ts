@@ -51,19 +51,19 @@ function convertAndCheckType(
 								// should have only one object
 								if (evalValue?.length > 1)
 									return {
-										error: `Input "${dn}" should have one object or function, got ${evalValue?.length}`
+										error: `Input "${dn}" should have one object or function, got ${evalValue?.length}`,
 									};
 								// should be an object
 								if (evalValue?.length === 1 && !['object', 'function'].includes(typeof evalValue[0])) {
 									return {
-										error: `Input "${dn}" should be array with object or function type, got "${typeOf(evalValue[0])}"`
+										error: `Input "${dn}" should be array with object or function type, got "${typeOf(evalValue[0])}"`,
 									};
 								}
 								return { value: evalValue[0] };
 							} else return { value: evalValue[0] };
 						} else
 							return {
-								error: `Input "${dn}" should be array with one object or function, got "${typeOf(evalValue[0])}"`
+								error: `Input "${dn}" should be array with one object or function, got "${typeOf(evalValue[0])}"`,
 							};
 					} catch (error) {
 						return { error: `Input "${dn}" eval error: "${value}"` };
@@ -73,12 +73,12 @@ function convertAndCheckType(
 						// should have only one object
 						if (value?.length > 1)
 							return {
-								error: `Input "${dn}" should have one object or function, got ${value?.length}`
+								error: `Input "${dn}" should have one object or function, got ${value?.length}`,
 							};
 						// should be an object
 						if (value?.length === 1 && !['object', 'function'].includes(typeof value[0])) {
 							return {
-								error: `Input "${dn}" should be array with object type or function, got "${typeOf(value[0])}"`
+								error: `Input "${dn}" should be array with object type or function, got "${typeOf(value[0])}"`,
 							};
 						}
 						return { value: value[0] };
@@ -94,7 +94,7 @@ function convertAndCheckType(
 						if (typeOfEvalValue === 'array') return { value: evalValue };
 						else
 							return {
-								error: `Input "${dn}" should be array type, got "${typeOf(evalValue)}"`
+								error: `Input "${dn}" should be array type, got "${typeOf(evalValue)}"`,
 							};
 					} catch (error) {
 						return { error: `Input "${dn}" eval error: "${value}"` };
@@ -104,7 +104,7 @@ function convertAndCheckType(
 			// regular array
 			if (typeOfValue === 'array') return { value };
 			return {
-				error: `Unknown error at type check for array rule, typeOfValue: ${typeOfValue}, value: ${JSON.stringify(value)}`
+				error: `Unknown error at type check for array rule, typeOfValue: ${typeOfValue}, value: ${JSON.stringify(value)}`,
 			};
 		}
 
@@ -118,7 +118,7 @@ function convertAndCheckType(
 				} else if (typeOfValue === 'number') return { value };
 				else
 					return {
-						error: `Input "${dn}" should be number type, got "${typeOf(value)}"`
+						error: `Input "${dn}" should be number type, got "${typeOf(value)}"`,
 					};
 			}
 			break;
@@ -132,7 +132,7 @@ function convertAndCheckType(
 			if (typeOfValue === 'string') return { value: value };
 			else
 				return {
-					error: `Input "${dn}" should be string type, got "${typeOf(value)}"`
+					error: `Input "${dn}" should be string type, got "${typeOf(value)}"`,
 				};
 		}
 
@@ -140,7 +140,7 @@ function convertAndCheckType(
 			if (typeOfValue === 'string') return { value: value };
 			else
 				return {
-					error: `Input "${dn}" should be string type, got "${typeOf(value)}"`
+					error: `Input "${dn}" should be string type, got "${typeOf(value)}"`,
 				};
 		}
 
@@ -153,7 +153,7 @@ function convertAndCheckType(
 			if (inputType === typeOfValue) return { value };
 			else
 				return {
-					error: `Input "${dn}" should be "${inputType}" type, got "${typeOf(value)}"`
+					error: `Input "${dn}" should be "${inputType}" type, got "${typeOf(value)}"`,
 				};
 		}
 	}

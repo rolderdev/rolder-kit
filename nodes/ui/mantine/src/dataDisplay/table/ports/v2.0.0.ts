@@ -51,15 +51,20 @@ export default {
 				validate(p) {
 					if (p.columnsDefinition) {
 						const noTypeErrorColumn = p.columnsDefinition?.find((i: any) => !i.type);
-						if (noTypeErrorColumn) return `Column must have the type. </br>Column: ${JSON.stringify(noTypeErrorColumn)}`;
+						if (noTypeErrorColumn)
+							return `Column must have the type. </br>Column: ${JSON.stringify(noTypeErrorColumn, null, '</br>')}`;
 						const typeErrorColumn = p.columnsDefinition?.find((i: any) => !i[i.type]);
 						if (typeErrorColumn)
 							return `Column type "${typeErrorColumn.type}" must have  "${
 								typeErrorColumn.type
-							}" field. </br>Column: ${JSON.stringify(typeErrorColumn)}`;
+							}" field. </br>Column: ${JSON.stringify(typeErrorColumn, null, '</br>')}`;
 						const noSortAccessorErrorColumn = p.columnsDefinition?.find((i: any) => i.sort && !i.accessor);
 						if (p.sortType === 'frontend' && noSortAccessorErrorColumn)
-							return `Column must have accessor. </br>Column: ${JSON.stringify(noSortAccessorErrorColumn)}`;
+							return `Column with "sort" must have accessor. </br>Column: ${JSON.stringify(
+								noSortAccessorErrorColumn,
+								null,
+								'</br>'
+							)}`;
 					}
 					return true;
 				},
@@ -78,7 +83,7 @@ export default {
 			name: 'onRowClick',
 			group: 'Base',
 			displayName: 'On row click',
-			type: getCustomEnumType(['disabled', 'signal', 'singleSelection']),
+			type: getCustomEnumType(['disabled', 'signal', 'function', 'singleSelection']),
 			default: 'disabled',
 			customs: {
 				dependsOn(p) {
@@ -91,11 +96,24 @@ export default {
 			name: 'onRowClick',
 			group: 'Base',
 			displayName: 'On row click',
-			type: getCustomEnumType(['disabled', 'signal', 'singleSelection', 'expansion']),
+			type: getCustomEnumType(['disabled', 'signal', 'function', 'singleSelection', 'expansion']),
 			default: 'disabled',
 			customs: {
 				dependsOn(p) {
 					return p.expansion;
+				},
+			},
+		}),
+		getPort({
+			plug: 'input',
+			name: 'clickFunc',
+			group: 'Base',
+			type: 'array',
+			displayName: 'Click func',
+			customs: {
+				isObject: true,
+				dependsOn(p) {
+					return p.onRowClick === 'function';
 				},
 			},
 		}),
@@ -108,7 +126,7 @@ export default {
 			customs: {
 				isObject: true,
 				dependsOn(p) {
-					return p.onRowClick === 'signal';
+					return ['function', 'signal'].includes(p.onRowClick);
 				},
 			},
 		}),

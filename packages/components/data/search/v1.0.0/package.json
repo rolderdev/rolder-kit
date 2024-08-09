@@ -1,0 +1,9 @@
+{
+	"name": "@packages/search-v0.1.0",
+	"main": "search.ts",
+	"types": "search.ts",
+	"type": "module",
+	"dependencies": {
+		"fuse.js": "^7.0.0"
+	}
+}

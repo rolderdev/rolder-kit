@@ -52,8 +52,8 @@ export default async (s: Store, changeState: ChangeState) => {
 	// Это вариант для кастомных ячеек, выше вариант без них.
 	if (s.cold.columnsDefinition.get().some((i) => i.type === 'template')) {
 		if (s.inited.get() && s.cold.items.get()) {
-			// Сделаем небольшую задержку на длительность развертывания анимации + 1, чтобы показать анимацию загрузки.
-			await new Promise((r) => setTimeout(r, 151));
+			// Сделаем небольшую задержку на длительность развертывания анимации + запас, чтобы показать анимацию загрузки.
+			await new Promise((r) => setTimeout(r, 200));
 			s.fetching.set(false);
 		}
 	}

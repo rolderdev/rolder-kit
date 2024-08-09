@@ -9,8 +9,13 @@ import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs';
 // Схема задает типы данных и их дефолты.
 const tablePropsSchema = z.object({
 	// Base
-	onRowClick: z.enum(['disabled', 'signal', 'singleSelection', 'expansion']),
-	// Функции - нужно деражить в корне, чтобы при сарвнении не искать функции в глубине объекта.
+	onRowClick: z.enum(['disabled', 'signal', 'function', 'singleSelection', 'expansion']),
+	// Функции - нужно деражить в корне, чтобы не городить сложную функцию сравнения.
+	clickFunc: z
+		.function()
+		// Важно не проверять иерархию, т.к. проверка ломает ее, поэтому z.any()
+		.args(z.object({ id: z.string() }).passthrough(), z.array(z.object({ id: z.string() }).passthrough()), z.any())
+		.optional(),
 	clickFilterFunc: z
 		.function()
 		.args(z.object({ id: z.string() }).passthrough())

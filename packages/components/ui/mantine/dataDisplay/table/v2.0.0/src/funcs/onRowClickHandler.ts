@@ -18,6 +18,18 @@ export default function (s: Store) {
 				sendSignal(s.noodlNode.get(), 'rowClicked');
 				return;
 			}
+			case 'function': {
+				// Для функции разработчик может применить функцию фильтрации, чтобы не показывать курсор-руку и не вызывать clickFunc.
+				const clickFilterFunc = s.hot.tableProps.clickFilterFunc?.get();
+				if (clickFilterFunc && !clickFilterFunc(record)) return;
+				const clickFunc = s.hot.tableProps.clickFunc?.get();
+				// Запустим функцию по клику. Предполагается, что разработчик сам обустроит ее сигналом и передачей кликнутого item.
+				if (clickFunc) {
+					const hierarchyNode = s.get((s) => s.scopeStore?.get()?.hierarchy?.find((i) => i.data.id === record.id));
+					clickFunc(record, s.cold.items.get() || [], hierarchyNode);
+				}
+				return;
+			}
 			case 'singleSelection': {
 				setSelectedItem(s, record);
 				return;
@@ -26,8 +38,6 @@ export default function (s: Store) {
 				toggleRowExpansion(s, record);
 				return;
 			}
-			default:
-				return 'unset';
 		}
 	};
 }

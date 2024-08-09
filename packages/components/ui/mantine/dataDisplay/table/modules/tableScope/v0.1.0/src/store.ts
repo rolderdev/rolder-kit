@@ -1,5 +1,6 @@
 import { store, createStoreContext } from '@davstack/store';
 import type { HierarchyNode } from 'd3-hierarchy';
+import type { DataTableSortStatus } from 'mantine-datatable';
 import type { NoodlNode } from '@packages/node';
 import type { Item } from 'types';
 import setHierarchy from './setHierarchy';
@@ -18,6 +19,7 @@ const tableScopeStore = store({
 	hierarchy: undefined as Hierarchy | undefined, // Иерархия items и их состояние. Не реактивно.
 	selectionState: {} as SelectionState, // Состояние каждого item, включая корень (tableId). Реактивно.
 	multiSelectionFilterFunc: undefined as MultiSelectionFilterFunc | undefined,
+	sortState: undefined as DataTableSortStatus<Item> | undefined, // Состояние сортировки.
 })
 	.computed((s) => ({
 		// Вернем реактивно выбранные items. Реагирует только на смену выбора, игнорируя indeterminate.

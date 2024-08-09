@@ -1,0 +1,9 @@
+{
+	"name": "@packages/port-v1.0.0",
+	"main": "port.ts",
+	"types": "port.ts",
+	"type": "module",
+	"dependencies": {
+		"valibot": "^0.37.0"
+	}
+}

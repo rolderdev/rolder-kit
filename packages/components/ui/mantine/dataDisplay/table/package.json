@@ -1,0 +1,6 @@
+{
+	"dependencies": {
+		"mantine-datatable": "7.11.2",
+		"@davstack/store": "^1.4.6"
+	}
+}
