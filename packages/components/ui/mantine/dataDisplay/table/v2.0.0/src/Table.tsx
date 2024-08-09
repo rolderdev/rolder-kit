@@ -19,11 +19,11 @@ export default memo(() => {
 	if (!s) return;
 
 	const fetching = s.fetching.use();
-	// Поскольку обновляем состояние для талицы разом, норм здесь использовать деструктуризацию.
+	// Поскольку обновляем состояние для таблицы разом, норм здесь использовать деструктуризацию.
 	const { libProps, tableProps, columns, items, selectedItems, expandedIds } = s.hot.use();
 	const sortState = s.sortState.use();
 
-	//console.log('Table render >>>>>'); // Считаем рендеры пока разрабатываем
+	//console.log('Table render >>>>>', console.log(s.tableId.get(), sortState)); // Считаем рендеры пока разрабатываем
 	return (
 		<DataTable<Item>
 			// Base
@@ -81,6 +81,7 @@ export default memo(() => {
 			sortStatus={sortState}
 			onSortStatusChange={(state) => {
 				s.sortState.set(state);
+				s.scopeStore.get()?.sortState.set(state);
 				if (tableProps.sort.enabled && tableProps.sort.type === 'frontend') s.hot.items.set(frontSortItems(s));
 				sendSortState(s);
 			}}

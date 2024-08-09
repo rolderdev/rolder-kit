@@ -20,11 +20,10 @@ export const setDefaultSortState = (s: Store) => {
 // Функция для фронт-сортировки.
 export const frontSortItems = (s: Store) => {
 	let items = s.cold.items.get();
-
 	if (items) {
 		const sortState = s.sortState.get();
 		if (sortState) {
-			// Отсортируем функцией разработчика, если на есть.
+			// Отсортируем функцией разработчика, если она есть.
 			const sortFunc = s.cold.columnsDefinition.get().find((i) => i.accessor === sortState.columnAccessor)?.sortFunc;
 			if (sortFunc) items = sortFunc(items, sortState.columnAccessor, sortState.direction);
 			else items = R.utils.naturalSort(items, sortState.columnAccessor, sortState.direction);

@@ -14,6 +14,6 @@
 		"idb-keyval": "6.2.1",
 		"is-online": "10.0.0",
 		"@cloudflare/speedtest": "1.3.0",
-		"@mantine/hooks": "^7.11.2"
+		"@mantine/hooks": "^7.12.0"
 	}
 }

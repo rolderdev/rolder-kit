@@ -1,4 +1,3 @@
-import { OutputName, PortName } from '@packages/port';
 import type { NoodlNode } from '@packages/node';
 
 export function sendOutput(noodlNode: NoodlNode, portName: string, value: any) {
@@ -15,6 +14,6 @@ export function sendOutputs(noodlNode: NoodlNode, ports: { portName: string; val
 	noodlNode.flagAllOutputsDirty();
 }
 
-export function sendSignal(noodlNode: NoodlNode, portName: PortName | OutputName) {
+export function sendSignal(noodlNode: NoodlNode, portName: string) {
 	if (noodlNode?.hasOutput(portName as string)) setTimeout(() => noodlNode.sendSignalOnOutput(portName as string));
 }

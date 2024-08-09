@@ -28,7 +28,7 @@ export default memo((p: { cell: React.ReactNode; itemId: string }) => {
 			.get()
 			?.hierarchy.get()
 			?.find((i) => i.data.id === item.id);
-		if (!node?.children && expanded) {
+		if (node && !node?.children && expanded) {
 			expanded = false;
 			setExpandedItems(
 				s,
