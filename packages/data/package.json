@@ -1,0 +1,6 @@
+{
+	"name": "data",
+	"dependencies": {
+		"@nodes/use-data": "workspace:*"
+	}
+}

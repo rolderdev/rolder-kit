@@ -1,0 +1,11 @@
+{
+	"dependencies": {
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+		"@packages/node": "workspace:@packages/node-v0.8.0@*"
+	},
+	"devDependencies": {
+		"@rspack/core": "1.0.0-beta.1",
+		"@rspack/cli": "1.0.0-beta.1",
+		"rspack-manifest-plugin": "^5.0.1"
+	}
+}

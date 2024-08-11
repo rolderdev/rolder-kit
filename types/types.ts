@@ -70,6 +70,7 @@ export type DbClass = {
 
 export type Item = {
 	id: string;
+	fid?: string;
 	dbClass?: string;
 	content?: { [key: string]: any };
 	states?: { [key: string]: any };

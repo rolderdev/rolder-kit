@@ -1,0 +1,17 @@
+{
+	"name": "@packages/use-data-v2.0.0",
+	"main": "node/definition.ts",
+	"types": "node/definition.ts",
+	"type": "module",
+	"dependencies": {
+		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*",
+		"@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@*",
+		"lodash.isequal": "^4.5.0",
+		"just-safe-set": "^4.2.1"
+	},
+	"devDependencies": {
+		"@davstack/store": "^1.4.6",
+		"@types/lodash.isequal": "^4.5.8",
+		"valibot": "^0.37.0"
+	}
+}
