@@ -10,6 +10,7 @@
 		"@rsdoctor/rspack-plugin": "^0.3.11",
 		"postcss": "^8.4.41",
 		"postcss-loader": "^8.1.1",
-		"@shared/types-v0.1.0": "workspace:*"
+		"@shared/types-v0.1.0": "workspace:*",
+		"@shared/rspack-config-v0.1.0": "workspace:*"
 	}
 }

@@ -4,10 +4,10 @@
 var rspack = require('@rspack/core');
 var path = require('path');
 const pJson = require('./package.json');
-const rspackBaseConfig = require('../../rspackBase.config');
+const rspackBaseConfig = require('../rspackBase.config');
 
 const nodeName = pJson.name;
-var outputBuildPath = path.resolve(__dirname, `../../../build/${nodeName}`);
+var outputBuildPath = path.resolve(__dirname, `../../../build/old_${nodeName}`);
 
 module.exports = function (env) {
 	const config = rspackBaseConfig(nodeName, __dirname, outputBuildPath, env.developer, env.project);

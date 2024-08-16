@@ -3,7 +3,7 @@
  */
 var path = require('path');
 const pJson = require('./package.json');
-const rspackBaseConfig = require('../../../rspackBase.config');
+const rspackBaseConfig = require('@shared/rspack-config-v0.1.0');
 
 const nodeName = pJson.name;
 var outputBuildPath = path.resolve(__dirname, `../../../build/${nodeName}`);
