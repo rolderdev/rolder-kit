@@ -1,0 +1,4 @@
+{
+	"name": "@shared/port-send-v1.0.0",
+	"main": "portSend.ts"
+}

@@ -1,0 +1,5 @@
+{
+	"name": "@shared/get-kuzzle-v0.2.0",
+	"main": "getKuzzle.ts",
+	"type": "module"
+}

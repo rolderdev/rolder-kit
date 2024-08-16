@@ -1,0 +1,7 @@
+{
+	"dependencies": {
+		"@mantine/core": "^7.12.1",
+		"@mantine/hooks": "^7.12.1",
+		"@tabler/icons-react": "^3.12.0"
+	}
+}

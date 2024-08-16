@@ -1,0 +1,10 @@
+{
+	"name": "@shared/types-v0.1.0",
+	"main": "types.ts",
+	"types": "types.ts",
+	"devDependencies": {
+		"kuzzle-sdk": "^7.11.3",
+		"dayjs": "^1.11.12",
+		"rxdb": "^15.30.0"
+	}
+}

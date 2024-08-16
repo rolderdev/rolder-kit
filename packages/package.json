@@ -1,10 +1,15 @@
 {
+	"dependencies": {
+		"@noodl/noodl-sdk": "^0.5.4",
+		"@shared/node-v1.0.0": "workspace:*"
+	},
 	"devDependencies": {
-		"@rspack/core": "1.0.0-beta.4",
-		"@rspack/cli": "1.0.0-beta.4",
+		"@rspack/core": "1.0.0-beta.5",
+		"@rspack/cli": "1.0.0-beta.5",
 		"rspack-manifest-plugin": "^5.0.1",
 		"@rsdoctor/rspack-plugin": "^0.3.11",
 		"postcss": "^8.4.41",
-		"postcss-loader": "^8.1.1"
+		"postcss-loader": "^8.1.1",
+		"@shared/types-v0.1.0": "workspace:*"
 	}
 }

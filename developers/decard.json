@@ -21,6 +21,6 @@
 	},
 	"playground": {
 		"projectDir": "/home/decard/projects/playground",
-		"rolderKit": ["app", "mantine"]
+		"rolderKit": ["app", "mantine", "data"]
 	}
 }

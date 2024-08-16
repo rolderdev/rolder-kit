@@ -17,7 +17,7 @@ module.exports = function (nodeName, context, outputBuildPath, developer, projec
 	return {
 		context,
 		performance: { hints: false },
-		entry: { [nodeName]: `./src/${nodeName}.ts` },
+		entry: { [nodeName]: `./${nodeName}.ts` },
 		resolve: {
 			extensions: ['...', '.ts', '.tsx'],
 		},

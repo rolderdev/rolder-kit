@@ -2,14 +2,9 @@
 	"name": "rolder-kit",
 	"version": "v1.0.0-rc5",
 	"private": true,
-	"dependencies": {
-		"@packages/port-send-v0.3.0": "workspace:*",
-		"@packages/node-v1.0.0": "workspace:*"
-	},
 	"devDependencies": {
 		"typescript": "^5.5.4",
 		"@types/react": "^18.3.3",
-		"@types/react-dom": "^18.3.0",
-		"types": "workspace:*"
+		"@types/react-dom": "^18.3.0"
 	}
 }

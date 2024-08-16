@@ -10,7 +10,6 @@
 		"@nodes/logout": "workspace:*",
 		"@nodes/nodered": "workspace:*",
 		"@nodes/save-as": "workspace:*",
-		"@nodes/search": "workspace:*",
 		"@nodes/update": "workspace:*",
 		"@nodes/update-by-query": "workspace:*",
 		"@old-nodes/use-data": "workspace:*",

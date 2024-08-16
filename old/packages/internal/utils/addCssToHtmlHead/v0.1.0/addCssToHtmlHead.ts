@@ -3,7 +3,7 @@ export default function addCssToHtmlHead(nodePackageNames: string[]) {
 		const cssLink = document.createElement('link');
 		cssLink.type = 'text/css';
 		cssLink.rel = 'stylesheet';
-		cssLink.href = `noodl_modules/${nodePackageName}/${nodePackageName}.css`;
+		cssLink.href = `noodl_modules/old_${nodePackageName}/${nodePackageName}.css`;
 		document.head.appendChild(cssLink);
 	}
 }

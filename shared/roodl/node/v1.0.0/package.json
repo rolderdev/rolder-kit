@@ -1,0 +1,9 @@
+{
+	"name": "@shared/node-v1.0.0",
+	"main": "main.ts",
+	"types": "main.ts",
+	"dependencies": {
+		"just-typeof": "^3.2.0",
+		"just-clone": "^6.2.0"
+	}
+}

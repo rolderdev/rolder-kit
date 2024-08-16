@@ -262,18 +262,7 @@ import createNode from '@nodes/create';
 import updateNode from '@nodes/update';
 import updateByQueryNode from '@nodes/update-by-query'; // Vezdexod
 import deleteNode from '@nodes/delete';
-import searchNode from '@nodes/search';
 
-const nodes = [
-	getDataNode,
-	logoutNode,
-	noderedNode,
-	saveAsNode,
-	createNode,
-	updateNode,
-	updateByQueryNode,
-	deleteNode,
-	searchNode,
-];
+const nodes = [getDataNode, logoutNode, noderedNode, saveAsNode, createNode, updateNode, updateByQueryNode, deleteNode];
 
 Noodl.defineModule({ reactNodes, nodes: nodes.map((i) => defineNode(i)) });
