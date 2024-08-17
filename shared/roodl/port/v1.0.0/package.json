@@ -2,7 +2,7 @@
 	"name": "@shared/port-v1.0.0",
 	"main": "port.ts",
 	"type": "module",
-	"dependencies": {
+	"devDependencies": {
 		"valibot": "^0.37.0"
 	}
 }

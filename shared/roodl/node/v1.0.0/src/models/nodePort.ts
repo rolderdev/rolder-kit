@@ -1,13 +1,13 @@
 /* Функция подготавливает порты для ноды и конвертирует параметры, заданные в редакторе. */
 
 import { getNodePort, type NodePort, type PortDef } from '@shared/port-v1.0.0';
-import type { JsVersions, NoodlNode } from '../../types';
+import type { JsNodeVersions, NoodlNode } from '../../types';
 import { getConverted, validateValueType } from './value';
 import { getCustomPropsPortDef } from './customProps';
 import { getVersionPortDef } from './version';
 import { clearWarning } from './warning';
 
-export const cachePortDefs = (noodlNode: NoodlNode, versions: JsVersions) => {
+export const cachePortDefs = (noodlNode: NoodlNode, versions: JsNodeVersions) => {
 	const nodeDef = versions[noodlNode.model.parameters.version];
 
 	if (noodlNode.model.parameters?.version && noodlNode.model.portDefsCache) {
@@ -17,7 +17,7 @@ export const cachePortDefs = (noodlNode: NoodlNode, versions: JsVersions) => {
 	}
 };
 
-export const setNodePorts = (noodlNode: NoodlNode, versions: JsVersions) => {
+export const setNodePorts = (noodlNode: NoodlNode) => {
 	let nodePorts: NodePort[] = [];
 
 	if (noodlNode.model.parameters?.version) {

@@ -1,6 +1,7 @@
 import type { NoodlNode } from '@shared/node-v1.0.0';
 import type { Kuzzle } from 'kuzzle-sdk';
 import type { RxDatabase } from 'rxdb';
+import type { Just, Nanoid, Sort, Valibot } from 'shared';
 
 type Rolder = {
 	/* states: {
@@ -36,18 +37,13 @@ type Rolder = {
 	};
 	libs: {
 		Kuzzle?: Kuzzle;
-		//	queryClient?: QueryClient;
 		mantine?: {
 			MantineError(title: string, message?: string, autoClose?: boolean | number): void;
 		};
-		/*		dayjs?: typeof Dayjs;
-		mutate?(props: {
-			action: 'create' | 'update' | 'delete' | 'updateByQuery'; // Vezdexod: updateByQuery
-			scheme: any;
-			silent?: boolean;
-			refresh?: 'wait_for' | 'false'; // Vezdexod
-		}): any;
-		[name: string]: any;*/
+		just: Just;
+		nanoid: Nanoid;
+		valibot: Valibot;
+		sort: Sort;
 	};
 	db?: RxDatabase;
 	/*utils: any;

@@ -1,25 +1,12 @@
 // Проверяет схему и выдает красиво в ошибках.
 
 import '@shared/types-v0.1.0';
-import last from 'just-last';
-import typeOf from 'just-typeof';
-import unique from 'just-unique';
-import {
-	array,
-	check,
-	InferOutput,
-	integer,
-	maxValue,
-	minValue,
-	number,
-	optional,
-	pipe,
-	safeParse,
-	strictObject,
-	string,
-	unknown,
-} from 'valibot';
+import { InferOutput } from 'valibot';
 import { Props } from '../types';
+
+const { array, check, integer, maxValue, minValue, number, optional, pipe, safeParse, strictObject, string, unknown } =
+	R.libs.valibot;
+const { typeOf, unique, last } = R.libs.just;
 
 const FetchScheme = pipe(
 	array(

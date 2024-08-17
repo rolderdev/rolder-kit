@@ -1,14 +1,13 @@
 // Планирует и запускает реактивную функцию или функцию сигнала.
 
-import typeOf from 'just-typeof';
 import type { PortDef } from '@shared/port-v1.0.0';
-import type { JsDefinition, NoodlNode, Props } from '../../types';
+import type { JsNodeDef, NoodlNode, Props } from '../../types';
 
 /* Разведем реакцию на сигнал и на изменение инпута. scheduleAfterInputsHaveUpdated - откладываем реакцию на момент,
 когда все порты обновились, но для каждого запуска, поэтому нужен флаг.
 Тригерим если не сигнал и разработчик указал, что этот порт реактивный.
 Если сигнал, просто тригерим. Сигнал - простой тогл true/false. Т.е. меняется два раза, запускаем на true. */
-export const runModule = async (noodlNode: NoodlNode, nodeDef: JsDefinition, inputDef: PortDef, isSignal: boolean) => {
+export const runModule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef, inputDef: PortDef, isSignal: boolean) => {
 	if (!isSignal) {
 		if (
 			nodeDef.triggerOnInputs?.(noodlNode.propsCache).includes(inputDef.name) ||
@@ -23,9 +22,9 @@ export const runModule = async (noodlNode: NoodlNode, nodeDef: JsDefinition, inp
 };
 
 // Нет имени сигнала, берем реактивную функцию. Иначе берем по имени сигнала.
-const runModuleFunc = async (nodeDef: JsDefinition, props: Props, signalName?: string) => {
+const runModuleFunc = async (nodeDef: JsNodeDef, props: Props, signalName?: string) => {
 	const module = getModule(nodeDef);
-	const type: string = typeOf(module);
+	const type: string = R.libs.just.typeOf(module);
 	if (type === 'promise') {
 		const m = await module.then((m: any) => m.default);
 		signalName ? await m[signalName]?.(props) : await m.reactive?.(props);
@@ -34,7 +33,7 @@ const runModuleFunc = async (nodeDef: JsDefinition, props: Props, signalName?: s
 };
 
 // Функция для проверки корректности импорта.
-const getModule = (nodeDef: JsDefinition) => {
+const getModule = (nodeDef: JsNodeDef) => {
 	try {
 		const module = nodeDef.module.dynamic || nodeDef.module.static;
 		if (module) return module;

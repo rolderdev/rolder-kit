@@ -1,6 +1,3 @@
-import set from 'just-safe-set';
-import get from 'just-safe-get';
-import { sort } from 'fast-sort';
 import { DocumentNotification } from 'kuzzle-sdk';
 import { getKuzzle } from '@shared/get-kuzzle';
 import { dbClassVersion } from '@shared/get-dbclass-version';
@@ -79,6 +76,9 @@ const handleNotification = (
 	schemeHash: string,
 	notif: DocumentNotification & { result: { _updatedFields: string[] } }
 ) => {
+	const sort = R.libs.sort;
+	const { get, set } = R.libs.just;
+
 	const schemeData = p.store.schemes.get(schemeHash);
 	if (schemeData) {
 		if (notif.scope === 'in') {

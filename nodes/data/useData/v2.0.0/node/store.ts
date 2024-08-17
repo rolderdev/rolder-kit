@@ -1,11 +1,10 @@
 import { Props, Store } from '../types';
-import { nanoid } from 'nanoid';
 import { proxy } from 'valtio';
 import { proxyMap } from 'valtio/utils';
 
 export default (p: Props) => {
 	return proxy<Store>({
-		useDataId: nanoid(8),
+		useDataId: R.libs.nanoid(8),
 		inited: false,
 		apiVersion: p.apiVersion,
 		fetchScheme: p.fetchScheme,

@@ -1,11 +1,6 @@
-import { subscribe as sub } from 'valtio';
-import compare from 'just-compare';
 import type { Props } from '../types';
 import { fetch } from './fetch';
-import { handleSubscribe, subscribe, unSubscribe } from './handleSubscribe';
-import setHierarchy from './setHierarchy';
-import setRefs from './setRefs';
-import sendOutputs from './sendOutputs';
+import { subscribe, unSubscribe } from './handleSubscribe';
 
 export default {
 	reactive: async (p: Props) => {
@@ -20,7 +15,7 @@ export default {
 			p.store.controlled = p.controlled;
 		}
 		// Сравним схему.
-		if (!compare(p.store.fetchScheme, p.fetchScheme)) {
+		if (!R.libs.just.compare(p.store.fetchScheme, p.fetchScheme)) {
 			p.store.fetchScheme = p.fetchScheme;
 			if (!p.controlled) await fetch(p);
 		}

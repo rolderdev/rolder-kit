@@ -1,2 +1,2 @@
 export type { NoodlNode, BaseJsProps, JsNodeDef } from './types';
-export { jsNode } from './src/node';
+export { jsNode, reactNode } from './src/node';

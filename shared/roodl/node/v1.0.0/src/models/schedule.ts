@@ -1,12 +1,12 @@
 /* Планировщики. Запускаются после того, как все инпуты обновились. */
 
 import type { PortDef } from '@shared/port-v1.0.0';
-import type { JsDefinition, NoodlNode } from '../../types';
+import type { JsNodeDef, NoodlNode } from '../../types';
 import { validateValues } from './value';
 import { hasWarings } from './warning';
 import { runModule } from './module';
 
-export const schedule = async (noodlNode: NoodlNode, nodeDef: JsDefinition, inputDef: PortDef, isSignal: boolean) => {
+export const schedule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef, inputDef: PortDef, isSignal: boolean) => {
 	// Пропустим, если уже запланировано.
 	if (!noodlNode.scheduledRun) {
 		// Запустим функцию инициализации один раз.

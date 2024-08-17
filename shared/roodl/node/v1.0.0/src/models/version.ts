@@ -1,9 +1,9 @@
 /* Модель порта "Version" */
 
 import { getPortDef, type PortDef } from '@shared/port-v1.0.0';
-import type { GraphModelNode, JsVersions, NodeContext } from '../../types';
+import type { GraphModelNode, JsNodeVersions, NodeContext } from '../../types';
 
-export const getVersionPortDef = (versions: JsVersions) => {
+export const getVersionPortDef = (versions: JsNodeVersions) => {
 	return {
 		...getPortDef({
 			name: 'version',

@@ -1,10 +1,6 @@
-import map from 'just-map-object';
 import { getKuzzle } from '@shared/get-kuzzle';
 import { sendOutput } from '@shared/port-send-v1.0.0';
 import type { Props } from '../types';
-import omit from 'just-omit';
-import { ref } from 'valtio';
-import { Item } from '@shared/types-v0.1.0';
 import handleDataChanges from './handleDataChanges';
 
 export const fetch = async (p: Props) => {
@@ -17,6 +13,8 @@ export const fetch = async (p: Props) => {
 		log.error('No dbName', R.env);
 		return;
 	}
+
+	const { map, omit } = R.libs.just;
 
 	const { fetchScheme } = p.store;
 

@@ -1,20 +1,34 @@
-import { ReactNode } from 'react';
-import type { PortDef, NodePort } from '@shared/port-v1.0.0';
+import type { PortDef } from '@shared/port-v1.0.0';
 import type { Item } from '@shared/types-v0.1.0';
 
-// ================ JS ================== //
+// ================== JS ==================== //
 
-export type BaseJsProps = {
+export type BaseJsProps = BaseProps;
+export type JsNodeVersions = { [key: string]: JsNodeDef };
+export type JsRoodlNode = RoodlNode & { color?: NodeColor };
+export type JsNodeDef = NodeDef;
+
+// ================= React ================== //
+
+export type BaseReactProps = BaseProps & { style: { [x: string]: any }; styles: { [x: string]: any } };
+export type ReactNodeVersions = { [key: string]: ReactNodeDef };
+export type ReactRoodlNode = RoodlNode & { getReactComponent(): any };
+export type ReactNodeDef = NodeDef;
+
+// ================ Shared ================== //
+
+export type BaseProps = {
 	noodlNode: NoodlNode;
 	version: string;
-	customProps?(p: Props): Props;
+	customProps?: { [x: string]: any };
+	//customProps?(p: Props): Props;
 };
+type Props = { [name: string]: any };
+type InspectInfo = { type: 'value' | 'text' | 'color'; value: any };
+type HashTag = '#expreimental' | '#pre-release' | '#deprecated';
 
-export type JsNodeVersions = {
-	[key: string]: JsNodeDef;
-};
-
-export type JsNodeDef = {
+// Декларация
+export type NodeDef = {
 	module: {
 		static?: any;
 		dynamic?: any;
@@ -29,97 +43,8 @@ export type JsNodeDef = {
 	disableCustomProps?: boolean;
 };
 
-export type JsNodeRoodlDef = {
-	color?: NodeColor;
-
-	/* propsCache?: { [x: string]: any };
-	outputPropValues?: { [x: string]: any };
-	firstRun?: boolean;
-	scheduledRun?: boolean;
-	scheduledModuleRun?: boolean;
-
-	_inputValues?: any;
-	_internal?: any;
-	props?: { [x: string]: any };
-	setValue?(inputName: string, value: any): void;
-	initialize(): void;
-	getInspectInfo?(): any;
-	changed?: {
-		[key: string]: (this: NodeRoodlDef, newValue: string, oldValue: string) => void;
-	};
-	scheduleAfterInputsHaveUpdated?: any;
-	setInputsValue?: (inputName: string, inputValue: any) => void;
-	signals?: {
-		[key: string]: {
-			displayName: string;
-			signal: (this: NoodlNode) => void;
-		};
-	};
-	methods: { [key: string]: any };
-	setup(context: any, graphModel: any): void;
-	addDeleteListener?: any;
-	model?: any; */
-};
-
-// ================ React ================== //
-
-/* export type BaseReactProps = {
-	noodlNode: NoodlNode;
-	children: ReactNode;
-	version?: string;
-	style: { [x: string]: any };
-	customProps?: { [x: string]: any };
-	innerProps?: { [x: string]: any };
-	propsFunction?(p: Props): Props;
-}; */
-
-/* export type CompVersions = {
-	[key: string]: CompDefinition;
-};
-
-export type CompDefinition = {
-	module: {
-		static?: any;
-		dynamic?: any;
-	};
-	remote?: any;
-	hashTag?: HashTag;
-	inputs?: NodePort[];
-	outputs?: NodePort[];
-	getInspectInfo?(p: Props, outProps: { [x: string]: any }): InspectInfo | InspectInfo[];
-}; */
-
-/* export type ReactNodeDef = {
-	name: string;
-	displayName: string;
-	docs?: string;
-	noodlNodeAsProp: boolean;
-	allowChildren: boolean;
-	props?: any;
-	currentPorts?: NodePort[] | {};
-	initialize?(): void;
-	getInspectInfo?(p: Props, outProps: { [x: string]: any }): InspectInfo | InspectInfo[];
-	getReactComponent(): any;
-	setValue?(inputName: string, value: any): void;
-	scheduleAfterInputsHaveUpdated?: any;
-	methods: { [key: string]: any };
-	setup(context: any, graphModel: any): void;
-	resultProps?: { [key: string]: any };
-	addDeleteListener?: any;
-	model?: any;
-	nodeDoubleClickAction?: {
-		focusPort: string;
-	};
-	useVariants: boolean;
-}; */
-
-// ================ Shared ================== //
-
-type Props = { [name: string]: any };
-type InspectInfo = { type: 'value' | 'text' | 'color'; value: any };
-type HashTag = '#expreimental' | '#pre-release' | '#deprecated';
-
-export type NodeRoodlDef = {
+// Нода для типизации в node.ts
+export type RoodlNode = {
 	name: string;
 	displayName: string;
 	docs?: string;
@@ -130,16 +55,15 @@ export type NodeRoodlDef = {
 	scheduledRun?: boolean;
 	scheduledModuleRun?: boolean;
 
-	_inputValues?: any;
+	_inputValues?: { [x: string]: any };
 	//_internal?: any;
 	props?: { [x: string]: any };
 	setValue?(inputName: string, value: any): void;
 	initialize(): void;
-	getInspectInfo?(): any;
+	getInspectInfo?(): void;
 	changed?: {
-		[key: string]: (this: NodeRoodlDef, newValue: string, oldValue: string) => void;
+		[key: string]: (this: RoodlNode, newValue: string, oldValue: string) => void;
 	};
-	scheduleAfterInputsHaveUpdated?: any;
 	setInputsValue?: (inputName: string, inputValue: any) => void;
 	signals?: {
 		[key: string]: {
@@ -148,11 +72,11 @@ export type NodeRoodlDef = {
 		};
 	};
 	methods: { [key: string]: any };
-	setup(context: any, graphModel: any): void;
-	addDeleteListener?: any;
-	model?: any;
+	setup(context: NodeContext, graphModel: GraphModel): void;
+	model?: GraphModel;
 };
 
+// Оригинальная нода Noodl
 export type NoodlNode = {
 	propsCache: { [x: string]: any };
 	firstRun?: boolean;

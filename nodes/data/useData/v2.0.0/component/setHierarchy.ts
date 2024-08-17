@@ -1,10 +1,11 @@
 import { hierarchy } from 'd3-hierarchy';
-import omit from 'just-omit';
 import { HierarchyItem, Props } from '../types';
 import { Item } from '@shared/types-v0.1.0';
 import { snapshot } from 'valtio';
 
 export default (p: Props) => {
+	const omit = R.libs.just.omit;
+
 	let rootData: Item['hierarchyData'] = {};
 
 	p.store.schemes.forEach((d) => {

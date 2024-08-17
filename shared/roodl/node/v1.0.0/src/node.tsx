@@ -1,22 +1,29 @@
 /* Интеграция нод в Roodl. */
 
-import { forwardRef } from 'react';
 import React from 'react';
-import clone from 'just-clone';
+import { forwardRef } from 'react';
 import { getNodePort, type PortDef } from '@shared/port-v1.0.0';
-import type { GraphModel, GraphModelNode, JsNodeRoodlDef, JsNodeVersions, NodeColor, NodeContext, NodeRoodlDef } from '../types';
+import type {
+	GraphModel,
+	GraphModelNode,
+	JsRoodlNode,
+	JsNodeVersions,
+	NodeColor,
+	NodeContext,
+	RoodlNode,
+	ReactRoodlNode,
+} from '../types';
 import { getVersionPortDef, validateVersion } from './models/version';
 import { cachePortDefs, setNodePorts, setValuesFromParameters } from './models/nodePort';
 import { schedule } from './models/schedule';
 import { validateValueType } from './models/value';
 import { getCustomPropsPortDef } from './models/customProps';
 
-export const jsNode = (nodeName: string, versions: JsNodeVersions, params?: { docs?: string; color?: NodeColor }) =>
+const getShared = (nodeName: string, versions: JsNodeVersions, docs?: string) =>
 	({
-		name: `rolder-kit.${nodeName}`,
+		name: `rolder-kit.api-v1.${nodeName}`,
 		displayName: '*' + nodeName,
-		docs: params?.docs,
-		color: params?.color || 'green',
+		docs,
 		// Выдадим над нодой короткую информацию о праметрах.
 		getInspectInfo() {
 			const version = this._inputValues.version;
@@ -68,7 +75,7 @@ export const jsNode = (nodeName: string, versions: JsNodeVersions, params?: { do
 									// Запишем в кеш значения с параметров редактора, восстановив дефолты, сконвертировав и проверив тип.
 									setValuesFromParameters(this);
 									// Переустановим порты на основе только что записанных значений с параметров.
-									setNodePorts(this, versions);
+									setNodePorts(this);
 								}
 								// Если есть transform на уровне всей ноды, значит нужно взять с него новую декларацию и повториь процесс выше.
 								// Повтор возникает из-за того, что разработчику в transform нужны актуальные данные в значениях параметров.
@@ -76,9 +83,9 @@ export const jsNode = (nodeName: string, versions: JsNodeVersions, params?: { do
 									// Нужен повтроить, чтобы transform имел актуальные props.
 									setValuesFromParameters(this);
 									// Нужно клонировать декларацию, чтобы разработчик мог менять массив без последствий.
-									this.model.portDefsCache = nodeDef.transform(this.propsCache, clone(this.model.portDefsCache));
+									this.model.portDefsCache = nodeDef.transform(this.propsCache, R.libs.just.clone(this.model.portDefsCache));
 									setValuesFromParameters(this);
-									setNodePorts(this, versions);
+									setNodePorts(this);
 								}
 								// Отложенный обработчик.
 								schedule(this, nodeDef, inputDef, inputDef.type === 'signal' && value === true);
@@ -98,7 +105,7 @@ export const jsNode = (nodeName: string, versions: JsNodeVersions, params?: { do
 		setup: function (context: NodeContext, graphModel: GraphModel) {
 			if (!context.editorConnection || !context.editorConnection.isRunningLocally()) return;
 
-			graphModel.on(`nodeAdded.rolder-kit.${nodeName}`, function (node: GraphModelNode) {
+			graphModel.on(`nodeAdded.rolder-kit.api-v1.${nodeName}`, function (node: GraphModelNode) {
 				if (!node.portDefsCache) node.portDefsCache = { inputs: [], outputs: [] }; // Кеш деклараций портов.
 				let startInputDefs = [getVersionPortDef(versions)]; // Порты, которые нужные в кеше сразу.
 				node.portDefsCache.inputs = startInputDefs;
@@ -126,7 +133,27 @@ export const jsNode = (nodeName: string, versions: JsNodeVersions, params?: { do
 				});
 			});
 		},
-	} as JsNodeRoodlDef);
+	} as RoodlNode);
+
+export const jsNode = (nodeName: string, versions: JsNodeVersions, params?: { docs?: string; color?: NodeColor }) =>
+	({
+		color: params?.color || 'green',
+		...getShared(nodeName, versions, params?.docs),
+	} as JsRoodlNode);
+
+export const reactNode = (nodeName: string, versions: JsNodeVersions, params?: { docs?: string; allowChildren?: boolean }) =>
+	({
+		noodlNodeAsProp: true,
+		allowChildren: params?.allowChildren || false,
+		useVariants: false,
+		...getShared(nodeName, versions, params?.docs),
+		getReactComponent() {
+			return forwardRef(function (p: any, ref) {
+				console.log('getReactComponent', p);
+				return <>TEST</>;
+			});
+		},
+	} as ReactRoodlNode);
 
 // export const reactNode = (nodeName: string, versions: JsNodeVersions, params?: { docs?: string; allowChildren?: boolean }) =>
 // 	({

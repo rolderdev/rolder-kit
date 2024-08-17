@@ -1,5 +1,4 @@
 import { snapshot } from 'valtio';
-import omit from 'just-omit';
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import { Props } from '../types';
 import { handleSubscribe } from './handleSubscribe';
@@ -21,7 +20,10 @@ export default (p: Props) => {
 
 		if (!schemeData.parentId) {
 			// snapshot - запретим редактирование всего кроме items.
-			data[dbClass] = { ...omit(snapshot(schemeData), ['aggregations', 'items', 'parentId']), items: schemeData.items };
+			data[dbClass] = {
+				...R.libs.just.omit(snapshot(schemeData), ['aggregations', 'items', 'parentId']),
+				items: schemeData.items,
+			};
 			sendOutput(p.noodlNode, `${dbClass}Items`, schemeData.items);
 			sendOutput(p.noodlNode, `${dbClass}Fetched`, schemeData.fetched);
 			sendOutput(p.noodlNode, `${dbClass}Total`, schemeData.total);
