@@ -12,6 +12,7 @@
 - Новый формат - \*
 - changelog
 - readme
+- CSS
 
 ### data
 

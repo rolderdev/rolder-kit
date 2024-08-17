@@ -26,7 +26,7 @@ export default async function (ErrorBoundary: any) {
 								userData: JSON.stringify(authState.user),
 								userEmail: authState.user.id,
 							});
-						window.HyperDX = HyperDX.default;
+						HyperDX = HyperDX.default as any;
 					}
 				});
 			} else window.HyperDX = undefined;
@@ -37,7 +37,7 @@ export default async function (ErrorBoundary: any) {
 	const authState = await R.db?.addState('auth');
 	authState.$.subscribe((authState: any) => {
 		if (authState.signedIn && authState.user && window.HyperDX)
-			HyperDX.setGlobalAttributes({
+			HyperDX?.setGlobalAttributes({
 				userId: authState.user.id,
 				userData: JSON.stringify(authState.user),
 				userEmail: authState.user.id,

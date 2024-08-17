@@ -1,6 +1,8 @@
 {
 	"name": "mantine",
 	"dependencies": {
+		"@mantine/form": "^7.12.1",
+		"just-safe-set": "^4.2.1",
 		"@nodes/mantine-v2.0.0": "workspace:*",
 		"@nodes/stack-v2.0.0": "workspace:*",
 		"@nodes/text-v2.0.0": "workspace:*"

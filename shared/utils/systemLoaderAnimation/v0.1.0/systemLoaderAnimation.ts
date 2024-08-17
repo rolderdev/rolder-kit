@@ -10,5 +10,5 @@ export default {
 	stop() {
 		const loaderEl = document.getElementById('loadingAnimation');
 		loaderEl?.parentNode?.removeChild(loaderEl);
-	},
+	}
 };

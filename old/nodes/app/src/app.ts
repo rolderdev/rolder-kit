@@ -54,7 +54,6 @@ import { getCustomEnumType, getPort } from '@packages/port';
 import { reactNode } from '@packages/node';
 
 import v140 from '@packages/app-v1.4.0';
-import v200 from '@packages/app-v2.0.0';
 import getEnum from '@packages/port/src/funcs/getEnum';
 import systemLoaderAnimation from '@packages/system-loader-animation';
 
@@ -127,36 +126,6 @@ Noodl.defineModule({
 						}),
 					],
 				},
-				'v2.0.0': {
-					hashTag: '#pre-release',
-					module: { static: v200 },
-					inputs: [
-						getPort({
-							plug: 'input',
-							name: 'multiInstance',
-							displayName: 'Multi local DB instance',
-							group: 'Params',
-							type: 'boolean',
-							default: true,
-						}),
-					],
-					outputs: [
-						getPort({
-							plug: 'output',
-							name: 'networkType',
-							displayName: 'Type',
-							group: 'Network',
-							type: 'string',
-						}),
-						getPort({
-							plug: 'output',
-							name: 'networkConnected',
-							displayName: 'Connected',
-							group: 'Network',
-							type: 'boolean',
-						}),
-					],
-				},
 			},
 			{
 				allowChildren: true,
@@ -181,7 +150,7 @@ Noodl.defineModule({
 			name: 'environment',
 			type: {
 				name: 'enum',
-				enums: getEnum(['d2', 't2', 's2', 'p2'], true),
+				enums: getEnum(['d2', 't2', 'p2'], true),
 			},
 			default: 'd2',
 			displayName: 'Project environment',

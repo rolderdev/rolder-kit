@@ -1,0 +1,7 @@
+{
+	"name": "@shared/get-formated-date-v0.2.0",
+	"main": "getFormatedDate.ts",
+	"dependencies": {
+		"@shared/get-value": "workspace:@packages/get-value-v0.8.0@*"
+	}
+}

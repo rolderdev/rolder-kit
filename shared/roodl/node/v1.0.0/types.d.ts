@@ -142,6 +142,7 @@ export type NoodlNode = {
 		create: (item: Item) => void;
 	};
 	forceUpdate: () => void;
+	getProjectSettings: () => Props;
 };
 
 export type NodeContext = {

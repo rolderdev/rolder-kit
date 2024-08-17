@@ -1,0 +1,20 @@
+---
+id: packages/app
+tasks:
+  build:
+    command: rspack build --mode=production
+    inputs:
+      - src/**/*
+      - /packages/app/**/*
+      - /nodes/app/**/*
+      - /shared/roodl/**/*
+      - /shared/utils/**/*
+  dev:
+    command: rspack build --mode=development --watch
+    inputs:
+      - src/**/*
+      - /packages/app/**/*
+      - /nodes/app/**/*
+      - /shared/roodl/**/*
+      - /shared/utils/**/*
+    local: true

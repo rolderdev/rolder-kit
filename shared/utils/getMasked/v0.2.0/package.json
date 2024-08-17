@@ -1,0 +1,7 @@
+{
+	"name": "@shared/get-masked-v0.2.0",
+	"main": "getMasked.ts",
+	"dependencies": {
+		"imask": "^7.6.1"
+	}
+}

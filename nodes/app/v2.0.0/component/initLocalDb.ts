@@ -1,16 +1,14 @@
-import { addRxPlugin, createRxDatabase } from 'rxdb';
+import { useState } from 'react';
+import { addRxPlugin, createRxDatabase, removeRxDatabase, createBlob } from 'rxdb';
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election';
 import { RxDBCleanupPlugin } from 'rxdb/plugins/cleanup';
 import { RxDBMigrationPlugin } from 'rxdb/plugins/migration-schema';
 import { RxDBStatePlugin } from 'rxdb/plugins/state';
 import { RxDBAttachmentsPlugin } from 'rxdb/plugins/attachments';
-import { createBlob } from 'rxdb';
 import { Network } from '@capacitor/network';
-import { useState } from 'react';
-import { sendOutputs } from '@packages/port-send';
-import type { NoodlNode } from '@packages/node';
-import { removeRxDatabase } from 'rxdb';
+import { sendOutput } from '@shared/port-send-v1.0.0';
+import type { NoodlNode } from '@shared/node-v1.0.0';
 
 export default function (noodlNode: NoodlNode, multiInstance?: boolean) {
 	const [localDbInited, setLocalDbInited] = useState(false);
@@ -27,7 +25,7 @@ export default function (noodlNode: NoodlNode, multiInstance?: boolean) {
 		// Зададим название локальной БД так, чтобы разработчик не получал гемор от того, что использует приложение по разным ссылкам.
 		const localDbName = `${project}-${environment}-${location.hostname}`;
 		createRxDatabase({ name: localDbName, storage: getRxStorageDexie(), multiInstance }).then(async (db) => {
-			R.db = db as any;
+			R.db = db;
 			R.libs.rxdb = { createBlob };
 			// State в RxDb такая же БД, как и коллекции. Значит могут быть конфликты, которые нет смысла разруливать.
 			// Поэтому пересоздаем всю БД при 2-х сценариях - смене версии приложения и конфликте схемы State.
@@ -57,18 +55,14 @@ export default function (noodlNode: NoodlNode, multiInstance?: boolean) {
 			const state = await Network.getStatus();
 			await network.set('connected', () => state.connected);
 			await network.set('connectionType', () => state.connectionType);
-			sendOutputs(noodlNode, [
-				{ portName: 'networkType', value: state.connectionType },
-				{ portName: 'networkConnected', value: state.connected },
-			]);
+			sendOutput(noodlNode, 'networkType', state.connectionType);
+			sendOutput(noodlNode, 'networkConnected', state.connected);
 
 			Network.addListener('networkStatusChange', async (state) => {
 				await network.set('connected', () => state.connected);
 				await network.set('connectionType', () => state.connectionType);
-				sendOutputs(noodlNode, [
-					{ portName: 'networkType', value: state.connectionType },
-					{ portName: 'networkConnected', value: state.connected },
-				]);
+				sendOutput(noodlNode, 'networkType', state.connectionType);
+				sendOutput(noodlNode, 'networkConnected', state.connected);
 
 				log.info('Network state changed', state);
 			});

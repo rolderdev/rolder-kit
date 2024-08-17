@@ -3,9 +3,7 @@
 	"main": "types.ts",
 	"types": "types.ts",
 	"devDependencies": {
-		"kuzzle-sdk": "^7.11.3",
-		"dayjs": "^1.11.12",
-		"rxdb": "^15.30.0",
-		"shared": "workspace:*"
+		"shared": "workspace:*",
+		"@nodes/app-v2.0.0": "workspace:*"
 	}
 }

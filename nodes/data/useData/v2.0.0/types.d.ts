@@ -1,14 +1,13 @@
 import { BaseJsProps } from '@shared/node-v1.0.0';
 import { Item } from '@shared/types-v0.1.0';
 import type { HierarchyNode } from 'd3-hierarchy';
-import { FetchScheme } from './node/validtaion';
 
 export type Props = BaseJsProps & BaseProps & { store: Store };
 
 type BaseProps = {
 	apiVersion: 'v2';
 	// Весь тип схемы не нужен, т.к. она полностью передается в Kuzzle.
-	fetchScheme: FetchScheme;
+	fetchScheme: any;
 	controlled: boolean;
 	subscribe: boolean;
 };

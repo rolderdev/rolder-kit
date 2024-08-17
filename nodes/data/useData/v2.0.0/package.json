@@ -6,11 +6,7 @@
 		"@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.2.0@*",
 		"@shared/get-dbclass-version": "workspace:@shared/get-dbclass-version-v1.0.0@*",
 		"d3-hierarchy": "^3.1.2",
-		"valtio": "^1.13.2",
-		"valibot": "^0.37.0",
-		"just-typeof": "^3.2.0",
-		"just-unique": "^4.2.0",
-		"just-last": "^3.2.0"
+		"valtio": "^1.13.2"
 	},
 	"devDependencies": {
 		"kuzzle-sdk": "^7.11.3",

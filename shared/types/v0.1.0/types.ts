@@ -1,7 +1,8 @@
 import type { NoodlNode } from '@shared/node-v1.0.0';
-import type { Kuzzle } from 'kuzzle-sdk';
-import type { RxDatabase } from 'rxdb';
-import type { Just, Nanoid, Sort } from 'shared';
+//import type { Kuzzle } from 'kuzzle-sdk';
+import type { CreateBlob, RxDatabase, HyperDX } from '@nodes/app-v2.0.0';
+import type { Icons, Utils } from 'shared';
+import type { Dayjs, Just, Nanoid, Numbro, Omgopass, Sort, Valibot } from 'shared/src/libs';
 
 type Rolder = {
 	/* states: {
@@ -17,12 +18,12 @@ type Rolder = {
 		projectVersion?: string;
 		dbName?: string;
 	};
-	/*params: {
-		sessionTimeout?: string;
+	params: {
+		//	sessionTimeout?: string;
 		defaults?: {
 			dateFormat: string;
 		};
-		colorScheme?: 'light' | 'dark';
+		/*	colorScheme?: 'light' | 'dark';
 		creds?: {
 			name: string;
 			data: any;
@@ -30,23 +31,29 @@ type Rolder = {
 		backendOptions?: {
 			name: string;
 			data: any;
-		}[];
-	};*/
+		}[];*/
+	};
 	dbClasses?: {
 		[x: string]: DbClass;
 	};
 	libs: {
-		Kuzzle?: Kuzzle;
+		//Kuzzle?: Kuzzle;
+		rxdb: { createBlob: CreateBlob };
 		mantine?: {
 			MantineError(title: string, message?: string, autoClose?: boolean | number): void;
 		};
 		just: Just;
 		nanoid: Nanoid;
 		sort: Sort;
+		valibot: Valibot;
+		numbro: Numbro;
+		generatePassword: Omgopass;
+		dayjs: Dayjs;
+		icons: Icons;
 	};
-	db?: RxDatabase;
-	/*utils: any;
-	user?: any; */
+	db: RxDatabase;
+	utils: Utils;
+	//user?: any;
 };
 
 export type DbClass = {
@@ -99,7 +106,7 @@ export type User = {
 declare global {
 	var R: Rolder;
 	var Noodl: NoodlNode;
-	/*var HyperDX: any; */
+	var HyperDX: HyperDX | undefined;
 	var log: {
 		start(): number;
 		end(title: string, startTime: number): void;

@@ -1,9 +1,10 @@
+import React from 'react';
 import { forwardRef, useEffect } from 'react';
-import type { Props } from './types';
+import type { Props } from '../types';
 import { ErrorBoundary } from 'react-error-boundary';
-import initLocalDb from './src/initLocalDb';
-import systemLoaderAnimation from '@packages/system-loader-animation';
-import hyperdx from './src/hyperdx';
+import initLocalDb from './initLocalDb';
+import systemLoaderAnimation from '@shared/system-loader-animation-v0.1.0';
+import hyperdx from './hyperdx';
 
 function FallbackComponent({ error }: any) {
 	return (
@@ -31,7 +32,7 @@ function FallbackComponent({ error }: any) {
 	);
 }
 
-export default forwardRef(function (props: Props, ref) {
+export default forwardRef(function (props: Props) {
 	const {
 		stopLoaderAnimationOn = 'authInitialized',
 		project,
@@ -40,11 +41,16 @@ export default forwardRef(function (props: Props, ref) {
 		environment = 'd2',
 	} = Noodl.getProjectSettings();
 	const { noodlNode, multiInstance } = props;
+	const { set } = R.libs.just;
 
-	R.env.environment = environment;
-	R.env.project = project;
-	R.env.projectVersion = projectVersion;
-	R.params.defaults = projectDefaults && eval(projectDefaults)?.[0];
+	set(R, ['env', 'environment'], environment);
+	set(R, ['env', 'project'], project);
+	set(R, ['env', 'projectVersion'], projectVersion);
+	try {
+		if (projectDefaults) set(R, ['params', 'defaults'], eval(projectDefaults));
+	} catch (error) {
+		log.error('Project defaults error:', error);
+	}
 
 	const localDbInited = initLocalDb(noodlNode, multiInstance);
 	useEffect(() => {

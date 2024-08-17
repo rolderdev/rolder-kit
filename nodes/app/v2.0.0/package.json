@@ -1,0 +1,12 @@
+{
+	"name": "@nodes/app-v2.0.0",
+	"main": "node/definition.ts",
+	"type": "module",
+	"dependencies": {
+		"@shared/system-loader-animation-v0.1.0": "workspace:*",
+		"react-error-boundary": "^4.0.13",
+		"@hyperdx/browser": "^0.21.0",
+		"rxdb": "^15.31.0",
+		"@capacitor/network": "^6.0.2"
+	}
+}

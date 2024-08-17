@@ -43,9 +43,6 @@ module.exports = function (nodeName, context, outputBuildPath, developer, projec
 			}),
 			process.env.RSDOCTOR && new RsdoctorRspackPlugin({ generateTileGraph: true }),
 		].filter(Boolean),
-		// Почему то минимайзер CSS наоборот увеличивает в нашем случае.
-		//optimization: { minimizer: [new rspack.LightningCssMinimizerRspackPlugin()] },
-		experiments: { css: true }, // С версии 1.0.0
 		module: {
 			parser: { 'css/auto': { namedExports: false } },
 			rules: [
