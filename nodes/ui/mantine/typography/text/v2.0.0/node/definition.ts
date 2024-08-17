@@ -1,21 +1,30 @@
 import { getPortDef } from '@shared/port-v1.0.0';
-import {} from '@shared/node-v1.0.0';
+import { ReactNodeDef } from '@shared/node-v1.0.0';
+import { lazy } from 'react';
 
 export default {
 	hashTag: '#expreimental',
-	module: { dynamic: import('../component/text') },
-	inputs: [],
+	module: { dynamic: lazy(() => import('../component/text')) },
+	inputs: [
+		getPortDef({
+			name: 'size',
+			displayName: 'Size',
+			group: 'Custom',
+			customGroup: 'Font',
+			type: [
+				{ label: 'xs', value: 'xs' },
+				{ label: 'sm', value: 'sm' },
+				{ label: 'md', value: 'md' },
+				{ label: 'lg', value: 'lg' },
+				{ label: 'xl', value: 'xl' },
+			],
+			default: 'md',
+		}),
+	],
 	outputs: [],
-	triggerOnInputs(p) {
-		return [];
-	},
 	getInspectInfo(p) {
-		if (p.fields)
-			return [
-				{ type: 'text', value: 'Search fields' },
-				{ type: 'value', value: p.fields },
-			];
+		if (p.size) return [{ type: 'text', value: `Size: "${p.size}"` }];
 		else return [];
 	},
 	disableCustomProps: true,
-} as any;
+} satisfies ReactNodeDef;

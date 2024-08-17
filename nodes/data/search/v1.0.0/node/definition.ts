@@ -58,4 +58,4 @@ export default {
 		else return [];
 	},
 	disableCustomProps: true,
-} as JsNodeDef;
+} satisfies JsNodeDef;

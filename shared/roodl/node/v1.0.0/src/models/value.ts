@@ -1,5 +1,6 @@
 // Модель значения порта.
 
+import typeOf from 'just-typeof';
 import { type PortDef } from '@shared/port-v1.0.0';
 import type { NoodlNode } from '../../types';
 import { clearWarning, sendWarning } from '../models/warning';
@@ -43,7 +44,7 @@ export const validateValueType = (noodlNode: NoodlNode, inputDef: PortDef, value
 	// Если не убрать эти undefined, сравнение по типу будет не корректным.
 	if (value !== undefined) {
 		const defType = inputDef.type;
-		const valueType = R.libs.just.typeOf(value);
+		const valueType = typeOf(value);
 
 		// Исключим из проверки unum.
 		if (typeof defType === 'string') {

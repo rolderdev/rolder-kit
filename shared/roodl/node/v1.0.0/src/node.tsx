@@ -1,6 +1,15 @@
-/* Интеграция нод в Roodl. */
+/* Интеграция нод в Roodl.
+Оба вида нод не проверяют props на изменения. Предполагается, что это должен решать разработчик ноды.
+JS и React используют один и тот же код (как это делает сам Roodl под капотом), но React есть отличия:
+	1. Для React module.ts не используется, он только для JS. Вместо этого устанавливается getReactComponent, в которой идет обработка и 
+		возвращается React-компонента.
+	2. Для JS module.ts разруливает варианты статичного и динамичного импорта. Для React используется Suspense, который сам
+	разруливает оба варианта импорта.
+	3. Асинхронная JS-нода не запускается снова пока работает предыдущая итерация. React запускается (рендерится) всегда.
+	4. В schedule.ts JS-нода передает props в указанную функцию (сигнал или reactive), React-нода просто обновляет props из кеша и запускает
+		рендер через встроенную в Roodl функцию forceUpdate. */
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { forwardRef } from 'react';
 import { getNodePort, type PortDef } from '@shared/port-v1.0.0';
 import type {
@@ -18,6 +27,7 @@ import { cachePortDefs, setNodePorts, setValuesFromParameters } from './models/n
 import { schedule } from './models/schedule';
 import { validateValueType } from './models/value';
 import { getCustomPropsPortDef } from './models/customProps';
+import { getModule } from './models/module';
 
 const getShared = (nodeName: string, versions: JsNodeVersions, docs?: string) =>
 	({
@@ -26,7 +36,7 @@ const getShared = (nodeName: string, versions: JsNodeVersions, docs?: string) =>
 		docs,
 		// Выдадим над нодой короткую информацию о праметрах.
 		getInspectInfo() {
-			const version = this._inputValues.version;
+			const version = this._inputValues?.version;
 			let output;
 			const getInspectInfo = versions[version]?.getInspectInfo;
 			if (getInspectInfo) output = getInspectInfo(this.propsCache || {}, this.outputPropValues || {});
@@ -149,43 +159,23 @@ export const reactNode = (nodeName: string, versions: JsNodeVersions, params?: {
 		...getShared(nodeName, versions, params?.docs),
 		getReactComponent() {
 			return forwardRef(function (p: any, ref) {
-				console.log('getReactComponent', p);
-				return <>TEST</>;
+				// Не будем выдавать компоненту пока не выбрана версия.
+				if (!p.version) return null;
+				else {
+					const ReactComponent = getModule(versions[p.version]);
+					// Если ошибка в импорте, вернем null.
+					if (!ReactComponent) return null;
+					else {
+						// Передадим готовые props и поднимем выше ref, чтобы родители могли управлять.
+						// Обернем в Suspense, чтобы не разруливать вручную динамичный и статичный импорты.
+						console.log(ReactComponent);
+						return (
+							<Suspense fallback={null}>
+								<ReactComponent {...p} ref={ref} />
+							</Suspense>
+						);
+					}
+				}
 			});
 		},
 	} as ReactRoodlNode);
-
-// export const reactNode = (nodeName: string, versions: JsNodeVersions, params?: { docs?: string; allowChildren?: boolean }) =>
-// 	({
-// 		allowChildren: params?.allowChildren || false,
-// 		...nodeRoodlDef(nodeName, versions, params?.docs),
-// 		initialize,
-// 		...methods(versions),
-// 		getReactComponent() {
-// 			return forwardRef(function (props: any, ref) {
-// 				return <>TEST</>;
-// 				/* const localRef = useRef<any>(null)
-// 					useImperativeHandle(ref, () => ({
-// 							signal(name: string) { setTimeout(() => localRef.current?.[name]()) }
-// 					}))
-// 					const version = props.version
-
-// 					const p = version ? getProps(versions, props) : {}
-
-// 					const Comp = !hasWarings(props.noodlNode) && version
-// 							? getModule(versions[version])
-// 							: null
-
-// 					return Comp
-// 							? <Suspense fallback={
-// 									params?.loaderAnimation
-// 											? <div style={{ padding: 24, margin: 'auto' }}>Loading...</div>
-// 											: null}
-// 							>
-// 									<Comp {...p} ref={localRef} />
-// 							</Suspense>
-// 							: null */
-// 			});
-// 		},
-// 		...setup(nodeName, versions),
-// 	} as JsNodeRoodlDef);

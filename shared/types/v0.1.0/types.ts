@@ -1,7 +1,7 @@
 import type { NoodlNode } from '@shared/node-v1.0.0';
 import type { Kuzzle } from 'kuzzle-sdk';
 import type { RxDatabase } from 'rxdb';
-import type { Just, Nanoid, Sort, Valibot } from 'shared';
+import type { Just, Nanoid, Sort } from 'shared';
 
 type Rolder = {
 	/* states: {
@@ -42,7 +42,6 @@ type Rolder = {
 		};
 		just: Just;
 		nanoid: Nanoid;
-		valibot: Valibot;
 		sort: Sort;
 	};
 	db?: RxDatabase;

@@ -1,19 +1,25 @@
 import type { PortDef } from '@shared/port-v1.0.0';
 import type { Item } from '@shared/types-v0.1.0';
+import { LazyExoticComponent } from 'react';
 
 // ================== JS ==================== //
 
 export type BaseJsProps = BaseProps;
 export type JsNodeVersions = { [key: string]: JsNodeDef };
 export type JsRoodlNode = RoodlNode & { color?: NodeColor };
-export type JsNodeDef = NodeDef;
+export type JsNodeDef = NodeDef & {
+	module: {
+		dynamic?: Promise<any>;
+	};
+	triggerOnInputs?(p: { [x: string]: any }): string[];
+};
 
 // ================= React ================== //
 
 export type BaseReactProps = BaseProps & { style: { [x: string]: any }; styles: { [x: string]: any } };
 export type ReactNodeVersions = { [key: string]: ReactNodeDef };
 export type ReactRoodlNode = RoodlNode & { getReactComponent(): any };
-export type ReactNodeDef = NodeDef;
+export type ReactNodeDef = NodeDef & { module: { dynamic?: LazyExoticComponent<any> } };
 
 // ================ Shared ================== //
 
@@ -29,16 +35,12 @@ type HashTag = '#expreimental' | '#pre-release' | '#deprecated';
 
 // Декларация
 export type NodeDef = {
-	module: {
-		static?: any;
-		dynamic?: any;
-	};
+	module: { static?: any };
 	hashTag?: HashTag;
 	inputs?: PortDef[];
 	outputs?: PortDef[];
 	initialize?(p: Props): Promise<Props>;
 	getInspectInfo?(p: Props, outProps: { [x: string]: any }): InspectInfo | InspectInfo[];
-	triggerOnInputs?(p: { [x: string]: any }): string[];
 	transform?(p: Props, portDefs: { inputs: PortDef[]; outputs: PortDef[] }): { inputs: PortDef[]; outputs: PortDef[] };
 	disableCustomProps?: boolean;
 };
@@ -141,6 +143,7 @@ export type NoodlNode = {
 	Object: {
 		create: (item: Item) => void;
 	};
+	forceUpdate: () => void;
 };
 
 export type NodeContext = {

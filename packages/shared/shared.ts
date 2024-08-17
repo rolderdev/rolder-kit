@@ -28,9 +28,7 @@ set(R, ['libs', 'just'], { typeOf, compare, clone, get, set, map, omit, last, un
 
 import { nanoid } from 'nanoid';
 export type Nanoid = typeof nanoid;
-import * as valibot from 'valibot';
-export type Valibot = typeof valibot;
 import { sort } from 'fast-sort';
 export type Sort = typeof sort;
 
-set(R, ['libs'], { nanoid, valibot, sort });
+set(R, ['libs'], { nanoid, sort });

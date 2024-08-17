@@ -1,8 +1,22 @@
 // Модель порта. Определяет схему порта, по которой они добавляются в схему ноды.
 
-import type { InferOutput } from 'valibot';
-const { any, array, boolean, check, function_, number, object, optional, parse, picklist, pipe, string, transform, union } =
-	R.libs.valibot;
+import {
+	any,
+	array,
+	boolean,
+	check,
+	function_,
+	type InferOutput,
+	number,
+	object,
+	optional,
+	parse,
+	picklist,
+	pipe,
+	string,
+	transform,
+	union,
+} from 'valibot';
 
 // Задаим схему порта в удобном для определения виде.
 export const PortDef = pipe(

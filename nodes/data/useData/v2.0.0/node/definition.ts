@@ -130,4 +130,4 @@ export default {
 		];
 	},
 	disableCustomProps: true,
-} as JsNodeDef;
+} satisfies JsNodeDef;

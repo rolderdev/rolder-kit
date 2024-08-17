@@ -2,7 +2,8 @@ import { Text } from '@mantine/core';
 import React from 'react';
 import { forwardRef } from 'react';
 
-export default forwardRef(function (props: any) {
+export default forwardRef(function (p: any) {
+	console.log(p);
 	return <Text>TEST</Text>;
 });
 
