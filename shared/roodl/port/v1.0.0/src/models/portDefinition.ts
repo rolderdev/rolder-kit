@@ -24,7 +24,7 @@ export const PortDef = pipe(
 		name: string(),
 		displayName: string(),
 		// Строгий список, чтобы не опечатываться.
-		group: picklist(['Version', 'Data', 'Params', 'Styles', 'Signals', 'States', 'Advanced', 'Custom']),
+		group: picklist(['Version', 'Data', 'Params', 'Layout', 'Dimensions', 'Styles', 'Signals', 'States', 'Advanced', 'Custom']),
 		customGroup: optional(string()), // Но оставим возможность задавать кастомную группу.
 		/* Зададим тип так, чтобы было удобно его определять. Оставим только список строгих литералов и массив enum.
 			Варианты objectEval и funcEval  - это наш специальный тип для передачи объекта или функции из редактора. Roodl в редакторе включает

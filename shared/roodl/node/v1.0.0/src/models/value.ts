@@ -46,10 +46,10 @@ export const validateValueType = (noodlNode: NoodlNode, inputDef: PortDef, value
 		const defType = inputDef.type;
 		const valueType = typeOf(value);
 
-		// Исключим из проверки unum.
+		// Все кроме enum.
 		if (typeof defType === 'string') {
 			// Исключим, что нет смысла проверять.
-			if (['*', 'proplist', 'component', 'signal'].includes(defType)) return;
+			if (['*', 'component', 'proplist', 'signal'].includes(defType)) return;
 			// Для funcEval нужно заменить тип в сообщении, чтобы слово eval не смущало разработчика.
 			if (defType === 'funcEval') {
 				if (valueType !== 'function') sendTypeWarning('function', valueType);
@@ -70,6 +70,12 @@ export const validateValueType = (noodlNode: NoodlNode, inputDef: PortDef, value
 
 			// Здесь все литералы и array.
 			if (defType !== valueType) sendTypeWarning(defType, valueType);
+			else clearWarning(noodlNode, inputDef.displayName);
+		}
+
+		// enum.
+		if (Array.isArray(defType)) {
+			if (valueType !== 'string') sendTypeWarning('string', valueType);
 			else clearWarning(noodlNode, inputDef.displayName);
 		}
 	}

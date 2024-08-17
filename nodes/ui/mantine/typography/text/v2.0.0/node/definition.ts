@@ -4,8 +4,49 @@ import { lazy } from 'react';
 
 export default {
 	hashTag: '#expreimental',
-	module: { dynamic: lazy(() => import('../component/text')) },
+	module: { dynamic: lazy(() => import('../component/Text')) },
 	inputs: [
+		getPortDef({
+			name: 'sourceType',
+			displayName: 'Source type',
+			group: 'Params',
+			type: [
+				{ label: 'Item', value: 'item' },
+				{ label: 'Value', value: 'value' },
+			],
+			default: 'item',
+		}),
+		getPortDef({
+			name: 'value',
+			displayName: 'Value',
+			group: 'Data',
+			type: 'string',
+			dependsOn(p) {
+				return p.sourceType === 'value';
+			},
+		}),
+		getPortDef({
+			name: 'item',
+			displayName: 'Item',
+			group: 'Data',
+			type: 'object',
+			visibleAt: 'connection',
+			dependsOn(p) {
+				return p.sourceType === 'item';
+			},
+		}),
+		getPortDef({
+			name: 'field',
+			displayName: 'Field',
+			group: 'Params',
+			type: 'string',
+			dependsOn(p) {
+				return p.sourceType === 'item';
+			},
+			validate(p) {
+				return p.sourceType === 'item' && !p.field ? false : true;
+			},
+		}),
 		getPortDef({
 			name: 'size',
 			displayName: 'Size',
@@ -26,5 +67,4 @@ export default {
 		if (p.size) return [{ type: 'text', value: `Size: "${p.size}"` }];
 		else return [];
 	},
-	disableCustomProps: true,
 } satisfies ReactNodeDef;

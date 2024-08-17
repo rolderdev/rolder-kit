@@ -7,19 +7,18 @@ import { LazyExoticComponent } from 'react';
 export type BaseJsProps = BaseProps;
 export type JsNodeVersions = { [key: string]: JsNodeDef };
 export type JsRoodlNode = RoodlNode & { color?: NodeColor };
-export type JsNodeDef = NodeDef & {
-	module: {
-		dynamic?: Promise<any>;
-	};
-	triggerOnInputs?(p: { [x: string]: any }): string[];
-};
+export type JsNodeDef = NodeDef & { triggerOnInputs?(p: { [x: string]: any }): string[] };
 
 // ================= React ================== //
 
-export type BaseReactProps = BaseProps & { style: { [x: string]: any }; styles: { [x: string]: any } };
+export type BaseReactProps = BaseProps & {
+	children?: React.ReactNode;
+	style: { [x: string]: any };
+	styles: { [x: string]: any };
+};
 export type ReactNodeVersions = { [key: string]: ReactNodeDef };
 export type ReactRoodlNode = RoodlNode & { getReactComponent(): any };
-export type ReactNodeDef = NodeDef & { module: { dynamic?: LazyExoticComponent<any> } };
+export type ReactNodeDef = NodeDef;
 
 // ================ Shared ================== //
 
@@ -27,7 +26,6 @@ export type BaseProps = {
 	noodlNode: NoodlNode;
 	version: string;
 	customProps?: { [x: string]: any };
-	//customProps?(p: Props): Props;
 };
 type Props = { [name: string]: any };
 type InspectInfo = { type: 'value' | 'text' | 'color'; value: any };
@@ -35,7 +33,7 @@ type HashTag = '#expreimental' | '#pre-release' | '#deprecated';
 
 // Декларация
 export type NodeDef = {
-	module: { static?: any };
+	module: { static?: any; dynamic?: any };
 	hashTag?: HashTag;
 	inputs?: PortDef[];
 	outputs?: PortDef[];
@@ -138,7 +136,7 @@ export type NoodlNode = {
 	_updatedAtIteration: number;
 	_valuesFromConnections: any;
 	removeChild: (reactNode: React.ReactNode) => void;
-	defineModule(module: { nodes?: JsNodeDef[]; reactNodes?: ReactNodeDef[] }): void;
+	defineModule(module: { nodes?: JsRoodlNode[]; reactNodes?: ReactRoodlNode[] }): void;
 	_onNodeDeleted: () => void;
 	Object: {
 		create: (item: Item) => void;

@@ -168,7 +168,6 @@ export const reactNode = (nodeName: string, versions: JsNodeVersions, params?: {
 					else {
 						// Передадим готовые props и поднимем выше ref, чтобы родители могли управлять.
 						// Обернем в Suspense, чтобы не разруливать вручную динамичный и статичный импорты.
-						console.log(ReactComponent);
 						return (
 							<Suspense fallback={null}>
 								<ReactComponent {...p} ref={ref} />

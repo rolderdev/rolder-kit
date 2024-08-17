@@ -6,4 +6,4 @@ import useData from './src/useData';
 
 const jsPackages = [search, useData];
 
-Noodl.defineModule({ nodes: jsPackages.map((i) => defineNode(i) as any) });
+Noodl.defineModule({ nodes: jsPackages.map((i) => defineNode(i)) });

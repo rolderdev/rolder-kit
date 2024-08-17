@@ -1,9 +1,0 @@
-{
-	"name": "@packages/mantine-v2.0.0",
-	"main": "mantine.tsx",
-	"types": "mantine.tsx",
-	"type": "module",
-	"dependencies": {
-		"@packages/add-css-to-html-head": "workspace:@packages/add-css-to-html-head-v0.1.0@*"
-	}
-}

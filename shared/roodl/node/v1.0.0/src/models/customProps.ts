@@ -10,7 +10,7 @@ export const getCustomPropsPortDef = () => {
 			visibleAt: 'both',
 			codeComment: `/*(props) => {
 	// Тут твой крутой код, использующий текущие props.
-	return {} // Тут твои крутиые кастомные настройки ноды.
+	return {} // Тут твои крутые кастомные настройки ноды.
 }*/`,
 		}),
 		index: 1000,

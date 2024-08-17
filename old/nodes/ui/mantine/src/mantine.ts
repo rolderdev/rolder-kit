@@ -6,7 +6,6 @@ import { defineNode } from '@noodl/noodl-sdk';
 const notifEnum = ['top-left', 'top-right', 'top-center', 'bottom-left', 'bottom-right', 'bottom-center'];
 
 import v100 from '@packages/mantine-v1.0.0';
-import v200 from '@packages/mantine-v2.0.0';
 
 const mantineNode = reactNode(
 	'Mantine',
@@ -22,38 +21,6 @@ const mantineNode = reactNode(
 					type: getCustomEnumType(notifEnum),
 					default: 'bottom-right',
 					customs: { isObject: true, required: 'connection' },
-				}),
-			],
-		},
-		'v2.0.0': {
-			hashTag: '#pre-release',
-			module: { static: v200 },
-			inputs: [
-				getPort({
-					plug: 'input',
-					name: 'notificationsPosition',
-					displayName: 'Notifications position',
-					group: 'Layout',
-					type: getCustomEnumType(notifEnum),
-					default: 'bottom-right',
-					customs: { isObject: true, required: 'connection' },
-				}),
-				getPort({
-					plug: 'input',
-					name: 'defaultColorScheme',
-					displayName: 'Default color scheme',
-					group: 'Style',
-					type: getCustomEnumType(['light', 'dark', 'auto']),
-					default: 'light',
-					customs: { required: 'connection' },
-				}),
-				getPort({
-					plug: 'input',
-					name: 'mantineTheme',
-					displayName: 'Mantine theme',
-					group: 'Style',
-					type: 'array',
-					customs: { isObject: true },
 				}),
 			],
 		},
