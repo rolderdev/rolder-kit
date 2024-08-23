@@ -90,13 +90,14 @@ export {
 	IconKeyboard,
 	IconRestore,
 	IconForms,
-	IconTextPlus, // Vezdexod
-	IconArrowNarrowUp, // Vezdexod
-	IconArrowNarrowDown, // Vezdexod
-	IconArchiveOff, // Vezdexod
-	IconLockOpen, // Vezdexod
-	IconLinkPlus, // Vezdexod 11.06
-	IconCopyPlus, // Vezdexod 11.06
-	IconFilter, // Vezdexod 04.07
-	IconSpeakerphone, // Vezdexod 17.07
+	IconTextPlus,
+	IconArrowNarrowUp,
+	IconArrowNarrowDown,
+	IconArchiveOff,
+	IconLockOpen,
+	IconLinkPlus,
+	IconCopyPlus,
+	IconFilter,
+	IconSpeakerphone,
 } from '@tabler/icons-react';
+export type { IconProps } from '@tabler/icons-react';

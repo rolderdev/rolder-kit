@@ -1,7 +1,6 @@
-import { Stack, Text } from '@mantine/core';
-import React from 'react';
+import { Stack } from '@mantine/core';
 import { forwardRef } from 'react';
-import { Props } from '../types';
+import type { Props } from '../types';
 
 export default forwardRef(function (p: Props) {
 	return (

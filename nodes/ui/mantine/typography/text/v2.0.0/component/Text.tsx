@@ -1,13 +1,16 @@
 import { Text } from '@mantine/core';
-import React from 'react';
 import { forwardRef } from 'react';
-import { Props } from '../types';
+import type { Props } from '../types';
 
 export default forwardRef(function (p: Props) {
-	console.log(p);
+	//const { useSnapshot, proxy } = R.libs.valtio;
+
+	//const item = useSnapshot(proxy(p.item || {}));
+	const value = p.sourceType === 'value' ? p.value : R.libs.just.get(p.item || {}, p.field);
+	//console.log('Text render', value);
 	return (
 		<Text {...p} {...p.customProps}>
-			{p.value}
+			{value}
 		</Text>
 	);
 });

@@ -1,4 +1,5 @@
 //// DEPRECATED
+import '@shared/types-v0.1.0';
 
 export default function (item: any, target: string, defaultValue?: any, defaultTarget?: string) {
 	if (item && target) {

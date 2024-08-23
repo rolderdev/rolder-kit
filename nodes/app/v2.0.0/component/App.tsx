@@ -1,4 +1,3 @@
-import React from 'react';
 import { forwardRef, useEffect } from 'react';
 import type { Props } from '../types';
 import { ErrorBoundary } from 'react-error-boundary';

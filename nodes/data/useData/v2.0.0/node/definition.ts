@@ -1,7 +1,7 @@
 import type { JsNodeDef } from '@shared/node-v1.0.0';
 import { getPortDef } from '@shared/port-v1.0.0';
 import getStore from './store';
-import { Props } from '../types';
+import type { Props } from '../types';
 import { validateFetchScheme } from './validtaion';
 
 export default {
@@ -42,7 +42,7 @@ export default {
 			type: 'boolean',
 			default: false,
 			visibleAt: 'editor',
-			dependsOn(p) {
+			dependsOn(p: Props) {
 				return p.controlled ? false : true;
 			},
 		}),
@@ -67,7 +67,8 @@ export default {
 		getPortDef({ name: 'fetching', displayName: 'Fetching', group: 'States', type: 'boolean' }),
 		getPortDef({ name: 'fetched', displayName: 'Fetched', group: 'Signals', type: 'signal' }),
 		getPortDef({ name: 'data', displayName: 'Data', group: 'Data', type: 'object' }),
-		getPortDef({ name: 'hierarchy', displayName: 'Hierarchy', group: 'Data', type: 'object' }),
+		getPortDef({ name: 'hierarchyRootNode', displayName: 'Hierarchy root node', group: 'Data', type: 'object' }),
+		getPortDef({ name: 'schemes', displayName: 'Schemes', group: 'Data', type: 'array' }),
 	],
 	transform(p, portDefs) {
 		// Пересоздание outputDbClasses
@@ -115,14 +116,14 @@ export default {
 
 		return portDefs;
 	},
-	triggerOnInputs(p) {
+	triggerOnInputs(p: Props) {
 		return ['apiVersion', 'fetchScheme', 'controlled', 'subscribe'];
 	},
-	async initialize(p) {
-		p.store = getStore(p as Props);
+	async initialize(p: Props) {
+		p.store = getStore(p);
 		return p;
 	},
-	getInspectInfo(p) {
+	getInspectInfo(p: Props) {
 		return [
 			{ type: 'text', value: `API ${p.apiVersion}` },
 			{ type: 'text', value: `=== Scheme ===` },

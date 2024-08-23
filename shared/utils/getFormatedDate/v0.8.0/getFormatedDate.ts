@@ -14,4 +14,5 @@ export default function (obj: any, templ: string | undefined, dateFormat: string
 			else if (dayjs(v).format() !== 'Invalid Date') return dayjs(v).format(dateFormat || defaultDateFormat);
 		} else return value;
 	} else return value;
+	return;
 }

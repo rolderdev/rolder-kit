@@ -31,4 +31,5 @@ export default function (
 		masked.resolve(value);
 		return masked.value;
 	}
+	return;
 }

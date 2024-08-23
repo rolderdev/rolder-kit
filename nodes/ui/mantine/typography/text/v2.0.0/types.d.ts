@@ -5,4 +5,5 @@ export type Props = BaseReactProps & {
 	sourceType: 'item' | 'value';
 	value?: string;
 	item?: Item;
+	field: string;
 };

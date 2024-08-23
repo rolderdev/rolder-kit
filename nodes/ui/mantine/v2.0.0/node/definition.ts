@@ -1,5 +1,5 @@
 import { getPortDef } from '@shared/port-v1.0.0';
-import { ReactNodeDef } from '@shared/node-v1.0.0';
+import type { ReactNodeDef } from '@shared/node-v1.0.0';
 import { lazy } from 'react';
 
 export default {
@@ -45,9 +45,6 @@ export default {
 		}),
 	],
 	outputs: [],
-	getInspectInfo(p) {
-		if (p.mantineTheme) return [{ type: 'value', value: p.mantineTheme }];
-		else return [];
-	},
+	getInspectInfo: (p) => (p.mantineTheme ? [{ type: 'value', value: p.mantineTheme }] : []),
 	disableCustomProps: true,
 } satisfies ReactNodeDef;

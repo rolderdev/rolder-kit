@@ -1,5 +1,5 @@
 import type { PortDef } from '@shared/port-v1.0.0';
-import type { Item } from '@shared/types-v0.1.0';
+import type { FrontItem, Item } from '@shared/types-v0.1.0';
 import { LazyExoticComponent } from 'react';
 
 // ================== JS ==================== //
@@ -139,10 +139,12 @@ export type NoodlNode = {
 	defineModule(module: { nodes?: JsRoodlNode[]; reactNodes?: ReactRoodlNode[] }): void;
 	_onNodeDeleted: () => void;
 	Object: {
-		create: (item: Item) => void;
+		create: (item: FrontItem) => FrontItem & { collapse: () => void; hierarchyNode: any };
 	};
+	Objects: { [itemId: string]: FrontItem & { collapse: () => void; hierarchyNode: any } };
 	forceUpdate: () => void;
 	getProjectSettings: () => Props;
+	_hasInputBeenSetFromAConnection: (inputName: string) => boolean;
 };
 
 export type NodeContext = {

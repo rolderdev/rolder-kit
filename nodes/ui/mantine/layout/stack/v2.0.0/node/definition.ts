@@ -1,10 +1,11 @@
-import { getPortDef } from '@shared/port-v1.0.0';
-import { ReactNodeDef } from '@shared/node-v1.0.0';
-import { lazy } from 'react';
+import { getPortDef, margins, paddings, sizes } from '@shared/port-v1.0.0';
+import type { ReactNodeDef } from '@shared/node-v1.0.0';
+
+import Comp from '../component/Stack';
 
 export default {
 	hashTag: '#expreimental',
-	module: { dynamic: lazy(() => import('../component/Stack')) },
+	module: { static: Comp },
 	inputs: [
 		getPortDef({
 			name: 'w',
@@ -47,47 +48,10 @@ export default {
 			name: 'gap',
 			displayName: 'Gap',
 			group: 'Layout',
-			type: [
-				{ value: '0', label: 'none' },
-				{ label: 'xs', value: 'xs' },
-				{ label: 'sm', value: 'sm' },
-				{ label: 'md', value: 'md' },
-				{ label: 'lg', value: 'lg' },
-				{ label: 'xl', value: 'xl' },
-			],
+			type: [{ value: '0', label: 'none' }, ...sizes],
 			default: 'md',
 		}),
+		...margins,
+		...paddings,
 	],
-	outputs: [],
-	getInspectInfo(p) {
-		if (p.size) return [{ type: 'text', value: `Size: "${p.size}"` }];
-		else return [];
-	},
 } satisfies ReactNodeDef;
-
-const aligns = ['stretch', 'center', 'flex-start', 'flex-end'];
-const justifies = ['center', 'flex-start', 'flex-end', 'space-between', 'space-around'];
-
-/* 
-export default reactNode(
-	'Stack',
-	{		
-		'v2.0.0': {
-
-				getPort({
-					plug: 'input',
-					name: 'gap',
-					displayName: 'Gap',
-					group: 'Layout',
-					default: 'md',
-					type: getEnumType([{ value: '0', label: 'none' }, ...enums.sizes]),
-				}),
-				...inputGroups.Margins,
-				...inputGroups.Paddings,
-				...getPorts('input', ['customProps', 'opacity']),
-			],
-		},
-	},
-	{ allowChildren: true }
-);
- */

@@ -1,7 +1,8 @@
 // Проставляет все связи.
 
-import { Item } from '@shared/types-v0.1.0';
-import { Props } from '../types';
+// Проставляет все связи.
+import type { FrontItem } from '@shared/types-v0.1.0';
+import type { Props } from '../types';
 
 export default (p: Props) => {
 	p.store.items.forEach((item) => {
@@ -11,14 +12,19 @@ export default (p: Props) => {
 				const dbClass = schemeData.scheme.dbClass;
 				// Запретим связи на самих себя. Это задача иерархии.
 				if (dbClassOrNot === dbClass && dbClassOrNot !== item.dbClass) {
+					//@ts-ignore
 					if (Array.isArray(item[dbClass])) {
-						let refArray: Item[] = [];
+						let refArray: FrontItem[] = [];
 						p.store.items.forEach((i) => {
+							//@ts-ignore
 							if (item[dbClass].map((i) => i.id).includes(i.id)) refArray.push(i);
 						});
+						//@ts-ignore
 						item[dbClass] = refArray;
 					} else {
+						//@ts-ignore
 						const refItem = p.store.items.get(item[dbClass].id);
+						//@ts-ignore
 						if (refItem) item[dbClass] = refItem;
 					}
 				}

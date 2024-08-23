@@ -1,13 +1,13 @@
-import '@shared/types-v0.1.0';
-
 // jsut
 import typeOf from 'just-typeof';
 import compare from 'just-compare';
 import clone from 'just-clone';
 //// object
+import has from 'just-has';
 import get from 'just-safe-get';
 import set from 'just-safe-set';
 import map from 'just-map-object';
+import pick from 'just-pick';
 import omit from 'just-omit';
 import template from 'just-template';
 import flush from 'just-flush';
@@ -25,9 +25,11 @@ export type Just = {
 	typeOf: typeof typeOf;
 	compare: typeof compare;
 	clone: typeof clone;
+	has: typeof has;
 	get: typeof get;
 	set: typeof set;
 	map: typeof map;
+	pick: typeof pick;
 	omit: typeof omit;
 	template: typeof template;
 	flush: typeof flush;
@@ -43,9 +45,11 @@ set(window, ['R', 'libs', 'just'], {
 	typeOf,
 	compare,
 	clone,
+	has,
 	get,
 	set,
 	map,
+	pick,
 	omit,
 	template,
 	flush,
@@ -57,6 +61,11 @@ set(window, ['R', 'libs', 'just'], {
 	sortBy,
 	capitalize,
 });
+
+// lodash
+import unset from 'lodash.unset';
+export type Lodash = { unset: typeof unset };
+set(window, ['R', 'libs', 'lodash'], { unset });
 
 // dayjs
 import dayjs from 'dayjs';
@@ -98,6 +107,13 @@ set(window, ['R', 'libs', 'valibot'], valibot);
 import generatePassword from 'omgopass';
 export type Omgopass = typeof generatePassword;
 set(window, ['R', 'libs', 'generatePassword'], generatePassword);
+
+// valtio
+import * as valtioModule from 'valtio';
+import { proxyMap } from 'valtio/utils';
+const valtio = { ...valtioModule, proxyMap };
+export type Valtio = typeof valtio;
+set(window, ['R', 'libs', 'valtio'], valtio);
 
 // numbro
 import numbro from 'numbro';

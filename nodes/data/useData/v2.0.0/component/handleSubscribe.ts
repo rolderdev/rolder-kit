@@ -1,9 +1,11 @@
-import { DocumentNotification } from 'kuzzle-sdk';
+import type { DocumentNotification } from 'kuzzle-sdk';
 import { getKuzzle } from '@shared/get-kuzzle';
 import { dbClassVersion } from '@shared/get-dbclass-version';
-import { Item } from '@shared/types-v0.1.0';
-import type { Props, ResultScheme } from '../types';
+import type { Item } from '@shared/types-v0.1.0';
+import type { Props } from '../types';
+import type { ResultScheme } from '../node/store';
 import handleDataChanges from './handleDataChanges';
+import createFrontItem from './createFrontItem';
 
 // Базируется на hash каждой схемы класса.
 // Если хеш есть в подписках и есть в данных, значит схема не изменилась - пропускаем.
@@ -71,6 +73,7 @@ export const unSubscribeFromScheme = async (p: Props, schemeHash: string) => {
 			.catch((error) => log.error(`Unsubscribe error`, error));
 };
 
+// Поскольку подписки идут по всем схемам, можно обрабатывать item найденный в этой схеме. Дубли отработает тригер другой схемы.
 const handleNotification = (
 	p: Props,
 	schemeHash: string,
@@ -81,42 +84,51 @@ const handleNotification = (
 
 	const schemeData = p.store.schemes.get(schemeHash);
 	if (schemeData) {
+		const frontItem = schemeData.items.get(notif.result._id);
+
 		if (notif.scope === 'in') {
-			const item = p.store.items.get(notif.result._id);
 			// Обновление существующего item.
-			if (item) {
-				notif.result._updatedFields.map((i) => set(item, i, get(notif.result._source, i)));
+			if (frontItem) {
+				notif.result._updatedFields.map((field) => set(frontItem, field, get(notif.result._source, field)));
 				const sorts = schemeData.scheme.sorts;
 				if (sorts) {
-					schemeData.items = sort(schemeData.items).by(
-						sorts.map((s) => ({ [Object.values(s)[0]]: (i) => get(i, Object.keys(s)[0]) } as any))
-					);
+					let items = Array.from(schemeData.items.values());
+					items = sort(items).by(sorts.map((s) => ({ [Object.values(s)[0]]: (i: any) => get(i, Object.keys(s)[0]) } as any)));
+					items.map((i) => schemeData.items.set(i.kid, i));
 				}
-			}
-			// Добавление нового item.
-			else {
-				const newRawItem: Item = { id: notif.result._id, dbClass: schemeData.scheme.dbClass, ...notif.result._source };
+			} else {
+				// Добавление нового item.
+				const newRawItem: Item = {
+					...notif.result._source,
+					dbClass: schemeData.scheme.dbClass,
+					id: notif.result._id,
+				};
+
 				p.store.items.set(newRawItem.id, newRawItem);
 				const sorts = schemeData.scheme.sorts;
 
-				const newItem = p.store.items.get(notif.result._id);
-				if (newItem) {
-					const items = schemeData.items.concat([newItem]);
+				const newBackendItem = p.store.items.get(newRawItem.id);
+				if (newBackendItem) {
+					createFrontItem(schemeData.items, newBackendItem);
+					schemeData.itemIds.push(newBackendItem.id);
+					// Нужно сменить сортировку в itemIds. schemeData.items - сортировка не важна.
 					if (sorts) {
-						schemeData.items = sort(items).by(
-							sorts.map((s) => ({ [Object.values(s)[0]]: (i) => get(i, Object.keys(s)[0]) } as any))
-						);
-					} else schemeData.items = items;
+						let items = Array.from(schemeData.items.values());
+						items = sort(items).by(sorts.map((s) => ({ [Object.values(s)[0]]: (i: any) => get(i, Object.keys(s)[0]) } as any)));
+						schemeData.itemIds = items.map((i) => i.kid);
+					}
 					schemeData.fetched++;
 					schemeData.total++;
 				}
 			}
 		}
 
-		// Удаление существующего item. Нужно удалить прокси как из items, так и из схемы. А так же уменьшить fetched и total.
-		if (notif.scope === 'out') {
-			p.store.items.delete(notif.result._id);
-			schemeData.items = schemeData.items.filter((i) => i.id !== notif.result._id);
+		// Удаление существующего item.
+		if (notif.scope === 'out' && frontItem) {
+			// Нельзя удалять, если есть frontItem в другой схеме, ссылающийся на item.
+			if (Array.from(p.store.schemes.values()).filter((i) => i.itemIds.includes(frontItem.kid)).length === 1)
+				p.store.items.delete(frontItem.kid);
+			schemeData.items.delete(frontItem.kid);
 			schemeData.fetched--;
 			schemeData.total--;
 		}

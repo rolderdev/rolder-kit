@@ -9,7 +9,7 @@ JS и React используют один и тот же код (как это �
 	4. В schedule.ts JS-нода передает props в указанную функцию (сигнал или reactive), React-нода просто обновляет props из кеша и запускает
 		рендер через встроенную в Roodl функцию forceUpdate. */
 
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { forwardRef } from 'react';
 import { getNodePort, type PortDef } from '@shared/port-v1.0.0';
 import type {
@@ -21,6 +21,7 @@ import type {
 	NodeContext,
 	RoodlNode,
 	ReactRoodlNode,
+	Props,
 } from '../types';
 import { getVersionPortDef, validateVersion } from './models/version';
 import { cachePortDefs, setNodePorts, setValuesFromParameters } from './models/nodePort';
@@ -158,7 +159,7 @@ export const reactNode = (nodeName: string, versions: JsNodeVersions, params?: {
 		useVariants: false,
 		...getShared(nodeName, versions, params?.docs),
 		getReactComponent() {
-			return forwardRef(function (p: any, ref) {
+			return forwardRef(function (p: Props, ref) {
 				// Не будем выдавать компоненту пока не выбрана версия.
 				if (!p.version) return null;
 				else {

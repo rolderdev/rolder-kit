@@ -1,5 +1,9 @@
-import '@shared/types-v0.1.0';
 import set from 'just-safe-set';
+
+// Base
+set(window, ['R', 'params'], {});
+// Обратная совместимость
+set(window, ['R', 'states', 'backend'], 'notInitialized');
 
 // logs
 const urlParams = new URLSearchParams(window.location.search);

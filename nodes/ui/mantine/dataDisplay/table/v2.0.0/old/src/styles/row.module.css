@@ -1,0 +1,19 @@
+.mantine-datatable-row[data-selected] td {
+	background: unset;
+}
+
+.expansion-with-border tr:last-of-type :global(.mantine-datatable-row-expansion-cell-content) {
+	border-bottom: 0;
+}
+
+.expansion-with-border
+	:global(.mantine-datatable-last-row-border-bottom-visible)
+	tr:last-of-type:not(.mantine-datatable-empty-row)
+	td {
+	border-bottom: 0;
+}
+
+.expansion-without-border tr:not(:last-of-type) :global(.mantine-datatable-row-expansion-cell-content) {
+	border-top: 0;
+	border-bottom: 0;
+}

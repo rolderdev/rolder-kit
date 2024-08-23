@@ -1,14 +1,16 @@
 // Проверяет схему и выдает красиво в ошибках.
 
 import '@shared/types-v0.1.0';
-import { Props } from '../types';
+import { type InferOutput } from 'valibot';
+import type { Props } from '../types';
 
-export const validateFetchScheme = (p: Props) => {
-	const { typeOf, unique, last } = R.libs.just;
-	const { array, check, integer, maxValue, minValue, number, optional, pipe, safeParse, strictObject, string, unknown } =
-		R.libs.valibot;
+export type FetchScheme = InferOutput<ReturnType<typeof getTypedFetchScheme>>;
 
-	const FetchScheme = pipe(
+const getTypedFetchScheme = () => {
+	const { typeOf, unique } = R.libs.just;
+	const { array, check, integer, maxValue, minValue, number, optional, pipe, strictObject, string, unknown } = R.libs.valibot;
+
+	return pipe(
 		array(
 			pipe(
 				strictObject({
@@ -58,11 +60,37 @@ export const validateFetchScheme = (p: Props) => {
 						}, '"Sorts" must be array of objects with following format <code>{ [path.to.value]: "asc" | "desc" }</code>')
 					),
 					hierarchyFunc: optional(string('"hierarchyFunc" must be string to transfer over net.')),
+					aggregations: pipe(
+						unknown(),
+						check((filters) => typeOf(filters) === 'object' || !filters, '"aggregations" must be object.')
+					),
 				}),
 				check(
 					(scheme) => (scheme.filters && scheme.filtersFunc ? false : true),
 					'Must be "filters" or "filtersFunc", choose one.'
-				)
+				),
+				check((scheme) => {
+					let isValid = true;
+					if (scheme.filtersFunc)
+						try {
+							eval(scheme.filtersFunc);
+						} catch (e: any) {
+							log.error(e);
+							isValid = false;
+						}
+					return isValid;
+				}, '"filtersFunc" eval error. Details at the console.'),
+				check((scheme) => {
+					let isValid = true;
+					if (scheme.hierarchyFunc)
+						try {
+							eval(scheme.hierarchyFunc);
+						} catch (e: any) {
+							log.error(e);
+							isValid = false;
+						}
+					return isValid;
+				}, '"hierarchyFunc" eval error. Details at the console.')
 			)
 		),
 		check(
@@ -70,8 +98,10 @@ export const validateFetchScheme = (p: Props) => {
 			'dbClass must be unique.'
 		)
 	);
+};
 
-	const result = safeParse(FetchScheme, p.fetchScheme);
+export const validateFetchScheme = (p: Props) => {
+	const result = R.libs.valibot.safeParse(getTypedFetchScheme(), p.fetchScheme);
 	if (!result.success) {
 		// Через forof, т.к. map добовляет запятые.
 		// <pre> делает красоту c JSON.stringify.
@@ -79,7 +109,7 @@ export const validateFetchScheme = (p: Props) => {
 		for (const issue of result.issues) {
 			html += `<hr width="100%" size="0.5px">${
 				issue.type === 'strict_object'
-					? `There is no key "${last(issue.path || []).key}" at Scheme specification.`
+					? `There is no key "${R.libs.just.last(issue.path || []).key}" at Scheme specification.`
 					: issue.message
 			}<br>${
 				issue.path?.[0].value ? JSON.stringify(issue.path?.[0].value, null, '  ') : JSON.stringify(issue.input, null, '  ')

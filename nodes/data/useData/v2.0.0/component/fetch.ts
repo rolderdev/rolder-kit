@@ -2,19 +2,24 @@ import { getKuzzle } from '@shared/get-kuzzle';
 import { sendOutput } from '@shared/port-send-v1.0.0';
 import type { Props } from '../types';
 import handleDataChanges from './handleDataChanges';
+import type { FrontItem, Item } from '@shared/types-v0.1.0';
+import createFrontItem from './createFrontItem';
+import type { BackendSchemeData } from '../node/store';
 
 export const fetch = async (p: Props) => {
 	const K = await getKuzzle();
 	if (!K) return;
 
+	const MantineError = R.libs.mantine?.MantineError;
+
 	const { dbName } = R.env;
 	if (!dbName) {
-		R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`);
+		MantineError?.('Системная ошибка!', `No dbName at R.env`);
 		log.error('No dbName', R.env);
 		return;
 	}
 
-	const { map, omit } = R.libs.just;
+	const { map } = R.libs.just;
 
 	const { fetchScheme } = p.store;
 
@@ -24,32 +29,51 @@ export const fetch = async (p: Props) => {
 	sendOutput(p.noodlNode, 'fetching', true);
 
 	const response = await K.query({ controller: 'rolder', action: `fetch_${p.apiVersion}`, dbName, fetchScheme });
-	const data = response.result;
+	const data = response.result as {
+		items: { [kid: string]: Item };
+		schemes: { [schemeHash: string]: BackendSchemeData };
+		error?: { message: string; dbClass?: string; metaData: any };
+	};
 
-	map(data, (dbClassOrError, v) => {
-		// Когда нет конкретной ошибки класса, контроллер выдает 'General error'.
-		if (dbClassOrError === 'error') {
-			log.error('useData error:', v);
-			R.libs.mantine?.MantineError('Системная ошибка!', `useData error. ${v}`);
-		}
-		// Ошибки классов.
-		if (v.error) {
-			log.error(`useData error at "${dbClassOrError}"`, v.error);
-			R.libs.mantine?.MantineError('Системная ошибка!', `useData error at "${dbClassOrError}". ${v.error}`);
-		}
+	if (data.error) {
+		log.error('Kuzzle error.', { error: data.error.message, metaData: data.error.metaData });
+		MantineError?.('Системная ошибка!', `Kuzzle error. ${data.error.message}`);
+	}
+
+	// Обновим прокси базовых item, тем самым добавив, удалив или обновив наследуемые.
+	// Здесь прокси valtio - т.е. реактивна вся структура item.
+	map(data.items, (kid, item) => p.store.items.set(kid, item));
+	p.store.items.forEach((_, kid) => {
+		if (!R.libs.just.has(data.items, kid)) p.store.items.delete(kid);
 	});
 
-	// Подготовим items и схемы.
-	p.store.items.clear();
-	Object.values(data.items).map((i: any) => p.store.items.set(i.id, i));
+	// Подготовим схемы и frontItems. Каждая схема имеет свои frontItems.
+	// Каждый frontItem - это прокси item. Items уникальны, но несколько frontItems могут использовать один item.
+	// С сервера в каждой схеме прилетает список kid, загруженных этой схемой с учетом сортировки. Важно сохранит сортировку.
+	// В рамках одной схемы не может быть двух kid. Значит мы можем запрашивать по ним. Поэтому, в каждой схеме сохряняется список kid
+	// как есть, а сам frontItems хроняться в Map так же по kid.
+	map(data.schemes, (schemeHash, backendSchemeData) => {
+		const frontItems = new Map<string, FrontItem>();
+		// Добавление и обновление.
+		// Здесь нам не важна сортировка, это решено в handleDataChanges.
+		for (const kid of backendSchemeData.itemIds) {
+			const backItem = p.store.items.get(kid);
+			if (backItem) {
+				const frontItem = p.store.schemes.get(schemeHash)?.items.get(kid);
+				// Если есть, обновляем, сохранив fid (id).
+				if (frontItem) frontItems.set(kid, { ...frontItem, ...backItem });
+				// Иначе, создаем новый.
+				else createFrontItem(frontItems, backItem);
+			}
+		}
+		// Обновим/создадим схему. Т.к. в frontItems только новые и измененные, это удалит устаревшие.
+		p.store.schemes.set(schemeHash, { ...backendSchemeData, items: frontItems });
+	});
 
-	p.store.schemes.clear();
-	map(data.schemes, (schemeHash, v: any) =>
-		p.store.schemes.set(schemeHash, {
-			...omit(v, ['itemIds']),
-			items: v.itemIds.map((id) => p.store.items.get(id)),
-		} as any)
-	);
+	// Удаление устаревших схем.
+	p.store.schemes.forEach((_, schemeHash) => {
+		if (!R.libs.just.has(data.schemes, schemeHash)) p.store.schemes.delete(schemeHash);
+	});
 
 	// Подготовим связи, иерархию, данные для отправки и отправим их.
 	handleDataChanges(p);

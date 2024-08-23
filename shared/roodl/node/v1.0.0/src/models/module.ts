@@ -16,7 +16,7 @@ export const runModule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef, inputD
 			noodlNode.firstRun
 		) {
 			await runModuleFunc(nodeDef, noodlNode.propsCache);
-			noodlNode.model.firstRun = false;
+			if (noodlNode.model) noodlNode.model.firstRun = false;
 			noodlNode.firstRun = false;
 		}
 	} else await runModuleFunc(nodeDef, noodlNode.propsCache, inputDef.name);

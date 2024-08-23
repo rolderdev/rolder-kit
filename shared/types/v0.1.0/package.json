@@ -4,6 +4,7 @@
 	"types": "types.ts",
 	"devDependencies": {
 		"shared": "workspace:*",
-		"@nodes/app-v2.0.0": "workspace:*"
+		"@nodes/app-v2.0.0": "workspace:*",
+		"kuzzle-sdk": "^7.11.3"
 	}
 }

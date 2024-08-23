@@ -1,8 +1,8 @@
 import type { NoodlNode } from '@shared/node-v1.0.0';
-//import type { Kuzzle } from 'kuzzle-sdk';
+import type { Kuzzle } from 'kuzzle-sdk';
 import type { CreateBlob, RxDatabase, HyperDX } from '@nodes/app-v2.0.0';
 import type { Icons, Utils } from 'shared';
-import type { Dayjs, Just, Nanoid, Numbro, Omgopass, Sort, Valibot } from 'shared/src/libs';
+import type { Dayjs, Just, Lodash, Nanoid, Numbro, Omgopass, Sort, Valibot, Valtio } from 'shared/src/libs';
 
 type Rolder = {
 	/* states: {
@@ -37,15 +37,17 @@ type Rolder = {
 		[x: string]: DbClass;
 	};
 	libs: {
-		//Kuzzle?: Kuzzle;
+		Kuzzle?: Kuzzle;
 		rxdb: { createBlob: CreateBlob };
 		mantine?: {
 			MantineError(title: string, message?: string, autoClose?: boolean | number): void;
 		};
 		just: Just;
+		lodash: Lodash;
 		nanoid: Nanoid;
 		sort: Sort;
 		valibot: Valibot;
+		valtio: Valtio;
 		numbro: Numbro;
 		generatePassword: Omgopass;
 		dayjs: Dayjs;
@@ -73,24 +75,16 @@ export type Item = {
 	dbClass: string;
 	content?: { [key: string]: any };
 	states?: { [key: string]: any };
+	user?: User['user'];
 	_kuzzle_info?: {
 		author: string;
 		createdAt: number;
 		updater: string | null;
 		updatedAt: number | null;
 	};
-	user?: User['user'];
-	hierarchyData?: {
-		[dbClass: string]: {
-			scheme: { dbClass: string; filters?: {} };
-			fetched?: number;
-			total?: number;
-			items?: Item[];
-			aggregations?: { [x: string]: any };
-			error?: string;
-		};
-	};
 };
+
+export type FrontItem = Item & { kid: string; snap: () => Omit<FrontItem, 'snap'> };
 
 export type User = {
 	user: {

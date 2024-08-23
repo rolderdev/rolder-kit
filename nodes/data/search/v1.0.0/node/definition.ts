@@ -1,5 +1,5 @@
 import { getPortDef } from '@shared/port-v1.0.0';
-import { JsNodeDef } from '@shared/node-v1.0.0';
+import type { JsNodeDef } from '@shared/node-v1.0.0';
 
 export default {
 	hashTag: '#expreimental',

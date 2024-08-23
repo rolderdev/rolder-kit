@@ -80,19 +80,19 @@ export const setNodePorts = (noodlNode: NoodlNode) => {
 // Установка значений с установленных параметров портов.
 export const setValuesFromParameters = (noodlNode: NoodlNode) => {
 	const inputDefs = noodlNode.model.portDefsCache?.inputs || [];
-
 	for (const inputDef of inputDefs) {
 		const inputName = inputDef.name;
 
-		if (inputDef) {
+		// Если инпут уже перелетел с подключения, пропустим.
+		if (inputDef && !noodlNode._hasInputBeenSetFromAConnection(inputName)) {
 			// Параметр установлен.
-			if (noodlNode.model.parameters[inputName] !== undefined)
+			if (noodlNode.model.parameters[inputName] !== undefined) {
 				noodlNode.propsCache[inputName] = getConverted(noodlNode, inputDef, noodlNode.model.parameters[inputName]);
-			// Параметра нет, но есть дефолт.
-			else if (inputDef.default !== undefined)
+				// Параметра нет, но есть дефолт.
+			} else if (inputDef.default !== undefined) {
 				noodlNode.propsCache[inputName] = getConverted(noodlNode, inputDef, inputDef.default);
-			// Параметра нет и нет дефолта.
-			else delete noodlNode.propsCache[inputName];
+				// Параметра нет и нет дефолта.
+			} else delete noodlNode.propsCache[inputName];
 
 			// Нужно сбросить ошибку. Поймал это в варианте, когда предыдущая валидация значения не прошла и установлено новое значение.
 			clearWarning(noodlNode, inputDef.displayName);

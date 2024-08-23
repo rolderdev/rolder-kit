@@ -9,11 +9,11 @@ import { runModule } from './module';
 export const schedule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactNodeDef, inputDef: PortDef, isSignal: boolean) => {
 	// Пропустим, если уже запланировано.
 	if (!noodlNode.scheduledRun) {
-		// Запустим функцию инициализации один раз.
-		if ((noodlNode.model.firstRun || noodlNode.firstRun) && nodeDef.initialize)
-			noodlNode.propsCache = await nodeDef.initialize(noodlNode.propsCache);
 		noodlNode.scheduledRun = true; // Запретим повторные запуски обработки портов.
 		noodlNode.scheduleAfterInputsHaveUpdated(async () => {
+			// Запустим функцию инициализации один раз.
+			if ((noodlNode.model.firstRun || noodlNode.firstRun) && nodeDef.initialize)
+				noodlNode.propsCache = await nodeDef.initialize(noodlNode.propsCache);
 			// Не проверяем, когда уже есть ошибки.
 			if (!hasWarings(noodlNode)) validateValues(noodlNode);
 			noodlNode.scheduledRun = false; // Вернем возможность запуска обработки портов.
@@ -26,10 +26,16 @@ export const schedule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactN
 					noodlNode.scheduledModuleRun = false; // Вернем возможность запуска модуля.
 				}
 			} else if (!hasWarings(noodlNode)) {
+				noodlNode.model.firstRun = false;
+				noodlNode.firstRun = false;
 				// Как и для JS, гарантируем только одно обновление для одновременно прилетевших значений инпутов.
 				// Нужно восстановить встроенные в Roodl props из Advanced HTML.
 				noodlNode.props = { ...noodlNode.propsCache, styles: noodlNode.props.styles, className: noodlNode.props.className };
-				noodlNode.forceUpdate();
+				// Отличим сигнал от обновления занчения. То что, реагируем толь на true, уже разрулено в node.ts
+				if (isSignal) {
+					// Отсавим без проверки наличие сигнала в компоненте, чтобы ее разработчик увидел ошибку.
+					noodlNode.innerReactComponentRef[inputDef.name](noodlNode.propsCache);
+				} else noodlNode.forceUpdate();
 			}
 		});
 	}

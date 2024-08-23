@@ -1,4 +1,5 @@
 import '@shared/types-v0.1.0';
+//@ts-ignore
 import { defineNode } from '@noodl/noodl-sdk';
 
 import search from './src/search';

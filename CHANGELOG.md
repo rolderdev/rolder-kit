@@ -9,7 +9,7 @@
 - react-node
 - shared.
 - Типицация в libs
-- Новый формат - \*
+- Новый формат - "\*"
 - changelog
 - readme
 - CSS
@@ -19,12 +19,17 @@
 #### useData v2.0.0 `#experimental`
 
 - FID
+- Проверка синтаксиса текстовых функций переехала в useData, т.к. не нужно запускать функции, чтобы проверить синтаксис, а разработчик увидет ошибку еще в редакторе.
+- Ошибки
 
 ### mantine
+
+-ColorSchemeScript
 
 #### [Table v2.0.0](https://docs.rolder.app/#/table) `#experimental`
 
 - FID
+- Баг остался - striped, повторное разворачивание.
 
 #### TableScope v0.1.0 `#experimental`
 
