@@ -61,6 +61,7 @@ export default (p: Props) => {
 		// Когда иерархия готова - есть конструкции нод.
 	).each((node) => {
 		const backendItem = node.data.id === rootId ? ({ id: rootId } as Item) : p.store.data.items.get(node.data.id);
+		if (node.data.id === rootId) console.log(node);
 		if (backendItem) {
 			// Добавим функции, чтобы можно было пользоваться иерархией прямо из item.
 			const backendItemWithFunctions = addNodeFunctions(node, backendItem, p.store);

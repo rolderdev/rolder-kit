@@ -3,7 +3,6 @@ import { getPortDef } from '@shared/port-v1.0.0';
 import getStore from './store';
 import type { Props } from '../types';
 import { validateFetchScheme } from './validtaion';
-import { fetch } from '../component/fetch';
 
 export default {
 	hashTag: '#expreimental',
@@ -117,9 +116,10 @@ export default {
 	initialize: async (p: Props) => {
 		p.store = getStore(p);
 		// Для ситуации, когда нода запускается первый раз, т.к. срабатывает одновременно reactive и этот код.
-		p.noodlNode._internal.firstRun = true;
-		if (!p.controlled) await fetch(p);
-		p.noodlNode._internal.firstRun = false;
+		//p.noodlNode._internal.firstRun = true;
+		//if (!p.controlled) await fetch(p);
+		//p.noodlNode._internal.firstRun = false;
+		//setTimeout(() => (p.noodlNode._internal.firstRun = false), 1000);
 		return p;
 	},
 	getInspectInfo: (p: Props) => [

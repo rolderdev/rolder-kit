@@ -1,4 +1,4 @@
-import { sendOutput } from '@shared/port-send-v1.0.0';
+import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import type { Props } from '../types';
 
 export default {
@@ -22,6 +22,7 @@ export const subscribe = (p: Props) => {
 		if (item) {
 			p.noodlNode._internal.item = item;
 			sendOutput(p.noodlNode, 'item', item);
+			sendSignal(p.noodlNode, 'itemChanged');
 
 			const subscribed = R.subscribes.get(itemId)?.includes(nid);
 
@@ -29,7 +30,10 @@ export const subscribe = (p: Props) => {
 			if (!subscribed) {
 				//console.log('subscribe', R.subscribes.get(itemId));
 				R.subscribes.get(itemId)?.push(nid);
-				subscribe(item, () => sendOutput(p.noodlNode, 'item', item));
+				subscribe(item, () => {
+					sendOutput(p.noodlNode, 'item', item);
+					sendSignal(p.noodlNode, 'itemChanged');
+				});
 			}
 
 			// Подпишемся на выбранные разработчиком поля.

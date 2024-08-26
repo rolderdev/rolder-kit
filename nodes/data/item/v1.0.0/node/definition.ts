@@ -35,7 +35,10 @@ export default {
 			type: 'proplist',
 		}),
 	],
-	outputs: [getPortDef({ name: 'item', displayName: 'Item', group: 'Data', type: 'object' })],
+	outputs: [
+		getPortDef({ name: 'item', displayName: 'Item', group: 'Data', type: 'object' }),
+		getPortDef({ name: 'itemChanged', displayName: 'Changed', group: 'Signals', type: 'signal' }),
+	],
 	triggerOnInputs: () => ['source', 'itemId'],
 	getInspectInfo: (p: Props) => {
 		let info = [{ type: 'text', value: `Source: "${p.source}"` }];

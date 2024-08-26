@@ -27,7 +27,7 @@ export default {
 			displayName: 'Label',
 			group: 'Params',
 			type: 'string',
-			validate: (p: Props) => p.label,
+			validate: (p: Props) => (p.label ? true : false),
 		}),
 		getPortDef({
 			name: 'position',

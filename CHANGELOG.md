@@ -31,6 +31,6 @@
 - FID
 - Баг остался - striped, повторное разворачивание.
 
-#### TableScope v0.1.0 `#experimental`
+#### [notification v2.0.0]
 
-- FID
+#### [Tooltip v2.0.0]
