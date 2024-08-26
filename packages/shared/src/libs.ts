@@ -111,7 +111,8 @@ set(window, ['R', 'libs', 'generatePassword'], generatePassword);
 // valtio
 import * as valtioModule from 'valtio';
 import { proxyMap } from 'valtio/utils';
-const valtio = { ...valtioModule, proxyMap };
+import { derive, underive } from 'derive-valtio';
+const valtio = { ...valtioModule, proxyMap, derive, underive };
 export type Valtio = typeof valtio;
 set(window, ['R', 'libs', 'valtio'], valtio);
 

@@ -2,19 +2,17 @@ import { memo, useContext } from 'react';
 import { Box } from '@mantine/core';
 import { TableContext } from '../TableProvider';
 
-export default memo((p: { itemId: string; columnIdx: string }) => {
+export default memo((p: { id: string; columnIdx: string }) => {
 	const { get } = R.libs.just;
-	const { snapshot, useSnapshot, proxy } = R.libs.valtio;
+	const { useSnapshot, proxy } = R.libs.valtio;
 
 	const store = useContext(TableContext);
-	const snap = useSnapshot(store);
+	const itemSnap = useSnapshot(R.items.get(p.id) || proxy({}));
 
-	// snapshot без подписки для передачи в функции.
-	const itemSnap = snapshot(get(store, ['items', p.itemId]) || proxy({}));
 	// Без подписки, заменится при смене схемы колонок.
 	const accessor = get(store, ['columnsDefinition', p.columnIdx, 'accessor']);
 	// Точечная подписка на значение.
-	const value = get(snap.items, `${p.itemId}.${accessor}`);
+	const value = get(itemSnap, accessor);
 
 	// Расчет отсупа функцией разработчика.
 	const paddingLeftPostion = store.tableProps.rowStyles.paddingLeftPostion;

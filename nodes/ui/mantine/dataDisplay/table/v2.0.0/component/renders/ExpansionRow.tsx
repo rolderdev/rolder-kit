@@ -3,25 +3,22 @@ import { Box, Center, Loader } from '@mantine/core';
 import { TableContext } from '../TableProvider';
 import getRoodlReactNode from '../funcs/getRoodlReactNode';
 
-export default memo((p: { itemId: string }) => {
+export default memo((p: { id: string }) => {
 	const store = useContext(TableContext);
-	const snap = R.libs.valtio.useSnapshot(store);
 
 	const [expansionRow, setExpansionRow] = useState<React.ReactNode | undefined>(undefined);
 
 	useEffect(() => {
-		getRoodlReactNode(store, p.itemId, snap.tableProps.expansion.template, { id: p.itemId, level: snap.level }).then(
-			(reactNode) => {
-				const childrenCount = snap.hierarchyNode?.find((i) => i.data.id === p.itemId)?.children?.length || 0;
-				if (childrenCount >= snap.tableProps.expansion.animationChildrenCount) setTimeout(() => setExpansionRow(reactNode), 200);
-				else setExpansionRow(reactNode);
-			}
-		);
+		getRoodlReactNode(store, p.id, store.tableProps.expansion.template, { id: p.id, level: store.level }).then((reactNode) => {
+			const childrenCount = R.items.get(p.id)?.getChildren().length || 0;
+			if (childrenCount >= store.tableProps.expansion.animationChildrenCount) setTimeout(() => setExpansionRow(reactNode), 200);
+			else setExpansionRow(reactNode);
+		});
 	}, []);
 
 	const LoaderAnimation = () => (
 		<Center>
-			<Loader size={snap.libProps.loaderSize} color={snap.libProps.loaderColor} type={snap.libProps.loaderType} />
+			<Loader size={store.libProps.loaderSize} color={store.libProps.loaderColor} type={store.libProps.loaderType} />
 		</Center>
 	);
 

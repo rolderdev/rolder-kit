@@ -11,11 +11,13 @@ export const schedule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactN
 	if (!noodlNode.scheduledRun) {
 		noodlNode.scheduledRun = true; // Запретим повторные запуски обработки портов.
 		noodlNode.scheduleAfterInputsHaveUpdated(async () => {
-			// Запустим функцию инициализации один раз.
-			if ((noodlNode.model.firstRun || noodlNode.firstRun) && nodeDef.initialize)
-				noodlNode.propsCache = await nodeDef.initialize(noodlNode.propsCache);
 			// Не проверяем, когда уже есть ошибки.
 			if (!hasWarings(noodlNode)) validateValues(noodlNode);
+			// Запустим функцию инициализации один раз.
+			if (!noodlNode.initializeExecuted && nodeDef.initialize) {
+				noodlNode.initializeExecuted = true;
+				noodlNode.propsCache = await nodeDef.initialize(noodlNode.propsCache);
+			}
 			noodlNode.scheduledRun = false; // Вернем возможность запуска обработки портов.
 			// Отличим JS от React по наличию reactKey у ноды.
 			if (!noodlNode.reactKey) {
@@ -27,14 +29,13 @@ export const schedule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactN
 				}
 			} else if (!hasWarings(noodlNode)) {
 				noodlNode.model.firstRun = false;
-				noodlNode.firstRun = false;
 				// Как и для JS, гарантируем только одно обновление для одновременно прилетевших значений инпутов.
 				// Нужно восстановить встроенные в Roodl props из Advanced HTML.
 				noodlNode.props = { ...noodlNode.propsCache, styles: noodlNode.props.styles, className: noodlNode.props.className };
 				// Отличим сигнал от обновления занчения. То что, реагируем толь на true, уже разрулено в node.ts
 				if (isSignal) {
 					// Отсавим без проверки наличие сигнала в компоненте, чтобы ее разработчик увидел ошибку.
-					noodlNode.innerReactComponentRef[inputDef.name](noodlNode.propsCache);
+					noodlNode.innerReactComponentRef?.[inputDef.name](noodlNode.propsCache);
 				} else noodlNode.forceUpdate();
 			}
 		});

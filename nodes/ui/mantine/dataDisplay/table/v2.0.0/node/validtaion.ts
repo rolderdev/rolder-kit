@@ -1,6 +1,6 @@
 import '@shared/types-v0.1.0';
 import type { Props } from '../types';
-import type { FrontItem } from '@shared/types-v0.1.0';
+import type { Item } from '@shared/types-v0.1.0';
 
 export const validateColumns = (p: Props) => {
 	const { array, check, optional, pipe, safeParse, looseObject, string, number, picklist, function_, union } = R.libs.valibot;
@@ -62,7 +62,7 @@ export const validateItems = (p: Props) => {
 	return true;
 };
 
-export const validateExpandedItems = (items?: FrontItem[], allowMultiple?: boolean) => {
+export const validateExpandedItems = (items?: Item[], allowMultiple?: boolean) => {
 	if (!allowMultiple && items && items?.length > 1) return 'Multiple expansion is not allowed. Array must contains one item.';
 	return true;
 };

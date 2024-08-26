@@ -41,8 +41,6 @@ export const setLibProps = (p: Props) => {
 		loaderBackgroundBlur: 0.5,
 		// Multi selection
 		allRecordsSelectionCheckboxPropsDev: p.customProps?.allRecordsSelectionCheckboxProps,
-		// Заменим встроенную функцие запрета выбора своей, просто чтобы все было одинаково.
-		isRecordSelectable: p.multiSelectionFilterFunc,
 		// Позволим разработчику рискнуть.
 		...p.customProps,
 	};

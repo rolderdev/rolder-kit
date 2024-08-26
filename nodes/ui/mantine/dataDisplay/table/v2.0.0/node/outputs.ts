@@ -19,14 +19,6 @@ export default [
 		dependsOn: (p) => p.onRowClick === 'signal',
 	}),
 	getPortDef({
-		name: 'clickedHierarchyNode',
-		displayName: 'Clicked hierarchy node',
-		group: 'Custom',
-		customGroup: 'Base',
-		type: 'object',
-		dependsOn: (p: Props) => p.onRowClick === 'signal' && (p.useExpansionHierarchy === true || p.useSelectionHierarchy === true),
-	}),
-	getPortDef({
 		name: 'rowClicked',
 		displayName: 'Row clicked',
 		group: 'Custom',
@@ -42,15 +34,6 @@ export default [
 		customGroup: 'Single selection',
 		type: 'object',
 		dependsOn: (p: Props) => p.onRowClick === 'singleSelection',
-	}),
-	getPortDef({
-		name: 'selectedHierarchyNode',
-		displayName: 'Selected hierarchy node',
-		group: 'Custom',
-		customGroup: 'Single selection',
-		type: 'object',
-		dependsOn: (p: Props) =>
-			p.onRowClick === 'singleSelection' && (p.useExpansionHierarchy === true || p.useSelectionHierarchy === true),
 	}),
 	getPortDef({
 		name: 'selectedItemChanged',

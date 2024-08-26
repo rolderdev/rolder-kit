@@ -46,9 +46,9 @@ const getShared = (nodeName: string, versions: JsNodeVersions, docs?: string) =>
 		initialize: function () {
 			this.propsCache = { noodlNode: this }; // Наполняется постепенно. Для конвертированных и проверенных на тип данных.
 			this.outputPropValues = {}; // Хранилище выходных props.
-			this.firstRun = true; // Первый запуск, когда нода уже существует.
 			this.scheduledRun = false;
 			this.scheduledModuleRun = false;
+			this.initializeExecuted = false;
 		},
 		methods: {
 			// Регистрирует инпут и слушает изменения.
@@ -80,7 +80,7 @@ const getShared = (nodeName: string, versions: JsNodeVersions, docs?: string) =>
 								// Нужно записать версию отдельно - setValuesFromParameters использует порты с декларации, где нет версии.
 								if (inputName === 'version') this.propsCache.version = value;
 								// Если есть transform, обработаем только первый раз, чтобы transform получил готовые данные.
-								if (this.model.firstRun || this.firstRun || !nodeDef.transform) {
+								if (this.model.firstRun || !nodeDef.transform) {
 									// Сохраним делкарачию портов в кеше, чтобы функции могли доверять ей, если есть transform.
 									cachePortDefs(this, versions);
 									// Запишем в кеш значения с параметров редактора, восстановив дефолты, сконвертировав и проверив тип.
@@ -116,30 +116,30 @@ const getShared = (nodeName: string, versions: JsNodeVersions, docs?: string) =>
 		setup: function (context: NodeContext, graphModel: GraphModel) {
 			if (!context.editorConnection || !context.editorConnection.isRunningLocally()) return;
 
-			graphModel.on(`nodeAdded.rolder-kit.api-v1.${nodeName}`, function (node: GraphModelNode) {
-				if (!node.portDefsCache) node.portDefsCache = { inputs: [], outputs: [] }; // Кеш деклараций портов.
+			graphModel.on(`nodeAdded.rolder-kit.api-v1.${nodeName}`, function (model: GraphModelNode) {
+				if (!model.portDefsCache) model.portDefsCache = { inputs: [], outputs: [] }; // Кеш деклараций портов.
 				let startInputDefs = [getVersionPortDef(versions)]; // Порты, которые нужные в кеше сразу.
-				node.portDefsCache.inputs = startInputDefs;
+				model.portDefsCache.inputs = startInputDefs;
 				// Установка порта с версией запускает весь процесс.
 				// Если в праметрах нет версии, нужно зарегестрировать порт с версией.
 				// Когда есть, процесс запуститься в любом случае через registerInputIfNeeded.
-				if (!node.parameters.version) {
-					context.editorConnection.sendDynamicPorts(node.id, [getNodePort('input', startInputDefs[0])]);
+				if (!model.parameters.version) {
+					context.editorConnection.sendDynamicPorts(model.id, [getNodePort('input', startInputDefs[0])]);
 					// Руганемся, когда нет версии.
-					validateVersion(node, context);
+					validateVersion(model, context);
 				} else {
 					// Первый запуск, когда нода добавлена.
-					node.firstRun = true; // Для варианта, когда выбрана версия, но все параметры дефолты.
-					if (!versions[node.parameters.version].disableCustomProps) node.portDefsCache.inputs.push(getCustomPropsPortDef());
+					model.firstRun = true; // Для варианта, когда выбрана версия, но все параметры дефолты.
+					if (!versions[model.parameters.version].disableCustomProps) model.portDefsCache.inputs.push(getCustomPropsPortDef());
 				}
 
-				node.on('parameterUpdated', function (port) {
+				model.on('parameterUpdated', function (port) {
 					if (port.name === 'version') {
 						// Руганемся, покажем/скроем ошибку при смене версии и оставим только порт версии, когда она не выбрана.
-						validateVersion(node, context);
+						validateVersion(model, context);
 						if (port.value === undefined) {
-							context.editorConnection.sendDynamicPorts(node.id, [getNodePort('input', startInputDefs[0])]);
-						} else node.firstRun = true; // После установки версии нужно запустить модуль первый раз.
+							context.editorConnection.sendDynamicPorts(model.id, [getNodePort('input', startInputDefs[0])]);
+						} else model.firstRun = true; // После установки версии нужно запустить модуль первый раз.
 					}
 				});
 			});

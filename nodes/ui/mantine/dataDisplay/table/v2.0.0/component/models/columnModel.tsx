@@ -4,7 +4,7 @@ import type { DataTableColumn } from 'mantine-datatable';
 import type { Item } from '@shared/types-v0.1.0';
 import type { Props } from '../../types';
 import Render from '../renders/Render';
-import type { TableRecord } from './itemModel';
+import type { TableRecord } from './recordModel';
 import ExpansionRender from '../renders/ExpansionRender';
 
 // Наш тип данных декларации колонки.
@@ -40,11 +40,11 @@ export const getColumns = (columnsDefinition: ColumnsDefinition, expansionEnable
 			(i) =>
 				({
 					...i,
-					render: (item) =>
+					render: (record) =>
 						expansionEnabled && i.idx === '0' ? (
-							<ExpansionRender column={i} itemId={item.id} />
+							<ExpansionRender column={i} id={record.id} />
 						) : (
-							<Render column={i} itemId={item.id} />
+							<Render column={i} id={record.id} />
 						),
 				} satisfies DataTableColumn<TableRecord>)
 		);

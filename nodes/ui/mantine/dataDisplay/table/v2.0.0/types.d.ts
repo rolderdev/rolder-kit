@@ -1,11 +1,11 @@
 import type { BaseReactProps } from '@shared/node-v1.0.0';
-import type { FrontItem } from '@shared/types-v0.1.0';
+import type { Item } from '@shared/types-v0.1.0';
 import type { IconProps } from 'shared/src/icons';
 import type { CollapseProps, MantineColor, MantineShadow, MantineSize } from '@mantine/core';
 import type { DataTableProps } from 'mantine-datatable';
 import type { Store } from './node/store';
 import type { ColumnDefinition } from './component/models/columnModel';
-import type { TableRecord } from './component/models/itemModel';
+import type { TableRecord } from './component/models/recordModel';
 import type { HierarchyNode } from '@nodes/use-data-v2.0.0';
 
 export type Props = BaseReactProps & {
@@ -23,7 +23,7 @@ export type Props = BaseReactProps & {
 		unsortedIcon?: IconProps;
 	};
 	columnsDefinition: ColumnDefinition[];
-	items?: FrontItem[];
+	items?: Item[];
 	onRowClick: 'disabled' | 'signal' | 'singleSelection' | 'expansion';
 	clickFilterFunc?: any;
 	textSelectionDisabled: boolean;
@@ -57,15 +57,15 @@ export type Props = BaseReactProps & {
 	paddingLeftFunc?: any;
 
 	// Single selection
-	defaultSelectedItem?: FrontItem;
-	selectedItem?: FrontItem;
+	defaultSelectedItem?: Item;
+	selectedItem?: Item;
 	singleSelectionFilterFunc: any;
 
 	// Multi selection
 	multiSelection: boolean;
 	useSelectionHierarchy?: boolean;
-	defaultSelectedItems?: FrontItem[];
-	selectedItems?: FrontItem[];
+	defaultSelectedItems?: Item[];
+	selectedItems?: Item[];
 	multiSelectionFilterFunc?: any;
 
 	// Expansion
@@ -74,8 +74,8 @@ export type Props = BaseReactProps & {
 	useExpansionHierarchy?: boolean;
 	hierarchyNode?: HierarchyNode;
 	allowMultiple?: boolean;
-	defaultExpandedItems?: FrontItem[];
-	expandedItems?: FrontItem[];
+	defaultExpandedItems?: Item[];
+	expandedItems?: Item[];
 	expansionFilterFunc?: any;
 	animationChildrenCount?: number;
 

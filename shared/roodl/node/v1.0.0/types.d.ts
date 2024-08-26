@@ -51,9 +51,9 @@ export type RoodlNode = {
 
 	propsCache?: { [x: string]: any };
 	outputPropValues?: { [x: string]: any };
-	firstRun?: boolean;
 	scheduledRun?: boolean;
 	scheduledModuleRun?: boolean;
+	initializeExecuted?: boolean;
 
 	_inputValues?: { [x: string]: any };
 	//_internal?: any;
@@ -79,9 +79,9 @@ export type RoodlNode = {
 // Оригинальная нода Noodl
 export type NoodlNode = {
 	propsCache: { [x: string]: any };
-	firstRun?: boolean;
 	scheduledRun?: boolean;
 	scheduledModuleRun?: boolean;
+	initializeExecuted?: boolean;
 
 	hasOutput(name: string): boolean;
 	flagOutputDirty(name: string): boolean;

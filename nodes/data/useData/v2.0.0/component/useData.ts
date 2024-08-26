@@ -1,3 +1,4 @@
+import { sendSignal } from '@shared/port-send-v1.0.0';
 import type { Props } from '../types';
 import { fetch } from './fetch';
 import { subscribe, unSubscribe } from './handleSubscribe';
@@ -32,6 +33,11 @@ export default {
 
 			// Первичная загрузка реактивного режима.
 			if (!p.controlled) await fetch(p);
+
+			// Тригер смены выбора.
+			R.libs.valtio.subscribe(p.store.itemsSelectionState, () => {
+				sendSignal(p.noodlNode, 'itemsStateChanged');
+			});
 
 			// Отпишимся при удалении ноды во избежание задвоения подписок.
 			p.noodlNode._onNodeDeleted = () => unSubscribe(p);

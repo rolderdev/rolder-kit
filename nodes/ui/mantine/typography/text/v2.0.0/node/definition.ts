@@ -47,6 +47,17 @@ export default {
 			type: sizes,
 			default: 'md',
 		}),
+		getPortDef({
+			name: 'c',
+			displayName: 'Color',
+			group: 'Styles',
+			type: 'string',
+			/* customs: {
+				dependsOn(p) {
+					return p.variant === 'text';
+				}
+			} */
+		}),
 	],
 	getInspectInfo: (p) => (p.size ? [{ type: 'text', value: `Size: "${p.size}"` }] : []),
 } satisfies ReactNodeDef;

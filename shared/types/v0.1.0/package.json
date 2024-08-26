@@ -5,6 +5,7 @@
 	"devDependencies": {
 		"shared": "workspace:*",
 		"@nodes/app-v2.0.0": "workspace:*",
+		"@nodes/use-data-v2.0.0": "workspace:*",
 		"kuzzle-sdk": "^7.11.3"
 	}
 }

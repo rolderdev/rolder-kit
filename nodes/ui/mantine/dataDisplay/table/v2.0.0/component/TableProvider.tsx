@@ -6,16 +6,16 @@ import Table from './Table';
 import { setLibProps } from './models/libPropsModel';
 import { setTableProps } from './models/tablePropsModel';
 import { setColumnsDefinition } from './models/columnModel';
-import { setItems } from './models/itemModel';
-import { resetSelectedItem, setSelectedItem } from './models/singleSelectionModel';
-import { resetSelectedRecords, setSelectedRecords } from './models/multiSelectionModel';
+import { setRecordIds } from './models/recordModel';
+import { resetSelectedId, setSelectedId } from './models/singleSelectionModel';
+import { resetSelectedIds, setSelectedIds } from './models/multiSelectionModel';
 import { setExpandedIds } from './models/expansionModel';
 
 import 'mantine-datatable/styles.css';
 export const TableContext = createContext<Store>({} as any);
 
 export default forwardRef(function (p: Props, ref) {
-	const { useSnapshot, ref: vRef } = R.libs.valtio;
+	const { useSnapshot } = R.libs.valtio;
 
 	const store = p.store;
 	const snap = useSnapshot(p.store);
@@ -33,21 +33,24 @@ export default forwardRef(function (p: Props, ref) {
 
 	// Реактивность на изменение инпутов.
 	useEffect(() => {
-		if (p.hierarchyNode) store.hierarchyNode = vRef(p.hierarchyNode);
 		setColumnsDefinition(p);
-		setItems(p);
+		setRecordIds(p);
+		setLibProps(p);
 		setTableProps(p);
 
 		if (!snap.inited) {
 			// Установка дефолтов.
-			if (store.defaults.selectedItem) setSelectedItem(store, store.defaults.selectedItem.id, true);
-			if (store.defaults.selectedItems) setSelectedRecords(store, store.defaults.selectedItems, true);
-			if (store.defaults.expandedItems) setExpandedIds(store, store.defaults.expandedItems, true);
+			if (store.defaults.selectedId) setSelectedId(store, store.defaults.selectedId, true);
+			if (store.defaults.selectedIds)
+				setSelectedIds(
+					store,
+					store.defaults.selectedIds.map((i) => ({ id: i })),
+					true
+				);
+			if (store.defaults.expandedIds) setExpandedIds(store, store.defaults.expandedIds, true);
 
-			// В конце, т.к. есть зависимости от дефолтов.
-			setLibProps(p);
 			store.inited = true;
-		} else setLibProps(p);
+		}
 
 		if (p.items && snap.fetching) store.fetching = false;
 	}, [p]);
@@ -56,17 +59,27 @@ export default forwardRef(function (p: Props, ref) {
 	useImperativeHandle(
 		ref,
 		() => ({
-			setSelectedItem: (p: Props) => p.selectedItem && setSelectedItem(store, p.selectedItem.id),
-			resetSelectedItem: () => resetSelectedItem(store),
+			setSelectedItem: (p: Props) => p.selectedItem && setSelectedId(store, p.selectedItem.id),
+			resetSelectedItem: () => resetSelectedId(store),
 			setSelectedItems: (p: Props) =>
 				p.selectedItems &&
-				setSelectedRecords(
+				setSelectedIds(
 					store,
 					store.records.filter((i) => p.selectedItems?.map((i) => i.id).includes(i.id))
 				),
-			resetSelectedItems: () => resetSelectedRecords(store),
-			setExpandedItems: (p: Props) => p.expandedItems && setExpandedIds(store, p.expandedItems),
-			expandAll: () => p.items && setExpandedIds(store, p.items),
+			resetSelectedItems: () => resetSelectedIds(store),
+			setExpandedItems: (p: Props) =>
+				p.expandedItems &&
+				setExpandedIds(
+					store,
+					p.expandedItems.map((i) => i.id)
+				),
+			expandAll: () =>
+				p.items &&
+				setExpandedIds(
+					store,
+					p.items.map((i) => i.id)
+				),
 			collapseAll: () => p.items && setExpandedIds(store, []),
 		}),
 		[store]

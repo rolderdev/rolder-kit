@@ -1,63 +1,57 @@
 import type { HierarchyNode as Hierarchy } from 'd3-hierarchy';
 import type { BaseProps, Props } from '../types';
-import type { FrontItem, Item } from '@shared/types-v0.1.0';
+import type { Item } from '@shared/types-v0.1.0';
 
 export default (p: Props) => {
-	const { proxy, proxyMap } = R.libs.valtio;
+	const { proxy, proxyMap, ref } = R.libs.valtio;
 
 	return proxy<Store>({
+		rootId: R.libs.nanoid(6),
 		inited: false,
 		apiVersion: p.apiVersion,
 		fetchScheme: p.fetchScheme,
 		controlled: p.controlled,
 		subscribe: p.subscribe,
-		schemes: proxyMap(),
-		items: proxyMap(),
-		rootHierarchyNode: {} as HierarchyNode,
-		hierarchyItems: proxyMap(),
-		subscribes: proxyMap(),
+		// Не реактивное хранилище.
+		data: {
+			schemes: ref(proxyMap()),
+			items: ref(proxyMap()),
+		},
+		rootItem: {} as Item,
+		itemsSelectionState: {} as ItemsSelectionState,
+		subscribes: ref(proxyMap()), // Не реактивное хранилище.
 	});
 };
 
 export type Store = BaseProps & {
+	rootId: string;
 	inited: boolean;
 	subscribes: Subscribes;
-	items: Items;
-	schemes: Schemes;
-	rootHierarchyNode: HierarchyNode;
-	hierarchyItems: HierarchyItems;
+	data: { schemes: Map<string, SchemeData>; items: Items };
+	rootItem: Item;
+	itemsSelectionState: ItemsSelectionState;
 };
+type Items = Map<string, Item>;
+type Subscribes = Map<string, string>;
 
-export type ResultScheme = { dbClass: string; filters?: {}; sorts: readonly { [path: string]: 'asc' | 'desc' }[] };
-
-export type HierarchyNode = Hierarchy<HierarchyItem>;
+export type HierarchyNode = Omit<Hierarchy<HierarchyItem>, 'id'>;
 export type HierarchyItem = {
 	id: string;
-	kid: string;
-	item: FrontItem;
-	state: { selection: 'selected' | 'notSelected' | 'indeterminate' };
 	dbClass: string;
-	hierarchyData?: HierarchyData;
-	getSelected?: (params: { dbClass: string; withIndeterminate?: boolean; withParent?: boolean }) => FrontItem[];
-	getDescendants?: (params: { dbClass: string; skipSelf?: boolean }) => FrontItem[];
-	getAncestors?: (params: { dbClass: string; skipSelf?: boolean }) => FrontItem[];
+	hierarchyData: HierarchyData;
 };
-
-type Subscribes = Map<string, string>;
-type Items = Map<string, Item>;
-type Schemes = Map<string, SchemeData>;
 export type HierarchyData = Record<string, SchemeData>;
-type HierarchyItems = Map<string, HierarchyItem>;
 
 export type SchemeData = {
 	scheme: ResultScheme;
 	parentId: string;
 	itemIds: string[];
-	items: FrontItems;
 	fetched: number;
 	total: number;
 	aggregations: { [x: string]: any };
 };
+export type ResultScheme = { dbClass: string; filters?: {}; sorts: readonly { [path: string]: 'asc' | 'desc' }[] };
 
-export type FrontItems = Map<string, FrontItem>;
-export type BackendSchemeData = Omit<SchemeData, 'items'>;
+type ItemsSelectionState = Record<string, ItemSelectionState>;
+export type ItemSelectionState = { selection: SelectionState };
+export type SelectionState = 'notSelected' | 'selected' | 'indeterminate';

@@ -1,70 +1,57 @@
 import { hierarchy } from 'd3-hierarchy';
 import type { Props } from '../types';
-import type { FrontItem } from '@shared/types-v0.1.0';
 import type { HierarchyItem, HierarchyData } from '../node/store';
+import addNodeFunctions from './addNodeFunctions';
+import type { Item } from '@shared/types-v0.1.0';
 
 export default (p: Props) => {
-	const { proxy } = R.libs.valtio;
+	const { get, set } = R.libs.just;
+	const rootId = p.store.rootId;
 
-	let hierarchyItem = p.store.hierarchyItems.get('root');
-	if (!hierarchyItem) {
-		// Библиотека требует одинаковой структуры для построения иерархии.
-		let hierarchyData: HierarchyData = {};
-		p.store.schemes.forEach((schemeData) => {
-			if (!schemeData.parentId) hierarchyData[schemeData.scheme.dbClass] = schemeData;
-		});
+	// Библиотека требует одинаковой структуры для построения иерархии.
+	const hierarchyData: HierarchyData = {};
+	p.store.data.schemes.forEach((schemeData) => {
+		if (!schemeData.parentId) hierarchyData[schemeData.scheme.dbClass] = schemeData;
+	});
 
-		hierarchyItem = {
-			dbClass: '',
-			id: 'root',
-			kid: '',
-			item: {} as FrontItem,
-			state: proxy({ selection: 'notSelected' }),
-			hierarchyData,
-		} as HierarchyItem;
-	}
-	p.store.hierarchyItems.set('root', hierarchyItem);
+	const hierarchyItem = {
+		dbClass: 'hierarchyRootItem',
+		id: rootId,
+		hierarchyData,
+	} as HierarchyItem;
 
-	const rootHierarchyNode = hierarchy<HierarchyItem>(
+	hierarchy<HierarchyItem>(
 		hierarchyItem,
 		// Этот колбек строит иерархию. Должен выдавать детей. В нашем случае для всех классов каждой схемы.
 		// За счет того, что сервер возвращает структуру схем можно построить иерархию не спрашивая разработчика.
 		(hierarchyItem) => {
-			let children: HierarchyItem[] = [];
+			let children: HierarchyItem[] = []; // Итоговые дети для возврата.
 			// Только если предыдущий шаг рекурсии вернул hierarchyData.
 			if (hierarchyItem.hierarchyData) {
-				// Вытянем всех детей всех классов.
-				const childFrontItems = Object.values(hierarchyItem.hierarchyData)
-					.map((i) => i.itemIds.map((id) => i.items.get(id))) // Возьмем в отсортированном порядке.
-					.flat()
-					.filter((i) => i !== undefined);
+				// Возьмем id всех детей всех классов.
+				const childIds = Object.values(hierarchyItem.hierarchyData)
+					.map((i) => i.itemIds)
+					.flat();
 
 				// Создадим для каждого ребенка hierarchyData, чтобы запустить рекурсию и добавим его в детей.
-				for (const childFrontItem of childFrontItems) {
-					// Проверим, создавался ли такой hierarchyItem.
-					// Поскольку в нем ссылка на схему, его можно использовать как есть, он уже содержит свежие данные.
-					const childHierarchyItem = p.store.hierarchyItems.get(childFrontItem.id);
-					if (childHierarchyItem) children.push(childHierarchyItem);
-					else {
-						// Если hierarchyItem нет, нужно создать его первый раз.
-						let hierarchyData: HierarchyData = {};
+				for (const childId of childIds) {
+					let hierarchyData: HierarchyData = {};
+					// Возьмем из каждой схемы ее schemeData и добавим в hierarchyData.
+					p.store.data.schemes.forEach((schemeData) => {
+						if (childId === schemeData.parentId) hierarchyData[schemeData.scheme.dbClass] = schemeData;
+					});
 
-						// Возьмем из каждой схемы ее schemeData и добавим в hierarchyData.
-						p.store.schemes.forEach((schemeData) => {
-							if (childFrontItem.kid === schemeData.parentId) hierarchyData[schemeData.scheme.dbClass] = schemeData;
-						});
-
+					// Возьмем прилетевший с бекенда item.
+					const childItem = p.store.data.items.get(childId);
+					if (childItem) {
 						// Построим hierarchyItem.
-						p.store.hierarchyItems.set(childFrontItem.id, {
-							dbClass: childFrontItem.dbClass,
-							id: childFrontItem.id,
-							kid: childFrontItem.kid,
-							item: childFrontItem,
-							state: proxy({ selection: 'notSelected' }), // Добавим дефолтное состояние выбора.
+						const hierarchyItem = {
+							dbClass: childItem.dbClass,
+							id: childItem.id,
 							hierarchyData,
-						});
-						const hierarchyItem = p.store.hierarchyItems.get(childFrontItem.id);
-						if (hierarchyItem) children.push(hierarchyItem);
+						} as HierarchyItem;
+
+						children.push(hierarchyItem);
 					}
 				}
 			}
@@ -73,29 +60,34 @@ export default (p: Props) => {
 		}
 		// Когда иерархия готова - есть конструкции нод.
 	).each((node) => {
-		// Добавим функции для удоства разработки в Roodl.
-		// Наследники.
-		node.data.getDescendants = (p) => {
-			let selectedNodes = node.descendants().filter((i) => i.data.dbClass === p.dbClass && i.id !== 'root');
-			if (p.skipSelf) selectedNodes.filter((i) => i.id !== node.id);
-			return selectedNodes.map((i) => i.data.item);
-		};
-		// Предки.
-		node.data.getAncestors = (p) => {
-			let selectedNodes = node.descendants().filter((i) => i.data.dbClass === p.dbClass && i.id !== 'root');
-			if (p.skipSelf) selectedNodes.filter((i) => i.id !== node.id);
-			return selectedNodes.map((i) => i.data.item);
-		};
-		// Выбор.
-		node.data.getSelected = (p) => {
-			const states = p.withIndeterminate ? ['selected', 'indeterminate'] : ['selected'];
-			let selectedNodes = node
-				.descendants()
-				.filter((i) => i.data.dbClass === p.dbClass && states.includes(i.data.state.selection) && i.id !== 'root');
-			if (!p?.withParent) selectedNodes = selectedNodes.filter((i) => i.data.id !== node.data.id);
-			return selectedNodes.map((i) => i.data.item);
-		};
-	});
+		const backendItem = node.data.id === rootId ? ({ id: rootId } as Item) : p.store.data.items.get(node.data.id);
+		if (backendItem) {
+			// Добавим функции, чтобы можно было пользоваться иерархией прямо из item.
+			const backendItemWithFunctions = addNodeFunctions(node, backendItem, p.store);
 
-	p.store.rootHierarchyNode = proxy(rootHierarchyNode);
+			// Состояния.
+			const rootNode = node.ancestors().find((i) => i.data.id === rootId);
+			if (rootNode) {
+				const path = node
+					.path(rootNode)
+					.map((i) => i.data.id)
+					.join();
+				if (path) {
+					const itemSelectionState = get(p.store.itemsSelectionState, path);
+					if (!itemSelectionState) set(p.store.itemsSelectionState, path, R.libs.valtio.proxy({ selection: 'notSelected' }));
+				}
+			}
+
+			// Обновим item в самом конце, чтобы функции выдавали актуальные данные.
+			const item = R.items.get(backendItem.id);
+			if (!R.libs.just.compare(item, backendItem)) {
+				//console.log('useData changes', backendItem.content?.horsepower);
+				R.items.set(backendItem.id, backendItemWithFunctions);
+				const subscribes = R.subscribes.get(backendItem.id);
+				if (!subscribes) R.subscribes.set(backendItem.id, []);
+			}
+
+			if (backendItem.id === rootId) p.store.rootItem = backendItemWithFunctions;
+		}
+	});
 };

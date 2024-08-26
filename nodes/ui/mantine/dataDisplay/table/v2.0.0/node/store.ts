@@ -1,11 +1,9 @@
 import type { NoodlNode } from '@shared/node-v1.0.0';
-import type { FrontItem } from '@shared/types-v0.1.0';
 import type { ColumnsDefinition } from '../component/models/columnModel';
-import type { ForntItems, TableRecord } from '../component/models/itemModel';
+import type { TableRecord } from '../component/models/recordModel';
 import type { LibProps } from '../component/models/libPropsModel';
 import type { TableProps } from '../component/models/tablePropsModel';
 import type { Props } from '../types';
-import type { HierarchyNode } from '@nodes/use-data-v2.0.0';
 
 export default (p: Props) => {
 	const { proxy, ref } = R.libs.valtio;
@@ -20,14 +18,13 @@ export default (p: Props) => {
 		tableProps: {} as TableProps,
 		columnsDefinition: {} as ColumnsDefinition,
 		records: [],
-		items: {} as ForntItems,
-		selectedItem: null,
-		selectedRecords: [],
+		selectedId: null,
+		selectedIds: [],
 		expandedIds: [],
 		defaults: {
-			selectedItem: p.defaultSelectedItem || null,
-			selectedItems: p.defaultSelectedItems || [],
-			expandedItems: p.defaultExpandedItems || [],
+			selectedId: p.defaultSelectedItem?.id || null,
+			selectedIds: p.defaultSelectedItems?.map((i) => i.id) || [],
+			expandedIds: p.defaultExpandedItems?.map((i) => i.id) || [],
 		},
 	});
 };
@@ -43,12 +40,10 @@ export type Store = {
 	tableProps: TableProps;
 	columnsDefinition: ColumnsDefinition;
 	records: TableRecord[];
-	items: ForntItems;
-	selectedItem: FrontItem | null;
-	selectedRecords: TableRecord[];
+	selectedId: string | null;
+	selectedIds: string[];
 	expandedIds: string[];
-	hierarchyNode?: HierarchyNode;
-	defaults: { selectedItem: FrontItem | null; selectedItems: FrontItem[]; expandedItems: FrontItem[] };
+	defaults: { selectedId: string | null; selectedIds: string[]; expandedIds: string[] };
 };
 
 export type Snap = Readonly<Store>;

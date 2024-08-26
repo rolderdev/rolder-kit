@@ -1,5 +1,6 @@
 import { getPortDef } from '@shared/port-v1.0.0';
 import type { JsNodeDef } from '@shared/node-v1.0.0';
+import type { Props } from '../types';
 
 export default {
 	hashTag: '#expreimental',
@@ -46,16 +47,13 @@ export default {
 		getPortDef({ name: 'items', displayName: 'Items', group: 'Data', type: 'array' }),
 		getPortDef({ name: 'count', displayName: 'Count', group: 'Data', type: 'number' }),
 	],
-	triggerOnInputs(p) {
-		return ['searchString'];
-	},
-	getInspectInfo(p) {
-		if (p.fields)
-			return [
-				{ type: 'text', value: 'Search fields' },
-				{ type: 'value', value: p.fields },
-			];
-		else return [];
-	},
+	triggerOnInputs: () => ['searchString'],
+	getInspectInfo: (p: Props) =>
+		p.fields
+			? [
+					{ type: 'text', value: 'Search fields' },
+					{ type: 'value', value: p.fields },
+			  ]
+			: [],
 	disableCustomProps: true,
 } satisfies JsNodeDef;

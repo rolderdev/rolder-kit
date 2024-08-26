@@ -26,7 +26,7 @@ export default [
 	{
 		title: 'Количество зон',
 		type: 'getValue',
-		getValue: (item, items, hierarchyNode) => item.content.houseCount * item.content.areaCount,
+		getValue: (item, items) => item.content.houseCount * item.content.areaCount,
 		width: 120
 	}	
 ]*/
@@ -42,14 +42,6 @@ export default [
 		// Только через подключение, иначе нельзя сделать хорошую реактивность, т.к. массив в редакторе это текст, а не js-код.
 		visibleAt: 'connection',
 		validate: (p: Props) => (p.items?.length ? validateItems(p) : true),
-	}),
-	getPortDef({
-		name: 'hierarchyNode',
-		displayName: 'Hierarchy node',
-		group: 'Custom',
-		customGroup: 'Base',
-		type: 'object',
-		dependsOn: (p: Props) => p.useExpansionHierarchy === true || p.useSelectionHierarchy === true,
 	}),
 	getPortDef({
 		name: 'onRowClick',
@@ -73,7 +65,7 @@ export default [
 		customGroup: 'Base',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.onRowClick === 'signal',
-		codeComment: `//(item, hierarchyNode) => item.states.flow !== 'closed'`,
+		codeComment: `//(item) => item.states.flow !== 'closed'`,
 	}),
 	getPortDef({
 		name: 'singleSelectionFilterFunc',
@@ -82,7 +74,7 @@ export default [
 		customGroup: 'Base',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.onRowClick === 'singleSelection',
-		codeComment: `//(item, hierarchyNode) => item.states.flow !== 'closed'`,
+		codeComment: `//(item) => item.states.flow !== 'closed'`,
 	}),
 	getPortDef({
 		name: 'textSelectionDisabled',
@@ -333,7 +325,7 @@ export default [
 		customGroup: 'Multi selection',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.multiSelection,
-		codeComment: `//(item, hierarchyNode) => item.states.flow !== 'closed'`,
+		codeComment: `//(item) => item.states.flow !== 'closed'`,
 	}),
 	getPortDef({
 		name: 'useSelectionHierarchy',
@@ -421,7 +413,7 @@ export default [
 		customGroup: 'Expansion',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.expansion,
-		codeComment: `//(item, hierarchyNode) => item.states.flow !== 'closed'`,
+		codeComment: `//(item) => item.states.flow !== 'closed'`,
 	}),
 	getPortDef({
 		name: 'animationChildrenCount',
