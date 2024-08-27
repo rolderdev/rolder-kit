@@ -5,9 +5,9 @@ import { proxyMap } from 'valtio/utils';
 set(window, ['R', 'params'], {});
 // Обратная совместимость
 set(window, ['R', 'states', 'backend'], 'notInitialized');
-// Глобальные items и подписки на них.
+// Глобальные items и их методы.
 set(window, ['R', 'items'], proxyMap());
-set(window, ['R', 'subscribes'], proxyMap());
+set(window, ['R', 'itemHandlers'], { funcs: proxyMap(), subscribes: proxyMap() });
 
 // logs
 const urlParams = new URLSearchParams(window.location.search);

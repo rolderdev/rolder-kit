@@ -1,16 +1,17 @@
-import { hierarchy } from 'd3-hierarchy';
+import { hierarchy, type HierarchyNode } from 'd3-hierarchy';
 import type { Props } from '../types';
 import type { HierarchyItem, HierarchyData } from '../node/store';
-import addNodeFunctions from './addNodeFunctions';
+import addItemFunctions from './addItemFunctions';
 import type { Item } from '@shared/types-v0.1.0';
 
 export default (p: Props) => {
-	const { get, set } = R.libs.just;
-	const rootId = p.store.rootId;
+	const { get, set, map, compare } = R.libs.just;
+	const s = p.store;
+	const rootId = s.rootId;
 
 	// Библиотека требует одинаковой структуры для построения иерархии.
 	const hierarchyData: HierarchyData = {};
-	p.store.data.schemes.forEach((schemeData) => {
+	s.data.schemes.forEach((schemeData) => {
 		if (!schemeData.parentId) hierarchyData[schemeData.scheme.dbClass] = schemeData;
 	});
 
@@ -37,12 +38,12 @@ export default (p: Props) => {
 				for (const childId of childIds) {
 					let hierarchyData: HierarchyData = {};
 					// Возьмем из каждой схемы ее schemeData и добавим в hierarchyData.
-					p.store.data.schemes.forEach((schemeData) => {
+					s.data.schemes.forEach((schemeData) => {
 						if (childId === schemeData.parentId) hierarchyData[schemeData.scheme.dbClass] = schemeData;
 					});
 
 					// Возьмем прилетевший с бекенда item.
-					const childItem = p.store.data.items.get(childId);
+					const childItem = s.data.items.get(childId);
 					if (childItem) {
 						// Построим hierarchyItem.
 						const hierarchyItem = {
@@ -60,35 +61,36 @@ export default (p: Props) => {
 		}
 		// Когда иерархия готова - есть конструкции нод.
 	).each((node) => {
-		const backendItem = node.data.id === rootId ? ({ id: rootId } as Item) : p.store.data.items.get(node.data.id);
-		if (node.data.id === rootId) console.log(node);
+		const rootNode = node.ancestors().find((i) => i.data.id === rootId) as HierarchyNode<HierarchyItem>;
+		let path = node
+			.path(rootNode)
+			.map((i) => i.data.id)
+			.join();
+
+		const backendItem = node.data.id === rootId ? ({ id: rootId } as Item) : s.data.items.get(node.data.id);
 		if (backendItem) {
+			const item = R.items.get(backendItem.id);
+
 			// Добавим функции, чтобы можно было пользоваться иерархией прямо из item.
-			const backendItemWithFunctions = addNodeFunctions(node, backendItem, p.store);
+			const { changeState, backendItemWithFuncs } = addItemFunctions(s, node, backendItem, item);
+			//console.log(changeState, backendItemWithFuncs);
 
 			// Состояния.
-			const rootNode = node.ancestors().find((i) => i.data.id === rootId);
-			if (rootNode) {
-				const path = node
-					.path(rootNode)
-					.map((i) => i.data.id)
-					.join();
-				if (path) {
-					const itemSelectionState = get(p.store.itemsSelectionState, path);
-					if (!itemSelectionState) set(p.store.itemsSelectionState, path, R.libs.valtio.proxy({ selection: 'notSelected' }));
-				}
-			}
+			const itemSelectionState = get(s.itemsSelectionState, path);
+			if (!itemSelectionState) set(s.itemsSelectionState, path, R.libs.valtio.proxy({ selection: 'notSelected' }));
 
 			// Обновим item в самом конце, чтобы функции выдавали актуальные данные.
-			const item = R.items.get(backendItem.id);
-			if (!R.libs.just.compare(item, backendItem)) {
-				//console.log('useData changes', backendItem.content?.horsepower);
-				R.items.set(backendItem.id, backendItemWithFunctions);
-				const subscribes = R.subscribes.get(backendItem.id);
-				if (!subscribes) R.subscribes.set(backendItem.id, []);
+			if (Object.values(changeState).includes(true) || !compare(item, backendItem)) {
+				//console.log('useData changes');
+				R.items.set(backendItem.id, backendItemWithFuncs);
+				// Запуск тригера для каждой функции после ее обновления.
+				map(changeState, (funcName, changed) => changed && Noodl.Events.emit(`${funcName}_${backendItem.id}`));
+				// Дефолт для подписок, чтобы не проверять.
+				const subscribes = R.itemHandlers.subscribes.get(backendItem.id);
+				if (!subscribes) R.itemHandlers.subscribes.set(backendItem.id, []);
 			}
 
-			if (backendItem.id === rootId) p.store.rootItem = backendItemWithFunctions;
+			if (backendItem.id === rootId) s.rootItem = backendItemWithFuncs;
 		}
 	});
 };

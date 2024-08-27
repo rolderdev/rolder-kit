@@ -47,8 +47,8 @@ const getShared = (nodeName: string, versions: JsNodeVersions, docs?: string) =>
 			this.propsCache = { noodlNode: this }; // Наполняется постепенно. Для конвертированных и проверенных на тип данных.
 			this.outputPropValues = {}; // Хранилище выходных props.
 			this.scheduledRun = false;
+			this.firstRun = true; // Для варианта, когда версия выбрана и это повторный запуск. Нужен, т.к. model.firstRun уже бедет false.
 			this.scheduledModuleRun = false;
-			this.initializeExecuted = false;
 		},
 		methods: {
 			// Регистрирует инпут и слушает изменения.
@@ -80,7 +80,7 @@ const getShared = (nodeName: string, versions: JsNodeVersions, docs?: string) =>
 								// Нужно записать версию отдельно - setValuesFromParameters использует порты с декларации, где нет версии.
 								if (inputName === 'version') this.propsCache.version = value;
 								// Если есть transform, обработаем только первый раз, чтобы transform получил готовые данные.
-								if (this.model.firstRun || !nodeDef.transform) {
+								if (this.firstRun || this.model.firstRun || !nodeDef.transform) {
 									// Сохраним делкарачию портов в кеше, чтобы функции могли доверять ей, если есть transform.
 									cachePortDefs(this, versions);
 									// Запишем в кеш значения с параметров редактора, восстановив дефолты, сконвертировав и проверив тип.

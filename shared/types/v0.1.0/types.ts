@@ -3,7 +3,7 @@ import type { Kuzzle } from 'kuzzle-sdk';
 import type { CreateBlob, RxDatabase, HyperDX } from '@nodes/app-v2.0.0';
 import type { Icons, Utils } from 'shared';
 import type { Dayjs, Just, Lodash, Nanoid, Numbro, Omgopass, Sort, Valibot, Valtio } from 'shared/src/libs';
-import type { HyerarchyNodeFunctions } from '@nodes/use-data-v2.0.0';
+import type { ItemFunctions } from '@nodes/use-data-v2.0.0';
 
 type Rolder = {
 	/* states: {
@@ -58,7 +58,10 @@ type Rolder = {
 	utils: Utils;
 	//user?: any;
 	items: Map<string, Item>;
-	subscribes: Map<string, string[]>;
+	itemHandlers: {
+		funcs: Map<string, ItemFunctions>;
+		subscribes: Map<string, string[]>;
+	};
 };
 
 export type DbClass = {
@@ -85,7 +88,7 @@ export type Item = {
 		updater: string | null;
 		updatedAt: number | null;
 	};
-} & { [dbClass: string]: { id: string } | { id: string }[] } & HyerarchyNodeFunctions;
+} & { [dbClass: string]: Item | Item[] | { id: string } | { id: string }[] } & ItemFunctions;
 
 export type User = {
 	user: {

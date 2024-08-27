@@ -2,7 +2,7 @@ import { getPortDef } from '@shared/port-v1.0.0';
 import type { JsNodeDef } from '@shared/node-v1.0.0';
 import type { Props } from '../types';
 import type { InspectInfo } from '@shared/node-v1.0.0/types';
-import { subscribe } from '../component/item';
+import { initStore, subscribe } from '../component/item';
 
 export default {
 	hashTag: '#expreimental',
@@ -39,7 +39,7 @@ export default {
 		getPortDef({ name: 'item', displayName: 'Item', group: 'Data', type: 'object' }),
 		getPortDef({ name: 'itemChanged', displayName: 'Changed', group: 'Signals', type: 'signal' }),
 	],
-	triggerOnInputs: () => ['source', 'itemId'],
+	triggerOnInputs: () => ['source', 'itemId', 'fields'],
 	getInspectInfo: (p: Props) => {
 		let info = [{ type: 'text', value: `Source: "${p.source}"` }];
 		if (p.noodlNode._internal.item)
@@ -50,11 +50,8 @@ export default {
 		return info as InspectInfo[];
 	},
 	initialize: async (p: Props) => {
-		//console.log('initialize', p.noodlNode.id);
-		// Для ситуации, когда нода запускается первый раз, т.к. срабатывает одновременно reactive и этот код.
-		p.noodlNode._internal.firstRun = true;
 		subscribe(p);
-		setTimeout(() => (p.noodlNode._internal.firstRun = false), 10);
+		p.propsStore = initStore(p);
 		return p;
 	},
 	transform(p: Props, portDefs) {

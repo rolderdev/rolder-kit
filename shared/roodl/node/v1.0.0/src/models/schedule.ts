@@ -14,11 +14,10 @@ export const schedule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactN
 			// Не проверяем, когда уже есть ошибки.
 			if (!hasWarings(noodlNode)) validateValues(noodlNode);
 			// Запустим функцию инициализации один раз.
-			if (!noodlNode.initializeExecuted && nodeDef.initialize) {
-				noodlNode.initializeExecuted = true;
+			if (nodeDef.initialize && (noodlNode.firstRun || noodlNode.model.firstRun))
 				noodlNode.propsCache = await nodeDef.initialize(noodlNode.propsCache);
-			}
-			noodlNode.scheduledRun = false; // Вернем возможность запуска обработки портов.
+
+			noodlNode.scheduledRun = false; // Вернем возможность запуска обработки поров.
 			// Отличим JS от React по наличию reactKey у ноды.
 			if (!noodlNode.reactKey) {
 				// Не запускаем модуль, когда есть ошибки или модуль уже запущен.
@@ -26,8 +25,11 @@ export const schedule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactN
 					noodlNode.scheduledModuleRun = true; // Запретим повторные запуски модуля.
 					await runModule(noodlNode, nodeDef as JsNodeDef, inputDef, isSignal);
 					noodlNode.scheduledModuleRun = false; // Вернем возможность запуска модуля.
+					noodlNode.firstRun = false;
+					noodlNode.model.firstRun = false;
 				}
 			} else if (!hasWarings(noodlNode)) {
+				noodlNode.firstRun = false;
 				noodlNode.model.firstRun = false;
 				// Как и для JS, гарантируем только одно обновление для одновременно прилетевших значений инпутов.
 				// Нужно восстановить встроенные в Roodl props из Advanced HTML.

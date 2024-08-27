@@ -49,7 +49,7 @@ const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 	for (const item of currentTableItems) {
 		// Возьмем всех наследников, исключив текущую таблицу.
 		for (const descendantItem of item.getDescendants({ skipSelf: true })) {
-			const parentItem = descendantItem.getParant();
+			const parentItem = descendantItem.getParent();
 			if (parentItem) {
 				const parentState = parentItem.getSelectionState();
 				// Нужно не трогать полупокеров.
@@ -62,7 +62,7 @@ const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 	}
 
 	// Возьмем всех предков из первого item, т.к. предки у всех item текущей таблицы теже.
-	const parentItem = Object.values(currentTableItems)[0].getParant();
+	const parentItem = Object.values(currentTableItems)[0].getParent();
 	if (parentItem) {
 		for (const ancestorItem of parentItem.getAncestors()) {
 			const ancestorState = ancestorItem.getSelectionState();

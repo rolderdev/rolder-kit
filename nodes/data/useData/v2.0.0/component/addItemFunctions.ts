@@ -87,7 +87,6 @@ export default (s: Store, node: HierarchyNode, backendItem: Item, item?: Item) =
 			return defaultState;
 		},
 	};
-	backendItem = { ...backendItem, ...funcs } as Item;
 
 	// Реактинвость изменения функций. Не всем функциям это нужно. Нужно там где используется здешняя нода.
 	if (item) {
@@ -136,13 +135,10 @@ export default (s: Store, node: HierarchyNode, backendItem: Item, item?: Item) =
 
 	// Сохраним функции в хранилище для последующих вызовов.
 	R.itemHandlers.funcs.set(backendItem.id, funcs);
-	map(
-		changeState,
-		(funcName, changed) =>
-			(changed || !item) &&
-			// Вся хитрость здесь. Нужен колбек, чтобы вытащить новую функцию. Само тело функции не меняется, но почему-то,
-			// если просто хранить функции в item, он выдает старые данные при смене схемы или состава иерархии.
-			set(backendItem, funcName, (...args: any) => get(R.itemHandlers.funcs.get(backendItem.id) as any, funcName)(...args))
+	map(funcs, (funcName) =>
+		// Вся хитрость здесь. Нужен колбек, чтобы вытащить новую функцию. Само тело функции не меняется, но почему-то,
+		// если просто хранить функции в item, он выдает старые данные при смене схемы или состава иерархии.
+		set(backendItem, funcName, (...args: any) => get(R.itemHandlers.funcs.get(backendItem.id) as any, funcName)(...args))
 	);
 
 	return { changeState, backendItemWithFuncs: backendItem };

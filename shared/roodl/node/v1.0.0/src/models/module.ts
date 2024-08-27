@@ -10,10 +10,9 @@ import type { JsNodeDef, NoodlNode, Props } from '../../types';
 Если сигнал, просто тригерим. Сигнал - простой тогл true/false. Т.е. меняется два раза, запускаем на true. */
 export const runModule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef, inputDef: PortDef, isSignal: boolean) => {
 	if (!isSignal) {
-		if (nodeDef.triggerOnInputs?.(noodlNode.propsCache).includes(inputDef.name) || noodlNode.model.firstRun)
+		if (nodeDef.triggerOnInputs?.(noodlNode.propsCache).includes(inputDef.name) || noodlNode.firstRun || noodlNode.model.firstRun)
 			await runModuleFunc(nodeDef, noodlNode.propsCache);
 	} else await runModuleFunc(nodeDef, noodlNode.propsCache, inputDef.name);
-	if (noodlNode.model && noodlNode.model.firstRun) noodlNode.model.firstRun = false;
 };
 
 // Нет имени сигнала, берем реактивную функцию. Иначе берем по имени сигнала.
