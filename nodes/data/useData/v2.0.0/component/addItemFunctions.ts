@@ -140,7 +140,7 @@ export default (s: Store, node: HierarchyNode, backendItem: Item, item?: Item) =
 		// если просто хранить функции в item, он выдает старые данные при смене схемы или состава иерархии.
 		set(backendItem, funcName, (...args: any) => get(R.itemHandlers.funcs.get(backendItem.id) as any, funcName)(...args))
 	);
-
+	console.log(changeState);
 	return { changeState, backendItemWithFuncs: backendItem };
 };
 
