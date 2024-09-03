@@ -1,26 +1,27 @@
 import type { Store } from '../../node/store';
+import useNode from './useNode';
+import useItem from './useItem';
 
 export default function (s: Store, id: string): string {
-	const snapshot = R.libs.valtio.snapshot;
-
 	const onRowClick = s.tableProps.onRowClick;
-	const item = R.items.get(id);
+	const itemSnap = useItem(id, 'snap');
+	const nodeSnap = useNode(s, id, 'snap');
 
-	if (item)
+	if (itemSnap)
 		switch (onRowClick) {
 			case 'signal': {
 				const clickFilterFunc = s.tableProps.clickFilterFunc;
-				if (clickFilterFunc && !clickFilterFunc(snapshot(item))) return 'unset';
+				if (clickFilterFunc && !clickFilterFunc(itemSnap, nodeSnap)) return 'unset';
 				return 'pointer';
 			}
 			case 'singleSelection': {
 				const singleSelectionFilterFunc = s.tableProps.singleSelectionFilterFunc;
-				if (singleSelectionFilterFunc && !singleSelectionFilterFunc(item)) return 'unset';
+				if (singleSelectionFilterFunc && !singleSelectionFilterFunc(itemSnap, nodeSnap)) return 'unset';
 				return 'pointer';
 			}
 			case 'expansion': {
 				const filterFunc = s.tableProps.expansion.filterFunc;
-				if (filterFunc && !filterFunc(snapshot(item))) return 'unset';
+				if (filterFunc && !filterFunc(itemSnap, nodeSnap)) return 'unset';
 				return 'pointer';
 			}
 			default:

@@ -1,17 +1,19 @@
 import type { NoodlNode } from '@shared/node-v1.0.0';
 import type { Kuzzle } from 'kuzzle-sdk';
-import type { CreateBlob, RxDatabase, HyperDX } from '@nodes/app-v2.0.0';
+import type { RxDatabase, HyperDX, Rxdb } from '@nodes/app-v2.0.0';
 import type { Icons, Utils } from 'shared';
-import type { Dayjs, Just, Lodash, Nanoid, Numbro, Omgopass, Sort, Valibot, Valtio } from 'shared/src/libs';
-import type { ItemFunctions } from '@nodes/use-data-v2.0.0';
+import type { Dayjs, Just, Lodash, Nanoid, Numbro, Omgopass, Remeda, Sort, Valibot, Valtio } from 'shared/src/libs';
+import type { Mutate, QueryClient } from '@nodes/data-v2.0.0';
+import type { Mantine } from '@nodes/mantine-v2.0.0';
+import type { Nodes } from '@nodes/use-data-v2.0.0';
 
 type Rolder = {
-	/* states: {
-		backend: 'notInitialized' | 'initializing' | 'initialized';
+	states: {
 		debug: number;
-		signedIn?: boolean;
-		devMode: boolean;
-	};*/
+		backend: 'notInitialized' | 'initializing' | 'initialized';
+		/* signedIn?: boolean;
+		devMode: boolean; */
+	};
 	env: {
 		environment?: string;
 		rolderKit?: string;
@@ -24,7 +26,7 @@ type Rolder = {
 		defaults?: {
 			dateFormat: string;
 		};
-		/*	colorScheme?: 'light' | 'dark';
+		//	colorScheme?: 'light' | 'dark';
 		creds?: {
 			name: string;
 			data: any;
@@ -32,19 +34,20 @@ type Rolder = {
 		backendOptions?: {
 			name: string;
 			data: any;
-		}[];*/
+		}[];
 	};
 	dbClasses?: {
 		[x: string]: DbClass;
 	};
 	libs: {
 		Kuzzle?: Kuzzle;
-		rxdb: { createBlob: CreateBlob };
-		mantine?: {
-			MantineError(title: string, message?: string, autoClose?: boolean | number): void;
-		};
+		queryClient?: QueryClient;
+		mutate?: Mutate;
+		rxdb: Rxdb;
+		mantine: Mantine;
 		just: Just;
 		lodash: Lodash;
+		remeda: Remeda;
 		nanoid: Nanoid;
 		sort: Sort;
 		valibot: Valibot;
@@ -56,12 +59,9 @@ type Rolder = {
 	};
 	db: RxDatabase;
 	utils: Utils;
-	//user?: any;
+	user?: User;
 	items: Map<string, Item>;
-	itemHandlers: {
-		funcs: Map<string, ItemFunctions>;
-		subscribes: Map<string, string[]>;
-	};
+	nodes: Nodes;
 };
 
 export type DbClass = {
@@ -88,7 +88,9 @@ export type Item = {
 		updater: string | null;
 		updatedAt: number | null;
 	};
-} & { [dbClass: string]: Item | Item[] | { id: string } | { id: string }[] } & ItemFunctions;
+} & { [dbClass: string]: Item | Item[] | { id: string } | { id: string }[] } & {
+	getRef: (dbClass: string) => Item | Item[] | { id: string } | { id: string }[];
+};
 
 export type User = {
 	user: {

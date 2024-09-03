@@ -1,5 +1,5 @@
 import { notifications } from '@mantine/notifications';
-import type { Props } from '../types';
+import type { Props } from '../node/definition';
 
 export default {
 	send: (p: Props) => {

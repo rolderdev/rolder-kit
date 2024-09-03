@@ -2,15 +2,21 @@
 
 import type { DataTableColumn } from 'mantine-datatable';
 import type { Item } from '@shared/types-v0.1.0';
-import type { Props } from '../../types';
-import Render from '../renders/Render';
+import Node from '@nodes/use-data-v2.0.0/component/Node';
+import type { Props } from '../../node/definition';
 import type { TableRecord } from './recordModel';
-import ExpansionRender from '../renders/ExpansionRender';
+import Cell from '../renders/Cell';
+import ExpanderCell from '../renders/ExpanderCell';
 
 // Наш тип данных декларации колонки.
 export type ColumnDefinition = Partial<DataTableColumn<TableRecord>> & {
-	type: 'accessor' | 'getValue' | 'template';
-	getValue?: (item: Readonly<Item>) => string | number;
+	type: 'accessor' | 'getValue' | 'custom' | 'template';
+	getValue?: (itemSub: Item, itemsSnap: Item[], nodeSub: Node | undefined) => string | number | undefined;
+	custom?: (
+		itemSub: Item,
+		itemsSnap: Item[],
+		nodeSub: Node | undefined
+	) => { watchItems: Item[]; getValue: ColumnDefinition['getValue'] };
 	template?: string;
 };
 export type ColumnsDefinition = Record<string, ColumnDefinition>;
@@ -42,9 +48,9 @@ export const getColumns = (columnsDefinition: ColumnsDefinition, expansionEnable
 					...i,
 					render: (record) =>
 						expansionEnabled && i.idx === '0' ? (
-							<ExpansionRender column={i} id={record.id} />
+							<ExpanderCell columnIdx={i.idx} id={record.id} />
 						) : (
-							<Render column={i} id={record.id} />
+							<Cell columnIdx={i.idx} id={record.id} />
 						),
 				} satisfies DataTableColumn<TableRecord>)
 		);

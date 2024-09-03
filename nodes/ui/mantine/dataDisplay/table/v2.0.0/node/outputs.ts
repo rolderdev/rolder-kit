@@ -1,15 +1,8 @@
 import { getPortDef, type PortDef } from '@shared/port-v1.0.0';
-import type { Props } from '../types';
+import type { Props } from './definition';
 
 export default [
 	// Base
-	getPortDef({
-		name: 'level',
-		displayName: 'Level',
-		group: 'Custom',
-		customGroup: 'Base',
-		type: 'number',
-	}),
 	getPortDef({
 		name: 'clickedItem',
 		displayName: 'Clicked item',
@@ -17,6 +10,14 @@ export default [
 		customGroup: 'Base',
 		type: 'object',
 		dependsOn: (p) => p.onRowClick === 'signal',
+	}),
+	getPortDef({
+		name: 'clickedNode',
+		displayName: 'Clicked node',
+		group: 'Custom',
+		customGroup: 'Base',
+		type: 'object',
+		dependsOn: (p) => p.onRowClick === 'signal' && p.hierarchy,
 	}),
 	getPortDef({
 		name: 'rowClicked',
@@ -34,6 +35,14 @@ export default [
 		customGroup: 'Single selection',
 		type: 'object',
 		dependsOn: (p: Props) => p.onRowClick === 'singleSelection',
+	}),
+	getPortDef({
+		name: 'selectedNode',
+		displayName: 'Selected node',
+		group: 'Custom',
+		customGroup: 'Base',
+		type: 'object',
+		dependsOn: (p) => p.onRowClick === 'singleSelection' && p.hierarchy,
 	}),
 	getPortDef({
 		name: 'selectedItemChanged',

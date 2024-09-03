@@ -2,7 +2,9 @@
 
 import type { Store } from '../../node/store';
 
-export default async (s: Store, id: string, template: string, metaData?: { id: string; level: number }) => {
+export type MetaData = { itemId: string; nodePath: string; level: number };
+
+export default async (s: Store, id: string, template: string, metaData: MetaData) => {
 	const noodlNode = s.noodlNode;
 	// Без этого не работает. Шаман Noodl сказал так делать, почему не понятно.
 	const group = noodlNode.nodeScope.createPrimitiveNode('Group');

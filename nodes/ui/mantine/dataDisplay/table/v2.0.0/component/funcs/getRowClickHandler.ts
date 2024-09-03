@@ -3,6 +3,8 @@ import type { Store } from '../../node/store';
 import type { TableRecord } from '../models/recordModel';
 import { setSelectedId } from '../models/singleSelectionModel';
 import { toggleRowExpansion } from '../models/expansionModel';
+import useItem from './useItem';
+import useNode from './useNode';
 
 export default function (s: Store) {
 	const onRowClick = s.tableProps.onRowClick;
@@ -10,14 +12,16 @@ export default function (s: Store) {
 	if (onRowClick === 'disabled') return undefined;
 
 	return ({ record }: { record: TableRecord }) => {
-		const item = R.items.get(record.id);
+		const item = useItem(record.id, 'store');
+		const nodeSnap = useNode(s, record.id, 'snap');
 		if (item)
 			switch (onRowClick) {
 				case 'signal': {
 					const clickFilterFunc = s.tableProps.clickFilterFunc;
 					// Если разработчик добавил проверку и она false, отменяем отправку.
-					if (clickFilterFunc && !clickFilterFunc(R.libs.valtio.snapshot(item))) return;
+					if (clickFilterFunc && !clickFilterFunc(item, nodeSnap)) return;
 					sendOutput(s.noodlNode, 'clickedItem', item);
+					sendOutput(s.noodlNode, 'clickedNode', nodeSnap);
 					sendSignal(s.noodlNode, 'rowClicked');
 					return;
 				}

@@ -1,22 +1,23 @@
 import { memo, useContext } from 'react';
 import { Box } from '@mantine/core';
 import { TableContext } from '../TableProvider';
+import useItem from '../funcs/useItem';
 
 export default memo((p: { id: string; columnIdx: string }) => {
 	const { get } = R.libs.just;
-	const { useSnapshot, proxy } = R.libs.valtio;
 
 	const store = useContext(TableContext);
-	const itemSnap = useSnapshot(R.items.get(p.id) || proxy({}));
+	const itemSnap = useItem(p.id, 'snap');
+	const itemSub = useItem(p.id, 'sub');
 
 	// Без подписки, заменится при смене схемы колонок.
 	const accessor = get(store, ['columnsDefinition', p.columnIdx, 'accessor']);
 	// Точечная подписка на значение.
-	const value = get(itemSnap, accessor);
+	const value = itemSub ? get(itemSub, accessor) : undefined;
 
 	// Расчет отсупа функцией разработчика.
 	const paddingLeftPostion = store.tableProps.rowStyles.paddingLeftPostion;
-	const level = store.level;
+	const level = store.hierarchy.level;
 	const pl = store.tableProps.paddingLeftFunc?.(level, itemSnap);
 
 	//console.log('AccessorCell render', value); // Считаем рендеры пока разрабатываем

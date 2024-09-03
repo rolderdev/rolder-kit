@@ -5,14 +5,14 @@ import { proxyMap } from 'valtio/utils';
 set(window, ['R', 'params'], {});
 // Обратная совместимость
 set(window, ['R', 'states', 'backend'], 'notInitialized');
-// Глобальные items и их методы.
+// Глобальные items и ноды иерархий.
 set(window, ['R', 'items'], proxyMap());
-set(window, ['R', 'itemHandlers'], { funcs: proxyMap(), subscribes: proxyMap() });
+set(window, ['R', 'nodes'], proxyMap());
 
 // logs
 const urlParams = new URLSearchParams(window.location.search);
 const debug = parseInt(urlParams.get('debug') || '0');
-set(window, ['R', 'env', 'debug'], debug);
+//set(window, ['R', 'states', 'debug'], debug);
 
 import { consola } from 'consola';
 switch (debug) {

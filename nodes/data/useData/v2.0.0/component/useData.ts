@@ -1,7 +1,7 @@
 import { sendSignal } from '@shared/port-send-v1.0.0';
-import type { Props } from '../types';
+import type { Props } from '../node/definition';
 import { fetch } from './fetch';
-import { subscribe, unSubscribe } from './handleSubscribe';
+import { handleNotification, subscribe, type Notification } from './handleSubscribe';
 
 export default {
 	reactive: async (p: Props) => {
@@ -23,27 +23,45 @@ export default {
 		// Отреагируем на включение/отключение подписки.
 		if (p.store.subscribe !== p.subscribe) {
 			if (!p.store.subscribe && p.subscribe) subscribe(p);
-			if (p.store.subscribe && !p.subscribe) unSubscribe(p);
+			//if (p.store.subscribe && !p.subscribe) unSubscribe(p);
 			p.store.subscribe = p.subscribe;
 		}
 
 		// Первый проход.
 		if (!p.store.inited) {
-			p.store.inited = true;
-
 			// Первичная загрузка реактивного режима.
 			if (!p.controlled) await fetch(p);
 
 			// Тригер смены выбора.
-			R.libs.valtio.subscribe(p.store.itemsSelectionState, () => {
-				sendSignal(p.noodlNode, 'itemsStateChanged');
-			});
+			const rootNode = R.nodes.get(p.store.rootId);
+			if (rootNode) Noodl.Events.on(`${rootNode.path}_selectionChanged`, () => sendSignal(p.noodlNode, 'nodesSelectionChanged'));
+
+			// Хак. Добавим свой клиент WebSocket и listener к нему.
+			if (!p.store.socket) p.store.socket = new WebSocket(`wss://${R.libs.Kuzzle?.host}`);
+			p.store.socket.onmessage = (event) => {
+				if (event.data === '{"p":2}') return; // Если это сообщение прокси сервера, пропускаем.
+				const data = JSON.parse(event.data) as Notification;
+				if (data.type !== 'document') return; // Если это сообщение не о подписке, пропускаем.
+				const roomId = data.room.split('-')[0];
+				let schemeHash = '';
+				p.store.subscribes.forEach((room, hash) => {
+					if (roomId === room) schemeHash = hash;
+				});
+				if (!schemeHash) return; // Если нет такой схемы в подписках, значит другая useData.
+				handleNotification(p, schemeHash, data);
+			};
+
+			p.store.inited = true;
 
 			// Отпишимся при удалении ноды во избежание задвоения подписок.
-			p.noodlNode._onNodeDeleted = () => unSubscribe(p);
+			//p.noodlNode._onNodeDeleted = () => unSubscribe(p);
 		}
 
 		return;
 	},
 	fetch: async (p: Props) => fetch(p),
+	/* resetNodesSelection: (p: Props) =>
+		R.nodes.forEach((node) => {
+			if (node.rootId === p.store.rootId) node.selectionState.value === 'notSelected';
+		}), */
 };

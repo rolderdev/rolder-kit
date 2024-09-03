@@ -189,7 +189,7 @@ const dataNode = reactNode(
 				}),
 			],
 		},
-		'v2.0.0': {
+		/* 'v2.0.0': {
 			hashTag: '#pre-release',
 			module: { dynamic: lazy(() => import('@packages/data-v2.0.0')) },
 			inputs: [
@@ -238,7 +238,8 @@ const dataNode = reactNode(
 					},
 				}),
 			],
-		},
+			outputs: [getPort({ plug: 'output', name: 'initialized', displayName: 'Initialized', group: 'Signals', type: 'signal' })],
+		}, */
 	},
 	{ allowChildren: true }
 );

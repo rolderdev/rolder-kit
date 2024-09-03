@@ -6,7 +6,7 @@ export default function (s: Store, id: string) {
 	const rowStyles = snap.tableProps.rowStyles;
 	let bgColor = rowStyles.rowBackgroundColor;
 
-	if (snap.selectedIds.includes(id)) bgColor = rowStyles.mutliSelectionRowBgColor;
+	if (snap.selectedIds[id]) bgColor = rowStyles.mutliSelectionRowBgColor;
 	// Единичный выбор перекрывает мульти-выбор.
 	if (snap.selectedId === id) bgColor = rowStyles.singleSelectionRowBgColor;
 

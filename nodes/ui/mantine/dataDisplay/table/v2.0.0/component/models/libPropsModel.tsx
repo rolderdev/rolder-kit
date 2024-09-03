@@ -1,6 +1,6 @@
 /* Модель настроек библиотеки. */
 
-import type { Props } from '../../types';
+import type { Props } from '../../node/definition';
 
 export type LibProps = ReturnType<typeof setLibProps>;
 
@@ -28,8 +28,8 @@ export const setLibProps = (p: Props) => {
 		verticalSpacing: p.verticalSpacing || 'xs',
 		fz: p.fz || 'sm',
 		// Table styles
-		shadow: s.isChild ? 'none' : p.shadow || 'sm', // Если таблица дочерняя, убираем тень
-		borderRadius: s.isChild ? '0px' : p.borderRadius || 'md', // и округление.
+		shadow: s.hierarchy.isChild ? 'none' : p.shadow || 'sm', // Если таблица дочерняя, убираем тень
+		borderRadius: s.hierarchy.isChild ? '0px' : p.borderRadius || 'md', // и округление.
 		emptyState: 'Записей не найдено',
 		// Row styles
 		stripedColor: p.stripedColor || 'white', // Нужно перезаписать, иначе наследуется с родительской таблицы.

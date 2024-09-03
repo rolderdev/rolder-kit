@@ -1,17 +1,22 @@
 /* Модель мульти-выбора. */
 
+import { useEffect } from 'react';
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
-import type { CheckboxProps } from '@mantine/core';
-import type { ItemSelectionState, SelectionState } from '@nodes/use-data-v2.0.0';
-import type { Store } from '../../node/store';
+import type { SelectionState } from '@nodes/use-data-v2.0.0';
+import Node from '@nodes/use-data-v2.0.0/component/Node';
+import type { Snap, Store } from '../../node/store';
 import type { TableRecord } from './recordModel';
+import useItem from '../funcs/useItem';
+import useNode from '../funcs/useNode';
 
 export const setSelectedIds = (s: Store, newSelectedRecords: TableRecord[], isDefault?: boolean) => {
 	const { compare } = R.libs.just;
 	const newSelectedIds = newSelectedRecords.map((i) => i.id);
+	const selectedIds = Object.keys(s.selectedIds).filter((id) => s.selectedIds[id]);
 
-	if (!compare(s.selectedIds.sort(), newSelectedIds.sort())) {
-		s.selectedIds = newSelectedIds;
+	if (!compare(selectedIds.sort(), newSelectedIds.sort())) {
+		s.selectedIds = {};
+		newSelectedIds.map((id) => (s.selectedIds[id] = true));
 
 		if (s.tableProps.multiSelection.useHierarchy) setSelectionHierarchy(s, newSelectedIds);
 
@@ -24,145 +29,163 @@ export const setSelectedIds = (s: Store, newSelectedRecords: TableRecord[], isDe
 	}
 };
 
-export const resetSelectedIds = (s: Store) => {
-	if (s.selectedIds.length) {
-		s.selectedIds = [];
-		if (s.tableProps.multiSelection.useHierarchy) setSelectionHierarchy(s, []);
-
-		sendOutput(s.noodlNode, 'selectedItems', []);
-		sendSignal(s.noodlNode, 'selectedItemsChanged');
-	}
-};
-
 const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
-	const currentTableItems = s.records.map((i) => R.items.get(i.id)).filter((i) => i !== undefined);
+	const currentTableNodes = s.records.map((i) => useNode(s, i.id, 'store')).filter((i) => i !== undefined) as Node[];
 
 	// Проставим состояние выбора текущей таблице.
-	for (const item of currentTableItems) {
-		const itemState = item.getSelectionState();
-		let selection: SelectionState = itemState.selection === 'indeterminate' ? 'indeterminate' : 'notSelected';
-		if (selectedIds.includes(item.id)) selection = 'selected';
-		itemState.selection = selection;
+	for (const node of currentTableNodes) {
+		if (node.itemId) {
+			const selectionState = node.selectionState;
+			let selection: SelectionState = selectionState.value === 'indeterminate' ? 'indeterminate' : 'notSelected';
+			if (selectedIds.includes(node.itemId)) selection = 'selected';
+			selectionState.value = selection;
+		}
 	}
 
 	// Пройдем по всем наследникам, исключая текущую таблицу, чтобы использовать indeterminate родителя.
-	for (const item of currentTableItems) {
+	for (const node of currentTableNodes) {
 		// Возьмем всех наследников, исключив текущую таблицу.
-		for (const descendantItem of item.getDescendants({ skipSelf: true })) {
-			const parentItem = descendantItem.getParent();
-			if (parentItem) {
-				const parentState = parentItem.getSelectionState();
+		for (const descendantNode of node.descendantNodes()) {
+			const parentNode = descendantNode.parentNode();
+			if (parentNode) {
+				const parentState = parentNode.selectionState;
 				// Нужно не трогать полупокеров.
-				if (parentState.selection !== 'indeterminate') {
-					const descendantItemState = descendantItem.getSelectionState();
-					descendantItemState.selection = parentState.selection;
+				if (parentState?.value !== 'indeterminate') {
+					const descendantItemState = descendantNode.selectionState;
+					if (parentState && descendantItemState) descendantItemState.value = parentState.value;
 				}
 			}
 		}
 	}
 
-	// Возьмем всех предков из первого item, т.к. предки у всех item текущей таблицы теже.
-	const parentItem = Object.values(currentTableItems)[0].getParent();
-	if (parentItem) {
-		for (const ancestorItem of parentItem.getAncestors()) {
-			const ancestorState = ancestorItem.getSelectionState();
-			const childrenCount = ancestorItem.getChildren().length;
-			const selectedChildrenCount = ancestorItem
-				.getChildren()
-				.filter((i) => i.getSelectionState().selection === 'selected').length;
-			const indeterminateChildrenCount = ancestorItem
-				.getChildren()
-				.filter((i) => i.getSelectionState().selection === 'indeterminate').length;
-			// Если в детях есть полупокер, то протягиваем его вверх, иначе определяем состояние по разнице.
-			ancestorState.selection = indeterminateChildrenCount
-				? 'indeterminate'
-				: childrenCount === selectedChildrenCount
-				? 'selected'
-				: selectedChildrenCount === 0
-				? 'notSelected'
-				: 'indeterminate';
+	// Возьмем всех предков ноды таблицы, вклюая ее саму.
+	const tableNode = s.hierarchy.tableNode;
+	if (tableNode) {
+		for (const ancestorNode of tableNode.ancestorNodes(true)) {
+			const ancestorState = ancestorNode.selectionState;
+			if (ancestorState) {
+				const childrenCount = ancestorNode.childNodes().length;
+				const selectedChildrenCount = ancestorNode.childNodes().filter((i) => i.selectionState.value === 'selected').length;
+				const indeterminateChildrenCount = ancestorNode
+					.childNodes()
+					.filter((i) => i.selectionState.value === 'indeterminate').length;
+				// Если в детях есть полупокер, то протягиваем его вверх, иначе определяем состояние по разнице.
+				ancestorState.value = indeterminateChildrenCount
+					? 'indeterminate'
+					: childrenCount === selectedChildrenCount
+					? 'selected'
+					: selectedChildrenCount === 0
+					? 'notSelected'
+					: 'indeterminate';
+			}
 		}
-
-		/* // Корень обработаем отдельно. Здесь специфика в том, что дети корня могут быть разных классов.
-		const rootItem = Object.values(currentTableItems)[0].getRoot();
-		// Вытянем класс корневой таблицы, чтобы понять каких детей корневой таблицы считать.
-		const rootTableDbClass = R.libs.just.last(Object.values(currentTableItems)[0].getAncestors()).dbClass;
-		const rootState = rootItem.getSelectionState();
-
-		const childrenCount = rootItem.getChildren(rootTableDbClass).length;
-		const selectedChildrenCount = rootItem
-			.getChildren(rootTableDbClass)
-			.filter((i) => i.getSelectionState().selection === 'selected').length;
-		const indeterminateChildrenCount = rootItem
-			.getChildren(rootTableDbClass)
-			.filter((i) => i.getSelectionState().selection === 'indeterminate').length;
-		console.log(childrenCount, selectedChildrenCount, indeterminateChildrenCount);
-		rootState.selection = indeterminateChildrenCount
-			? 'indeterminate'
-			: childrenCount === selectedChildrenCount
-			? 'selected'
-			: selectedChildrenCount === 0
-			? 'notSelected'
-			: 'indeterminate'; */
 	}
+
+	// Сообщим useData, что выбор изменился.
+	const rootNode = currentTableNodes[0]?.rootNode();
+	if (rootNode) Noodl.Events.emit(`${rootNode.path}_selectionChanged`);
 };
 
-// Подменим параметры чекбокса, если используется иерархия и функция еще не определена.
-// Подписывается на изменение выбора иерархии и проставляет его.
-export const handleHierarchySelectionAndCheckboxProps = (s: Store, record: TableRecord, idx: number) => {
-	const { useSnapshot, snapshot } = R.libs.valtio;
+// Подменим параметры чекбокса и сделаем выбор в иерархии реактивным.
+export const useHierarchySelection = (s: Store) => {
+	const { get, set } = R.libs.just;
+	const { subscribeKey } = R.libs.valtio;
 
-	const item = R.items.get(record.id);
-	let checkBoxProps: CheckboxProps = {};
+	useEffect(() => {
+		// Реактивность состояния чекбокса в заголовке.
+		if (!s.hierarchy.isChild && !get(s.checkboxes, ['unsubs', 'header'])) {
+			const tableNode = s.hierarchy.tableNode;
+			if (tableNode) {
+				const unsub = subscribeKey(tableNode.selectionState, 'value', (selection) => {
+					let newCheckBoxProps = s.libProps.allRecordsSelectionCheckboxPropsDev || {};
+					newCheckBoxProps = { ...newCheckBoxProps, indeterminate: selection === 'indeterminate' };
+					set(s.checkboxes, ['props', 'header'], newCheckBoxProps);
+				});
 
-	if (item) {
-		// Запустим функцию разработчика, если есть.
-		checkBoxProps = s.libProps.getRecordSelectionCheckboxProps?.(item, idx) || {};
-
-		// Подписка на иерархию и изменение выбора
-		if (s.tableProps.multiSelection.useHierarchy) {
-			const itemStateSnap = useSnapshot(item.getSelectionState());
-			checkBoxProps.indeterminate = itemStateSnap.selection === 'indeterminate';
-
-			const filterFunc = s.tableProps.multiSelection.filterFunc;
-			const selectedIds = s.selectedIds;
-
-			if (!selectedIds.includes(item.id) && itemStateSnap.selection === 'selected') {
-				if (filterFunc) {
-					if (filterFunc(snapshot(item))) s.selectedIds.push(item.id);
-				} else s.selectedIds.push(item.id);
-			}
-
-			if (selectedIds.includes(item.id) && itemStateSnap.selection !== 'selected') {
-				if (filterFunc) {
-					if (filterFunc(snapshot(item))) s.selectedIds = selectedIds.filter((id) => id !== item.id);
-				} else s.selectedIds = selectedIds.filter((id) => id !== item.id);
+				set(s.checkboxes, ['unsubs', 'header'], unsub);
 			}
 		}
 
-		// Расчет отступа функцией разработчика.
-		const paddingLeftPostion = s.tableProps.rowStyles.paddingLeftPostion;
-		const level = s.level;
-		const pl = s.tableProps.paddingLeftFunc?.(level, snapshot(item));
-		checkBoxProps.pl = paddingLeftPostion === 'checkbox' ? pl : undefined;
-	}
-
-	return checkBoxProps;
+		// Реактивность состояния чекбоксов строк.
+		s.records.map((record, idx) => {
+			const node = useNode(s, record.id, 'store');
+			if (node && !get(s.checkboxes, ['unsubs', record.id])) {
+				setRowSelection(s, record.id, idx);
+				const unsub = subscribeKey(node.selectionState, 'value', () => setRowSelection(s, record.id, idx));
+				set(s.checkboxes, ['unsubs', record.id], unsub);
+				////////////////////////////////////
+				// Как менять выбор при смене детей?
+				//const unsub2 = subscribeKey(node, 'childIds', () => handleRecordSelection(s, record.id));
+				////////////////////////////////////
+			}
+		});
+	}, [s.records.map((i) => i.id)]);
 };
 
-export const useHeaderCheckboxProps = (s: Store) => {
-	// Вернем только параметры, установленные разработчиком или пустые параметры, когда хук не нужен.
-	if (!s.tableProps.multiSelection.enabled || s.isChild || !s.tableProps.multiSelection.useHierarchy)
-		return s.libProps.allRecordsSelectionCheckboxPropsDev || {};
+const setRowSelection = (s: Store, id: string, idx: number) => {
+	try {
+		const nodeSnap = useNode(s, id, 'snap');
+		const itemSnap = useItem(id, 'snap');
+		const selection = nodeSnap?.selectionState.value;
 
-	const { useSnapshot, proxy } = R.libs.valtio;
-	// Если разработчик указал параметры, возьмем их.
-	const checkBoxProps: CheckboxProps = s.libProps.allRecordsSelectionCheckboxPropsDev || {};
-	// Найдем состояние выбора rootItem.
-	const selectionState = R.items.get(s.records[0]?.id)?.getRoot()?.getSelectionState();
-	// Подпишемся его изменения.
-	const selectionSnap = useSnapshot(selectionState || proxy({} as ItemSelectionState));
-	checkBoxProps.indeterminate = selectionSnap.selection === 'indeterminate';
+		if (nodeSnap && itemSnap) {
+			let newCheckBoxProps = s.libProps.getRecordSelectionCheckboxProps?.(itemSnap, idx) || {};
 
-	return checkBoxProps;
+			// Расчет отсупа функцией разработчика.
+			try {
+				const paddingLeftPostion = s.tableProps.rowStyles.paddingLeftPostion;
+				const level = s.hierarchy.level;
+				const pl = s.tableProps.paddingLeftFunc?.(level, itemSnap);
+				if (paddingLeftPostion === 'checkbox') newCheckBoxProps.pl = pl;
+			} catch (e: any) {
+				log.error('paddingLeftFunc error', e);
+				R.libs.mantine?.MantineError?.('Системная ошибка!', `paddingLeftFunc error. ${e.message}`);
+			}
+
+			newCheckBoxProps = { ...newCheckBoxProps, indeterminate: nodeSnap.selectionState.value === 'indeterminate' };
+			R.libs.just.set(s.checkboxes, ['props', id], newCheckBoxProps);
+
+			// Реактивность на измение выбора в иерархии.
+			try {
+				const filterFunc = s.tableProps.multiSelection.filterFunc;
+				const selectedIds = s.selectedIds;
+
+				if (!selectedIds[itemSnap.id] && selection === 'selected') {
+					if (filterFunc) {
+						if (filterFunc(itemSnap, nodeSnap)) s.selectedIds[itemSnap.id] = true;
+					} else s.selectedIds[itemSnap.id] = true;
+				}
+
+				if (selectedIds[itemSnap.id] && selection !== 'selected') {
+					if (filterFunc) {
+						if (filterFunc(itemSnap, nodeSnap)) s.selectedIds[itemSnap.id] = false;
+					} else s.selectedIds[itemSnap.id] = false;
+				}
+			} catch (e: any) {
+				log.error('multiSelection filterFunc error', e);
+				R.libs.mantine?.MantineError?.('Системная ошибка!', `multiSelection filterFunc error. ${e.message}`);
+			}
+		}
+	} catch (e: any) {
+		log.error('getRecordSelectionCheckboxProps error', e);
+		R.libs.mantine?.MantineError?.('Системная ошибка!', `getRecordSelectionCheckboxProps error. ${e.message}`);
+	}
+};
+
+export const handleRecordSelection = (s: Store, snap: Snap, recordId: string) => {
+	const filterFunc = s.tableProps.multiSelection.filterFunc;
+	if (filterFunc) {
+		snap.checkboxes.hasChildren[recordId]; // Тригер для варианта, когда дети появились.
+		const isSelectable = filterFunc(useItem(recordId, 'snap'), useNode(s, recordId, 'snap'));
+		if (!isSelectable && s.selectedIds[recordId]) {
+			const selectedRecords = Object.keys(s.selectedIds)
+				.filter((id) => s.selectedIds[id] && id !== recordId)
+				.map((id) => ({ id }));
+			setSelectedIds(s, selectedRecords);
+		}
+
+		return isSelectable;
+	}
+
+	return true;
 };

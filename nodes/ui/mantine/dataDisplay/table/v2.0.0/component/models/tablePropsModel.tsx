@@ -1,6 +1,6 @@
 /* Модель настроек таблицы. */
 
-import type { Props } from '../../types';
+import type { Props } from '../../node/definition';
 
 export type TableProps = ReturnType<typeof setTableProps>;
 

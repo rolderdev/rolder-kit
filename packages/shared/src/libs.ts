@@ -12,6 +12,7 @@ import omit from 'just-omit';
 import template from 'just-template';
 import flush from 'just-flush';
 import isEmpty from 'just-is-empty';
+import extend from 'just-extend';
 //// array
 import last from 'just-last';
 import unique from 'just-unique';
@@ -34,6 +35,7 @@ export type Just = {
 	template: typeof template;
 	flush: typeof flush;
 	isEmpty: typeof isEmpty;
+	extend: typeof extend;
 	last: typeof last;
 	unique: typeof unique;
 	insert: typeof insert;
@@ -54,6 +56,7 @@ set(window, ['R', 'libs', 'just'], {
 	template,
 	flush,
 	isEmpty,
+	extend,
 	last,
 	unique,
 	insert,
@@ -66,6 +69,14 @@ set(window, ['R', 'libs', 'just'], {
 import unset from 'lodash.unset';
 export type Lodash = { unset: typeof unset };
 set(window, ['R', 'libs', 'lodash'], { unset });
+
+// remeda
+import { uniqueWith } from 'remeda';
+export type Remeda = {
+	// array
+	uniqueWith: typeof uniqueWith;
+};
+set(window, ['R', 'libs', 'remeda'], { uniqueWith });
 
 // dayjs
 import dayjs from 'dayjs';
@@ -81,6 +92,8 @@ import weekday from 'dayjs/plugin/weekday';
 import weekYear from 'dayjs/plugin/weekYear';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import timezone from 'dayjs/plugin/timezone';
+import minMax from 'dayjs/plugin/minMax';
+
 dayjs.extend(isBetween);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(dayOfYear);
@@ -92,6 +105,7 @@ dayjs.extend(weekday);
 dayjs.extend(weekYear);
 dayjs.extend(weekOfYear);
 dayjs.extend(timezone);
+dayjs.extend(minMax);
 dayjs.locale('ru');
 export type Dayjs = typeof dayjs;
 set(window, ['R', 'libs', 'dayjs'], dayjs);
@@ -110,9 +124,9 @@ set(window, ['R', 'libs', 'generatePassword'], generatePassword);
 
 // valtio
 import * as valtioModule from 'valtio';
-import { proxyMap } from 'valtio/utils';
+import { proxyMap, subscribeKey, watch } from 'valtio/utils';
 import { derive, underive } from 'derive-valtio';
-const valtio = { ...valtioModule, proxyMap, derive, underive };
+const valtio = { ...valtioModule, subscribeKey, watch, proxyMap, derive, underive };
 export type Valtio = typeof valtio;
 set(window, ['R', 'libs', 'valtio'], valtio);
 

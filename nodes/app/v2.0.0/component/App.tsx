@@ -1,5 +1,5 @@
 import { forwardRef, useEffect } from 'react';
-import type { Props } from '../types';
+import type { Props } from '../node/definition';
 import { ErrorBoundary } from 'react-error-boundary';
 import initLocalDb from './initLocalDb';
 import systemLoaderAnimation from '@shared/system-loader-animation-v0.1.0';

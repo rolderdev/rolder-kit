@@ -1,7 +1,18 @@
 import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef } from '@shared/node-v1.0.0';
+import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
 import { lazy } from 'react';
-import type { Props } from '../types';
+import type { TooltipProps } from '@mantine/core';
+
+export type Props = BaseReactProps & {
+	label: string;
+	useCustomOffset: boolean;
+	numberOffset?: number;
+	customOffset?: TooltipProps['offset'];
+	hoverEvent: boolean;
+	focusEvent: boolean;
+	touchEvent: boolean;
+	floating: boolean;
+};
 
 const positions = [
 	{ label: 'Top', value: 'top' },

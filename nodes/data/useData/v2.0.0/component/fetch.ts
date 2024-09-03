@@ -1,9 +1,10 @@
 import { getKuzzle } from '@shared/get-kuzzle';
 import { sendOutput } from '@shared/port-send-v1.0.0';
-import type { Props } from '../types';
-import handleDataChanges from './handleDataChanges';
 import type { Item } from '@shared/types-v0.1.0';
+import type { JSONObject, ResponsePayload } from 'kuzzle-sdk';
+import handleDataChanges from './handleDataChanges';
 import type { SchemeData } from '../node/store';
+import type { Props } from '../node/definition';
 
 export type BackendData = {
 	items: { [id: string]: Item };
@@ -24,6 +25,7 @@ export const fetch = async (p: Props) => {
 		return;
 	}
 
+	const { has, map } = R.libs.just;
 	const { fetchScheme } = p.store;
 
 	const startTime = log.start();
@@ -31,28 +33,43 @@ export const fetch = async (p: Props) => {
 
 	sendOutput(p.noodlNode, 'fetching', true);
 
-	const response = await K.query({ controller: 'rolder', action: `fetch_${p.apiVersion}`, dbName, fetchScheme });
-	const data = response.result as BackendData;
+	let response: ResponsePayload<JSONObject> | undefined;
+
+	// Отловим неавторизованную сессию здесь дополнительно, т.к. useData в отличии от UseData вполне может запуститься до проверки авторизации.
+	try {
+		response = await K.query({ controller: 'rolder', action: `fetch_${p.apiVersion}`, dbName, fetchScheme });
+	} catch (e: any) {
+		if (e.code === 117506049) R.db?.states.auth?.set('signedIn', () => false);
+		return;
+	}
+
+	const data = response?.result as BackendData;
 
 	if (data.error) {
 		log.error('Kuzzle error.', { error: data.error.message, metaData: data.error.metaData });
 		MantineError?.('Системная ошибка!', `Kuzzle error. ${data.error.message}`);
 	}
 
-	// Обновим не реактивное хранилище items.
-	R.libs.just.map(data.items, (itemId, item) => p.store.data.items.set(itemId, item));
-	p.store.data.items.forEach((_, itemId) => !R.libs.just.has(data.items, itemId) && p.store.data.schemes.delete(itemId));
-
-	// Обновим не реактивное хранилище схем. Каждая схема имеет свой список itemIds. В нем не могут совпадать id, но могут глобально.
-	R.libs.just.map(data.schemes, (schemeHash, schemeData) => p.store.data.schemes.set(schemeHash, schemeData));
-	p.store.data.schemes.forEach(
-		(_, schemeHash) => !R.libs.just.has(data.schemes, schemeHash) && p.store.data.schemes.delete(schemeHash)
+	// Обновим items. Нужно сохранить во временном хранилище, т.к. выдавать их глобально нужно после построения иерархии.
+	map(data.items, (itemId, item) =>
+		//@ts-expect-error
+		p.store.items.set(itemId, {
+			...item,
+			getRef: (dbClass) =>
+				Array.isArray(item[dbClass])
+					? item[dbClass].map((i) => R.items.get(i.id) || i)
+					: R.items.get(item[dbClass]?.id) || item[dbClass],
+		})
 	);
 
-	handleDataChanges(p); // Подготовим данные для отправки и отправим их.
+	// Обновим хранилище схем для иерархи и серверных подписок.
+	// Каждая схема имеет свой список itemIds. В нем не могут совпадать id, но могут глобально.
+	map(data.schemes, (schemeHash, schemeData) => p.store.schemes.set(schemeHash, schemeData));
+	p.store.schemes.forEach((_, schemeHash) => !has(data.schemes, schemeHash) && p.store.schemes.delete(schemeHash));
+
+	// Подготовим и отправим данные.
+	handleDataChanges(p);
 
 	log.info(`useData: ${fetchScheme.map((i) => i.dbClass).join(', ')}`, data);
 	log.end(`useData: ${fetchScheme.map((i) => i.dbClass).join(', ')}`, startTime);
-
-	return;
 };

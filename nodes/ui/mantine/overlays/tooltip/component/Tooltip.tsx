@@ -1,6 +1,6 @@
 import { Box, Tooltip } from '@mantine/core';
 import { forwardRef } from 'react';
-import type { Props } from '../types';
+import type { Props } from '../node/definition';
 
 export default forwardRef(function (p: Props) {
 	const resultProps = {

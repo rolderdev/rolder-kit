@@ -6,21 +6,22 @@ import { getColumns } from './models/columnModel';
 import getRowClickHandler from './funcs/getRowClickHandler';
 import getCursorState from './funcs/getCursorState';
 import getRowBgColor from './funcs/getRowBgColor';
-import { handleHierarchySelectionAndCheckboxProps, setSelectedIds } from './models/multiSelectionModel';
+import { handleRecordSelection, setSelectedIds, useHierarchySelection } from './models/multiSelectionModel';
 import ExpansionRow from './renders/ExpansionRow';
 
 import rowClasses from './styles/row.module.css';
 
 export default memo(() => {
+	const { get } = R.libs.just;
 	const { useSnapshot } = R.libs.valtio;
 
 	const store = useContext(TableContext);
 	const snap = useSnapshot(store);
 
-	// Состояние чекбокса в хедере.
-	//const headerCheckboxProps = useHeaderCheckboxProps(store);
+	// Состояние чекбоксов и реактивность на изменения выбора в иерархии.
+	useHierarchySelection(store);
 
-	//console.log('Table', store.tableId);
+	//console.log('Table render', store.hierarchy.tableNodePath, store.hierarchy.level);
 	return (
 		<DataTable<TableRecord>
 			// Base
@@ -29,39 +30,32 @@ export default memo(() => {
 			records={snap.fetching ? [] : snap.records}
 			onRowClick={getRowClickHandler(store)}
 			// Row styles
-			className={
-				// Убирает стандартный цвет мультивыбора.
-				`${rowClasses['row']}` /* ${
-					// Эти классы убирают лишние бордюры строк в развернутых таблицах.
-					snap.tableProps.expansion.enabled
-						? snap.libProps.withRowBorders
-							? rowClasses['expansion-with-border']
-							: rowClasses['expansion-without-border']
-						: undefined
-				} */
-			}
-			rowClassName={rowClasses['row']}
+			className={`${rowClasses['row']}`}
 			rowStyle={(record) => ({ cursor: getCursorState(store, record.id) })} // Управление состоянием курсора.
 			rowBackgroundColor={(record) => (snap.libProps.striped ? undefined : getRowBgColor(store, record.id))}
-			getRecordSelectionCheckboxProps={(record, idx) => handleHierarchySelectionAndCheckboxProps(store, record, idx)}
+			getRecordSelectionCheckboxProps={(record) => get(snap.checkboxes, ['props', record.id])}
 			// Multi selection
-			selectedRecords={store.tableProps.multiSelection.enabled ? snap.selectedIds.map((id) => ({ id })) : undefined}
+			selectedRecords={
+				store.tableProps.multiSelection.enabled
+					? Object.keys(snap.selectedIds)
+							.filter((id) => snap.selectedIds[id])
+							.map((id) => ({ id }))
+					: undefined
+			}
 			onSelectedRecordsChange={
 				store.tableProps.multiSelection.enabled ? (selectedRecords) => setSelectedIds(store, selectedRecords) : undefined
 			}
-			// Заменим встроенную функцие запрета выбора своей, передав item.
+			// Заменим встроенную функцию запрета выбора своей.
 			isRecordSelectable={(record) =>
-				store.tableProps.multiSelection.enabled && snap.tableProps.multiSelection.filterFunc
-					? snap.tableProps.multiSelection.filterFunc(R.items.get(record.id), record.id)
-					: true
+				store.tableProps.multiSelection.enabled ? handleRecordSelection(store, snap as any, record.id) : true
 			}
 			// Заменим стандартные параметры чекбокса в заголовке.
 			// Нам это нужно из-за варианта, когда в корне нет ни отдного selected, но есть 'indeterminate'.
-			//allRecordsSelectionCheckboxProps={headerCheckboxProps}
+			allRecordsSelectionCheckboxProps={get(snap.checkboxes, ['props', 'header'])}
 			// Уберем прилипание колоник с чекбоксом, если таблица часть иерархии.
 			// Почему то этот код тригерит рендер, если прилетает с libprops.
 			selectionColumnStyle={
-				snap.tableProps.expansion.enabled || snap.isChild
+				snap.tableProps.expansion.enabled || snap.hierarchy?.isChild
 					? { position: 'relative', '--mantine-datatable-shadow-background-left': 'none', borderLeft: 'unset' }
 					: undefined
 			}
@@ -74,9 +68,10 @@ export default memo(() => {
 							// См. onRowClickHandler, ExpanderCell и getCursorState.
 							trigger: 'never',
 							collapseProps: snap.tableProps.expansion.collapseProps,
-							expanded: { recordIds: snap.expandedIds }, // Развернутые строки.
+							// Развернутые строки.
+							expanded: { recordIds: Object.keys(snap.expandedIds).filter((id) => snap.expandedIds[id]) },
 							content: ({ record, collapse }) => {
-								// Добавляем функцию collapse прямо в объект, чтбы разработчик мог запустить ее и свернуть вручную
+								// Добавляем функцию collapse прямо в объект, чтбы разработчик мог запустить ее и свернуть вручную.
 								Noodl.Objects[record.id].collapse = collapse;
 								return <ExpansionRow id={record.id} />;
 							},

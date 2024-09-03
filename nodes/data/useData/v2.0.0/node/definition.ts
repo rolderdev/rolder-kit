@@ -1,8 +1,24 @@
+import type { BaseJsProps } from '@shared/node-v1.0.0';
 import type { JsNodeDef } from '@shared/node-v1.0.0';
 import { getPortDef } from '@shared/port-v1.0.0';
 import getStore from './store';
-import type { Props } from '../types';
 import { validateFetchScheme } from './validtaion';
+import type { FetchScheme } from './validtaion';
+import type { Store } from './store';
+import type { Nodes, NodeSelectionState, SelectionState } from '../component/Node';
+
+export type Props = BaseJsProps & BaseProps & { store: Store };
+
+export type BaseProps = {
+	apiVersion: 'v2';
+	// Весь тип схемы не нужен, т.к. она полностью передается в Kuzzle.
+	fetchScheme: FetchScheme;
+	outputDbClasses?: string[];
+	controlled: boolean;
+	subscribe: boolean;
+};
+
+export type { Nodes, NodeSelectionState, SelectionState };
 
 export default {
 	hashTag: '#expreimental',
@@ -55,14 +71,28 @@ export default {
 			customGroup: 'Output DB classes',
 			type: 'proplist',
 		}),
+		/* 		getPortDef({
+			name: 'resetNodesSelection',
+			displayName: 'Reset nodes selection',
+			group: 'Custom',
+			customGroup: 'Selection',
+			type: 'signal',
+		}), */
 	],
 	outputs: [
 		getPortDef({ name: 'fetching', displayName: 'Fetching', group: 'States', type: 'boolean' }),
 		getPortDef({ name: 'fetched', displayName: 'Fetched', group: 'Signals', type: 'signal' }),
 		getPortDef({ name: 'data', displayName: 'Data', group: 'Data', type: 'object' }),
-		getPortDef({ name: 'hierarchyRootItem', displayName: 'Hierarchy root item', group: 'Data', type: 'object' }),
+		getPortDef({ name: 'rootId', displayName: 'Root node id', group: 'Data', type: 'string' }),
+		getPortDef({ name: 'rootNode', displayName: 'Root node', group: 'Data', type: 'object' }),
 		getPortDef({ name: 'schemes', displayName: 'Schemes', group: 'Data', type: 'array' }),
-		getPortDef({ name: 'itemsStateChanged', displayName: 'Items state changed', group: 'Signals', type: 'signal' }),
+		getPortDef({
+			name: 'nodesSelectionChanged',
+			displayName: 'Nodes selection changed',
+			group: 'Custom',
+			customGroup: 'Selection',
+			type: 'signal',
+		}),
 	],
 	transform(p: Props, portDefs) {
 		// Пересоздание outputDbClasses

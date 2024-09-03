@@ -1,7 +1,6 @@
 {
 	"name": "@nodes/use-data-v2.0.0",
 	"main": "node/definition.ts",
-	"types": "types.d.ts",
 	"type": "module",
 	"dependencies": {
 		"@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.2.0@*",
@@ -11,6 +10,6 @@
 	"devDependencies": {
 		"kuzzle-sdk": "^7.11.3",
 		"@types/d3-hierarchy": "^3.1.7",
-		"valibot": "^0.37.0"
+		"valibot": "^0.41.0"
 	}
 }

@@ -1,5 +1,5 @@
 import '@shared/types-v0.1.0';
-import type { Props } from '../types';
+import type { Props } from './definition';
 import type { Item } from '@shared/types-v0.1.0';
 
 export const validateColumns = (p: Props) => {
@@ -9,7 +9,7 @@ export const validateColumns = (p: Props) => {
 		pipe(
 			looseObject({
 				title: optional(string('"title" must be string.')),
-				type: picklist(['accessor', 'getValue', 'template'], '"type" must by "accessor", "getValue" or "template".'),
+				type: picklist(['accessor', 'getValue', 'custom', 'template'], '"type" must by "accessor", "getValue" or "template".'),
 				accessor: optional(string('"accessor" must be string.')),
 				getValue: optional(function_('"getValue" must be function.')),
 				template: optional(string('"template" must be string.')),
@@ -23,6 +23,7 @@ export const validateColumns = (p: Props) => {
 				(column) => (column.type === 'getValue' && !column.getValue ? false : true),
 				'Must be "getValue" field for getValue type.'
 			),
+			check((column) => (column.type === 'custom' && !column.custom ? false : true), 'Must be "custom" field for custom type.'),
 			check(
 				(column) => (column.type === 'template' && !column.template ? false : true),
 				'Must be "template" field for template type.'

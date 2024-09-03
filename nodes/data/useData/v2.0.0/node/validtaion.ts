@@ -2,7 +2,7 @@
 
 import '@shared/types-v0.1.0';
 import { type InferOutput } from 'valibot';
-import type { Props } from '../types';
+import type { Props } from '../node/definition';
 
 export type FetchScheme = InferOutput<ReturnType<typeof getTypedFetchScheme>>;
 

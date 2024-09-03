@@ -1,10 +1,31 @@
+import { lazy } from 'react';
+import type { MantineTheme, MantineColorScheme } from '@mantine/core';
+import { type NotificationsProps, notifications } from '@mantine/notifications';
+import { useInterval } from '@mantine/hooks';
+import { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField } from '@mantine/form';
+import type { BaseReactProps } from '@shared/node-v1.0.0';
 import { getPortDef } from '@shared/port-v1.0.0';
 import type { ReactNodeDef } from '@shared/node-v1.0.0';
-import { lazy } from 'react';
+
+function MantineError(title: string, message?: string, autoClose?: boolean | number): void {
+	notifications.show({ title, message, color: 'red', autoClose: autoClose ? autoClose : false });
+}
+export const mantine = {
+	MantineError,
+	form: { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField },
+	hooks: { useInterval },
+};
+export type Mantine = typeof mantine;
+
+export type Props = BaseReactProps & {
+	notificationsPosition: NotificationsProps['position'];
+	defaultColorScheme: MantineColorScheme;
+	mantineTheme: MantineTheme;
+};
 
 export default {
 	hashTag: '#expreimental',
-	module: { dynamic: lazy(() => import('../component/Mantine')) },
+	module: { static: lazy(() => import('../component/Mantine')) },
 	inputs: [
 		getPortDef({
 			name: 'notificationsPosition',

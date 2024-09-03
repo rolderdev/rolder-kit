@@ -1,6 +1,13 @@
 import { getPortDef } from '@shared/port-v1.0.0';
-import type { JsNodeDef } from '@shared/node-v1.0.0';
-import type { Props } from '../types';
+import type { JsNodeDef, BaseJsProps } from '@shared/node-v1.0.0';
+
+export type Props = BaseJsProps & {
+	title?: string;
+	message: string;
+	color?: string;
+	autoClose?: boolean;
+	autoCloseTimeout?: number;
+};
 
 export default {
 	hashTag: '#expreimental',
@@ -22,6 +29,13 @@ export default {
 			type: 'number',
 			default: 2000,
 			dependsOn: (p: Props) => (p.autoClose ? true : false),
+		}),
+		getPortDef({
+			name: 'color',
+			displayName: 'Color',
+			group: 'Styles',
+			type: 'string',
+			default: 'blue',
 		}),
 		getPortDef({ name: 'send', displayName: 'Send', group: 'Signals', type: 'signal' }),
 	],

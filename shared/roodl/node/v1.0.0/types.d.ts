@@ -37,6 +37,7 @@ export type NodeDef = {
 	hashTag?: HashTag;
 	inputs?: PortDef[];
 	outputs?: PortDef[];
+	validate?(p: Props): Promise<boolean | string>;
 	initialize?(p: Props): Promise<Props>;
 	getInspectInfo?(p: Props, outProps: { [x: string]: any }): InspectInfo | InspectInfo[];
 	transform?(p: Props, portDefs: { inputs: PortDef[]; outputs: PortDef[] }): { inputs: PortDef[]; outputs: PortDef[] };
@@ -136,7 +137,12 @@ export type NoodlNode = {
 	_updatedAtIteration: number;
 	_valuesFromConnections: any;
 	removeChild: (reactNode: React.ReactNode) => void;
-	defineModule(module: { nodes?: JsRoodlNode[]; reactNodes?: ReactRoodlNode[] }): void;
+	defineModule(module: {
+		name: string;
+		nodes?: JsRoodlNode[];
+		reactNodes?: ReactRoodlNode[];
+		settings?: { [x: string]: any }[];
+	}): void;
 	_onNodeDeleted: () => void;
 	Object: {
 		create: (item: FrontItem) => FrontItem & { collapse: () => void; hierarchyNode: any };

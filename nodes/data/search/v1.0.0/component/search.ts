@@ -1,7 +1,7 @@
 import Fuse from 'fuse.js';
 import type { Item } from '@shared/types-v0.1.0';
 import { sendOutput } from '@shared/port-send-v1.0.0';
-import type { Props } from '../types';
+import type { Props } from '../node/definition';
 
 export default {
 	reactive: (p: Props) => {

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useImperativeHandle } from 'react';
 import { forwardRef } from 'react';
-import type { Props } from '../types';
+import type { Props } from '../node/definition';
 import type { Store } from '../node/store';
 import Table from './Table';
 import { setLibProps } from './models/libPropsModel';
@@ -8,7 +8,7 @@ import { setTableProps } from './models/tablePropsModel';
 import { setColumnsDefinition } from './models/columnModel';
 import { setRecordIds } from './models/recordModel';
 import { resetSelectedId, setSelectedId } from './models/singleSelectionModel';
-import { resetSelectedIds, setSelectedIds } from './models/multiSelectionModel';
+import { setSelectedIds } from './models/multiSelectionModel';
 import { setExpandedIds } from './models/expansionModel';
 
 import 'mantine-datatable/styles.css';
@@ -24,12 +24,21 @@ export default forwardRef(function (p: Props, ref) {
 		// Параметры иерархии.
 		// metaData записывается в родителе, когда тот создает расширяемые строки.
 		const parentMetaData = p.noodlNode.nodeScope.componentOwner.metaData;
-		if (parentMetaData) {
-			store.tableId = parentMetaData.id; // id родительского item.
-			store.level = parentMetaData.level + 1;
-			store.isChild = true;
-		} else store.tableId = R.libs.nanoid(6);
-	}, []);
+		if (parentMetaData)
+			store.hierarchy = {
+				isChild: true,
+				level: parentMetaData.level + 1,
+				tableNodePath: parentMetaData.nodePath,
+				tableNode: R.nodes.get(parentMetaData.nodePath),
+			};
+		else
+			store.hierarchy = {
+				isChild: false,
+				level: 0,
+				tableNodePath: p.rootNodeId,
+				tableNode: p.rootNodeId ? R.nodes.get(p.rootNodeId) : undefined,
+			};
+	}, [p.rootNodeId]);
 
 	// Реактивность на изменение инпутов.
 	useEffect(() => {
@@ -67,7 +76,7 @@ export default forwardRef(function (p: Props, ref) {
 					store,
 					store.records.filter((i) => p.selectedItems?.map((i) => i.id).includes(i.id))
 				),
-			resetSelectedItems: () => resetSelectedIds(store),
+			resetSelectedItems: () => setSelectedIds(store, []),
 			setExpandedItems: (p: Props) =>
 				p.expandedItems &&
 				setExpandedIds(
@@ -80,7 +89,7 @@ export default forwardRef(function (p: Props, ref) {
 					store,
 					p.items.map((i) => i.id)
 				),
-			collapseAll: () => p.items && setExpandedIds(store, []),
+			collapseAll: () => setExpandedIds(store, []),
 		}),
 		[store]
 	);

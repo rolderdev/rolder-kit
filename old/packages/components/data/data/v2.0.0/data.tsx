@@ -6,6 +6,7 @@ import { getKuzzle } from '@packages/get-kuzzle';
 import systemLoaderAnimation from '@packages/system-loader-animation';
 import { Network } from '@capacitor/network';
 import setConfig from './src/setConfig';
+import { sendSignal } from '@packages/port-send';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -106,6 +107,7 @@ export default forwardRef(function (props: Props) {
 							if (success) {
 								R.states.backend = 'initialized';
 								setInitState('initialized');
+								sendSignal(props.noodlNode, 'initialized');
 							}
 
 							log.end('Kuzzle online init', startTime);

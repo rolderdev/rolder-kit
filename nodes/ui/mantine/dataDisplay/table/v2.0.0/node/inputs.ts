@@ -1,6 +1,6 @@
 import { getPortDef, sizes, type PortDef } from '@shared/port-v1.0.0';
 import { validateColumns, validateExpandedItems, validateItems } from './validtaion';
-import type { Props } from '../types';
+import type { Props } from './definition';
 // Enablers
 /*    
     "table2FilterEnabled",            
@@ -26,7 +26,7 @@ export default [
 	{
 		title: 'Количество зон',
 		type: 'getValue',
-		getValue: (item, items) => item.content.houseCount * item.content.areaCount,
+		getValue: (item, items, node) => item.content.houseCount * item.content.areaCount,
 		width: 120
 	}	
 ]*/
@@ -42,6 +42,23 @@ export default [
 		// Только через подключение, иначе нельзя сделать хорошую реактивность, т.к. массив в редакторе это текст, а не js-код.
 		visibleAt: 'connection',
 		validate: (p: Props) => (p.items?.length ? validateItems(p) : true),
+	}),
+	getPortDef({
+		name: 'hierarchy',
+		displayName: 'Enable hierarchy',
+		group: 'Custom',
+		customGroup: 'Base',
+		type: 'boolean',
+		default: false,
+	}),
+	getPortDef({
+		name: 'rootNodeId',
+		displayName: 'Root node id',
+		group: 'Custom',
+		customGroup: 'Base',
+		type: 'string',
+		visibleAt: 'connection',
+		dependsOn: (p: Props) => p.hierarchy,
 	}),
 	getPortDef({
 		name: 'onRowClick',
@@ -65,7 +82,7 @@ export default [
 		customGroup: 'Base',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.onRowClick === 'signal',
-		codeComment: `//(item) => item.states.flow !== 'closed'`,
+		codeComment: `//(item, node) => item.states.flow !== 'closed'`,
 	}),
 	getPortDef({
 		name: 'singleSelectionFilterFunc',
@@ -74,7 +91,7 @@ export default [
 		customGroup: 'Base',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.onRowClick === 'singleSelection',
-		codeComment: `//(item) => item.states.flow !== 'closed'`,
+		codeComment: `//(item, node) => item.states.flow !== 'closed'`,
 	}),
 	getPortDef({
 		name: 'textSelectionDisabled',
@@ -274,7 +291,7 @@ export default [
 		customGroup: 'Row styles',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.rowStyles,
-		codeComment: `//(level, item) => level * 16`,
+		codeComment: `//(level, item, node) => level * 16`,
 	}),
 	// Single selection
 	getPortDef({
@@ -325,7 +342,7 @@ export default [
 		customGroup: 'Multi selection',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.multiSelection,
-		codeComment: `//(item) => item.states.flow !== 'closed'`,
+		codeComment: `//(item, node) => item.states.flow !== 'closed'`,
 	}),
 	getPortDef({
 		name: 'useSelectionHierarchy',
@@ -334,7 +351,7 @@ export default [
 		customGroup: 'Multi selection',
 		type: 'boolean',
 		default: false,
-		dependsOn: (p: Props) => p.multiSelection,
+		dependsOn: (p: Props) => p.multiSelection && p.hierarchy,
 	}),
 	getPortDef({
 		name: 'defaultSelectedItems',
@@ -395,7 +412,7 @@ export default [
 		customGroup: 'Expansion',
 		type: 'boolean',
 		default: false,
-		dependsOn: (p: Props) => p.expansion,
+		dependsOn: (p: Props) => p.expansion && p.hierarchy,
 	}),
 	getPortDef({
 		name: 'allowMultiple',
@@ -413,7 +430,7 @@ export default [
 		customGroup: 'Expansion',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.expansion,
-		codeComment: `//(item) => item.states.flow !== 'closed'`,
+		codeComment: `//(item, node) => item.states.flow !== 'closed'`,
 	}),
 	getPortDef({
 		name: 'animationChildrenCount',

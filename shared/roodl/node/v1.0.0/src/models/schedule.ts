@@ -3,7 +3,7 @@
 import type { PortDef } from '@shared/port-v1.0.0';
 import type { JsNodeDef, NoodlNode, ReactNodeDef } from '../../types';
 import { validateValues } from './value';
-import { hasWarings } from './warning';
+import { clearWarning, hasWarings, sendWarning } from './warning';
 import { runModule } from './module';
 
 export const schedule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactNodeDef, inputDef: PortDef, isSignal: boolean) => {
@@ -12,7 +12,21 @@ export const schedule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactN
 		noodlNode.scheduledRun = true; // Запретим повторные запуски обработки портов.
 		noodlNode.scheduleAfterInputsHaveUpdated(async () => {
 			// Не проверяем, когда уже есть ошибки.
-			if (!hasWarings(noodlNode)) validateValues(noodlNode);
+			if (!hasWarings(noodlNode)) {
+				// Сначала проверим ошибки портов.
+				validateValues(noodlNode);
+				// Потом позволим разработчику запустить свою валидацию всей ноды.
+				if (nodeDef.validate) {
+					const validateResult = await nodeDef.validate(noodlNode.propsCache);
+					// Если разработчик вернул свой текст ошибки.
+					if (typeof validateResult === 'string') sendWarning(noodlNode, inputDef.displayName, validateResult);
+					// Стандартный текст ошибки, если рзработчик вернул false.
+					if (validateResult === false)
+						sendWarning(noodlNode, inputDef.displayName, `Input "${inputDef.displayName}" is required.`);
+					// Сброс ошибки
+					if (validateResult === true) clearWarning(noodlNode, inputDef.displayName);
+				}
+			}
 			// Запустим функцию инициализации один раз.
 			if (nodeDef.initialize && (noodlNode.firstRun || noodlNode.model.firstRun))
 				noodlNode.propsCache = await nodeDef.initialize(noodlNode.propsCache);

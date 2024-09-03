@@ -47,7 +47,7 @@ export default reactNode(
 				getPort({ plug: 'output', name: 'error', displayName: 'Error', group: 'Params', type: 'string' }),
 			],
 		},
-		'v2.0.0': {
+		/* 'v2.0.0': {
 			hashTag: '#pre-release',
 			module: { dynamic: lazy(() => import('@packages/auth-v2.0.0')) },
 			inputs: [
@@ -87,7 +87,7 @@ export default reactNode(
 				getPort({ plug: 'output', name: 'signedIn', displayName: 'Signed in', group: 'Signals', type: 'signal' }),
 				getPort({ plug: 'output', name: 'signedOut', displayName: 'Signed out', group: 'Signals', type: 'signal' }),
 			],
-		},
+		}, */
 	},
 	{ allowChildren: true }
 );
