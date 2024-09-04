@@ -40,7 +40,7 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	try {
 		response = await K.query({ controller: 'rolder', action: `fetch_${apiVersion}`, dbName, fetchScheme });
 	} catch (e: any) {
-		log.error('useData fetch error', e);
+		log.error('useData fetch error.', e);
 		if (e.code === 117506049) R.db?.states.auth?.set('signedIn', () => false);
 		return;
 	}

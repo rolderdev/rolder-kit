@@ -84,6 +84,12 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 
 		// Запустим обновление токена, если токен валиден.
 		if (tokenValid) p.store.refreshInterval = setInterval(async () => await vaildateRefreshToken(p.sessionTimeout), ms('1h'));
+		else {
+			// Сбросим токен и пользователя, чтобы useData не померала от неверного токена.
+			await persistentState.set('token', () => undefined);
+			await persistentState.set('user', () => undefined);
+		}
+
 		// Изменим состояние на диске для всех вкладок.
 		await persistentState.set('signedIn', () => tokenValid);
 

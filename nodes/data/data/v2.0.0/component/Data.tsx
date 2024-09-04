@@ -12,6 +12,7 @@ function Mutation(props: any) {
 }
 
 export default forwardRef(function (p: Props & BaseReactProps) {
+	console.log(R.libs.queryClient);
 	return (
 		<QueryClientProvider client={R.libs.queryClient}>
 			<Mutation>{p.children}</Mutation>
