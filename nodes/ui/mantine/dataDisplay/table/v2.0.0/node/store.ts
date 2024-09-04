@@ -7,10 +7,11 @@ import type { Props } from './definition';
 import type Node from '@nodes/use-data-v2.0.0/component/Node';
 import type { CheckboxProps } from '@mantine/core';
 
-export default (p: Props) => {
+export default (p: Props, noodlNode: NoodlNode) => {
 	const { proxy, ref } = R.libs.valtio;
+
 	return proxy<Store>({
-		noodlNode: ref(p.noodlNode),
+		noodlNode: ref(noodlNode),
 		inited: false,
 		hierarchy: { isChild: false, level: 0 },
 		fetching: true,

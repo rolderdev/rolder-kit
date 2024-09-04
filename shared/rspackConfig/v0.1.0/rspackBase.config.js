@@ -44,7 +44,6 @@ module.exports = function (nodeName, context, outputBuildPath, developer, projec
 			process.env.RSDOCTOR && new RsdoctorRspackPlugin({ generateTileGraph: true }),
 		].filter(Boolean),
 		module: {
-			parser: { 'css/auto': { namedExports: false } },
 			rules: [
 				{
 					test: /\.ts$/,

@@ -1,6 +1,6 @@
 import { reactNode } from '@shared/node-v1.0.0';
 
-import set from 'just-safe-set';
+import { set } from 'shared/src/libs/just';
 import { mantine } from '@nodes/mantine-v2.0.0';
 set(window, ['R', 'libs', 'mantine'], mantine);
 

@@ -2,7 +2,7 @@
 
 import typeOf from 'just-typeof';
 import type { PortDef } from '@shared/port-v1.0.0';
-import type { JsNodeDef, NoodlNode, Props } from '../../types';
+import type { JsNodeDef, NoodlNode, Props } from '../../main';
 
 /* Разведем реакцию на сигнал и на изменение инпута. scheduleAfterInputsHaveUpdated - откладываем реакцию на момент,
 когда все порты обновились, но для каждого запуска, поэтому нужен флаг.

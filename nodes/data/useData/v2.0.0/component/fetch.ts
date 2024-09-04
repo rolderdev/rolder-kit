@@ -5,6 +5,7 @@ import type { JSONObject, ResponsePayload } from 'kuzzle-sdk';
 import handleDataChanges from './handleDataChanges';
 import type { SchemeData } from '../node/store';
 import type { Props } from '../node/definition';
+import type { NoodlNode } from '@shared/node-v1.0.0';
 
 export type BackendData = {
 	items: { [id: string]: Item };
@@ -12,7 +13,7 @@ export type BackendData = {
 	error?: { message: string; dbClass?: string; metaData: any };
 };
 
-export const fetch = async (p: Props) => {
+export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	const K = await getKuzzle();
 	if (!K) return;
 
@@ -31,7 +32,7 @@ export const fetch = async (p: Props) => {
 	const startTime = log.start();
 	log.info(`useData props: ${fetchScheme.map((i) => i.dbClass).join(', ')}`, p);
 
-	sendOutput(p.noodlNode, 'fetching', true);
+	sendOutput(noodlNode, 'fetching', true);
 
 	let response: ResponsePayload<JSONObject> | undefined;
 
@@ -68,7 +69,7 @@ export const fetch = async (p: Props) => {
 	p.store.schemes.forEach((_, schemeHash) => !has(data.schemes, schemeHash) && p.store.schemes.delete(schemeHash));
 
 	// Подготовим и отправим данные.
-	handleDataChanges(p);
+	handleDataChanges(p, noodlNode);
 
 	log.info(`useData: ${fetchScheme.map((i) => i.dbClass).join(', ')}`, data);
 	log.end(`useData: ${fetchScheme.map((i) => i.dbClass).join(', ')}`, startTime);

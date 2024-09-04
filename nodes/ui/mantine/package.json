@@ -4,7 +4,6 @@
 		"@mantine/hooks": "^7.12.2",
 		"@mantine/dates": "^7.12.2",
 		"@mantine/notifications": "^7.12.2",
-		"@mantine/form": "^7.12.2",
-		"dayjs": "^1.11.13"
+		"@mantine/form": "^7.12.2"
 	}
 }

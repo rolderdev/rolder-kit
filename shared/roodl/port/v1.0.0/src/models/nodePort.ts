@@ -1,6 +1,19 @@
 // Модель порта ноды. Определяет схему порта, которая регистрируется в ноде Roodl. Здесь нет проверок типов данных.
 
-import { array, boolean, brand, number, object, optional, parse, pick, picklist, pipe, string, type InferOutput } from 'valibot';
+import {
+	array,
+	boolean,
+	brand,
+	number,
+	object,
+	optional,
+	parse,
+	pick,
+	picklist,
+	pipe,
+	string,
+	type InferOutput,
+} from 'shared/src/libs/valibot';
 import { PortDef } from './portDefinition';
 
 // Возьмем с модели порта повторяющиеся параметры.

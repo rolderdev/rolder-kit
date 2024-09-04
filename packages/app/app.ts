@@ -6,10 +6,12 @@ import systemLoaderAnimation from '@shared/system-loader-animation-v0.1.0';
 import './loader.css';
 systemLoaderAnimation.start();
 
+import v200 from '@nodes/app-v2.0.0';
+
 const app = reactNode(
 	'App',
 	{
-		'v2.0.0': (await import('@nodes/app-v2.0.0')).default,
+		'v2.0.0': v200,
 	},
 	{ allowChildren: true, docs: '' }
 );

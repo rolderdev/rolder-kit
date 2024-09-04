@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"shared": "workspace:*",
 		"@shared/port-v1.0.0": "workspace:*",
 		"@shared/node-v1.0.0": "workspace:*"
 	},

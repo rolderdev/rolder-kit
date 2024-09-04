@@ -4,18 +4,13 @@ import { Notifications } from '@mantine/notifications';
 import { forwardRef } from 'react';
 import type { Props } from '../node/definition';
 
-import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-dayjs.extend(customParseFormat);
-
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import './body.module.css';
 
-export default forwardRef(function (props: Props) {
-	const { notificationsPosition, defaultColorScheme, mantineTheme } = props;
+export default forwardRef(function (p: Props) {
+	const { notificationsPosition, defaultColorScheme, mantineTheme } = p;
 
 	const theme = createTheme(mantineTheme);
 	return (
@@ -23,7 +18,7 @@ export default forwardRef(function (props: Props) {
 			<ColorSchemeScript defaultColorScheme={defaultColorScheme} />
 			<MantineProvider theme={theme} defaultColorScheme={defaultColorScheme}>
 				<Notifications position={notificationsPosition} />
-				<DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 1 }}>{props.children}</DatesProvider>
+				<DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 1 }}>{p.children}</DatesProvider>
 			</MantineProvider>
 		</>
 	);

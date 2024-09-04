@@ -25,7 +25,7 @@ export type Props = BaseReactProps & {
 
 export default {
 	hashTag: '#expreimental',
-	module: { static: lazy(() => import('../component/Mantine')) },
+	module: { dynamic: lazy(() => import('../component/Mantine')) },
 	inputs: [
 		getPortDef({
 			name: 'notificationsPosition',
@@ -58,11 +58,11 @@ export default {
 			group: 'Styles',
 			type: 'objectEval',
 			codeComment: `/* Тема Mantine. Смотри документацию - https://mantine.dev/theming/theme-object/
-() => ({
-	components: { 
-		Image: { defaultProps: { radius: 'md' } } 
-	}
-})*/`,
+	() => ({
+		components: {
+			Image: { defaultProps: { radius: 'md' } }
+		}
+	})*/`,
 		}),
 	],
 	outputs: [],

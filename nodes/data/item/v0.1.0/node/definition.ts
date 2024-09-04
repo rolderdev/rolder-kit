@@ -1,12 +1,12 @@
 import { getPortDef } from '@shared/port-v1.0.0';
 import type { JsNodeDef, BaseJsProps } from '@shared/node-v1.0.0';
-import type { InspectInfo } from '@shared/node-v1.0.0/types';
+import type { InspectInfo } from '@shared/node-v1.0.0';
 import { initStore, subscribe } from '../component/item';
 
 export type Props = BaseJsProps & BaseProps & { propsStore: BaseProps };
 
 export type BaseProps = {
-	source: 'specific' | 'expansionRow' | 'templateCell';
+	source: 'specific' | 'table' | 'repeater';
 	itemId?: string;
 	fields?: string[];
 };
@@ -21,8 +21,8 @@ export default {
 			group: 'Params',
 			type: [
 				{ label: 'Specific', value: 'specific' },
-				{ label: 'Expansion row', value: 'expansionRow' },
-				{ label: 'Template cell', value: 'templateCell' },
+				{ label: 'Table', value: 'table' },
+				{ label: 'Repeater', value: 'repeater' },
 			],
 			default: 'specific',
 			visibleAt: 'editor',
@@ -50,24 +50,23 @@ export default {
 		getPortDef({ name: 'nodeChanged', displayName: 'Node changed', group: 'Signals', type: 'signal' }),
 	],
 	triggerOnInputs: () => ['source', 'itemId', 'fields'],
-	getInspectInfo: (p: Props) => {
+	getInspectInfo: (p: Props, outProps, noodlNode) => {
 		let info = [{ type: 'text', value: `Source: "${p.source}"` }];
-		if (p.noodlNode._internal.metaData)
+		if (noodlNode._internal.metaData)
 			info = info.concat([
-				{ type: 'text', value: `Level: ${p.noodlNode._internal.metaData.level}` },
-				{ type: 'text', value: `Node path: "${p.noodlNode._internal.metaData.nodePath}"` },
+				{ type: 'text', value: `Level: ${noodlNode._internal.metaData.level}` },
+				{ type: 'text', value: `Node path: "${noodlNode._internal.metaData.nodePath}"` },
 			]);
-		if (p.noodlNode._internal.item)
+		if (noodlNode._internal.item)
 			info = info.concat([
-				{ type: 'text', value: `Item id: "${p.noodlNode._internal.item.id}"` },
-				{ type: 'value', value: p.noodlNode._internal.item },
+				{ type: 'text', value: `Item id: "${noodlNode._internal.item.id}"` },
+				{ type: 'value', value: noodlNode._internal.item },
 			]);
 		return info as InspectInfo[];
 	},
-	initialize: async (p: Props) => {
-		subscribe(p);
-		p.propsStore = initStore(p);
-		return p;
+	initialize: async (p: Props, noodlNode) => {
+		await subscribe(p, noodlNode);
+		p.propsStore = await initStore(p);
 	},
 	transform(p: Props, portDefs) {
 		portDefs.outputs = portDefs.outputs.filter((i) => i.customGroup !== 'Fields');

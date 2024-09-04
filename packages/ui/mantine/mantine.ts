@@ -16,4 +16,4 @@ import text from './typography/text';
 const reactPackages = [mantine, table, stack, tooltip, text];
 const jsPackages = [notification];
 
-Noodl.defineModule({ name: 'mantine', reactNodes: reactPackages, nodes: jsPackages.map((i) => defineNode(i)) });
+Noodl.defineModule({ name: 'mantine', reactNodes: reactPackages, nodes: jsPackages.map(defineNode) });

@@ -1,6 +1,6 @@
 // Модель сообщения в редакторе.
 
-import type { NoodlNode } from '../../types';
+import type { NoodlNode } from '../../main';
 
 export function sendWarning(noodlNode: NoodlNode, displayName: string, message: string) {
 	if (noodlNode.model)

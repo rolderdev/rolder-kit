@@ -6,7 +6,7 @@ export default forwardRef(function (p: Props) {
 	//const { useSnapshot, proxy } = R.libs.valtio;
 
 	//const item = useSnapshot(proxy(p.item || {}));
-	const value = p.sourceType === 'value' ? p.value : R.libs.just.get(p.item || {}, p.field);
+	const value = p.sourceType === 'value' ? p.value : R.libs.just.get(p.item || {}, p.field || '');
 	//console.log('Text render', value);
 	return (
 		<Text {...p} {...p.customProps}>

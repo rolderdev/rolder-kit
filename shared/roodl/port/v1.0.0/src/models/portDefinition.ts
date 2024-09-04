@@ -16,7 +16,7 @@ import {
 	string,
 	transform,
 	union,
-} from 'valibot';
+} from 'shared/src/libs/valibot';
 
 // Задаим схему порта в удобном для определения виде.
 export const PortDef = pipe(

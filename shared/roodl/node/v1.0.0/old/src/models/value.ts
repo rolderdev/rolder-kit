@@ -2,7 +2,7 @@
 
 import typeOf from 'just-typeof';
 import { type PortDef } from '@shared/port-v1.0.0';
-import type { NoodlNode } from '../../types';
+import type { NoodlNode } from '../../main';
 import { clearWarning, sendWarning } from '../models/warning';
 
 // Функция конвертирует параметры ноды.

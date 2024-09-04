@@ -71,13 +71,6 @@ export default {
 			customGroup: 'Output DB classes',
 			type: 'proplist',
 		}),
-		/* 		getPortDef({
-			name: 'resetNodesSelection',
-			displayName: 'Reset nodes selection',
-			group: 'Custom',
-			customGroup: 'Selection',
-			type: 'signal',
-		}), */
 	],
 	outputs: [
 		getPortDef({ name: 'fetching', displayName: 'Fetching', group: 'States', type: 'boolean' }),
@@ -137,15 +130,11 @@ export default {
 					})
 				);
 			});
-
 		return portDefs;
 	},
-	triggerOnInputs(p: Props) {
-		return ['apiVersion', 'fetchScheme', 'controlled', 'subscribe'];
-	},
+	triggerOnInputs: () => ['apiVersion', 'fetchScheme', 'controlled', 'subscribe'],
 	initialize: async (p: Props) => {
 		p.store = getStore(p);
-		return p;
 	},
 	getInspectInfo: (p: Props) => [
 		{ type: 'text', value: `API ${p.apiVersion}` },

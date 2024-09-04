@@ -11,16 +11,15 @@ export default {
 		getPortDef({ name: 'node', displayName: 'Node', group: 'Data', type: 'object' }),
 		getPortDef({ name: 'nodeChanged', displayName: 'Node changed', group: 'Signals', type: 'signal' }),
 	],
-	getInspectInfo: (p: Props) =>
-		p.noodlNode._internal.node
+	getInspectInfo: (p: Props, noodlNode) =>
+		noodlNode._internal.node
 			? [
-					{ type: 'text', value: `Item id: "${p.noodlNode._internal.node.itemId}"` },
-					{ type: 'value', value: p.noodlNode._internal.node },
+					{ type: 'text', value: `Item id: "${noodlNode._internal.node.itemId}"` },
+					{ type: 'value', value: noodlNode._internal.node },
 			  ]
 			: [],
-	initialize: async (p: Props) => {
-		subscribe(p);
-		return p;
+	initialize: async (p: Props, noodlNode) => {
+		await subscribe(p, noodlNode);
 	},
 	disableCustomProps: true,
 } satisfies JsNodeDef;

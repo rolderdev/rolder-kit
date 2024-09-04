@@ -2,23 +2,24 @@ import { sendSignal } from '@shared/port-send-v1.0.0';
 import type { Props } from '../node/definition';
 import { fetch } from './fetch';
 import { handleNotification, subscribe, type Notification } from './handleSubscribe';
+import type { JsComponent } from '@shared/node-v1.0.0';
 
 export default {
-	reactive: async (p: Props) => {
+	reactive: async (p: Props, noodlNode) => {
 		// Обработаем измения инпутов
 		if (p.store.apiVersion !== p.apiVersion) {
 			p.store.apiVersion = p.apiVersion;
-			if (!p.controlled) await fetch(p);
+			if (!p.controlled) await fetch(p, noodlNode);
 		}
 		// Загрузим данные при включении реактивного режима в редакторе.
 		if (p.store.controlled !== p.controlled) {
-			if (p.store.controlled && !p.controlled) await fetch(p);
+			if (p.store.controlled && !p.controlled) await fetch(p, noodlNode);
 			p.store.controlled = p.controlled;
 		}
 		// Сравним схему.
 		if (!R.libs.just.compare(p.store.fetchScheme, p.fetchScheme)) {
 			p.store.fetchScheme = p.fetchScheme;
-			if (!p.controlled) await fetch(p);
+			if (!p.controlled) await fetch(p, noodlNode);
 		}
 		// Отреагируем на включение/отключение подписки.
 		if (p.store.subscribe !== p.subscribe) {
@@ -30,11 +31,11 @@ export default {
 		// Первый проход.
 		if (!p.store.inited) {
 			// Первичная загрузка реактивного режима.
-			if (!p.controlled) await fetch(p);
+			if (!p.controlled) await fetch(p, noodlNode);
 
 			// Тригер смены выбора.
 			const rootNode = R.nodes.get(p.store.rootId);
-			if (rootNode) Noodl.Events.on(`${rootNode.path}_selectionChanged`, () => sendSignal(p.noodlNode, 'nodesSelectionChanged'));
+			if (rootNode) Noodl.Events.on(`${rootNode.path}_selectionChanged`, () => sendSignal(noodlNode, 'nodesSelectionChanged'));
 
 			// Хак. Добавим свой клиент WebSocket и listener к нему.
 			if (!p.store.socket) p.store.socket = new WebSocket(`wss://${R.libs.Kuzzle?.host}`);
@@ -48,7 +49,7 @@ export default {
 					if (roomId === room) schemeHash = hash;
 				});
 				if (!schemeHash) return; // Если нет такой схемы в подписках, значит другая useData.
-				handleNotification(p, schemeHash, data);
+				handleNotification(p, noodlNode, schemeHash, data);
 			};
 
 			p.store.inited = true;
@@ -59,9 +60,5 @@ export default {
 
 		return;
 	},
-	fetch: async (p: Props) => fetch(p),
-	/* resetNodesSelection: (p: Props) =>
-		R.nodes.forEach((node) => {
-			if (node.rootId === p.store.rootId) node.selectionState.value === 'notSelected';
-		}), */
-};
+	fetch: async (p: Props, noodlNode) => fetch(p, noodlNode),
+} as JsComponent;

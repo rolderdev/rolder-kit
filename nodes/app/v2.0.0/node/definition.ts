@@ -1,4 +1,3 @@
-import { lazy } from 'react';
 import { getPortDef } from '@shared/port-v1.0.0';
 import type { ReactNodeDef } from '@shared/node-v1.0.0';
 import type { BaseReactProps } from '@shared/node-v1.0.0';

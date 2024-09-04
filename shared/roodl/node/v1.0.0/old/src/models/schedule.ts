@@ -1,7 +1,7 @@
 /* Планировщики. Запускаются после того, как все инпуты обновились. */
 
 import type { PortDef } from '@shared/port-v1.0.0';
-import type { JsNodeDef, NoodlNode, ReactNodeDef } from '../../types';
+import type { JsNodeDef, NoodlNode, ReactNodeDef } from '../../main';
 import { validateValues } from './value';
 import { clearWarning, hasWarings, sendWarning } from './warning';
 import { runModule } from './module';

@@ -2,10 +2,15 @@ import type { NoodlNode } from '@shared/node-v1.0.0';
 import type { Kuzzle } from 'kuzzle-sdk';
 import type { RxDatabase, HyperDX, Rxdb } from '@nodes/app-v2.0.0';
 import type { Icons, Utils } from 'shared';
-import type { Dayjs, Just, Lodash, Nanoid, Numbro, Omgopass, Remeda, Sort, Valibot, Valtio } from 'shared/src/libs';
+import type { Lodash, Nanoid, Omgopass, Remeda, Sort } from 'shared/src/libs';
 import type { Mutate, QueryClient } from '@nodes/data-v2.0.0';
 import type { Mantine } from '@nodes/mantine-v2.0.0';
 import type { Nodes } from '@nodes/use-data-v2.0.0';
+import type { Just } from 'shared/src/libs/just';
+import type { Valibot } from 'shared/src/libs/valibot';
+import type { Valtio } from 'shared/src/libs/valtio';
+import type { Numbro } from 'shared/src/libs/numbro';
+import type { Dayjs } from 'shared/src/libs/dayjs';
 
 type Rolder = {
 	states: {

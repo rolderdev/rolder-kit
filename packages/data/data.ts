@@ -12,4 +12,4 @@ import useData from './src/useData';
 const reactPackages = [data, auth];
 const jsPackages = [item, node, search, useData];
 
-Noodl.defineModule({ name: 'data', reactNodes: reactPackages, nodes: jsPackages.map((i) => defineNode(i)) });
+Noodl.defineModule({ name: 'data', reactNodes: reactPackages, nodes: jsPackages.map(defineNode) });

@@ -1,6 +1,7 @@
 import type { PortDef } from '@shared/port-v1.0.0';
-import type { FrontItem, Item } from '@shared/types-v0.1.0';
-import { LazyExoticComponent } from 'react';
+import type { Item } from '@shared/types-v0.1.0';
+
+export { jsNode, reactNode } from './src/node';
 
 // ================== JS ==================== //
 
@@ -27,8 +28,8 @@ export type BaseProps = {
 	version: string;
 	customProps?: { [x: string]: any };
 };
-type Props = { [name: string]: any };
-type InspectInfo = { type: 'value' | 'text' | 'color'; value: any };
+export type Props = { [name: string]: any };
+export type InspectInfo = { type: 'value' | 'text' | 'color'; value: any };
 type HashTag = '#expreimental' | '#pre-release' | '#deprecated';
 
 // Декларация
@@ -145,9 +146,9 @@ export type NoodlNode = {
 	}): void;
 	_onNodeDeleted: () => void;
 	Object: {
-		create: (item: FrontItem) => FrontItem & { collapse: () => void; hierarchyNode: any };
+		create: (item: Item) => Item & { collapse: () => void; hierarchyNode: any };
 	};
-	Objects: { [itemId: string]: FrontItem & { collapse: () => void; hierarchyNode: any } };
+	Objects: { [itemId: string]: Item & { collapse: () => void; hierarchyNode: any } };
 	forceUpdate: () => void;
 	getProjectSettings: () => Props;
 	_hasInputBeenSetFromAConnection: (inputName: string) => boolean;
@@ -252,7 +253,7 @@ export type GraphModelNode = {
 	parameters: { [x: string]: any };
 	parent: GraphModelNode;
 	type: string;
-	on(listener: string, callback: ({ name, state, value }) => void): void;
+	on(listener: string, callback: (p: { name: string; state: string; value: any }) => void): void;
 };
 
 type ColorTypes = {

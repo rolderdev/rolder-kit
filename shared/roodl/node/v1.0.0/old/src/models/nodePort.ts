@@ -1,7 +1,7 @@
 /* Функция подготавливает порты для ноды и конвертирует параметры, заданные в редакторе. */
 
 import { getNodePort, type NodePort, type PortDef } from '@shared/port-v1.0.0';
-import type { JsNodeVersions, NoodlNode } from '../../types';
+import type { JsNodeVersions, NoodlNode } from '../../main';
 import { getConverted, validateValueType } from './value';
 import { getCustomPropsPortDef } from './customProps';
 import { getVersionPortDef } from './version';

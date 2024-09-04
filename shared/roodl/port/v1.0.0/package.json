@@ -1,8 +1,5 @@
 {
 	"name": "@shared/port-v1.0.0",
 	"main": "port.ts",
-	"type": "module",
-	"dependencies": {
-		"valibot": "^0.41.0"
-	}
+	"type": "module"
 }

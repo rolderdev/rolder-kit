@@ -31,7 +31,7 @@ function FallbackComponent({ error }: any) {
 	);
 }
 
-export default forwardRef(function (props: Props) {
+export default forwardRef(function (p: Props) {
 	const {
 		stopLoaderAnimationOn = 'authInitialized',
 		project,
@@ -39,7 +39,7 @@ export default forwardRef(function (props: Props) {
 		projectDefaults,
 		environment = 'd2',
 	} = Noodl.getProjectSettings();
-	const { noodlNode, multiInstance } = props;
+	const { noodlNode, multiInstance } = p;
 	const { set } = R.libs.just;
 
 	set(R, ['env', 'environment'], environment);
@@ -69,7 +69,7 @@ export default forwardRef(function (props: Props) {
 					height: '100%',
 				}}
 			>
-				{localDbInited ? props.children : null}
+				{localDbInited ? p.children : null}
 			</div>
 		</ErrorBoundary>
 	);

@@ -115,8 +115,7 @@ export default {
 			{ type: 'value', value: p.columnsDefinition },
 		];
 	},
-	async initialize(p: Props) {
-		p.store = getStore(p);
-		return p;
+	initialize: async (p: Props, noodlNode) => {
+		p.store = getStore(p, noodlNode);
 	},
 } satisfies ReactNodeDef;

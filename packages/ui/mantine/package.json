@@ -1,7 +1,6 @@
 {
 	"name": "mantine",
 	"dependencies": {
-		"just-safe-set": "^4.2.1",
 		"@nodes/mantine-v2.0.0": "workspace:*",
 		"@nodes/table-v2.0.0": "workspace:*",
 		"@nodes/notification-v2.0.0": "workspace:*",

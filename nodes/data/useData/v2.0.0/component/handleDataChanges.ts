@@ -4,8 +4,9 @@ import { handleSubscribe } from './handleSubscribe';
 import type { Item } from '@shared/types-v0.1.0';
 import type { SchemeData } from '../node/store';
 import Node from './Node';
+import type { NoodlNode } from '@shared/node-v1.0.0';
 
-export default (p: Props) => {
+export default (p: Props, noodlNode: NoodlNode) => {
 	// Подготовим иерархию. Она должна быть атомарной. Т.е. каждая нода содержит информацию о свзях, но свзяи не проложены.
 	// Нужно создавать иерархию до обновления item. Построение иерархии их не требует, но ноды использующие иерархию,
 	// будут запрашивать еще не существующие items. Общее правило - сначала меняется структура, потом содержание.
@@ -35,21 +36,21 @@ export default (p: Props) => {
 
 			if (p.outputDbClasses?.includes(dbClass)) {
 				sendOutput(
-					p.noodlNode,
+					noodlNode,
 					`${dbClass}Items`,
 					schemeData.itemIds.map((id) => R.items.get(id)).filter((i) => i !== undefined)
 				);
-				sendOutput(p.noodlNode, `${dbClass}Fetched`, schemeData.fetched);
-				sendOutput(p.noodlNode, `${dbClass}Total`, schemeData.total);
-				sendOutput(p.noodlNode, `${dbClass}Aggregations`, schemeData.aggregations);
+				sendOutput(noodlNode, `${dbClass}Fetched`, schemeData.fetched);
+				sendOutput(noodlNode, `${dbClass}Total`, schemeData.total);
+				sendOutput(noodlNode, `${dbClass}Aggregations`, schemeData.aggregations);
 			}
 		}
 	});
 
-	sendOutput(p.noodlNode, 'data', data);
-	sendOutput(p.noodlNode, 'rootId', p.store.rootId);
-	sendOutput(p.noodlNode, 'rootNode', R.nodes.get(p.store.rootId));
-	sendOutput(p.noodlNode, 'schemes', Array.from(p.store.schemes.values()));
-	sendOutput(p.noodlNode, 'fetching', false);
-	sendSignal(p.noodlNode, 'fetched');
+	sendOutput(noodlNode, 'data', data);
+	sendOutput(noodlNode, 'rootId', p.store.rootId);
+	sendOutput(noodlNode, 'rootNode', R.nodes.get(p.store.rootId));
+	sendOutput(noodlNode, 'schemes', Array.from(p.store.schemes.values()));
+	sendOutput(noodlNode, 'fetching', false);
+	sendSignal(noodlNode, 'fetched');
 };

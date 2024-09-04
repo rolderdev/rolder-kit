@@ -15,8 +15,10 @@ module.exports = function (env) {
 	config.experiments = { css: true };
 	config.module.rules.push({
 		test: /\.css$/,
-		use: [{ loader: 'postcss-loader' }],
+		use: ['postcss-loader'],
 		type: 'css/auto',
 	});
+	config.module.parser = { 'css/auto': { namedExports: false } };
+
 	return config;
 };

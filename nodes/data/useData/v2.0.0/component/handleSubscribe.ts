@@ -4,9 +4,10 @@ import { dbClassVersion } from '@shared/get-dbclass-version';
 import type { Item } from '@shared/types-v0.1.0';
 import type { Props } from '../node/definition';
 import handleDataChanges from './handleDataChanges';
+import type { NoodlNode } from '@shared/node-v1.0.0';
 
 export type Notification = DocumentNotification & { result: { _updatedFields: string[] } };
-const subDelay = 100;
+const subDelay = 200;
 
 // Базируется на hash каждой схемы класса.
 // Если хеш есть в подписках и есть в данных, значит схема не изменилась - пропускаем.
@@ -92,7 +93,7 @@ export const subscribeToScheme = async (p: Props, schemeHash: string) => {
 }; */
 
 // Поскольку подписки идут по всем схемам, можно обрабатывать item найденный в этой схеме. Дубли отработает тригер другой схемы.
-export const handleNotification = (p: Props, schemeHash: string, notif: Notification) => {
+export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: string, notif: Notification) => {
 	const sort = R.libs.sort;
 	const { get, set } = R.libs.just;
 
@@ -145,5 +146,5 @@ export const handleNotification = (p: Props, schemeHash: string, notif: Notifica
 		}
 	}
 
-	handleDataChanges(p);
+	handleDataChanges(p, noodlNode);
 };

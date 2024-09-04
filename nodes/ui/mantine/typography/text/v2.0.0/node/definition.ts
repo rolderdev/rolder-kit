@@ -29,7 +29,7 @@ export default {
 			displayName: 'Value',
 			group: 'Data',
 			type: 'string',
-			dependsOn: (p) => p.sourceType === 'value',
+			dependsOn: (p: Props) => p.sourceType === 'value',
 		}),
 		getPortDef({
 			name: 'item',
@@ -37,15 +37,15 @@ export default {
 			group: 'Data',
 			type: 'object',
 			visibleAt: 'connection',
-			dependsOn: (p) => p.sourceType === 'item',
+			dependsOn: (p: Props) => p.sourceType === 'item',
 		}),
 		getPortDef({
 			name: 'field',
 			displayName: 'Field',
 			group: 'Params',
 			type: 'string',
-			dependsOn: (p) => p.sourceType === 'item',
-			validate: (p) => (p.sourceType === 'item' && !p.field ? false : true),
+			dependsOn: (p: Props) => p.sourceType === 'item',
+			validate: (p: Props) => (p.sourceType === 'item' && !p.field ? false : true),
 		}),
 		getPortDef({
 			name: 'size',
