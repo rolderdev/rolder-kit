@@ -7,7 +7,7 @@ export default async function (kuzzle: Kuzzle, online: boolean) {
 
 	if (!online && !configState.dbClasses) {
 		R.libs.mantine?.MantineError?.('Системная ошибка!', `Нужно быть в сети для первого запуска приложения`);
-		return false;
+		return;
 	}
 
 	if (online) {
@@ -25,10 +25,9 @@ export default async function (kuzzle: Kuzzle, online: boolean) {
 			await R.db?.states.config.set('options', () => r.result.options);
 		} catch (e: any) {
 			if (e.code === 117506049) R.libs.Kuzzle;
-			console.log(e.code);
 			R.libs.mantine?.MantineError('Системная ошибка!', `Fetch config error: ${JSON.stringify(e, null, '\t')}`);
 			console.error('fetchConfig error', e);
-			return false;
+			return;
 		}
 
 		log.end('Fetch config', startTime);
@@ -39,6 +38,4 @@ export default async function (kuzzle: Kuzzle, online: boolean) {
 	R.dbClasses = dbClasses;
 	R.params.creds = creds;
 	R.params.backendOptions = options;
-
-	return true;
 }

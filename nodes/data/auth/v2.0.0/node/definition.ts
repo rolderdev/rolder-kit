@@ -1,16 +1,19 @@
 import { lazy } from 'react';
-import type { BaseReactProps } from '@shared/node-v1.0.0';
+import type { BaseProps } from '@shared/node-v1.0.0';
 import { getPortDef } from '@shared/port-v1.0.0';
 import type { ReactNodeDef } from '@shared/node-v1.0.0';
 import ms from 'ms';
 import validate from './validate';
 import initialize from './initialize';
 
-export type Props = BaseReactProps & {
+export type Props = BaseProps & {
 	sessionTimeout: string;
 	username?: string;
 	password?: string;
+	store: Store;
 };
+
+export type Store = { signedIn: boolean | undefined; isLeader: boolean; refreshInterval?: NodeJS.Timeout };
 
 export default {
 	hashTag: '#expreimental',
@@ -56,16 +59,18 @@ export default {
 			];
 		else return [];
 	},
-	validate: async (p: Props) => validate(p),
-	initialize: async (p: Props) => {
-		// Нужно дождаться инициализации сети в R.db
-		const interval = setInterval(async () => {
-			if (R.db?.states?.network) {
-				clearInterval(interval);
-				await initialize(p);
-			}
-		}, 10);
-		return p;
+	validate: async (p: Props, model) => validate(p, model),
+	initialize: async (p: Props, noodlNode) => {
+		// Нужно дождаться инициализации Kuzzle
+		await new Promise((resolve) => {
+			const interval = setInterval(async () => {
+				if (R.libs.Kuzzle) {
+					clearInterval(interval);
+					await initialize(p, noodlNode);
+					resolve(undefined);
+				}
+			}, 10);
+		});
 	},
 	disableCustomProps: true,
 } satisfies ReactNodeDef;

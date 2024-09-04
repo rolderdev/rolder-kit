@@ -1,26 +1,14 @@
 import { lazy } from 'react';
-import type { BaseReactProps } from '@shared/node-v1.0.0';
+import type { BaseProps } from '@shared/node-v1.0.0';
 import { getPortDef } from '@shared/port-v1.0.0';
-import type { Item } from '@shared/types-v0.1.0';
 import type { ReactNodeDef } from '@shared/node-v1.0.0';
-import type { QueryClientT as QueryClient, Mutate } from '../component/Data';
+import initialize from './initialize';
 
-export type { QueryClient, Mutate };
-
-export type Props = BaseReactProps & {
+export type Props = BaseProps & {
 	dbName: string;
 	backendDevMode?: boolean;
 	backendUrl?: string;
 	backendPort?: number;
-};
-
-export type MutationFnProps = {
-	action: 'create' | 'update' | 'delete';
-	scheme: {
-		dbClass: string;
-		items: Item[];
-	}[];
-	silent?: boolean;
 };
 
 export default {
@@ -64,17 +52,22 @@ export default {
 		}),
 	],
 	outputs: [getPortDef({ name: 'initialized', displayName: 'Initialized', group: 'Signals', type: 'signal' })],
-	getInspectInfo: (p: Props, outProps) => [{ type: 'value', value: `DB name: ${p.dbName}` }],
-	/* validate: async (p: Props) => validate(p),
-	initialize: async (p: Props) => {
+	getInspectInfo: (p: Props, outProps, noodlNode) => [
+		{ type: 'value', value: `DB: ${p.dbName}` },
+		noodlNode._internal.host &&
+			noodlNode._internal.port && { type: 'value', value: `Host: ${noodlNode._internal.host}:${noodlNode._internal.port}` },
+	],
+	initialize: async (p: Props, noodlNode) => {
 		// Нужно дождаться инициализации сети в R.db
-		const interval = setInterval(async () => {
-			if (R.db?.states?.network) {
-				clearInterval(interval);
-				await initialize(p);
-			}
-		}, 10);
-		return p;
-	}, */
+		await new Promise((resolve) => {
+			const interval = setInterval(async () => {
+				if (R.db?.states?.network) {
+					clearInterval(interval);
+					await initialize(p, noodlNode);
+					resolve(undefined);
+				}
+			}, 10);
+		});
+	},
 	disableCustomProps: true,
 } satisfies ReactNodeDef;

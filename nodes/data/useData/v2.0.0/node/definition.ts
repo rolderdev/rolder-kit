@@ -134,7 +134,16 @@ export default {
 	},
 	triggerOnInputs: () => ['apiVersion', 'fetchScheme', 'controlled', 'subscribe'],
 	initialize: async (p: Props) => {
-		p.store = getStore(p);
+		// Нужно дождаться инициализации Kuzzle
+		await new Promise((resolve) => {
+			const interval = setInterval(() => {
+				if (R.libs.Kuzzle) {
+					clearInterval(interval);
+					p.store = getStore(p);
+					resolve(undefined);
+				}
+			}, 10);
+		});
 	},
 	getInspectInfo: (p: Props) => [
 		{ type: 'text', value: `API ${p.apiVersion}` },

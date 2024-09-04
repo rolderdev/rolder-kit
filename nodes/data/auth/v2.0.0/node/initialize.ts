@@ -1,53 +1,48 @@
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
-import setParams from '../component/src/setParams';
-import type { Props } from '../node/definition';
+import setParams from './setParams';
+import type { Props, Store } from '../node/definition';
 import systemLoaderAnimation from '@shared/system-loader-animation-v0.1.0';
 import { getKuzzle } from '@shared/get-kuzzle-v0.2.0';
-import fetchUser from '../component/src/fetchUser';
+import fetchUser from './fetchUser';
 import ms from 'ms';
-import vaildateRefreshToken from '../component/src/vaildateRefreshToken';
+import vaildateRefreshToken from './vaildateRefreshToken';
+import type { NoodlNode } from '@shared/node-v1.0.0';
 
-type Store = { signedIn: boolean | undefined; isLeader: boolean; refreshInterval?: NodeJS.Timeout };
-
-export default async (p: Props) => {
+export default async (p: Props, noodlNode: NoodlNode) => {
 	// Создадим хранилище для сравнения параметров.
-	const s: Store = { signedIn: undefined, isLeader: false, refreshInterval: undefined };
+	p.store = { signedIn: undefined, isLeader: false, refreshInterval: undefined };
 
 	// Возьмем состояние с диска. addState возвращает текущее состояние, если есть, иначе создает.
 	// Делаем это вначале, чтобы далее использовать новое пустое или текущее состояние на диске.
 	const persistentState = await R.db?.addState('auth');
 
-	// Восстановим сессию с диска.
-	await setParams();
+	// Восстановим сессию с диска
+	setParams();
 
 	// Подпишемся на изменения signedIn и inited на диске, чтобы реагировать на всех вкладках.
 	// Первая подписка нужна для первичного прохода, чтобы вкладки ждали лидера.
 	// Вторая подписка нужна для дальнейшего реагирования на смену состояния.
 	persistentState.inited$.subscribe((inited: boolean) => {
-		console.log('inited', { inited, stored: persistentState.signedIn, local: s.signedIn, leader: s.isLeader });
 		// Если инициализировано и состояние изменилось, учитывая что signedIn в store изначально undefined.
-		if (inited && persistentState.signedIn !== s.signedIn) handleAuth(p, s);
+		if (inited && persistentState.signedIn !== p.store.signedIn) handleAuth(p.store, noodlNode);
 	});
 	persistentState.signedIn$.subscribe((storedSignedIn: boolean) => {
-		console.log('signedIn sub', { stored: storedSignedIn, local: s.signedIn, leader: s.isLeader });
 		// Сравним состояние на диске с состоянием текущей вкладки, есди инициализировано.
-		if (persistentState.inited && storedSignedIn !== s.signedIn) handleAuth(p, s);
+		if (persistentState.inited && storedSignedIn !== p.store.signedIn) handleAuth(p.store, noodlNode);
 	});
 
 	// Подпишемся на изменение ключа, чтобы остальные вкладки могли его использовать.
 	// Kuzzle матерится, елси токен разные во вкладках.
 	persistentState.token$.subscribe((token: string) => {
-		console.log('token sub', { token, stored: persistentState.signedIn, local: s.signedIn, leader: s.isLeader });
 		// Записываем токен у всех вкладок, кроме лидера. Лидер делает это в vaildateRefreshToken.
-		if (!s.isLeader && R.libs.Kuzzle) R.libs.Kuzzle.jwt = token;
+		if (!p.store.isLeader && R.libs.Kuzzle) R.libs.Kuzzle.jwt = token;
 	});
 
 	// Тригер на вход пользователя. Перехватывает вход у вкладки не лидера.
 	persistentState.signIn$.subscribe(async (storedSignedIn: boolean) => {
-		console.log('signIn sub', { stored: storedSignedIn, local: s.signedIn, leader: s.isLeader });
-		if (storedSignedIn && s.isLeader) {
+		if (storedSignedIn && p.store.isLeader) {
 			// Отправим состояние процесса.
-			sendOutput(p.noodlNode, 'signingIn', true);
+			sendOutput(noodlNode, 'signingIn', true);
 
 			// Авторизуем пользователя
 			const signedIn = await signIn(p, persistentState.username, persistentState.password);
@@ -57,7 +52,7 @@ export default async (p: Props) => {
 				// Установим их глобально.
 				setParams();
 				// Запустим обновление токена.
-				s.refreshInterval = setInterval(async () => await vaildateRefreshToken(p.sessionTimeout), ms('5s'));
+				p.store.refreshInterval = setInterval(async () => await vaildateRefreshToken(p.sessionTimeout), ms('5s'));
 			}
 			// Изменим состояние на диске для всех вкладок.
 			await persistentState.set('signedIn', () => signedIn);
@@ -66,30 +61,29 @@ export default async (p: Props) => {
 			await persistentState.set('signIn', () => false);
 
 			// Отправим состояние процесса.
-			sendOutput(p.noodlNode, 'signingIn', false);
+			sendOutput(noodlNode, 'signingIn', false);
 		}
 	});
 
 	// Подпишемся на смену лидерства. Работает одинаково при первом проходе лидера и при смене лидера.
 	// Делаем это в конце, чтобы иметь готовый persistentState.
 	R.db?.waitForLeadership().then(async () => {
-		console.log('waitForLeadership', { stored: persistentState.signedIn, local: s.signedIn, leader: s.isLeader });
-		s.isLeader = true;
+		p.store.isLeader = true;
 
 		// Установим состояние инициализации на диск, чтобы другие вкладки ждали лидера.
 		await persistentState.set('inited', () => false);
 
 		// Отменим, если оффлайн.
 		if (!R.db?.states.network.connected) {
-			handleAuth(p, s);
+			handleAuth(p.store, noodlNode);
 			return;
 		}
 
-		// Проверим и обновленим ключ, если авторизованы
+		// Проверим и обновим ключ, если авторизованы
 		const tokenValid = persistentState.signedIn ? await vaildateRefreshToken(p.sessionTimeout) : false;
 
 		// Запустим обновление токена, если токен валиден.
-		if (tokenValid) s.refreshInterval = setInterval(async () => await vaildateRefreshToken(p.sessionTimeout), ms('5s'));
+		if (tokenValid) p.store.refreshInterval = setInterval(async () => await vaildateRefreshToken(p.sessionTimeout), ms('1h'));
 		// Изменим состояние на диске для всех вкладок.
 		await persistentState.set('signedIn', () => tokenValid);
 
@@ -98,21 +92,24 @@ export default async (p: Props) => {
 	});
 };
 
-const handleAuth = async (p: Props, s: Store) => {
+const handleAuth = async (s: Store, noodlNode: NoodlNode) => {
 	const signedIn = R.db?.states.auth.signedIn;
-	console.log('handleAuth', { stored: signedIn, local: s.signedIn, leader: s.isLeader });
+
 	if (signedIn) {
-		sendOutput(p.noodlNode, 'userRole', R.user?.user?.role?.value || null);
-		sendSignal(p.noodlNode, 'signedIn');
+		s.signedIn = true;
+		noodlNode.innerReactComponentRef.setSignInState(true);
+		sendOutput(noodlNode, 'userRole', R.user?.user?.role?.value || null);
+		sendSignal(noodlNode, 'signedIn');
 		// Уберем анимацию загрузки, если указано в параметрах приложения.
 		const { stopLoaderAnimationOn = 'authInitialized' } = Noodl.getProjectSettings();
 		if (stopLoaderAnimationOn === 'authInitialized') systemLoaderAnimation.stop();
-		s.signedIn = true;
 	} else {
-		sendOutput(p.noodlNode, 'userRole', null);
-		sendSignal(p.noodlNode, 'signedOut');
-		systemLoaderAnimation.stop(); // Выключаем лоадер при любой настройке, если не авторизован.
+		s.refreshInterval && clearInterval(s.refreshInterval);
 		s.signedIn = false;
+		noodlNode.innerReactComponentRef.setSignInState(false);
+		sendOutput(noodlNode, 'userRole', null);
+		sendSignal(noodlNode, 'signedOut');
+		systemLoaderAnimation.stop(); // Выключаем лоадер при любой настройке, если не авторизован.
 	}
 };
 

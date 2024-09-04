@@ -7,7 +7,7 @@ import handleDataChanges from './handleDataChanges';
 import type { NoodlNode } from '@shared/node-v1.0.0';
 
 export type Notification = DocumentNotification & { result: { _updatedFields: string[] } };
-const subDelay = 200;
+const subDelay = 50;
 
 // Базируется на hash каждой схемы класса.
 // Если хеш есть в подписках и есть в данных, значит схема не изменилась - пропускаем.
@@ -19,10 +19,15 @@ export const handleSubscribe = (p: Props) => {
 
 	// Обработка подписок с задержкой, чтобы не уткнуться в лимиты.
 	// Отписываться нельзя, баш в Kuzzle. handleNotification прововерит схему и не будет тригерить отсутсвующие схемы.
-	schemes.forEach((_, schemeHash) => {
-		// Подписка на новые схемы.
-		if (!subscribes.has(schemeHash)) setTimeout(() => subscribeToScheme(p, schemeHash), subDelay);
-	});
+	const schemeHashes = Array.from(schemes.keys());
+	let count = 0;
+	const interval = setInterval(() => {
+		if (count !== schemeHashes.length) {
+			// Подписка на новые схемы.
+			if (!subscribes.has(schemeHashes[count])) subscribeToScheme(p, schemeHashes[count]);
+			count++;
+		} else clearInterval(interval);
+	}, subDelay);
 
 	// Отписка от больше не существующих схем.
 	/* 	subscribes.forEach((_, schemeHash) => {

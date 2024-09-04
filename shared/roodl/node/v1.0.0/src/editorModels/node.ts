@@ -5,7 +5,7 @@ import { sendWarning } from './warning';
 export const validateNode = async (model: GraphModelNode, context: NodeContext, versions: JsNodeVersions | ReactNodeVersions) => {
 	const nodeDef = versions[model.parameters.version];
 	if (nodeDef.validate) {
-		const validateResult = await nodeDef.validate(model.parametersCache);
+		const validateResult = await nodeDef.validate(model.parametersCache, model);
 		// Если разработчик вернул свой текст ошибки.
 		if (typeof validateResult === 'string') sendWarning(model, context, '', validateResult);
 		// Сброс ошибки

@@ -41,7 +41,7 @@ export type NodeDef = {
 	hashTag?: HashTag;
 	inputs?: PortDef[];
 	outputs?: PortDef[];
-	validate?(p: Props): Promise<boolean | string>;
+	validate?(p: Props, model: GraphModelNode): Promise<boolean | string>;
 	initialize?(p: Props, noodlNode: NoodlNode): Promise<void>;
 	getInspectInfo?(p: Props, outProps: { [x: string]: any }, noodlNode: NoodlNode): InspectInfo | InspectInfo[];
 	transform?(

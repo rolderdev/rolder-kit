@@ -10,10 +10,6 @@ export default async function (sessionTimeout: string) {
 	if (K) {
 		try {
 			const tokenValidation = await K.auth.refreshToken({ expiresIn: sessionTimeout });
-			console.log({
-				expiresAt: R.libs.dayjs?.(tokenValidation.expiresAt).format('YYYY.MM.DD HH:mm'),
-				ttl: ms(tokenValidation.ttl),
-			});
 			await R.db?.states.auth.set('token', () => tokenValidation.jwt);
 			valid = true;
 
