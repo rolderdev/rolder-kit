@@ -3,6 +3,7 @@
 import type { PortDef } from '@shared/port-v1.0.0';
 import type { JsNodeDef, NoodlNode, ReactNodeDef } from '../../main';
 import { runModule } from './module';
+import { setPropDeafaults } from './prop';
 
 export const schedule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactNodeDef, inputDef: PortDef, isSignal: boolean) => {
 	// Пропустим, если уже запланировано.
@@ -10,6 +11,7 @@ export const schedule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactN
 		noodlNode.scheduledRun = true; // Запретим повторные запуски обработки портов.
 		noodlNode.scheduleAfterInputsHaveUpdated(async () => {
 			noodlNode.scheduledRun = false; // Вернем возможность запуска обработки поров.
+			setPropDeafaults(noodlNode, nodeDef); // Установим дефолты в props для коректной работы в runtime.
 			// Запустим функцию инициализации один раз.
 			if (nodeDef.initialize && noodlNode.firstRun) await nodeDef.initialize(noodlNode.props, noodlNode);
 

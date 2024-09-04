@@ -13,7 +13,6 @@ import type {
 	Props,
 	ReactNodeVersions,
 	NodeDef,
-	NoodlNode,
 } from '../main';
 import { getVersionPort, validateVersion } from './editorModels/version';
 import { getConverted } from './editorModels/parameter';
@@ -61,6 +60,7 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 								// Уберем ошибку, если приелетело значение с порта. Это не работает в обратную сторону.
 								if (!Noodl.deployed && value !== undefined) clearWarning(this.model, this.context, inputDef.displayName);
 							} else {
+								// Значение пришло с редактора. Не отрабатывает дефолты редактора.
 								//console.log('from editor', nodeName, inputName, value, this.props.noodlNode);
 								this.props[inputName] = getConverted(this.model, this.context, inputDef);
 							}

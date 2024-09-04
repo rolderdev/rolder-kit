@@ -27,7 +27,7 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	}
 
 	const { has, map } = R.libs.just;
-	const { fetchScheme } = p.store;
+	const { fetchScheme, apiVersion } = p.store;
 
 	const startTime = log.start();
 	log.info(`useData props: ${fetchScheme.map((i) => i.dbClass).join(', ')}`, p);
@@ -38,8 +38,9 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 
 	// Отловим неавторизованную сессию здесь дополнительно, т.к. useData в отличии от UseData вполне может запуститься до проверки авторизации.
 	try {
-		response = await K.query({ controller: 'rolder', action: `fetch_${p.apiVersion}`, dbName, fetchScheme });
+		response = await K.query({ controller: 'rolder', action: `fetch_${apiVersion}`, dbName, fetchScheme });
 	} catch (e: any) {
+		log.error('useData fetch error', e);
 		if (e.code === 117506049) R.db?.states.auth?.set('signedIn', () => false);
 		return;
 	}
