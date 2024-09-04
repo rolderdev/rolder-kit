@@ -103,7 +103,7 @@ const handleAuth = async (s: Store, noodlNode: NoodlNode) => {
 
 	if (signedIn) {
 		s.signedIn = true;
-		noodlNode.innerReactComponentRef.setSignInState(true);
+		noodlNode.innerReactComponentRef?.setSignInState(true);
 		sendOutput(noodlNode, 'userRole', R.user?.user?.role?.value || null);
 		sendSignal(noodlNode, 'signedIn');
 		// Уберем анимацию загрузки, если указано в параметрах приложения.
@@ -112,7 +112,7 @@ const handleAuth = async (s: Store, noodlNode: NoodlNode) => {
 	} else {
 		s.refreshInterval && clearInterval(s.refreshInterval);
 		s.signedIn = false;
-		noodlNode.innerReactComponentRef.setSignInState(false);
+		noodlNode.innerReactComponentRef?.setSignInState(false);
 		sendOutput(noodlNode, 'userRole', null);
 		sendSignal(noodlNode, 'signedOut');
 		systemLoaderAnimation.stop(); // Выключаем лоадер при любой настройке, если не авторизован.

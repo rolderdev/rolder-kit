@@ -1,12 +1,6 @@
-import { BaseReactProps, NoodlNode } from '@packages/node';
-import type { Item } from 'types';
+import { BaseReactProps } from '@packages/node';
 
-export type Props = BaseReactProps & {
-	dbName: string;
-	backendDevMode?: boolean;
-	backendUrl?: string;
-	backendPort?: number;
-};
+export type Props = BaseReactProps & {};
 
 export type MutationFnProps = {
 	action: 'create' | 'update' | 'delete';

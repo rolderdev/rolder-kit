@@ -189,10 +189,10 @@ const dataNode = reactNode(
 				}),
 			],
 		},
-		/* 'v2.0.0': {
-			hashTag: '#pre-release',
+		'v2.0.0': {
+			hashTag: '#deprecated',
 			module: { dynamic: lazy(() => import('@packages/data-v2.0.0')) },
-			inputs: [
+			/* inputs: [
 				getPort({
 					plug: 'input',
 					name: 'dbName',
@@ -238,8 +238,8 @@ const dataNode = reactNode(
 					},
 				}),
 			],
-			outputs: [getPort({ plug: 'output', name: 'initialized', displayName: 'Initialized', group: 'Signals', type: 'signal' })],
-		}, */
+			outputs: [getPort({ plug: 'output', name: 'initialized', displayName: 'Initialized', group: 'Signals', type: 'signal' })], */
+		},
 	},
 	{ allowChildren: true }
 );

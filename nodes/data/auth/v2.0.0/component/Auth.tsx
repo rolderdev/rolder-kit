@@ -24,6 +24,6 @@ export default memo(
 			[p, signedIn]
 		);
 
-		return <>{signedIn ? p.children : null}</>;
+		return signedIn ? p.children : null;
 	})
 );

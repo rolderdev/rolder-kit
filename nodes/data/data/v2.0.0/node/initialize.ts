@@ -10,8 +10,6 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 	const { project, stopLoaderAnimationOn = 'authInitialized', environment = 'd2' } = Noodl.getProjectSettings();
 
 	R.env.dbName = dbName;
-	// Обратная совместимость.
-	await import('./backward');
 
 	if (!project || !environment) {
 		log.error('Kuzzle init: empty required props', { project, environment });
@@ -37,6 +35,7 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 	}
 
 	R.libs.Kuzzle = kuzzle;
+	noodlNode.innerReactComponentRef.setInitState(true);
 	sendSignal(noodlNode, 'initialized');
 
 	log.info('R', R);
