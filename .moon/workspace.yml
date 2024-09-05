@@ -1,6 +1,8 @@
 $schema: "https://moonrepo.dev/schemas/workspace.json"
 
 projects:
-  - "nodes/**/moon.yml"
   - "packages/**/moon.yml"
+  - "nodes/**/moon.yml"
+  - "old/nodes/**/moon.yml"
+  - "old/packages/**/moon.yml"
   - "types/moon.yml"

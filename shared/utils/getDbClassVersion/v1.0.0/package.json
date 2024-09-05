@@ -1,0 +1,5 @@
+{
+	"name": "@shared/get-dbclass-version-v1.0.0",
+	"main": "getDbClassVersion.ts",
+	"type": "module"
+}

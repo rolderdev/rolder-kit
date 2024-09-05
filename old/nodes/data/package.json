@@ -1,0 +1,20 @@
+{
+	"name": "data",
+	"dependencies": {
+		"@nodes/auth": "workspace:*",
+		"@nodes/create": "workspace:*",
+		"@nodes/data-context": "workspace:*",
+		"@nodes/delete": "workspace:*",
+		"@nodes/get-data": "workspace:*",
+		"@nodes/local-data": "workspace:*",
+		"@nodes/logout": "workspace:*",
+		"@nodes/nodered": "workspace:*",
+		"@nodes/save-as": "workspace:*",
+		"@nodes/update": "workspace:*",
+		"@nodes/update-by-query": "workspace:*",
+		"@old-nodes/use-data": "workspace:*",
+		"@packages/data-v1.0.0": "workspace:*",
+		"@packages/data-v1.1.0": "workspace:*",
+		"@packages/data-v2.0.0": "workspace:*"
+	}
+}

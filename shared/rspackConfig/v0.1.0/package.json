@@ -1,0 +1,4 @@
+{
+	"name": "@shared/rspack-config-v0.1.0",
+	"main": "rspackBase.config.js"
+}

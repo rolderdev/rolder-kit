@@ -1,8 +1,0 @@
-{
-	"name": "@nodes/search",
-	"main": "searchNode.ts",
-	"types": "searchNode.ts",
-	"dependencies": {
-		"@packages/search-v0.1.0": "workspace:*"
-	}
-}

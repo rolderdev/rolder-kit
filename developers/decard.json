@@ -1,26 +1,26 @@
 {
 	"startum-desktop": {
 		"projectDir": "/home/decard/projects/clients/startum/noodl/desktop",
-		"rolderKit": ["app", "mantine", "data", "pdf", "qr-code", "xlsx"]
+		"rolderKit": ["shared", "app", "mantine", "data", "pdf", "qr-code", "xlsx"]
 	},
 	"startum-mobile": {
 		"projectDir": "/home/decard/projects/clients/startum/noodl/mobile",
-		"rolderKit": ["app", "mantine", "data", "qrCode", "web-camera"]
+		"rolderKit": ["shared", "app", "mantine", "data", "qrCode", "web-camera"]
 	},
 	"rasko-desktop": {
 		"projectDir": "/home/decard/projects/clients/rasko/noodl/desktop",
-		"rolderKit": ["app", "mantine", "data", "gantt", "pdf", "xlsx"]
+		"rolderKit": ["shared", "app", "mantine", "data", "gantt", "pdf", "xlsx"]
 	},
 	"cockbot-desktop": {
 		"projectDir": "cockbot-desktop",
-		"rolderKit": ["app", "data", "mantine"]
+		"rolderKit": ["shared", "app", "data", "mantine"]
 	},
 	"rkdocs": {
 		"projectDir": "/home/decard/projects/rkdocs",
-		"rolderKit": ["app", "mantine", "data", "markdown"]
+		"rolderKit": ["shared", "app", "mantine", "data", "markdown"]
 	},
 	"playground": {
 		"projectDir": "/home/decard/projects/playground",
-		"rolderKit": ["app", "mantine"]
+		"rolderKit": ["shared", "app", "mantine", "data"]
 	}
 }

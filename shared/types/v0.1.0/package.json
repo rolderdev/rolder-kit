@@ -1,0 +1,13 @@
+{
+	"name": "@shared/types-v0.1.0",
+	"main": "types.ts",
+	"types": "types.ts",
+	"devDependencies": {
+		"shared": "workspace:*",
+		"@nodes/app-v2.0.0": "workspace:*",
+		"@nodes/data-v2.0.0": "workspace:*",
+		"@nodes/mantine-v2.0.0": "workspace:*",
+		"@nodes/use-data-v2.0.0": "workspace:*",
+		"kuzzle-sdk": "^7.11.3"
+	}
+}

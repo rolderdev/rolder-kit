@@ -1,22 +1,10 @@
 {
 	"name": "rolder-kit",
-	"version": "v1.0.0-rc4",
+	"version": "v1.0.0-rc5",
 	"private": true,
-	"dependencies": {
-		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-		"@packages/node": "workspace:@packages/node-v0.8.0@*",
-		"@packages/node-v1.0.0": "workspace:*"
-	},
 	"devDependencies": {
 		"typescript": "^5.5.4",
-		"@rspack/core": "1.0.0-beta.1",
-		"@rspack/cli": "1.0.0-beta.1",
-		"rspack-manifest-plugin": "^5.0.1",
-		"@rsdoctor/rspack-plugin": "^0.3.11",
-		"postcss": "^8.4.40",
-		"postcss-loader": "^8.1.1",
 		"@types/react": "^18.3.3",
-		"@types/react-dom": "^18.3.0",
-		"types": "workspace:*"
+		"@types/react-dom": "^18.3.0"
 	}
 }

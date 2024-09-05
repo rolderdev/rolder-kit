@@ -1,9 +1,0 @@
-{
-	"name": "@nodes/paper",
-	"main": "paperNode.ts",
-	"types": "paperNode.ts",
-	"dependencies": {
-		"@packages/paper-v1.0.0": "workspace:*",
-		"@packages/paper-v2.0.0": "workspace:*"
-	}
-}

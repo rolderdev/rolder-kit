@@ -1,6 +1,0 @@
-apiVersion: v2
-
-name: kuzzle
-
-version: 0.0.1
-appVersion: "current"

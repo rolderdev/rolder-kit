@@ -1,0 +1,4 @@
+{
+	"name": "@shared/is-empty-v0.1.0",
+	"main": "isEmpty.ts"
+}

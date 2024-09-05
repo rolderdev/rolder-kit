@@ -1,0 +1,5 @@
+{
+	"name": "@shared/port-v1.0.0",
+	"main": "port.ts",
+	"type": "module"
+}

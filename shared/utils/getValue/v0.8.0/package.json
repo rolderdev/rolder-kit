@@ -1,0 +1,4 @@
+{
+	"name": "@shared/get-value-v0.8.0",
+	"main": "getValue.ts"
+}

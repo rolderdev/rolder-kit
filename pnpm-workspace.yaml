@@ -1,6 +1,6 @@
 ---
 packages:
-  - types/**
+  - shared/**
+  - packages/**
   - nodes/**
-  - packages/**  
-  - '!docs_toDelete/**'  
+  - old/**
