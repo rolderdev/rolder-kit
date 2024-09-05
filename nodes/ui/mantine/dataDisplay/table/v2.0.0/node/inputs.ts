@@ -291,7 +291,7 @@ export default [
 		customGroup: 'Row styles',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.rowStyles,
-		codeComment: `//(level, item, node) => level * 16`,
+		codeComment: `//(level, item) => level * 16`,
 	}),
 	// Single selection
 	getPortDef({
