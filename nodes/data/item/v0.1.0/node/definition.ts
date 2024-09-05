@@ -35,19 +35,12 @@ export default {
 			dependsOn: (p: Props) => p.source === 'specific',
 			validate: (p: Props) => (p.source === 'specific' ? (p.itemId ? true : false) : true),
 		}),
-		getPortDef({
-			name: 'fields',
-			displayName: 'Fields',
-			group: 'Custom',
-			customGroup: 'Fields',
-			type: 'proplist',
-		}),
+		getPortDef({ name: 'fields', displayName: 'Fields', group: 'Custom', customGroup: 'Fields', type: 'proplist' }),
+		getPortDef({ name: 'subscribe', displayName: 'Subscribe', group: 'Signals', type: 'signal' }),
 	],
 	outputs: [
 		getPortDef({ name: 'item', displayName: 'Item', group: 'Data', type: 'object' }),
 		getPortDef({ name: 'itemChanged', displayName: 'Item changed', group: 'Signals', type: 'signal' }),
-		getPortDef({ name: 'node', displayName: 'Node', group: 'Data', type: 'object' }),
-		getPortDef({ name: 'nodeChanged', displayName: 'Node changed', group: 'Signals', type: 'signal' }),
 	],
 	triggerOnInputs: () => ['source', 'itemId', 'fields'],
 	getInspectInfo: (p: Props, outProps, noodlNode) => {
@@ -69,7 +62,7 @@ export default {
 		p.propsStore = await initStore(p);
 	},
 	transform(p: Props, portDefs) {
-		portDefs.outputs = portDefs.outputs.filter((i) => i.customGroup !== 'Fields');
+		portDefs.outputs = portDefs.outputs.filter((i: any) => i.group !== 'Fields');
 		if (p.fields)
 			p.fields.map((field) => {
 				if (!portDefs.outputs.some((i) => i.name === field))

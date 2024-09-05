@@ -30,7 +30,7 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	const { fetchScheme, apiVersion } = p.store;
 
 	const startTime = log.start();
-	log.info(`useData props: ${fetchScheme.map((i) => i.dbClass).join(', ')}`, p);
+	log.info(`useData props: ${fetchScheme?.map((i) => i.dbClass).join(', ')}`, p);
 
 	sendOutput(noodlNode, 'fetching', true);
 
@@ -57,10 +57,12 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 		//@ts-expect-error
 		p.store.items.set(itemId, {
 			...item,
-			getRef: (dbClass) =>
-				Array.isArray(item[dbClass])
-					? item[dbClass].map((i) => R.items.get(i.id) || i)
-					: R.items.get(item[dbClass]?.id) || item[dbClass],
+			getRef: (dbClass) => {
+				if (item[dbClass]) {
+					if (Array.isArray(item[dbClass])) return item[dbClass].map((i) => R.items.get(i.id)).filter((i) => !!i);
+					else return R.items.get(item[dbClass].id);
+				} else return undefined;
+			},
 		})
 	);
 
@@ -72,6 +74,6 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	// Подготовим и отправим данные.
 	handleDataChanges(p, noodlNode);
 
-	log.info(`useData: ${fetchScheme.map((i) => i.dbClass).join(', ')}`, data);
-	log.end(`useData: ${fetchScheme.map((i) => i.dbClass).join(', ')}`, startTime);
+	log.info(`useData: ${fetchScheme?.map((i) => i.dbClass).join(', ')}`, data);
+	log.end(`useData: ${fetchScheme?.map((i) => i.dbClass).join(', ')}`, startTime);
 };

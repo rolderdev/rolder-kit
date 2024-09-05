@@ -62,7 +62,7 @@ const setNodePorts = (model: GraphModelNode, context: NodeContext, versions: JsN
 			}
 			// Трансформация.
 			if (!filtered && inputDef.transform) {
-				const newInputDef = inputDef.transform(model.parametersCache, inputDef) as PortDef;
+				const newInputDef = inputDef.transform(model.parametersCache, inputDef);
 				// Нужно восстановить дефолт и проверить его тип, если еще нет значения.
 				if (newInputDef.default !== undefined && model.parametersCache[newInputDef.name] === undefined) {
 					model.parameters[newInputDef.name] = newInputDef.default;

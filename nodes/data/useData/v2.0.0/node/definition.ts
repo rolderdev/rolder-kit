@@ -12,7 +12,7 @@ export type Props = BaseJsProps & BaseProps & { store: Store };
 export type BaseProps = {
 	apiVersion: 'v2';
 	// Весь тип схемы не нужен, т.к. она полностью передается в Kuzzle.
-	fetchScheme: FetchScheme;
+	fetchScheme?: FetchScheme;
 	outputDbClasses?: string[];
 	controlled: boolean;
 	subscribe: boolean;
@@ -37,7 +37,7 @@ export default {
 			displayName: 'Fetch scheme',
 			group: 'Params',
 			type: 'array',
-			validate: (p: Props) => (!p.fetchScheme?.length ? false : validateFetchScheme(p as Props)),
+			validate: (p: Props) => (!p.fetchScheme?.length ? false : validateFetchScheme(p)),
 		}),
 		getPortDef({
 			name: 'controlled',
@@ -70,6 +70,16 @@ export default {
 			group: 'Custom',
 			customGroup: 'Output DB classes',
 			type: 'proplist',
+			validate: (p: Props) => {
+				if (R.dbClasses) {
+					let notExistsDbClasses: string[] = [];
+					p.outputDbClasses?.forEach((i) => {
+						if (!R.dbClasses?.[i]) notExistsDbClasses.push(i);
+					});
+					if (notExistsDbClasses.length) return `There is no such DB classes as "${notExistsDbClasses.join('", "')}"`;
+				}
+				return true;
+			},
 		}),
 	],
 	outputs: [
@@ -134,7 +144,7 @@ export default {
 	},
 	triggerOnInputs: () => ['apiVersion', 'fetchScheme', 'controlled', 'subscribe'],
 	initialize: async (p: Props) => {
-		// Нужно дождаться инициализации Kuzzle
+		// Нужно дождаться инициализации Kuzzle.
 		await new Promise((resolve) => {
 			const interval = setInterval(() => {
 				if (R.libs.Kuzzle) {

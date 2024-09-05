@@ -3,7 +3,6 @@ import type { Kuzzle } from 'kuzzle-sdk';
 import type { RxDatabase, HyperDX, Rxdb } from '@nodes/app-v2.0.0';
 import type { Icons, Utils } from 'shared';
 import type { Lodash, Nanoid, Omgopass, Remeda, Sort } from 'shared/src/libs';
-import type { Mutate, QueryClient } from '@nodes/data-v2.0.0';
 import type { Mantine } from '@nodes/mantine-v2.0.0';
 import type { Nodes } from '@nodes/use-data-v2.0.0';
 import type { Just } from 'shared/src/libs/just';
@@ -46,8 +45,6 @@ type Rolder = {
 	};
 	libs: {
 		Kuzzle?: Kuzzle;
-		queryClient?: QueryClient;
-		mutate?: Mutate;
 		rxdb: Rxdb;
 		mantine: Mantine;
 		just: Just;
@@ -93,8 +90,8 @@ export type Item = {
 		updater: string | null;
 		updatedAt: number | null;
 	};
-} & { [dbClass: string]: Item | Item[] | { id: string } | { id: string }[] } & {
-	getRef: (dbClass: string) => Item | Item[] | { id: string } | { id: string }[];
+} & { [dbClass: string]: Item | Item[] | { id: string } | { id: string }[] | undefined } & {
+	getRef: (dbClass: string) => Item | Item[] | undefined;
 };
 
 export type User = {

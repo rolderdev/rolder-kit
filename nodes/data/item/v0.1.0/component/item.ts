@@ -31,6 +31,7 @@ export default {
 
 		if (isChanged) subscribe(p, noodlNode);
 	},
+	subscribe: (p: Props, noodlNode) => subscribe(p, noodlNode),
 } as JsComponent;
 
 export const subscribe = async (p: Props, noodlNode: NoodlNode) => {

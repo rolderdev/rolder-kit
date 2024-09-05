@@ -17,7 +17,7 @@ const getTypedFetchScheme = () => {
 					dbClass: pipe(
 						string('"dbClass" must be string.'),
 						check((dbClass) => {
-							return !R.dbClasses?.[dbClass] ? false : true;
+							return R.dbClasses ? (!R.dbClasses?.[dbClass] ? false : true) : true;
 						}, `There is no such DB class.`)
 					),
 					order: optional(
