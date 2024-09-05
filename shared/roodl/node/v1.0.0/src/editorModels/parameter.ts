@@ -117,9 +117,14 @@ export const getConverted = (model: GraphModelNode, context: NodeContext, inputD
 				evalFunc = eval(value as string);
 				// evalFunc - функция, то просто возвращаем. Если объект, то нужно выполнить функцию, проверить, что вернулся объект и вернуть его.
 				if (inputDef.type === 'objectEval') evalFunc = evalFunc?.(model.parametersCache);
-				clearWarning(model, context, 'convert', inputDef.displayName);
+				// Исключим для runtime.
+				if (!Noodl.deployed) clearWarning(model, context, 'convert', inputDef.displayName);
 			} catch (error) {
-				sendWarning(model, context, 'convert', inputDef.displayName, `Input "${inputDef.displayName}" error:<br/>${error}`);
+				// Исключим для runtime.
+				if (!Noodl.deployed)
+					sendWarning(model, context, 'convert', inputDef.displayName, `Input "${inputDef.displayName}" error:<br/>${error}`);
+				// Но отправим в консоль.
+				log.error(`Input "${inputDef.displayName}" error:<br/>${error}`);
 			}
 
 			return evalFunc;

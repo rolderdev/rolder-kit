@@ -61,7 +61,7 @@ export default {
 		// Нужно дождаться инициализации сети в R.db
 		await new Promise((resolve) => {
 			const interval = setInterval(async () => {
-				if (R.db?.states?.network) {
+				if (R.db?.states?.network?.connected !== undefined) {
 					clearInterval(interval);
 					await initialize(p, noodlNode);
 					resolve(undefined);
