@@ -1,5 +1,6 @@
 import type { PortDef } from '@shared/port-v1.0.0';
 import type { Item } from '@shared/types-v0.1.0';
+import type { Warnings } from './src/editorModels/warning';
 
 export { jsNode, reactNode } from './src/node';
 
@@ -57,15 +58,13 @@ export type RoodlNode = {
 	displayName: string;
 	docs?: string;
 
-	propsCache?: { [x: string]: any };
-	outputPropValues?: { [x: string]: any };
+	props?: Props;
+	outputPropValues?: Props;
 	firstRun?: boolean;
 	scheduledRun?: boolean;
 	scheduledModuleRun?: boolean;
 
-	_inputValues?: { [x: string]: any };
-	//_internal?: any;
-	props?: { [x: string]: any };
+	_inputValues?: Props;
 	setValue?(inputName: string, value: any): void;
 	initialize(): void;
 	getInspectInfo?(): void;
@@ -242,6 +241,7 @@ export type GraphModel = {
 export type GraphModelNode = {
 	firstRun: boolean;
 	parametersCache: Props;
+	warnings: Warnings;
 
 	children: GraphModelNode[];
 	component: any;

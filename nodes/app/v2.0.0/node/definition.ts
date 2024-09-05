@@ -47,13 +47,11 @@ export default {
 			type: 'string',
 		}),
 	],
-	getInspectInfo(p, outProps) {
-		if (outProps.networkConnected && outProps.networkType)
-			return [
-				{ type: 'value', value: `Network connected: ${outProps.networkConnected}` },
-				{ type: 'value', value: `Network type: ${outProps.networkType}` },
-			];
-		else return [];
-	},
+	getInspectInfo: (p, outProps) =>
+		outProps.networkConnected &&
+		outProps.networkType && [
+			{ type: 'value', value: `Network connected: ${outProps.networkConnected}` },
+			{ type: 'value', value: `Network type: ${outProps.networkType}` },
+		],
 	disableCustomProps: true,
 } satisfies ReactNodeDef;

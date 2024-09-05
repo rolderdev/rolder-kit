@@ -1,5 +1,5 @@
 import type { GraphModelNode, JsNodeVersions, NodeContext, ReactNodeVersions } from '../../main';
-import { sendWarning } from './warning';
+import { clearWarning, sendWarning } from './warning';
 
 // Валидация всей ноды.
 export const validateNode = async (model: GraphModelNode, context: NodeContext, versions: JsNodeVersions | ReactNodeVersions) => {
@@ -7,8 +7,8 @@ export const validateNode = async (model: GraphModelNode, context: NodeContext, 
 	if (nodeDef.validate) {
 		const validateResult = await nodeDef.validate(model.parametersCache, model);
 		// Если разработчик вернул свой текст ошибки.
-		if (typeof validateResult === 'string') sendWarning(model, context, '', validateResult);
+		if (typeof validateResult === 'string') sendWarning(model, context, 'global', 'global', validateResult);
 		// Сброс ошибки
-		if (validateResult === true) context.editorConnection.clearWarnings(model.component.name, model.id);
+		if (validateResult === true) clearWarning(model, context, 'global', 'global');
 	}
 };

@@ -18,7 +18,7 @@ import { getVersionPort, validateVersion } from './editorModels/version';
 import { getConverted } from './editorModels/parameter';
 import { getModule } from './runtimeModels/module';
 import { getNodeInputDefs, handleNodePorts } from './editorModels/nodePort';
-import { clearWarning, hasWarnings } from './editorModels/warning';
+import { hasWarnings } from './editorModels/warning';
 import { schedule } from './runtimeModels/schedule';
 
 const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersions, docs?: string) =>
@@ -58,14 +58,14 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 								//console.log('from connection', nodeName, inputName, value);
 								this.props[inputName] = value;
 								// Уберем ошибку, если приелетело значение с порта. Это не работает в обратную сторону.
-								if (!Noodl.deployed && value !== undefined) clearWarning(this.model, this.context, inputDef.displayName);
+								//if (!Noodl.deployed && value !== undefined) clearWarning(this.model, this.context, inputDef.displayName);
 							} else {
 								// Значение пришло с редактора. Не отрабатывает дефолты редактора.
 								//console.log('from editor', nodeName, inputName, value, this.props.noodlNode);
 								this.props[inputName] = getConverted(this.model, this.context, inputDef);
 							}
 
-							if (!Noodl.deployed && hasWarnings(this.model, this.context)) return;
+							if (!Noodl.deployed && hasWarnings(this.model)) return;
 							else schedule(this, nodeDef, inputDef, inputDef.type === 'signal' && value === true);
 						}
 					},
@@ -84,6 +84,9 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 			const versionPort = getVersionPort(versions);
 
 			graphModel.on(`nodeAdded.rolder-kit.api-v1.${nodeName}`, async function (model: GraphModelNode) {
+				model.parametersCache = {};
+				model.warnings = new Map();
+
 				if (!model.parameters.version) {
 					context.editorConnection.sendDynamicPorts(model.id, [versionPort]);
 					validateVersion(model, context);

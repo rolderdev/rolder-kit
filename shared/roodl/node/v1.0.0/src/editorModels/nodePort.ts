@@ -23,9 +23,9 @@ export const handleNodePorts = async (
 
 	prepareParameters(model, context, versions);
 	setNodePorts(model, context, versions);
-	if (hasWarnings(model, context)) return;
+	if (hasWarnings(model, 'convert') || hasWarnings(model, 'type')) return;
 	validateParameterValues(model, context, versions);
-	if (hasWarnings(model, context)) return;
+	if (hasWarnings(model, 'value')) return;
 	if (nodeDef.transform) {
 		const ports = nodeDef.transform(
 			model.parametersCache,
@@ -38,7 +38,7 @@ export const handleNodePorts = async (
 			setNodePorts(model, context, versions);
 		}
 	}
-	if (hasWarnings(model, context)) return;
+	if (hasWarnings(model, 'convert') || hasWarnings(model, 'type')) return;
 	await validateNode(model, context, versions);
 };
 

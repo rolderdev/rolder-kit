@@ -3,9 +3,6 @@ import type { GraphModelNode, JsNodeVersions, NodeContext, ReactNodeVersions } f
 import { clearWarning, hasWarnings, sendWarning } from './warning';
 
 export const prepareParameters = (model: GraphModelNode, context: NodeContext, versions: JsNodeVersions | ReactNodeVersions) => {
-	model.parametersCache = {};
-	context.editorConnection.clearWarnings(model.component.name, model.id);
-
 	const inputDefs = versions[model.parameters.version].inputs || [];
 	// Простые инпуты, не требующие конвертации.
 	const literalInputDefs = inputDefs.filter((i) =>
@@ -17,15 +14,16 @@ export const prepareParameters = (model: GraphModelNode, context: NodeContext, v
 	setParameters(model, inputDefs);
 	// Сконвертируем простые типы.
 	literalInputDefs.forEach((inputDef) => (model.parametersCache[inputDef.name] = getConverted(model, context, inputDef)));
-	if (hasWarnings(model, context)) return;
+	if (hasWarnings(model, 'convert')) return;
 	// Валидируем простык типы.
 	literalInputDefs.forEach((inputDef) => validateType(model, context, inputDef));
-	if (hasWarnings(model, context)) return;
+	if (hasWarnings(model, 'type')) return;
 	// Сконвертируем сложные типы.
 	complexInputDefs.forEach((inputDef) => (model.parametersCache[inputDef.name] = getConverted(model, context, inputDef)));
-	if (hasWarnings(model, context)) return;
+	if (hasWarnings(model, 'convert')) return;
 	// Валидируем сложные типы.
 	complexInputDefs.forEach((inputDef) => validateType(model, context, inputDef));
+	if (hasWarnings(model, 'type')) return;
 };
 
 // Установка значений с параметров портов.
@@ -52,6 +50,7 @@ export const validateType = (model: GraphModelNode, context: NodeContext, inputD
 		sendWarning(
 			model,
 			context,
+			'type',
 			inputDef.displayName,
 			`Input "${inputDef.displayName}" type error:<br/>Expect "${defType}", got "${valueType}".`
 		);
@@ -74,7 +73,7 @@ export const validateType = (model: GraphModelNode, context: NodeContext, inputD
 				// Для funcEval нужно заменить тип в сообщении, чтобы слово eval не смущало разработчика.
 				if (defType === 'funcEval') {
 					if (valueType !== 'function') sendTypeWarning('function', valueType);
-					else clearWarning(model, context, inputDef.displayName);
+					else clearWarning(model, context, 'type', inputDef.displayName);
 					return;
 				}
 
@@ -84,22 +83,23 @@ export const validateType = (model: GraphModelNode, context: NodeContext, inputD
 						sendWarning(
 							model,
 							context,
+							'type',
 							inputDef.displayName,
 							`Input "${inputDef.displayName}" type error:<br/>Must be function with "object" return type, got "${valueType}" return type.`
 						);
-					else clearWarning(model, context, inputDef.displayName);
+					else clearWarning(model, context, 'type', inputDef.displayName);
 					return;
 				}
 
 				// Здесь все литералы.
 				if (defType !== valueType) sendTypeWarning(defType, valueType);
-				else clearWarning(model, context, inputDef.displayName);
+				else clearWarning(model, context, 'type', inputDef.displayName);
 			}
 
 			// enum.
 			if (Array.isArray(defType)) {
 				if (valueType !== 'string') sendTypeWarning('string', valueType);
-				else clearWarning(model, context, inputDef.displayName);
+				else clearWarning(model, context, 'type', inputDef.displayName);
 			}
 		}
 	}
@@ -117,9 +117,9 @@ export const getConverted = (model: GraphModelNode, context: NodeContext, inputD
 				evalFunc = eval(value as string);
 				// evalFunc - функция, то просто возвращаем. Если объект, то нужно выполнить функцию, проверить, что вернулся объект и вернуть его.
 				if (inputDef.type === 'objectEval') evalFunc = evalFunc?.(model.parametersCache);
-				clearWarning(model, context, inputDef.displayName);
+				clearWarning(model, context, 'convert', inputDef.displayName);
 			} catch (error) {
-				sendWarning(model, context, inputDef.displayName, `Input "${inputDef.displayName}" error:<br/>${error}`);
+				sendWarning(model, context, 'convert', inputDef.displayName, `Input "${inputDef.displayName}" error:<br/>${error}`);
 			}
 
 			return evalFunc;
@@ -143,11 +143,11 @@ export const validateParameterValues = (
 		if (model.component.connections.some((i: any) => i.targetId === model.id && i.targetPort === inputDef.name)) return;
 		const validateResult = inputDef.validate?.(model.parametersCache);
 		// Если разработчик вернул свой текст ошибки.
-		if (typeof validateResult === 'string') sendWarning(model, context, inputDef.displayName, validateResult);
+		if (typeof validateResult === 'string') sendWarning(model, context, 'value', inputDef.displayName, validateResult);
 		// Стандартный текст ошибки, если рзработчик вернул false.
 		if (validateResult === false)
-			sendWarning(model, context, inputDef.displayName, `Input "${inputDef.displayName}" is required.`);
+			sendWarning(model, context, 'value', inputDef.displayName, `Input "${inputDef.displayName}" is required.`);
 		// Сброс ошибки
-		if (validateResult === true) clearWarning(model, context, inputDef.displayName);
+		if (validateResult === true) clearWarning(model, context, 'value', inputDef.displayName);
 	}
 };
