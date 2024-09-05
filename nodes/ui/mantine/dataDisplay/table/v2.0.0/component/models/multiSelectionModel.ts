@@ -31,6 +31,7 @@ export const setSelectedIds = (s: Store, newSelectedRecords: TableRecord[], isDe
 
 const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 	const currentTableNodes = s.records.map((i) => useNode(s, i.id, 'store')).filter((i) => i !== undefined) as Node[];
+	const filterFunc = s.tableProps.multiSelection.filterFunc;
 
 	// Проставим состояние выбора текущей таблице.
 	for (const node of currentTableNodes) {
@@ -52,7 +53,9 @@ const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 				// Нужно не трогать полупокеров.
 				if (parentState?.value !== 'indeterminate') {
 					const descendantItemState = descendantNode.selectionState;
-					if (parentState && descendantItemState) descendantItemState.value = parentState.value;
+					// Применим функцию фильтрации разработчика, если есть. Это нужно только для наследников.
+					const isFiltered = filterFunc ? !filterFunc(descendantNode.item(), descendantNode) : false;
+					if (!isFiltered && parentState && descendantItemState) descendantItemState.value = parentState.value;
 				}
 			}
 		}
