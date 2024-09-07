@@ -58,6 +58,7 @@ export const PortDef = pipe(
 		codeComment: optional(string()),
 		visibleAt: optional(picklist(['editor', 'connection', 'both'])),
 		tooltip: optional(string()),
+		multiline: optional(boolean()),
 		dependsOn: optional(function_()),
 		validate: optional(function_()),
 		transform: optional(any()),

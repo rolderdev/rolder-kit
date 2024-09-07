@@ -61,15 +61,15 @@ export default {
 	},
 	validate: async (p: Props, model) => validate(p, model),
 	initialize: async (p: Props, noodlNode) => {
-		// Нужно дождаться инициализации Kuzzle
+		// Нужно дождаться инициализации Kuzzle и компоненты.
 		await new Promise((resolve) => {
 			const interval = setInterval(async () => {
-				if (R.libs.Kuzzle) {
+				if (R.libs.Kuzzle && noodlNode.innerReactComponentRef) {
 					clearInterval(interval);
 					await initialize(p, noodlNode);
 					resolve(undefined);
 				}
-			}, 10);
+			}, 50);
 		});
 	},
 	disableCustomProps: true,

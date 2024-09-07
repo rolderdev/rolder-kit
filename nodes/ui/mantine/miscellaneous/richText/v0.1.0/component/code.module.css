@@ -1,0 +1,3 @@
+.code :where(code) {
+	background-color: var(--mantine-color-gray-3);
+}

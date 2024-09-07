@@ -58,15 +58,15 @@ export default {
 			noodlNode._internal.port && { type: 'value', value: `Host: ${noodlNode._internal.host}:${noodlNode._internal.port}` },
 	],
 	initialize: async (p: Props, noodlNode) => {
-		// Нужно дождаться инициализации сети в R.db
+		// Нужно дождаться инициализации сети в R.db и когда нудл создаст компоненту.
 		await new Promise((resolve) => {
 			const interval = setInterval(async () => {
-				if (R.db?.states?.network?.connected !== undefined) {
+				if (R.db?.states?.network?.connected !== undefined && noodlNode.innerReactComponentRef) {
 					clearInterval(interval);
 					await initialize(p, noodlNode);
 					resolve(undefined);
 				}
-			}, 10);
+			}, 50);
 		});
 	},
 	disableCustomProps: true,

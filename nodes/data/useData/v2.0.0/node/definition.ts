@@ -100,7 +100,7 @@ export default {
 	transform(p: Props, portDefs) {
 		// Пересоздание outputDbClasses
 		const dbClasses = p.outputDbClasses;
-		portDefs.outputs = portDefs.outputs.filter((i) => !i.group.includes('Data:'));
+		portDefs.outputs = portDefs.outputs.filter((i) => !i.group?.includes('Data:'));
 		if (dbClasses)
 			dbClasses.map((dbClass) => {
 				portDefs.outputs.push({
@@ -152,7 +152,7 @@ export default {
 					p.store = getStore(p);
 					resolve(undefined);
 				}
-			}, 10);
+			}, 50);
 		});
 	},
 	getInspectInfo: (p: Props) => [

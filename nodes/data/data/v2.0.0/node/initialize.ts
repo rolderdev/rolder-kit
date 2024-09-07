@@ -35,7 +35,7 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 	}
 
 	R.libs.Kuzzle = kuzzle;
-	noodlNode.innerReactComponentRef?.setInitState(true);
+	noodlNode.innerReactComponentRef.setInitState(true);
 	sendSignal(noodlNode, 'initialized');
 
 	log.info('R', R);

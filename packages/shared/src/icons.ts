@@ -100,5 +100,8 @@ export {
 	IconFilter,
 	IconSpeakerphone,
 	IconFolderRoot,
+	IconSourceCode,
+	IconFlask,
+	IconRocket,
 } from '@tabler/icons-react';
 export type { IconProps } from '@tabler/icons-react';

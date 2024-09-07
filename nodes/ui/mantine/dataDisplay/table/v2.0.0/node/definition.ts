@@ -109,12 +109,10 @@ export default {
 	module: { dynamic: lazy(() => import('../component/TableProvider')) },
 	inputs,
 	outputs,
-	getInspectInfo(p: Props) {
-		return [
-			{ type: 'text', value: `=== Columns ===` },
-			{ type: 'value', value: p.columnsDefinition },
-		];
-	},
+	getInspectInfo: (p: Props) => [
+		{ type: 'text', value: `=== Columns ===` },
+		{ type: 'value', value: p.columnsDefinition },
+	],
 	initialize: async (p: Props, noodlNode) => {
 		p.store = getStore(p, noodlNode);
 	},

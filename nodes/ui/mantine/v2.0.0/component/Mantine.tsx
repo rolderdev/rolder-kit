@@ -1,8 +1,9 @@
-import { ColorSchemeScript, createTheme, MantineProvider } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { Notifications } from '@mantine/notifications';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import type { Props } from '../node/definition';
+import colorSchemeManager from './colorSchemeManager';
 
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
@@ -12,11 +13,14 @@ import './body.module.css';
 export default forwardRef(function (p: Props) {
 	const { notificationsPosition, defaultColorScheme, mantineTheme } = p;
 
+	useEffect(() => {
+		R.db?.states.params.set('colorScheme', () => defaultColorScheme);
+	}, [defaultColorScheme]);
+
 	const theme = createTheme(mantineTheme);
 	return (
 		<>
-			<ColorSchemeScript defaultColorScheme={defaultColorScheme} />
-			<MantineProvider theme={theme} defaultColorScheme={defaultColorScheme}>
+			<MantineProvider theme={theme} colorSchemeManager={colorSchemeManager}>
 				<Notifications position={notificationsPosition} />
 				<DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 1 }}>{p.children}</DatesProvider>
 			</MantineProvider>
