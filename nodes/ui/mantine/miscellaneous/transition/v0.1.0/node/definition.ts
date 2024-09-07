@@ -11,6 +11,7 @@ export default {
 		getPortDef({ name: 'automount', displayName: 'Automount', group: 'Params', type: 'boolean', default: true }),
 		getPortDef({ name: 'keepMounted', displayName: 'Keep mounted', group: 'Params', type: 'boolean', default: true }),
 		getPortDef({ name: 'duration', displayName: 'Duration', group: 'Params', type: 'number', default: 250 }),
+		getPortDef({ name: 'enterDelay', displayName: 'Enter delay', group: 'Params', type: 'number', default: 0 }),
 		getPortDef({ name: 'exitDelay', displayName: 'Exit delay', group: 'Params', type: 'number', default: 50 }),
 		getPortDef({
 			name: 'transition',

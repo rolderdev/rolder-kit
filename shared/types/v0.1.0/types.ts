@@ -2,7 +2,7 @@ import type { NoodlNode } from '@shared/node-v1.0.0';
 import type { Kuzzle } from 'kuzzle-sdk';
 import type { RxDatabase, HyperDX, Rxdb } from '@nodes/app-v2.0.0';
 import type { Icons, Utils } from 'shared';
-import type { Deepmerge, Lodash, Nanoid, Omgopass, Remeda, Sort } from 'shared/src/libs';
+import type { Lodash, Nanoid, Omgopass, Remeda, Sort } from 'shared/src/libs';
 import type { Mantine } from '@nodes/mantine-v2.0.0';
 import type { Nodes } from '@nodes/use-data-v2.0.0';
 import type { Just } from 'shared/src/libs/just';
@@ -50,7 +50,7 @@ type Rolder = {
 		just: Just;
 		lodash: Lodash;
 		remeda: Remeda;
-		deepmerge: Deepmerge;
+		deepMutation: any;
 		nanoid: Nanoid;
 		sort: Sort;
 		valibot: Valibot;

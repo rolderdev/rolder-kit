@@ -73,6 +73,7 @@ export default forwardRef(function (p: Props, ref) {
 				setIsEditor(!isEditor);
 				editor && editor.commands.setContent(p.content || '');
 			},
+			clear: (p: Props) => editor && editor.commands.clearContent(),
 		}),
 		[isEditor, editor]
 	);

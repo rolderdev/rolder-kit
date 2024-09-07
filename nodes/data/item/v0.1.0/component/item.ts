@@ -1,85 +1,103 @@
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import type { MetaData } from '@nodes/table-v2.0.0';
-import type { BaseProps, Props } from '../node/definition';
+import type { Props, Store } from '../node/definition';
 import type { JsComponent, NoodlNode } from '@shared/node-v1.0.0';
 
-export const initStore = async (p: Props) =>
+export const initStore = (p: Props) =>
 	({
-		source: p.source,
-		itemId: p.itemId,
-		fields: p.fields,
-	} satisfies BaseProps);
+		fields: p.fields, // Сравнивать есть смысл только поля, так как подписка на item работает одинаково при любом источнике.
+		subscribes: new Map(),
+	} satisfies Store);
 
 export default {
 	reactive: (p: Props, noodlNode) => {
 		const s = p.propsStore;
-		// Перезапустим подписку при изменении параметров. Это порождает доп. подписки, т.к. нет отмены.
-		let isChanged = false;
 
-		if (p.source !== s.source) {
-			s.source = p.source;
-			isChanged = true;
-		}
-		if (p.itemId !== s.itemId) {
-			s.itemId = p.itemId;
-			isChanged = true;
-		}
-		if (!R.libs.just.compare(p.fields, s.fields)) {
-			s.fields = p.fields;
-			isChanged = true;
+		let metaData = noodlNode.nodeScope.componentOwner.metaData as MetaData | undefined;
+		let repeaterItemId = noodlNode.nodeScope.componentOwner._forEachModel?.id;
+		if (metaData) metaData.level++;
+
+		let itemId: string | undefined = undefined;
+
+		// Возьмем itemId из указанного источника, если его нет, организуем fallback.
+		switch (p.source) {
+			case 'specific':
+				itemId = p.itemId;
+				break;
+			case 'table':
+				itemId = metaData?.itemId;
+				break;
+			case 'repeater':
+				itemId = repeaterItemId;
+				break;
+			default:
+				p.itemId ? (itemId = p.itemId) : (itemId = repeaterItemId);
 		}
 
-		if (isChanged) subscribe(p, noodlNode);
+		if (itemId) {
+			s.itemId = itemId;
+			const item = R.items.get(itemId);
+
+			//// Сценарии пописки.
+			if (item) {
+				const subscribed = s.subscribes.get(item.id)?.subscribed;
+
+				// 1. Когда item есть сразу.
+				if (!subscribed) {
+					s.subscribes.set(itemId, { metaData });
+					subscribe(p, noodlNode);
+				} else {
+					// 2. При смене полей. Для удобства разработки, в runtime всегда равны.
+					if (!R.libs.just.compare(p.fields, s.fields)) {
+						s.fields = p.fields;
+						s.subscribes.set(itemId, { metaData });
+						subscribe(p, noodlNode);
+					}
+				}
+			} else {
+				// 3. Когда есть id, но еще нет item. Например, если id прилетает с параметров страницы.
+				const interval = setInterval(() => {
+					const i = R.items.get(itemId);
+					if (i) {
+						clearInterval(interval);
+						s.subscribes.set(itemId, { metaData });
+						subscribe(p, noodlNode);
+					}
+				}, 50);
+			}
+		}
 	},
-	subscribe: (p: Props, noodlNode) => subscribe(p, noodlNode),
 } as JsComponent;
 
 export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 	const { subscribe, derive } = R.libs.valtio;
+	const itemId = p.propsStore.itemId;
 
-	let itemId: string | undefined = undefined;
-	let metaData = noodlNode.nodeScope.componentOwner.metaData as MetaData | undefined;
-	let repeaterItemId = noodlNode.nodeScope.componentOwner._forEachModel?.id;
-	if (metaData) metaData.level++;
-
-	// Возьмем itemId из указанного источника, если его нет, организуем fallback.
-	switch (p.source) {
-		case 'specific':
-			itemId = p.itemId;
-			break;
-		case 'table':
-			itemId = metaData?.itemId;
-			break;
-		case 'repeater':
-			itemId = repeaterItemId;
-			break;
-		default:
-			p.itemId ? (itemId = p.itemId) : (itemId = repeaterItemId);
-	}
-
-	// Подпишемся на изменения item, если подписки этой ноды еще нет.
 	if (itemId) {
-		const item = R.items.get(itemId);
+		const sub = p.propsStore.subscribes.get(itemId);
+		if (sub && !sub.subscribed) {
+			sub.subscribed = true;
+			const item = R.items.get(itemId);
 
-		if (item) {
-			noodlNode._internal.item = item;
-			sendOutput(noodlNode, 'item', item);
-			sendSignal(noodlNode, 'itemChanged');
-
-			// Подпишемся на сам item.
-			subscribe(item, () => {
+			if (item) {
 				sendOutput(noodlNode, 'item', item);
 				sendSignal(noodlNode, 'itemChanged');
-			});
 
-			// Подпишемся на выбранные разработчиком поля.
-			// Возьмем каждое поле и сделаем из него derive-прокси, что позволит реагировать только на поля.
-			p.fields?.map((field) => {
-				const derived = derive({ field: (get) => R.libs.just.get(get(item), field) });
-				sendOutput(noodlNode, field, derived.field);
+				// Подпишемся на сам item.
+				subscribe(item, () => {
+					sendOutput(noodlNode, 'item', item);
+					sendSignal(noodlNode, 'itemChanged');
+				});
 
-				subscribe(derived, () => sendOutput(noodlNode, field, derived.field));
-			});
+				// Подпишемся на выбранные разработчиком поля.
+				// Возьмем каждое поле и сделаем из него derive-прокси, что позволит реагировать только на поля.
+				p.fields?.map((field) => {
+					const derived = derive({ field: (get) => R.libs.just.get(get(item), field) });
+					sendOutput(noodlNode, field, derived.field);
+
+					subscribe(derived, () => sendOutput(noodlNode, field, derived.field));
+				});
+			}
 		}
 	}
 };

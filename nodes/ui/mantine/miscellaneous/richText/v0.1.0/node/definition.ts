@@ -42,6 +42,7 @@ export default {
 		getPortDef({ name: 'toggleEditor', displayName: 'Toggle editor', group: 'Signals', type: 'signal' }),
 		getPortDef({ name: 'restore', displayName: 'Restore content', group: 'Signals', type: 'signal' }),
 		getPortDef({ name: 'restoreAndToggle', displayName: 'Restore and toggle', group: 'Signals', type: 'signal' }),
+		getPortDef({ name: 'clear', displayName: 'Clear content', group: 'Signals', type: 'signal' }),
 	],
 	outputs: [
 		getPortDef({ name: 'html', displayName: 'HTML', group: 'Data', type: 'string' }),

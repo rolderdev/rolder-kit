@@ -13,9 +13,9 @@ export type Remeda = {
 };
 set(window, ['R', 'libs', 'remeda'], { uniqueWith });
 
-import deepmerge from '@fastify/deepmerge';
-export type Deepmerge = typeof deepmerge;
-set(window, ['R', 'libs', 'deepmerge'], deepmerge);
+//@ts-expect-error
+import deepMutation from 'deep-mutation';
+set(window, ['R', 'libs', 'deepMutation'], deepMutation);
 
 import { nanoid } from 'nanoid';
 export type Nanoid = typeof nanoid;
