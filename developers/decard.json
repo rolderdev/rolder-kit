@@ -17,7 +17,7 @@
 	},
 	"rkdocs": {
 		"projectDir": "/home/decard/projects/rkdocs",
-		"rolderKit": ["shared", "app", "mantine", "data", "markdown"]
+		"rolderKit": ["shared", "app", "mantine", "data"]
 	},
 	"playground": {
 		"projectDir": "/home/decard/projects/playground",

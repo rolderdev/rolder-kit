@@ -66,6 +66,18 @@ export default {
 		}),
 	],
 	outputs: [],
-	getInspectInfo: (p) => (p.mantineTheme ? [{ type: 'value', value: p.mantineTheme }] : []),
+	getInspectInfo: (p: Props) => (p.mantineTheme ? [{ type: 'value', value: p.mantineTheme }] : []),
+	initialize: async (p: Props) => {
+		// Нужно дождаться инициализации params в R.db
+		await new Promise((resolve) => {
+			const interval = setInterval(async () => {
+				if (R.db?.states.params !== undefined) {
+					clearInterval(interval);
+					await R.db?.states.params.set('colorScheme', () => p.defaultColorScheme);
+					resolve(undefined);
+				}
+			}, 50);
+		});
+	},
 	disableCustomProps: true,
 } satisfies ReactNodeDef;

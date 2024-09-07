@@ -29,8 +29,10 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	const { has, map } = R.libs.just;
 	const { fetchScheme, apiVersion } = p.store;
 
+	if (!fetchScheme) return;
+
 	const startTime = log.start();
-	log.info(`useData props: ${fetchScheme?.map((i) => i.dbClass).join(', ')}`, p);
+	log.info(`useData props: ${fetchScheme.map((i) => i.dbClass).join(', ')}`, p);
 
 	sendOutput(noodlNode, 'fetching', true);
 
@@ -53,18 +55,16 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	}
 
 	// Обновим items. Нужно сохранить во временном хранилище, т.к. выдавать их глобально нужно после построения иерархии.
-	map(data.items, (itemId, item) =>
-		//@ts-expect-error
-		p.store.items.set(itemId, {
-			...item,
-			getRef: (dbClass) => {
-				if (item[dbClass]) {
-					if (Array.isArray(item[dbClass])) return item[dbClass].map((i) => R.items.get(i.id)).filter((i) => !!i);
-					else return R.items.get(item[dbClass].id);
-				} else return undefined;
-			},
-		})
-	);
+	map(data.items, (itemId, item) => {
+		item.getRef = (dbClass) => {
+			const globalItem = R.items.get(itemId);
+			if (globalItem && globalItem[dbClass]) {
+				if (Array.isArray(globalItem[dbClass])) return globalItem[dbClass].map((i) => R.items.get(i.id)).filter((i) => !!i);
+				else return R.items.get(globalItem[dbClass].id);
+			} else return undefined;
+		};
+		p.store.items.set(itemId, item);
+	});
 
 	// Обновим хранилище схем для иерархи и серверных подписок.
 	// Каждая схема имеет свой список itemIds. В нем не могут совпадать id, но могут глобально.

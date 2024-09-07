@@ -1,0 +1,23 @@
+{
+	"name": "@nodes/rich-text-v0.1.0",
+	"main": "node/definition.ts",
+	"type": "module",
+	"dependencies": {
+		"@tiptap/react": "^2.6.6",
+		"@tiptap/pm": "^2.6.6",
+		"@tiptap/extension-link": "^2.6.6",
+		"@tiptap/starter-kit": "^2.6.6",
+		"@tiptap/extension-highlight": "^2.6.6",
+		"@tiptap/extension-underline": "^2.6.6",
+		"@tiptap/extension-text-align": "^2.6.6",
+		"@tiptap/extension-superscript": "^2.6.6",
+		"@tiptap/extension-subscript": "^2.6.6",
+		"@tiptap/extension-color": "^2.6.6",
+		"@tiptap/extension-text-style": "^2.6.6",
+		"@tiptap/extension-task-item": "^2.6.6",
+		"@tiptap/extension-task-list": "^2.6.6",
+		"@tiptap/extension-code-block-lowlight": "^2.6.6",
+		"highlight.js": "^11.10.0",
+		"lowlight": "^3.1.0"
+	}
+}

@@ -126,6 +126,13 @@ export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: s
 					...notif.result._source,
 					dbClass: schemeData.scheme.dbClass,
 					id: itemId,
+					getRef: (dbClass) => {
+						const globalItem = R.items.get(itemId);
+						if (globalItem && globalItem[dbClass]) {
+							if (Array.isArray(globalItem[dbClass])) return globalItem[dbClass].map((i) => R.items.get(i.id)).filter((i) => !!i);
+							else return R.items.get(globalItem[dbClass].id);
+						} else return undefined;
+					},
 				} as Item;
 
 				R.items.set(newRawItem.id, newRawItem);

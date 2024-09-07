@@ -1,12 +1,7 @@
 import { getPortDef, margins, paddings, sizes } from '@shared/port-v1.0.0';
 import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import type { Item } from '@shared/types-v0.1.0';
 
-export type Props = BaseReactProps & {
-	sourceType: 'item' | 'value';
-	value?: string;
-	item?: Item;
-};
+export type Props = BaseReactProps & {};
 
 import Comp from '../component/Stack';
 
@@ -58,6 +53,14 @@ export default {
 			type: [{ value: '0', label: 'none' }, ...sizes],
 			default: 'md',
 		}),
+		getPortDef({
+			name: 'opacity',
+			displayName: 'Opacity',
+			group: 'Styles',
+			type: 'number',
+			default: 1,
+		}),
+
 		...margins,
 		...paddings,
 	],

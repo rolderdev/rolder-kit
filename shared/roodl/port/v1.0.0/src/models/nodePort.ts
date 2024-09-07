@@ -29,7 +29,7 @@ export const NodePortSchema = pipe(
 		type: object({
 			// В отличии от PortDef, здесь только поддерживемые Roodl и используемые нами.
 			name: picklist(['*', 'string', 'number', 'boolean', 'array', 'object', 'signal', 'enum', 'proplist', 'component']),
-			//multiline: optional(boolean()), // Для текстового поля.
+			multiline: optional(boolean()), // Для текстового поля.
 			enums: optional(array(object({ value: string(), label: string() }))),
 			allowEditOnly: optional(boolean()),
 			allowConnectionsOnly: optional(boolean()),
@@ -55,6 +55,7 @@ export const getNodePort = (plug: NodePort['plug'], portDef: PortDef) => {
 	// Преобразуем тип порта для Roodl.
 	if (typeof portDef.type === 'string') {
 		if (['objectEval', 'funcEval'].includes(portDef.type)) nodePort.type = { name: 'array' };
+		else if (portDef.type === 'string' && portDef.multiline) nodePort.type = { name: 'string', multiline: true };
 		else nodePort.type = { name: portDef.type as any };
 	} else nodePort.type = { name: 'enum', enums: portDef.type };
 

@@ -5,6 +5,8 @@
 		"@nodes/table-v2.0.0": "workspace:*",
 		"@nodes/notification-v2.0.0": "workspace:*",
 		"@nodes/stack-v2.0.0": "workspace:*",
+		"@nodes/rich-text-v0.1.0": "workspace:*",
+		"@nodes/transition-v0.1.0": "workspace:*",
 		"@nodes/tooltip-v0.1.0": "workspace:*",
 		"@nodes/text-v2.0.0": "workspace:*"
 	}
