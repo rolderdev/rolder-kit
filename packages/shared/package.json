@@ -33,7 +33,7 @@
 		"numbro": "^2.5.0",
 		"omgopass": "^3.2.1",
 		"@tabler/icons-react": "^3.14.0",
-		"@fastify/deepmerge": "^2.0.0",
+		"deep-mutation": "^3.3.0",
 		"@shared/get-value-v0.8.0": "workspace:*",
 		"@shared/get-masked-v0.2.0": "workspace:*",
 		"@shared/get-formated-date-v0.2.0": "workspace:*",
