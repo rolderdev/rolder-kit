@@ -20,6 +20,7 @@ import { getModule } from './runtimeModels/module';
 import { getNodeInputDefs, handleNodePorts } from './editorModels/nodePort';
 import { hasWarnings } from './editorModels/warning';
 import { schedule } from './runtimeModels/schedule';
+import { validatePropValue } from './runtimeModels/prop';
 
 const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersions, docs?: string) =>
 	({
@@ -29,7 +30,6 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 		initialize: function () {
 			this.firstRun = true;
 			this.scheduledRun = false;
-			this.scheduledModuleRun = false;
 			this.props = {}; // Хранилище входных props.
 			this.outputPropValues = {}; // Хранилище выходных props.
 		},
@@ -57,8 +57,8 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 							if (this._hasInputBeenSetFromAConnection(inputName)) {
 								//console.log('from connection', nodeName, inputName, value);
 								this.props[inputName] = value;
-								// Уберем ошибку, если приелетело значение с порта. Это не работает в обратную сторону.
-								//if (!Noodl.deployed && value !== undefined) clearWarning(this.model, this.context, inputDef.displayName);
+								// Валидириуем значение в runtime, если не задеплоено.
+								if (!Noodl.deployed) validatePropValue(this, inputDef);
 							} else {
 								// Значение пришло с редактора. Не отрабатывает дефолты редактора.
 								//console.log('from editor', nodeName, inputName, value, this.props.noodlNode);

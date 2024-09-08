@@ -17,7 +17,11 @@ export default (p: Props, noodlNode: NoodlNode) => {
 	Node.setNodesProxy(p, flatNodes);
 
 	// После построения иерархии можно выдать items.
-	p.store.items.forEach((i) => R.items.set(i.id, i));
+	p.store.items.forEach((i) => {
+		const item = R.items.get(i.id);
+		if (!item) R.items.set(i.id, i);
+		else R.libs.lodash.merge(item, i);
+	});
 
 	if (p.subscribe) handleSubscribe(p);
 

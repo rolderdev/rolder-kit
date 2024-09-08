@@ -7,6 +7,8 @@ export const initStore = (p: Props) =>
 	({
 		fields: p.fields, // Сравнивать есть смысл только поля, так как подписка на item работает одинаково при любом источнике.
 		subscribes: new Map(),
+		unsubs: [],
+		deriveUnsubs: [],
 	} satisfies Store);
 
 export default {
@@ -35,7 +37,6 @@ export default {
 		}
 
 		if (itemId) {
-			s.itemId = itemId;
 			const item = R.items.get(itemId);
 
 			//// Сценарии пописки.
@@ -44,14 +45,29 @@ export default {
 
 				// 1. Когда item есть сразу.
 				if (!subscribed) {
+					s.currentItemId = itemId;
 					s.subscribes.set(itemId, { metaData });
 					subscribe(p, noodlNode);
 				} else {
 					// 2. При смене полей. Для удобства разработки, в runtime всегда равны.
 					if (!R.libs.just.compare(p.fields, s.fields)) {
+						s.currentItemId = itemId;
 						s.fields = p.fields;
+
 						s.subscribes.set(itemId, { metaData });
 						subscribe(p, noodlNode);
+
+						// При смене itemId, но присутствующей подписке, нужно обновить значения портов.
+					} else if (s.currentItemId !== itemId) {
+						s.currentItemId = itemId;
+
+						sendOutput(noodlNode, 'item', item);
+						sendSignal(noodlNode, 'itemChanged');
+
+						p.fields?.map((field) => {
+							const value = R.libs.just.get(item, field);
+							sendOutput(noodlNode, field, value !== undefined ? value : null);
+						});
 					}
 				}
 			} else {
@@ -60,6 +76,7 @@ export default {
 					const i = R.items.get(itemId);
 					if (i) {
 						clearInterval(interval);
+						s.currentItemId = itemId;
 						s.subscribes.set(itemId, { metaData });
 						subscribe(p, noodlNode);
 					}
@@ -71,7 +88,7 @@ export default {
 
 export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 	const { subscribe, derive } = R.libs.valtio;
-	const itemId = p.propsStore.itemId;
+	const itemId = p.propsStore.currentItemId;
 
 	if (itemId) {
 		const sub = p.propsStore.subscribes.get(itemId);
@@ -84,18 +101,23 @@ export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 				sendSignal(noodlNode, 'itemChanged');
 
 				// Подпишемся на сам item.
-				subscribe(item, () => {
-					sendOutput(noodlNode, 'item', item);
-					sendSignal(noodlNode, 'itemChanged');
-				});
+				p.propsStore.unsubs.push(
+					subscribe(item, () => {
+						sendOutput(noodlNode, 'item', item);
+						sendSignal(noodlNode, 'itemChanged');
+					})
+				);
 
 				// Подпишемся на выбранные разработчиком поля.
 				// Возьмем каждое поле и сделаем из него derive-прокси, что позволит реагировать только на поля.
 				p.fields?.map((field) => {
 					const derived = derive({ field: (get) => R.libs.just.get(get(item), field) });
-					sendOutput(noodlNode, field, derived.field);
+					sendOutput(noodlNode, field, derived.field !== undefined ? derived.field : null);
 
-					subscribe(derived, () => sendOutput(noodlNode, field, derived.field));
+					p.propsStore.deriveUnsubs.push(derived);
+					p.propsStore.unsubs.push(
+						subscribe(derived, () => sendOutput(noodlNode, field, derived.field !== undefined ? derived.field : null))
+					);
 				});
 			}
 		}

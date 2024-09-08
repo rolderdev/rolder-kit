@@ -60,9 +60,9 @@ export type RoodlNode = {
 
 	props?: Props;
 	outputPropValues?: Props;
+
 	firstRun?: boolean;
 	scheduledRun?: boolean;
-	scheduledModuleRun?: boolean;
 
 	_inputValues?: Props;
 	setValue?(inputName: string, value: any): void;
@@ -87,7 +87,6 @@ export type RoodlNode = {
 export type NoodlNode = {
 	firstRun?: boolean;
 	scheduledRun?: boolean;
-	scheduledModuleRun?: boolean;
 
 	hasOutput(name: string): boolean;
 	flagOutputDirty(name: string): boolean;

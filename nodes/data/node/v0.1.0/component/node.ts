@@ -13,12 +13,14 @@ export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 	// Подпишемся на изменения ноды иерархии.
 	const node = metaData?.nodePath ? R.nodes.get(metaData.nodePath) : undefined;
 
-	if (node) {
-		noodlNode._internal.node = node;
+	if (node && metaData?.nodePath) {
+		p.node = node;
+
 		sendOutput(noodlNode, 'node', snapshot(node));
 		sendSignal(noodlNode, 'nodeChanged');
 
-		subscribe(node, () => {
+		p.unsub = subscribe(node, () => {
+			console.log(metaData?.nodePath);
 			sendOutput(noodlNode, 'node', snapshot(node));
 			sendSignal(noodlNode, 'nodeChanged');
 		});

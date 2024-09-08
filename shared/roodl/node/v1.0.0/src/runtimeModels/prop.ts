@@ -1,5 +1,6 @@
 import type { PortDef } from '@shared/port-v1.0.0';
 import type { NodeDef, NoodlNode } from '../../main';
+import { clearWarning, sendWarning } from '../editorModels/warning';
 
 // Установка дефолтных значений для props, т.к. в  runtime дефолты с редактора не применяются.
 export const setPropDeafaults = (noodlNode: NoodlNode, nodeDef: NodeDef) => {
@@ -30,4 +31,24 @@ const getConverted = (noodlNode: NoodlNode, inputDef: PortDef, value: unknown) =
 			return evalFunc;
 		} else return value;
 	} else return value;
+};
+
+export const validatePropValue = (noodlNode: NoodlNode, inputDef: PortDef) => {
+	if (inputDef.validate) {
+		const validateResult = inputDef.validate(noodlNode.props);
+		// Если разработчик вернул свой текст ошибки.
+		if (typeof validateResult === 'string')
+			sendWarning(noodlNode.model, noodlNode.context, 'value', inputDef.displayName, validateResult);
+		// Стандартный текст ошибки, если рзработчик вернул false.
+		if (validateResult === false)
+			sendWarning(
+				noodlNode.model,
+				noodlNode.context,
+				'value',
+				inputDef.displayName,
+				`Input "${inputDef.displayName}" is required.`
+			);
+		// Сброс ошибки
+		if (validateResult === true) clearWarning(noodlNode.model, noodlNode.context, 'value', inputDef.displayName);
+	}
 };

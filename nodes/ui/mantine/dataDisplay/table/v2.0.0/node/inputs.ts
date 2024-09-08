@@ -31,7 +31,7 @@ export default [
 	}	
 ]*/
 `,
-		validate: (p: Props) => (p.columnsDefinition?.length ? validateColumns(p) : false),
+		validate: (p: Props) => (p.columnsDefinition ? validateColumns(p) : true),
 	}),
 	getPortDef({
 		name: 'items',
@@ -406,15 +406,6 @@ export default [
 		validate: (p: Props) => (p.expansion ? (p.expansionTemplate ? true : false) : true),
 	}),
 	getPortDef({
-		name: 'useExpansionHierarchy',
-		displayName: 'Use hierarchy',
-		group: 'Custom',
-		customGroup: 'Expansion',
-		type: 'boolean',
-		default: false,
-		dependsOn: (p: Props) => p.expansion && p.hierarchy,
-	}),
-	getPortDef({
 		name: 'allowMultiple',
 		displayName: 'Allow multiple',
 		group: 'Custom',
@@ -440,7 +431,7 @@ export default [
 		type: 'number',
 		default: 25,
 		tooltip: 'Enable animation loader on expansion when row children count is reached.',
-		dependsOn: (p: Props) => p.useExpansionHierarchy === true,
+		dependsOn: (p: Props) => p.hierarchy,
 	}),
 	getPortDef({
 		name: 'defaultExpandedItems',

@@ -1,7 +1,7 @@
 import { getKuzzle } from '@shared/get-kuzzle';
 import { sendOutput } from '@shared/port-send-v1.0.0';
 import type { Item } from '@shared/types-v0.1.0';
-import type { JSONObject, ResponsePayload } from 'kuzzle-sdk';
+import type { JSONObject, ResponsePayload } from '@nodes/data-v2.0.0';
 import handleDataChanges from './handleDataChanges';
 import type { SchemeData } from '../node/store';
 import type { Props } from '../node/definition';
@@ -27,7 +27,7 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	}
 
 	const { has, map } = R.libs.just;
-	const { fetchScheme, apiVersion } = p.store;
+	const fetchScheme = p.store.fetchScheme;
 
 	if (!fetchScheme) return;
 
@@ -40,7 +40,7 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 
 	// Отловим неавторизованную сессию здесь дополнительно, т.к. useData в отличии от UseData вполне может запуститься до проверки авторизации.
 	try {
-		response = await K.query({ controller: 'rolder', action: `fetch_${apiVersion}`, dbName, fetchScheme });
+		response = await K.query({ controller: 'rolder', action: `fetch_${p.store.apiVersion}`, dbName, fetchScheme });
 	} catch (e: any) {
 		log.error('useData fetch error.', e);
 		if (e.code === 117506049) R.db?.states.auth?.set('signedIn', () => false);
