@@ -14,6 +14,8 @@ export default memo((p: { id: string; columnIdx: string }) => {
 	const itemSnap = useItem(p.id, 'snap');
 
 	useEffect(() => {
+		let unsub: () => void;
+
 		const column: Column = R.libs.just.get(store, ['columnsDefinition', p.columnIdx]);
 		const custom = column.custom;
 		if (itemSnap && custom) {
@@ -26,7 +28,7 @@ export default memo((p: { id: string; columnIdx: string }) => {
 			if (getValue && watchItems) {
 				try {
 					let watchItemsCount = 0;
-					R.libs.valtio.watch((get) => {
+					unsub = R.libs.valtio.watch((get) => {
 						watchItems.map((i: Item) => {
 							get(i);
 							watchItemsCount++;
@@ -59,6 +61,8 @@ export default memo((p: { id: string; columnIdx: string }) => {
 				}
 			}
 		}
+
+		return () => unsub();
 	}, []);
 
 	// Расчет отсупа функцией разработчика.

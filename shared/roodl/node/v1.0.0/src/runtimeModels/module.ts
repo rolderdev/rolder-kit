@@ -14,7 +14,6 @@ export const runModule = async (noodlNode: NoodlNode, nodeDef: JsNodeDef, inputD
 			else if (noodlNode.firstRun) await runModuleFunc(nodeDef, noodlNode);
 		}
 	} else await runModuleFunc(nodeDef, noodlNode, inputDef.name);
-	noodlNode.scheduledModuleRun = false; // Вернем возможность запуска модуля.
 };
 
 // Нет имени сигнала, берем реактивную функцию. Иначе берем по имени сигнала.

@@ -2,7 +2,7 @@
 
 import type { Store } from '../../node/store';
 
-export type MetaData = { itemId: string; nodePath: string; level: number };
+export type MetaData = { itemId: string; nodePath?: string; level: number };
 
 export default async (s: Store, id: string, template: string, metaData: MetaData) => {
 	const noodlNode = s.noodlNode;

@@ -16,7 +16,7 @@ export type Props = BaseProps & {
 export type Store = { signedIn: boolean | undefined; isLeader: boolean; refreshInterval?: NodeJS.Timeout };
 
 export default {
-	hashTag: '#expreimental',
+	hashTag: '#pre-release',
 	module: { dynamic: lazy(() => import('../component/Auth')) },
 	inputs: [
 		getPortDef({

@@ -11,7 +11,6 @@ export type Props = BaseJsProps & BaseProps & { store: Store };
 
 export type BaseProps = {
 	apiVersion: 'v2';
-	// Весь тип схемы не нужен, т.к. она полностью передается в Kuzzle.
 	fetchScheme?: FetchScheme;
 	outputDbClasses?: string[];
 	controlled: boolean;
@@ -21,7 +20,7 @@ export type BaseProps = {
 export type { Nodes, NodeSelectionState, SelectionState };
 
 export default {
-	hashTag: '#expreimental',
+	hashTag: '#pre-release',
 	module: { dynamic: import('../component/useData') },
 	inputs: [
 		getPortDef({
@@ -37,7 +36,7 @@ export default {
 			displayName: 'Fetch scheme',
 			group: 'Params',
 			type: 'array',
-			validate: (p: Props) => (!p.fetchScheme?.length ? false : validateFetchScheme(p)),
+			validate: (p: Props) => (p.fetchScheme ? validateFetchScheme(p) : true),
 		}),
 		getPortDef({
 			name: 'controlled',
@@ -80,6 +79,13 @@ export default {
 				}
 				return true;
 			},
+		}),
+		getPortDef({
+			name: 'resetNodesSelection',
+			displayName: 'Reset nodes selection',
+			group: 'Custom',
+			customGroup: 'Selection',
+			type: 'signal',
 		}),
 	],
 	outputs: [
@@ -143,7 +149,7 @@ export default {
 		return portDefs;
 	},
 	triggerOnInputs: () => ['apiVersion', 'fetchScheme', 'controlled', 'subscribe'],
-	initialize: async (p: Props) => {
+	initialize: async (p: Props, noodlNode) => {
 		// Нужно дождаться инициализации Kuzzle.
 		await new Promise((resolve) => {
 			const interval = setInterval(() => {

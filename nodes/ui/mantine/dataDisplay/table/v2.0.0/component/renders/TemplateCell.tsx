@@ -11,12 +11,11 @@ export default memo((p: { id: string; columnIdx: string }) => {
 	const [templateCell, setTemplateCell] = useState<React.ReactNode | undefined>(undefined);
 	useEffect(() => {
 		const nodePath = store.hierarchy.tableNode?.childNodes().find((i) => i.itemId === p.id)?.path;
-		if (nodePath)
-			getRoodlReactNode(store, p.id, R.libs.just.get(store.columnsDefinition, [p.columnIdx, 'template']), {
-				itemId: p.id,
-				level: store.hierarchy.level,
-				nodePath,
-			}).then((reactNode) => setTemplateCell(reactNode));
+		getRoodlReactNode(store, p.id, R.libs.just.get(store.columnsDefinition, [p.columnIdx, 'template']), {
+			itemId: p.id,
+			level: store.hierarchy.level,
+			nodePath,
+		}).then((reactNode) => setTemplateCell(reactNode));
 	}, []);
 
 	// snapshot без подписки для передачи в функции.

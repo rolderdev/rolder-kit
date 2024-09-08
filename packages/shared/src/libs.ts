@@ -2,20 +2,16 @@ import { set } from './libs/just';
 
 // lodash
 import unset from 'lodash.unset';
-export type Lodash = { unset: typeof unset };
-set(window, ['R', 'libs', 'lodash'], { unset });
+import merge from 'lodash.merge';
+const lodash = { unset, merge };
+export type Lodash = typeof lodash;
+set(window, ['R', 'libs', 'lodash'], lodash);
 
 // remeda
 import { uniqueWith } from 'remeda';
-export type Remeda = {
-	// array
-	uniqueWith: typeof uniqueWith;
-};
-set(window, ['R', 'libs', 'remeda'], { uniqueWith });
-
-//@ts-expect-error
-import deepMutation from 'deep-mutation';
-set(window, ['R', 'libs', 'deepMutation'], deepMutation);
+const remeda = { uniqueWith };
+export type Remeda = typeof remeda;
+set(window, ['R', 'libs', 'remeda'], remeda);
 
 import { nanoid } from 'nanoid';
 export type Nanoid = typeof nanoid;

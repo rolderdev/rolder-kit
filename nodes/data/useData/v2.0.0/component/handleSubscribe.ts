@@ -1,10 +1,10 @@
-import type { DocumentNotification } from 'kuzzle-sdk';
 import { getKuzzle } from '@shared/get-kuzzle';
 import { dbClassVersion } from '@shared/get-dbclass-version';
 import type { Item } from '@shared/types-v0.1.0';
 import type { Props } from '../node/definition';
 import handleDataChanges from './handleDataChanges';
 import type { NoodlNode } from '@shared/node-v1.0.0';
+import type { DocumentNotification } from '@nodes/data-v2.0.0';
 
 export type Notification = DocumentNotification & { result: { _updatedFields: string[] } };
 const subDelay = 50;
@@ -135,7 +135,10 @@ export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: s
 					},
 				} as Item;
 
-				R.items.set(newRawItem.id, newRawItem);
+				const item = R.items.get(itemId);
+				if (!item) R.items.set(newRawItem.id, newRawItem);
+				else R.libs.lodash.merge(item, newRawItem);
+
 				schemeData.itemIds.push(newRawItem.id);
 
 				// Нужно сменить сортировку в itemIds.

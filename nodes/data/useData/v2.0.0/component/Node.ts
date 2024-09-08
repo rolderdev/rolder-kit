@@ -42,7 +42,8 @@ export default class Node {
 		this.itemId = itemId;
 		this.parentId = parentId;
 		this.parentPath = parentPath;
-		this.selectionState = ref(R.nodes.get(path)?.selectionState || proxy({ value: 'notSelected' }));
+		// Нужен ref при первичном создании, чтобы изменение выбора не тригерило всю ноду.
+		this.selectionState = ref(proxy({ value: 'notSelected' }));
 		this.aggregations = aggregations;
 	}
 

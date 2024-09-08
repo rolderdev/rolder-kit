@@ -2,7 +2,7 @@ import { RichTextEditor } from '@mantine/tiptap';
 import type { Props } from '../node/definition';
 
 export default (p: Props & { editor: any }) => {
-	const { IconSourceCode, IconFlask, IconRocket } = R.libs.icons;
+	const { IconSourceCode, IconFlask, IconRocket, IconCheck, IconBan } = R.libs.icons;
 
 	return (
 		<RichTextEditor.Toolbar sticky={p.sticky} stickyOffset={p.stickyOffset}>
@@ -71,6 +71,20 @@ export default (p: Props & { editor: any }) => {
 					title="#pre-release"
 				>
 					<IconRocket stroke={1.25} size="1rem" />
+				</RichTextEditor.Control>
+				<RichTextEditor.Control
+					onClick={() => p.editor?.commands.insertContent('<span style="color: #37B24D"><sup>#release</sup></span>')}
+					aria-label="#release"
+					title="#release"
+				>
+					<IconCheck stroke={1.25} size="1rem" />
+				</RichTextEditor.Control>
+				<RichTextEditor.Control
+					onClick={() => p.editor?.commands.insertContent('<span style="color: #868e96"><sup>#deprecated</sup></span>')}
+					aria-label="#deprecated"
+					title="#deprecated"
+				>
+					<IconBan stroke={1.25} size="1rem" />
 				</RichTextEditor.Control>
 			</RichTextEditor.ControlsGroup>
 

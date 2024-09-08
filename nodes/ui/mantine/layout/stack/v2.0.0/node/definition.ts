@@ -6,7 +6,6 @@ export type Props = BaseReactProps & {};
 import Comp from '../component/Stack';
 
 export default {
-	hashTag: '#expreimental',
 	module: { static: Comp },
 	inputs: [
 		getPortDef({

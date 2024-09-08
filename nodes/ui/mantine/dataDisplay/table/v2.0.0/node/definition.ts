@@ -28,7 +28,7 @@ export type Props = BaseReactProps & {
 		sortedIcon?: IconProps;
 		unsortedIcon?: IconProps;
 	};
-	columnsDefinition: ColumnDefinition[];
+	columnsDefinition?: ColumnDefinition[];
 	items?: Item[];
 	hierarchy: boolean;
 	rootNodeId?: string;
@@ -79,7 +79,6 @@ export type Props = BaseReactProps & {
 	// Expansion
 	expansion: boolean;
 	expansionTemplate: string;
-	useExpansionHierarchy?: boolean;
 	allowMultiple?: boolean;
 	defaultExpandedItems?: Item[];
 	expandedItems?: Item[];
@@ -105,7 +104,7 @@ export type Props = BaseReactProps & {
 };
 
 export default {
-	hashTag: '#expreimental',
+	hashTag: '#pre-release',
 	module: { dynamic: lazy(() => import('../component/TableProvider')) },
 	inputs,
 	outputs,

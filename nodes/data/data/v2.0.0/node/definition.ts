@@ -11,8 +11,10 @@ export type Props = BaseProps & {
 	backendPort?: number;
 };
 
+export type { Kuzzle, DocumentNotification, JSONObject, ResponsePayload } from 'kuzzle-sdk';
+
 export default {
-	hashTag: '#expreimental',
+	hashTag: '#pre-release',
 	module: { dynamic: lazy(() => import('../component/Data')) },
 	inputs: [
 		getPortDef({

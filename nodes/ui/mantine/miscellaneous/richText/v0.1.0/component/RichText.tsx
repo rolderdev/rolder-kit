@@ -22,6 +22,7 @@ import Toolbar from './Toolbar';
 
 import '@mantine/tiptap/styles.css';
 import classes from './code.module.css';
+import IndentHandler from './IndentHandler';
 
 const lowlight = createLowlight();
 lowlight.register({ js, ts, json });
@@ -31,6 +32,7 @@ export default forwardRef(function (p: Props, ref) {
 
 	const editor = useEditor({
 		extensions: [
+			IndentHandler,
 			StarterKit.configure({ codeBlock: false }),
 			Underline,
 			Link,

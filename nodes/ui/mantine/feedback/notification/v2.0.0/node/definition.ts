@@ -10,7 +10,6 @@ export type Props = BaseJsProps & {
 };
 
 export default {
-	hashTag: '#expreimental',
 	module: { dynamic: import('../component/notification') },
 	inputs: [
 		getPortDef({ name: 'title', displayName: 'Title', group: 'Params', type: 'string' }),

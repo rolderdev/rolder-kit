@@ -12,12 +12,15 @@ export type BaseProps = {
 	fields?: string[];
 };
 
-export type Store = Omit<BaseProps, 'source'> & {
+export type Store = Omit<BaseProps, 'source' | 'itemId'> & {
+	currentItemId?: string;
 	subscribes: Map<string, { subscribed?: boolean; metaData?: MetaData }>;
+	unsubs: any[];
+	deriveUnsubs: any[];
 };
 
 export default {
-	hashTag: '#expreimental',
+	hashTag: '#pre-release',
 	module: { dynamic: import('../component/item') },
 	inputs: [
 		getPortDef({
@@ -38,7 +41,6 @@ export default {
 			group: 'Params',
 			type: 'string',
 			dependsOn: (p: Props) => p.source === 'specific',
-			validate: (p: Props) => (p.source === 'specific' ? (p.itemId ? true : false) : true),
 		}),
 		getPortDef({ name: 'fields', displayName: 'Fields', group: 'Custom', customGroup: 'Fields', type: 'proplist' }),
 	],
@@ -49,10 +51,12 @@ export default {
 	triggerOnInputs: () => ['source', 'itemId', 'fields'],
 	getInspectInfo: (p: Props) => {
 		const s = p.propsStore;
+		if (!s) return [];
+
 		let info = [] as InspectInfo[];
 
-		if (s.itemId) {
-			const sub = s.subscribes.get(s.itemId);
+		if (s.currentItemId) {
+			const sub = s.subscribes.get(s.currentItemId);
 			if (sub)
 				info = info.concat([
 					{ type: 'text', value: `Subscribed: ${sub.subscribed}` },
@@ -65,14 +69,26 @@ export default {
 				]);
 			if (sub?.subscribed)
 				info = info.concat([
-					{ type: 'text', value: `Item id: "${s.itemId}"` },
-					{ type: 'value', value: R.items.get(s.itemId) },
+					{ type: 'text', value: `Item id: "${s.currentItemId}"` },
+					{ type: 'value', value: R.items.get(s.currentItemId) },
 				]);
 		}
 
 		return info as InspectInfo[];
 	},
-	initialize: async (p: Props) => {
+	initialize: async (p: Props, noodlNode) => {
+		// Отпишемся, когда родитель отмонтировался. Родитель может быть страницей, в таком случае пропустим.
+		if (noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef)
+			noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => {
+				p.propsStore.unsubs.forEach((i) => i?.());
+				p.propsStore.deriveUnsubs.forEach((i) => R.libs.valtio.underive(i));
+			};
+		// Отпишемся, когда удален.
+		noodlNode._onNodeDeleted = () => {
+			p.propsStore.unsubs.forEach((i) => i?.());
+			p.propsStore.deriveUnsubs.forEach((i) => R.libs.valtio.underive(i));
+		};
+
 		p.propsStore = initStore(p);
 	},
 	transform(p: Props, portDefs) {

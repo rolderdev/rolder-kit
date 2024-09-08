@@ -141,7 +141,7 @@ export const validateParameterValues = (
 	context: NodeContext,
 	versions: JsNodeVersions | ReactNodeVersions
 ) => {
-	const inputDefsWithVaildate = versions[model.parameters.version].inputs?.filter((i: PortDef) => i.validate) || [];
+	const inputDefsWithVaildate = versions[model.parameters.version].inputs?.filter((i) => i.validate) || [];
 
 	for (const inputDef of inputDefsWithVaildate) {
 		// Не будем валидировать, если есть подключение.

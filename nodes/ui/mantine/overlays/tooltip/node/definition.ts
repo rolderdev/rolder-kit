@@ -30,7 +30,6 @@ const positions = [
 ];
 
 export default {
-	hashTag: '#expreimental',
 	module: { dynamic: lazy(() => import('../component/Tooltip')) },
 	inputs: [
 		getPortDef({

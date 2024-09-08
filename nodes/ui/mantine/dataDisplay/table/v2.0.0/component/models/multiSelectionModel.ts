@@ -31,7 +31,6 @@ export const setSelectedIds = (s: Store, newSelectedRecords: TableRecord[], isDe
 
 const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 	const currentTableNodes = s.records.map((i) => useNode(s, i.id, 'store')).filter((i) => i !== undefined) as Node[];
-	const filterFunc = s.tableProps.multiSelection.filterFunc;
 
 	// Проставим состояние выбора текущей таблице.
 	for (const node of currentTableNodes) {
@@ -53,15 +52,13 @@ const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 				// Нужно не трогать полупокеров.
 				if (parentState?.value !== 'indeterminate') {
 					const descendantItemState = descendantNode.selectionState;
-					// Применим функцию фильтрации разработчика, если есть. Это нужно только для наследников.
-					const isFiltered = filterFunc ? !filterFunc(descendantNode.item(), descendantNode) : false;
-					if (!isFiltered && parentState && descendantItemState) descendantItemState.value = parentState.value;
+					if (parentState && descendantItemState) descendantItemState.value = parentState.value;
 				}
 			}
 		}
 	}
 
-	// Возьмем всех предков ноды таблицы, вклюая ее саму.
+	// Возьмем всех предков ноды таблицы, включая ее саму.
 	const tableNode = s.hierarchy.tableNode;
 	if (tableNode) {
 		for (const ancestorNode of tableNode.ancestorNodes(true)) {
@@ -115,14 +112,16 @@ export const useHierarchySelection = (s: Store) => {
 			if (node && !get(s.checkboxes, ['unsubs', record.id])) {
 				setRowSelection(s, record.id, idx);
 				const unsub = subscribeKey(node.selectionState, 'value', () => setRowSelection(s, record.id, idx));
+
 				set(s.checkboxes, ['unsubs', record.id], unsub);
-				////////////////////////////////////
-				// Как менять выбор при смене детей?
-				//const unsub2 = subscribeKey(node, 'childIds', () => handleRecordSelection(s, record.id));
-				////////////////////////////////////
 			}
 		});
 	}, [s.records.map((i) => i.id)]);
+
+	// Отписка при демонтировании таблицы.
+	useEffect(() => {
+		() => Object.values(s.checkboxes.unsubs).forEach((i) => i());
+	}, []);
 };
 
 const setRowSelection = (s: Store, id: string, idx: number) => {

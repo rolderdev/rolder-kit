@@ -19,7 +19,7 @@ export type { HyperDX };
 import Comp from '../component/App';
 
 export default {
-	hashTag: '#expreimental',
+	hashTag: '#pre-release',
 	module: { static: Comp },
 	inputs: [
 		getPortDef({
