@@ -1,13 +1,13 @@
 import set from 'just-safe-set';
-import { proxyMap } from 'valtio/utils';
+import { proxy } from 'valtio';
 
 // Base
 set(window, ['R', 'params'], {});
 // Обратная совместимость
 set(window, ['R', 'states', 'backend'], 'notInitialized');
 // Глобальные items и ноды иерархий.
-set(window, ['R', 'items'], proxyMap());
-set(window, ['R', 'nodes'], proxyMap());
+set(window, ['R', 'items'], proxy());
+set(window, ['R', 'nodes'], proxy());
 
 // logs
 const urlParams = new URLSearchParams(window.location.search);

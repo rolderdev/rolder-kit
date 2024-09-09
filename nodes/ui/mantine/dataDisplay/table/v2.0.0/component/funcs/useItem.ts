@@ -3,7 +3,7 @@ import type { Item } from '@shared/types-v0.1.0';
 export default (id: string, type: 'snap' | 'sub' | 'store') => {
 	const { useSnapshot, snapshot } = R.libs.valtio;
 
-	const item = R.items.get(id);
+	const item = R.items[id];
 
 	switch (type) {
 		case 'snap':

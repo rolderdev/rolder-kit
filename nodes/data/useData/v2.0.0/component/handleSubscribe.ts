@@ -110,13 +110,13 @@ export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: s
 		if (notif.scope === 'in') {
 			// Обновление существующего item.
 			if (schemeData.itemIds.includes(itemId)) {
-				const item = R.items.get(itemId);
+				const item = R.items[itemId];
 				if (item) notif.result._updatedFields.map((field) => set(item, field, get(notif.result._source, field)));
 
 				// Нужно сменить сортировку в itemIds.
 				const sorts = schemeData.scheme.sorts;
 				if (sorts) {
-					let items = schemeData.itemIds.map((id) => R.items.get(id)).filter((i) => i !== undefined);
+					let items = schemeData.itemIds.map((id) => R.items[id]).filter((i) => i !== undefined);
 					items = sort(items).by(sorts.map((s) => ({ [Object.values(s)[0]]: (i: any) => get(i, Object.keys(s)[0]) } as any)));
 					schemeData.itemIds = items.map((i) => i.id);
 				}
@@ -127,16 +127,16 @@ export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: s
 					dbClass: schemeData.scheme.dbClass,
 					id: itemId,
 					getRef: (dbClass) => {
-						const globalItem = R.items.get(itemId);
+						const globalItem = R.items[itemId];
 						if (globalItem && globalItem[dbClass]) {
-							if (Array.isArray(globalItem[dbClass])) return globalItem[dbClass].map((i) => R.items.get(i.id)).filter((i) => !!i);
-							else return R.items.get(globalItem[dbClass].id);
+							if (Array.isArray(globalItem[dbClass])) return globalItem[dbClass].map((i) => R.items[i.id]).filter((i) => !!i);
+							else return R.items[globalItem[dbClass].id];
 						} else return undefined;
 					},
 				} as Item;
 
-				const item = R.items.get(itemId);
-				if (!item) R.items.set(newRawItem.id, newRawItem);
+				const item = R.items[itemId];
+				if (!item) R.items[newRawItem.id] = newRawItem;
 				else R.libs.lodash.merge(item, newRawItem);
 
 				schemeData.itemIds.push(newRawItem.id);
@@ -144,7 +144,7 @@ export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: s
 				// Нужно сменить сортировку в itemIds.
 				const sorts = schemeData.scheme.sorts;
 				if (sorts) {
-					let items = schemeData.itemIds.map((id) => R.items.get(id)).filter((i) => i !== undefined);
+					let items = schemeData.itemIds.map((id) => R.items[id]).filter((i) => i !== undefined);
 					items = sort(items).by(sorts.map((s) => ({ [Object.values(s)[0]]: (i: any) => get(i, Object.keys(s)[0]) } as any)));
 					schemeData.itemIds = items.map((i) => i.id);
 				}

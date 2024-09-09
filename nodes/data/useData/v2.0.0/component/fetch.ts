@@ -57,13 +57,15 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	// Обновим items. Нужно сохранить во временном хранилище, т.к. выдавать их глобально нужно после построения иерархии.
 	map(data.items, (itemId, item) => {
 		item.getRef = (dbClass) => {
-			const globalItem = R.items.get(itemId);
+			const globalItem = R.items[itemId];
 			if (globalItem && globalItem[dbClass]) {
-				if (Array.isArray(globalItem[dbClass])) return globalItem[dbClass].map((i) => R.items.get(i.id)).filter((i) => !!i);
-				else return R.items.get(globalItem[dbClass].id);
+				if (Array.isArray(globalItem[dbClass])) return globalItem[dbClass].map((i) => R.items[i.id]).filter((i) => !!i);
+				else return R.items[globalItem[dbClass].id];
 			} else return undefined;
 		};
-		p.store.items.set(itemId, item);
+		const proxyItem = R.items[itemId];
+		if (!proxyItem) R.items[itemId] = item;
+		else R.libs.lodash.merge(proxyItem, item);
 	});
 
 	// Обновим хранилище схем для иерархи и серверных подписок.

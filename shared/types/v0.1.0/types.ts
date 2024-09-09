@@ -63,7 +63,7 @@ type Rolder = {
 	db: RxDatabase;
 	utils: Utils;
 	user?: User;
-	items: Map<string, Item>;
+	items: Record<string, Item>;
 	nodes: Nodes;
 };
 

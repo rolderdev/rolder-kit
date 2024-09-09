@@ -29,14 +29,14 @@ export default forwardRef(function (p: Props, ref) {
 				isChild: true,
 				level: parentMetaData.level + 1,
 				tableNodePath: parentMetaData.nodePath,
-				tableNode: R.nodes.get(parentMetaData.nodePath),
+				tableNode: R.nodes[parentMetaData.nodePath],
 			};
 		else
 			store.hierarchy = {
 				isChild: false,
 				level: 0,
 				tableNodePath: p.rootNodeId,
-				tableNode: p.rootNodeId ? R.nodes.get(p.rootNodeId) : undefined,
+				tableNode: p.rootNodeId ? R.nodes[p.rootNodeId] : undefined,
 			};
 	}, [p.rootNodeId]);
 

@@ -1,7 +1,7 @@
 import type { Item } from '@shared/types-v0.1.0';
 import type { Props } from '../node/definition';
 
-export type Nodes = Map<string, Node>;
+export type Nodes = Record<string, Node>;
 export type NodeSelectionState = { value: SelectionState };
 export type SelectionState = 'notSelected' | 'selected' | 'indeterminate';
 type Aggregations = Record<string, Record<string, any>>;
@@ -109,28 +109,28 @@ export default class Node {
 		const { map, set } = R.libs.just;
 		// Важно не заменять весь прокси.
 		for (const node of flatNodes) {
-			const nodeProxy = R.nodes.get(node.path);
+			const nodeProxy = R.nodes[node.path];
 			if (nodeProxy) map(node as any, (k, v) => k !== 'selectionState' && set(nodeProxy, k, v));
-			else R.nodes.set(node.path, node);
+			else R.nodes[node.path] = node;
 		}
 
-		R.nodes.forEach((node) => {
-			if (p.store.rootId === node.rootId && !flatNodes.map((i) => i.path).includes(node.path)) R.nodes.delete(node.path);
-		});
+		Object.values(R.nodes)
+			.filter((node) => !flatNodes.map((i) => i.path).includes(node.path))
+			.forEach((i) => delete R.nodes[i.path]);
 	}
 
 	//// Методы для разработчика.
 	// Методы нод.
 	rootNode() {
-		return R.nodes.get(this.rootId) as Node;
+		return R.nodes[this.rootId];
 	}
 
 	parentNode() {
-		return this.parentPath ? R.nodes.get(this.parentPath) : undefined;
+		return this.parentPath ? R.nodes[this.parentPath] : undefined;
 	}
 
 	childNodes() {
-		return this.childPathes.map((path) => R.nodes.get(path)).filter((i) => !!i);
+		return this.childPathes.map((path) => R.nodes[path]).filter((i) => !!i);
 	}
 
 	descendantNodes(withSelf?: boolean) {
@@ -164,7 +164,7 @@ export default class Node {
 
 	// Методы item.
 	item() {
-		return this.itemId ? R.items.get(this.itemId) : undefined;
+		return this.itemId ? R.items[this.itemId] : undefined;
 	}
 
 	parent() {

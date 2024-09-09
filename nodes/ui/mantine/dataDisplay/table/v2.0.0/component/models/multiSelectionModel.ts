@@ -23,7 +23,7 @@ export const setSelectedIds = (s: Store, newSelectedRecords: TableRecord[], isDe
 		sendOutput(
 			s.noodlNode,
 			'selectedItems',
-			newSelectedIds.map((id) => R.items.get(id))
+			newSelectedIds.map((id) => R.items[id])
 		);
 		if (!isDefault) sendSignal(s.noodlNode, 'selectedItemsChanged');
 	}
