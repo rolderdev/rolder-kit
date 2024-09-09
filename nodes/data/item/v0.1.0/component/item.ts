@@ -37,7 +37,7 @@ export default {
 		}
 
 		if (itemId) {
-			const item = R.items.get(itemId);
+			const item = R.items[itemId];
 
 			//// Сценарии пописки.
 			if (item) {
@@ -73,7 +73,7 @@ export default {
 			} else {
 				// 3. Когда есть id, но еще нет item. Например, если id прилетает с параметров страницы.
 				const interval = setInterval(() => {
-					const i = R.items.get(itemId);
+					const i = R.items[itemId];
 					if (i) {
 						clearInterval(interval);
 						s.currentItemId = itemId;
@@ -94,7 +94,7 @@ export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 		const sub = p.propsStore.subscribes.get(itemId);
 		if (sub && !sub.subscribed) {
 			sub.subscribed = true;
-			const item = R.items.get(itemId);
+			const item = R.items[itemId];
 
 			if (item) {
 				sendOutput(noodlNode, 'item', item);

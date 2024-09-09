@@ -33,7 +33,7 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 		if (!p.controlled) await fetch(p, noodlNode);
 
 		// Тригер смены выбора.
-		const rootNode = R.nodes.get(p.store.rootId);
+		const rootNode = R.nodes[p.store.rootId];
 		if (rootNode) Noodl.Events.on(`${rootNode.path}_selectionChanged`, () => sendSignal(noodlNode, 'nodesSelectionChanged'));
 
 		// Хак. Добавим свой клиент WebSocket и listener к нему.
@@ -61,9 +61,10 @@ export default {
 	reactive,
 	fetch: async (p: Props, noodlNode) => fetch(p, noodlNode),
 	resetNodesSelection: (p: Props, noodlNode) => {
-		R.nodes.forEach((node) => {
-			if (node.rootId === p.store.rootId) node.selectionState.value = 'notSelected';
-		});
+		Object.values(R.nodes)
+			.filter((i) => i.rootId === p.store.rootId)
+			.forEach((i) => (i.selectionState.value = 'notSelected'));
+
 		sendSignal(noodlNode, 'nodesSelectionChanged');
 		if (!p.controlled) reactive(p, noodlNode);
 	},

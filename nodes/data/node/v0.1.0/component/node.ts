@@ -11,7 +11,7 @@ export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 	let metaData = noodlNode.nodeScope.componentOwner.metaData as MetaData | undefined;
 
 	// Подпишемся на изменения ноды иерархии.
-	const node = metaData?.nodePath ? R.nodes.get(metaData.nodePath) : undefined;
+	const node = metaData?.nodePath ? R.nodes[metaData.nodePath] : undefined;
 
 	if (node && metaData?.nodePath) {
 		p.node = node;

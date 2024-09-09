@@ -70,7 +70,7 @@ export default {
 			if (sub?.subscribed)
 				info = info.concat([
 					{ type: 'text', value: `Item id: "${s.currentItemId}"` },
-					{ type: 'value', value: R.items.get(s.currentItemId) },
+					{ type: 'value', value: R.items[s.currentItemId] },
 				]);
 		}
 

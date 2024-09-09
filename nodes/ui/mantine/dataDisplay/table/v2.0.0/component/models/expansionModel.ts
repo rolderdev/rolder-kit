@@ -13,7 +13,7 @@ export const toggleRowExpansion = (s: Store, id: string) => {
 	sendOutput(
 		s.noodlNode,
 		'expandedItems',
-		R.libs.just.map(s.expandedIds, (id, v) => v && R.items.get(id))
+		R.libs.just.map(s.expandedIds, (id, v) => v && R.items[id])
 	);
 	sendSignal(s.noodlNode, 'expandedItemsChanged');
 };
@@ -34,7 +34,7 @@ export const setExpandedIds = (s: Store, expandedIds: string[], isDefault?: bool
 		sendOutput(
 			s.noodlNode,
 			'expandedItems',
-			newExpandedIds.map((id) => R.items.get(id))
+			newExpandedIds.map((id) => R.items[id])
 		);
 		if (!isDefault) sendSignal(s.noodlNode, 'expandedItemsChanged');
 	}

@@ -5,7 +5,7 @@ export default (s: Store, id: string, type: 'snap' | 'sub' | 'store') => {
 	const { useSnapshot, snapshot } = R.libs.valtio;
 
 	const nodePath = s.hierarchy.tableNode?.childNodes().find((i) => i.itemId === id)?.path;
-	const node = nodePath ? R.nodes.get(nodePath) : undefined;
+	const node = nodePath ? R.nodes[nodePath] : undefined;
 
 	switch (type) {
 		case 'snap':

@@ -1,4 +1,3 @@
-import type { Item } from '@shared/types-v0.1.0';
 import type { BaseProps, Props } from '../node/definition';
 
 export default (p: Props) =>
@@ -10,7 +9,6 @@ export default (p: Props) =>
 		controlled: p.controlled,
 		subscribe: p.subscribe,
 		schemes: new Map(),
-		items: new Map(),
 		subscribes: new Map(),
 	} satisfies Store);
 
@@ -18,7 +16,6 @@ export type Store = BaseProps & {
 	rootId: string;
 	inited: boolean;
 	schemes: Map<string, SchemeData>;
-	items: Map<string, Item>;
 	subscribes: Subscribes;
 	socket?: WebSocket;
 };

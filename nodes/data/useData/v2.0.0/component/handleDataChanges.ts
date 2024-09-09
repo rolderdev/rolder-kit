@@ -16,13 +16,6 @@ export default (p: Props, noodlNode: NoodlNode) => {
 	// Создадим прокси нод иерархии или обновим их для реактивности.
 	Node.setNodesProxy(p, flatNodes);
 
-	// После построения иерархии можно выдать items.
-	p.store.items.forEach((i) => {
-		const item = R.items.get(i.id);
-		if (!item) R.items.set(i.id, i);
-		else R.libs.lodash.merge(item, i);
-	});
-
 	if (p.subscribe) handleSubscribe(p);
 
 	const data: { [dbClass: string]: SchemeData & { items: Item[] } } = {};
@@ -35,14 +28,14 @@ export default (p: Props, noodlNode: NoodlNode) => {
 			// items нужно выдавать согласно порядку в itemIds, чтобы сохранить серверную сортировку.
 			data[dbClass] = {
 				...schemeData,
-				items: schemeData.itemIds.map((id) => R.items.get(id)).filter((i) => i !== undefined),
+				items: schemeData.itemIds.map((id) => R.items[id]).filter((i) => i !== undefined),
 			};
 
 			if (p.outputDbClasses?.includes(dbClass)) {
 				sendOutput(
 					noodlNode,
 					`${dbClass}Items`,
-					schemeData.itemIds.map((id) => R.items.get(id)).filter((i) => i !== undefined)
+					schemeData.itemIds.map((id) => R.items[id]).filter((i) => i !== undefined)
 				);
 				sendOutput(noodlNode, `${dbClass}Fetched`, schemeData.fetched);
 				sendOutput(noodlNode, `${dbClass}Total`, schemeData.total);
@@ -53,7 +46,7 @@ export default (p: Props, noodlNode: NoodlNode) => {
 
 	sendOutput(noodlNode, 'data', data);
 	sendOutput(noodlNode, 'rootId', p.store.rootId);
-	sendOutput(noodlNode, 'rootNode', R.nodes.get(p.store.rootId));
+	sendOutput(noodlNode, 'rootNode', R.nodes[p.store.rootId]);
 	sendOutput(noodlNode, 'schemes', Array.from(p.store.schemes.values()));
 	sendOutput(noodlNode, 'fetching', false);
 	sendSignal(noodlNode, 'fetched');
