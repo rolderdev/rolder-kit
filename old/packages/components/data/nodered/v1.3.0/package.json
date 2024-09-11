@@ -4,6 +4,6 @@
 	"types": "nodered.ts",
 	"type": "module",
 	"dependencies": {
-		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*"
+		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@^"
 	}
 }

@@ -114,9 +114,14 @@ export default class Node {
 			else R.nodes[node.path] = node;
 		}
 
-		Object.values(R.nodes)
-			.filter((node) => !flatNodes.map((i) => i.path).includes(node.path))
-			.forEach((i) => delete R.nodes[i.path]);
+		// Нужно чуть отложить удаление. У таблиц сворачивает голову.
+		setTimeout(
+			() =>
+				Object.values(R.nodes)
+					.filter((node) => !flatNodes.map((i) => i.path).includes(node.path))
+					.forEach((i) => delete R.nodes[i.path]),
+			500
+		);
 	}
 
 	//// Методы для разработчика.

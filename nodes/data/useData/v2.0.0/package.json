@@ -3,8 +3,8 @@
 	"main": "node/definition.ts",
 	"type": "module",
 	"dependencies": {
-		"@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.2.0@*",
-		"@shared/get-dbclass-version": "workspace:@shared/get-dbclass-version-v1.0.0@*"
+		"@shared/get-dbclass-version": "workspace:@shared/get-dbclass-version-v1.0.0@^",
+		"@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.2.0@^"
 	},
 	"devDependencies": {
 		"@nodes/data-v2.0.0": "workspace:*"

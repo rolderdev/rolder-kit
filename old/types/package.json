@@ -3,9 +3,9 @@
 	"main": "types.ts",
 	"types": "types.ts",
 	"devDependencies": {
-		"kuzzle-sdk": "^7.11.3",
 		"@tanstack/react-query": "4.36.1",
-		"dayjs": "^1.11.12",
-		"rxdb": "^15.30.0"
+		"dayjs": "^1.11.13",
+		"kuzzle-sdk": "^7.11.3",
+		"rxdb": "^15.33.0"
 	}
 }

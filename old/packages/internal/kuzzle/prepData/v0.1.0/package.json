@@ -4,9 +4,9 @@
 	"types": "prepData.ts",
 	"type": "module",
 	"dependencies": {
-		"@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@*",
-		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*",
-		"@capacitor/preferences": "^6.0.1"
+		"@capacitor/preferences": "^6.0.2",
+		"@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@^",
+		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@^"
 	},
 	"devDependencies": {
 		"types": "workspace:*"

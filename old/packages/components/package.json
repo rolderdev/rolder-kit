@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
-		"dayjs": "^1.11.12",
-		"ky": "^1.5.0"
+		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@^",
+		"dayjs": "^1.11.13",
+		"ky": "^1.7.2"
 	}
 }

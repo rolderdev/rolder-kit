@@ -16,10 +16,10 @@ import type {
 } from '../main';
 import { getVersionPort, validateVersion } from './editorModels/version';
 import { getConverted } from './editorModels/parameter';
-import { getModule } from './runtimeModels/module';
+import { getModule, runSignal } from './runtimeModels/run';
 import { getNodeInputDefs, handleNodePorts } from './editorModels/nodePort';
 import { hasWarnings } from './editorModels/warning';
-import { schedule } from './runtimeModels/schedule';
+import scheduleRun from './runtimeModels/scheduleRun';
 import { validatePropValue } from './runtimeModels/prop';
 
 const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersions, docs?: string) =>
@@ -46,7 +46,7 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 			registerInputIfNeeded: function (inputName: string) {
 				if (this.hasInput(inputName)) return;
 				this.registerInput(inputName, {
-					set: function (value: unknown) {
+					set: async function (value: unknown) {
 						const v = this._inputValues.version;
 						this.props.version = v;
 						const nodeDef = versions[v] as NodeDef | undefined;
@@ -65,8 +65,13 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 								this.props[inputName] = getConverted(this.model, this.context, inputDef);
 							}
 
+							// Отсановим, если есть ошибки во время разработки.
 							if (!Noodl.deployed && hasWarnings(this.model)) return;
-							else schedule(this, nodeDef, inputDef, inputDef.type === 'signal' && value === true);
+
+							// Разведем сигнал и обновление props. Реагируем на false на случай одновременной подачи props и сигнала.
+							if (inputDef.type === 'signal') {
+								if (value === false) runSignal(this, nodeDef, inputDef);
+							} else scheduleRun(this, nodeDef, inputDef);
 						}
 					},
 				});

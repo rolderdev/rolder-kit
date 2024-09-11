@@ -7,7 +7,7 @@
 		"@mantine/hooks": "6.0.22"
 	},
 	"devDependencies": {
-		"types": "workspace:*",
-		"@packages/node": "workspace:@packages/node-v0.8.0@*"
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"types": "workspace:*"
 	}
 }

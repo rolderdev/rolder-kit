@@ -3,12 +3,12 @@
   "main": "columnCell.tsx",
   "types": "columnCell.tsx",
   "dependencies": {
-    "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
-    "@packages/scope": "workspace:@packages/scope-v0.1.0@*",
+    "@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@^",
+    "@packages/scope": "workspace:@packages/scope-v0.1.0@^",
     "bunshi": "2.0.2"
   },
   "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@^",
     "types": "workspace:*"
   }
 }

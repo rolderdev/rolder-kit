@@ -3,12 +3,12 @@
 	"main": "tabs.tsx",
 	"types": "tabs.tsx",
 	"dependencies": {
-		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
 		"@mantine/core": "6.0.22",
-		"@mantine/hooks": "6.0.22"
+		"@mantine/hooks": "6.0.22",
+		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@^"
 	},
 	"devDependencies": {
-		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
 		"types": "workspace:*"
 	}
 }

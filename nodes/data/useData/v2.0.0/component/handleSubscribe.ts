@@ -5,43 +5,32 @@ import type { Props } from '../node/definition';
 import handleDataChanges from './handleDataChanges';
 import type { NoodlNode } from '@shared/node-v1.0.0';
 import type { DocumentNotification } from '@nodes/data-v2.0.0';
+import getIemMethods from './getIemMethods';
 
 export type Notification = DocumentNotification & { result: { _updatedFields: string[] } };
-const subDelay = 50;
 
 // Базируется на hash каждой схемы класса.
 // Если хеш есть в подписках и есть в данных, значит схема не изменилась - пропускаем.
 // Если хеш есть в подписках, но нет в данных, значит старая схема изменилась - отписываемся.
 // Если хеша нет в подписках, но есть в данных, значит это новая схема - подписываемся.
-export const handleSubscribe = (p: Props) => {
+export const handleSubscribe = async (p: Props, noodlNode: NoodlNode) => {
 	const schemes = p.store.schemes;
 	const subscribes = p.store.subscribes;
 
-	// Обработка подписок с задержкой, чтобы не уткнуться в лимиты.
-	// Отписываться нельзя, баш в Kuzzle. handleNotification прововерит схему и не будет тригерить отсутсвующие схемы.
-	const schemeHashes = Array.from(schemes.keys());
-	let count = 0;
-	const interval = setInterval(() => {
-		if (count !== schemeHashes.length) {
-			// Подписка на новые схемы.
-			if (!subscribes.has(schemeHashes[count])) subscribeToScheme(p, schemeHashes[count]);
-			count++;
-		} else clearInterval(interval);
-	}, subDelay);
-
 	// Отписка от больше не существующих схем.
-	/* 	subscribes.forEach((_, schemeHash) => {
-		if (!schemes.has(schemeHash)) setTimeout(() => unSubscribeFromScheme(p, schemeHash), subDelay);
-	}); */
+	subscribes.forEach((_, schemeHash) => {
+		if (!schemes.has(schemeHash)) unSubscribeFromScheme(p, schemeHash);
+	});
+
+	// Подписка на новые схемы.
+	schemes.forEach(async (schemeData, schemeHash) => {
+		if (schemeData.channel && !subscribes.has(schemeHash)) subscribeOnScheme(p, noodlNode, schemeHash, schemeData.channel);
+	});
 };
 
-export const subscribe = (p: Props) =>
-	p.store.schemes.forEach((_, schemeHash) => setTimeout(() => subscribeToScheme(p, schemeHash)), subDelay);
+export const unSubscribe = (p: Props) => p.store.subscribes.forEach((_, schemeHash) => unSubscribeFromScheme(p, schemeHash));
 
-/* export const unSubscribe = (p: Props) =>
-	p.store.subscribes.forEach((_, schemeHash) => setTimeout(() => unSubscribeFromScheme(p, schemeHash)), subDelay); */
-
-export const subscribeToScheme = async (p: Props, schemeHash: string) => {
+const subscribeOnScheme = async (p: Props, noodlNode: NoodlNode, schemeHash: string, channel: string) => {
 	const { dbName } = window.R.env;
 	if (!dbName) return;
 
@@ -53,49 +42,48 @@ export const subscribeToScheme = async (p: Props, schemeHash: string) => {
 		const dbClassV = dbClassVersion(scheme.dbClass);
 
 		if (dbClassV) {
-			K.realtime
-				.subscribe(dbName, dbClassV, scheme.filters || {}, (notif) => {
-					return;
-					//if (notif.type !== 'document') return;
-					//handleNotification(p, schemeHash, notif as any);
+			const notify = (notif: Notification) => {
+				/* if (['0b1164db77fce49cba2056a80a55e90d8877aac9', '281a1fdd1454945638386c2a2c454fd1224c6c1e'].includes(schemeHash)) {
+					console.log('server notif', schemeHash, notif);
+				}
+ */
+				if (notif.type !== 'document') return;
+				handleNotification(p, noodlNode, schemeHash, notif);
 
-					//log.info(`Subscribe - ${notif.action} ${scheme.dbClass}: `, notif.result);
-				})
-				.then((roomId) => {
-					p.store.subscribes.set(schemeHash, roomId);
+				log.info(`Subscribe - ${notif.action} ${scheme.dbClass}: `, notif.result);
+			};
 
-					log.info(`Subscribed to "${scheme.dbClass}"`, scheme);
+			K.protocol.on(channel, notify);
 
-					//if (scheme.filters?.and?.[1]?.equals?.['object.id'] === 'qHxx-o0B4FHf03Oer2Vz') console.log(`Subscribed`, roomId);
-				})
-				.catch((error) => log.error(`Subscribe error`, error));
+			/* if (['0b1164db77fce49cba2056a80a55e90d8877aac9', '281a1fdd1454945638386c2a2c454fd1224c6c1e'].includes(schemeHash)) {
+				console.log(`Subscribed`, schemeHash, channel);
+			} */
+
+			p.store.subscribes.set(schemeHash, { channel, notify });
+			log.info(`Subscribed to "${scheme.dbClass}"`, { schemeHash, scheme });
 		}
 	}
 };
 
-/* export const unSubscribeFromScheme = async (p: Props, schemeHash: string) => {
+const unSubscribeFromScheme = async (p: Props, schemeHash: string) => {
 	const { dbName } = window.R.env;
 	if (!dbName) return;
 
 	const K = await getKuzzle();
 	if (!K) return;
 
-	const scheme = p.store.subscribeShemes.get(schemeHash);
-	const roomId = p.store.subscribes.get(schemeHash);
+	const unsub = p.store.subscribes.get(schemeHash);
+	if (unsub) {
+		K.protocol.removeListener(unsub.channel, unsub.notify);
+		p.store.subscribes.delete(schemeHash);
 
-	if (scheme && roomId)
-		K.realtime
-			.unsubscribe(roomId)
-			.then(() => {
-				p.store.subscribes.delete(schemeHash);
+		log.info(`Unsubscribed from schemeHash "${schemeHash}"`);
 
-				log.info(`Unsubscribed from "${scheme.dbClass}"`, scheme);
-				if (scheme.filters?.and?.[1]?.equals?.['object.id'] === 'qHxx-o0B4FHf03Oer2Vz') console.log(`Unsubscribed`, roomId);
-
-				p.store.subscribeShemes.delete(schemeHash);
-			})
-			.catch((error) => log.error(`Unsubscribe error`, error));
-}; */
+		/* 	if (['0b1164db77fce49cba2056a80a55e90d8877aac9', '281a1fdd1454945638386c2a2c454fd1224c6c1e'].includes(schemeHash)) {
+			console.log(`Unsubscribed`, schemeHash);
+		} */
+	}
+};
 
 // Поскольку подписки идут по всем схемам, можно обрабатывать item найденный в этой схеме. Дубли отработает тригер другой схемы.
 export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: string, notif: Notification) => {
@@ -104,14 +92,19 @@ export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: s
 
 	const schemeData = p.store.schemes.get(schemeHash);
 	const itemId = notif.result._id;
-	//console.log('notif', notif, schemeData);
 
 	if (schemeData) {
 		if (notif.scope === 'in') {
 			// Обновление существующего item.
 			if (schemeData.itemIds.includes(itemId)) {
 				const item = R.items[itemId];
-				if (item) notif.result._updatedFields.map((field) => set(item, field, get(notif.result._source, field)));
+
+				// Здесь кастомное решение, т.к. Kuzzle не отправляет, что удалил.
+				if (item) {
+					// Если было удаление ключей.
+					if (notif.volatile.deleteFields) notif.volatile.deleteFields.forEach((i: string) => R.libs.lodash.unset(item, i));
+					notif.result._updatedFields?.map((field) => set(item, field, get(notif.result._source, field)));
+				}
 
 				// Нужно сменить сортировку в itemIds.
 				const sorts = schemeData.scheme.sorts;
@@ -126,13 +119,7 @@ export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: s
 					...notif.result._source,
 					dbClass: schemeData.scheme.dbClass,
 					id: itemId,
-					getRef: (dbClass) => {
-						const globalItem = R.items[itemId];
-						if (globalItem && globalItem[dbClass]) {
-							if (Array.isArray(globalItem[dbClass])) return globalItem[dbClass].map((i) => R.items[i.id]).filter((i) => !!i);
-							else return R.items[globalItem[dbClass].id];
-						} else return undefined;
-					},
+					...getIemMethods(itemId),
 				} as Item;
 
 				const item = R.items[itemId];

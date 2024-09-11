@@ -6,20 +6,20 @@
 	"dependencies": {
 		"@mantine/core": "6.0.22",
 		"@mantine/hooks": "6.0.22",
+		"@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@^",
+		"@packages/get-value": "workspace:@packages/get-value-v0.8.0@^",
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
 		"@tanstack/react-query": "4.36.1",
-		"nanostores": "0.10.3",
-		"just-map-object": "2.3.0",
-		"just-flush": "2.3.0",
-		"just-safe-set": "4.2.1",
 		"fast-sort": "3.4.0",
+		"just-flush": "2.3.0",
+		"just-map-object": "2.3.0",
+		"just-safe-set": "4.2.1",
 		"lodash-es": "4.17.21",
-		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-		"@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@*",
-		"@packages/get-value": "workspace:@packages/get-value-v0.8.0@*"
+		"nanostores": "0.10.3"
 	},
 	"devDependencies": {
-		"types": "workspace:*",
-		"@packages/node": "workspace:@packages/node-v0.8.0@*",
-		"@types/lodash-es": "4.17.12"
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"@types/lodash-es": "4.17.12",
+		"types": "workspace:*"
 	}
 }

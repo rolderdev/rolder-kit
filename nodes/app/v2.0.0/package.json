@@ -3,11 +3,11 @@
 	"main": "node/definition.ts",
 	"type": "module",
 	"dependencies": {
-		"@shared/system-loader-animation-v0.1.0": "workspace:*",
-		"react-error-boundary": "^4.0.13",
+		"@capacitor/network": "^6.0.2",
 		"@hyperdx/browser": "^0.21.1",
 		"@opentelemetry/api": "1.8.0",
-		"rxdb": "^15.32.0",
-		"@capacitor/network": "^6.0.2"
+		"@shared/system-loader-animation-v0.1.0": "workspace:*",
+		"react-error-boundary": "^4.0.13",
+		"rxdb": "^15.33.0"
 	}
 }

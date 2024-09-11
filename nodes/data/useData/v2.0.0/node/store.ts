@@ -1,3 +1,4 @@
+import type { Notification } from '../component/handleSubscribe';
 import type { BaseProps, Props } from '../node/definition';
 
 export default (p: Props) =>
@@ -20,7 +21,7 @@ export type Store = BaseProps & {
 	socket?: WebSocket;
 };
 
-type Subscribes = Map<string, string>;
+type Subscribes = Map<string, { channel: string; notify: (notif: Notification) => void }>;
 
 export type SchemeData = {
 	scheme: FetchScheme;
@@ -29,5 +30,6 @@ export type SchemeData = {
 	fetched: number;
 	total: number;
 	aggregations?: { [x: string]: any };
+	channel?: string;
 };
 export type FetchScheme = { dbClass: string; filters?: {}; sorts: readonly { [path: string]: 'asc' | 'desc' }[] };

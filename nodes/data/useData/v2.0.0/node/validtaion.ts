@@ -64,6 +64,14 @@ const getTypedFetchScheme = () => {
 						unknown(),
 						check((filters) => typeOf(filters) === 'object' || !filters, '"aggregations" must be object.')
 					),
+					history: optional(
+						pipe(
+							number('"history" must be integer.'),
+							integer('"history" must be integer.'),
+							minValue(1, '"history" must be at least 1.'),
+							maxValue(10, '"history" must not exceed 10.')
+						)
+					),
 				}),
 				check(
 					(scheme) => (scheme.filters && scheme.filtersFunc ? false : true),
@@ -102,6 +110,7 @@ const getTypedFetchScheme = () => {
 
 export const validateFetchScheme = (p: Props) => {
 	const result = R.libs.valibot.safeParse(getTypedFetchScheme(), p.fetchScheme);
+
 	if (!result.success) {
 		// Через forof, т.к. map добовляет запятые.
 		// <pre> делает красоту c JSON.stringify.

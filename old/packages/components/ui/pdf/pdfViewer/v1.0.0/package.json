@@ -4,9 +4,9 @@
 	"types": "pdfViewer.tsx",
 	"type": "module",
 	"dependencies": {
-		"@packages/is-empty": "workspace:@packages/is-empty-v0.1.0@*",
-		"react-pdf": "^9.0.0",
-		"pdfjs-dist": "^4.3.136",
-		"@emotion/styled": "11.11.0"
+		"@emotion/styled": "11.11.0",
+		"@packages/is-empty": "workspace:@packages/is-empty-v0.1.0@^",
+		"pdfjs-dist": "^4.6.82",
+		"react-pdf": "^9.1.0"
 	}
 }

@@ -7,6 +7,7 @@ set(window, ['R', 'params'], {});
 set(window, ['R', 'states', 'backend'], 'notInitialized');
 // Глобальные items и ноды иерархий.
 set(window, ['R', 'items'], proxy());
+set(window, ['R', 'itemsHistory'], proxy());
 set(window, ['R', 'nodes'], proxy());
 
 // logs

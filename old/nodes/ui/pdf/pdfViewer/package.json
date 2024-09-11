@@ -3,9 +3,9 @@
   "main": "pdfViewerNode.ts",
   "types": "pdfViewerNode.ts",
   "dependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@^",
     "@packages/pdf-viewer-v1.0.0": "workspace:*",
-    "@packages/port": "workspace:@packages/port-v0.6.0@*"
+    "@packages/port": "workspace:@packages/port-v0.6.0@^"
   },
   "devDependencies": {
     "types": "workspace:*"

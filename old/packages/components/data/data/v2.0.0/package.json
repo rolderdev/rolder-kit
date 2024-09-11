@@ -4,7 +4,7 @@
 	"types": "data.tsx",
 	"type": "module",
 	"dependencies": {
-		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@*",
+		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@^",
 		"@tanstack/react-query": "4.36.1"
 	}
 }
