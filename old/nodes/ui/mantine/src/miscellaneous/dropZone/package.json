@@ -3,10 +3,10 @@
   "main": "dropZoneNode.ts",
   "types": "dropZoneNode.ts",
   "dependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "@packages/port": "workspace:@packages/port-v0.6.0@*",
     "@packages/drop-zone-v1.0.0": "workspace:*",
-    "@packages/drop-zone-v1.1.0": "workspace:*"
+    "@packages/drop-zone-v1.1.0": "workspace:*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@^",
+    "@packages/port": "workspace:@packages/port-v0.6.0@^"
   },
   "devDependencies": {
     "types": "workspace:*"

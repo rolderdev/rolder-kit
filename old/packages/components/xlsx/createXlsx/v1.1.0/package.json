@@ -4,15 +4,15 @@
   "types": "createXlsx.ts",
   "type": "module",
   "dependencies": {
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-    "@packages/get-masked": "workspace:@packages/get-masked-v0.2.0@*",
-    "@packages/get-formated-date": "workspace:@packages/get-formated-date-v0.2.0@*",
-    "@packages/get-value": "workspace:@packages/get-value-v0.8.0@*",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz",
-    "sheetjs-style-v2": "0.15.6"
+    "@packages/get-formated-date": "workspace:@packages/get-formated-date-v0.2.0@^",
+    "@packages/get-masked": "workspace:@packages/get-masked-v0.2.0@^",
+    "@packages/get-value": "workspace:@packages/get-value-v0.8.0@^",
+    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
+    "sheetjs-style-v2": "0.15.6",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
   },
   "devDependencies": {
-    "types": "workspace:*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@*"
+    "@packages/node": "workspace:@packages/node-v0.8.0@^",
+    "types": "workspace:*"
   }
 }

@@ -22,11 +22,12 @@ export default {
 			: [],
 	initialize: async (p: Props, noodlNode) => {
 		// Отпишемся, когда родитель отмонтировался.
-		noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => p.unsub?.();
+		if (noodlNode.nodeScope.componentOwner._forEachNode)
+			noodlNode.nodeScope.componentOwner._forEachNode.innerReactComponentRef.componentWillUnmount = () => p.unsub?.();
 		// Отпишемся, когда удален.
 		noodlNode._onNodeDeleted = () => p.unsub?.();
 
-		const nodePath = noodlNode.nodeScope.componentOwner.metaData.nodePath;
+		const nodePath = noodlNode.nodeScope.componentOwner.metaData?.nodePath;
 		if (!Noodl.deployed) {
 			if (!nodePath)
 				sendWarning(noodlNode.model, noodlNode.context, 'global', 'global', 'Node must be in Table with hierarchy enabled.');

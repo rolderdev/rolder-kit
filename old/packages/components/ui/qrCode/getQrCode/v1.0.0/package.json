@@ -4,12 +4,12 @@
   "types": "getQrCode.ts",
   "type": "module",
   "dependencies": {
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
+    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
     "qrcode": "1.5.3"
   },
   "devDependencies": {
-    "types": "workspace:*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "@types/qrcode": "1.5.5"
+    "@packages/node": "workspace:@packages/node-v0.8.0@^",
+    "@types/qrcode": "1.5.5",
+    "types": "workspace:*"
   }
 }

@@ -3,8 +3,8 @@
   "main": "selectNode.ts",
   "types": "selectNode.ts",
   "dependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "@packages/port": "workspace:@packages/port-v0.6.0@*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@^",
+    "@packages/port": "workspace:@packages/port-v0.6.0@^",
     "@packages/select-v1.0.0": "workspace:*",
     "@packages/select-v1.1.0": "workspace:*",
     "@packages/select-v1.2.0": "workspace:*"

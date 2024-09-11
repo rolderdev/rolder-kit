@@ -3,14 +3,14 @@
   "main": "authNode.ts",
   "types": "authNode.ts",
   "dependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
-    "@packages/port": "workspace:@packages/port-v0.6.0@*",
     "@packages/auth-v1.0.0": "workspace:*",
     "@packages/auth-v2.0.0": "workspace:*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@^",
+    "@packages/port": "workspace:@packages/port-v0.6.0@^",
     "ms": "^2.1.3"
   },
   "devDependencies": {
-    "types": "workspace:*",
-    "@types/ms": "0.7.34"
+    "@types/ms": "0.7.34",
+    "types": "workspace:*"
   }
 }

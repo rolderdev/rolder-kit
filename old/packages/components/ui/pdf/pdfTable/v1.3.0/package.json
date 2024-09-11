@@ -4,7 +4,7 @@
 	"types": "pdfTable.tsx",
 	"type": "module",
 	"dependencies": {
-		"@packages/get-value": "workspace:@packages/get-value-v0.8.0@*",
+		"@packages/get-value": "workspace:@packages/get-value-v0.8.0@^",
 		"just-clone": "^6.2.0"
 	}
 }

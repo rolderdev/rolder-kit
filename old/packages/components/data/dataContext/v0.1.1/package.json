@@ -4,14 +4,14 @@
 	"types": "dataContext.tsx",
 	"type": "module",
 	"dependencies": {
-		"@tanstack/react-query": "4.36.1",
-		"nanostores": "0.10.3",
-		"bunshi": "2.0.2",
 		"@mantine/hooks": "^6.0.22",
-		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*"
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
+		"@tanstack/react-query": "4.36.1",
+		"bunshi": "2.0.2",
+		"nanostores": "0.10.3"
 	},
 	"devDependencies": {
-		"types": "workspace:*",
-		"@packages/node": "workspace:@packages/node-v0.8.0@*"
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"types": "workspace:*"
 	}
 }

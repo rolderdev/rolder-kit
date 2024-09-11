@@ -8,8 +8,8 @@ export type Lodash = typeof lodash;
 set(window, ['R', 'libs', 'lodash'], lodash);
 
 // remeda
-import { uniqueWith } from 'remeda';
-const remeda = { uniqueWith };
+import { uniqueWith, take } from 'remeda';
+const remeda = { uniqueWith, take };
 export type Remeda = typeof remeda;
 set(window, ['R', 'libs', 'remeda'], remeda);
 

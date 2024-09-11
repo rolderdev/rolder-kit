@@ -20,7 +20,6 @@ export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 		sendSignal(noodlNode, 'nodeChanged');
 
 		p.unsub = subscribe(node, () => {
-			console.log(metaData?.nodePath);
 			sendOutput(noodlNode, 'node', snapshot(node));
 			sendSignal(noodlNode, 'nodeChanged');
 		});

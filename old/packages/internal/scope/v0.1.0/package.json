@@ -8,9 +8,9 @@
 		"nanostores": "0.10.3"
 	},
 	"devDependencies": {
-		"types": "workspace:*",
-		"@packages/node": "workspace:@packages/node-v0.8.0@*",
 		"@mantine/core": "6.0.22",
-		"@mantine/hooks": "6.0.22"
+		"@mantine/hooks": "6.0.22",
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"types": "workspace:*"
 	}
 }

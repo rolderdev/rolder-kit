@@ -1,6 +1,5 @@
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import type { Props } from '../node/definition';
-import { handleSubscribe } from './handleSubscribe';
 import type { Item } from '@shared/types-v0.1.0';
 import type { SchemeData } from '../node/store';
 import Node from './Node';
@@ -8,15 +7,11 @@ import type { NoodlNode } from '@shared/node-v1.0.0';
 
 export default (p: Props, noodlNode: NoodlNode) => {
 	// Подготовим иерархию. Она должна быть атомарной. Т.е. каждая нода содержит информацию о свзях, но свзяи не проложены.
-	// Нужно создавать иерархию до обновления item. Построение иерархии их не требует, но ноды использующие иерархию,
-	// будут запрашивать еще не существующие items. Общее правило - сначала меняется структура, потом содержание.
 	let flatNodes: Node[] = [];
 	Node.createHierarchy(p, flatNodes);
 
 	// Создадим прокси нод иерархии или обновим их для реактивности.
 	Node.setNodesProxy(p, flatNodes);
-
-	if (p.subscribe) handleSubscribe(p);
 
 	const data: { [dbClass: string]: SchemeData & { items: Item[] } } = {};
 
@@ -25,7 +20,6 @@ export default (p: Props, noodlNode: NoodlNode) => {
 		const dbClass = schemeData.scheme.dbClass;
 
 		if (!schemeData.parentId) {
-			// items нужно выдавать согласно порядку в itemIds, чтобы сохранить серверную сортировку.
 			data[dbClass] = {
 				...schemeData,
 				items: schemeData.itemIds.map((id) => R.items[id]).filter((i) => i !== undefined),

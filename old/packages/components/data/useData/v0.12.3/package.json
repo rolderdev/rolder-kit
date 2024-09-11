@@ -4,20 +4,20 @@
 	"types": "useData.tsx",
 	"type": "module",
 	"dependencies": {
+		"@packages/data-context": "workspace:@packages/data-context-v0.1.0@^",
+		"@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@^",
+		"@packages/get-value": "workspace:@packages/get-value-v0.8.0@^",
+		"@packages/kuzzle-fetch": "workspace:@packages/kuzzle-fetch-v0.1.0@^",
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
 		"@tanstack/react-query": "4.36.1",
-		"nanostores": "0.9.5",
 		"bunshi": "2.0.2",
-		"just-last": "3.2.0",
 		"just-clone": "6.2.0",
 		"just-is-empty": "3.4.1",
-		"@packages/get-value": "workspace:@packages/get-value-v0.8.0@*",
-		"@packages/data-context": "workspace:@packages/data-context-v0.1.0@*",
-		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-		"@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@*",
-		"@packages/kuzzle-fetch": "workspace:@packages/kuzzle-fetch-v0.1.0@*"
+		"just-last": "3.2.0",
+		"nanostores": "0.9.5"
 	},
 	"devDependencies": {
-		"types": "workspace:*",
-		"@packages/node": "workspace:@packages/node-v0.8.0@*"
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"types": "workspace:*"
 	}
 }

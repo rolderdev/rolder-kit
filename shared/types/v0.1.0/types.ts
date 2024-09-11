@@ -1,7 +1,7 @@
 import type { NoodlNode } from '@shared/node-v1.0.0';
 import type { RxDatabase, HyperDX, Rxdb } from '@nodes/app-v2.0.0';
 import type { Kuzzle } from '@nodes/data-v2.0.0';
-import type { Nodes } from '@nodes/use-data-v2.0.0';
+import type { HistoryItem, ItemsHistory, Nodes } from '@nodes/use-data-v2.0.0';
 import type { Mantine } from '@nodes/mantine-v2.0.0';
 import type { Icons, Utils } from 'shared';
 import type { Lodash, Nanoid, Omgopass, Remeda, Sort } from 'shared/src/libs';
@@ -64,6 +64,7 @@ type Rolder = {
 	utils: Utils;
 	user?: User;
 	items: Record<string, Item>;
+	itemsHistory: ItemsHistory;
 	nodes: Nodes;
 };
 
@@ -93,6 +94,7 @@ export type Item = {
 	};
 } & { [dbClass: string]: Item | Item[] | { id: string } | { id: string }[] | undefined } & {
 	getRef: (dbClass: string) => Item | Item[] | undefined;
+	getHistory: (count?: number) => HistoryItem[];
 };
 
 export type User = {

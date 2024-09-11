@@ -1,7 +1,6 @@
 import { sendSignal } from '@shared/port-send-v1.0.0';
 import type { Props } from '../node/definition';
 import { fetch } from './fetch';
-import { handleNotification, subscribe, type Notification } from './handleSubscribe';
 import type { JsComponent, NoodlNode } from '@shared/node-v1.0.0';
 
 const reactive = async (p: Props, noodlNode: NoodlNode) => {
@@ -22,8 +21,7 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 	}
 	// Отреагируем на включение/отключение подписки.
 	if (p.store.subscribe !== p.subscribe) {
-		if (!p.store.subscribe && p.subscribe) subscribe(p);
-		//if (p.store.subscribe && !p.subscribe) unSubscribe(p);
+		await fetch(p, noodlNode); // Нужно перезагрузить данные, т.к. подписки прилетают с сервреа.
 		p.store.subscribe = p.subscribe;
 	}
 
@@ -35,21 +33,6 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 		// Тригер смены выбора.
 		const rootNode = R.nodes[p.store.rootId];
 		if (rootNode) Noodl.Events.on(`${rootNode.path}_selectionChanged`, () => sendSignal(noodlNode, 'nodesSelectionChanged'));
-
-		// Хак. Добавим свой клиент WebSocket и listener к нему.
-		if (!p.store.socket) p.store.socket = new WebSocket(`wss://${R.libs.Kuzzle?.host}`);
-		p.store.socket.onmessage = (event) => {
-			if (event.data === '{"p":2}') return; // Если это сообщение прокси сервера, пропускаем.
-			const data = JSON.parse(event.data) as Notification;
-			if (data.type !== 'document') return; // Если это сообщение не о подписке, пропускаем.
-			const roomId = data.room.split('-')[0];
-			let schemeHash = '';
-			p.store.subscribes.forEach((room, hash) => {
-				if (roomId === room) schemeHash = hash;
-			});
-			if (!schemeHash) return; // Если нет такой схемы в подписках, значит другая useData.
-			handleNotification(p, noodlNode, schemeHash, data);
-		};
 
 		p.store.inited = true;
 	}

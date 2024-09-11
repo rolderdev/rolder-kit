@@ -78,7 +78,7 @@ export default {
 	},
 	initialize: async (p: Props, noodlNode) => {
 		// Отпишемся, когда родитель отмонтировался. Родитель может быть страницей, в таком случае пропустим.
-		if (noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef)
+		if (noodlNode.nodeScope.componentOwner.parent?.innerReactComponentRef)
 			noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => {
 				p.propsStore.unsubs.forEach((i) => i?.());
 				p.propsStore.deriveUnsubs.forEach((i) => R.libs.valtio.underive(i));

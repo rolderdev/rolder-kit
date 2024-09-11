@@ -3,12 +3,12 @@
   "main": "columnFilter.tsx",
   "types": "columnFilter.tsx",
   "dependencies": {
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-    "@packages/scope": "workspace:@packages/scope-v0.1.0@*",
-    "@packages/is-empty": "workspace:@packages/is-empty-v0.1.0@*"
+    "@packages/is-empty": "workspace:@packages/is-empty-v0.1.0@^",
+    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
+    "@packages/scope": "workspace:@packages/scope-v0.1.0@^"
   },
   "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@*",
+    "@packages/node": "workspace:@packages/node-v0.8.0@^",
     "types": "workspace:*"
   }
 }

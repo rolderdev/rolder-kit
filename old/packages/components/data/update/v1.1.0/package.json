@@ -4,14 +4,14 @@
   "types": "update.ts",
   "type": "module",
   "dependencies": {
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-    "@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@*",
-    "just-clone": "6.2.0",
-    "@packages/deep-merge": "workspace:@packages/deep-merge-v0.1.0@*",
-    "@tanstack/react-query": "4.36.1"
+    "@packages/deep-merge": "workspace:@packages/deep-merge-v0.1.0@^",
+    "@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@^",
+    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
+    "@tanstack/react-query": "4.36.1",
+    "just-clone": "6.2.0"
   },
   "devDependencies": {
-    "types": "workspace:*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@*"
+    "@packages/node": "workspace:@packages/node-v0.8.0@^",
+    "types": "workspace:*"
   }
 }

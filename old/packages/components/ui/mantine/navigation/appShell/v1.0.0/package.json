@@ -3,16 +3,16 @@
 	"main": "appShell.tsx",
 	"types": "appShell.tsx",
 	"dependencies": {
-		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@*",
-		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@*",
-		"@packages/use-named-children": "workspace:@packages/use-named-children-v0.1.0@*",
 		"@mantine/core": "6.0.22",
 		"@mantine/hooks": "6.0.22",
-		"zustand": "4.5.2",
-		"immer": "10.1.1"
+		"@packages/get-comp-props": "workspace:@packages/get-comp-props-v0.1.0@^",
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
+		"@packages/use-named-children": "workspace:@packages/use-named-children-v0.1.0@^",
+		"immer": "10.1.1",
+		"zustand": "4.5.2"
 	},
 	"devDependencies": {
-		"@packages/node": "workspace:@packages/node-v0.8.0@*",
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
 		"types": "workspace:*"
 	}
 }

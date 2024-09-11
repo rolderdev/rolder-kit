@@ -3,9 +3,9 @@
 	"main": "node.ts",
 	"types": "node.ts",
 	"dependencies": {
-		"@packages/port": "workspace:@packages/port-v0.6.0@*",
+		"@packages/is-empty": "workspace:@packages/is-empty-v0.1.0@^",
+		"@packages/port": "workspace:@packages/port-v0.6.0@^",
 		"just-typeof": "3.2.0",
-		"@packages/is-empty": "workspace:@packages/is-empty-v0.1.0@*",
 		"nanostores": "0.10.3"
 	},
 	"devDependencies": {

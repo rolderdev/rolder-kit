@@ -14,7 +14,7 @@ export default memo((p: { id: string; columnIdx: string }) => {
 	const itemSnap = useItem(p.id, 'snap');
 
 	useEffect(() => {
-		let unsub: () => void;
+		let unsub: (() => void) | undefined;
 
 		const column: Column = R.libs.just.get(store, ['columnsDefinition', p.columnIdx]);
 		const custom = column.custom;
@@ -62,7 +62,7 @@ export default memo((p: { id: string; columnIdx: string }) => {
 			}
 		}
 
-		return () => unsub();
+		return () => unsub?.();
 	}, []);
 
 	// Расчет отсупа функцией разработчика.

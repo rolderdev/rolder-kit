@@ -6,6 +6,8 @@ import { validateFetchScheme } from './validtaion';
 import type { FetchScheme } from './validtaion';
 import type { Store } from './store';
 import type { Nodes, NodeSelectionState, SelectionState } from '../component/Node';
+import type { HistoryItem, ItemsHistory } from '../component/fetch';
+import { unSubscribe } from '../component/handleSubscribe';
 
 export type Props = BaseJsProps & BaseProps & { store: Store };
 
@@ -17,7 +19,7 @@ export type BaseProps = {
 	subscribe: boolean;
 };
 
-export type { Nodes, NodeSelectionState, SelectionState };
+export type { Nodes, NodeSelectionState, SelectionState, HistoryItem, ItemsHistory };
 
 export default {
 	hashTag: '#pre-release',
@@ -150,6 +152,12 @@ export default {
 	},
 	triggerOnInputs: () => ['apiVersion', 'fetchScheme', 'controlled', 'subscribe'],
 	initialize: async (p: Props, noodlNode) => {
+		// Отпишемся, когда родитель отмонтировался. Родитель может быть страницей, в таком случае пропустим.
+		if (noodlNode.nodeScope.componentOwner.parent?.innerReactComponentRef)
+			noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => unSubscribe(p);
+		// Отпишемся, когда удален.
+		noodlNode._onNodeDeleted = () => unSubscribe(p);
+		//console.log('init', noodlNode.model.type);
 		// Нужно дождаться инициализации Kuzzle.
 		await new Promise((resolve) => {
 			const interval = setInterval(() => {
