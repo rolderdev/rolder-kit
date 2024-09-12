@@ -1,6 +1,6 @@
 import { getKuzzle } from '@shared/get-kuzzle';
 import type { Item } from '@shared/types-v0.1.0';
-import type { JSONObject, ResponsePayload } from '@nodes/data-v2.0.0';
+import type { JSONObject, ResponsePayload } from '@nodes/app-v2.0.0';
 import type { Props } from '../node/definition';
 import type { UpdateScheme } from '../node/validtaion';
 

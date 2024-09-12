@@ -7,6 +7,6 @@
 		"@shared/get-kuzzle": "workspace:@shared/get-kuzzle-v0.2.0@^"
 	},
 	"devDependencies": {
-		"@nodes/data-v2.0.0": "workspace:*"
+		"@nodes/app-v2.0.0": "workspace:*"
 	}
 }

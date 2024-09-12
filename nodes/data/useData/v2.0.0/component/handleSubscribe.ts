@@ -4,8 +4,8 @@ import type { Item } from '@shared/types-v0.1.0';
 import type { Props } from '../node/definition';
 import handleDataChanges from './handleDataChanges';
 import type { NoodlNode } from '@shared/node-v1.0.0';
-import type { DocumentNotification } from '@nodes/data-v2.0.0';
-import getIemMethods from './getIemMethods';
+import type { DocumentNotification } from '@nodes/app-v2.0.0';
+import getIem from './getIem';
 
 export type Notification = DocumentNotification & { result: { _updatedFields: string[] } };
 
@@ -115,12 +115,11 @@ export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: s
 				}
 			} else {
 				// Добавление нового item.
-				const newRawItem = {
+				const newRawItem = getIem({
 					...notif.result._source,
 					dbClass: schemeData.scheme.dbClass,
 					id: itemId,
-					...getIemMethods(itemId),
-				} as Item;
+				} as Item);
 
 				const item = R.items[itemId];
 				if (!item) R.items[newRawItem.id] = newRawItem;

@@ -1,13 +1,13 @@
 import { getKuzzle } from '@shared/get-kuzzle';
 import { sendOutput } from '@shared/port-send-v1.0.0';
 import type { Item } from '@shared/types-v0.1.0';
-import type { JSONObject, ResponsePayload } from '@nodes/data-v2.0.0';
+import type { JSONObject, ResponsePayload } from '@nodes/app-v2.0.0';
 import handleDataChanges from './handleDataChanges';
 import type { SchemeData } from '../node/store';
 import type { Props } from '../node/definition';
 import type { NoodlNode } from '@shared/node-v1.0.0';
-import getIemMethods from './getIemMethods';
 import { handleSubscribe } from './handleSubscribe';
+import getIem from './getIem';
 
 export type BackendData = {
 	items: { [id: string]: Item };
@@ -81,10 +81,10 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 
 	// Обновим items.
 	map(data.items, (itemId, item) => {
-		// Добавим методы.
-		item = { ...item, ...(getIemMethods(itemId) as any) };
+		// Скроем методы и встроенные параметры.
+		item = getIem(item);
 
-		// Здесь безопсно класть в прокси item с бекенда как есть, без клонирования, т.к. data.items никогда не мутируется.
+		// Здесь безопасно класть в прокси item с бекенда как есть, без клонирования, т.к. data.items никогда не мутируется.
 		const proxyItem = R.items[itemId];
 		if (!proxyItem) R.items[itemId] = item;
 		else R.libs.lodash.merge(proxyItem, item);

@@ -1,7 +1,6 @@
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import setParams from './setParams';
-import type { Props, Store } from '../node/definition';
-import systemLoaderAnimation from '@shared/system-loader-animation-v0.1.0';
+import type { Props, AuthStore } from '../definition';
 import { getKuzzle } from '@shared/get-kuzzle-v0.2.0';
 import fetchUser from './fetchUser';
 import ms from 'ms';
@@ -14,7 +13,7 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 
 	// Возьмем состояние с диска. addState возвращает текущее состояние, если есть, иначе создает.
 	// Делаем это вначале, чтобы далее использовать новое пустое или текущее состояние на диске.
-	const persistentState = await R.db?.addState('auth');
+	const persistentState = await R.db.addState('auth');
 
 	// Восстановим сессию с диска
 	setParams();
@@ -52,7 +51,7 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 				// Установим их глобально.
 				setParams();
 				// Запустим обновление токена.
-				p.store.refreshInterval = setInterval(async () => await vaildateRefreshToken(p.sessionTimeout), ms('5s'));
+				p.store.refreshInterval = setInterval(async () => await vaildateRefreshToken(p.sessionTimeout), ms('1h'));
 			}
 			// Изменим состояние на диске для всех вкладок.
 			await persistentState.set('signedIn', () => signedIn);
@@ -67,14 +66,14 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 
 	// Подпишемся на смену лидерства. Работает одинаково при первом проходе лидера и при смене лидера.
 	// Делаем это в конце, чтобы иметь готовый persistentState.
-	R.db?.waitForLeadership().then(async () => {
+	R.db.waitForLeadership().then(async () => {
 		p.store.isLeader = true;
 
 		// Установим состояние инициализации на диск, чтобы другие вкладки ждали лидера.
 		await persistentState.set('inited', () => false);
 
 		// Отменим, если оффлайн.
-		if (!R.db?.states.network.connected) {
+		if (!R.db.states.network.connected) {
 			handleAuth(p.store, noodlNode);
 			return;
 		}
@@ -96,26 +95,22 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 		// Установим состояние инициализации на диск, чтобы другие вкладки могли проверить готовность.
 		await persistentState.set('inited', () => true);
 	});
+
+	log.info('Auth initialized', { signedIn: R.db.states.auth.signedIn, user: R.user });
 };
 
-const handleAuth = async (s: Store, noodlNode: NoodlNode) => {
-	const signedIn = R.db?.states.auth.signedIn;
+const handleAuth = async (s: AuthStore, noodlNode: NoodlNode) => {
+	const signedIn = R.db.states.auth.signedIn;
 
 	if (signedIn) {
 		s.signedIn = true;
-		noodlNode.innerReactComponentRef?.setSignInState(true);
 		sendOutput(noodlNode, 'userRole', R.user?.user?.role?.value || null);
 		sendSignal(noodlNode, 'signedIn');
-		// Уберем анимацию загрузки, если указано в параметрах приложения.
-		const { stopLoaderAnimationOn = 'authInitialized' } = Noodl.getProjectSettings();
-		if (stopLoaderAnimationOn === 'authInitialized') systemLoaderAnimation.stop();
 	} else {
 		s.refreshInterval && clearInterval(s.refreshInterval);
 		s.signedIn = false;
-		noodlNode.innerReactComponentRef?.setSignInState(false);
 		sendOutput(noodlNode, 'userRole', null);
 		sendSignal(noodlNode, 'signedOut');
-		systemLoaderAnimation.stop(); // Выключаем лоадер при любой настройке, если не авторизован.
 	}
 };
 
@@ -134,7 +129,7 @@ const signIn = async (p: Props, username?: string, password?: string) => {
 	const startTime = log.start();
 	try {
 		const token = await K.auth.login('local', { username, password }, p.sessionTimeout);
-		await R.db?.states.auth.set('token', () => token);
+		await R.db.states.auth.set('token', () => token);
 	} catch (e: any) {
 		let errorMessage = 'Неизвестная ошибка';
 

@@ -1,12 +1,15 @@
-export default async function (ErrorBoundary: any) {
-	const configState = await R.db?.addState('config');
+import { ErrorBoundary } from 'react-error-boundary';
+
+export default async () => {
+	const configState = await R.db.addState('config');
 	configState.options$.subscribe((options?: { name: string; data: any }[]) => {
 		if (options?.length) {
 			const remoteLogs = options.find((i) => i.name === 'remoteLogs')?.data?.enabled;
 			const apiKey = configState.creds?.find((i: any) => i.name === 'hyperdx')?.data.apiKey;
 			if (remoteLogs && apiKey) {
 				import('@hyperdx/browser').then(async (HyperDX) => {
-					const { project, environment, projectVersion } = R.env;
+					const { project, environment = 'd2', projectVersion } = Noodl.getProjectSettings();
+
 					if (project && environment && projectVersion) {
 						HyperDX.default.init({
 							apiKey,
@@ -19,7 +22,7 @@ export default async function (ErrorBoundary: any) {
 						HyperDX.default.attachToReactErrorBoundary(ErrorBoundary);
 						HyperDX.default.setGlobalAttributes({ environment, project, projectVersion, rolderKit: R.env?.rolderKit || 'none' });
 						// Добавим информацию о пользователе в логи если авторизаван.
-						const authState = await R.db?.addState('auth');
+						const authState = await R.db.addState('auth');
 						if (authState.signedIn && authState.user)
 							HyperDX.default.setGlobalAttributes({
 								userId: authState.user.id,
@@ -34,7 +37,7 @@ export default async function (ErrorBoundary: any) {
 	});
 
 	// Добавим информацию о пользователе в логи после авторизации.
-	const authState = await R.db?.addState('auth');
+	const authState = await R.db.addState('auth');
 	authState.$.subscribe((authState: any) => {
 		if (authState.signedIn && authState.user && window.HyperDX)
 			HyperDX?.setGlobalAttributes({
@@ -43,4 +46,4 @@ export default async function (ErrorBoundary: any) {
 				userEmail: authState.user.id,
 			});
 	});
-}
+};

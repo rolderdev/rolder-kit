@@ -123,7 +123,7 @@ export const reactNode = (nodeName: string, versions: JsNodeVersions, params?: {
 		getReactComponent() {
 			return forwardRef(function (p: Props, ref) {
 				// Не будем выдавать компоненту пока не выбрана версия.
-				if (!p.version) return null;
+				if (p.noodlNode.firstRun) return null;
 				else {
 					//console.log('forwardRef', p);
 					const ReactComponent = getModule(versions[p.version]);

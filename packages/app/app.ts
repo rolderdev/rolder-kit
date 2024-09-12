@@ -1,9 +1,8 @@
 import '@shared/types-v0.1.0';
 import { reactNode } from '@shared/node-v1.0.0';
-import systemLoaderAnimation from '@shared/system-loader-animation-v0.1.0';
 
-// css loader
-import './loader.css';
+import systemLoaderAnimation from '@shared/system-loader-animation-v0.2.0';
+import '@shared/system-loader-animation-v0.2.0/loader.css';
 systemLoaderAnimation.start();
 
 import v200 from '@nodes/app-v2.0.0';
@@ -51,21 +50,6 @@ Noodl.defineModule({
 			name: 'projectDefaults',
 			type: 'array',
 			displayName: 'Project defaults',
-			group: 'Rolder',
-		},
-		{
-			name: 'stopLoaderAnimationOn',
-			type: {
-				name: 'enum',
-				enums: [
-					{ label: 'App initialized', value: 'appInitialized' },
-					{ label: 'Data initialized', value: 'dataInitialized' },
-					{ label: 'Auth initialized', value: 'authInitialized' },
-					{ label: 'Local data initialized', value: 'localDataInitialized' },
-				],
-			},
-			default: 'authInitialized',
-			displayName: 'Stop loader animation on',
 			group: 'Rolder',
 		},
 	],

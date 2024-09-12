@@ -1,6 +1,6 @@
 import type { NoodlNode } from '@shared/node-v1.0.0';
-import type { RxDatabase, HyperDX, Rxdb } from '@nodes/app-v2.0.0';
-import type { Kuzzle } from '@nodes/data-v2.0.0';
+import type { InitState } from '@shared/init-state-v0.1.0';
+import type { RxDatabase, HyperDX, Rxdb, Kuzzle } from '@nodes/app-v2.0.0';
 import type { HistoryItem, ItemsHistory, Nodes } from '@nodes/use-data-v2.0.0';
 import type { Mantine } from '@nodes/mantine-v2.0.0';
 import type { Icons, Utils } from 'shared';
@@ -14,7 +14,8 @@ import type { Dayjs } from 'shared/src/libs/dayjs';
 type Rolder = {
 	states: {
 		debug: number;
-		backend: 'notInitialized' | 'initializing' | 'initialized';
+		init: { value: InitState }; // Реактивное состояние инициализации приложения.
+		backend: 'notInitialized' | 'initializing' | 'initialized'; // Обратная совместимость.
 		/* signedIn?: boolean;
 		devMode: boolean; */
 	};
@@ -81,8 +82,8 @@ export type DbClass = {
 };
 
 export type Item = {
-	id: string;
-	dbClass: string;
+	id: Readonly<string>;
+	dbClass: Readonly<string>;
 	content?: { [key: string]: any };
 	states?: { [key: string]: any };
 	user?: User['user'];
@@ -95,6 +96,7 @@ export type Item = {
 } & { [dbClass: string]: Item | Item[] | { id: string } | { id: string }[] | undefined } & {
 	getRef: (dbClass: string) => Item | Item[] | undefined;
 	getHistory: (count?: number) => HistoryItem[];
+	roots: string[];
 };
 
 export type User = {
