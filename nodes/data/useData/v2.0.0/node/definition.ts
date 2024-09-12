@@ -8,6 +8,7 @@ import type { Store } from './store';
 import type { Nodes, NodeSelectionState, SelectionState } from '../component/Node';
 import type { HistoryItem, ItemsHistory } from '../component/fetch';
 import { unSubscribe } from '../component/handleSubscribe';
+import initState from '@shared/init-state-v0.1.0';
 
 export type Props = BaseJsProps & BaseProps & { store: Store };
 
@@ -158,16 +159,9 @@ export default {
 		// Отпишемся, когда удален.
 		noodlNode._onNodeDeleted = () => unSubscribe(p);
 		//console.log('init', noodlNode.model.type);
-		// Нужно дождаться инициализации Kuzzle.
-		await new Promise((resolve) => {
-			const interval = setInterval(() => {
-				if (R.libs.Kuzzle) {
-					clearInterval(interval);
-					p.store = getStore(p);
-					resolve(undefined);
-				}
-			}, 50);
-		});
+
+		await initState('initialized');
+		p.store = getStore(p);
 	},
 	getInspectInfo: (p: Props) => [
 		{ type: 'text', value: `API ${p.apiVersion}` },

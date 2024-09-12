@@ -1,7 +1,7 @@
 import { getKuzzle } from '@shared/get-kuzzle';
 import { sendOutput } from '@shared/port-send-v1.0.0';
 import type { Item } from '@shared/types-v0.1.0';
-import type { JSONObject, ResponsePayload } from '@nodes/data-v2.0.0';
+import type { JSONObject, ResponsePayload } from '@nodes/app-v2.0.0';
 import handleDataChanges from './handleDataChanges';
 import type { SchemeData } from '../node/store';
 import type { Props } from '../node/definition';

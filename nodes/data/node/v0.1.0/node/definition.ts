@@ -3,6 +3,7 @@ import type { JsNodeDef, BaseJsProps } from '@shared/node-v1.0.0';
 import { subscribe } from '../component/node';
 import type Node from '@nodes/use-data-v2.0.0/component/Node';
 import { clearWarning, sendWarning } from '@shared/node-v1.0.0/src/editorModels/warning';
+import initState from '@shared/init-state-v0.1.0';
 
 export type Props = BaseJsProps & { node: Node; unsub: any };
 
@@ -26,6 +27,8 @@ export default {
 			noodlNode.nodeScope.componentOwner._forEachNode.innerReactComponentRef.componentWillUnmount = () => p.unsub?.();
 		// Отпишемся, когда удален.
 		noodlNode._onNodeDeleted = () => p.unsub?.();
+
+		await initState('initialized');
 
 		const nodePath = noodlNode.nodeScope.componentOwner.metaData?.nodePath;
 		if (!Noodl.deployed) {

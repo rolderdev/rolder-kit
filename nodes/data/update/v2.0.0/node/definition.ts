@@ -3,6 +3,7 @@ import type { JsNodeDef } from '@shared/node-v1.0.0';
 import { getPortDef } from '@shared/port-v1.0.0';
 import { validateUpdateScheme } from './validtaion';
 import type { UpdateScheme } from './validtaion';
+import initState from '@shared/init-state-v0.1.0';
 
 export type Props = BaseJsProps & { apiVersion: 'v1'; updateScheme?: UpdateScheme; optimistic: boolean };
 
@@ -52,5 +53,8 @@ export default {
 		outProps.data && { type: 'text', value: `=== Data ===` },
 		outProps.data && { type: 'value', value: outProps.data },
 	],
+	initialize: async () => {
+		await initState('initialized');
+	},
 	disableCustomProps: true,
 } satisfies JsNodeDef;

@@ -3,6 +3,7 @@ import type { JsNodeDef, BaseJsProps } from '@shared/node-v1.0.0';
 import type { InspectInfo } from '@shared/node-v1.0.0';
 import { initStore } from '../component/item';
 import type { MetaData } from '@nodes/table-v2.0.0';
+import initState from '@shared/init-state-v0.1.0';
 
 export type Props = BaseJsProps & BaseProps & { propsStore: Store };
 
@@ -89,6 +90,7 @@ export default {
 			p.propsStore.deriveUnsubs.forEach((i) => R.libs.valtio.underive(i));
 		};
 
+		await initState('initialized');
 		p.propsStore = initStore(p);
 	},
 	transform(p: Props, portDefs) {

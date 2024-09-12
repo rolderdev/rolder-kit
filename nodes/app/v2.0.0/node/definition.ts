@@ -24,6 +24,7 @@ export type Props = BaseReactProps & {
 	store: AuthStore;
 };
 
+export type { Kuzzle, JSONObject, ResponsePayload, DocumentNotification } from 'kuzzle-sdk';
 export type AuthStore = { signedIn: boolean | undefined; isLeader: boolean; refreshInterval?: NodeJS.Timeout };
 
 import { createBlob } from 'rxdb';

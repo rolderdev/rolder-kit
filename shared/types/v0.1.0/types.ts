@@ -1,7 +1,6 @@
 import type { NoodlNode } from '@shared/node-v1.0.0';
 import type { InitState } from '@shared/init-state-v0.1.0';
-import type { RxDatabase, HyperDX, Rxdb } from '@nodes/app-v2.0.0';
-import type { Kuzzle } from '@nodes/data-v2.0.0';
+import type { RxDatabase, HyperDX, Rxdb, Kuzzle } from '@nodes/app-v2.0.0';
 import type { HistoryItem, ItemsHistory, Nodes } from '@nodes/use-data-v2.0.0';
 import type { Mantine } from '@nodes/mantine-v2.0.0';
 import type { Icons, Utils } from 'shared';
