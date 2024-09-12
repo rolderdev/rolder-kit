@@ -1,9 +1,8 @@
-import type { Props } from './definition';
+import type { Props } from '../definition';
 import setConfig from './setConfig';
 import { sendSignal } from '@shared/port-send-v1.0.0';
-import { Kuzzle, WebSocket } from 'kuzzle-sdk';
-import systemLoaderAnimation from '@shared/system-loader-animation-v0.2.0';
 import type { NoodlNode } from '@shared/node-v1.0.0';
+import systemLoaderAnimation from '@shared/system-loader-animation-v0.2.0';
 
 export default async (p: Props, noodlNode: NoodlNode) => {
 	const { dbName, backendDevMode, backendUrl, backendPort } = p;
@@ -17,15 +16,18 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 	}
 
 	const startTime = log.start();
+
+	const kuzzleModule = await import('kuzzle-sdk');
 	const host = backendDevMode ? backendUrl || 'localhost' : `${project}.kuzzle.${environment}.rolder.app`;
 	const port = backendDevMode ? backendPort || 7512 : 443;
 	noodlNode._internal.host = host;
 	noodlNode._internal.port = port;
 
-	const kuzzle = new Kuzzle(new WebSocket(host, { port }));
+	const kuzzle = new kuzzleModule.Kuzzle(new kuzzleModule.WebSocket(host, { port }));
 
 	if (R.db?.states.network.connected) {
 		await kuzzle.connect();
+		systemLoaderAnimation.progress(50);
 		await setConfig(kuzzle, true);
 
 		log.end('Kuzzle online init', startTime);
@@ -36,11 +38,4 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 
 	R.libs.Kuzzle = kuzzle;
 	sendSignal(noodlNode, 'initialized');
-
-	log.info('R', R);
-
-	// Установим прогресс анимации.
-	systemLoaderAnimation.progress(66);
-	// Изменим реактивное состояние инициализации приложения.
-	R.states.init.value = 'backend';
 };

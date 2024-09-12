@@ -6,6 +6,8 @@ import { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField } from
 import type { BaseReactProps } from '@shared/node-v1.0.0';
 import { getPortDef } from '@shared/port-v1.0.0';
 import type { ReactNodeDef } from '@shared/node-v1.0.0';
+import validate from './validate';
+import initState from '@shared/init-state-v0.1.0';
 
 function MantineError(title: string, message?: string, autoClose?: boolean | number): void {
 	notifications.show({ title, message, color: 'red', autoClose: autoClose ? autoClose : false });
@@ -24,7 +26,7 @@ export type Props = BaseReactProps & {
 };
 
 export default {
-	hashTag: '#expreimental',
+	hashTag: '#pre-release',
 	module: { dynamic: lazy(() => import('../component/Mantine')) },
 	inputs: [
 		getPortDef({
@@ -67,17 +69,9 @@ export default {
 	],
 	outputs: [],
 	getInspectInfo: (p: Props) => (p.mantineTheme ? [{ type: 'value', value: p.mantineTheme }] : []),
+	validate: async (p: Props, model) => validate(model),
 	initialize: async (p: Props) => {
-		// Нужно дождаться инициализации params в R.db
-		await new Promise((resolve) => {
-			const interval = setInterval(async () => {
-				if (R.db?.states.params !== undefined) {
-					clearInterval(interval);
-					await R.db?.states.params.set('colorScheme', () => p.defaultColorScheme);
-					resolve(undefined);
-				}
-			}, 50);
-		});
+		await initState('initialized');
 	},
 	disableCustomProps: true,
 } satisfies ReactNodeDef;

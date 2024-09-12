@@ -1,9 +1,7 @@
-import { forwardRef, useEffect } from 'react';
+import { forwardRef, memo, useImperativeHandle } from 'react';
 import type { Props } from '../node/definition';
 import { ErrorBoundary } from 'react-error-boundary';
-import initLocalDb from './initLocalDb';
-import systemLoaderAnimation from '@shared/system-loader-animation-v0.1.0';
-import hyperdx from './hyperdx';
+import systemLoaderAnimation from '@shared/system-loader-animation-v0.2.0';
 
 function FallbackComponent({ error }: any) {
 	return (
@@ -30,47 +28,51 @@ function FallbackComponent({ error }: any) {
 		</div>
 	);
 }
+// memo для того, чтобы не реагировать на изменяющиеся логин/пароль при печати.
+export default memo(
+	forwardRef(function (p: Props, ref) {
+		const { project, projectVersion, projectDefaults, environment = 'd2' } = Noodl.getProjectSettings();
+		const { set } = R.libs.just;
 
-export default forwardRef(function (p: Props) {
-	const {
-		stopLoaderAnimationOn = 'authInitialized',
-		project,
-		projectVersion,
-		projectDefaults,
-		environment = 'd2',
-	} = Noodl.getProjectSettings();
-	const { noodlNode, multiInstance } = p;
-	const { set } = R.libs.just;
-
-	set(R, ['env', 'environment'], environment);
-	set(R, ['env', 'project'], project);
-	set(R, ['env', 'projectVersion'], projectVersion);
-	try {
-		if (projectDefaults) set(R, ['params', 'defaults'], eval(projectDefaults));
-	} catch (error) {
-		log.error('Project defaults error:', error);
-	}
-
-	const localDbInited = initLocalDb(noodlNode, multiInstance);
-	useEffect(() => {
-		if (localDbInited) {
-			// Запустим мониторинг настроек. Когда бекенд скачает настройки, каждая функция поймает их и примет соотвествующие решения.
-			hyperdx(ErrorBoundary);
-			// Остановим анимацию, если так настроено.
-			if (stopLoaderAnimationOn === 'appInitialized') systemLoaderAnimation.stop();
+		set(R, ['env', 'environment'], environment);
+		set(R, ['env', 'project'], project);
+		set(R, ['env', 'projectVersion'], projectVersion);
+		try {
+			if (projectDefaults) set(R, ['params', 'defaults'], eval(projectDefaults));
+		} catch (error) {
+			log.error('Project defaults error:', error);
 		}
-	}, [localDbInited]);
 
-	return (
-		<ErrorBoundary FallbackComponent={FallbackComponent}>
-			<div
-				style={{
-					width: '100%',
-					height: '100%',
-				}}
-			>
-				{localDbInited ? p.children : null}
-			</div>
-		</ErrorBoundary>
-	);
-});
+		// Завершим анимацию.
+		systemLoaderAnimation.stop();
+		// Изменим реактивное состояние инициализации приложения.
+		R.states.init.value = 'initialized';
+
+		// Примем внешние сигналы.
+		useImperativeHandle(
+			ref,
+			() => ({
+				async signIn() {
+					// Авторизуем пользователя, переключив флаг, чтобы авторизация произошла у лидера по подписке.
+					await R.db.states.auth.set('username', () => p.username);
+					await R.db.states.auth.set('password', () => p.password);
+					await R.db.states.auth.set('signIn', () => true);
+				},
+			}),
+			[p]
+		);
+
+		return (
+			<ErrorBoundary FallbackComponent={FallbackComponent}>
+				<div
+					style={{
+						width: '100%',
+						height: '100%',
+					}}
+				>
+					{p.children}
+				</div>
+			</ErrorBoundary>
+		);
+	})
+);

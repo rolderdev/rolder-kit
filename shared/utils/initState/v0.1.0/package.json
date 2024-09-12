@@ -1,0 +1,5 @@
+{
+	"name": "@shared/init-state-v0.1.0",
+	"main": "initState.ts",
+	"type": "module"
+}

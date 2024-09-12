@@ -5,7 +5,7 @@ import type { Props } from '../node/definition';
 import handleDataChanges from './handleDataChanges';
 import type { NoodlNode } from '@shared/node-v1.0.0';
 import type { DocumentNotification } from '@nodes/data-v2.0.0';
-import getIemMethods from './getIemMethods';
+import getIemMethods from './getIem';
 
 export type Notification = DocumentNotification & { result: { _updatedFields: string[] } };
 

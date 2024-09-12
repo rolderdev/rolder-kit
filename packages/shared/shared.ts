@@ -3,6 +3,8 @@ import { proxy } from 'valtio';
 
 // Base
 set(window, ['R', 'params'], {});
+// Реактивное остояние инициализации приложения.
+set(window, ['R', 'states', 'init'], proxy({ value: 'initializing' }));
 // Обратная совместимость
 set(window, ['R', 'states', 'backend'], 'notInitialized');
 // Глобальные items и ноды иерархий.
@@ -55,3 +57,6 @@ import './src/libs';
 import utils from './src/utils';
 export type Utils = typeof utils;
 set(window, ['R', 'utils'], utils);
+
+// Сменим состояние инициализации приложения.
+R.states.init.value = 'shared';

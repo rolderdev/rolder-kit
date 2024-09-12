@@ -4,6 +4,7 @@
 	"types": "types.ts",
 	"devDependencies": {
 		"shared": "workspace:*",
+		"@shared/init-state-v0.1.0": "workspace:*",
 		"@nodes/app-v2.0.0": "workspace:*",
 		"@nodes/data-v2.0.0": "workspace:*",
 		"@nodes/mantine-v2.0.0": "workspace:*",

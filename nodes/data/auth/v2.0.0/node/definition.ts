@@ -59,7 +59,7 @@ export default {
 			];
 		else return [];
 	},
-	validate: async (p: Props, model) => validate(p, model),
+	validate: async (p: Props, model) => validate(model),
 	initialize: async (p: Props, noodlNode) => {
 		// Нужно дождаться инициализации Kuzzle и компоненты.
 		await new Promise((resolve) => {

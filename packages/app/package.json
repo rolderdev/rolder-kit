@@ -1,7 +1,7 @@
 {
 	"name": "app",
 	"dependencies": {
-		"@shared/system-loader-animation-v0.1.0": "workspace:*",
+		"@shared/system-loader-animation-v0.2.0": "workspace:*",
 		"@nodes/app-v2.0.0": "workspace:*"
 	}
 }

@@ -3,6 +3,7 @@ import type { BaseProps } from '@shared/node-v1.0.0';
 import { getPortDef } from '@shared/port-v1.0.0';
 import type { ReactNodeDef } from '@shared/node-v1.0.0';
 import initialize from './initialize';
+import initState from '@shared/init-state-v0.1.0';
 
 export type Props = BaseProps & {
 	dbName: string;
@@ -60,16 +61,9 @@ export default {
 			noodlNode._internal.port && { type: 'value', value: `Host: ${noodlNode._internal.host}:${noodlNode._internal.port}` },
 	],
 	initialize: async (p: Props, noodlNode) => {
-		// Нужно дождаться инициализации сети в R.db и когда нудл создаст компоненту.
-		await new Promise((resolve) => {
-			const interval = setInterval(async () => {
-				if (R.db?.states?.network?.connected !== undefined && noodlNode.innerReactComponentRef) {
-					clearInterval(interval);
-					await initialize(p, noodlNode);
-					resolve(undefined);
-				}
-			}, 50);
-		});
+		console.log('Data init');
+		await initState('app');
+		await initialize(p, noodlNode);
 	},
 	disableCustomProps: true,
 } satisfies ReactNodeDef;
