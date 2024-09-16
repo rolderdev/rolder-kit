@@ -1,5 +1,6 @@
 // Модель порта. Определяет схему порта, по которой они добавляются в схему ноды.
 
+import '@shared/types-v0.1.0';
 import {
 	any,
 	array,
@@ -81,11 +82,14 @@ export const PortDef = pipe(
 );
 
 // Обрати внимание, что тип и схема называются одинаково. Это рекомендованная конвенция valibot.
-// Не разобрался как типизировать функции с ValiBot, поэтому тут тпизирую вручную.
+// Не разобрался как типизировать функции с ValiBot, поэтому тут типизирую вручную.
 export type PortDef = Omit<InferOutput<typeof PortDef>, 'dependsOn' | 'validate' | 'transform'> & {
 	dependsOn?(p: { [key: string]: any }): boolean;
 	validate?(p: { [key: string]: any }): boolean | string;
-	transform?(p: { [key: string]: any }, portDef: PortDef): PortDef;
+	transform?(p: { [key: string]: any }, portDef: ResultPortDef): void;
 };
 
-export const getPortDef = (portDef: PortDef) => parse(PortDef, portDef) as PortDef;
+// Тип после трансформации Valibot. Нужен, чтобы избежать путанницы с группой - она может быть любой из-за Custom.
+export type ResultPortDef = Omit<PortDef, 'group' | 'customGroup'> & { group: string };
+
+export const getPortDef = (portDef: PortDef) => parse(PortDef, portDef) as ResultPortDef;

@@ -27,6 +27,11 @@ import IndentHandler from './IndentHandler';
 const lowlight = createLowlight();
 lowlight.register({ js, ts, json });
 
+const debounceContent = R.libs.remeda.debounce((p: Props, editor: any) => sendOutput(p.noodlNode, 'html', editor.getHTML()), {
+	timing: 'trailing',
+	waitMs: 500,
+});
+
 export default forwardRef(function (p: Props, ref) {
 	const [isEditor, setIsEditor] = useState(p.isEditor);
 
@@ -53,12 +58,12 @@ export default forwardRef(function (p: Props, ref) {
 		],
 		content: p.content,
 		onCreate: ({ editor }) => sendOutput(p.noodlNode, 'html', editor.getHTML()),
-		onUpdate: ({ editor }) => sendOutput(p.noodlNode, 'html', editor.getHTML()),
+		onUpdate: ({ editor }) => debounceContent.call(p, editor),
 		editable: isEditor,
 	});
 
 	useEffect(() => {
-		if (editor && p.content) editor.commands.setContent(p.content);
+		if (editor && !isEditor && p.content) editor.commands.setContent(p.content);
 	}, [p.content]);
 
 	useEffect(() => {

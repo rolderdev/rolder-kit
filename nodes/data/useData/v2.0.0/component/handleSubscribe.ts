@@ -28,7 +28,7 @@ export const handleSubscribe = async (p: Props, noodlNode: NoodlNode) => {
 	});
 };
 
-export const unSubscribe = (p: Props) => p.store.subscribes.forEach((_, schemeHash) => unSubscribeFromScheme(p, schemeHash));
+export const unsubscribe = (p: Props) => p.store.subscribes.forEach((_, schemeHash) => unSubscribeFromScheme(p, schemeHash));
 
 const subscribeOnScheme = async (p: Props, noodlNode: NoodlNode, schemeHash: string, channel: string) => {
 	const { dbName } = window.R.env;
@@ -43,6 +43,7 @@ const subscribeOnScheme = async (p: Props, noodlNode: NoodlNode, schemeHash: str
 
 		if (dbClassV) {
 			const notify = (notif: Notification) => {
+				//console.log('server notif', schemeHash, notif);
 				/* if (['0b1164db77fce49cba2056a80a55e90d8877aac9', '281a1fdd1454945638386c2a2c454fd1224c6c1e'].includes(schemeHash)) {
 					console.log('server notif', schemeHash, notif);
 				}
@@ -115,11 +116,14 @@ export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: s
 				}
 			} else {
 				// Добавление нового item.
-				const newRawItem = getIem({
-					...notif.result._source,
-					dbClass: schemeData.scheme.dbClass,
-					id: itemId,
-				} as Item);
+				const newRawItem = getIem(
+					{
+						...notif.result._source,
+						dbClass: schemeData.scheme.dbClass,
+						id: itemId,
+					} as Item,
+					p.store.rootId
+				);
 
 				const item = R.items[itemId];
 				if (!item) R.items[newRawItem.id] = newRawItem;

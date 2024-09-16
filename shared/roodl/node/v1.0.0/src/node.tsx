@@ -71,7 +71,7 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 							// Разведем сигнал и обновление props. Реагируем на false на случай одновременной подачи props и сигнала.
 							if (inputDef.type === 'signal') {
 								if (value === false) runSignal(this, nodeDef, inputDef);
-							} else scheduleRun(this, nodeDef, inputDef);
+							} else scheduleRun(this, nodeDef, inputDef, versions);
 						}
 					},
 				});
@@ -90,6 +90,7 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 
 			graphModel.on(`nodeAdded.rolder-kit.api-v1.${nodeName}`, async function (model: GraphModelNode) {
 				model.parametersCache = {};
+				model.portDefsCache = { inputs: [], outputs: [] };
 				model.warnings = new Map();
 
 				if (!model.parameters.version) {

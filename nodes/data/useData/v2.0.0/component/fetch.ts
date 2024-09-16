@@ -82,7 +82,7 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	// Обновим items.
 	map(data.items, (itemId, item) => {
 		// Скроем методы и встроенные параметры.
-		item = getIem(item);
+		item = getIem(item, p.store.rootId);
 
 		// Здесь безопасно класть в прокси item с бекенда как есть, без клонирования, т.к. data.items никогда не мутируется.
 		const proxyItem = R.items[itemId];

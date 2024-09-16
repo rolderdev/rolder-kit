@@ -20,7 +20,8 @@ export default {
 			}
 
 			// Обновим оптимистично.
-			if (p.optimistic)
+			if (p.optimistic) {
+				let scopeUpdate: { [rootId: string]: Record<string, 'in' | 'out'> } = {};
 				for (const scheme of p.updateScheme) {
 					for (const item of scheme.items) {
 						const proxyItem = R.items[item.id];
@@ -32,9 +33,18 @@ export default {
 								for (const deleteField of scheme.deleteFields) {
 									R.libs.lodash.unset(proxyItem, deleteField);
 								}
+							// Отправим в useData все items всех схем, если в них указан scope.
+							if (scheme.scope) {
+								proxyItem.roots.forEach((rootId) => R.libs.just.set(scopeUpdate, [rootId, item.id], scheme.scope));
+							}
 						}
 					}
 				}
+
+				R.libs.just.map(scopeUpdate, (rootId, itemsScope) => {
+					Noodl.Events.emit(`${rootId}_handleHierarchy`, itemsScope);
+				});
+			}
 
 			sendOutput(noodlNode, 'updating', true);
 			const data: BackendData['data'] | undefined = await kUpdate(p, p.updateScheme);

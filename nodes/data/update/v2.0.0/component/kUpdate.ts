@@ -44,8 +44,8 @@ export default async (p: Props, updateScheme: UpdateScheme) => {
 		MantineError?.('Системная ошибка!', `Kuzzle error. ${backendData.error.message}`);
 	}
 
-	log.info(`useData: ${updateScheme?.map((i) => i.dbClass).join(', ')}`, backendData);
-	log.end(`useData: ${updateScheme?.map((i) => i.dbClass).join(', ')}`, startTime);
+	log.info(`update: ${updateScheme?.map((i) => i.dbClass).join(', ')}`, backendData);
+	log.end(`update: ${updateScheme?.map((i) => i.dbClass).join(', ')}`, startTime);
 
 	return backendData.data;
 };

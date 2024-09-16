@@ -1,8 +1,8 @@
 import type { Item } from '@shared/types-v0.1.0';
 import type { HistoryItem } from './fetch';
 
-export default (item: Item) => {
-	const roots: string[] = item.roots || [];
+export default (item: Item, rootId: string) => {
+	const roots: string[] = [...(item.roots || []), rootId];
 
 	const prototype = Object.create(
 		{
@@ -22,6 +22,10 @@ export default (item: Item) => {
 						? (take(snapshot(R.itemsHistory[item.id]), count) as HistoryItem[])
 						: (snapshot(R.itemsHistory[item.id]) as HistoryItem[])
 					: [];
+			},
+			handleHierarchy: () => {
+				const globalItem = R.items[item.id];
+				if (globalItem) globalItem.roots.forEach((rootId) => Noodl.Events.emit(`${rootId}_handleHierarchy`));
 			},
 			roots,
 		},

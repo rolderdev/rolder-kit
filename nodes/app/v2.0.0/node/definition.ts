@@ -178,6 +178,18 @@ export default {
 		// Дождемся библиотек и утилит.
 		await initState('shared');
 
+		const { project, projectVersion, projectDefaults, environment = 'd2' } = Noodl.getProjectSettings();
+		const { set } = R.libs.just;
+
+		set(R, ['env', 'environment'], environment);
+		set(R, ['env', 'project'], project);
+		set(R, ['env', 'projectVersion'], projectVersion);
+		try {
+			if (projectDefaults) set(R, ['params', 'defaults'], eval(projectDefaults));
+		} catch (error) {
+			log.error('Project defaults error:', error);
+		}
+
 		// Создадим локульную БД для хранения состояния приложения и для возможного offline сценария.
 		await initLocalDb(p.multiInstance);
 		// Установим прогресс анимации.
@@ -197,6 +209,16 @@ export default {
 		await new Promise((r) => setTimeout(r, 10));
 
 		if (p.useAuth) await initAuth(p, noodlNode);
+		// Нужно дождаться не выполнения, а состояния.
+		await new Promise((resolve) => {
+			const interval = setInterval(async () => {
+				if (R.db.states.auth.inited) {
+					clearInterval(interval);
+					resolve(undefined);
+				}
+			}, 50);
+		});
+
 		systemLoaderAnimation.progress(100);
 		R.states.init.value = 'auth';
 		await new Promise((r) => setTimeout(r, 10));

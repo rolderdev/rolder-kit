@@ -1,6 +1,6 @@
 /* Модель порта "Version" */
 
-import { getNodePort, getPortDef, type PortDef } from '@shared/port-v1.0.0';
+import { getNodePort, getPortDef } from '@shared/port-v1.0.0';
 import type { GraphModelNode, JsNodeVersions, NodeContext, ReactNodeVersions } from '../../main';
 import { clearWarning, sendWarning } from './warning';
 
@@ -17,7 +17,7 @@ export const getVersionPortDef = (versions: JsNodeVersions | ReactNodeVersions) 
 			visibleAt: 'editor',
 		}),
 		index: 0,
-	} as PortDef;
+	};
 };
 
 export const getVersionPort = (versions: JsNodeVersions | ReactNodeVersions) => {

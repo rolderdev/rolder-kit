@@ -19,11 +19,11 @@
 
 .progress-section {
 	border-radius: 8px;
-	background-color: #073bf5;
+	background-color: #9cb1fc; /* Rolder brand 200 */
 }
 
 .lds-roller {
-	color: #073bf5;
+	color: #9cb1fc; /* Rolder brand 200 */
 }
 .lds-roller,
 .lds-roller div,

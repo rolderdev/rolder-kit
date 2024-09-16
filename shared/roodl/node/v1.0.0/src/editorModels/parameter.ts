@@ -1,4 +1,4 @@
-import type { PortDef } from '@shared/port-v1.0.0';
+import type { ResultPortDef } from '@shared/port-v1.0.0';
 import type { GraphModelNode, JsNodeVersions, NodeContext, ReactNodeVersions } from '../../main';
 import { clearWarning, hasWarnings, sendWarning } from './warning';
 
@@ -27,7 +27,7 @@ export const prepareParameters = (model: GraphModelNode, context: NodeContext, v
 };
 
 // Установка значений с параметров портов.
-const setParameters = (model: GraphModelNode, inputDefs: PortDef[]) => {
+const setParameters = (model: GraphModelNode, inputDefs: ResultPortDef[]) => {
 	for (const inputDef of inputDefs) {
 		const inputName = inputDef.name;
 
@@ -45,7 +45,7 @@ const setParameters = (model: GraphModelNode, inputDefs: PortDef[]) => {
 
 // Функция проверяет соответствие типа данных между тем, что задано в декларации инпута и фактическим значением.
 // Стандартные типы проверяются простым сравнением. Специализированные Roodl и наши eval порты проверяются каждый по своему.
-export const validateType = (model: GraphModelNode, context: NodeContext, inputDef: PortDef) => {
+export const validateType = (model: GraphModelNode, context: NodeContext, inputDef: ResultPortDef) => {
 	const sendTypeWarning = (defType: any, valueType: any) => {
 		sendWarning(
 			model,
@@ -106,7 +106,7 @@ export const validateType = (model: GraphModelNode, context: NodeContext, inputD
 };
 
 // Функция конвертирует параметры ноды.
-export const getConverted = (model: GraphModelNode, context: NodeContext, inputDef: PortDef) => {
+export const getConverted = (model: GraphModelNode, context: NodeContext, inputDef: ResultPortDef) => {
 	const value: unknown = model.parameters[inputDef.name];
 
 	if (typeof inputDef.type === 'string') {

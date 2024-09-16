@@ -2,14 +2,13 @@ import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import type { Props } from '../node/definition';
 import type { Item } from '@shared/types-v0.1.0';
 import type { SchemeData } from '../node/store';
-import Node from './Node';
 import type { NoodlNode } from '@shared/node-v1.0.0';
+import Node from './Node';
 
 export default (p: Props, noodlNode: NoodlNode) => {
 	// Подготовим иерархию. Она должна быть атомарной. Т.е. каждая нода содержит информацию о свзях, но свзяи не проложены.
 	let flatNodes: Node[] = [];
 	Node.createHierarchy(p, flatNodes);
-
 	// Создадим прокси нод иерархии или обновим их для реактивности.
 	Node.setNodesProxy(p, flatNodes);
 

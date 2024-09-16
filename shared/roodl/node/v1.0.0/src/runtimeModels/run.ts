@@ -1,22 +1,18 @@
 // Запускает реактивную JS-функцию, JS-функцию сигнал или React-сигнал.
 
-import type { PortDef } from '@shared/port-v1.0.0';
+import type { ResultPortDef } from '@shared/port-v1.0.0';
 import type { JsNodeDef, NoodlNode, ReactNodeDef } from '../../main';
 
-export const runReactiveJsFunc = async (noodlNode: NoodlNode, nodeDef: JsNodeDef, inputDef: PortDef) => {
+export const runReactiveJsFunc = async (noodlNode: NoodlNode, nodeDef: JsNodeDef, inputDef: ResultPortDef) => {
 	if (nodeDef.triggerOnInputs) {
 		if (nodeDef.triggerOnInputs(noodlNode.props).includes(inputDef.name)) await runJsFunc(nodeDef, noodlNode);
 		else if (noodlNode.firstRun) await runJsFunc(nodeDef, noodlNode);
 	}
 };
 
-export const runSignal = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactNodeDef, inputDef: PortDef) => {
+export const runSignal = async (noodlNode: NoodlNode, nodeDef: JsNodeDef | ReactNodeDef, inputDef: ResultPortDef) => {
 	// Нужно пропустить, пока scheduleRun не отработал первый раз.
 	if (!noodlNode.firstRun) {
-		//if (noodlNode.model.type === 'rolder-kit.api-v1.useData') console.log('runSignal', inputDef.name);
-		// Запустим функцию инициализации один раз.
-		//if (nodeDef.initialize && noodlNode.firstRun) await nodeDef.initialize(noodlNode.props, noodlNode);
-
 		// Отличим JS от React по наличию reactKey у ноды.
 		if (!noodlNode.reactKey) await runJsFunc(nodeDef as JsNodeDef, noodlNode, inputDef.name);
 		else noodlNode.innerReactComponentRef?.[inputDef.name](noodlNode.props);

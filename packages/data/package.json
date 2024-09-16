@@ -3,8 +3,11 @@
 	"dependencies": {
 		"@nodes/item-v0.1.0": "workspace:*",
 		"@nodes/node-v0.1.0": "workspace:*",
+		"@nodes/create-v2.0.0": "workspace:*",
 		"@nodes/update-v2.0.0": "workspace:*",
+		"@nodes/delete-v2.0.0": "workspace:*",
 		"@nodes/search-v0.1.0": "workspace:*",
-		"@nodes/use-data-v2.0.0": "workspace:*"
+		"@nodes/use-data-v2.0.0": "workspace:*",
+		"@nodes/logout-v2.0.0": "workspace:*"
 	}
 }

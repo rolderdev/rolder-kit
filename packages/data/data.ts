@@ -4,10 +4,13 @@ import { defineNode } from '@noodl/noodl-sdk';
 
 import item from './src/item';
 import node from './src/node';
+import create from './src/create';
 import update from './src/update';
+import deleteN from './src/delete';
 import search from './src/search';
 import useData from './src/useData';
+import logout from './src/logout';
 
-const jsPackages = [item, node, update, search, useData];
+const jsPackages = [item, node, create, update, deleteN, search, useData, logout];
 
 Noodl.defineModule({ name: 'data', nodes: jsPackages.map(defineNode) });

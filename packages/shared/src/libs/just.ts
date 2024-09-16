@@ -1,7 +1,7 @@
 import typeOf from 'just-typeof';
 import compare from 'just-compare';
 import clone from 'just-clone';
-//// object
+// object
 import has from 'just-has';
 import get from 'just-safe-get';
 import set from 'just-safe-set';
@@ -12,13 +12,13 @@ import template from 'just-template';
 import flush from 'just-flush';
 import isEmpty from 'just-is-empty';
 import extend from 'just-extend';
-//// array
+// array
 import last from 'just-last';
 import unique from 'just-unique';
 import insert from 'just-insert';
 import range from 'just-range';
 import sortBy from 'just-sort-by';
-//// string
+// string
 import capitalize from 'just-capitalize';
 
 const just = {

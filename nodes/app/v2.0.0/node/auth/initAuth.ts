@@ -21,7 +21,7 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 	// Подпишемся на изменения signedIn и inited на диске, чтобы реагировать на всех вкладках.
 	// Первая подписка нужна для первичного прохода, чтобы вкладки ждали лидера.
 	// Вторая подписка нужна для дальнейшего реагирования на смену состояния.
-	persistentState.inited$.subscribe((inited: boolean) => {
+	persistentState.inited$.subscribe(async (inited: boolean) => {
 		// Если инициализировано и состояние изменилось, учитывая что signedIn в store изначально undefined.
 		if (inited && persistentState.signedIn !== p.store.signedIn) handleAuth(p.store, noodlNode);
 	});
@@ -51,7 +51,7 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 				// Установим их глобально.
 				setParams();
 				// Запустим обновление токена.
-				p.store.refreshInterval = setInterval(async () => await vaildateRefreshToken(p.sessionTimeout), ms('1h'));
+				p.store.refreshInterval = setInterval(async () => vaildateRefreshToken(p.sessionTimeout), ms('25m'));
 			}
 			// Изменим состояние на диске для всех вкладок.
 			await persistentState.set('signedIn', () => signedIn);
@@ -63,6 +63,8 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 			sendOutput(noodlNode, 'signingIn', false);
 		}
 	});
+
+	log.info('Auth initialized', { signedIn: R.db.states.auth.signedIn, user: R.user });
 
 	// Подпишемся на смену лидерства. Работает одинаково при первом проходе лидера и при смене лидера.
 	// Делаем это в конце, чтобы иметь готовый persistentState.
@@ -82,7 +84,7 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 		const tokenValid = persistentState.signedIn ? await vaildateRefreshToken(p.sessionTimeout) : false;
 
 		// Запустим обновление токена, если токен валиден.
-		if (tokenValid) p.store.refreshInterval = setInterval(async () => await vaildateRefreshToken(p.sessionTimeout), ms('1h'));
+		if (tokenValid) p.store.refreshInterval = setInterval(() => vaildateRefreshToken(p.sessionTimeout), ms('25m'));
 		else {
 			// Сбросим токен и пользователя, чтобы useData не померала от неверного токена.
 			await persistentState.set('token', () => undefined);
@@ -95,8 +97,6 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 		// Установим состояние инициализации на диск, чтобы другие вкладки могли проверить готовность.
 		await persistentState.set('inited', () => true);
 	});
-
-	log.info('Auth initialized', { signedIn: R.db.states.auth.signedIn, user: R.user });
 };
 
 const handleAuth = async (s: AuthStore, noodlNode: NoodlNode) => {

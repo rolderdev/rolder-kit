@@ -32,7 +32,6 @@ export default {
 			group: 'Params',
 			type: 'boolean',
 			default: true,
-			visibleAt: 'editor',
 		}),
 		getPortDef({
 			name: 'update',

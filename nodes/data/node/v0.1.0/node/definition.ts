@@ -22,12 +22,6 @@ export default {
 			  ]
 			: [],
 	initialize: async (p: Props, noodlNode) => {
-		// Отпишемся, когда родитель отмонтировался.
-		if (noodlNode.nodeScope.componentOwner._forEachNode)
-			noodlNode.nodeScope.componentOwner._forEachNode.innerReactComponentRef.componentWillUnmount = () => p.unsub?.();
-		// Отпишемся, когда удален.
-		noodlNode._onNodeDeleted = () => p.unsub?.();
-
 		await initState('initialized');
 
 		const nodePath = noodlNode.nodeScope.componentOwner.metaData?.nodePath;
@@ -39,6 +33,12 @@ export default {
 				await subscribe(p, noodlNode);
 			}
 		} else await subscribe(p, noodlNode);
+
+		// Отпишемся, когда родитель отмонтировался.
+		if (noodlNode.nodeScope.componentOwner._forEachNode)
+			noodlNode.nodeScope.componentOwner._forEachNode.innerReactComponentRef.componentWillUnmount = () => p.unsub?.();
+		// Отпишемся, когда удален.
+		noodlNode._onNodeDeleted = () => p.unsub?.();
 	},
 	disableCustomProps: true,
 } satisfies JsNodeDef;

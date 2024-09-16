@@ -4,6 +4,7 @@ import type { InspectInfo } from '@shared/node-v1.0.0';
 import { initStore } from '../component/item';
 import type { MetaData } from '@nodes/table-v2.0.0';
 import initState from '@shared/init-state-v0.1.0';
+import unsubscribe from '../component/unsubscribe';
 
 export type Props = BaseJsProps & BaseProps & { propsStore: Store };
 
@@ -13,8 +14,9 @@ export type BaseProps = {
 	fields?: string[];
 };
 
-export type Store = Omit<BaseProps, 'source' | 'itemId'> & {
+export type Store = {
 	currentItemId?: string;
+	fields?: string[];
 	subscribes: Map<string, { subscribed?: boolean; metaData?: MetaData }>;
 	unsubs: any[];
 	deriveUnsubs: any[];
@@ -49,7 +51,7 @@ export default {
 		getPortDef({ name: 'item', displayName: 'Item', group: 'Data', type: 'object' }),
 		getPortDef({ name: 'itemChanged', displayName: 'Item changed', group: 'Signals', type: 'signal' }),
 	],
-	triggerOnInputs: () => ['source', 'itemId', 'fields'],
+	triggerOnInputs: () => ['source', 'itemId', 'fields', 'connectionFields'],
 	getInspectInfo: (p: Props) => {
 		const s = p.propsStore;
 		if (!s) return [];
@@ -77,28 +79,23 @@ export default {
 
 		return info as InspectInfo[];
 	},
-	initialize: async (p: Props, noodlNode) => {
-		// Отпишемся, когда родитель отмонтировался. Родитель может быть страницей, в таком случае пропустим.
-		if (noodlNode.nodeScope.componentOwner.parent?.innerReactComponentRef)
-			noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => {
-				p.propsStore.unsubs.forEach((i) => i?.());
-				p.propsStore.deriveUnsubs.forEach((i) => R.libs.valtio.underive(i));
-			};
-		// Отпишемся, когда удален.
-		noodlNode._onNodeDeleted = () => {
-			p.propsStore.unsubs.forEach((i) => i?.());
-			p.propsStore.deriveUnsubs.forEach((i) => R.libs.valtio.underive(i));
-		};
-
+	initialize: async (p: Props, noodlNode, portDefs) => {
 		await initState('initialized');
 		p.propsStore = initStore(p);
+
+		// Отпишемся, когда родитель отмонтировался. Родитель может быть страницей, в таком случае пропустим.
+		if (noodlNode.nodeScope.componentOwner.parent?.innerReactComponentRef)
+			noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => unsubscribe(p);
+		// Отпишемся, когда удален.
+		noodlNode._onNodeDeleted = () => unsubscribe(p);
 	},
-	transform(p: Props, portDefs) {
-		portDefs.outputs = portDefs.outputs.filter((i: any) => i.group !== 'Fields');
+	transform: (p: Props, portDefs) => {
+		portDefs.outputs = portDefs.outputs.filter((i: any) => i.group !== 'Fields') || [];
+
 		if (p.fields)
 			p.fields.map((field) => {
-				if (!portDefs.outputs.some((i) => i.name === field))
-					portDefs.outputs.push(
+				if (!portDefs.outputs?.some((i) => i.name === field))
+					portDefs.outputs?.push(
 						getPortDef({
 							name: field,
 							displayName: field,
@@ -108,8 +105,6 @@ export default {
 						})
 					);
 			});
-
-		return portDefs;
 	},
 	disableCustomProps: true,
 } satisfies JsNodeDef;

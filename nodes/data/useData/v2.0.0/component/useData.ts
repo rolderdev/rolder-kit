@@ -2,6 +2,8 @@ import { sendSignal } from '@shared/port-send-v1.0.0';
 import type { Props } from '../node/definition';
 import { fetch } from './fetch';
 import type { JsComponent, NoodlNode } from '@shared/node-v1.0.0';
+import handleDataChanges from './handleDataChanges';
+import { unsubscribe } from './handleSubscribe';
 
 const reactive = async (p: Props, noodlNode: NoodlNode) => {
 	// Обработаем измения инпутов
@@ -23,6 +25,7 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 	if (p.store.subscribe !== p.subscribe) {
 		await fetch(p, noodlNode); // Нужно перезагрузить данные, т.к. подписки прилетают с сервреа.
 		p.store.subscribe = p.subscribe;
+		if (!p.subscribe) unsubscribe(p);
 	}
 
 	// Первый проход.
@@ -30,9 +33,38 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 		// Первичная загрузка реактивного режима.
 		if (!p.controlled) await fetch(p, noodlNode);
 
-		// Тригер смены выбора.
+		// Тригеры.
 		const rootNode = R.nodes[p.store.rootId];
-		if (rootNode) Noodl.Events.on(`${rootNode.path}_selectionChanged`, () => sendSignal(noodlNode, 'nodesSelectionChanged'));
+		if (rootNode) {
+			// Смена выбора.
+			Noodl.Events.on(`${rootNode.path}_selectionChanged`, () => sendSignal(noodlNode, 'nodesSelectionChanged'));
+
+			// Перестроение иерархии.
+			Noodl.Events.on(`${p.store.rootId}_handleHierarchy`, (itemsScope) => {
+				if (itemsScope) {
+					p.store.schemes.forEach((schemeData) => {
+						if (schemeData.itemIds.some((id) => Object.keys(itemsScope).includes(id))) {
+							R.libs.just.map(itemsScope, (itemId, scope) => {
+								if (itemId !== 'fetch' && scope === 'out') {
+									schemeData.itemIds = schemeData.itemIds.filter((id) => id !== itemId);
+									if (!p.store.subscribe) {
+										schemeData.fetched--;
+										schemeData.total--;
+									}
+								}
+							});
+						}
+					});
+
+					handleDataChanges(p, noodlNode);
+				}
+			});
+
+			// Принудительная загрузка при удалении и подписке.
+			Noodl.Events.on(`${p.store.rootId}_fetch`, () => {
+				if (p.store.subscribe) fetch(p, noodlNode);
+			});
+		}
 
 		p.store.inited = true;
 	}

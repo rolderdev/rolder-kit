@@ -2,10 +2,12 @@ import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import type { MetaData } from '@nodes/table-v2.0.0';
 import type { Props, Store } from '../node/definition';
 import type { JsComponent, NoodlNode } from '@shared/node-v1.0.0';
+import unsubscribe from './unsubscribe';
 
 export const initStore = (p: Props) =>
 	({
-		fields: p.fields, // Сравнивать есть смысл только поля, так как подписка на item работает одинаково при любом источнике.
+		// Сравнивать есть смысл только поля, так как подписка на item работает одинаково при любом источнике.
+		fields: p.fields,
 		subscribes: new Map(),
 		unsubs: [],
 		deriveUnsubs: [],
@@ -49,7 +51,7 @@ export default {
 					s.subscribes.set(itemId, { metaData });
 					subscribe(p, noodlNode);
 				} else {
-					// 2. При смене полей. Для удобства разработки, в runtime всегда равны.
+					// 2. При смене полей.
 					if (!R.libs.just.compare(p.fields, s.fields)) {
 						s.currentItemId = itemId;
 						s.fields = p.fields;
@@ -64,7 +66,7 @@ export default {
 						sendOutput(noodlNode, 'item', item);
 						sendSignal(noodlNode, 'itemChanged');
 
-						p.fields?.map((field) => {
+						s.fields?.map((field) => {
 							const value = R.libs.just.get(item, field);
 							sendOutput(noodlNode, field, value !== undefined ? value : null);
 						});
@@ -82,6 +84,15 @@ export default {
 					}
 				}, 50);
 			}
+
+			// Если itemId больше нет, нужно отписаться и почистить все порты.
+		} else {
+			unsubscribe(p);
+			s.currentItemId = undefined;
+			sendOutput(noodlNode, 'item', null);
+			s.fields?.map((field) => {
+				sendOutput(noodlNode, field, null);
+			});
 		}
 	},
 } as JsComponent;
@@ -110,7 +121,7 @@ export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 
 				// Подпишемся на выбранные разработчиком поля.
 				// Возьмем каждое поле и сделаем из него derive-прокси, что позволит реагировать только на поля.
-				p.fields?.map((field) => {
+				p.propsStore.fields?.map((field) => {
 					const derived = derive({ field: (get) => R.libs.just.get(get(item), field) });
 					sendOutput(noodlNode, field, derived.field !== undefined ? derived.field : null);
 

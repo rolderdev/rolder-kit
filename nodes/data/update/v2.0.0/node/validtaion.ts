@@ -10,7 +10,7 @@ export type UpdateScheme = (Omit<UpdateSchemeSchema[number], 'items'> & { items:
 
 const getTypedUpdateScheme = () => {
 	const { unique, typeOf } = R.libs.just;
-	const { array, check, optional, pipe, strictObject, string, boolean, unknown } = R.libs.valibot;
+	const { array, check, optional, pipe, strictObject, string, boolean, unknown, picklist } = R.libs.valibot;
 
 	return pipe(
 		array(
@@ -30,6 +30,7 @@ const getTypedUpdateScheme = () => {
 				),
 				history: optional(boolean()),
 				deleteFields: optional(array(string())),
+				scope: optional(picklist(['in', 'out'])),
 			})
 		),
 		check(
