@@ -7,7 +7,7 @@ import type { FetchScheme } from './validtaion';
 import type { Store } from './store';
 import type { Nodes, NodeSelectionState, SelectionState } from '../component/Node';
 import type { HistoryItem, ItemsHistory } from '../component/fetch';
-import { unSubscribe } from '../component/handleSubscribe';
+import { unsubscribe } from '../component/handleSubscribe';
 import initState from '@shared/init-state-v0.1.0';
 
 export type Props = BaseJsProps & BaseProps & { store: Store };
@@ -55,7 +55,7 @@ export default {
 			group: 'Custom',
 			customGroup: 'Subscribe',
 			type: 'boolean',
-			default: false,
+			default: true,
 			visibleAt: 'editor',
 			dependsOn: (p: Props) => (p.controlled ? false : true),
 		}),
@@ -106,21 +106,21 @@ export default {
 			type: 'signal',
 		}),
 	],
-	transform(p: Props, portDefs) {
+	transform: (p: Props, portDefs) => {
 		// Пересоздание outputDbClasses
 		const dbClasses = p.outputDbClasses;
 		portDefs.outputs = portDefs.outputs.filter((i) => !i.group?.includes('Data:'));
 		if (dbClasses)
 			dbClasses.map((dbClass) => {
-				portDefs.outputs.push({
-					...getPortDef({
+				portDefs.outputs.push(
+					getPortDef({
 						name: `${dbClass}Items`,
 						group: 'Custom',
 						customGroup: `Data: ${dbClass}`,
 						type: 'array',
 						displayName: `${dbClass} Items`,
-					}),
-				});
+					})
+				);
 				portDefs.outputs.push(
 					getPortDef({
 						name: `${dbClass}Fetched`,
@@ -149,19 +149,17 @@ export default {
 					})
 				);
 			});
-		return portDefs;
 	},
 	triggerOnInputs: () => ['apiVersion', 'fetchScheme', 'controlled', 'subscribe'],
 	initialize: async (p: Props, noodlNode) => {
-		// Отпишемся, когда родитель отмонтировался. Родитель может быть страницей, в таком случае пропустим.
-		if (noodlNode.nodeScope.componentOwner.parent?.innerReactComponentRef)
-			noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => unSubscribe(p);
-		// Отпишемся, когда удален.
-		noodlNode._onNodeDeleted = () => unSubscribe(p);
-		//console.log('init', noodlNode.model.type);
-
 		await initState('initialized');
 		p.store = getStore(p);
+
+		// Отпишемся, когда родитель отмонтировался. Родитель может быть страницей, в таком случае пропустим.
+		if (noodlNode.nodeScope.componentOwner.parent?.innerReactComponentRef)
+			noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => unsubscribe(p);
+		// Отпишемся, когда удален.
+		noodlNode._onNodeDeleted = () => unsubscribe(p);
 	},
 	getInspectInfo: (p: Props) => [
 		{ type: 'text', value: `API ${p.apiVersion}` },

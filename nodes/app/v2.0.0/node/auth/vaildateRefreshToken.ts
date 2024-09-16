@@ -3,13 +3,14 @@
 import { getKuzzle } from '@shared/get-kuzzle-v0.2.0';
 import ms from 'ms';
 
-export default async function (sessionTimeout: string) {
+export default async function (expiresIn: string) {
 	const K = await getKuzzle();
 	let valid = false;
 
 	if (K) {
 		try {
-			const tokenValidation = await K.auth.refreshToken({ expiresIn: sessionTimeout });
+			const tokenValidation = await K.auth.refreshToken({ expiresIn });
+			K.jwt = tokenValidation.jwt;
 			await R.db?.states.auth.set('token', () => tokenValidation.jwt);
 			valid = true;
 
@@ -18,6 +19,12 @@ export default async function (sessionTimeout: string) {
 				ttl: ms(tokenValidation.ttl),
 			});
 		} catch (e) {
+			// Сбросим при ошибке.
+			K.jwt = undefined;
+			await R.db.states.auth.set('token', () => undefined);
+			await R.db.states.auth.set('user', () => undefined);
+			await R.db.states.auth.set('signedIn', () => false);
+
 			log.error('vaildateRefreshToken error', e);
 		}
 	}

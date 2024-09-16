@@ -5,13 +5,13 @@
 		"shared": "workspace:*"
 	},
 	"devDependencies": {
-		"@rsdoctor/rspack-plugin": "^0.4.1",
-		"@rspack/cli": "^1.0.4",
-		"@rspack/core": "^1.0.4",
+		"@rsdoctor/rspack-plugin": "^0.4.2",
+		"@rspack/cli": "^1.0.5",
+		"@rspack/core": "^1.0.5",
 		"@shared/rspack-config-v0.1.0": "workspace:*",
 		"@shared/types-v0.1.0": "workspace:*",
 		"css-loader": "^7.1.2",
-		"postcss": "^8.4.45",
+		"postcss": "^8.4.47",
 		"postcss-loader": "^8.1.1",
 		"rspack-manifest-plugin": "^5.0.1",
 		"style-loader": "^4.0.0"

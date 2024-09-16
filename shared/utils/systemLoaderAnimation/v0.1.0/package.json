@@ -1,5 +1,0 @@
-{
-	"name": "@shared/system-loader-animation-v0.1.0",
-	"main": "systemLoaderAnimation.ts",
-	"type": "module"
-}

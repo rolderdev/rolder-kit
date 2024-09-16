@@ -16,6 +16,8 @@ export default async function (kuzzle: Kuzzle, online: boolean) {
 		try {
 			const r = await kuzzle.query({ controller: 'rolder', action: 'fetchConfig' });
 
+			if (r.result.backendVersions) R.env.backendVersions = r.result.backendVersions;
+
 			if (r.result.creds?.error) log.error('Fetch dbClasses error', r.result.dbClasses?.error);
 			if (r.result.creds?.error) log.error('Fetch system creds error', r.result.creds?.error);
 			if (r.result.creds?.error) log.error('Fetch options error', r.result.options?.error);

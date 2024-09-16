@@ -14,7 +14,7 @@ import {
 	string,
 	type InferOutput,
 } from 'shared/src/libs/valibot';
-import { PortDef } from './portDefinition';
+import { PortDef, type ResultPortDef } from './portDefinition';
 
 // Возьмем с модели порта повторяющиеся параметры.
 const pd = pick(object(PortDef.entries), ['name', 'displayName', 'default', 'tooltip']);
@@ -40,7 +40,7 @@ export const NodePortSchema = pipe(
 
 export type NodePort = InferOutput<typeof NodePortSchema>;
 
-export const getNodePort = (plug: NodePort['plug'], portDef: PortDef) => {
+export const getNodePort = (plug: NodePort['plug'], portDef: ResultPortDef) => {
 	let nodePort: Partial<NodePort> = {
 		plug,
 		name: portDef.name,

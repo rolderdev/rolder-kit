@@ -1,4 +1,4 @@
-import type { PortDef } from '@shared/port-v1.0.0';
+import type { ResultPortDef } from '@shared/port-v1.0.0';
 import type { Item } from '@shared/types-v0.1.0';
 import type { Warnings } from './src/editorModels/warning';
 
@@ -36,19 +36,18 @@ export type Props = { [name: string]: any };
 export type InspectInfo = { type: 'value' | 'text' | 'color'; value: any };
 type HashTag = '#expreimental' | '#pre-release' | '#deprecated';
 
+export type ResultPortDefs = { inputs: ResultPortDef[]; outputs: ResultPortDef[] };
+
 // Декларация
 export type NodeDef = {
 	module: { static?: any; dynamic?: any };
 	hashTag?: HashTag;
-	inputs?: PortDef[];
-	outputs?: PortDef[];
+	inputs?: ResultPortDef[];
+	outputs?: ResultPortDef[];
 	validate?(p: Props, model: GraphModelNode): Promise<boolean | string>;
-	initialize?(p: Props, noodlNode: NoodlNode): Promise<void>;
+	initialize?(p: Props, noodlNode: NoodlNode, portDefs: ResultPortDefs): Promise<void>;
 	getInspectInfo?(p: Props, outProps: { [x: string]: any }, noodlNode: NoodlNode): InspectInfo | InspectInfo[];
-	transform?(
-		p: Props,
-		portDefs: { inputs: PortDef[]; outputs: PortDef[] }
-	): { inputs: PortDef[]; outputs: PortDef[] } | undefined;
+	transform?(p: Props, portDefs: ResultPortDefs): void;
 	disableCustomProps?: boolean;
 };
 
@@ -238,8 +237,8 @@ export type GraphModel = {
 };
 
 export type GraphModelNode = {
-	firstRun: boolean;
 	parametersCache: Props;
+	portDefsCache: ResultPortDefs;
 	warnings: Warnings;
 
 	children: GraphModelNode[];

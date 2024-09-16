@@ -72,8 +72,9 @@ export default [
 		],
 		default: 'disabled',
 		validate: (p: Props) => (p.onRowClick ? true : false),
-		transform: (p: Props, portDef) =>
-			p.expansion ? { ...portDef, type: [...(portDef.type as any), { label: 'Expansion', value: 'expansion' }] } : portDef,
+		transform: (p: Props, portDef) => {
+			portDef.type = [...(portDef.type as any), { label: 'Expansion', value: 'expansion' }];
+		},
 	}),
 	getPortDef({
 		name: 'clickFilterFunc',

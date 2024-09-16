@@ -25,6 +25,7 @@ type Rolder = {
 		project?: string;
 		projectVersion?: string;
 		dbName?: string;
+		backendVersions?: { core: string; app: string };
 	};
 	params: {
 		//	sessionTimeout?: string;

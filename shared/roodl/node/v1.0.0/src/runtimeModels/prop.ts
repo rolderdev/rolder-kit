@@ -1,4 +1,4 @@
-import type { PortDef } from '@shared/port-v1.0.0';
+import type { ResultPortDef } from '@shared/port-v1.0.0';
 import type { NodeDef, NoodlNode } from '../../main';
 import { clearWarning, sendWarning } from '../editorModels/warning';
 
@@ -15,7 +15,7 @@ export const setPropDeafaults = (noodlNode: NoodlNode, nodeDef: NodeDef) => {
 };
 
 // Функция конвертирует параметры ноды.
-const getConverted = (noodlNode: NoodlNode, inputDef: PortDef, value: unknown) => {
+const getConverted = (noodlNode: NoodlNode, inputDef: ResultPortDef, value: unknown) => {
 	if (typeof inputDef.type === 'string') {
 		if (['array', 'objectEval', 'funcEval'].includes(inputDef.type)) {
 			let evalFunc: any;
@@ -33,7 +33,7 @@ const getConverted = (noodlNode: NoodlNode, inputDef: PortDef, value: unknown) =
 	} else return value;
 };
 
-export const validatePropValue = (noodlNode: NoodlNode, inputDef: PortDef) => {
+export const validatePropValue = (noodlNode: NoodlNode, inputDef: ResultPortDef) => {
 	if (inputDef.validate) {
 		const validateResult = inputDef.validate(noodlNode.props);
 		// Если разработчик вернул свой текст ошибки.

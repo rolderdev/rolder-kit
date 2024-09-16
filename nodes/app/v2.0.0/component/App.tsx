@@ -31,18 +31,6 @@ function FallbackComponent({ error }: any) {
 // memo для того, чтобы не реагировать на изменяющиеся логин/пароль при печати.
 export default memo(
 	forwardRef(function (p: Props, ref) {
-		const { project, projectVersion, projectDefaults, environment = 'd2' } = Noodl.getProjectSettings();
-		const { set } = R.libs.just;
-
-		set(R, ['env', 'environment'], environment);
-		set(R, ['env', 'project'], project);
-		set(R, ['env', 'projectVersion'], projectVersion);
-		try {
-			if (projectDefaults) set(R, ['params', 'defaults'], eval(projectDefaults));
-		} catch (error) {
-			log.error('Project defaults error:', error);
-		}
-
 		// Завершим анимацию.
 		systemLoaderAnimation.stop();
 		// Изменим реактивное состояние инициализации приложения.
