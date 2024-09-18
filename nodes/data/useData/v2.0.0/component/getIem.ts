@@ -23,10 +23,7 @@ export default (item: Item, rootId: string) => {
 						: (snapshot(R.itemsHistory[item.id]) as HistoryItem[])
 					: [];
 			},
-			handleHierarchy: () => {
-				const globalItem = R.items[item.id];
-				if (globalItem) globalItem.roots.forEach((rootId) => Noodl.Events.emit(`${rootId}_handleHierarchy`));
-			},
+			getDbClassState: (statePath: string) => R.libs.just.get(R.dbClasses, `${item.dbClass}.states.${statePath}`),
 			roots,
 		},
 		{

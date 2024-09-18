@@ -3,15 +3,16 @@ import { forwardRef } from 'react';
 import type { Props } from '../node/definition';
 import type { Store } from '../node/store';
 import Table from './Table';
-import { setLibProps } from './models/libPropsModel';
-import { setTableProps } from './models/tablePropsModel';
-import { setColumnsDefinition } from './models/columnModel';
-import { setRecordIds } from './models/recordModel';
-import { resetSelectedId, setSelectedId } from './models/singleSelectionModel';
-import { setSelectedIds } from './models/multiSelectionModel';
-import { setExpandedIds } from './models/expansionModel';
+import { setLibProps } from './models/libProps';
+import { setTableProps } from './models/tableProps';
+import { setColumnsDefinition } from './models/column';
+import { setRecordIds } from './models/record';
+import { resetSelectedId, setSelectedId, useHierarhySingleSelection } from './models/singleSelection';
+import { setSelectedIds } from './models/multiSelection';
+import { setExpandedIds } from './models/expansion';
 
 import 'mantine-datatable/styles.css';
+import { setSortState } from './models/sort';
 export const TableContext = createContext<Store>({} as any);
 
 export default forwardRef(function (p: Props, ref) {
@@ -19,6 +20,15 @@ export default forwardRef(function (p: Props, ref) {
 
 	const store = p.store;
 	const snap = useSnapshot(p.store);
+
+	// Дефолты с входов при монтировании.
+	useEffect(() => {
+		if (p.defaultSelectedItem?.id) setSelectedId(store, p.defaultSelectedItem?.id, true);
+		const defaultSelectedRecords = p.defaultSelectedItems?.map((item) => ({ id: item.id })) || [];
+		if (defaultSelectedRecords.length) setSelectedIds(store, defaultSelectedRecords, true);
+		const defaultExpandedIds = p.defaultExpandedItems?.map((item) => item.id) || [];
+		if (defaultExpandedIds.length) setExpandedIds(store, defaultExpandedIds, true);
+	}, []);
 
 	useEffect(() => {
 		// Параметры иерархии.
@@ -47,22 +57,16 @@ export default forwardRef(function (p: Props, ref) {
 		setLibProps(p);
 		setTableProps(p);
 
-		if (!snap.inited) {
-			// Установка дефолтов.
-			if (store.defaults.selectedId) setSelectedId(store, store.defaults.selectedId, true);
-			if (store.defaults.selectedIds)
-				setSelectedIds(
-					store,
-					store.defaults.selectedIds.map((i) => ({ id: i })),
-					true
-				);
-			if (store.defaults.expandedIds) setExpandedIds(store, store.defaults.expandedIds, true);
+		// Дефолтная сортировка. Нужно обращаться к store, т.к. snap батчится.
+		if (store.tableProps.sort.enabled && store.tableProps.sort.defaultState && !store.sortState)
+			setSortState(store, store.tableProps.sort.defaultState, true);
 
-			store.inited = true;
-		}
-
-		if (p.items && snap.fetching) store.fetching = false;
+		if (!snap.inited) store.inited = true;
+		store.fetching = !!p.fetching;
 	}, [p]);
+
+	// Подписка на изменение выбранного item в иерархии.
+	useHierarhySingleSelection(store);
 
 	// Входящие сигналы.
 	useImperativeHandle(

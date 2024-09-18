@@ -36,8 +36,10 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 		// Тригеры.
 		const rootNode = R.nodes[p.store.rootId];
 		if (rootNode) {
-			// Смена выбора.
-			Noodl.Events.on(`${rootNode.path}_selectionChanged`, () => sendSignal(noodlNode, 'nodesSelectionChanged'));
+			// Смена состояний.
+			Noodl.Events.on(`${rootNode.path}_singleSelectionChanged`, () => sendSignal(noodlNode, 'singleSelectionChanged'));
+			Noodl.Events.on(`${rootNode.path}_multiSelectionChanged`, () => sendSignal(noodlNode, 'multiSelectionChanged'));
+			Noodl.Events.on(`${rootNode.path}_expansionChanged`, () => sendSignal(noodlNode, 'expansionChanged'));
 
 			// Перестроение иерархии.
 			Noodl.Events.on(`${p.store.rootId}_handleHierarchy`, (itemsScope) => {
@@ -75,12 +77,36 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 export default {
 	reactive,
 	fetch: async (p: Props, noodlNode) => fetch(p, noodlNode),
-	resetNodesSelection: (p: Props, noodlNode) => {
+	resetSingleSelection: (p: Props, noodlNode) => {
 		Object.values(R.nodes)
 			.filter((i) => i.rootId === p.store.rootId)
-			.forEach((i) => (i.selectionState.value = 'notSelected'));
+			.forEach((i) => (i.states.singleSelection.value = null));
 
-		sendSignal(noodlNode, 'nodesSelectionChanged');
+		sendSignal(noodlNode, 'singleSelectionChanged');
+		if (!p.controlled) reactive(p, noodlNode);
+	},
+	resetMultiSelection: (p: Props, noodlNode) => {
+		Object.values(R.nodes)
+			.filter((i) => i.rootId === p.store.rootId)
+			.forEach((i) => (i.states.multiSelection.value = 'notSelected'));
+
+		sendSignal(noodlNode, 'multiSelectionChanged');
+		if (!p.controlled) reactive(p, noodlNode);
+	},
+	expandAll: (p: Props, noodlNode) => {
+		Object.values(R.nodes)
+			.filter((i) => i.rootId === p.store.rootId)
+			.forEach((i) => (i.states.expansion.value = true));
+
+		sendSignal(noodlNode, 'expansionChanged');
+		if (!p.controlled) reactive(p, noodlNode);
+	},
+	collapseAll: (p: Props, noodlNode) => {
+		Object.values(R.nodes)
+			.filter((i) => i.rootId === p.store.rootId)
+			.forEach((i) => (i.states.expansion.value = false));
+
+		sendSignal(noodlNode, 'expansionChanged');
 		if (!p.controlled) reactive(p, noodlNode);
 	},
 } as JsComponent;

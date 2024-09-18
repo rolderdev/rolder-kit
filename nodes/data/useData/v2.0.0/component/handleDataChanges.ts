@@ -10,13 +10,13 @@ export default (p: Props, noodlNode: NoodlNode) => {
 	let flatNodes: Node[] = [];
 	Node.createHierarchy(p, flatNodes);
 	// Создадим прокси нод иерархии или обновим их для реактивности.
-	Node.setNodesProxy(p, flatNodes);
+	Node.setNodesProxy(flatNodes);
 
 	const data: { [dbClass: string]: SchemeData & { items: Item[] } } = {};
 
 	// В data выдаем только родительские схемы.
 	p.store.schemes.forEach((schemeData) => {
-		const dbClass = schemeData.scheme.dbClass;
+		const dbClass = typeof schemeData.scheme.dbClass === 'string' ? schemeData.scheme.dbClass : schemeData.scheme.dbClass.name;
 
 		if (!schemeData.parentId) {
 			data[dbClass] = {

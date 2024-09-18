@@ -1,15 +1,16 @@
 import { memo, useContext } from 'react';
 import { DataTable } from 'mantine-datatable';
-import type { TableRecord } from './models/recordModel';
+import type { TableRecord } from './models/record';
 import { TableContext } from './TableProvider';
-import { getColumns } from './models/columnModel';
+import { getColumns } from './models/column';
 import getRowClickHandler from './funcs/getRowClickHandler';
 import getCursorState from './funcs/getCursorState';
 import getRowBgColor from './funcs/getRowBgColor';
-import { handleRecordSelection, setSelectedIds, useHierarchySelection } from './models/multiSelectionModel';
+import { handleRecordSelection, setSelectedIds, useHierarchySelection } from './models/multiSelection';
 import ExpansionRow from './renders/ExpansionRow';
 
 import rowClasses from './styles/row.module.css';
+import { setSortState } from './models/sort';
 
 export default memo(() => {
 	const { get } = R.libs.just;
@@ -21,7 +22,7 @@ export default memo(() => {
 	// Состояние чекбоксов и реактивность на изменения выбора в иерархии.
 	useHierarchySelection(store);
 
-	//console.log('Table render', store.hierarchy.tableNodePath, store.hierarchy.level);
+	//console.log('Table render');
 	return (
 		<DataTable<TableRecord>
 			// Base
@@ -78,6 +79,9 @@ export default memo(() => {
 					  }
 					: undefined
 			}
+			// Sort
+			sortStatus={snap.sortState}
+			onSortStatusChange={(sortState) => setSortState(store, sortState)}
 			{...(snap.libProps as any)}
 		/>
 	);

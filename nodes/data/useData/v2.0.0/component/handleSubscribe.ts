@@ -39,7 +39,8 @@ const subscribeOnScheme = async (p: Props, noodlNode: NoodlNode, schemeHash: str
 
 	const scheme = p.store.schemes.get(schemeHash)?.scheme;
 	if (scheme) {
-		const dbClassV = dbClassVersion(scheme.dbClass);
+		const dbClass = typeof scheme.dbClass === 'string' ? scheme.dbClass : scheme.dbClass.name;
+		const dbClassV = dbClassVersion(dbClass);
 
 		if (dbClassV) {
 			const notify = (notif: Notification) => {

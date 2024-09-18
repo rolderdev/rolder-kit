@@ -1,8 +1,8 @@
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import type { Store } from '../../node/store';
-import type { TableRecord } from '../models/recordModel';
-import { setSelectedId } from '../models/singleSelectionModel';
-import { toggleRowExpansion } from '../models/expansionModel';
+import type { TableRecord } from '../models/record';
+import { setSelectedId } from '../models/singleSelection';
+import { toggleRowExpansion } from '../models/expansion';
 import useItem from './useItem';
 import useNode from './useNode';
 

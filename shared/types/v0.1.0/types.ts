@@ -42,7 +42,7 @@ type Rolder = {
 			data: any;
 		}[];
 	};
-	dbClasses?: {
+	dbClasses: {
 		[x: string]: DbClass;
 	};
 	libs: {
@@ -71,7 +71,9 @@ type Rolder = {
 };
 
 export type DbClass = {
-	version: string;
+	versions: number[];
+	current: string;
+	version: string; // Обратная совместимость.
 	states: {
 		[name: string]: {
 			value: string;

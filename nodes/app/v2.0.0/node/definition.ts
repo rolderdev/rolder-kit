@@ -63,7 +63,7 @@ export default {
 		}),
 		getPortDef({
 			name: 'dbName',
-			displayName: 'DB name',
+			displayName: 'Default DB name',
 			group: 'Custom',
 			customGroup: 'Backend',
 			type: 'string',
@@ -169,7 +169,7 @@ export default {
 		}
 		if (p.useAuth && R.db?.states?.auth) {
 			inspectInfo.push({ type: 'value', value: `Signed in: ${R.db.states.auth.signedIn}` });
-			inspectInfo.push({ type: 'value', value: `User: ${R.user ? R.user : 'none'}` });
+			inspectInfo.push({ type: 'value', value: R.user ? R.user : 'none' });
 		}
 
 		return inspectInfo;

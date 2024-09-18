@@ -771,12 +771,12 @@ export default reactNode(
 				'parentTableId',
 			]),
 		},
-		'v2.0.0': {
+		/* 'v2.0.0': {
 			hashTag: '#expreimental',
 			module: { dynamic: lazy(() => import('@packages/table-v2.0.0')) },
 			inputs: ports200.inputs,
 			outputs: ports200.outputs,
-		},
+		}, */
 	},
 	{
 		allowChildren: true,

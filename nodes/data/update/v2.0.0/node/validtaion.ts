@@ -10,16 +10,38 @@ export type UpdateScheme = (Omit<UpdateSchemeSchema[number], 'items'> & { items:
 
 const getTypedUpdateScheme = () => {
 	const { unique, typeOf } = R.libs.just;
-	const { array, check, optional, pipe, strictObject, string, boolean, unknown, picklist } = R.libs.valibot;
+	const { array, check, optional, pipe, strictObject, string, boolean, unknown, picklist, union, number } = R.libs.valibot;
 
 	return pipe(
 		array(
 			strictObject({
+				dbName: optional(string('"dbName" must be string.')),
 				dbClass: pipe(
-					string('"dbClass" must be string.'),
-					check((dbClass) => {
-						return R.dbClasses ? (!R.dbClasses?.[dbClass] ? false : true) : true;
-					}, `There is no such DB class.`)
+					union([
+						string('"dbClass" must be string.'),
+						strictObject({
+							name: string('"dbClass" must be string.'),
+							version: number('"version" must be number.'),
+						}),
+					]),
+					check(
+						(dbClass) => (typeof dbClass === 'string' && R.dbClasses ? (!R.dbClasses[dbClass] ? false : true) : true),
+						`There is no such DB class.`
+					),
+					check(
+						(dbClassObj) =>
+							typeof dbClassObj === 'object' && R.dbClasses ? (!R.dbClasses[dbClassObj.name] ? false : true) : true,
+						`There is no such DB class.`
+					),
+					check(
+						(dbClassObj) =>
+							typeof dbClassObj === 'object' && R.dbClasses
+								? !R.dbClasses[dbClassObj.name]?.versions?.includes(dbClassObj.version)
+									? false
+									: true
+								: true,
+						`There is no such version of DB class.`
+					)
 				),
 				items: array(
 					pipe(

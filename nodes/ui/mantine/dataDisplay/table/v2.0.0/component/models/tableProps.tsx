@@ -1,17 +1,22 @@
 /* Модель настроек таблицы. */
 
+import type { DataTableSortStatus } from 'mantine-datatable';
 import type { Props } from '../../node/definition';
+import type { TableRecord } from './record';
 
 export type TableProps = ReturnType<typeof setTableProps>;
 
 // Устанавливает наши специфичные настройки таблицы.
 export const setTableProps = (p: Props) => {
+	const defaultSortColumnDef = p.columnsDefinition?.find((i) => typeof i.sort === 'string');
+
 	const tableProps = {
 		...R.libs.just.pick(p, [
 			// Base
 			'onRowClick',
 			'clickFilterFunc',
 			'singleSelectionFilterFunc',
+			'useSingleSelectionHierarchy',
 			'paddingLeftFunc',
 		]),
 		rowStyles: {
@@ -22,13 +27,14 @@ export const setTableProps = (p: Props) => {
 		},
 		multiSelection: {
 			enabled: p.multiSelection,
-			useHierarchy: p.useSelectionHierarchy,
+			useHierarchy: p.useMultiSelectionHierarchy,
 			filterFunc: p.multiSelectionFilterFunc,
 		},
 		expansion: {
 			enabled: p.expansion,
 			allowMultiple: p.allowMultiple,
 			template: p.expansionTemplate,
+			useHierarchy: p.useExpansionHierarchy,
 			filterFunc: p.expansionFilterFunc,
 			animationChildrenCount: p.animationChildrenCount || 25,
 			collapseProps: {
@@ -37,6 +43,17 @@ export const setTableProps = (p: Props) => {
 				animateOpacity: true,
 				...p.customProps?.collapseProps,
 			},
+		},
+		sort: {
+			enabled: p.sort,
+			type: p.sortType,
+			defaultState:
+				typeof defaultSortColumnDef?.sort === 'string'
+					? ({
+							columnAccessor: defaultSortColumnDef.accessor || defaultSortColumnDef.sortPath,
+							direction: defaultSortColumnDef.sort,
+					  } satisfies DataTableSortStatus<TableRecord>)
+					: undefined,
 		},
 	};
 

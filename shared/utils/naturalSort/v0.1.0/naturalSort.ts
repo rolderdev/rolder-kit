@@ -10,7 +10,7 @@ export default function (originalArray: any[], sortPath: string, direction: 'asc
 	// 3. Игнорирует регистр.
 	const compare = new Intl.Collator(['ru', 'en'], { numeric: true, sensitivity: 'base' }).compare;
 
-	// Для .sort нужен клон.
+	// Для .sort нужен клон, но не глубокий, чтобы не убивать прокси.
 	return [...originalArray].sort((a, b) =>
 		compare(get(direction === 'asc' ? a : b, sortPath), get(direction === 'asc' ? b : a, sortPath))
 	);

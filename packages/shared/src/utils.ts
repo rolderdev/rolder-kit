@@ -9,7 +9,7 @@ const utils = {
 	getFormatedDate: { v2: getFormatedDate2 },
 	getMasked: { v2: getMasked2 },
 	isEmpty: { v1: isEmpty },
-	naturalSort,
+	naturalSort: { v1: naturalSort },
 };
 
 export default utils;
