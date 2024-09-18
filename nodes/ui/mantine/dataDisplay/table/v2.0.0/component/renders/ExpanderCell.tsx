@@ -2,7 +2,7 @@ import { memo, useContext } from 'react';
 import { ActionIcon, Box, Group } from '@mantine/core';
 import clsx from 'clsx';
 import { TableContext } from '../TableProvider';
-import { toggleRowExpansion } from '../models/expansionModel';
+import { expansionDisabled, toggleRowExpansion } from '../models/expansion';
 import Cell from './Cell';
 import useNode from '../funcs/useNode';
 import useItem from '../funcs/useItem';
@@ -19,27 +19,22 @@ export default memo((p: { columnIdx: string; id: string }) => {
 	const ChevronIcon = R.libs.icons['IconChevronRight'];
 
 	const itemSnap = useItem(p.id, 'snap');
-	const nodeSub = useNode(store, p.id, 'sub');
 
 	// Вытягиваем реактивное состояние развернутости для анимации шеврона.
 	const expanded = snap.expandedIds[p.id];
 
 	// Определим, исключена ли строка из развертывния разработчиком.
-	const disabled = snap.expanders[p.id];
-	try {
-		const filterFunc = store.tableProps.expansion.filterFunc;
-		const d = itemSnap && filterFunc ? !filterFunc(itemSnap, useNode(store, p.id, 'snap')) : false;
-		store.expanders[p.id] = d;
-	} catch (e: any) {
-		log.error('expansion filterFunc error', e);
-		R.libs.mantine?.MantineError?.('Системная ошибка!', `expansion filterFunc error. ${e.message}`);
-	}
+	const disabled = expansionDisabled(store, p.id) || snap.expanders[p.id];
 
-	if (nodeSub?.childIds) {
+	// Реактивность на изменение ноды.
+	const nodeSub = useNode(store, p.id, 'sub');
+	if (nodeSub) {
+		// Установим новое состояние, если оно изменилось в иерархии и если не отфильтровано разработчиком.
+		if (!disabled) store.expandedIds[p.id] = nodeSub.states.expansion.value;
 		// Свернем строку, если у нее больше нет детей.
-		if (!nodeSub.childNodes().length && expanded) store.expandedIds[p.id] = false;
+		if (!nodeSub.childIds && expanded) store.expandedIds[p.id] = false;
 		// Добавим состояне детей для чекбокса.
-		store.checkboxes.hasChildren[p.id] = nodeSub.childNodes().length > 0;
+		store.checkboxes.hasChildren[p.id] = nodeSub.childIds.length > 0;
 	}
 
 	// Расчет отсупа функцией разработчика.
@@ -47,7 +42,7 @@ export default memo((p: { columnIdx: string; id: string }) => {
 	const level = store.hierarchy.level;
 	const pl = itemSnap && store.tableProps.paddingLeftFunc?.(level, itemSnap);
 
-	//console.log('Expander render');
+	//console.log('Expander render', level);
 	if (onRowClick === 'expansion')
 		return (
 			<Group pl={paddingLeftPostion === 'expander' ? pl : undefined} wrap="nowrap" gap={6}>

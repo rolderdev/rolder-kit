@@ -86,31 +86,21 @@ export default [
 		type: 'signal',
 		dependsOn: (p: Props) => p.expansion,
 	}),
+	// Sort
+	getPortDef({
+		name: 'sortState',
+		displayName: 'Sort state',
+		group: 'Custom',
+		customGroup: 'Sort',
+		type: 'object',
+		dependsOn: (p: Props) => p.sort,
+	}),
+	getPortDef({
+		name: 'sortStateChanged',
+		displayName: 'Sort state changed',
+		group: 'Custom',
+		customGroup: 'Sort',
+		type: 'signal',
+		dependsOn: (p: Props) => p.sort,
+	}),
 ] as PortDef[];
-
-// 	// Sort
-// 	getPortDef({
-//
-// 		name: 'sortState',
-// 		group: 'Sort',
-// 		type: 'object',
-// 		displayName: 'Sort state',
-// 		customs: {
-// 			dependsOn(p) {
-// 				return p.sort ? true : false;
-// 			},
-// 		},
-// 	}),
-// 	getPortDef({
-//
-// 		name: 'sortStateChanged',
-// 		group: 'Sort',
-// 		type: 'signal',
-// 		displayName: 'Sort state changed',
-// 		customs: {
-// 			dependsOn(p) {
-// 				return p.sort ? true : false;
-// 			},
-// 		},
-// 	}),
-// ]

@@ -3,7 +3,7 @@ import { Box } from '@mantine/core';
 import { TableContext } from '../TableProvider';
 import useNode from '../funcs/useNode';
 import useItem from '../funcs/useItem';
-import type { Column } from '../models/columnModel';
+import type { Column } from '../models/column';
 
 export default memo((p: { id: string; columnIdx: string }) => {
 	const store = useContext(TableContext);

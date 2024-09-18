@@ -44,6 +44,14 @@ export default [
 		validate: (p: Props) => (p.items?.length ? validateItems(p) : true),
 	}),
 	getPortDef({
+		name: 'fetching',
+		displayName: 'Fetching',
+		group: 'Custom',
+		customGroup: 'Base',
+		type: 'boolean',
+		default: true,
+	}),
+	getPortDef({
 		name: 'hierarchy',
 		displayName: 'Enable hierarchy',
 		group: 'Custom',
@@ -59,6 +67,14 @@ export default [
 		type: 'string',
 		visibleAt: 'connection',
 		dependsOn: (p: Props) => p.hierarchy,
+	}),
+	getPortDef({
+		name: 'textSelectionDisabled',
+		displayName: 'Disable text selection',
+		group: 'Custom',
+		customGroup: 'Base',
+		type: 'boolean',
+		default: false,
 	}),
 	getPortDef({
 		name: 'onRowClick',
@@ -95,12 +111,13 @@ export default [
 		codeComment: `//(item, node) => item.states.flow !== 'closed'`,
 	}),
 	getPortDef({
-		name: 'textSelectionDisabled',
-		displayName: 'Disable text selection',
+		name: 'useSingleSelectionHierarchy',
+		displayName: 'Use single selection hierarchy',
 		group: 'Custom',
 		customGroup: 'Base',
 		type: 'boolean',
 		default: false,
+		dependsOn: (p: Props) => p.onRowClick === 'singleSelection' && p.hierarchy,
 	}),
 	// Layout
 	getPortDef({
@@ -346,7 +363,7 @@ export default [
 		codeComment: `//(item, node) => item.states.flow !== 'closed'`,
 	}),
 	getPortDef({
-		name: 'useSelectionHierarchy',
+		name: 'useMultiSelectionHierarchy',
 		displayName: 'Use hierarchy',
 		group: 'Custom',
 		customGroup: 'Multi selection',
@@ -425,6 +442,15 @@ export default [
 		codeComment: `//(item, node) => item.states.flow !== 'closed'`,
 	}),
 	getPortDef({
+		name: 'useExpansionHierarchy',
+		displayName: 'Use hierarchy',
+		group: 'Custom',
+		customGroup: 'Expansion',
+		type: 'boolean',
+		default: false,
+		dependsOn: (p: Props) => p.expansion && p.hierarchy,
+	}),
+	getPortDef({
 		name: 'animationChildrenCount',
 		displayName: 'Animation children count',
 		group: 'Custom',
@@ -478,94 +504,61 @@ export default [
 		type: 'signal',
 		dependsOn: (p: Props) => p.expansion && p.allowMultiple === true,
 	}),
+	// Sort
+	getPortDef({
+		name: 'sort',
+		displayName: 'Enabled',
+		group: 'Custom',
+		customGroup: 'Sort',
+		type: 'boolean',
+		default: false,
+	}),
+	getPortDef({
+		name: 'sortType',
+		displayName: 'Type',
+		group: 'Custom',
+		customGroup: 'Sort',
+		type: [
+			{ label: 'Frontend', value: 'frontend' },
+			{ label: 'Backend', value: 'backend' },
+		],
+		default: 'frontend',
+		dependsOn: (p: Props) => p.sort,
+	}),
+	getPortDef({
+		name: 'sortedIcon',
+		displayName: 'Sorted icon',
+		group: 'Custom',
+		customGroup: 'Sort',
+		type: 'string',
+		default: 'IconArrowUp',
+		dependsOn: (p: Props) => p.sort,
+		validate: (p: Props) => (p.sort ? (p.sortedIcon ? true : false) : true),
+	}),
+	getPortDef({
+		name: 'unsortedIcon',
+		displayName: 'Unsorted icon',
+		group: 'Custom',
+		customGroup: 'Sort',
+		type: 'string',
+		default: 'IconSelector',
+		dependsOn: (p: Props) => p.sort,
+		validate: (p: Props) => (p.sort ? (p.unsortedIcon ? true : false) : true),
+	}),
+	getPortDef({
+		name: 'resetSort',
+		displayName: 'Reset sort',
+		group: 'Custom',
+		customGroup: 'Sort',
+		type: 'signal',
+		dependsOn: (p: Props) => p.sort,
+	}),
+	getPortDef({
+		name: 'restoreDefaultSort',
+		displayName: 'Restore default',
+		group: 'Custom',
+		customGroup: 'Sort',
+		type: 'signal',
+		dependsOn: (p: Props) => p.sort,
+	}),
 ] as PortDef[];
-
-// 	getPort({
-//
-// 		name: 'scopeDbClass',
-// 		group: 'Scope',
-// 		type: 'string',
-// 		displayName: 'DB class',
-// 		customs: {
-// 			required: 'connection',
-// 			dependsOn(p) {
-// 				return p.scope ? true : false;
-// 			},
-// 		},
-// 	}),
-
-// 	// Sort
-// 	getPort({
-//
-// 		name: 'sort',
-// 		group: 'Sort',
-// 		type: 'boolean',
-// 		displayName: 'Enabled',
-// 		default: false,
-// 	}),
-// 	getPort({
-//
-// 		name: 'sortType',
-// 		group: 'Sort',
-// 		displayName: 'Type',
-// 		type: getCustomEnumType(['frontend', 'backend']),
-// 		default: 'frontend',
-// 		customs: {
-// 			dependsOn(p) {
-// 				return p.sort ? true : false;
-// 			},
-// 		},
-// 	}),
-// 	getPort({
-//
-// 		name: 'sortedIcon',
-// 		group: 'Sort',
-// 		type: 'string',
-// 		displayName: 'Sorted icon',
-// 		default: 'IconArrowUp',
-// 		customs: {
-// 			required: 'both',
-// 			dependsOn(p) {
-// 				return p.sort ? true : false;
-// 			},
-// 		},
-// 	}),
-// 	getPort({
-//
-// 		name: 'unsortedIcon',
-// 		group: 'Sort',
-// 		type: 'string',
-// 		displayName: 'Unsorted icon',
-// 		default: 'IconSelector',
-// 		customs: {
-// 			required: 'both',
-// 			dependsOn(p) {
-// 				return p.sort ? true : false;
-// 			},
-// 		},
-// 	}),
-// 	getPort({
-//
-// 		name: 'resetSort',
-// 		group: 'Sort',
-// 		type: 'signal',
-// 		displayName: 'Reset sort',
-// 		customs: {
-// 			dependsOn(p) {
-// 				return p.sort ? true : false;
-// 			},
-// 		},
-// 	}),
-// 	getPort({
-//
-// 		name: 'restoreDefaultSort',
-// 		group: 'Sort',
-// 		type: 'signal',
-// 		displayName: 'Restore default',
-// 		customs: {
-// 			dependsOn(p) {
-// 				return p.sort ? true : false;
-// 			},
-// 		},
-// 	}),
-// ],

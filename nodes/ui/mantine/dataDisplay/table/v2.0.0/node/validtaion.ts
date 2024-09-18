@@ -3,31 +3,44 @@ import type { Props } from './definition';
 import type { Item } from '@shared/types-v0.1.0';
 
 export const validateColumns = (p: Props) => {
-	const { array, check, optional, pipe, safeParse, looseObject, string, number, picklist, function_, union } = R.libs.valibot;
+	const { array, check, optional, pipe, safeParse, looseObject, string, number, picklist, function_, union, boolean } =
+		R.libs.valibot;
 
-	const Columns = array(
-		pipe(
-			looseObject({
-				title: optional(string('"title" must be string.')),
-				type: picklist(['accessor', 'getValue', 'custom', 'template'], '"type" must by "accessor", "getValue" or "template".'),
-				accessor: optional(string('"accessor" must be string.')),
-				getValue: optional(function_('"getValue" must be function.')),
-				template: optional(string('"template" must be string.')),
-				width: optional(union([string(), number()], '"width" must be string or number.'), '100%'), // Дефолт в 100%
-			}),
-			check(
-				(column) => (column.type === 'accessor' && !column.accessor ? false : true),
-				'Must be "accessor" field for accessor type.'
-			),
-			check(
-				(column) => (column.type === 'getValue' && !column.getValue ? false : true),
-				'Must be "getValue" field for getValue type.'
-			),
-			check((column) => (column.type === 'custom' && !column.custom ? false : true), 'Must be "custom" field for custom type.'),
-			check(
-				(column) => (column.type === 'template' && !column.template ? false : true),
-				'Must be "template" field for template type.'
+	const Columns = pipe(
+		array(
+			pipe(
+				looseObject({
+					title: optional(string('"title" must be string.')),
+					type: picklist(['accessor', 'getValue', 'custom', 'template'], '"type" must by "accessor", "getValue" or "template".'),
+					accessor: optional(string('"accessor" must be string.')),
+					getValue: optional(function_('"getValue" must be function.')),
+					template: optional(string('"template" must be string.')),
+					width: optional(union([string(), number()], '"width" must be string or number.'), '100%'), // Дефолт в 100%
+					sort: optional(union([boolean(), picklist(['asc', 'desc'])], '"sort" must be boolean, "asc" or "desc".')),
+					sortPath: optional(string('"sortPath" must be string.')),
+				}),
+				check(
+					(column) => (column.type === 'accessor' && !column.accessor ? false : true),
+					'Must be "accessor" key for accessor type.'
+				),
+				check(
+					(column) => (column.type === 'getValue' && !column.getValue ? false : true),
+					'Must be "getValue" key for getValue type.'
+				),
+				check((column) => (column.type === 'custom' && !column.custom ? false : true), 'Must be "custom" key for custom type.'),
+				check(
+					(column) => (column.type === 'template' && !column.template ? false : true),
+					'Must be "template" key for template type.'
+				),
+				check(
+					(column) => (p.sort && p.sortType === 'frontend' && column.sort ? (column.sortPath ? true : false) : true),
+					'Must be "sortPath" key for "Frontend" sort type.'
+				)
 			)
+		),
+		check(
+			(columns) => (p.sort ? (columns.filter((i) => i.sort).length ? true : false) : true),
+			'Columns must have at least one "sort" key with "Sort" enabled.'
 		)
 	);
 
@@ -53,13 +66,13 @@ export const validateItems = (p: Props) => {
 
 	const Items = array(
 		pipe(
-			looseObject({ id: optional(string()), fid: optional(string()) }),
+			looseObject({ id: optional(string()) }),
 			check((item) => (!item.id ? false : true))
 		)
 	);
 
 	const result = safeParse(Items, p.items);
-	if (!result.success) return 'Some items do not have "id" or "fid".';
+	if (!result.success) return 'Some items do not have "id".';
 	return true;
 };
 

@@ -1,9 +1,12 @@
 import type { Item } from '@shared/types-v0.1.0';
 import type { Props } from '../node/definition';
+import type { SchemeData } from '../node/store';
 
 export type Nodes = Record<string, Node>;
-export type NodeSelectionState = { value: SelectionState };
-export type SelectionState = 'notSelected' | 'selected' | 'indeterminate';
+export type NodeSingleSelection = { value: string | null }; // Выбранный ребенок.
+export type NodeMultiSelection = { value: MultiSelection };
+export type MultiSelection = 'notSelected' | 'selected' | 'indeterminate';
+export type NodeExpansion = { value: boolean };
 type Aggregations = Record<string, Record<string, any>>;
 
 export default class Node {
@@ -16,8 +19,12 @@ export default class Node {
 	parentPath?: string;
 	childIds: string[];
 	childPathes: string[];
-	selectionState: NodeSelectionState;
 	aggregations: Aggregations;
+	states: {
+		singleSelection: NodeSingleSelection; // Выбранный ребенок.
+		multiSelection: NodeMultiSelection;
+		expansion: NodeExpansion;
+	};
 
 	constructor(
 		rootId: string,
@@ -31,8 +38,6 @@ export default class Node {
 		parentId?: string,
 		parentPath?: string
 	) {
-		const { ref, proxy } = R.libs.valtio;
-
 		this.rootId = rootId;
 		this.dbClass = dbClass;
 		this.path = path;
@@ -42,8 +47,7 @@ export default class Node {
 		this.itemId = itemId;
 		this.parentId = parentId;
 		this.parentPath = parentPath;
-		// Нужен ref при первичном создании, чтобы изменение выбора не тригерило всю ноду.
-		this.selectionState = ref(proxy({ value: 'notSelected' }));
+		this.states = { singleSelection: { value: null }, multiSelection: { value: 'notSelected' }, expansion: { value: false } };
 		this.aggregations = aggregations;
 	}
 
@@ -52,76 +56,81 @@ export default class Node {
 		const rootId = p.store.rootId;
 
 		const rootChildIds = Array.from(p.store.schemes.values())
-			.filter((i) => !i.parentId)
+			.filter((i) => !i.parentSchemeHash)
 			.flatMap((i) => i.itemIds);
+
 		const aggregations: Aggregations = {};
 		p.store.schemes.forEach((i) => {
-			if (!i.parentId && i.aggregations) aggregations[i.scheme.dbClass] = i.aggregations;
+			const dbClass = typeof i.scheme.dbClass === 'string' ? i.scheme.dbClass : i.scheme.dbClass.name;
+			if (!i.parentSchemeHash && i.aggregations) aggregations[dbClass] = i.aggregations;
 		});
 
-		const rootNode = new Node(
-			rootId,
-			'rootNode',
-			rootId,
-			-1,
-			rootChildIds,
-			rootChildIds.map((id) => `${id}.${rootId}`),
-			aggregations
+		flatNodes.push(
+			new Node(
+				rootId,
+				'rootNode',
+				rootId,
+				-1,
+				rootChildIds,
+				rootChildIds.map((id) => `${id}.${rootId}`),
+				aggregations
+			)
 		);
-		flatNodes.push(rootNode);
 
-		Node.createNodes(p, rootId, rootId, rootChildIds, 0, flatNodes);
+		const rootSchemesData = Array.from(p.store.schemes.values()).filter((i) => !i.parentSchemeHash);
+		this.createChildren(p, rootSchemesData, rootId, 0, flatNodes);
 	}
 
-	static createNodes(p: Props, parentId: string, parentPath: string, childIds: string[], level: number, flatNodes: Node[]) {
-		const rootId = p.store.rootId;
+	static createChildren(p: Props, schemesData: SchemeData[], parentPath: string, level: number, flatNodes: Node[]) {
+		schemesData.forEach((schemeData) => {
+			const dbClass = typeof schemeData.scheme.dbClass === 'string' ? schemeData.scheme.dbClass : schemeData.scheme.dbClass.name;
 
-		childIds.map((id) => {
-			const dbClass = Array.from(p.store.schemes.values()).find((i) => i.itemIds.includes(id))?.scheme.dbClass || 'rootNode';
-			const aggregations: Aggregations = {};
-			p.store.schemes.forEach((i) => {
-				if (i.parentId === id && i.aggregations) aggregations[i.scheme.dbClass] = i.aggregations;
+			schemeData.itemIds.forEach((itemId) => {
+				const thisNodeChildIds = Array.from(p.store.schemes.values())
+					.filter((i) => i.parentId === itemId && i.parentSchemeHash === schemeData.schemeHash)
+					.flatMap((i) => i.itemIds);
+
+				const aggregations: Aggregations = {};
+				p.store.schemes.forEach((i) => {
+					const dbClass = typeof i.scheme.dbClass === 'string' ? i.scheme.dbClass : i.scheme.dbClass.name;
+					if (i.parentSchemeHash === schemeData.schemeHash && i.aggregations) aggregations[dbClass] = i.aggregations;
+				});
+
+				flatNodes.push(
+					new Node(
+						p.store.rootId,
+						dbClass,
+						`${itemId}.${parentPath}`,
+						level,
+						thisNodeChildIds,
+						thisNodeChildIds.map((childId) => `${childId}.${itemId}.${parentPath}`),
+						aggregations,
+						itemId,
+						schemeData.parentId,
+						parentPath
+					)
+				);
+
+				const childSchemesData = Array.from(p.store.schemes.values()).filter(
+					(i) => i.parentId === itemId && i.parentSchemeHash === schemeData.schemeHash
+				);
+				this.createChildren(p, childSchemesData, `${itemId}.${parentPath}`, level + 1, flatNodes);
 			});
-			const thisNodeChildIds = Array.from(p.store.schemes.values())
-				.filter((i) => i.parentId === id)
-				.flatMap((i) => i.itemIds);
-
-			flatNodes.push(
-				new Node(
-					rootId,
-					dbClass,
-					`${id}.${parentPath}`,
-					level,
-					thisNodeChildIds,
-					thisNodeChildIds.map((childId) => `${childId}.${id}.${parentPath}`),
-					aggregations,
-					id,
-					parentId,
-					parentPath
-				)
-			);
-
-			this.createNodes(p, id, `${id}.${parentPath}`, thisNodeChildIds, level + 1, flatNodes);
 		});
 	}
 
-	static setNodesProxy(p: Props, flatNodes: Node[]) {
+	static setNodesProxy(flatNodes: Node[]) {
 		const { map, set } = R.libs.just;
 		// Важно не заменять весь прокси.
 		for (const node of flatNodes) {
 			const nodeProxy = R.nodes[node.path];
-			if (nodeProxy) map(node as any, (k, v) => k !== 'selectionState' && set(nodeProxy, k, v));
+			if (nodeProxy) map(node as any, (k, v) => k !== 'states' && set(nodeProxy, k, v));
 			else R.nodes[node.path] = node;
 		}
 
-		// Нужно чуть отложить удаление. У таблиц сворачивает голову.
-		setTimeout(
-			() =>
-				Object.values(R.nodes)
-					.filter((node) => !flatNodes.map((i) => i.path).includes(node.path))
-					.forEach((i) => delete R.nodes[i.path]),
-			500
-		);
+		Object.values(R.nodes)
+			.filter((node) => !flatNodes.map((i) => i.path).includes(node.path))
+			.forEach((i) => delete R.nodes[i.path]);
 	}
 
 	//// Методы для разработчика.
@@ -197,15 +206,26 @@ export default class Node {
 		);
 	}
 
-	selected(dbClass?: string, withIndeterminate?: boolean) {
+	singleSelected() {
+		const selectedId = this.descendantNodes().find((i) => i.states.singleSelection.value)?.states.singleSelection.value;
+		return selectedId ? R.items[selectedId] : undefined;
+	}
+
+	multiSelected(dbClass?: string, withIndeterminate?: boolean) {
 		const states = withIndeterminate ? ['selected', 'indeterminate'] : ['selected'];
-		const allSelectedNodes = this.descendantNodes().filter((i) => states.includes(i.selectionState.value));
+		const allSelectedNodes = this.descendantNodes().filter((i) => states.includes(i.states.multiSelection.value));
 		const selectedItems = filterDbClass(
 			allSelectedNodes.map((i) => i.item()),
 			dbClass
 		);
 
 		return R.libs.remeda.uniqueWith(selectedItems, (a, b) => a.id === b.id);
+	}
+
+	expanded() {
+		return this.descendantNodes()
+			.filter((i) => i.states.expansion.value)
+			.map((i) => i.item());
 	}
 }
 

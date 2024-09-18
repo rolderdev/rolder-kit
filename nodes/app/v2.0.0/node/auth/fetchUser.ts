@@ -13,7 +13,7 @@ export default async function () {
 
 	try {
 		const user = await K.auth.getCurrentUser();
-		const r = await K.query({ controller: 'rolder', action: 'fetchUser', dbName, user });
+		const r = await K.query({ controller: 'rolder', action: 'fetchUser_v1', dbName, user });
 
 		if (r.result.userErrors) {
 			R.libs.mantine?.MantineError('Системная ошибка!', `Fetch user error: ${JSON.stringify(r.result.userErrors, null, '\t')}`);

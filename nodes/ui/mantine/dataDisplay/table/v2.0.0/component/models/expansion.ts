@@ -2,6 +2,8 @@
 
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import type { Store } from '../../node/store';
+import useNode from '../funcs/useNode';
+import useItem from '../funcs/useItem';
 
 export type ExpansionRows = Record<string, React.ReactNode>;
 
@@ -9,6 +11,8 @@ export type ExpansionRows = Record<string, React.ReactNode>;
 export const toggleRowExpansion = (s: Store, id: string) => {
 	if (s.expandedIds[id]) s.expandedIds[id] = false;
 	else s.expandedIds[id] = true;
+
+	setHierarhyExpansion(s);
 
 	sendOutput(
 		s.noodlNode,
@@ -23,13 +27,15 @@ export const toggleRowExpansion = (s: Store, id: string) => {
 export const setExpandedIds = (s: Store, expandedIds: string[], isDefault?: boolean) => {
 	const { compare } = R.libs.just;
 
-	// Отфильтруем по items этой таблицы.
-	const newExpandedIds = expandedIds.filter((id) => s.records.map((i) => i.id).includes(id));
+	// Отфильтруем по items этой таблицы и функцией разработчика.
+	const newExpandedIds = expandedIds.filter((id) => s.records.map((i) => i.id).includes(id) && !expansionDisabled(s, id));
 	const expendedIds = Object.keys(s.expandedIds).filter((id) => s.expandedIds[id]);
 
 	if (!compare(expendedIds.sort(), newExpandedIds.sort())) {
 		s.expandedIds = {};
 		newExpandedIds.map((id) => (s.expandedIds[id] = true));
+
+		setHierarhyExpansion(s);
 
 		sendOutput(
 			s.noodlNode,
@@ -37,5 +43,34 @@ export const setExpandedIds = (s: Store, expandedIds: string[], isDefault?: bool
 			newExpandedIds.map((id) => R.items[id])
 		);
 		if (!isDefault) sendSignal(s.noodlNode, 'expandedItemsChanged');
+	}
+};
+
+// Метод фильтрации.
+export const expansionDisabled = (s: Store, id: string) => {
+	let disabled = false;
+	try {
+		const filterFunc = s.tableProps.expansion.filterFunc;
+		const itemSnap = useItem(id, 'snap');
+		disabled = itemSnap && filterFunc ? !filterFunc(itemSnap, useNode(s, id, 'snap')) : false;
+	} catch (e: any) {
+		log.error('expansion filterFunc error', e);
+		R.libs.mantine?.MantineError?.('Системная ошибка!', `expansion filterFunc error. ${e.message}`);
+	}
+
+	return disabled;
+};
+
+// Метод установки состояния иерархии.
+const setHierarhyExpansion = (s: Store) => {
+	if (s.tableProps.expansion.useHierarchy) {
+		if (s.hierarchy.tableNode) {
+			s.hierarchy.tableNode?.childNodes().forEach((childNode) => {
+				if (childNode.itemId) childNode.states.expansion.value = s.expandedIds[childNode.itemId];
+			});
+
+			const rootNode = s.hierarchy.tableNode.rootNode();
+			if (rootNode) Noodl.Events.emit(`${rootNode.path}_expansionChanged`);
+		}
 	}
 };

@@ -4,7 +4,7 @@ import { TableContext } from '../TableProvider';
 import useNode from '../funcs/useNode';
 import useItem from '../funcs/useItem';
 import type { Item } from '@shared/types-v0.1.0';
-import type { Column } from '../models/columnModel';
+import type { Column } from '../models/column';
 
 export default memo((p: { id: string; columnIdx: string }) => {
 	const store = useContext(TableContext);
@@ -33,6 +33,7 @@ export default memo((p: { id: string; columnIdx: string }) => {
 							get(i);
 							watchItemsCount++;
 						});
+
 						if (watchItemsCount && watchItemsCount === watchItems.length) {
 							const itemSnap = useItem(p.id, 'snap');
 							const itemsSnap = store.records.map((i) => useItem(i.id, 'snap')).filter((i) => i !== undefined);

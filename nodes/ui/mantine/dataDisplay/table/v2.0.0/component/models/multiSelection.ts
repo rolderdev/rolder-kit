@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react';
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
-import type { SelectionState } from '@nodes/use-data-v2.0.0';
+import type { MultiSelection } from '@nodes/use-data-v2.0.0';
 import Node from '@nodes/use-data-v2.0.0/component/Node';
 import type { Snap, Store } from '../../node/store';
-import type { TableRecord } from './recordModel';
+import type { TableRecord } from './record';
 import useItem from '../funcs/useItem';
 import useNode from '../funcs/useNode';
 
@@ -35,8 +35,8 @@ const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 	// Проставим состояние выбора текущей таблице.
 	for (const node of currentTableNodes) {
 		if (node.itemId) {
-			const selectionState = node.selectionState;
-			let selection: SelectionState = selectionState.value === 'indeterminate' ? 'indeterminate' : 'notSelected';
+			const selectionState = node.states.multiSelection;
+			let selection: MultiSelection = selectionState.value === 'indeterminate' ? 'indeterminate' : 'notSelected';
 			if (selectedIds.includes(node.itemId)) selection = 'selected';
 			selectionState.value = selection;
 		}
@@ -48,10 +48,10 @@ const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 		for (const descendantNode of node.descendantNodes()) {
 			const parentNode = descendantNode.parentNode();
 			if (parentNode) {
-				const parentState = parentNode.selectionState;
+				const parentState = parentNode.states.multiSelection;
 				// Нужно не трогать полупокеров.
 				if (parentState?.value !== 'indeterminate') {
-					const descendantItemState = descendantNode.selectionState;
+					const descendantItemState = descendantNode.states.multiSelection;
 					if (parentState && descendantItemState) descendantItemState.value = parentState.value;
 				}
 			}
@@ -62,13 +62,15 @@ const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 	const tableNode = s.hierarchy.tableNode;
 	if (tableNode) {
 		for (const ancestorNode of tableNode.ancestorNodes(true)) {
-			const ancestorState = ancestorNode.selectionState;
+			const ancestorState = ancestorNode.states.multiSelection;
 			if (ancestorState) {
 				const childrenCount = ancestorNode.childNodes().length;
-				const selectedChildrenCount = ancestorNode.childNodes().filter((i) => i.selectionState.value === 'selected').length;
+				const selectedChildrenCount = ancestorNode
+					.childNodes()
+					.filter((i) => i.states.multiSelection.value === 'selected').length;
 				const indeterminateChildrenCount = ancestorNode
 					.childNodes()
-					.filter((i) => i.selectionState.value === 'indeterminate').length;
+					.filter((i) => i.states.multiSelection.value === 'indeterminate').length;
 				// Если в детях есть полупокер, то протягиваем его вверх, иначе определяем состояние по разнице.
 				ancestorState.value = indeterminateChildrenCount
 					? 'indeterminate'
@@ -83,7 +85,7 @@ const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 
 	// Сообщим useData, что выбор изменился.
 	const rootNode = currentTableNodes[0]?.rootNode();
-	if (rootNode) Noodl.Events.emit(`${rootNode.path}_selectionChanged`);
+	if (rootNode) Noodl.Events.emit(`${rootNode.path}_multiSelectionChanged`);
 };
 
 // Подменим параметры чекбокса и сделаем выбор в иерархии реактивным.
@@ -96,7 +98,7 @@ export const useHierarchySelection = (s: Store) => {
 		if (!s.hierarchy.isChild && !get(s.checkboxes, ['unsubs', 'header'])) {
 			const tableNode = s.hierarchy.tableNode;
 			if (tableNode) {
-				const unsub = subscribeKey(tableNode.selectionState, 'value', (selection) => {
+				const unsub = subscribeKey(tableNode.states.multiSelection, 'value', (selection) => {
 					let newCheckBoxProps = s.libProps.allRecordsSelectionCheckboxPropsDev || {};
 					newCheckBoxProps = { ...newCheckBoxProps, indeterminate: selection === 'indeterminate' };
 					set(s.checkboxes, ['props', 'header'], newCheckBoxProps);
@@ -111,7 +113,7 @@ export const useHierarchySelection = (s: Store) => {
 			const node = useNode(s, record.id, 'store');
 			if (node && !get(s.checkboxes, ['unsubs', record.id])) {
 				setRowSelection(s, record.id, idx);
-				const unsub = subscribeKey(node.selectionState, 'value', () => setRowSelection(s, record.id, idx));
+				const unsub = subscribeKey(node.states.multiSelection, 'value', () => setRowSelection(s, record.id, idx));
 
 				set(s.checkboxes, ['unsubs', record.id], unsub);
 			}
@@ -128,7 +130,7 @@ const setRowSelection = (s: Store, id: string, idx: number) => {
 	try {
 		const nodeSnap = useNode(s, id, 'snap');
 		const itemSnap = useItem(id, 'snap');
-		const selection = nodeSnap?.selectionState.value;
+		const selection = nodeSnap?.states.multiSelection.value;
 
 		if (nodeSnap && itemSnap) {
 			let newCheckBoxProps = s.libProps.getRecordSelectionCheckboxProps?.(itemSnap, idx) || {};
@@ -144,7 +146,7 @@ const setRowSelection = (s: Store, id: string, idx: number) => {
 				R.libs.mantine?.MantineError?.('Системная ошибка!', `paddingLeftFunc error. ${e.message}`);
 			}
 
-			newCheckBoxProps = { ...newCheckBoxProps, indeterminate: nodeSnap.selectionState.value === 'indeterminate' };
+			newCheckBoxProps = { ...newCheckBoxProps, indeterminate: nodeSnap.states.multiSelection.value === 'indeterminate' };
 			R.libs.just.set(s.checkboxes, ['props', id], newCheckBoxProps);
 
 			// Реактивность на измение выбора в иерархии.

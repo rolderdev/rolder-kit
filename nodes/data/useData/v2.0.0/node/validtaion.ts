@@ -2,23 +2,46 @@
 
 import '@shared/types-v0.1.0';
 import type { Props } from '../node/definition';
-import type { InferOutput } from 'shared/src/libs/valibot';
+import { type InferOutput } from 'shared/src/libs/valibot';
 
 export type FetchScheme = InferOutput<ReturnType<typeof getTypedFetchScheme>>;
 
 const getTypedFetchScheme = () => {
 	const { typeOf, unique } = R.libs.just;
-	const { array, check, integer, maxValue, minValue, number, optional, pipe, strictObject, string, unknown } = R.libs.valibot;
+	const { array, check, integer, maxValue, minValue, number, optional, pipe, strictObject, string, unknown, union } =
+		R.libs.valibot;
 
 	return pipe(
 		array(
 			pipe(
 				strictObject({
+					dbName: optional(string('"dbName" must be string.')),
 					dbClass: pipe(
-						string('"dbClass" must be string.'),
-						check((dbClass) => {
-							return R.dbClasses ? (!R.dbClasses?.[dbClass] ? false : true) : true;
-						}, `There is no such DB class.`)
+						union([
+							string('"dbClass" must be string.'),
+							strictObject({
+								name: string('"dbClass" must be string.'),
+								version: number('"version" must be number.'),
+							}),
+						]),
+						check(
+							(dbClass) => (typeof dbClass === 'string' && R.dbClasses ? (!R.dbClasses[dbClass] ? false : true) : true),
+							`There is no such DB class.`
+						),
+						check(
+							(dbClassObj) =>
+								typeof dbClassObj === 'object' && R.dbClasses ? (!R.dbClasses[dbClassObj.name] ? false : true) : true,
+							`There is no such DB class.`
+						),
+						check(
+							(dbClassObj) =>
+								typeof dbClassObj === 'object' && R.dbClasses
+									? !R.dbClasses[dbClassObj.name]?.versions?.includes(dbClassObj.version)
+										? false
+										: true
+									: true,
+							`There is no such version of DB class.`
+						)
 					),
 					order: optional(
 						pipe(

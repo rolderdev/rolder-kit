@@ -14,7 +14,7 @@ export default async function (kuzzle: Kuzzle, online: boolean) {
 		const startTime = log.start();
 
 		try {
-			const r = await kuzzle.query({ controller: 'rolder', action: 'fetchConfig' });
+			const r = await kuzzle.query({ controller: 'rolder', action: 'fetchConfig_v1' });
 
 			if (r.result.backendVersions) R.env.backendVersions = r.result.backendVersions;
 

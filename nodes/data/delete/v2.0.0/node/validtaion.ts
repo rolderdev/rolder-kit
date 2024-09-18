@@ -8,16 +8,38 @@ export type DeleteScheme = InferOutput<ReturnType<typeof getTypedDeleteScheme>>;
 
 const getTypedDeleteScheme = () => {
 	const { unique } = R.libs.just;
-	const { array, check, pipe, strictObject, string } = R.libs.valibot;
+	const { array, check, pipe, strictObject, string, optional, union, number } = R.libs.valibot;
 
 	return pipe(
 		array(
 			strictObject({
+				dbName: optional(string('"dbName" must be string.')),
 				dbClass: pipe(
-					string('"dbClass" must be string.'),
-					check((dbClass) => {
-						return R.dbClasses ? (!R.dbClasses?.[dbClass] ? false : true) : true;
-					}, `There is no such DB class.`)
+					union([
+						string('"dbClass" must be string.'),
+						strictObject({
+							name: string('"dbClass" must be string.'),
+							version: number('"version" must be number.'),
+						}),
+					]),
+					check(
+						(dbClass) => (typeof dbClass === 'string' && R.dbClasses ? (!R.dbClasses[dbClass] ? false : true) : true),
+						`There is no such DB class.`
+					),
+					check(
+						(dbClassObj) =>
+							typeof dbClassObj === 'object' && R.dbClasses ? (!R.dbClasses[dbClassObj.name] ? false : true) : true,
+						`There is no such DB class.`
+					),
+					check(
+						(dbClassObj) =>
+							typeof dbClassObj === 'object' && R.dbClasses
+								? !R.dbClasses[dbClassObj.name]?.versions?.includes(dbClassObj.version)
+									? false
+									: true
+								: true,
+						`There is no such version of DB class.`
+					)
 				),
 				ids: array(string('"id" must be string.'), '"ids" is required.'),
 			})

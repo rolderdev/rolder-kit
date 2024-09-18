@@ -25,11 +25,18 @@ type Subscribes = Map<string, { channel: string; notify: (notif: Notification) =
 
 export type SchemeData = {
 	scheme: FetchScheme;
+	schemeHash: string;
 	parentId?: string;
+	parentSchemeHash?: string;
 	itemIds: string[];
 	fetched: number;
 	total: number;
 	aggregations?: { [x: string]: any };
 	channel?: string;
 };
-export type FetchScheme = { dbClass: string; filters?: {}; sorts: readonly { [path: string]: 'asc' | 'desc' }[] };
+export type FetchScheme = {
+	dbName?: string;
+	dbClass: { name: string; version: number } | string;
+	filters?: {};
+	sorts: readonly { [path: string]: 'asc' | 'desc' }[];
+};

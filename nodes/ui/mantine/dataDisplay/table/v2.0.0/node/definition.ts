@@ -5,8 +5,8 @@ import type { IconProps } from 'shared/src/icons';
 import type { CollapseProps, MantineColor, MantineShadow, MantineSize } from '@mantine/core';
 import type { DataTableProps } from 'mantine-datatable';
 import type { Store } from './store';
-import type { ColumnDefinition } from '../component/models/columnModel';
-import type { TableRecord } from '../component/models/recordModel';
+import type { ColumnDefinition } from '../component/models/column';
+import type { TableRecord } from '../component/models/record';
 import type { MetaData } from '../component/funcs/getRoodlReactNode';
 import inputs from './inputs';
 import outputs from './outputs';
@@ -35,6 +35,7 @@ export type Props = BaseReactProps & {
 	onRowClick: 'disabled' | 'signal' | 'singleSelection' | 'expansion';
 	clickFilterFunc?: any;
 	textSelectionDisabled: boolean;
+	fetching?: boolean;
 
 	// Layout
 	noHeader: boolean;
@@ -68,10 +69,11 @@ export type Props = BaseReactProps & {
 	defaultSelectedItem?: Item;
 	selectedItem?: Item;
 	singleSelectionFilterFunc: any;
+	useSingleSelectionHierarchy?: boolean;
 
 	// Multi selection
 	multiSelection: boolean;
-	useSelectionHierarchy?: boolean;
+	useMultiSelectionHierarchy?: boolean;
 	defaultSelectedItems?: Item[];
 	selectedItems?: Item[];
 	multiSelectionFilterFunc?: any;
@@ -83,6 +85,7 @@ export type Props = BaseReactProps & {
 	defaultExpandedItems?: Item[];
 	expandedItems?: Item[];
 	expansionFilterFunc?: any;
+	useExpansionHierarchy?: boolean;
 	animationChildrenCount?: number;
 
 	// Sort

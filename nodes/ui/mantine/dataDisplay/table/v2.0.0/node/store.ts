@@ -1,11 +1,12 @@
 import type { NoodlNode } from '@shared/node-v1.0.0';
-import type { ColumnsDefinition } from '../component/models/columnModel';
-import type { TableRecord } from '../component/models/recordModel';
-import type { LibProps } from '../component/models/libPropsModel';
-import type { TableProps } from '../component/models/tablePropsModel';
+import type { ColumnsDefinition } from '../component/models/column';
+import type { TableRecord } from '../component/models/record';
+import type { LibProps } from '../component/models/libProps';
+import type { TableProps } from '../component/models/tableProps';
 import type { Props } from './definition';
 import type Node from '@nodes/use-data-v2.0.0/component/Node';
 import type { CheckboxProps } from '@mantine/core';
+import type { DataTableSortStatus } from 'mantine-datatable';
 
 export default (p: Props, noodlNode: NoodlNode) => {
 	const { proxy, ref } = R.libs.valtio;
@@ -24,11 +25,6 @@ export default (p: Props, noodlNode: NoodlNode) => {
 		checkboxes: { unsubs: {}, props: {}, hasChildren: {} },
 		expandedIds: {},
 		expanders: {},
-		defaults: {
-			selectedId: p.defaultSelectedItem?.id || null,
-			selectedIds: p.defaultSelectedItems?.map((i) => i.id) || [],
-			expandedIds: p.defaultExpandedItems?.map((i) => i.id) || [],
-		},
 	});
 };
 
@@ -55,7 +51,7 @@ export type Store = {
 	};
 	expandedIds: Record<string, boolean>;
 	expanders: Record<string, boolean>;
-	defaults: { selectedId: string | null; selectedIds: string[]; expandedIds: string[] };
+	sortState?: DataTableSortStatus<TableRecord>;
 };
 
 export type Snap = Readonly<Store>;

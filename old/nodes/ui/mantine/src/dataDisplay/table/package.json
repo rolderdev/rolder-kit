@@ -12,8 +12,7 @@
 		"@packages/table-v1.2.0": "workspace:*",
 		"@packages/table-v1.2.1": "workspace:*",
 		"@packages/table-v1.2.2": "workspace:*",
-		"@packages/table-v1.2.3": "workspace:*",
-		"@packages/table-v2.0.0": "workspace:*"
+		"@packages/table-v1.2.3": "workspace:*"
 	},
 	"devDependencies": {
 		"types": "workspace:*"

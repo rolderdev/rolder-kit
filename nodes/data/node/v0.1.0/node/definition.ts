@@ -25,6 +25,7 @@ export default {
 		await initState('initialized');
 
 		const nodePath = noodlNode.nodeScope.componentOwner.metaData?.nodePath;
+
 		if (!Noodl.deployed) {
 			if (!nodePath)
 				sendWarning(noodlNode.model, noodlNode.context, 'global', 'global', 'Node must be in Table with hierarchy enabled.');

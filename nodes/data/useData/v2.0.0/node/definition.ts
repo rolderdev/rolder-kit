@@ -5,7 +5,7 @@ import getStore from './store';
 import { validateFetchScheme } from './validtaion';
 import type { FetchScheme } from './validtaion';
 import type { Store } from './store';
-import type { Nodes, NodeSelectionState, SelectionState } from '../component/Node';
+import type { Nodes, NodeMultiSelection, NodeSingleSelection, NodeExpansion, MultiSelection } from '../component/Node';
 import type { HistoryItem, ItemsHistory } from '../component/fetch';
 import { unsubscribe } from '../component/handleSubscribe';
 import initState from '@shared/init-state-v0.1.0';
@@ -20,7 +20,7 @@ export type BaseProps = {
 	subscribe: boolean;
 };
 
-export type { Nodes, NodeSelectionState, SelectionState, HistoryItem, ItemsHistory };
+export type { Nodes, NodeMultiSelection, NodeSingleSelection, NodeExpansion, MultiSelection, HistoryItem, ItemsHistory };
 
 export default {
 	hashTag: '#pre-release',
@@ -83,13 +83,10 @@ export default {
 				return true;
 			},
 		}),
-		getPortDef({
-			name: 'resetNodesSelection',
-			displayName: 'Reset nodes selection',
-			group: 'Custom',
-			customGroup: 'Selection',
-			type: 'signal',
-		}),
+		getPortDef({ name: 'resetSingleSelection', displayName: 'Reset single selection', group: 'Signals', type: 'signal' }),
+		getPortDef({ name: 'resetMultiSelection', displayName: 'Reset multi selection', group: 'Signals', type: 'signal' }),
+		getPortDef({ name: 'expandAll', displayName: 'Expand all', group: 'Signals', type: 'signal' }),
+		getPortDef({ name: 'collapseAll', displayName: 'Collapse all', group: 'Signals', type: 'signal' }),
 	],
 	outputs: [
 		getPortDef({ name: 'fetching', displayName: 'Fetching', group: 'States', type: 'boolean' }),
@@ -98,13 +95,9 @@ export default {
 		getPortDef({ name: 'rootId', displayName: 'Root node id', group: 'Data', type: 'string' }),
 		getPortDef({ name: 'rootNode', displayName: 'Root node', group: 'Data', type: 'object' }),
 		getPortDef({ name: 'schemes', displayName: 'Schemes', group: 'Data', type: 'array' }),
-		getPortDef({
-			name: 'nodesSelectionChanged',
-			displayName: 'Nodes selection changed',
-			group: 'Custom',
-			customGroup: 'Selection',
-			type: 'signal',
-		}),
+		getPortDef({ name: 'singleSelectionChanged', displayName: 'Single selection changed', group: 'Signals', type: 'signal' }),
+		getPortDef({ name: 'multiSelectionChanged', displayName: 'Multi selection changed', group: 'Signals', type: 'signal' }),
+		getPortDef({ name: 'expansionChanged', displayName: 'Expansion changed', group: 'Signals', type: 'signal' }),
 	],
 	transform: (p: Props, portDefs) => {
 		// Пересоздание outputDbClasses

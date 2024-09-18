@@ -4,7 +4,7 @@ import type { DataTableColumn } from 'mantine-datatable';
 import type { Item } from '@shared/types-v0.1.0';
 import Node from '@nodes/use-data-v2.0.0/component/Node';
 import type { Props } from '../../node/definition';
-import type { TableRecord } from './recordModel';
+import type { TableRecord } from './record';
 import Cell from '../renders/Cell';
 import ExpanderCell from '../renders/ExpanderCell';
 
@@ -18,6 +18,8 @@ export type ColumnDefinition = Partial<DataTableColumn<TableRecord>> & {
 		nodeSub: Node | undefined
 	) => { watchItems: Item[]; getValue: ColumnDefinition['getValue'] };
 	template?: string;
+	sort?: true | 'asc' | 'desc';
+	sortPath: string;
 };
 export type ColumnsDefinition = Record<string, ColumnDefinition>;
 export type Column = ColumnDefinition & DataTableColumn<TableRecord> & { idx: string };
@@ -25,7 +27,7 @@ export type Column = ColumnDefinition & DataTableColumn<TableRecord> & { idx: st
 export const setColumnsDefinition = (p: Props) => {
 	const { has, set, map } = R.libs.just;
 
-	p.columnsDefinition.map((columnDefinition, idx) => set(p.store.columnsDefinition, `${idx}`, columnDefinition));
+	p.columnsDefinition?.map((columnDefinition, idx) => set(p.store.columnsDefinition, `${idx}`, columnDefinition));
 	map(p.store.columnsDefinition, (idx) => {
 		if (!has(p.columnsDefinition, idx)) delete p.store.columnsDefinition[idx];
 	});
@@ -39,7 +41,9 @@ export const getColumns = (columnsDefinition: ColumnsDefinition, expansionEnable
 				({
 					...i,
 					idx: `${idx}`,
-					accessor: i.accessor || `${idx}`,
+					// Нужно установить sortPath, когда включена сортировка, т.к. библиотека не хранит в состоянии сортировки номер колонки.
+					accessor: i.accessor || i.sortPath || `${idx}`,
+					sortable: i.sort ? true : false,
 				} satisfies Column)
 		)
 		.map(
