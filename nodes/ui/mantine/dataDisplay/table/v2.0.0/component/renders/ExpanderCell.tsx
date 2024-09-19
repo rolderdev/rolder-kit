@@ -24,7 +24,7 @@ export default memo((p: { columnIdx: string; id: string }) => {
 	const expanded = snap.expandedIds[p.id];
 
 	// Определим, исключена ли строка из развертывния разработчиком.
-	const disabled = expansionDisabled(store, p.id) || snap.expanders[p.id];
+	const disabled = expansionDisabled(store, p.id);
 
 	// Реактивность на изменение ноды.
 	const nodeSub = useNode(store, p.id, 'sub');

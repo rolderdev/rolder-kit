@@ -92,7 +92,7 @@ const getTypedFetchScheme = () => {
 							number('"history" must be integer.'),
 							integer('"history" must be integer.'),
 							minValue(1, '"history" must be at least 1.'),
-							maxValue(10, '"history" must not exceed 10.')
+							maxValue(100, '"history" must not exceed 100.')
 						)
 					),
 				}),

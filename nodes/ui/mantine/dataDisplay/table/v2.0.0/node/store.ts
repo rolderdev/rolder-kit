@@ -24,7 +24,6 @@ export default (p: Props, noodlNode: NoodlNode) => {
 		selectedIds: {},
 		checkboxes: { unsubs: {}, props: {}, hasChildren: {} },
 		expandedIds: {},
-		expanders: {},
 	});
 };
 
@@ -50,7 +49,6 @@ export type Store = {
 		hasChildren: { [id: string]: boolean };
 	};
 	expandedIds: Record<string, boolean>;
-	expanders: Record<string, boolean>;
 	sortState?: DataTableSortStatus<TableRecord>;
 };
 
