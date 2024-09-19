@@ -46,7 +46,11 @@ const getTypedCreateScheme = () => {
 				items: array(
 					pipe(
 						unknown(),
-						check((item) => typeOf(item) === 'object' || !item, '"item" must be object.')
+						check((item) => typeOf(item) === 'object' || !item, '"item" must be object.'),
+						check(
+							(item: any) => (item.history ? (item.history === true || typeof item.history === 'object' ? true : false) : true),
+							'"history" at item must be "true" or "object".'
+						)
 					),
 					'"items" is required.'
 				),
