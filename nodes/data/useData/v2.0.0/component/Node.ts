@@ -56,13 +56,13 @@ export default class Node {
 		const rootId = p.store.rootId;
 
 		const rootChildIds = Array.from(p.store.schemes.values())
-			.filter((i) => !i.parentSchemeHash)
+			.filter((i) => !i.parentSchemeId)
 			.flatMap((i) => i.itemIds);
 
 		const aggregations: Aggregations = {};
 		p.store.schemes.forEach((i) => {
 			const dbClass = typeof i.scheme.dbClass === 'string' ? i.scheme.dbClass : i.scheme.dbClass.name;
-			if (!i.parentSchemeHash && i.aggregations) aggregations[dbClass] = i.aggregations;
+			if (!i.parentSchemeId && i.aggregations) aggregations[dbClass] = i.aggregations;
 		});
 
 		flatNodes.push(
@@ -77,7 +77,7 @@ export default class Node {
 			)
 		);
 
-		const rootSchemesData = Array.from(p.store.schemes.values()).filter((i) => !i.parentSchemeHash);
+		const rootSchemesData = Array.from(p.store.schemes.values()).filter((i) => !i.parentSchemeId);
 		this.createChildren(p, rootSchemesData, rootId, 0, flatNodes);
 	}
 
@@ -87,13 +87,13 @@ export default class Node {
 
 			schemeData.itemIds.forEach((itemId) => {
 				const thisNodeChildIds = Array.from(p.store.schemes.values())
-					.filter((i) => i.parentId === itemId && i.parentSchemeHash === schemeData.schemeHash)
+					.filter((i) => i.parentId === itemId && i.parentSchemeId === schemeData.schemeId)
 					.flatMap((i) => i.itemIds);
 
 				const aggregations: Aggregations = {};
 				p.store.schemes.forEach((i) => {
 					const dbClass = typeof i.scheme.dbClass === 'string' ? i.scheme.dbClass : i.scheme.dbClass.name;
-					if (i.parentSchemeHash === schemeData.schemeHash && i.aggregations) aggregations[dbClass] = i.aggregations;
+					if (i.parentSchemeId === schemeData.schemeId && i.aggregations) aggregations[dbClass] = i.aggregations;
 				});
 
 				flatNodes.push(
@@ -112,7 +112,7 @@ export default class Node {
 				);
 
 				const childSchemesData = Array.from(p.store.schemes.values()).filter(
-					(i) => i.parentId === itemId && i.parentSchemeHash === schemeData.schemeHash
+					(i) => i.parentId === itemId && i.parentSchemeId === schemeData.schemeId
 				);
 				this.createChildren(p, childSchemesData, `${itemId}.${parentPath}`, level + 1, flatNodes);
 			});
