@@ -8,8 +8,8 @@ export default {
 			return;
 		}
 
-		await R.db.states.auth?.set('signedIn', () => false);
 		if (R.libs.Kuzzle) R.libs.Kuzzle.jwt = undefined;
+		await R.db.states.auth?.set('signedIn', () => false);
 		return;
 	},
 } as JsComponent;
