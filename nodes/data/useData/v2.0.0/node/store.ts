@@ -25,9 +25,10 @@ type Subscribes = Map<string, { channel: string; notify: (notif: Notification) =
 
 export type SchemeData = {
 	scheme: FetchScheme;
-	schemeId: string;
+	schemeHash: string;
+	level: number;
 	parentId?: string;
-	parentSchemeId?: string;
+	parentSchemeHash?: string;
 	itemIds: string[];
 	fetched: number;
 	total: number;

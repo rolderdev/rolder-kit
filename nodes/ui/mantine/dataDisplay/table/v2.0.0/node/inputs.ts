@@ -458,7 +458,7 @@ export default [
 		type: 'number',
 		default: 25,
 		tooltip: 'Enable animation loader on expansion when row children count is reached.',
-		dependsOn: (p: Props) => p.hierarchy,
+		dependsOn: (p: Props) => p.expansion,
 	}),
 	getPortDef({
 		name: 'defaultExpandedItems',

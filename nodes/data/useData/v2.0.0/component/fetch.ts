@@ -12,7 +12,7 @@ import getIem from './getIem';
 export type BackendData = {
 	items: { [id: string]: Item };
 	itemsHistory: ItemsHistory;
-	schemes: { [schemeId: string]: SchemeData };
+	schemes: { [schemeHash: string]: SchemeData };
 	error?: { message: string; dbClass?: string; metaData: any };
 };
 
@@ -73,8 +73,8 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 
 	// Обновим хранилище схем для иерархи и серверных подписок.
 	// Каждая схема имеет свой список itemIds. В нем не могут совпадать id, но могут глобально.
-	map(data.schemes, (schemeId, schemeData) => p.store.schemes.set(schemeId, schemeData));
-	p.store.schemes.forEach((_, schemeId) => !has(data.schemes, schemeId) && p.store.schemes.delete(schemeId));
+	map(data.schemes, (schemeHash, schemeData) => p.store.schemes.set(schemeHash, schemeData));
+	p.store.schemes.forEach((_, schemeHash) => !has(data.schemes, schemeHash) && p.store.schemes.delete(schemeHash));
 
 	// Запустим подписку на схемы.
 	if (p.subscribe) handleSubscribe(p, noodlNode);
