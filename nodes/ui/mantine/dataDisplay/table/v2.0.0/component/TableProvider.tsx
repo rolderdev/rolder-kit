@@ -98,6 +98,7 @@ export default forwardRef(function (p: Props, ref) {
 		[store]
 	);
 
+	//console.log('Table provider', snap.hierarchy);
 	return snap.inited ? (
 		<TableContext.Provider value={store}>
 			<Table />

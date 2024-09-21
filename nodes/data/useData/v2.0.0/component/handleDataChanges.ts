@@ -10,7 +10,7 @@ export default (p: Props, noodlNode: NoodlNode) => {
 	let flatNodes: Node[] = [];
 	Node.createHierarchy(p, flatNodes);
 	// Создадим прокси нод иерархии или обновим их для реактивности.
-	Node.setNodesProxy(flatNodes);
+	Node.setNodesProxy(p, flatNodes);
 
 	const data: { [dbClass: string]: SchemeData & { items: Item[] } } = {};
 

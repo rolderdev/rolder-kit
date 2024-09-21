@@ -49,15 +49,13 @@ export default forwardRef(function (p: Props, ref) {
 			Color,
 			CodeBlockLowlight.configure({ lowlight }),
 			getTaskListExtension(TipTapTaskList),
-			TaskItem.configure({
-				nested: true,
-				HTMLAttributes: {
-					class: 'test-item',
-				},
-			}),
+			TaskItem.configure({ nested: true }),
 		],
 		content: p.content,
-		onCreate: ({ editor }) => sendOutput(p.noodlNode, 'html', editor.getHTML()),
+		onCreate: ({ editor }) => {
+			// Нужно проверить на пустой контент на случай, если он подан не сразу на вход.
+			if (editor.getHTML() !== '<p></p>') sendOutput(p.noodlNode, 'html', editor.getHTML());
+		},
 		onUpdate: ({ editor }) => debounceContent.call(p, editor),
 		editable: isEditor,
 	});

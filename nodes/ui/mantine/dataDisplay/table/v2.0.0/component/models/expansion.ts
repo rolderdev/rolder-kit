@@ -28,7 +28,7 @@ export const setExpandedIds = (s: Store, expandedIds: string[], isDefault?: bool
 	const { compare } = R.libs.just;
 
 	// Отфильтруем по items этой таблицы и функцией разработчика.
-	const newExpandedIds = expandedIds.filter((id) => s.records.map((i) => i.id).includes(id) && !expansionDisabled(s, id));
+	const newExpandedIds = expandedIds.filter((id) => s.records.map((i) => i.id).includes(id) && !expansionFiltered(s, id));
 	const expendedIds = Object.keys(s.expandedIds).filter((id) => s.expandedIds[id]);
 
 	if (!compare(expendedIds.sort(), newExpandedIds.sort())) {
@@ -47,18 +47,18 @@ export const setExpandedIds = (s: Store, expandedIds: string[], isDefault?: bool
 };
 
 // Метод фильтрации.
-export const expansionDisabled = (s: Store, id: string) => {
-	let disabled = false;
+export const expansionFiltered = (s: Store, id: string) => {
+	let filter = false;
 	try {
 		const filterFunc = s.tableProps.expansion.filterFunc;
 		const itemSnap = useItem(id, 'snap');
-		disabled = itemSnap && filterFunc ? !filterFunc(itemSnap, useNode(s, id, 'snap')) : false;
+		filter = itemSnap && filterFunc ? !filterFunc(itemSnap, useNode(s, id, 'snap')) : false;
 	} catch (e: any) {
 		log.error('expansion filterFunc error', e);
 		R.libs.mantine?.MantineError?.('Системная ошибка!', `expansion filterFunc error. ${e.message}`);
 	}
 
-	return disabled;
+	return filter;
 };
 
 // Метод установки состояния иерархии.
