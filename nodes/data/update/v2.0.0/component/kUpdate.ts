@@ -3,6 +3,7 @@ import type { Item } from '@shared/types-v0.1.0';
 import type { JSONObject, ResponsePayload } from '@nodes/app-v2.0.0';
 import type { Props } from '../node/definition';
 import type { UpdateScheme } from '../node/validtaion';
+import { getDbClassName } from '@shared/db-class';
 
 export type BackendData = {
 	data: { [dbClass: string]: { items: Item[]; count: number } };
@@ -23,7 +24,7 @@ export default async (p: Props, updateScheme: UpdateScheme) => {
 	}
 
 	const startTime = log.start();
-	log.info(`update props: ${updateScheme.map((i) => i.dbClass).join(', ')}`, p);
+	log.info(`update props: ${updateScheme.map((i) => getDbClassName(i.dbClass)).join(', ')}`, p);
 
 	let response: ResponsePayload<JSONObject> | undefined;
 
@@ -44,8 +45,8 @@ export default async (p: Props, updateScheme: UpdateScheme) => {
 		MantineError?.('Системная ошибка!', `Kuzzle error. ${backendData.error.message}`);
 	}
 
-	log.info(`update: ${updateScheme?.map((i) => i.dbClass).join(', ')}`, backendData);
-	log.end(`update: ${updateScheme?.map((i) => i.dbClass).join(', ')}`, startTime);
+	log.info(`update: ${updateScheme?.map((i) => getDbClassName(i.dbClass)).join(', ')}`, backendData);
+	log.end(`update: ${updateScheme?.map((i) => getDbClassName(i.dbClass)).join(', ')}`, startTime);
 
 	return backendData.data;
 };

@@ -1,5 +1,5 @@
 import type Node from '@nodes/use-data-v2.0.0/component/Node';
-import type { Store } from '../../node/store';
+import type { Store } from '../store';
 
 export default (s: Store, id: string, type: 'snap' | 'sub' | 'store') => {
 	const { useSnapshot, snapshot } = R.libs.valtio;

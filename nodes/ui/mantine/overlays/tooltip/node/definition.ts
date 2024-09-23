@@ -1,6 +1,5 @@
 import { getPortDef, sizes } from '@shared/port-v1.0.0';
 import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import { lazy } from 'react';
 import type { TooltipProps } from '@mantine/core';
 
 export type Props = BaseReactProps & {
@@ -29,8 +28,10 @@ const positions = [
 	{ label: 'Left end', value: 'left-end' },
 ];
 
+import Comp from '../component/Tooltip';
+
 export default {
-	module: { dynamic: lazy(() => import('../component/Tooltip')) },
+	module: { static: Comp },
 	inputs: [
 		getPortDef({
 			name: 'label',

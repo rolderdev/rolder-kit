@@ -1,5 +1,5 @@
 import { getKuzzle } from '@shared/get-kuzzle';
-import { dbClassVersion } from '@shared/get-dbclass-version';
+import { getDbClassName, getVersionedDbClass } from '@shared/db-class';
 import type { Item } from '@shared/types-v0.1.0';
 import type { Props } from '../node/definition';
 import handleDataChanges from './handleDataChanges';
@@ -40,8 +40,8 @@ const subscribeOnScheme = async (p: Props, noodlNode: NoodlNode, schemeHash: str
 
 	const scheme = p.store.schemes.get(schemeHash)?.scheme;
 	if (scheme) {
-		const dbClass = typeof scheme.dbClass === 'string' ? scheme.dbClass : scheme.dbClass.name;
-		const dbClassV = dbClassVersion(dbClass);
+		const dbClassName = getDbClassName(scheme.dbClass);
+		const dbClassV = getVersionedDbClass(scheme.dbClass);
 
 		if (dbClassV) {
 			const notify = (notif: Notification) => {
@@ -50,13 +50,13 @@ const subscribeOnScheme = async (p: Props, noodlNode: NoodlNode, schemeHash: str
 				if (notif.type !== 'document') return;
 				handleNotification(p, noodlNode, schemeHash, notif);
 
-				log.info(`Subscribe - ${notif.action} ${scheme.dbClass}: `, notif.result);
+				log.info(`Subscribe - ${notif.action} ${dbClassName}: `, notif.result);
 			};
 
 			K.protocol.on(channel, notify);
 
 			p.store.subscribes.set(schemeHash, { channel, notify });
-			log.info(`Subscribed to "${scheme.dbClass}"`, { schemeHash, scheme });
+			log.info(`Subscribed to "${dbClassName}"`, { schemeHash, scheme });
 		}
 	}
 };
@@ -110,7 +110,7 @@ export const handleNotification = async (p: Props, noodlNode: NoodlNode, schemeH
 				const newRawItem = getIem(
 					{
 						...notif.result._source,
-						dbClass: schemeData.scheme.dbClass,
+						dbClass: getDbClassName(schemeData.scheme.dbClass),
 						id: itemId,
 					} as Item,
 					p.store.rootId

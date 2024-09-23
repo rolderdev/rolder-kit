@@ -110,6 +110,7 @@ export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 			if (item) {
 				sendOutput(noodlNode, 'item', item);
 				sendSignal(noodlNode, 'itemChanged');
+				sendOutput(noodlNode, 'subscribed', true);
 
 				// Подпишемся на сам item.
 				p.propsStore.unsubs.push(

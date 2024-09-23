@@ -8,7 +8,7 @@ export default {};
 export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 	const { subscribe, snapshot } = R.libs.valtio;
 
-	let metaData = noodlNode.nodeScope.componentOwner.metaData as MetaData | undefined;
+	const metaData = noodlNode.nodeScope.componentOwner.metaData as MetaData | undefined;
 
 	// Подпишемся на изменения ноды иерархии.
 	const node = metaData?.nodePath ? R.nodes[metaData.nodePath] : undefined;
@@ -18,6 +18,7 @@ export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 
 		sendOutput(noodlNode, 'node', snapshot(node));
 		sendSignal(noodlNode, 'nodeChanged');
+		sendOutput(noodlNode, 'subscribed', true);
 
 		p.unsub = subscribe(node, () => {
 			sendOutput(noodlNode, 'node', snapshot(node));

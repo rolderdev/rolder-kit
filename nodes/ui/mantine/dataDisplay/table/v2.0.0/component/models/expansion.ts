@@ -1,7 +1,7 @@
 /* Модель расширяемых строк. */
 
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
-import type { Store } from '../../node/store';
+import type { Store } from '../store';
 import useNode from '../funcs/useNode';
 import useItem from '../funcs/useItem';
 
@@ -9,10 +9,18 @@ export type ExpansionRows = Record<string, React.ReactNode>;
 
 // Метод установки состояния развернутой строки по клику на строку или шеврон.
 export const toggleRowExpansion = (s: Store, id: string) => {
-	if (s.expandedIds[id]) s.expandedIds[id] = false;
-	else s.expandedIds[id] = true;
+	const toggle = !s.expandedIds[id];
 
-	setHierarhyExpansion(s);
+	if (!s.tableProps.expansion.useHierarchy) s.expandedIds[id] = toggle;
+	else {
+		const nodeStore = useNode(s, id, 'store');
+		if (nodeStore) {
+			nodeStore.states.expansion.value = toggle;
+			if (toggle) nodeStore.childNodes().forEach((n) => (n.states.expansion.value = false));
+			const rootNode = nodeStore.rootNode();
+			if (rootNode) Noodl.Events.emit(`${rootNode.path}_expansionChanged`);
+		}
+	}
 
 	sendOutput(
 		s.noodlNode,
@@ -33,9 +41,18 @@ export const setExpandedIds = (s: Store, expandedIds: string[], isDefault?: bool
 
 	if (!compare(expendedIds.sort(), newExpandedIds.sort())) {
 		s.expandedIds = {};
-		newExpandedIds.map((id) => (s.expandedIds[id] = true));
+		newExpandedIds.forEach((id) => (s.expandedIds[id] = true));
 
-		setHierarhyExpansion(s);
+		if (s.tableProps.expansion.useHierarchy) {
+			if (s.hierarchy.tableNode) {
+				s.hierarchy.tableNode?.childNodes().forEach((childNode) => {
+					if (childNode.itemId) childNode.states.expansion.value = s.expandedIds[childNode.itemId];
+				});
+
+				const rootNode = s.hierarchy.tableNode.rootNode();
+				if (rootNode) Noodl.Events.emit(`${rootNode.path}_expansionChanged`);
+			}
+		}
 
 		sendOutput(
 			s.noodlNode,
@@ -59,18 +76,4 @@ export const expansionFiltered = (s: Store, id: string) => {
 	}
 
 	return filter;
-};
-
-// Метод установки состояния иерархии.
-const setHierarhyExpansion = (s: Store) => {
-	if (s.tableProps.expansion.useHierarchy) {
-		if (s.hierarchy.tableNode) {
-			s.hierarchy.tableNode?.childNodes().forEach((childNode) => {
-				if (childNode.itemId) childNode.states.expansion.value = s.expandedIds[childNode.itemId];
-			});
-
-			const rootNode = s.hierarchy.tableNode.rootNode();
-			if (rootNode) Noodl.Events.emit(`${rootNode.path}_expansionChanged`);
-		}
-	}
 };

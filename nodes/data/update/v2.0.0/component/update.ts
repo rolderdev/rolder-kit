@@ -21,21 +21,24 @@ export default {
 
 			// Обновим оптимистично.
 			if (p.optimistic) {
+				const { merge, unset } = R.libs.lodash;
+				const { omit, clone } = R.libs.just;
+
 				let scopeUpdate: { [rootId: string]: Record<string, 'in' | 'out'> } = {};
 				for (const scheme of p.updateScheme) {
 					for (const item of scheme.items) {
-						const proxyItem = R.items[item.id];
+						// Нужно клонировать перед мутацией, т.к. разарботчик может положить части прокси в item, что мутирует его и запишет не верно в БД.
+						const clonedItem = clone(item);
+						const proxyItem = R.items[clonedItem.id];
 						if (proxyItem) {
 							// lodash.merge - мутирует прокси, что нам и нужно, т.к. заменять прокси нельзя, потеряем точечную реактивность.
-							R.libs.lodash.merge(proxyItem, item);
+							// Нам не нужен history в item.
+							merge(proxyItem, omit(clonedItem, ['history']));
 							// Удалим ключи. Это работает и для конструкции - someArray[0].someField
-							if (scheme.deleteFields?.length)
-								for (const deleteField of scheme.deleteFields) {
-									R.libs.lodash.unset(proxyItem, deleteField);
-								}
+							if (scheme.deleteFields?.length) for (const deleteField of scheme.deleteFields) unset(proxyItem, deleteField);
 							// Отправим в useData все items всех схем, если в них указан scope.
 							if (scheme.scope) {
-								proxyItem.roots.forEach((rootId) => R.libs.just.set(scopeUpdate, [rootId, item.id], scheme.scope));
+								proxyItem.roots.forEach((rootId) => R.libs.just.set(scopeUpdate, [rootId, clonedItem.id], scheme.scope));
 							}
 						}
 					}

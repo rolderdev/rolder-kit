@@ -1,4 +1,4 @@
-import type { Store } from '../../node/store';
+import type { Store } from '../store';
 import useNode from './useNode';
 import useItem from './useItem';
 

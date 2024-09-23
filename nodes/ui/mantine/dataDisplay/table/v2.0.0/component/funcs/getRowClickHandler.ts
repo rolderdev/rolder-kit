@@ -1,5 +1,5 @@
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
-import type { Store } from '../../node/store';
+import type { Store } from '../store';
 import type { TableRecord } from '../models/record';
 import { setSelectedId } from '../models/singleSelection';
 import { toggleRowExpansion } from '../models/expansion';

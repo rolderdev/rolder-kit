@@ -7,6 +7,10 @@
 	}
 }
 
+.expansion-without-border tr:last-of-type :global(.mantine-datatable-row-expansion-cell-content) {
+	border-bottom: 0;
+}
+
 /* .expansion-with-border tr:last-of-type :global(.mantine-datatable-row-expansion-cell-content) {
 	border-bottom: 0;
 }

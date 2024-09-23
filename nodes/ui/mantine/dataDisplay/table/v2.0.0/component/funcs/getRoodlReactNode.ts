@@ -1,8 +1,16 @@
 // Создает React-ноду для кастомной ячейки или разворачиваемой строки.
 
-import type { Store } from '../../node/store';
+import type { Store } from '../store';
+import type { FilterState } from '@nodes/table-filter-v0.1.0';
 
-export type MetaData = { itemId: string; nodePath?: string; level: number };
+export type MetaData = {
+	itemId: string;
+	nodePath?: string;
+	level: number;
+	columnIdx?: string;
+	filterState?: FilterState;
+	close?: () => void;
+};
 
 export default async (s: Store, id: string, template: string, metaData: MetaData) => {
 	const noodlNode = s.noodlNode;

@@ -9,8 +9,10 @@ export type Props = BaseJsProps & {
 	autoCloseTimeout?: number;
 };
 
+import Comp from '../component/notification';
+
 export default {
-	module: { dynamic: import('../component/notification') },
+	module: { static: Comp },
 	inputs: [
 		getPortDef({ name: 'title', displayName: 'Title', group: 'Params', type: 'string' }),
 		getPortDef({

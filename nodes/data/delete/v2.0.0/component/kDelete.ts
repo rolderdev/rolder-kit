@@ -2,6 +2,7 @@ import { getKuzzle } from '@shared/get-kuzzle';
 import type { JSONObject, ResponsePayload } from '@nodes/app-v2.0.0';
 import type { Props } from '../node/definition';
 import type { DeleteScheme } from '../node/validtaion';
+import { getDbClassName } from '@shared/db-class';
 
 export type BackendData = {
 	data: { [dbClass: string]: { ids: string[]; count: number } };
@@ -22,7 +23,7 @@ export default async (p: Props, deleteScheme: DeleteScheme) => {
 	}
 
 	const startTime = log.start();
-	log.info(`delete props: ${deleteScheme.map((i) => i.dbClass).join(', ')}`, p);
+	log.info(`delete props: ${deleteScheme.map((i) => getDbClassName(i.dbClass)).join(', ')}`, p);
 
 	let response: ResponsePayload<JSONObject> | undefined;
 
@@ -43,8 +44,8 @@ export default async (p: Props, deleteScheme: DeleteScheme) => {
 		MantineError?.('Системная ошибка!', `Kuzzle error. ${backendData.error.message}`);
 	}
 
-	log.info(`delete: ${deleteScheme?.map((i) => i.dbClass).join(', ')}`, backendData);
-	log.end(`delete: ${deleteScheme?.map((i) => i.dbClass).join(', ')}`, startTime);
+	log.info(`delete: ${deleteScheme?.map((i) => getDbClassName(i.dbClass)).join(', ')}`, backendData);
+	log.end(`delete: ${deleteScheme?.map((i) => getDbClassName(i.dbClass)).join(', ')}`, startTime);
 
 	return backendData.data;
 };

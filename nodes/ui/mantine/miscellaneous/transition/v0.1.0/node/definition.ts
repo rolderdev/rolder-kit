@@ -1,12 +1,13 @@
-import { lazy } from 'react';
 import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
 import { getPortDef } from '@shared/port-v1.0.0';
 
 export type Props = BaseReactProps & { automount: boolean };
 
+import Comp from '../component/Transition';
+
 export default {
 	hashTag: '#pre-release',
-	module: { dynamic: lazy(() => import('../component/Transition')) },
+	module: { static: Comp },
 	inputs: [
 		getPortDef({ name: 'automount', displayName: 'Automount', group: 'Params', type: 'boolean', default: true }),
 		getPortDef({ name: 'keepMounted', displayName: 'Keep mounted', group: 'Params', type: 'boolean', default: true }),
