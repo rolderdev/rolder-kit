@@ -1,0 +1,5 @@
+{
+	"name": "@shared/db-class-v1.0.0",
+	"main": "dbClass.ts",
+	"type": "module"
+}

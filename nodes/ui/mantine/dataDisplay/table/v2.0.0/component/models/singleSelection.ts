@@ -1,7 +1,7 @@
 /* Модель единичного выбора. */
 
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
-import type { Store } from '../../node/store';
+import type { Store } from '../store';
 import useNode from '../funcs/useNode';
 import useItem from '../funcs/useItem';
 import { useEffect } from 'react';

@@ -246,7 +246,7 @@ export default [
 		customGroup: 'Row styles',
 		type: 'boolean',
 		default: false,
-		dependsOn: (p: Props) => p.rowStyles,
+		dependsOn: (p: Props) => p.rowStyles && !p.hierarchy,
 	}),
 	getPortDef({
 		name: 'rowBackgroundColor',
@@ -255,7 +255,7 @@ export default [
 		customGroup: 'Row styles',
 		type: 'string',
 		default: 'white',
-		dependsOn: (p) => p.rowStyles && !p.striped,
+		dependsOn: (p) => p.rowStyles,
 	}),
 	getPortDef({
 		name: 'stripedColor',
@@ -450,7 +450,7 @@ export default [
 		default: false,
 		dependsOn: (p: Props) => p.expansion && p.hierarchy,
 	}),
-	getPortDef({
+	/* 	getPortDef({
 		name: 'animationChildrenCount',
 		displayName: 'Animation children count',
 		group: 'Custom',
@@ -459,7 +459,7 @@ export default [
 		default: 25,
 		tooltip: 'Enable animation loader on expansion when row children count is reached.',
 		dependsOn: (p: Props) => p.expansion,
-	}),
+	}), */
 	getPortDef({
 		name: 'defaultExpandedItems',
 		displayName: 'Default expanded items',

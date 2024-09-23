@@ -1,5 +1,9 @@
 # Changelog
 
+## 2024-09-23 v1.0.0-rc17
+
+[Новость](https://docs.rolder.app/#/newspost/kv4qE5IBFk35karOxiDO)
+
 ## 2024-09-21 v1.0.0-rc16
 
 [Новость](https://docs.rolder.app/#/newspost/jv6pDZIBFk35karORyCl)

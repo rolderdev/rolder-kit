@@ -84,6 +84,8 @@ export type DbClass = {
 	};
 };
 
+export type SchemeDbClass = { name: string; version: number } | string;
+
 export type Item = {
 	id: Readonly<string>;
 	dbClass: Readonly<string>;

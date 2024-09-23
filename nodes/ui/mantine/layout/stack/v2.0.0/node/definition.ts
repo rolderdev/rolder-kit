@@ -8,18 +8,8 @@ import Comp from '../component/Stack';
 export default {
 	module: { static: Comp },
 	inputs: [
-		getPortDef({
-			name: 'w',
-			displayName: 'Width',
-			group: 'Dimensions',
-			type: 'string',
-		}),
-		getPortDef({
-			name: 'h',
-			displayName: 'Height',
-			group: 'Dimensions',
-			type: 'string',
-		}),
+		getPortDef({ name: 'w', displayName: 'Width', group: 'Dimensions', type: 'string' }),
+		getPortDef({ name: 'h', displayName: 'Height', group: 'Dimensions', type: 'string' }),
 		getPortDef({
 			name: 'align',
 			displayName: 'Align',
@@ -52,14 +42,7 @@ export default {
 			type: [{ value: '0', label: 'none' }, ...sizes],
 			default: 'md',
 		}),
-		getPortDef({
-			name: 'opacity',
-			displayName: 'Opacity',
-			group: 'Styles',
-			type: 'number',
-			default: 1,
-		}),
-
+		getPortDef({ name: 'opacity', displayName: 'Opacity', group: 'Styles', type: 'number', default: 1 }),
 		...margins,
 		...paddings,
 	],

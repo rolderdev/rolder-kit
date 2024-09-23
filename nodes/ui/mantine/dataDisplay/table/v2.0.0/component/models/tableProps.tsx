@@ -3,11 +3,12 @@
 import type { DataTableSortStatus } from 'mantine-datatable';
 import type { Props } from '../../node/definition';
 import type { TableRecord } from './record';
+import type { Store } from '../store';
 
 export type TableProps = ReturnType<typeof setTableProps>;
 
 // Устанавливает наши специфичные настройки таблицы.
-export const setTableProps = (p: Props) => {
+export const setTableProps = (p: Props, s: Store) => {
 	const defaultSortColumnDef = p.columnsDefinition?.find((i) => typeof i.sort === 'string');
 
 	const tableProps = {
@@ -57,6 +58,6 @@ export const setTableProps = (p: Props) => {
 		},
 	};
 
-	p.store.tableProps = tableProps;
+	s.tableProps = tableProps;
 	return tableProps; // Только для типизации.
 };

@@ -1,14 +1,14 @@
 import type { NoodlNode } from '@shared/node-v1.0.0';
-import type { ColumnsDefinition } from '../component/models/column';
-import type { TableRecord } from '../component/models/record';
-import type { LibProps } from '../component/models/libProps';
-import type { TableProps } from '../component/models/tableProps';
-import type { Props } from './definition';
+import type { ColumnsDefinition } from './models/column';
+import type { TableRecord } from './models/record';
+import type { LibProps } from './models/libProps';
+import type { TableProps } from './models/tableProps';
 import type Node from '@nodes/use-data-v2.0.0/component/Node';
 import type { CheckboxProps } from '@mantine/core';
 import type { DataTableSortStatus } from 'mantine-datatable';
+import type { FilterState } from '@nodes/table-filter-v0.1.0';
 
-export default (p: Props, noodlNode: NoodlNode) => {
+export default (noodlNode: NoodlNode) => {
 	const { proxy, ref } = R.libs.valtio;
 
 	return proxy<Store>({
@@ -50,6 +50,7 @@ export type Store = {
 	};
 	expandedIds: Record<string, boolean>;
 	sortState?: DataTableSortStatus<TableRecord>;
+	filtersState?: Record<string, FilterState>;
 };
 
 export type Snap = Readonly<Store>;
