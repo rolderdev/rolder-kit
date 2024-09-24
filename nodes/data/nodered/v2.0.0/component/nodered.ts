@@ -40,7 +40,7 @@ export default {
 							break;
 						// Сервис по копированию классов
 						case 'copyDBClass':
-							nodeRedUrl = `https://copy-base.services.${serviceVersion}.rolder.app/copyDBClass`;
+							nodeRedUrl = `c`;
 							break;
 						// Следующий сервис
 						// ...
