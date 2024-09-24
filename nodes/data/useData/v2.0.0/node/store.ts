@@ -1,3 +1,4 @@
+import type { SchemeDbClass } from '@shared/types-v0.1.0';
 import type { Notification } from '../component/handleSubscribe';
 import type { BaseProps, Props } from '../node/definition';
 
@@ -26,6 +27,7 @@ type Subscribes = Map<string, { channel: string; notify: (notif: Notification) =
 export type SchemeData = {
 	scheme: FetchScheme;
 	schemeHash: string;
+	level: number;
 	parentId?: string;
 	parentSchemeHash?: string;
 	itemIds: string[];
@@ -36,7 +38,7 @@ export type SchemeData = {
 };
 export type FetchScheme = {
 	dbName?: string;
-	dbClass: { name: string; version: number } | string;
+	dbClass: SchemeDbClass;
 	filters?: {};
 	sorts: readonly { [path: string]: 'asc' | 'desc' }[];
 };

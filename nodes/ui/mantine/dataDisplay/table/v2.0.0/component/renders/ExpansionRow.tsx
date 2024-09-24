@@ -16,11 +16,13 @@ export default memo((p: { id: string }) => {
 				itemId: p.id,
 				level: store.hierarchy.level,
 				nodePath: nodeSnap.path,
-			}).then((reactNode) => {
-				const childrenCount = nodeSnap.childNodes().length;
-				if (childrenCount >= store.tableProps.expansion.animationChildrenCount) setTimeout(() => setExpansionRow(reactNode), 200);
+			}).then(
+				(reactNode) => setTimeout(() => setExpansionRow(reactNode), 200) /* {
+				if (nodeSnap.childIds.length >= store.tableProps.expansion.animationChildrenCount)
+					setTimeout(() => setExpansionRow(reactNode), 200);
 				else setExpansionRow(reactNode);
-			});
+			} */
+			);
 	}, []);
 
 	const LoaderAnimation = () => (

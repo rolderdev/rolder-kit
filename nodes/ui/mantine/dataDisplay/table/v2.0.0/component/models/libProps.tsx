@@ -1,13 +1,12 @@
 /* Модель настроек библиотеки. */
 
 import type { Props } from '../../node/definition';
+import type { Store } from '../store';
 
 export type LibProps = ReturnType<typeof setLibProps>;
 
 // Устанавливает настройки библиотеки.
-export const setLibProps = (p: Props) => {
-	const s = p.store;
-
+export const setLibProps = (p: Props, s: Store) => {
 	const libProps = {
 		...R.libs.just.pick(p, [
 			// Base
@@ -33,7 +32,7 @@ export const setLibProps = (p: Props) => {
 		emptyState: 'Записей не найдено',
 		// Row styles
 		stripedColor: p.stripedColor || 'white', // Нужно перезаписать, иначе наследуется с родительской таблицы.
-		highlightOnHoverColor: p.highlightOnHoverColor || 'white',
+		highlightOnHoverColor: p.highlightOnHover ? p.highlightOnHoverColor : 'white',
 		// Loader styles
 		loaderSize: 'lg',
 		loaderType: 'dots',

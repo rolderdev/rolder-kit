@@ -48,6 +48,7 @@ export default {
 		getPortDef({ name: 'fields', displayName: 'Fields', group: 'Custom', customGroup: 'Fields', type: 'proplist' }),
 	],
 	outputs: [
+		getPortDef({ name: 'subscribed', displayName: 'Subscribed', group: 'States', type: 'boolean' }),
 		getPortDef({ name: 'item', displayName: 'Item', group: 'Data', type: 'object' }),
 		getPortDef({ name: 'itemChanged', displayName: 'Item changed', group: 'Signals', type: 'signal' }),
 	],

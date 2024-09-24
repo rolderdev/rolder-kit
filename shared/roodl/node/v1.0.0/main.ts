@@ -47,7 +47,7 @@ export type NodeDef = {
 	validate?(p: Props, model: GraphModelNode): Promise<boolean | string>;
 	initialize?(p: Props, noodlNode: NoodlNode, portDefs: ResultPortDefs): Promise<void>;
 	getInspectInfo?(p: Props, outProps: { [x: string]: any }, noodlNode: NoodlNode): InspectInfo | InspectInfo[];
-	transform?(p: Props, portDefs: ResultPortDefs): void;
+	transform?(p: Props, portDefs: ResultPortDefs): Promise<void>;
 	disableCustomProps?: boolean;
 };
 

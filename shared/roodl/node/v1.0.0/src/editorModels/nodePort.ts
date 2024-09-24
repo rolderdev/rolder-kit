@@ -32,7 +32,7 @@ export const handleNodePorts = async (
 	validateParameterValues(model, context, versions);
 	if (hasWarnings(model, 'value')) return;
 	if (nodeDef.transform) {
-		nodeDef.transform(model.parametersCache, model.portDefsCache);
+		await nodeDef.transform(model.parametersCache, model.portDefsCache);
 		setNodePorts(model, context, versions);
 	}
 	if (hasWarnings(model, 'convert') || hasWarnings(model, 'type')) return;

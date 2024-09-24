@@ -4,13 +4,12 @@ import type { Item } from '@shared/types-v0.1.0';
 import type { IconProps } from 'shared/src/icons';
 import type { CollapseProps, MantineColor, MantineShadow, MantineSize } from '@mantine/core';
 import type { DataTableProps } from 'mantine-datatable';
-import type { Store } from './store';
+import type { Store } from '../component/store';
 import type { ColumnDefinition } from '../component/models/column';
 import type { TableRecord } from '../component/models/record';
 import type { MetaData } from '../component/funcs/getRoodlReactNode';
 import inputs from './inputs';
 import outputs from './outputs';
-import getStore from './store';
 
 export type { MetaData };
 
@@ -115,7 +114,4 @@ export default {
 		{ type: 'text', value: `=== Columns ===` },
 		{ type: 'value', value: p.columnsDefinition },
 	],
-	initialize: async (p: Props, noodlNode) => {
-		p.store = getStore(p, noodlNode);
-	},
 } satisfies ReactNodeDef;

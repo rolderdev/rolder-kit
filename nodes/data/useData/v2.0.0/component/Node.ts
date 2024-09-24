@@ -1,6 +1,7 @@
 import type { Item } from '@shared/types-v0.1.0';
 import type { Props } from '../node/definition';
 import type { SchemeData } from '../node/store';
+import { getDbClassName } from '@shared/db-class';
 
 export type Nodes = Record<string, Node>;
 export type NodeSingleSelection = { value: string | null }; // Выбранный ребенок.
@@ -61,8 +62,8 @@ export default class Node {
 
 		const aggregations: Aggregations = {};
 		p.store.schemes.forEach((i) => {
-			const dbClass = typeof i.scheme.dbClass === 'string' ? i.scheme.dbClass : i.scheme.dbClass.name;
-			if (!i.parentSchemeHash && i.aggregations) aggregations[dbClass] = i.aggregations;
+			const dbClassName = getDbClassName(i.scheme.dbClass);
+			if (!i.parentSchemeHash && i.aggregations) aggregations[dbClassName] = i.aggregations;
 		});
 
 		flatNodes.push(
@@ -83,8 +84,6 @@ export default class Node {
 
 	static createChildren(p: Props, schemesData: SchemeData[], parentPath: string, level: number, flatNodes: Node[]) {
 		schemesData.forEach((schemeData) => {
-			const dbClass = typeof schemeData.scheme.dbClass === 'string' ? schemeData.scheme.dbClass : schemeData.scheme.dbClass.name;
-
 			schemeData.itemIds.forEach((itemId) => {
 				const thisNodeChildIds = Array.from(p.store.schemes.values())
 					.filter((i) => i.parentId === itemId && i.parentSchemeHash === schemeData.schemeHash)
@@ -92,14 +91,14 @@ export default class Node {
 
 				const aggregations: Aggregations = {};
 				p.store.schemes.forEach((i) => {
-					const dbClass = typeof i.scheme.dbClass === 'string' ? i.scheme.dbClass : i.scheme.dbClass.name;
-					if (i.parentSchemeHash === schemeData.schemeHash && i.aggregations) aggregations[dbClass] = i.aggregations;
+					const dbClassName = getDbClassName(i.scheme.dbClass);
+					if (i.parentSchemeHash === schemeData.schemeHash && i.aggregations) aggregations[dbClassName] = i.aggregations;
 				});
 
 				flatNodes.push(
 					new Node(
 						p.store.rootId,
-						dbClass,
+						getDbClassName(schemeData.scheme.dbClass),
 						`${itemId}.${parentPath}`,
 						level,
 						thisNodeChildIds,
@@ -119,7 +118,7 @@ export default class Node {
 		});
 	}
 
-	static setNodesProxy(flatNodes: Node[]) {
+	static setNodesProxy(p: Props, flatNodes: Node[]) {
 		const { map, set } = R.libs.just;
 		// Важно не заменять весь прокси.
 		for (const node of flatNodes) {
@@ -129,7 +128,7 @@ export default class Node {
 		}
 
 		Object.values(R.nodes)
-			.filter((node) => !flatNodes.map((i) => i.path).includes(node.path))
+			.filter((node) => node.rootId === p.store.rootId && !flatNodes.map((i) => i.path).includes(node.path))
 			.forEach((i) => delete R.nodes[i.path]);
 	}
 

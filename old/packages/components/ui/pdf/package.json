@@ -4,6 +4,6 @@
 	"types": "pdfDocument.tsx",
 	"type": "module",
 	"dependencies": {
-		"@react-pdf/renderer": "^3.4.4"
+		"@react-pdf/renderer": "^3.4.5"
 	}
 }

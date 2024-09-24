@@ -8,47 +8,47 @@ import getCursorState from './funcs/getCursorState';
 import getRowBgColor from './funcs/getRowBgColor';
 import { handleRecordSelection, setSelectedIds, useHierarchySelection } from './models/multiSelection';
 import ExpansionRow from './renders/ExpansionRow';
+import { setSortState } from './models/sort';
 
 import rowClasses from './styles/row.module.css';
-import { setSortState } from './models/sort';
 
 export default memo(() => {
 	const { get } = R.libs.just;
 	const { useSnapshot } = R.libs.valtio;
 
-	const store = useContext(TableContext);
-	const snap = useSnapshot(store);
+	const s = useContext(TableContext);
+	const snap = useSnapshot(s);
 
 	// Состояние чекбоксов и реактивность на изменения выбора в иерархии.
-	useHierarchySelection(store);
+	useHierarchySelection(s);
 
-	//console.log('Table render');
+	//console.log('Table render', snap.filtersState);
 	return (
 		<DataTable<TableRecord>
 			// Base
 			fetching={snap.fetching}
-			columns={getColumns(snap.columnsDefinition as any, snap.tableProps.expansion.enabled)}
+			columns={getColumns(snap as any)}
 			records={snap.fetching ? [] : snap.records}
-			onRowClick={getRowClickHandler(store)}
+			onRowClick={getRowClickHandler(s)}
 			// Row styles
-			className={`${rowClasses['row']}`}
-			rowStyle={(record) => ({ cursor: getCursorState(store, record.id) })} // Управление состоянием курсора.
-			rowBackgroundColor={(record) => (snap.libProps.striped ? undefined : getRowBgColor(store, record.id))}
+			className={`${rowClasses.row}` + (snap.hierarchy.isChild ? ` ${rowClasses['expansion-without-border']}` : '')}
+			rowStyle={(record) => ({ cursor: getCursorState(s, record.id) })} // Управление состоянием курсора.
+			rowBackgroundColor={(record) => getRowBgColor(s, record.id)}
 			getRecordSelectionCheckboxProps={(record) => get(snap.checkboxes, ['props', record.id])}
 			// Multi selection
 			selectedRecords={
-				store.tableProps.multiSelection.enabled
+				s.tableProps.multiSelection.enabled
 					? Object.keys(snap.selectedIds)
 							.filter((id) => snap.selectedIds[id])
 							.map((id) => ({ id }))
 					: undefined
 			}
 			onSelectedRecordsChange={
-				store.tableProps.multiSelection.enabled ? (selectedRecords) => setSelectedIds(store, selectedRecords) : undefined
+				s.tableProps.multiSelection.enabled ? (selectedRecords) => setSelectedIds(s, selectedRecords) : undefined
 			}
 			// Заменим встроенную функцию запрета выбора своей.
 			isRecordSelectable={(record) =>
-				store.tableProps.multiSelection.enabled ? handleRecordSelection(store, snap as any, record.id) : true
+				s.tableProps.multiSelection.enabled ? handleRecordSelection(s, snap as any, record.id) : true
 			}
 			// Заменим стандартные параметры чекбокса в заголовке.
 			// Нам это нужно из-за варианта, когда в корне нет ни отдного selected, но есть 'indeterminate'.
@@ -81,7 +81,7 @@ export default memo(() => {
 			}
 			// Sort
 			sortStatus={snap.sortState}
-			onSortStatusChange={(sortState) => setSortState(store, sortState)}
+			onSortStatusChange={(sortState) => setSortState(s, sortState)}
 			{...(snap.libProps as any)}
 		/>
 	);

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import type { MultiSelection } from '@nodes/use-data-v2.0.0';
 import Node from '@nodes/use-data-v2.0.0/component/Node';
-import type { Snap, Store } from '../../node/store';
+import type { Snap, Store } from '../store';
 import type { TableRecord } from './record';
 import useItem from '../funcs/useItem';
 import useNode from '../funcs/useNode';

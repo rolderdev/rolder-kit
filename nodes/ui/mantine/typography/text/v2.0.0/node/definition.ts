@@ -1,6 +1,5 @@
 import { getPortDef, sizes } from '@shared/port-v1.0.0';
 import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import { lazy } from 'react';
 import type { Item } from '@shared/types-v0.1.0';
 
 export type Props = BaseReactProps & {
@@ -10,9 +9,11 @@ export type Props = BaseReactProps & {
 	field: string;
 };
 
+import Comp from '../component/Text';
+
 export default {
 	hashTag: '#expreimental',
-	module: { dynamic: lazy(() => import('../component/Text')) },
+	module: { static: Comp },
 	inputs: [
 		getPortDef({
 			name: 'sourceType',

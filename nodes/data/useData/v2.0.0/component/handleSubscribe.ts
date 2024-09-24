@@ -1,11 +1,12 @@
 import { getKuzzle } from '@shared/get-kuzzle';
-import { dbClassVersion } from '@shared/get-dbclass-version';
+import { getDbClassName, getVersionedDbClass } from '@shared/db-class';
 import type { Item } from '@shared/types-v0.1.0';
 import type { Props } from '../node/definition';
 import handleDataChanges from './handleDataChanges';
 import type { NoodlNode } from '@shared/node-v1.0.0';
 import type { DocumentNotification } from '@nodes/app-v2.0.0';
 import getIem from './getIem';
+import fetchBySub from './fetchBySub';
 
 export type Notification = DocumentNotification & { result: { _updatedFields: string[] } };
 
@@ -39,30 +40,23 @@ const subscribeOnScheme = async (p: Props, noodlNode: NoodlNode, schemeHash: str
 
 	const scheme = p.store.schemes.get(schemeHash)?.scheme;
 	if (scheme) {
-		const dbClass = typeof scheme.dbClass === 'string' ? scheme.dbClass : scheme.dbClass.name;
-		const dbClassV = dbClassVersion(dbClass);
+		const dbClassName = getDbClassName(scheme.dbClass);
+		const dbClassV = getVersionedDbClass(scheme.dbClass);
 
 		if (dbClassV) {
 			const notify = (notif: Notification) => {
 				//console.log('server notif', schemeHash, notif);
-				/* if (['0b1164db77fce49cba2056a80a55e90d8877aac9', '281a1fdd1454945638386c2a2c454fd1224c6c1e'].includes(schemeHash)) {
-					console.log('server notif', schemeHash, notif);
-				}
- */
+
 				if (notif.type !== 'document') return;
 				handleNotification(p, noodlNode, schemeHash, notif);
 
-				log.info(`Subscribe - ${notif.action} ${scheme.dbClass}: `, notif.result);
+				log.info(`Subscribe - ${notif.action} ${dbClassName}: `, notif.result);
 			};
 
 			K.protocol.on(channel, notify);
 
-			/* if (['0b1164db77fce49cba2056a80a55e90d8877aac9', '281a1fdd1454945638386c2a2c454fd1224c6c1e'].includes(schemeHash)) {
-				console.log(`Subscribed`, schemeHash, channel);
-			} */
-
 			p.store.subscribes.set(schemeHash, { channel, notify });
-			log.info(`Subscribed to "${scheme.dbClass}"`, { schemeHash, scheme });
+			log.info(`Subscribed to "${dbClassName}"`, { schemeHash, scheme });
 		}
 	}
 };
@@ -80,15 +74,11 @@ const unSubscribeFromScheme = async (p: Props, schemeHash: string) => {
 		p.store.subscribes.delete(schemeHash);
 
 		log.info(`Unsubscribed from schemeHash "${schemeHash}"`);
-
-		/* 	if (['0b1164db77fce49cba2056a80a55e90d8877aac9', '281a1fdd1454945638386c2a2c454fd1224c6c1e'].includes(schemeHash)) {
-			console.log(`Unsubscribed`, schemeHash);
-		} */
 	}
 };
 
 // Поскольку подписки идут по всем схемам, можно обрабатывать item найденный в этой схеме. Дубли отработает тригер другой схемы.
-export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: string, notif: Notification) => {
+export const handleNotification = async (p: Props, noodlNode: NoodlNode, schemeHash: string, notif: Notification) => {
 	const sort = R.libs.sort;
 	const { get, set } = R.libs.just;
 
@@ -120,7 +110,7 @@ export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: s
 				const newRawItem = getIem(
 					{
 						...notif.result._source,
-						dbClass: schemeData.scheme.dbClass,
+						dbClass: getDbClassName(schemeData.scheme.dbClass),
 						id: itemId,
 					} as Item,
 					p.store.rootId
@@ -141,6 +131,12 @@ export const handleNotification = (p: Props, noodlNode: NoodlNode, schemeHash: s
 				}
 				schemeData.fetched++;
 				schemeData.total++;
+
+				// Костылечег. При добавлении нужно создать новую серверную схему и подписаться на нее.
+				// При этом, не понятно как это сделать точечно. Поэтому делаем простую перезагрузку, но без тригеров и обновления выходов.
+				// Так сервер подпишет на новые схемы, которые породил новый item.
+				// Хоть и костыль, но без тормозов, т.к. весь код выше уже все сделал для фронта, а handleDataChanges тригернул все, что нужно.
+				fetchBySub(p, noodlNode);
 			}
 		}
 

@@ -1,7 +1,7 @@
 /* Модель сортировки. */
 import type { DataTableSortStatus } from 'mantine-datatable';
 import type { TableRecord } from './record';
-import type { Store } from '../../node/store';
+import type { Store } from '../store';
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 
 export const setSortState = (s: Store, sortState: DataTableSortStatus<TableRecord>, firstTime?: boolean) => {

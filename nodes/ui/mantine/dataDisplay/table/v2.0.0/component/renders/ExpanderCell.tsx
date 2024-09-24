@@ -2,7 +2,7 @@ import { memo, useContext } from 'react';
 import { ActionIcon, Box, Group } from '@mantine/core';
 import clsx from 'clsx';
 import { TableContext } from '../TableProvider';
-import { expansionDisabled, toggleRowExpansion } from '../models/expansion';
+import { expansionFiltered, toggleRowExpansion } from '../models/expansion';
 import Cell from './Cell';
 import useNode from '../funcs/useNode';
 import useItem from '../funcs/useItem';
@@ -24,17 +24,24 @@ export default memo((p: { columnIdx: string; id: string }) => {
 	const expanded = snap.expandedIds[p.id];
 
 	// Определим, исключена ли строка из развертывния разработчиком.
-	const disabled = expansionDisabled(store, p.id);
+	const disabled = expansionFiltered(store, p.id);
 
 	// Реактивность на изменение ноды.
+	const nodeStore = useNode(store, p.id, 'store');
 	const nodeSub = useNode(store, p.id, 'sub');
-	if (nodeSub) {
-		// Установим новое состояние, если оно изменилось в иерархии и если не отфильтровано разработчиком.
-		if (!disabled) store.expandedIds[p.id] = nodeSub.states.expansion.value;
-		// Свернем строку, если у нее больше нет детей.
-		if (!nodeSub.childIds && expanded) store.expandedIds[p.id] = false;
-		// Добавим состояне детей для чекбокса.
-		store.checkboxes.hasChildren[p.id] = nodeSub.childIds.length > 0;
+	if (nodeStore && nodeSub) {
+		// Не большая хитрость. Мы не можем доверять детям, т.к. там могут быть дети не участвующие в иерархии таблиц.
+		// Но нам нужно подписаться на изменение их количества. nodeSub.childIds - так нельзя, тригерит все ячейки.
+		nodeSub.childIds.length;
+		// Свернем строку, если она отфильтрована разработчиком.
+		if (expansionFiltered(store, p.id)) {
+			// Именно в этом порядке. Иначе ошибка 300 React.
+			nodeStore.states.expansion.value = false;
+			store.expandedIds[p.id] = false;
+			// Установим новое состояние, если оно изменилось в иерархии и если не отфильтровано разработчиком.
+		} else store.expandedIds[p.id] = nodeSub.states.expansion.value;
+		// Добавим состояне для чекбокса.
+		store.checkboxes.hasChildren[p.id] = store.expandedIds[p.id];
 	}
 
 	// Расчет отсупа функцией разработчика.

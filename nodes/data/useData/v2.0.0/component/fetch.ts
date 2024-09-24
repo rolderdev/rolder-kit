@@ -8,6 +8,7 @@ import type { Props } from '../node/definition';
 import type { NoodlNode } from '@shared/node-v1.0.0';
 import { handleSubscribe } from './handleSubscribe';
 import getIem from './getIem';
+import { getDbClassName } from '@shared/db-class';
 
 export type BackendData = {
 	items: { [id: string]: Item };
@@ -42,7 +43,7 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	if (!fetchScheme) return;
 
 	const startTime = log.start();
-	log.info(`useData props: ${fetchScheme.map((i) => i.dbClass).join(', ')}`, p);
+	log.info(`useData props: ${fetchScheme.map((i) => getDbClassName(i.dbClass)).join(', ')}`, p);
 
 	sendOutput(noodlNode, 'fetching', true);
 
@@ -106,6 +107,6 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	// Подготовим и отправим данные.
 	handleDataChanges(p, noodlNode);
 
-	log.info(`useData: ${fetchScheme?.map((i) => i.dbClass).join(', ')}`, data);
-	log.end(`useData: ${fetchScheme?.map((i) => i.dbClass).join(', ')}`, startTime);
+	log.info(`useData: ${fetchScheme?.map((i) => getDbClassName(i.dbClass)).join(', ')}`, data);
+	log.end(`useData: ${fetchScheme?.map((i) => getDbClassName(i.dbClass)).join(', ')}`, startTime);
 };

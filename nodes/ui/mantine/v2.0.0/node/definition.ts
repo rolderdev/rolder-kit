@@ -27,7 +27,7 @@ export type Props = BaseReactProps & {
 
 export default {
 	hashTag: '#pre-release',
-	module: { dynamic: lazy(() => import('../component/Mantine')) },
+	module: { dynamic: lazy(() => import('../component/Mantine')) }, // Обязательно динамика, т.к. при статике RsPack ругается на CSS.
 	inputs: [
 		getPortDef({
 			name: 'notificationsPosition',

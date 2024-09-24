@@ -11,10 +11,6 @@
 		"projectDir": "/home/decard/projects/clients/rasko/noodl/desktop",
 		"rolderKit": ["shared", "app", "mantine", "data", "gantt", "pdf", "xlsx"]
 	},
-	"cockbot-desktop": {
-		"projectDir": "cockbot-desktop",
-		"rolderKit": ["shared", "app", "data", "mantine"]
-	},
 	"rkdocs": {
 		"projectDir": "/home/decard/projects/rkdocs",
 		"rolderKit": ["shared", "app", "mantine", "data"]

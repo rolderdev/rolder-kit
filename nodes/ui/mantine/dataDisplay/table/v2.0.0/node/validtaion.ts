@@ -3,8 +3,22 @@ import type { Props } from './definition';
 import type { Item } from '@shared/types-v0.1.0';
 
 export const validateColumns = (p: Props) => {
-	const { array, check, optional, pipe, safeParse, looseObject, string, number, picklist, function_, union, boolean } =
-		R.libs.valibot;
+	const {
+		array,
+		check,
+		optional,
+		pipe,
+		safeParse,
+		looseObject,
+		strictObject,
+		string,
+		number,
+		picklist,
+		function_,
+		union,
+		boolean,
+		unknown,
+	} = R.libs.valibot;
 
 	const Columns = pipe(
 		array(
@@ -18,6 +32,21 @@ export const validateColumns = (p: Props) => {
 					width: optional(union([string(), number()], '"width" must be string or number.'), '100%'), // Дефолт в 100%
 					sort: optional(union([boolean(), picklist(['asc', 'desc'])], '"sort" must be boolean, "asc" or "desc".')),
 					sortPath: optional(string('"sortPath" must be string.')),
+					filter: optional(
+						strictObject({
+							template: string('Filter "template" must be string.'),
+							func: optional(function_('Filter "func" must be function.')),
+							defaultState: optional(
+								strictObject({
+									enabled: boolean('Filter defaultState "enabled" must be boolean.'),
+									value: pipe(
+										unknown(),
+										check((v) => (v ? true : false), 'Filter defaultState "value" required.')
+									),
+								})
+							),
+						})
+					),
 				}),
 				check(
 					(column) => (column.type === 'accessor' && !column.accessor ? false : true),
