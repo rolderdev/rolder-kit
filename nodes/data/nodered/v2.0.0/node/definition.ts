@@ -125,30 +125,48 @@ export default {
 		// Выбираем серивис
 		// Выбираем версию для выьранного сервиса
 
-		const allServices = await sdrgfsdrfvsdf;
+		await new Promise((resolve) => {
+			setTimeout(() => {
+				portDefs.inputs.push(
+					getPortDef({
+						name: 'selectedService',
+						displayName: 'Service',
+						group: 'Custom',
+						customGroup: 'Services',
+						type: [{ label: 'Upload files', value: 'uploadFiles' }],
+						default: 'uploadFiles',
+						dependsOn: (p: Props) => p.useServices,
+					})
+				);
 
-		portDefs.inputs.push(
-			getPortDef({
-				name: 'selectedService',
-				displayName: 'Service',
-				group: 'Custom',
-				customGroup: 'Services',
-				type: allServices.type,
-				default: 'uploadFiles',
-				dependsOn: (p: Props) => p.useServices,
-			})
-		),
-			portDefs.inputs.push(
-				getPortDef({
-					name: 'serviceVersion',
-					displayName: 'Version',
-					group: 'Custom',
-					customGroup: 'Services',
-					type: allServices.type,
-					default: allServices.default,
-					dependsOn: (p: Props) => p.useServices,
-				})
-			);
+				resolve(undefined);
+			}, 3000);
+		});
+
+		// const allServices = await sdrgfsdrfvsdf;
+
+		// portDefs.inputs.push(
+		// 	getPortDef({
+		// 		name: 'selectedService',
+		// 		displayName: 'Service',
+		// 		group: 'Custom',
+		// 		customGroup: 'Services',
+		// 		type: allServices.type,
+		// 		default: 'uploadFiles',
+		// 		dependsOn: (p: Props) => p.useServices,
+		// 	})
+		// ),
+		// 	portDefs.inputs.push(
+		// 		getPortDef({
+		// 			name: 'serviceVersion',
+		// 			displayName: 'Version',
+		// 			group: 'Custom',
+		// 			customGroup: 'Services',
+		// 			type: allServices.type,
+		// 			default: allServices.default,
+		// 			dependsOn: (p: Props) => p.useServices,
+		// 		})
+		// 	);
 	},
 	initialize: async () => {
 		await initState('initialized');
