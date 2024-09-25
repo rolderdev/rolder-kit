@@ -80,7 +80,22 @@ export default {
 		// 		portDef.type = await
 		// 	},
 		// }),
-
+		getPortDef({
+			name: 'selectedService',
+			displayName: 'Service',
+			group: 'Custom',
+			customGroup: 'Services',
+			type: [],
+			dependsOn: (p: Props) => p.useServices,
+		}),
+		getPortDef({
+			name: 'serviceVersion',
+			displayName: 'Version',
+			group: 'Custom',
+			customGroup: 'Services',
+			type: [],
+			dependsOn: (p: Props) => p.useServices,
+		}),
 		getPortDef({
 			name: 'flowData',
 			displayName: 'Flow data',
@@ -131,8 +146,6 @@ export default {
 		await initState('initialized');
 
 		const services = await getServices();
-		p.services = services;
-		console.log(services?.['uploadFiles'].serviceVersion);
 
 		if (services) {
 			const servicesEnumType = Object.keys(services).map((iServiceName: string) => {
@@ -142,46 +155,23 @@ export default {
 				};
 			});
 
-			console.log('servicesEnumType:', servicesEnumType);
-
-			console.log('portDefs.inputs:', portDefs.inputs);
-
-			// Находим свойство для модификации
+			// Находим порт для модификации.
+			// Он уже определен в общем списке, нам он нужен там, чтобы transform в serviceVersion поймал выбранный сервис.
 			const selectedServicePort = portDefs.inputs.find((input) => input.name === 'selectedService');
+			const serviceVersionPort = portDefs.inputs.find((input) => input.name === 'serviceVersion');
+			if (selectedServicePort && serviceVersionPort) {
+				// Найдем дефолт. Лучше бы это определять в самом Nodered.
+				const defaultServiceName = servicesEnumType[0].value;
 
-			// Если мы нашли порт, то модифицируем
-			if (selectedServicePort) {
+				// Добавим в порт список сервисов для выбора.
 				selectedServicePort.type = servicesEnumType;
-			}
-			// Если не нашли, то создаем
-			else {
-				portDefs.inputs.push(
-					getPortDef({
-						name: 'selectedService',
-						displayName: 'Service',
-						group: 'Custom',
-						customGroup: 'Services',
-						type: servicesEnumType,
-						//default: 'uploadFiles',
-						dependsOn: (p: Props) => p.useServices,
-					})
-				);
-				portDefs.inputs.push(
-					getPortDef({
-						name: 'serviceVersion',
-						displayName: 'Version',
-						group: 'Custom',
-						customGroup: 'Services',
-						type: [],
-						dependsOn: (p: Props) => p.useServices,
-						transform: (p: Props, portDef) => {
-							console.log(p);
-							return p.services && p.selectedService
-								? (portDef.type = p.services[p.selectedService || 'uploadFiles'].serviceVersion)
-								: portDef;
-						},
-					})
-				);
+				// Установим дефолтный. Нужно учитывать, что его не будет в props пока мы не в tuntime.
+				selectedServicePort.default = defaultServiceName;
+
+				// Добавим в порт список версий для выбора.
+				serviceVersionPort.type = services[p.selectedService || defaultServiceName].serviceVersion;
+				// Установим дефолтную версию.
+				serviceVersionPort.default = services[p.selectedService || defaultServiceName].defaultServiceVersion;
 			}
 		}
 
@@ -219,8 +209,9 @@ export default {
 	},
 	validate: async () =>
 		R.params.creds?.filter((i) => i.name === 'nodered')?.[0].data ? true : 'There is no creds for Nodered at backend config.',
-	initialize: async () => {
+	initialize: async (p: Props) => {
 		await initState('initialized');
+		p.services = await getServices();
 	},
 	disableCustomProps: true,
 } satisfies JsNodeDef;

@@ -2,7 +2,13 @@ import ky from 'ky';
 
 export type Services = Record<
 	string,
-	{ nameForUrl: string; nameForlabel: string; serviceVersion: { label: string; value: string }[] }
+	{
+		isDefault?: boolean;
+		nameForUrl: string;
+		nameForlabel: string;
+		serviceVersion: { label: string; value: string }[];
+		defaultServiceVersion: string;
+	}
 >;
 
 export const getServices = async () => {

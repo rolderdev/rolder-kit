@@ -4,9 +4,10 @@ import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import type { NoodlNode } from '@shared/node-v1.0.0';
 
 export default {
-	async execute(props: Props, noodlNode: NoodlNode) {
+	async execute(p: Props, noodlNode: NoodlNode) {
 		const { project, backendVersions, environment, dbName } = R.env;
-		const { flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion } = props;
+		const { flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion, services } = p;
+		console.log('execute', p);
 
 		const backendVersion = backendVersions?.app;
 		if (!dbName) {
