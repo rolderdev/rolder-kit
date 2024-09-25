@@ -15,12 +15,11 @@ import type {
 	NodeDef,
 } from '../main';
 import { getVersionPort, validateVersion } from './editorModels/version';
-import { getConverted } from './editorModels/parameter';
 import { getModule, runSignal } from './runtimeModels/run';
 import { getNodeInputDefs, handleNodePorts } from './editorModels/nodePort';
 import { hasWarnings } from './editorModels/warning';
 import scheduleRun from './runtimeModels/scheduleRun';
-import { validatePropValue } from './runtimeModels/prop';
+import { validatePropType, validatePropValue } from './runtimeModels/prop';
 
 const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersions, docs?: string) =>
 	({
@@ -56,13 +55,17 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 							// Значение пришло через подключение.
 							if (this._hasInputBeenSetFromAConnection(inputName)) {
 								//console.log('from connection', nodeName, inputName, value);
+								// Валидириуем тип и значение в runtime, если не задеплоено.
+								if (!Noodl.deployed) {
+									validatePropType(this, inputDef, value);
+									validatePropValue(this, inputDef);
+									if (hasWarnings(this.model)) return;
+								}
 								this.props[inputName] = value;
-								// Валидириуем значение в runtime, если не задеплоено.
-								if (!Noodl.deployed) validatePropValue(this, inputDef);
 							} else {
 								// Значение пришло с редактора. Не отрабатывает дефолты редактора.
 								//console.log('from editor', nodeName, inputName, value, this.props.noodlNode);
-								this.props[inputName] = getConverted(this.model, this.context, inputDef);
+								this.props[inputName] = this.model.parametersCache[inputName];
 							}
 
 							// Отсановим, если есть ошибки во время разработки.
@@ -99,11 +102,13 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 				} else await handleNodePorts(model, context, versions);
 
 				model.on('parameterUpdated', async function (port) {
-					if (port.name === 'version') {
-						validateVersion(model, context);
-						if (port.value === undefined) context.editorConnection.sendDynamicPorts(model.id, [versionPort]);
-						else await handleNodePorts(model, context, versions);
-					} else await handleNodePorts(model, context, versions);
+					if (port.state !== 'stop') {
+						if (port.name === 'version') {
+							validateVersion(model, context);
+							if (port.value === undefined) context.editorConnection.sendDynamicPorts(model.id, [versionPort]);
+							else await handleNodePorts(model, context, versions);
+						} else await handleNodePorts(model, context, versions);
+					}
 				});
 			});
 		},

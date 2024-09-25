@@ -1,0 +1,13 @@
+{
+	"name": "utils",
+	"main": "utils.ts",
+	"dependencies": {
+		"@shared/get-formated-date-v0.2.0": "workspace:*",
+		"@shared/get-masked-v0.2.0": "workspace:*",
+		"@shared/get-value-v0.8.0": "workspace:*",
+		"@shared/is-empty-v0.1.0": "workspace:*",
+		"@shared/natural-sort-v0.1.0": "workspace:*",
+		"@nodes/format-number-v0.1.0": "workspace:*",
+		"@nodes/format-date-v0.1.0": "workspace:*"
+	}
+}

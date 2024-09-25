@@ -14,12 +14,14 @@ import stack from './layout/stack';
 // miscellaneous
 import richText from './miscellaneous/richText';
 import transition from './miscellaneous/transition';
+// navigation
+import anchor from './navigation/anchor';
 // overlays
 import tooltip from './overlays/tooltip';
 // typography
 import text from './typography/text';
 
-const reactPackages = [mantine, table, numberInput, stack, richText, transition, tooltip, text];
+const reactPackages = [mantine, table, numberInput, stack, richText, transition, anchor, tooltip, text];
 const jsPackages = [notification, tableFilter];
 
 Noodl.defineModule({ name: 'mantine', reactNodes: reactPackages, nodes: jsPackages.map(defineNode) });

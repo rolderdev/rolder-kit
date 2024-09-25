@@ -240,7 +240,9 @@ export type GraphModelNode = {
 	parametersCache: Props;
 	portDefsCache: ResultPortDefs;
 	warnings: Warnings;
+	setParameter(name: string, value: any, state: 'stop'): void;
 
+	////
 	children: GraphModelNode[];
 	component: any;
 	id: string;

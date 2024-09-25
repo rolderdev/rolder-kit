@@ -3,7 +3,7 @@ import type { GraphModelNode, JsNodeVersions, NodeContext, ReactNodeVersions } f
 import { clearWarning, hasWarnings, sendWarning } from './warning';
 
 export const prepareParameters = (model: GraphModelNode, context: NodeContext, versions: JsNodeVersions | ReactNodeVersions) => {
-	const inputDefs = versions[model.parameters.version].inputs || [];
+	const inputDefs = model.portDefsCache.inputs;
 	// Простые инпуты, не требующие конвертации.
 	const literalInputDefs = inputDefs.filter((i) =>
 		typeof i.type === 'string' ? !['array', 'proplist', 'objectEval', 'funcEval'].includes(i.type) : true
@@ -13,13 +13,17 @@ export const prepareParameters = (model: GraphModelNode, context: NodeContext, v
 	// Подготовим параметры. Все, еще не конвертируя и не валидируя.
 	setParameters(model, inputDefs);
 	// Сконвертируем простые типы.
-	literalInputDefs.forEach((inputDef) => (model.parametersCache[inputDef.name] = getConverted(model, context, inputDef)));
+	literalInputDefs.forEach(
+		(inputDef) => (model.parametersCache[inputDef.name] = getConvertedParameter(model, context, inputDef))
+	);
 	if (hasWarnings(model, 'convert')) return;
-	// Валидируем простык типы.
+	// Валидируем простые типы.
 	literalInputDefs.forEach((inputDef) => validateType(model, context, inputDef));
 	if (hasWarnings(model, 'type')) return;
 	// Сконвертируем сложные типы.
-	complexInputDefs.forEach((inputDef) => (model.parametersCache[inputDef.name] = getConverted(model, context, inputDef)));
+	complexInputDefs.forEach(
+		(inputDef) => (model.parametersCache[inputDef.name] = getConvertedParameter(model, context, inputDef))
+	);
 	if (hasWarnings(model, 'convert')) return;
 	// Валидируем сложные типы.
 	complexInputDefs.forEach((inputDef) => validateType(model, context, inputDef));
@@ -96,7 +100,7 @@ export const validateType = (model: GraphModelNode, context: NodeContext, inputD
 				else clearWarning(model, context, 'type', inputDef.displayName);
 			}
 
-			// enum.
+			// enum. Здесь жуе выбранный из enum value, который должен быть текстом.
 			if (Array.isArray(defType)) {
 				if (valueType !== 'string') sendTypeWarning('string', valueType);
 				else clearWarning(model, context, 'type', inputDef.displayName);
@@ -106,7 +110,8 @@ export const validateType = (model: GraphModelNode, context: NodeContext, inputD
 };
 
 // Функция конвертирует параметры ноды.
-export const getConverted = (model: GraphModelNode, context: NodeContext, inputDef: ResultPortDef) => {
+export const getConvertedParameter = (model: GraphModelNode, context: NodeContext, inputDef: ResultPortDef) => {
+	// Нужно брать с кеша, т.к. в нем отчищаются зависимые значения.
 	const value: unknown = model.parameters[inputDef.name];
 
 	if (typeof inputDef.type === 'string') {

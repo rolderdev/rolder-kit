@@ -4,7 +4,7 @@ import { getNodePort, type NodePort } from '@shared/port-v1.0.0';
 import type { GraphModelNode, JsNodeVersions, NodeContext, NodeDef, ReactNodeVersions } from '../../main';
 import { getCustomPropsPortDef } from './customProps';
 import { getVersionPortDef } from './version';
-import { getConverted, prepareParameters, validateParameterValues, validateType } from './parameter';
+import { getConvertedParameter, prepareParameters, validateParameterValues, validateType } from './parameter';
 import { hasWarnings } from './warning';
 import { validateNode } from './node';
 
@@ -51,11 +51,21 @@ const setNodePorts = (model: GraphModelNode, context: NodeContext) => {
 		let transformed = false;
 
 		if (inputDef) {
-			// Зависимость.
-			if (inputDef.dependsOn && !inputDef.dependsOn(model.parametersCache)) {
-				delete model.parametersCache[inputDef.name];
-				delete model.parameters[inputDef.name];
-				filtered = true;
+			// Зависимость. В parameters оставляем значение, чтобы можно было его восстановить.
+			// Но чистим в parametersCache, чтобы в компоненту не прилетало лишнее.
+			if (inputDef.dependsOn) {
+				if (!inputDef.dependsOn(model.parametersCache)) {
+					delete model.parametersCache[inputDef.name];
+					// Тригернем для registerInputIfNeeded, но установим состояние в stop, чтобы parameterUpdated не зациклился.
+					// Значение меняется с чего то на undefined, это триенрит registerInputIfNeeded.
+					model.setParameter(inputDef.name, undefined, 'stop');
+					filtered = true;
+					// Нужно пропустить порты с подключений, иначе при смене параметров в редакторе они стираются.
+				} else if (!model.component.connections.find((i: any) => i.targetId === model.id && i.targetPort === inputDef.name)) {
+					// Нужно зпустить дважды, т.к. тригериться только при смене значения.
+					model.setParameter(inputDef.name, undefined, 'stop');
+					model.setParameter(inputDef.name, model.parameters[inputDef.name], 'stop');
+				}
 			}
 			// Трансформация.
 			if (!filtered && inputDef.transform) {
@@ -64,7 +74,7 @@ const setNodePorts = (model: GraphModelNode, context: NodeContext) => {
 				// Нужно восстановить дефолт и проверить его тип, если еще нет значения.
 				if (inputDef.default !== undefined && model.parametersCache[inputDef.name] === undefined) {
 					model.parameters[inputDef.name] = inputDef.default;
-					model.parametersCache[inputDef.name] = getConverted(model, context, inputDef);
+					model.parametersCache[inputDef.name] = getConvertedParameter(model, context, inputDef);
 					validateType(model, context, inputDef);
 				}
 				nodePorts.push(getNodePort('input', inputDef));

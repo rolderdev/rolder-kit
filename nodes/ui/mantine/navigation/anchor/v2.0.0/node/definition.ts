@@ -9,7 +9,7 @@ export type Props = BaseReactProps & {
 	truncateProp: 'disabled' | 'end' | 'start';
 };
 
-import Comp from '../component/Text';
+import Comp from '../component/Anchor';
 
 export default {
 	hashTag: '#pre-release',
@@ -38,6 +38,12 @@ export default {
 			group: 'Data',
 			type: 'number',
 			dependsOn: (p: Props) => p.type === 'number',
+		}),
+		getPortDef({
+			name: 'href',
+			displayName: 'Link',
+			group: 'Data',
+			type: 'string',
 		}),
 		getPortDef({
 			name: 'fz',
@@ -130,6 +136,17 @@ export default {
 			type: 'objectEval',
 			dependsOn: (p: Props) => p.variant === 'gradient',
 			codeComment: `//(props) => ({ from: 'blue', to: 'cyan', deg: 90 })`,
+		}),
+		getPortDef({
+			name: 'underline',
+			displayName: 'Underline',
+			group: 'Styles',
+			type: [
+				{ label: 'Never', value: 'never' },
+				{ label: 'Hover', value: 'hover' },
+				{ label: 'Always', value: 'always' },
+			],
+			default: 'never',
 		}),
 		getPortDef({
 			name: 'td',

@@ -1,18 +1,20 @@
 ---
-id: packages/shared
+id: packages/utils
 tasks:
   build:
     command: rspack build --mode=production
     inputs:
       - src/**/*
-      - /packages/shared/**/*      
+      - /packages/utils/**/*
+      - /nodes/utils/**/*
       - /shared/roodl/**/*
       - /shared/utils/**/*
   dev:
     command: rspack build --mode=development --watch
     inputs:
       - src/**/*
-      - /packages/shared/**/*      
+      - /packages/utils/**/*
+      - /nodes/utils/**/*
       - /shared/roodl/**/*
       - /shared/utils/**/*
     local: true
