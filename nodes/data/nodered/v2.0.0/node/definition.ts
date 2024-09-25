@@ -2,7 +2,7 @@ import type { BaseJsProps } from '@shared/node-v1.0.0';
 import type { JsNodeDef } from '@shared/node-v1.0.0';
 import { getPortDef } from '@shared/port-v1.0.0';
 import initState from '@shared/init-state-v0.1.0';
-import ky from 'ky';
+import { getServices, type Services } from './getServices';
 
 export type Props = BaseJsProps & {
 	flowEndpoint?: string;
@@ -13,6 +13,7 @@ export type Props = BaseJsProps & {
 	};
 	timeout: number;
 	useServices: boolean;
+	services?: Services;
 	selectedService?: string;
 	serviceVersion?: string;
 };
@@ -129,55 +130,59 @@ export default {
 		// Дожидаемся, что получили creds
 		await initState('initialized');
 
-		// Получаем параметры подключения к nodered из R
-		const noderedCreds = R.params.creds?.filter((i) => i.name === 'nodered')?.[0].data;
+		const services = await getServices();
+		p.services = services;
+		console.log(services?.['uploadFiles'].serviceVersion);
 
-		// Ссылка для получения сервисов
-		const servicesUrl = 'https://service-manager.services.d2.rolder.app/serviceManager_v1.0.0';
+		if (services) {
+			const servicesEnumType = Object.keys(services).map((iServiceName: string) => {
+				return {
+					label: services?.[iServiceName]?.nameForlabel,
+					value: iServiceName,
+				};
+			});
 
-		// Получаем данные о сервисах
-		const services: { [key: string]: any } = await ky
-			.post(servicesUrl, {
-				headers: {
-					Authorization: 'Basic ' + btoa(`${noderedCreds.username}:${noderedCreds.password}`),
-				},
-				body: null,
-			})
-			.json();
+			console.log('servicesEnumType:', servicesEnumType);
 
-		console.log('services:', services);
+			console.log('portDefs.inputs:', portDefs.inputs);
 
-		const servicesList = Object.keys(services)?.map((iServiceName: string) => {
-			return {
-				label: services?.[iServiceName]?.nameForlabel,
-				value: iServiceName,
-			};
-		});
+			// Находим свойство для модификации
+			const selectedServicePort = portDefs.inputs.find((input) => input.name === 'selectedService');
 
-		console.log('servicesList:', servicesList);
-
-		console.log('portDefs.inputs:', portDefs.inputs);
-
-		// Находим свойство для модификации
-		const selectedService = portDefs.inputs?.find((input) => input?.name === 'selectedService');
-
-		// Если мы нашли порт, то модифицируем
-		if (selectedService) {
-			selectedService.type = servicesList;
-		}
-		// Если не нашли, то создаем
-		else {
-			portDefs.inputs.push(
-				getPortDef({
-					name: 'selectedService',
-					displayName: 'Service',
-					group: 'Custom',
-					customGroup: 'Services',
-					type: servicesList,
-					default: 'uploadFiles',
-					dependsOn: (p: Props) => p.useServices,
-				})
-			);
+			// Если мы нашли порт, то модифицируем
+			if (selectedServicePort) {
+				selectedServicePort.type = servicesEnumType;
+			}
+			// Если не нашли, то создаем
+			else {
+				portDefs.inputs.push(
+					getPortDef({
+						name: 'selectedService',
+						displayName: 'Service',
+						group: 'Custom',
+						customGroup: 'Services',
+						type: servicesEnumType,
+						//default: 'uploadFiles',
+						dependsOn: (p: Props) => p.useServices,
+					})
+				);
+				portDefs.inputs.push(
+					getPortDef({
+						name: 'serviceVersion',
+						displayName: 'Version',
+						group: 'Custom',
+						customGroup: 'Services',
+						type: [],
+						dependsOn: (p: Props) => p.useServices,
+						transform: (p: Props, portDef) => {
+							console.log(p);
+							return p.services && p.selectedService
+								? (portDef.type = p.services[p.selectedService || 'uploadFiles'].serviceVersion)
+								: portDef;
+						},
+					})
+				);
+			}
 		}
 
 		// await new Promise((resolve) => {
@@ -212,6 +217,8 @@ export default {
 		// 		})
 		// 	);
 	},
+	validate: async () =>
+		R.params.creds?.filter((i) => i.name === 'nodered')?.[0].data ? true : 'There is no creds for Nodered at backend config.',
 	initialize: async () => {
 		await initState('initialized');
 	},
