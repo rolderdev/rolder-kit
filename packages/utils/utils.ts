@@ -25,4 +25,21 @@ import formatDate from './src/formatDate';
 
 const jsPackages = [formatNumber, formatDate];
 
+set(
+	window,
+	['R', 'packages', 'utils'],
+	[
+		{
+			name: 'Rolder Kit - Utils',
+			type: '',
+			subCategories: [
+				{
+					name: '',
+					items: ['rolder-kit.api-v1.formatNumber', 'rolder-kit.api-v1.formatDate'],
+				},
+			],
+		},
+	]
+);
+
 Noodl.defineModule({ name: 'utils', nodes: jsPackages.map(defineNode) });
