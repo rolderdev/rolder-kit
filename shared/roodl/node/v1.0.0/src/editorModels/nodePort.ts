@@ -27,19 +27,19 @@ export const handleNodePorts = async (
 	model.portDefsCache.outputs = R.libs.just.clone(nodeDef.outputs || []);
 
 	prepareParameters(model, context, versions);
-	setNodePorts(model, context, versions);
+	setNodePorts(model, context);
 	if (hasWarnings(model, 'convert') || hasWarnings(model, 'type')) return;
 	validateParameterValues(model, context, versions);
 	if (hasWarnings(model, 'value')) return;
 	if (nodeDef.transform) {
 		await nodeDef.transform(model.parametersCache, model.portDefsCache);
-		setNodePorts(model, context, versions);
+		setNodePorts(model, context);
 	}
 	if (hasWarnings(model, 'convert') || hasWarnings(model, 'type')) return;
 	await validateNode(model, context, versions);
 };
 
-const setNodePorts = (model: GraphModelNode, context: NodeContext, versions: JsNodeVersions | ReactNodeVersions) => {
+const setNodePorts = (model: GraphModelNode, context: NodeContext) => {
 	let nodePorts: NodePort[] = [];
 
 	const inputDefs = model.portDefsCache.inputs;
