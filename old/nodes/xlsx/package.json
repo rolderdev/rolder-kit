@@ -1,5 +1,5 @@
 {
-	"name": "xlsx",
+	"name": "old_xlsx",
 	"dependencies": {
 		"@noodl/noodl-sdk": "0.5.4",
 		"@packages/create-xlsx-v1.0.0": "workspace:*",

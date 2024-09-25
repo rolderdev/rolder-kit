@@ -1,5 +1,5 @@
 ---
-id: node-handlers/app
+id: old_app
 tasks:
   build:
     command: rspack build --mode=production
