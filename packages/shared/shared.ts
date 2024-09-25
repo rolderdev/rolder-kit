@@ -1,3 +1,4 @@
+import '@shared/types-v0.1.0';
 import set from 'just-safe-set';
 import { proxy } from 'valtio';
 
@@ -52,11 +53,6 @@ R.libs.icons = icons;
 
 // libs
 import './src/libs';
-
-// utils
-import utils from './src/utils';
-export type Utils = typeof utils;
-set(window, ['R', 'utils'], utils);
 
 // Сменим состояние инициализации приложения.
 R.states.init.value = 'shared';

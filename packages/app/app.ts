@@ -1,4 +1,5 @@
 import '@shared/types-v0.1.0';
+import { set } from 'shared/src/libs/just';
 import { reactNode } from '@shared/node-v1.0.0';
 
 import systemLoaderAnimation from '@shared/system-loader-animation-v0.2.0';
@@ -13,6 +14,23 @@ const app = reactNode(
 		'v2.0.0': v200,
 	},
 	{ allowChildren: true, docs: '' }
+);
+
+set(
+	window,
+	['R', 'packages', 'app'],
+	[
+		{
+			name: 'Rolder Kit - App',
+			type: '',
+			subCategories: [
+				{
+					name: '',
+					items: ['rolder-kit.api-v1.App'],
+				},
+			],
+		},
+	]
 );
 
 Noodl.defineModule({

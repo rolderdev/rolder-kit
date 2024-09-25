@@ -1,5 +1,6 @@
 ---
-id: node-handlers/data
+id: old_data
+
 tasks:
   build:
     command: rspack build --mode=production

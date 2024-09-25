@@ -1,5 +1,5 @@
 ---
-id: node-handlers/qr-code
+id: old_qr-code
 tasks:
   build:
     command: rspack build --mode=production

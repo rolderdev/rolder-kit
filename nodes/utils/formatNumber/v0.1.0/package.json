@@ -1,0 +1,5 @@
+{
+	"name": "@nodes/format-number-v0.1.0",
+	"main": "node/definition.ts",
+	"type": "module"
+}

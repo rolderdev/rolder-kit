@@ -1,5 +1,5 @@
 {
-	"name": "pdf",
+	"name": "old_pdf",
 	"dependencies": {
 		"@nodes/pdf-document": "workspace:*",
 		"@nodes/pdf-image": "workspace:*",

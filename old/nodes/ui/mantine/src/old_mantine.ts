@@ -78,7 +78,7 @@ import highlightNode from '@nodes/highlight';
 import listNode from '@nodes/list';
 // navigation
 import navLinkNode from '@nodes/nav-link';
-import anchorNode from '@nodes/anchor';
+//import anchorNode from '@nodes/anchor';
 //// tabs
 import tabsNode from '@nodes/tabs';
 import tabNode from '@nodes/tab';
@@ -162,7 +162,6 @@ Noodl.defineModule({
 		listNode,
 		// navigation
 		navLinkNode,
-		anchorNode,
 		//// tabs
 		tabsNode,
 		tabNode,

@@ -1,4 +1,4 @@
-import { Box, createTheme, MantineProvider, Transition } from '@mantine/core';
+import { Box, createTheme, DEFAULT_THEME, MantineProvider, Transition } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { Notifications } from '@mantine/notifications';
 import { forwardRef, useEffect, useState } from 'react';
@@ -9,6 +9,7 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import './body.module.css';
+import './fonts.module.css';
 
 export default forwardRef(function (p: Props) {
 	const { notificationsPosition, defaultColorScheme, mantineTheme } = p;
@@ -20,7 +21,11 @@ export default forwardRef(function (p: Props) {
 		R.db?.states.params.set('colorScheme', () => defaultColorScheme);
 	}, [defaultColorScheme]);
 
-	const theme = createTheme(mantineTheme);
+	const theme = createTheme({
+		...mantineTheme,
+		fontFamily: `IBM Plex Sans, ${DEFAULT_THEME.fontFamily}`,
+		headings: { fontFamily: `IBM Plex Sans, ${DEFAULT_THEME.fontFamily}` },
+	});
 	return (
 		<>
 			<MantineProvider theme={theme} colorSchemeManager={colorSchemeManager}>
