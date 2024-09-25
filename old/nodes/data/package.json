@@ -1,5 +1,5 @@
 {
-	"name": "data",
+	"name": "old_data",
 	"dependencies": {
 		"@nodes/auth": "workspace:*",
 		"@nodes/create": "workspace:*",

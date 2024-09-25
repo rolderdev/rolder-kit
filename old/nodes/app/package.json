@@ -1,5 +1,5 @@
 {
-	"name": "app",
+	"name": "old_app",
 	"dependencies": {
 		"@mantine/form": "^7.12.2",
 		"@packages/add-css-to-html-head": "workspace:@packages/add-css-to-html-head-v0.1.0@^",

@@ -1,5 +1,5 @@
 {
-	"name": "mantine",
+	"name": "old_mantine",
 	"dependencies": {
 		"@nodes/action-icon": "workspace:*",
 		"@nodes/anchor": "workspace:*",

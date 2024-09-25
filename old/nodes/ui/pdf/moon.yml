@@ -1,5 +1,5 @@
 ---
-id: node-handlers/pdf
+id: old_pdf
 tasks:
   build:
     command: rspack build --mode=production

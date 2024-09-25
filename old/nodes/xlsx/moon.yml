@@ -1,5 +1,5 @@
 ---
-id: node-handlers/xlsx
+id: old_xlsx
 tasks:
   build:
     command: rspack build --mode=production

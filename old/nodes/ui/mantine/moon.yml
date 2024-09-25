@@ -1,5 +1,5 @@
 ---
-id: node-handlers/mantine
+id: old_mantine
 tasks:
   build:
     command: rspack build --mode=production
