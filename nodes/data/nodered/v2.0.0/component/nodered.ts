@@ -6,7 +6,7 @@ import type { NoodlNode } from '@shared/node-v1.0.0';
 export default {
 	async execute(p: Props, noodlNode: NoodlNode) {
 		const { project, backendVersions, environment, dbName } = R.env;
-		const { flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion } = p;
+		const { flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion, backendServiceVersion } = p;
 		console.log('execute', p);
 
 		const backendVersion = backendVersions?.app;
@@ -32,14 +32,14 @@ export default {
 				if (useServices) {
 					if (selectedService && serviceVersion) {
 						// Собираем ссылку на основе выбранных параметров для сервиса
-						nodeRedUrl = `https://${selectedService}.services.${backendVersion}.rolder.app/${selectedService}_${serviceVersion}`;
+						nodeRedUrl = `https://${selectedService}.services.${backendServiceVersion}.rolder.app/${selectedService}_${serviceVersion}`;
 
 						console.log(nodeRedUrl);
 					} else {
 						log.error('Не удалось получить параметры сервисов!');
 					}
 				} else {
-					nodeRedUrl = `https://${project}.nodered.${backendVersion}.rolder.app/${flowEndpoint}`;
+					nodeRedUrl = `https://${project}.nodered.${backendServiceVersion}.rolder.app/${flowEndpoint}`;
 				}
 
 				const formData = new FormData();
