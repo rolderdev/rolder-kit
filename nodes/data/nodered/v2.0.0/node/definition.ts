@@ -61,6 +61,18 @@ export default {
 			dependsOn: (p: Props) => p.useServices,
 		}),
 		getPortDef({
+			name: 'backendServiceVersion',
+			displayName: 'Backend service version',
+			group: 'Custom',
+			customGroup: 'Services',
+			type: [
+				{ label: 'd2', value: 'd2' },
+				{ label: 'p2', value: 'p2' },
+			],
+			default: 'p2',
+			dependsOn: (p: Props) => p.useServices,
+		}),
+		getPortDef({
 			name: 'flowData',
 			displayName: 'Flow data',
 			group: 'Data',
@@ -94,17 +106,18 @@ export default {
 		}),
 	],
 	transform: async (p: Props, portDefs) => {
-		// Получаем из p.services объект с сервисами
-		// Получаем дефолтные настройки
-		// Получаем ключи словаря сервисов - их названия
-		// Подаем их в выбор сервиса
-		// После выбора сервиса, получаем его версии и подаем в выбор версий
-		// После выбора сервиса, версии и версии бэкенда d2/p2 (p2 по дефолту) формируем ссылку
+		console.log('nodered transform');
+		// Получаем из nodered сервисы, и держим их в props
+		// Внутри дожидаемся подключения к Kuzzle
+		if (!p?.services) p.services = await getServices();
+
+		// console.log('Инициализация завершена - transform!', R?.params?.creds);
+		// console.log('Сервисы - transform!', p.services);
 
 		if (p.services) {
-			const servicesType = Object.keys(p.services).map((iServiceName: string) => {
+			const servicesType: { label: string; value: string }[] = Object.keys(p.services).map((iServiceName: string) => {
 				return {
-					label: p.services?.[iServiceName]?.nameForLabel,
+					label: p.services[iServiceName].nameForLabel,
 					value: iServiceName,
 				};
 			});
@@ -115,11 +128,17 @@ export default {
 			const serviceVersionPort = portDefs.inputs.find((input) => input.name === 'serviceVersion');
 			if (selectedServicePort && serviceVersionPort) {
 				// Найдем дефолт. Лучше бы это определять в самом Nodered.
-				const defaultServiceName = servicesType[0].value;
+				const getDefaultServiceName = (p: Props) => {
+					for (const serviceName in p.services) {
+						if (p.services[serviceName]?.isDefault === true) return serviceName;
+					}
+					return;
+				};
+				const defaultServiceName = getDefaultServiceName(p);
 
 				// Добавим в порт список сервисов для выбора.
 				selectedServicePort.type = servicesType;
-				// Установим дефолтный. Нужно учитывать, что его не будет в props пока мы не в tuntime.
+				// Установим дефолтный. Нужно учитывать, что его не будет в props пока мы не в runtime.
 				selectedServicePort.default = defaultServiceName;
 
 				// Добавим в порт список версий для выбора.
@@ -131,16 +150,18 @@ export default {
 			log.error('Не удалось получить сервисы!');
 		}
 	},
-	validate: async () =>
+	validate: async (p: Props) => {
+		console.log('nodered validate');
 		// Проверяем, получили ли мы creds из Kuzzle.
-		R.params.creds?.filter((i) => i.name === 'nodered')?.[0].data
+		return R.params.creds?.find((i) => i.name === 'nodered')?.data
 			? true
-			: 'В Kuzzle -> config -> creds нет логина и пароля для доступа к nodeRed!', //There is no creds for Nodered at backend config.',
+			: 'В Kuzzle -> config -> creds нет логина и пароля для доступа к nodeRed!'; //There is no creds for Nodered at backend config.',
+	},
 	initialize: async (p: Props) => {
+		console.log('nodered initialize');
 		// Ждем, что в R появятся creds для nodered
 		await initState('initialized');
-		// Получаем из nodered сервисы, и передаем из через props
-		p.services = await getServices();
+		// console.log('Инициализация завершена - initialize!', R?.params?.creds);
 	},
 	disableCustomProps: true,
 } satisfies JsNodeDef;

@@ -6,7 +6,7 @@ import type { NoodlNode } from '@shared/node-v1.0.0';
 export default {
 	async execute(p: Props, noodlNode: NoodlNode) {
 		const { project, backendVersions, environment, dbName } = R.env;
-		const { flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion, services } = p;
+		const { flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion } = p;
 		console.log('execute', p);
 
 		const backendVersion = backendVersions?.app;
@@ -24,27 +24,19 @@ export default {
 			sendOutput(noodlNode, 'executing', true);
 
 			const noderedCreds = R.params.creds?.filter((i) => i.name === 'nodered')?.[0].data;
+
 			if (noderedCreds) {
 				let nodeRedUrl = '';
 
 				// Если флаг useServices, то используем ссылку ссответствующего сервиса
 				if (useServices) {
-					// Получаем ссылку на выбранный сервис
-					switch (selectedService) {
-						// Сервис по загрузке файлов
-						case 'uploadFiles':
-							nodeRedUrl = `https://upload-files.services.${serviceVersion}.rolder.app/uploadFiles`;
-							break;
-						// Сервис по удалению файлов
-						case 'deleteFilesByUrl':
-							nodeRedUrl = `https://upload-files.services.${serviceVersion}.rolder.app/deleteFilesByUrl`;
-							break;
-						// Сервис по копированию классов
-						case 'copyDBClass':
-							nodeRedUrl = `c`;
-							break;
-						// Следующий сервис
-						// ...
+					if (selectedService && serviceVersion) {
+						// Собираем ссылку на основе выбранных параметров для сервиса
+						nodeRedUrl = `https://${selectedService}.services.${backendVersion}.rolder.app/${selectedService}_${serviceVersion}`;
+
+						console.log(nodeRedUrl);
+					} else {
+						log.error('Не удалось получить параметры сервисов!');
 					}
 				} else {
 					nodeRedUrl = `https://${project}.nodered.${backendVersion}.rolder.app/${flowEndpoint}`;
