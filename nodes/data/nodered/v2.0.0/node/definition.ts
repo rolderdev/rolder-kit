@@ -6,10 +6,10 @@ import { getServices, type Services } from './getServices';
 
 export type Props = BaseJsProps & {
 	flowEndpoint?: string;
-	flowData?: {
-		data: any;
-		files: File[];
-		params: any;
+	flowData: {
+		data?: any;
+		files?: File[];
+		params?: any;
 	};
 	timeout: number;
 	useServices: boolean;
@@ -44,42 +44,6 @@ export default {
 			type: 'boolean',
 			default: false,
 		}),
-		// getPortDef({
-		// 	name: 'selectedService',
-		// 	displayName: 'Service',
-		// 	group: 'Custom',
-		// 	customGroup: 'Services',
-		// 	type: [
-		// 		{ label: 'Upload files', value: 'uploadFiles' },
-		// 		{ label: 'Delete files by URL', value: 'deleteFilesByUrl' },
-		// 		{ label: 'Copy DB class', value: 'copyDBClass' },
-		// 	],
-		// 	default: 'uploadFiles',
-		// 	dependsOn: (p: Props) => p.useServices,
-		// }),
-		// getPortDef({
-		// 	name: 'serviceVersion',
-		// 	displayName: 'Version',
-		// 	group: 'Custom',
-		// 	customGroup: 'Services',
-		// 	type: [
-		// 		{ label: 'd2', value: 'd2' },
-		// 		{ label: 'p2', value: 'p2' },
-		// 	],
-		// 	default: 'd2',
-		// 	dependsOn: (p: Props) => p.useServices,
-		// }),
-		// getPortDef({
-		// 	name: 'serviceVersion',
-		// 	displayName: 'Version',
-		// 	group: 'Custom',
-		// 	customGroup: 'Services',
-		// 	type: [],
-		// 	dependsOn: (p: Props) => p.useServices,
-		// 	transform: (p: Props, portDef) => {
-		// 		portDef.type = await
-		// 	},
-		// }),
 		getPortDef({
 			name: 'selectedService',
 			displayName: 'Service',
@@ -129,28 +93,18 @@ export default {
 			type: '*',
 		}),
 	],
-	// getInspectInfo: (p: Props, outProps) => [
-	// 	{ type: 'text', value: `API ${p.apiVersion}` },
-	// 	{ type: 'text', value: `=== Scheme ===` },
-	// 	{ type: 'value', value: p.updateScheme },
-	// 	outProps.data && { type: 'text', value: `=== Data ===` },
-	// 	outProps.data && { type: 'value', value: outProps.data },
-	// ],
 	transform: async (p: Props, portDefs) => {
-		// Получаем от сервиса все всервисы и их версии
-		// Находим сервис дефолтный
-		// Выбираем серивис
-		// Выбираем версию для выьранного сервиса
+		// Получаем из p.services объект с сервисами
+		// Получаем дефолтные настройки
+		// Получаем ключи словаря сервисов - их названия
+		// Подаем их в выбор сервиса
+		// После выбора сервиса, получаем его версии и подаем в выбор версий
+		// После выбора сервиса, версии и версии бэкенда d2/p2 (p2 по дефолту) формируем ссылку
 
-		// Дожидаемся, что получили creds
-		await initState('initialized');
-
-		const services = await getServices();
-
-		if (services) {
-			const servicesEnumType = Object.keys(services).map((iServiceName: string) => {
+		if (p.services) {
+			const servicesType = Object.keys(p.services).map((iServiceName: string) => {
 				return {
-					label: services?.[iServiceName]?.nameForlabel,
+					label: p.services?.[iServiceName]?.nameForLabel,
 					value: iServiceName,
 				};
 			});
@@ -161,56 +115,31 @@ export default {
 			const serviceVersionPort = portDefs.inputs.find((input) => input.name === 'serviceVersion');
 			if (selectedServicePort && serviceVersionPort) {
 				// Найдем дефолт. Лучше бы это определять в самом Nodered.
-				const defaultServiceName = servicesEnumType[0].value;
+				const defaultServiceName = servicesType[0].value;
 
 				// Добавим в порт список сервисов для выбора.
-				selectedServicePort.type = servicesEnumType;
+				selectedServicePort.type = servicesType;
 				// Установим дефолтный. Нужно учитывать, что его не будет в props пока мы не в tuntime.
 				selectedServicePort.default = defaultServiceName;
 
 				// Добавим в порт список версий для выбора.
-				serviceVersionPort.type = services[p.selectedService || defaultServiceName].serviceVersion;
+				serviceVersionPort.type = p.services[p.selectedService || defaultServiceName].serviceVersion;
 				// Установим дефолтную версию.
-				serviceVersionPort.default = services[p.selectedService || defaultServiceName].defaultServiceVersion;
+				serviceVersionPort.default = p.services[p.selectedService || defaultServiceName].defaultServiceVersion;
 			}
+		} else {
+			log.error('Не удалось получить сервисы!');
 		}
-
-		// await new Promise((resolve) => {
-		// 	setTimeout(() => {
-
-		// 		resolve(undefined);
-		// 	}, 3000);
-		// });
-
-		// const allServices = await sdrgfsdrfvsdf;
-
-		// portDefs.inputs.push(
-		// 	getPortDef({
-		// 		name: 'selectedService',
-		// 		displayName: 'Service',
-		// 		group: 'Custom',
-		// 		customGroup: 'Services',
-		// 		type: allServices.type,
-		// 		default: 'uploadFiles',
-		// 		dependsOn: (p: Props) => p.useServices,
-		// 	})
-		// ),
-		// 	portDefs.inputs.push(
-		// 		getPortDef({
-		// 			name: 'serviceVersion',
-		// 			displayName: 'Version',
-		// 			group: 'Custom',
-		// 			customGroup: 'Services',
-		// 			type: allServices.type,
-		// 			default: allServices.default,
-		// 			dependsOn: (p: Props) => p.useServices,
-		// 		})
-		// 	);
 	},
 	validate: async () =>
-		R.params.creds?.filter((i) => i.name === 'nodered')?.[0].data ? true : 'There is no creds for Nodered at backend config.',
+		// Проверяем, получили ли мы creds из Kuzzle.
+		R.params.creds?.filter((i) => i.name === 'nodered')?.[0].data
+			? true
+			: 'В Kuzzle -> config -> creds нет логина и пароля для доступа к nodeRed!', //There is no creds for Nodered at backend config.',
 	initialize: async (p: Props) => {
+		// Ждем, что в R появятся creds для nodered
 		await initState('initialized');
+		// Получаем из nodered сервисы, и передаем из через props
 		p.services = await getServices();
 	},
 	disableCustomProps: true,

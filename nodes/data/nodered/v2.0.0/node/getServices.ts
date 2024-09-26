@@ -5,7 +5,7 @@ export type Services = Record<
 	{
 		isDefault?: boolean;
 		nameForUrl: string;
-		nameForlabel: string;
+		nameForLabel: string;
 		serviceVersion: { label: string; value: string }[];
 		defaultServiceVersion: string;
 	}
