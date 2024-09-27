@@ -84,15 +84,22 @@ export default class Node {
 
 	static createChildren(p: Props, schemesData: SchemeData[], parentPath: string, level: number, flatNodes: Node[]) {
 		schemesData.forEach((schemeData) => {
+			//console.log(schemeData);
 			schemeData.itemIds.forEach((itemId) => {
 				const thisNodeChildIds = Array.from(p.store.schemes.values())
 					.filter((i) => i.parentId === itemId && i.parentSchemeHash === schemeData.schemeHash)
 					.flatMap((i) => i.itemIds);
+				/* 
+				console.log({
+					parentName: R.items[itemId]?.content?.name,
+					childNames: thisNodeChildIds.map((id) => R.items[id]?.content?.name),
+				}); */
 
 				const aggregations: Aggregations = {};
 				p.store.schemes.forEach((i) => {
 					const dbClassName = getDbClassName(i.scheme.dbClass);
-					if (i.parentSchemeHash === schemeData.schemeHash && i.aggregations) aggregations[dbClassName] = i.aggregations;
+					if (i.parentId === itemId && i.parentSchemeHash === schemeData.schemeHash && i.aggregations)
+						aggregations[dbClassName] = i.aggregations;
 				});
 
 				flatNodes.push(

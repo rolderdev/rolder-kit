@@ -24,15 +24,8 @@ export default forwardRef(function (p: Props, ref) {
 
 	const snap = useSnapshot(s);
 
-	// Дефолты с входов при монтировании.
+	// Подчистим стостояния таблицы и ее дете в иерархии при демонтировании.
 	useEffect(() => {
-		if (p.defaultSelectedItem?.id) setSelectedId(s, p.defaultSelectedItem?.id, true);
-		const defaultSelectedRecords = p.defaultSelectedItems?.map((item) => ({ id: item.id })) || [];
-		if (defaultSelectedRecords.length) setSelectedIds(s, defaultSelectedRecords, true);
-		const defaultExpandedIds = p.defaultExpandedItems?.map((item) => item.id) || [];
-		if (defaultExpandedIds.length) setExpandedIds(s, defaultExpandedIds, true);
-
-		// Подчистим стостояния таблицы и ее дете в иерархии при демонтировании.
 		return () => {
 			if (!s.hierarchy.isChild && s.hierarchy.tableNode)
 				s.hierarchy.tableNode
@@ -82,7 +75,16 @@ export default forwardRef(function (p: Props, ref) {
 		// Инициализация фильтрации.
 		if (!s.filtersState) setInitialFiltersState(s, p.items || []);
 
-		if (!snap.inited) s.inited = true;
+		if (!snap.inited) {
+			// Дефолты с входов при монтировании.
+			if (p.defaultSelectedItem?.id) setSelectedId(s, p.defaultSelectedItem?.id, true);
+			const defaultSelectedRecords = p.defaultSelectedItems?.map((item) => ({ id: item.id })) || [];
+			if (defaultSelectedRecords.length) setSelectedIds(s, defaultSelectedRecords, true);
+			const defaultExpandedIds = p.defaultExpandedItems?.map((item) => item.id) || [];
+			if (defaultExpandedIds.length) setExpandedIds(s, defaultExpandedIds, true);
+
+			s.inited = true;
+		}
 		s.fetching = !!p.fetching;
 	}, [p]);
 
