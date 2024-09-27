@@ -6,8 +6,7 @@ import type { NoodlNode } from '@shared/node-v1.0.0';
 export default {
 	async execute(p: Props, noodlNode: NoodlNode) {
 		const { project, backendVersions, environment, dbName } = R.env;
-		const { flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion, services } = p;
-		console.log('execute', p);
+		const { flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion } = p;
 
 		const backendVersion = backendVersions?.app;
 		if (!dbName) {
@@ -19,32 +18,23 @@ export default {
 		if (flowEndpoint || selectedService) {
 			const startTime = log.start();
 
-			log.info(`Nodered ${flowEndpoint || selectedService} props`, { flowEndpoint, flowData });
-			//@ts-ignore
+			log.info(`nodered ${flowEndpoint || selectedService} props`, { flowEndpoint, flowData });
 			sendOutput(noodlNode, 'executing', true);
 
 			const noderedCreds = R.params.creds?.filter((i) => i.name === 'nodered')?.[0].data;
+
 			if (noderedCreds) {
 				let nodeRedUrl = '';
 
 				// Если флаг useServices, то используем ссылку ссответствующего сервиса
 				if (useServices) {
-					// Получаем ссылку на выбранный сервис
-					switch (selectedService) {
-						// Сервис по загрузке файлов
-						case 'uploadFiles':
-							nodeRedUrl = `https://upload-files.services.${serviceVersion}.rolder.app/uploadFiles`;
-							break;
-						// Сервис по удалению файлов
-						case 'deleteFilesByUrl':
-							nodeRedUrl = `https://upload-files.services.${serviceVersion}.rolder.app/deleteFilesByUrl`;
-							break;
-						// Сервис по копированию классов
-						case 'copyDBClass':
-							nodeRedUrl = `c`;
-							break;
-						// Следующий сервис
-						// ...
+					const backendServiceVersion = p.customProps?.backendServiceVersion || 'p2';
+
+					if (selectedService && serviceVersion) {
+						// Собираем ссылку на основе выбранных параметров для сервиса
+						nodeRedUrl = `https://${selectedService}.services.${backendServiceVersion}.rolder.app/${selectedService}_${serviceVersion}`;
+					} else {
+						log.error('Не удалось получить параметры сервисов!');
 					}
 				} else {
 					nodeRedUrl = `https://${project}.nodered.${backendVersion}.rolder.app/${flowEndpoint}`;
@@ -66,25 +56,25 @@ export default {
 					if (flowData.files) flowData.files.map((i) => formData.append(encodeURIComponent(i.name), i));
 				}
 
-				const jsonResp = await ky
-					.post(nodeRedUrl, {
-						headers: {
-							Authorization: 'Basic ' + btoa(`${noderedCreds.username}:${noderedCreds.password}`),
-						},
-						body: formData,
-						timeout: timeout, // Vezdexod
-					})
-					.json();
-
-				//@ts-ignore
-				sendOutput(noodlNode, 'result', jsonResp);
-				//@ts-ignore
-				sendOutput(noodlNode, 'executing', false);
-				//@ts-ignore
-				sendSignal(noodlNode, 'executed');
-
-				log.info(`Nodered ${flowEndpoint}`, jsonResp);
-				log.end(`Nodered: ${flowEndpoint}`, startTime);
+				try {
+					const jsonResp = await ky
+						.post(nodeRedUrl, {
+							headers: {
+								Authorization: 'Basic ' + btoa(`${noderedCreds.username}:${noderedCreds.password}`),
+							},
+							body: formData,
+							timeout: timeout,
+						})
+						.json();
+					sendOutput(noodlNode, 'result', jsonResp);
+					sendOutput(noodlNode, 'executing', false);
+					sendSignal(noodlNode, 'executed');
+					log.info(`nodered ${flowEndpoint}`, jsonResp);
+					log.end(`nodered: ${flowEndpoint}`, startTime);
+				} catch (e: any) {
+					log.error(`nodered error`, e);
+					R.libs.mantine?.MantineError?.('Системная ошибка!', `nodered error: ${e.message}`);
+				}
 			}
 		}
 

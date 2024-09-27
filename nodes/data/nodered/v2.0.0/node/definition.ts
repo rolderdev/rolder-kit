@@ -6,16 +6,26 @@ import { getServices, type Services } from './getServices';
 
 export type Props = BaseJsProps & {
 	flowEndpoint?: string;
-	flowData?: {
-		data: any;
-		files: File[];
-		params: any;
+	flowData: {
+		data?: any;
+		files?: File[];
+		params?: any;
 	};
 	timeout: number;
 	useServices: boolean;
 	services?: Services;
 	selectedService?: string;
 	serviceVersion?: string;
+};
+
+// Найдем дефолт. Лучше бы это определять в самом Nodered.
+const getDefaultServiceName = (p: Props) => {
+	let defaultServiceName;
+
+	for (const serviceName in p.services) {
+		if (p.services[serviceName]?.isDefault === true) defaultServiceName = serviceName;
+	}
+	return defaultServiceName as string; // Говорим TS что стопудово будет строка
 };
 
 export default {
@@ -44,42 +54,6 @@ export default {
 			type: 'boolean',
 			default: false,
 		}),
-		// getPortDef({
-		// 	name: 'selectedService',
-		// 	displayName: 'Service',
-		// 	group: 'Custom',
-		// 	customGroup: 'Services',
-		// 	type: [
-		// 		{ label: 'Upload files', value: 'uploadFiles' },
-		// 		{ label: 'Delete files by URL', value: 'deleteFilesByUrl' },
-		// 		{ label: 'Copy DB class', value: 'copyDBClass' },
-		// 	],
-		// 	default: 'uploadFiles',
-		// 	dependsOn: (p: Props) => p.useServices,
-		// }),
-		// getPortDef({
-		// 	name: 'serviceVersion',
-		// 	displayName: 'Version',
-		// 	group: 'Custom',
-		// 	customGroup: 'Services',
-		// 	type: [
-		// 		{ label: 'd2', value: 'd2' },
-		// 		{ label: 'p2', value: 'p2' },
-		// 	],
-		// 	default: 'd2',
-		// 	dependsOn: (p: Props) => p.useServices,
-		// }),
-		// getPortDef({
-		// 	name: 'serviceVersion',
-		// 	displayName: 'Version',
-		// 	group: 'Custom',
-		// 	customGroup: 'Services',
-		// 	type: [],
-		// 	dependsOn: (p: Props) => p.useServices,
-		// 	transform: (p: Props, portDef) => {
-		// 		portDef.type = await
-		// 	},
-		// }),
 		getPortDef({
 			name: 'selectedService',
 			displayName: 'Service',
@@ -129,30 +103,21 @@ export default {
 			type: '*',
 		}),
 	],
-	// getInspectInfo: (p: Props, outProps) => [
-	// 	{ type: 'text', value: `API ${p.apiVersion}` },
-	// 	{ type: 'text', value: `=== Scheme ===` },
-	// 	{ type: 'value', value: p.updateScheme },
-	// 	outProps.data && { type: 'text', value: `=== Data ===` },
-	// 	outProps.data && { type: 'value', value: outProps.data },
-	// ],
 	transform: async (p: Props, portDefs) => {
-		// Получаем от сервиса все всервисы и их версии
-		// Находим сервис дефолтный
-		// Выбираем серивис
-		// Выбираем версию для выьранного сервиса
+		console.log('nodered transform');
+		// Получаем из nodered сервисы, и держим их в props
+		// Внутри дожидаемся подключения к Kuzzle
+		if (!p?.services) p.services = await getServices();
 
-		// Дожидаемся, что получили creds
-		await initState('initialized');
+		if (p.services) {
+			// Сформируем массив с сервисами
+			const servicesType: { label: string; value: string }[] = [];
 
-		const services = await getServices();
-
-		if (services) {
-			const servicesEnumType = Object.keys(services).map((iServiceName: string) => {
-				return {
-					label: services?.[iServiceName]?.nameForlabel,
+			R.libs.just.map(p.services, (iServiceName, service) => {
+				servicesType.push({
+					label: service.nameForLabel,
 					value: iServiceName,
-				};
+				});
 			});
 
 			// Находим порт для модификации.
@@ -161,57 +126,31 @@ export default {
 			const serviceVersionPort = portDefs.inputs.find((input) => input.name === 'serviceVersion');
 			if (selectedServicePort && serviceVersionPort) {
 				// Найдем дефолт. Лучше бы это определять в самом Nodered.
-				const defaultServiceName = servicesEnumType[0].value;
+				const defaultServiceName = getDefaultServiceName(p);
 
 				// Добавим в порт список сервисов для выбора.
-				selectedServicePort.type = servicesEnumType;
-				// Установим дефолтный. Нужно учитывать, что его не будет в props пока мы не в tuntime.
+				selectedServicePort.type = servicesType;
+				// Установим дефолтный. Нужно учитывать, что его не будет в props пока мы не в runtime.
 				selectedServicePort.default = defaultServiceName;
 
 				// Добавим в порт список версий для выбора.
-				serviceVersionPort.type = services[p.selectedService || defaultServiceName].serviceVersion;
+				serviceVersionPort.type = p.services[p.selectedService || defaultServiceName].serviceVersion;
 				// Установим дефолтную версию.
-				serviceVersionPort.default = services[p.selectedService || defaultServiceName].defaultServiceVersion;
+				serviceVersionPort.default = p.services[p.selectedService || defaultServiceName].defaultServiceVersion;
 			}
+		} else {
+			log.error('Не удалось получить сервисы!');
 		}
-
-		// await new Promise((resolve) => {
-		// 	setTimeout(() => {
-
-		// 		resolve(undefined);
-		// 	}, 3000);
-		// });
-
-		// const allServices = await sdrgfsdrfvsdf;
-
-		// portDefs.inputs.push(
-		// 	getPortDef({
-		// 		name: 'selectedService',
-		// 		displayName: 'Service',
-		// 		group: 'Custom',
-		// 		customGroup: 'Services',
-		// 		type: allServices.type,
-		// 		default: 'uploadFiles',
-		// 		dependsOn: (p: Props) => p.useServices,
-		// 	})
-		// ),
-		// 	portDefs.inputs.push(
-		// 		getPortDef({
-		// 			name: 'serviceVersion',
-		// 			displayName: 'Version',
-		// 			group: 'Custom',
-		// 			customGroup: 'Services',
-		// 			type: allServices.type,
-		// 			default: allServices.default,
-		// 			dependsOn: (p: Props) => p.useServices,
-		// 		})
-		// 	);
 	},
-	validate: async () =>
-		R.params.creds?.filter((i) => i.name === 'nodered')?.[0].data ? true : 'There is no creds for Nodered at backend config.',
+	validate: async (p: Props) => {
+		// Проверяем, получили ли мы creds из Kuzzle.
+		return R.params.creds?.find((i) => i.name === 'nodered')?.data
+			? true
+			: 'В Kuzzle -> config -> creds нет логина и пароля для доступа к nodeRed!'; //There is no creds for Nodered at backend config.',
+	},
 	initialize: async (p: Props) => {
+		// Ждем, что в R появятся creds для nodered
 		await initState('initialized');
-		p.services = await getServices();
 	},
-	disableCustomProps: true,
+	disableCustomProps: false,
 } satisfies JsNodeDef;
