@@ -20,8 +20,6 @@ export const getServices = async () => {
 
 	if (!noderedCreds) return;
 
-	console.log('Инициализация завершена - getServices!', R?.params?.creds);
-
 	// Ссылка для получения сервисов
 	const servicesUrl = 'https://service-manager.services.d2.rolder.app/serviceManager_v1.1.0';
 
