@@ -12,6 +12,7 @@ import notification from './feedback/notification';
 import numberInput from './inputs/numberInput';
 // lyaout
 import stack from './layout/stack';
+import scrollArea from './layout/scrollArea';
 // miscellaneous
 import richText from './miscellaneous/richText';
 import transition from './miscellaneous/transition';
@@ -22,7 +23,7 @@ import tooltip from './overlays/tooltip';
 // typography
 import text from './typography/text';
 
-const reactPackages = [mantine, table, numberInput, stack, richText, transition, anchor, tooltip, text];
+const reactPackages = [mantine, table, numberInput, stack, scrollArea, richText, transition, anchor, tooltip, text];
 const jsPackages = [notification, tableFilter];
 
 set(

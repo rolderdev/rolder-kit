@@ -13,6 +13,13 @@ export default (item: Item, rootId: string) => {
 					else return R.items[globalItem[dbClass].id];
 				} else return undefined;
 			},
+			getBackRef: (dbClass: string) => {
+				let resultRefItem: Item | undefined;
+				R.libs.just.map(R.items, (_, refItem) => {
+					if (refItem.dbClass === dbClass && refItem[item.dbClass]) resultRefItem = refItem;
+				});
+				return resultRefItem;
+			},
 			getHistory: (count?: number) => {
 				const snapshot = R.libs.valtio.snapshot;
 				const take = R.libs.remeda.take;

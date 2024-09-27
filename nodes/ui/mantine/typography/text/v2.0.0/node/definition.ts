@@ -30,6 +30,7 @@ export default {
 			displayName: 'Value',
 			group: 'Data',
 			type: 'string',
+			multiline: true,
 			dependsOn: (p: Props) => p.type === 'string',
 		}),
 		getPortDef({

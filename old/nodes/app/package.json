@@ -12,7 +12,7 @@
 		"@packages/node": "workspace:@packages/node-v0.8.0@^",
 		"@packages/port": "workspace:@packages/port-v0.6.0@^",
 		"@packages/system-loader-animation": "workspace:@packages/system-loader-animation-v0.1.0@^",
-		"@tabler/icons-react": "^3.17.0",
+		"@tabler/icons-react": "^3.18.0",
 		"consola": "^3.2.3",
 		"dayjs": "^1.11.13",
 		"fast-deep-equal": "^3.1.3",

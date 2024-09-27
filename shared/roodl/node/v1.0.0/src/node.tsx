@@ -55,13 +55,13 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 							// Значение пришло через подключение.
 							if (this._hasInputBeenSetFromAConnection(inputName)) {
 								//console.log('from connection', nodeName, inputName, value);
+								this.props[inputName] = value;
 								// Валидириуем тип и значение в runtime, если не задеплоено.
 								if (!Noodl.deployed) {
 									validatePropType(this, inputDef, value);
 									validatePropValue(this, inputDef);
 									if (hasWarnings(this.model)) return;
 								}
-								this.props[inputName] = value;
 							} else {
 								// Значение пришло с редактора. Не отрабатывает дефолты редактора.
 								//console.log('from editor', nodeName, inputName, value, this.props.noodlNode);
