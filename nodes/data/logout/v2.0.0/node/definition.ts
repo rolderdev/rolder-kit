@@ -7,9 +7,11 @@ export type Props = BaseJsProps;
 export default {
 	hashTag: '#pre-release',
 	module: { dynamic: import('../component/logout') },
-	inputs: [getPortDef({ name: 'logout', displayName: 'Logout', group: 'Signals', type: 'signal' })],
-	initialize: async () => {
-		await initState('initialized');
+	inNode: { inputs: [getPortDef({ name: 'logout', displayName: 'Logout', group: 'Signals', type: 'signal' })] },
+	beforeComponent: {
+		initialize: async () => {
+			await initState('initialized');
+		},
 	},
 	disableCustomProps: true,
 } satisfies JsNodeDef;

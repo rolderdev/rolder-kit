@@ -3,7 +3,7 @@
 // Нужна своя структура, т.к. нужно отличать разные типы ошибок.
 //export type InputWarnings = Record<WarningType, string>; // string - сообщение об ошибке.
 export type Warnings = Map<string, WarningType>; // string - displayName инпута.
-type WarningType = 'convert' | 'type' | 'value' | 'global';
+type WarningType = 'convert' | 'type' | 'value' | 'globalBefore' | 'globalAfter';
 
 import type { GraphModelNode, NodeContext } from '../../main';
 

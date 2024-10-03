@@ -7,5 +7,5 @@ import Comp from '../component/UnstyledButton';
 
 export default {
 	module: { static: Comp },
-	outputs: [getPortDef({ name: 'clicked', displayName: 'Clicked', group: 'Signals', type: 'signal' })],
+	inNode: { outputs: [getPortDef({ name: 'clicked', displayName: 'Clicked', group: 'Signals', type: 'signal' })] },
 } satisfies ReactNodeDef;

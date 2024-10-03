@@ -8,5 +8,5 @@ import Comp from '../component/Button';
 export default {
 	hashTag: '#pre-release',
 	module: { static: Comp },
-	outputs: [getPortDef({ name: 'clicked', displayName: 'Clicked', group: 'Signals', type: 'signal' })],
+	inNode: { outputs: [getPortDef({ name: 'clicked', displayName: 'Clicked', group: 'Signals', type: 'signal' })] },
 } satisfies ReactNodeDef;

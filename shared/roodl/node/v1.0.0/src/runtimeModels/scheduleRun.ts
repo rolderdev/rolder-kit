@@ -20,10 +20,10 @@ export default async (
 			setPropDeafaults(noodlNode, nodeDef);
 
 			// Запустим функцию инициализации один раз.
-			if (nodeDef.initialize && noodlNode.firstRun)
-				await nodeDef.initialize(noodlNode.props, noodlNode, {
+			if (nodeDef.beforeComponent?.initialize && noodlNode.firstRun)
+				await nodeDef.beforeComponent?.initialize(noodlNode.props, noodlNode, {
 					inputs: getNodeInputDefs(nodeDef, versions),
-					outputs: nodeDef.outputs || [],
+					outputs: nodeDef.inNode?.outputs || [],
 				});
 
 			// Отличим JS от React по наличию reactKey у ноды.

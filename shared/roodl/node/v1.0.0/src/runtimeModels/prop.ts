@@ -4,7 +4,7 @@ import { clearWarning, sendWarning } from '../editorModels/warning';
 
 // Установка дефолтных значений для props, т.к. в  runtime дефолты с редактора не применяются.
 export const setPropDeafaults = (noodlNode: NoodlNode, nodeDef: NodeDef) => {
-	const inputDefs = nodeDef.inputs || [];
+	const inputDefs = nodeDef.inNode?.inputs || [];
 
 	for (const inputDef of inputDefs) {
 		const inputName = inputDef.name;

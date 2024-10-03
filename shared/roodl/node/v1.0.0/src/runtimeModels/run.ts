@@ -4,8 +4,8 @@ import type { ResultPortDef } from '@shared/port-v1.0.0';
 import type { JsNodeDef, NoodlNode, ReactNodeDef } from '../../main';
 
 export const runReactiveJsFunc = async (noodlNode: NoodlNode, nodeDef: JsNodeDef, inputDef: ResultPortDef) => {
-	if (nodeDef.triggerOnInputs) {
-		if (nodeDef.triggerOnInputs(noodlNode.props).includes(inputDef.name)) await runJsFunc(nodeDef, noodlNode);
+	if (nodeDef.afterNode?.triggerOnInputs) {
+		if (nodeDef.afterNode.triggerOnInputs(noodlNode.props).includes(inputDef.name)) await runJsFunc(nodeDef, noodlNode);
 		else if (noodlNode.firstRun) await runJsFunc(nodeDef, noodlNode);
 	}
 };
