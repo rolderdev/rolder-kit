@@ -1,6 +1,0 @@
-{
-	"name": "@packages/notification-v2.0.0",
-	"main": "notification.ts",
-	"types": "notification.ts",
-	"type": "module"
-}
