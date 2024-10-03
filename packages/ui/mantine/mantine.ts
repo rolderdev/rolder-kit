@@ -4,9 +4,10 @@ import { defineNode } from '@noodl/noodl-sdk';
 
 import mantine from './src/mantine';
 // buttons
-//import button from './buttons/button';
-//import unstyledButton from './buttons/unstyledButton';
+import { button, buttonLeftSection, buttonRightSection } from './buttons/button';
+import unstyledButton from './buttons/unstyledButton';
 // dataDispaly
+import icon from './dataDisplay/icon';
 import { table, tableFilter } from './dataDisplay/table';
 // feedback
 import notification from './feedback/notification';
@@ -30,9 +31,12 @@ import title from './typography/title';
 const reactPackages = [
 	mantine,
 	// buttons
-	//button,
-	//unstyledButton,
+	button,
+	buttonLeftSection,
+	buttonRightSection,
+	unstyledButton,
 	// dataDispaly
+	icon,
 	table,
 	// inputs
 	numberInput,

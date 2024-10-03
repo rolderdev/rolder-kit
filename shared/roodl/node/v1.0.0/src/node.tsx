@@ -37,7 +37,7 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 		getInspectInfo() {
 			const version = this._inputValues?.version;
 			let output;
-			const getInspectInfo = versions[version]?.getInspectInfo;
+			const getInspectInfo = versions[version]?.afterNode?.getInspectInfo;
 			if (getInspectInfo) output = getInspectInfo(this.props || {}, this.outputPropValues || {}, this as any);
 			return output;
 		},

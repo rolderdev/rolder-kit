@@ -92,26 +92,19 @@ export type Props = BaseReactProps & {
 	sortType: 'frontend' | 'backend';
 	sortedIcon: string;
 	unsortedIcon: string;
-
-	/* 
-  
-  // Enablers    
-  table2FilterEnabled: boolean;  
-  
-  // Params
-  
-    
-  // Filter
-  table2FilterType: "frontend" | "backend";*/
 };
 
 export default {
 	hashTag: '#pre-release',
 	module: { dynamic: lazy(() => import('../component/TableProvider')) },
-	inputs,
-	outputs,
-	getInspectInfo: (p: Props) => [
-		{ type: 'text', value: `=== Columns ===` },
-		{ type: 'value', value: p.columnsDefinition },
-	],
+	inNode: {
+		inputs,
+		outputs,
+	},
+	afterNode: {
+		getInspectInfo: (p: Props) => [
+			{ type: 'text', value: `=== Columns ===` },
+			{ type: 'value', value: p.columnsDefinition },
+		],
+	},
 } satisfies ReactNodeDef;

@@ -12,38 +12,41 @@ export type Props = BaseJsProps & {
 import Comp from '../component/notification';
 
 export default {
-	hashTag: '#pre-release',
 	module: { static: Comp },
-	inputs: [
-		getPortDef({ name: 'title', displayName: 'Title', group: 'Params', type: 'string' }),
-		getPortDef({
-			name: 'message',
-			displayName: 'Message',
-			group: 'Params',
-			type: 'string',
-			validate: (p: Props) => (p.message ? true : false),
-		}),
-		getPortDef({ name: 'autoClose', displayName: 'Auto close', group: 'Params', type: 'boolean', default: true }),
-		getPortDef({
-			name: 'autoCloseTimeout',
-			displayName: 'Auto close timeout',
-			group: 'Params',
-			type: 'number',
-			default: 2000,
-			dependsOn: (p: Props) => (p.autoClose ? true : false),
-		}),
-		getPortDef({
-			name: 'color',
-			displayName: 'Color',
-			group: 'Styles',
-			type: 'string',
-			default: 'blue',
-		}),
-		getPortDef({ name: 'send', displayName: 'Send', group: 'Signals', type: 'signal' }),
-	],
-	getInspectInfo: (p: Props) => [
-		{ type: 'text', value: `Title: ${p.title}` },
-		{ type: 'text', value: `Message: ${p.message}` },
-	],
+	inNode: {
+		inputs: [
+			getPortDef({ name: 'title', displayName: 'Title', group: 'Params', type: 'string' }),
+			getPortDef({
+				name: 'message',
+				displayName: 'Message',
+				group: 'Params',
+				type: 'string',
+				validate: (p: Props) => (p.message ? true : false),
+			}),
+			getPortDef({ name: 'autoClose', displayName: 'Auto close', group: 'Params', type: 'boolean', default: true }),
+			getPortDef({
+				name: 'autoCloseTimeout',
+				displayName: 'Auto close timeout',
+				group: 'Params',
+				type: 'number',
+				default: 2000,
+				dependsOn: (p: Props) => (p.autoClose ? true : false),
+			}),
+			getPortDef({
+				name: 'color',
+				displayName: 'Color',
+				group: 'Styles',
+				type: 'string',
+				default: 'blue',
+			}),
+			getPortDef({ name: 'send', displayName: 'Send', group: 'Signals', type: 'signal' }),
+		],
+	},
+	afterNode: {
+		getInspectInfo: (p: Props) => [
+			{ type: 'text', value: `Title: ${p.title}` },
+			{ type: 'text', value: `Message: ${p.message}` },
+		],
+	},
 	disableCustomProps: true,
 } satisfies JsNodeDef;

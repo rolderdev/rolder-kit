@@ -6,11 +6,11 @@ import { getCustomPropsPortDef } from './customProps';
 import { getVersionPortDef } from './version';
 import { getConvertedParameter, prepareParameters, validateParameterValues, validateType } from './parameter';
 import { hasWarnings } from './warning';
-import { validateNode } from './node';
+import { validateAfterNode, validateBeforNode } from './node';
 
 export const getNodeInputDefs = (nodeDef: NodeDef, versions: JsNodeVersions | ReactNodeVersions) => [
 	getVersionPortDef(versions),
-	...(nodeDef.inputs || []),
+	...(nodeDef.inNode?.inputs || []),
 	...(!nodeDef.disableCustomProps ? [getCustomPropsPortDef()] : []),
 ];
 
@@ -22,21 +22,24 @@ export const handleNodePorts = async (
 	const nodeDef = versions[model.parameters.version];
 
 	// Подготовим кеш деклараций портов, чтобы можно было мутировать.
-	model.portDefsCache.inputs = R.libs.just.clone([getVersionPortDef(versions), ...(nodeDef.inputs || [])]);
+	model.portDefsCache.inputs = R.libs.just.clone([getVersionPortDef(versions), ...(nodeDef.inNode?.inputs || [])]);
 	if (!versions[model.parameters.version].disableCustomProps) model.portDefsCache.inputs.push(getCustomPropsPortDef());
-	model.portDefsCache.outputs = R.libs.just.clone(nodeDef.outputs || []);
+	model.portDefsCache.outputs = R.libs.just.clone(nodeDef.inNode?.outputs || []);
+
+	validateBeforNode(model, context, versions);
+	if (hasWarnings(model, 'globalBefore')) return;
 
 	prepareParameters(model, context);
 	setNodePorts(model, context);
 	if (hasWarnings(model, 'convert') || hasWarnings(model, 'type')) return;
 	validateParameterValues(model, context, versions);
 	if (hasWarnings(model, 'value')) return;
-	if (nodeDef.transform) {
-		await nodeDef.transform(model.parametersCache, model.portDefsCache);
+	if (nodeDef.afterNode?.transformPorts) {
+		await nodeDef.afterNode?.transformPorts(model.parametersCache, model.portDefsCache);
 		setNodePorts(model, context);
 	}
 	if (hasWarnings(model, 'convert') || hasWarnings(model, 'type')) return;
-	await validateNode(model, context, versions);
+	await validateAfterNode(model, context, versions);
 };
 
 const setNodePorts = (model: GraphModelNode, context: NodeContext) => {

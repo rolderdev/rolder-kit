@@ -9,7 +9,7 @@ export { jsNode, reactNode } from './src/node';
 export type BaseJsProps = BaseProps;
 export type JsNodeVersions = { [key: string]: JsNodeDef };
 export type JsRoodlNode = RoodlNode & { color?: NodeColor };
-export type JsNodeDef = NodeDef & { triggerOnInputs?(p: { [x: string]: any }): string[] };
+export type JsNodeDef = NodeDef & { afterNode?: { triggerOnInputs?(p: { [x: string]: any }): string[] } };
 export type JsComponent = { reactive?: (p: unknown, noodlNode: NoodlNode) => void | Promise<void> } & {
 	[signal: string]: (p: unknown, noodlNode: NoodlNode) => void | Promise<void>;
 };
@@ -38,16 +38,27 @@ type HashTag = '#expreimental' | '#pre-release' | '#deprecated';
 
 export type ResultPortDefs = { inputs: ResultPortDef[]; outputs: ResultPortDef[] };
 
-// Декларация
+// Декларация.
 export type NodeDef = {
-	module: { static?: any; dynamic?: any };
 	hashTag?: HashTag;
-	inputs?: ResultPortDef[];
-	outputs?: ResultPortDef[];
-	validate?(p: Props, model: GraphModelNode): Promise<boolean | string>;
-	initialize?(p: Props, noodlNode: NoodlNode, portDefs: ResultPortDefs): Promise<void>;
-	getInspectInfo?(p: Props, outProps: { [x: string]: any }, noodlNode: NoodlNode): InspectInfo | InspectInfo[];
-	transform?(p: Props, portDefs: ResultPortDefs): Promise<void>;
+	module: { static?: any; dynamic?: any };
+	// Процесс.
+	beforeNode?: {
+		validate?(model: GraphModelNode): Promise<boolean | string>;
+	};
+	inNode?: {
+		inputs?: ResultPortDef[];
+		outputs?: ResultPortDef[];
+	};
+	afterNode?: {
+		transformPorts?(p: Props, portDefs: ResultPortDefs): Promise<void>;
+		validate?(p: Props, model: GraphModelNode): Promise<boolean | string>;
+		getInspectInfo?(p: Props, outProps: { [x: string]: any }, noodlNode: NoodlNode): InspectInfo | InspectInfo[];
+	};
+	beforeComponent?: {
+		initialize?(p: Props, noodlNode: NoodlNode, portDefs: ResultPortDefs): Promise<void>;
+	};
+	// Опции.
 	disableCustomProps?: boolean;
 };
 
