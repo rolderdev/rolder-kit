@@ -6,6 +6,7 @@ export type Props = BaseReactProps & {};
 import Comp from '../component/Stack';
 
 export default {
+	hashTag: '#pre-release',
 	module: { static: Comp },
 	inputs: [
 		getPortDef({ name: 'w', displayName: 'Width', group: 'Dimensions', type: 'string' }),

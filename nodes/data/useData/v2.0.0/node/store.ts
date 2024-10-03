@@ -10,14 +10,14 @@ export default (p: Props) =>
 		fetchScheme: p.fetchScheme,
 		controlled: p.controlled,
 		subscribe: p.subscribe,
-		schemes: new Map(),
+		schemesData: [],
 		subscribes: new Map(),
 	} satisfies Store);
 
 export type Store = BaseProps & {
 	rootId: string;
 	inited: boolean;
-	schemes: Map<string, SchemeData>;
+	schemesData: SchemeData[];
 	subscribes: Subscribes;
 	socket?: WebSocket;
 };
@@ -27,15 +27,16 @@ type Subscribes = Map<string, { channel: string; notify: (notif: Notification) =
 export type SchemeData = {
 	scheme: FetchScheme;
 	schemeHash: string;
+	path: string;
 	level: number;
-	parentId?: string;
-	parentSchemeHash?: string;
+	parentId: string;
 	itemIds: string[];
 	fetched: number;
 	total: number;
 	aggregations?: { [x: string]: any };
 	channel?: string;
 };
+
 export type FetchScheme = {
 	dbName?: string;
 	dbClass: SchemeDbClass;

@@ -3,7 +3,8 @@
 		"shared": "workspace:*",
 		"@shared/init-state-v0.1.0": "workspace:*",
 		"@shared/port-v1.0.0": "workspace:*",
-		"@shared/port-send-v1.0.0": "workspace:*"
+		"@shared/port-send-v1.0.0": "workspace:*",
+		"@shared/item-v0.1.0": "workspace:*"
 	},
 	"devDependencies": {
 		"@shared/types-v0.1.0": "workspace:*",

@@ -5,7 +5,7 @@
 	"type": "module",
 	"dependencies": {
 		"@cloudflare/speedtest": "1.3.0",
-		"@mantine/hooks": "^7.13.0",
+		"@mantine/hooks": "^7.13.1",
 		"@packages/deep-merge": "workspace:@packages/deep-merge-v0.1.0@^",
 		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@^",
 		"@packages/system-loader-animation": "workspace:@packages/system-loader-animation-v0.1.0@^",
@@ -14,6 +14,6 @@
 		"@tanstack/react-query-persist-client": "4.36.1",
 		"idb-keyval": "6.2.1",
 		"is-online": "10.0.0",
-		"kuzzle-sdk": "^7.12.0"
+		"kuzzle-sdk": "^7.13.0"
 	}
 }

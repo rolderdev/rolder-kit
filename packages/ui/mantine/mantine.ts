@@ -3,15 +3,18 @@ import { set } from 'shared/src/libs/just';
 import { defineNode } from '@noodl/noodl-sdk';
 
 import mantine from './src/mantine';
+// buttons
+//import button from './buttons/button';
+//import unstyledButton from './buttons/unstyledButton';
 // dataDispaly
-import table from './dataDisplay/table';
-import tableFilter from './dataDisplay/modules/tableFilter';
+import { table, tableFilter } from './dataDisplay/table';
 // feedback
 import notification from './feedback/notification';
 // inputs
 import numberInput from './inputs/numberInput';
-// lyaout
+// layout
 import stack from './layout/stack';
+import scrollArea from './layout/scrollArea';
 // miscellaneous
 import richText from './miscellaneous/richText';
 import transition from './miscellaneous/transition';
@@ -19,10 +22,37 @@ import transition from './miscellaneous/transition';
 import anchor from './navigation/anchor';
 // overlays
 import tooltip from './overlays/tooltip';
+import { popover, popoverDropdown, popoverTarget } from './overlays/popover';
 // typography
 import text from './typography/text';
+import title from './typography/title';
 
-const reactPackages = [mantine, table, numberInput, stack, richText, transition, anchor, tooltip, text];
+const reactPackages = [
+	mantine,
+	// buttons
+	//button,
+	//unstyledButton,
+	// dataDispaly
+	table,
+	// inputs
+	numberInput,
+	// layout
+	stack,
+	scrollArea,
+	// miscellaneous
+	richText,
+	transition,
+	// navigation
+	anchor,
+	// overlays
+	tooltip,
+	popover,
+	popoverDropdown,
+	popoverTarget,
+	// typography
+	text,
+	title,
+];
 const jsPackages = [notification, tableFilter];
 
 set(

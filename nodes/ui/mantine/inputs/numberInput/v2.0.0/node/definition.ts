@@ -5,6 +5,7 @@ import { lazy } from 'react';
 export type Props = BaseReactProps & { defaultValue?: string | number };
 
 export default {
+	hashTag: '#expreimental',
 	module: { dynamic: lazy(() => import('../component/NumberInput')) },
 	inputs: [
 		getPortDef({ name: 'label', displayName: 'Label', group: 'Params', type: 'string' }),

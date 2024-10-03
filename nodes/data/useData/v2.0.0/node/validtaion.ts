@@ -82,7 +82,8 @@ const getTypedFetchScheme = () => {
 							return isValid;
 						}, '"Sorts" must be array of objects with following format <code>{ [path.to.value]: "asc" | "desc" }</code>')
 					),
-					hierarchyFunc: optional(string('"hierarchyFunc" must be string to transfer over net.')),
+					childrenFunc: optional(string('"childrenFunc" must be string to transfer over net.')),
+					recursionFunc: optional(string('"recursionFunc" must be string to transfer over net.')),
 					aggregations: pipe(
 						unknown(),
 						check((filters) => typeOf(filters) === 'object' || !filters, '"aggregations" must be object.')
@@ -113,15 +114,26 @@ const getTypedFetchScheme = () => {
 				}, '"filtersFunc" eval error. Details at the console.'),
 				check((scheme) => {
 					let isValid = true;
-					if (scheme.hierarchyFunc)
+					if (scheme.childrenFunc)
 						try {
-							eval(scheme.hierarchyFunc);
+							eval(scheme.childrenFunc);
 						} catch (e: any) {
 							log.error(e);
 							isValid = false;
 						}
 					return isValid;
-				}, '"hierarchyFunc" eval error. Details at the console.')
+				}, '"childrenFunc" eval error. Details at the console.'),
+				check((scheme) => {
+					let isValid = true;
+					if (scheme.recursionFunc)
+						try {
+							eval(scheme.recursionFunc);
+						} catch (e: any) {
+							log.error(e);
+							isValid = false;
+						}
+					return isValid;
+				}, '"recursionFunc" eval error. Details at the console.')
 			)
 		),
 		check(

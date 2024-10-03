@@ -55,15 +55,14 @@ export default class Node {
 	//// Внутренние методы.
 	static createHierarchy(p: Props, flatNodes: Node[]) {
 		const rootId = p.store.rootId;
+		const rootSchemesData = p.store.schemesData.filter((i) => i.path === 'root');
 
-		const rootChildIds = Array.from(p.store.schemes.values())
-			.filter((i) => !i.parentSchemeHash)
-			.flatMap((i) => i.itemIds);
+		const rootChildIds = rootSchemesData.flatMap((i) => i.itemIds);
 
 		const aggregations: Aggregations = {};
-		p.store.schemes.forEach((i) => {
+		rootSchemesData.forEach((i) => {
 			const dbClassName = getDbClassName(i.scheme.dbClass);
-			if (!i.parentSchemeHash && i.aggregations) aggregations[dbClassName] = i.aggregations;
+			if (i.aggregations) aggregations[dbClassName] = i.aggregations;
 		});
 
 		flatNodes.push(
@@ -78,42 +77,45 @@ export default class Node {
 			)
 		);
 
-		const rootSchemesData = Array.from(p.store.schemes.values()).filter((i) => !i.parentSchemeHash);
 		this.createChildren(p, rootSchemesData, rootId, 0, flatNodes);
 	}
 
 	static createChildren(p: Props, schemesData: SchemeData[], parentPath: string, level: number, flatNodes: Node[]) {
-		schemesData.forEach((schemeData) => {
-			schemeData.itemIds.forEach((itemId) => {
-				const thisNodeChildIds = Array.from(p.store.schemes.values())
-					.filter((i) => i.parentId === itemId && i.parentSchemeHash === schemeData.schemeHash)
-					.flatMap((i) => i.itemIds);
+		schemesData.forEach((thisNodeSchemeData) => {
+			const thisNodeIds = thisNodeSchemeData.itemIds;
+
+			thisNodeIds.forEach((thisNodeItemId) => {
+				let thisNodeChildIds: string[] = [];
+				p.store.schemesData.forEach((childSchemeData) => {
+					if (childSchemeData.path === `${thisNodeItemId}.${thisNodeSchemeData.path}`) {
+						thisNodeChildIds = thisNodeChildIds.concat(childSchemeData.itemIds);
+					}
+				});
 
 				const aggregations: Aggregations = {};
-				p.store.schemes.forEach((i) => {
-					const dbClassName = getDbClassName(i.scheme.dbClass);
-					if (i.parentSchemeHash === schemeData.schemeHash && i.aggregations) aggregations[dbClassName] = i.aggregations;
+				p.store.schemesData.forEach((childSchemeData) => {
+					const dbClassName = getDbClassName(childSchemeData.scheme.dbClass);
+					if (childSchemeData.path === `${thisNodeItemId}.${thisNodeSchemeData.path}` && childSchemeData.aggregations)
+						aggregations[dbClassName] = childSchemeData.aggregations;
 				});
 
 				flatNodes.push(
 					new Node(
 						p.store.rootId,
-						getDbClassName(schemeData.scheme.dbClass),
-						`${itemId}.${parentPath}`,
+						getDbClassName(thisNodeSchemeData.scheme.dbClass),
+						`${thisNodeItemId}.${parentPath}`,
 						level,
 						thisNodeChildIds,
-						thisNodeChildIds.map((childId) => `${childId}.${itemId}.${parentPath}`),
+						thisNodeChildIds.map((childId) => `${childId}.${thisNodeItemId}.${parentPath}`),
 						aggregations,
-						itemId,
-						schemeData.parentId,
+						thisNodeItemId,
+						thisNodeSchemeData.parentId,
 						parentPath
 					)
 				);
 
-				const childSchemesData = Array.from(p.store.schemes.values()).filter(
-					(i) => i.parentId === itemId && i.parentSchemeHash === schemeData.schemeHash
-				);
-				this.createChildren(p, childSchemesData, `${itemId}.${parentPath}`, level + 1, flatNodes);
+				const childSchemesData = p.store.schemesData.filter((i) => i.path === `${thisNodeItemId}.${thisNodeSchemeData.path}`);
+				this.createChildren(p, childSchemesData, `${thisNodeItemId}.${parentPath}`, level + 1, flatNodes);
 			});
 		});
 	}

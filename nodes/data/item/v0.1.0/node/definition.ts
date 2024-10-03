@@ -66,7 +66,7 @@ export default {
 					{ type: 'text', value: `Subscribed: ${sub.subscribed}` },
 					{ type: 'text', value: `Source: "${p.source}"` },
 				]);
-			if (sub?.metaData)
+			if (sub?.metaData?.nodePath)
 				info = info.concat([
 					{ type: 'text', value: `Level: ${sub.metaData.level}` },
 					{ type: 'text', value: `Node path: "${sub.metaData.nodePath}"` },
@@ -90,7 +90,7 @@ export default {
 		// Отпишемся, когда удален.
 		noodlNode._onNodeDeleted = () => unsubscribe(p);
 	},
-	transform: (p: Props, portDefs) => {
+	transform: async (p: Props, portDefs) => {
 		portDefs.outputs = portDefs.outputs.filter((i: any) => i.group !== 'Fields') || [];
 
 		if (p.fields)

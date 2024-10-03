@@ -46,56 +46,54 @@ export const validatePropType = (noodlNode: NoodlNode, inputDef: ResultPortDef, 
 		);
 	};
 
-	if (value !== undefined) {
+	if (value !== undefined && value !== null) {
 		const defType = inputDef.type;
 		const valueType = R.libs.just.typeOf(value);
 
-		// eval порты в runtime передаются уже готовыми, конвертация не нужна, нужно лишь убудеиться в их корректности.
-		if (value !== undefined) {
-			// Все кроме enum.
-			if (typeof defType === 'string') {
-				// Исключим, что нет смысла проверять.
-				//В отличии от валидации параметра, здесь нужно проверить component, т.к. можно подать его через подключение.
-				if (['*', 'proplist', 'signal'].includes(defType)) return;
+		// Все кроме enum.
+		if (typeof defType === 'string') {
+			// Исключим, что нет смысла проверять.
+			//В отличии от валидации параметра, здесь нужно проверить component, т.к. можно подать его через подключение.
+			if (['*', 'proplist', 'signal'].includes(defType)) return;
 
-				// Для funcEval нужно заменить тип в сообщении, чтобы слово eval не смущало разработчика.
-				if (defType === 'funcEval') {
-					if (valueType !== 'function') sendTypeWarning('function', valueType);
-					else clearWarning(noodlNode.model, noodlNode.context, 'type', inputDef.displayName);
-					return;
-				}
-
-				// Для objectEval не стандартное сообщение.
-				if (defType === 'objectEval') {
-					if (valueType !== 'object')
-						sendWarning(
-							noodlNode.model,
-							noodlNode.context,
-							'type',
-							inputDef.displayName,
-							`Input "${inputDef.displayName}" type error:<br/>Must be function with "object" return type, got "${valueType}" return type.`
-						);
-					else clearWarning(noodlNode.model, noodlNode.context, 'type', inputDef.displayName);
-					return;
-				}
-
-				// component подается обычной строкой.
-				if (defType === 'component') {
-					if (valueType !== 'string') sendTypeWarning('string', valueType);
-					else clearWarning(noodlNode.model, noodlNode.context, 'type', inputDef.displayName);
-					return;
-				}
-
-				// Здесь все литералы, кроме component.
-				if (defType !== valueType) sendTypeWarning(defType, valueType);
+			// eval порты в runtime передаются уже готовыми, конвертация не нужна, нужно лишь убудеиться в их корректности.
+			// Для funcEval нужно заменить тип в сообщении, чтобы слово eval не смущало разработчика.
+			if (defType === 'funcEval') {
+				if ((valueType as any) !== 'function') sendTypeWarning('function', valueType);
 				else clearWarning(noodlNode.model, noodlNode.context, 'type', inputDef.displayName);
+				return;
 			}
 
-			// enum. Здесь жуе выбранный из enum value, который должен быть текстом.
-			if (Array.isArray(defType)) {
-				if (valueType !== 'string') sendTypeWarning('string', valueType);
+			// Для objectEval не стандартное сообщение.
+			if (defType === 'objectEval') {
+				if (valueType !== 'object')
+					sendWarning(
+						noodlNode.model,
+						noodlNode.context,
+						'type',
+						inputDef.displayName,
+						`Input "${inputDef.displayName}" type error:<br/>Must be function with "object" return type, got "${valueType}" return type.`
+					);
 				else clearWarning(noodlNode.model, noodlNode.context, 'type', inputDef.displayName);
+				return;
 			}
+
+			// component подается обычной строкой.
+			if (defType === 'component') {
+				if ((valueType as any) !== 'string') sendTypeWarning('string', valueType);
+				else clearWarning(noodlNode.model, noodlNode.context, 'type', inputDef.displayName);
+				return;
+			}
+
+			// Здесь все литералы, кроме component.
+			if (defType !== valueType) sendTypeWarning(defType, valueType);
+			else clearWarning(noodlNode.model, noodlNode.context, 'type', inputDef.displayName);
+		}
+
+		// enum. Здесь жуе выбранный из enum value, который должен быть текстом.
+		if (Array.isArray(defType)) {
+			if ((valueType as any) !== 'string') sendTypeWarning('string', valueType);
+			else clearWarning(noodlNode.model, noodlNode.context, 'type', inputDef.displayName);
 		}
 	}
 };

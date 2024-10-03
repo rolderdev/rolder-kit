@@ -16,20 +16,20 @@ export default (p: Props, noodlNode: NoodlNode) => {
 	const data: { [dbClass: string]: SchemeData & { items: Item[] } } = {};
 
 	// В data выдаем только родительские схемы.
-	p.store.schemes.forEach((schemeData) => {
+	p.store.schemesData.forEach((schemeData) => {
 		const dbClassName = getDbClassName(schemeData.scheme.dbClass);
 
-		if (!schemeData.parentId) {
+		if (schemeData.path === 'root') {
 			data[dbClassName] = {
 				...schemeData,
-				items: schemeData.itemIds.map((id) => R.items[id]).filter((i) => i !== undefined),
+				items: schemeData.itemIds.map((id) => R.items[id]).filter((i) => !!i),
 			};
 
 			if (p.outputDbClasses?.includes(dbClassName)) {
 				sendOutput(
 					noodlNode,
 					`${dbClassName}Items`,
-					schemeData.itemIds.map((id) => R.items[id]).filter((i) => i !== undefined)
+					schemeData.itemIds.map((id) => R.items[id]).filter((i) => !!i)
 				);
 				sendOutput(noodlNode, `${dbClassName}Fetched`, schemeData.fetched);
 				sendOutput(noodlNode, `${dbClassName}Total`, schemeData.total);
@@ -41,7 +41,7 @@ export default (p: Props, noodlNode: NoodlNode) => {
 	sendOutput(noodlNode, 'data', data);
 	sendOutput(noodlNode, 'rootId', p.store.rootId);
 	sendOutput(noodlNode, 'rootNode', R.nodes[p.store.rootId]);
-	sendOutput(noodlNode, 'schemes', Array.from(p.store.schemes.values()));
+	sendOutput(noodlNode, 'schemesData', p.store.schemesData);
 	sendOutput(noodlNode, 'fetching', false);
 	sendSignal(noodlNode, 'fetched');
 };

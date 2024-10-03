@@ -1,8 +1,0 @@
-{
-	"name": "@nodes/tooltip",
-	"main": "tooltipNode.ts",
-	"types": "tooltipNode.ts",
-	"dependencies": {
-		"@packages/tooltip-v0.1.0": "workspace:*"
-	}
-}

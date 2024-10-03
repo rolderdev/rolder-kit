@@ -1,6 +1,8 @@
 import type { Item } from '@shared/types-v0.1.0';
 import type { HistoryItem } from './fetch';
 
+type RefItem = Item & { [dbClass: string]: { id: string } };
+
 export default (item: Item, rootId: string) => {
 	const roots: string[] = [...(item.roots || []), rootId];
 
@@ -12,6 +14,13 @@ export default (item: Item, rootId: string) => {
 					if (Array.isArray(globalItem[dbClass])) return globalItem[dbClass].map((i) => R.items[i.id]).filter((i) => !!i);
 					else return R.items[globalItem[dbClass].id];
 				} else return undefined;
+			},
+			getBackRef: (dbClass: string) => {
+				let resultRefItem: Item | undefined;
+				R.libs.just.map(R.items as any, (_, refItem: RefItem) => {
+					if (refItem.dbClass === dbClass && refItem[item.dbClass]?.id === item.id) resultRefItem = refItem;
+				});
+				return resultRefItem;
 			},
 			getHistory: (count?: number) => {
 				const snapshot = R.libs.valtio.snapshot;

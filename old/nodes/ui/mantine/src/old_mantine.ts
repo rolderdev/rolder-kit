@@ -105,7 +105,6 @@ import carouselNode from '@nodes/carousel';
 import modalNode from '@nodes/modal';
 import drawerNode from '@nodes/drawer';
 // overlays
-import tooltipNode from './overlays/tooltip/tooltipNode';
 //// hoverCard
 import hoverCardNode from './overlays/hoverCard/hoverCardNode';
 import hoverCardTargetNode from './overlays/hoverCard/modules/hoverCardTarget/hoverCardTargetNode';
@@ -188,7 +187,6 @@ Noodl.defineModule({
 		modalNode,
 		drawerNode,
 		// overlays
-		tooltipNode,
 		//// hoverCard
 		hoverCardNode,
 		hoverCardTargetNode,

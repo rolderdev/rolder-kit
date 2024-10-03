@@ -1,5 +1,0 @@
-{
-	"name": "@packages/tooltip-v0.1.0",
-	"main": "tooltip.tsx",
-	"types": "tooltip.tsx"
-}
