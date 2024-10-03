@@ -7,13 +7,13 @@ import type { SchemeData } from '../node/store';
 import type { Props } from '../node/definition';
 import type { NoodlNode } from '@shared/node-v1.0.0';
 import { handleSubscribe } from './handleSubscribe';
-import getIem from './getIem';
 import { getDbClassName } from '@shared/db-class';
+import setItem from './setItem';
 
 export type BackendData = {
-	items: { [id: string]: Item };
+	items: { [itemId: string]: Item };
 	itemsHistory: ItemsHistory;
-	schemes: { [schemeHash: string]: SchemeData };
+	fetchResults: SchemeData[];
 	error?: { message: string; dbClass?: string; metaData: any };
 };
 
@@ -37,7 +37,7 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 		return;
 	}
 
-	const { has, map } = R.libs.just;
+	const { map } = R.libs.just;
 	const fetchScheme = p.store.fetchScheme;
 
 	if (!fetchScheme) return;
@@ -74,21 +74,15 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 
 	// Обновим хранилище схем для иерархи и серверных подписок.
 	// Каждая схема имеет свой список itemIds. В нем не могут совпадать id, но могут глобально.
-	map(data.schemes, (schemeHash, schemeData) => p.store.schemes.set(schemeHash, schemeData));
-	p.store.schemes.forEach((_, schemeHash) => !has(data.schemes, schemeHash) && p.store.schemes.delete(schemeHash));
+	p.store.schemesData = data.fetchResults;
 
 	// Запустим подписку на схемы.
 	if (p.subscribe) handleSubscribe(p, noodlNode);
 
 	// Обновим items.
-	map(data.items, (itemId, item) => {
-		// Скроем методы и встроенные параметры.
-		item = getIem(item, p.store.rootId);
-
+	map(data.items, (_, item) => {
 		// Здесь безопасно класть в прокси item с бекенда как есть, без клонирования, т.к. data.items никогда не мутируется.
-		const proxyItem = R.items[itemId];
-		if (!proxyItem) R.items[itemId] = item;
-		else R.libs.lodash.merge(proxyItem, item);
+		setItem(item, p.store.rootId);
 	});
 
 	// Обновим историю items.

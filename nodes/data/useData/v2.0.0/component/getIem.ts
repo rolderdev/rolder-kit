@@ -1,6 +1,8 @@
 import type { Item } from '@shared/types-v0.1.0';
 import type { HistoryItem } from './fetch';
 
+type RefItem = Item & { [dbClass: string]: { id: string } };
+
 export default (item: Item, rootId: string) => {
 	const roots: string[] = [...(item.roots || []), rootId];
 
@@ -15,8 +17,8 @@ export default (item: Item, rootId: string) => {
 			},
 			getBackRef: (dbClass: string) => {
 				let resultRefItem: Item | undefined;
-				R.libs.just.map(R.items, (_, refItem) => {
-					if (refItem.dbClass === dbClass && refItem[item.dbClass]) resultRefItem = refItem;
+				R.libs.just.map(R.items as any, (_, refItem: RefItem) => {
+					if (refItem.dbClass === dbClass && refItem[item.dbClass]?.id === item.id) resultRefItem = refItem;
 				});
 				return resultRefItem;
 			},

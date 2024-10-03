@@ -7,7 +7,7 @@
 		"@shared/get-value-v0.8.0": "workspace:*",
 		"@shared/is-empty-v0.1.0": "workspace:*",
 		"@shared/natural-sort-v0.1.0": "workspace:*",
-		"@tabler/icons-react": "^3.18.0",
+		"@tabler/icons-react": "^3.19.0",
 		"consola": "^3.2.3",
 		"dayjs": "^1.11.13",
 		"derive-valtio": "^0.2.0",
@@ -37,7 +37,7 @@
 		"numbro": "^2.5.0",
 		"omgopass": "^3.2.1",
 		"remeda": "^2.14.0",
-		"valibot": "^0.41.0",
+		"valibot": "1.0.0-beta.0",
 		"valtio": "^2.0.0"
 	},
 	"devDependencies": {

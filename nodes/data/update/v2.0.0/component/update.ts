@@ -2,6 +2,7 @@ import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import type { Props } from '../node/definition';
 import kUpdate, { type BackendData } from './kUpdate';
 import type { JsComponent } from '@shared/node-v1.0.0';
+import { merge } from '@shared/item-v0.1.0';
 
 export default {
 	update: async (p: Props, noodlNode) => {
@@ -21,7 +22,7 @@ export default {
 
 			// Обновим оптимистично.
 			if (p.optimistic) {
-				const { merge, unset } = R.libs.lodash;
+				const { unset } = R.libs.lodash;
 				const { omit, clone } = R.libs.just;
 
 				let scopeUpdate: { [rootId: string]: Record<string, 'in' | 'out'> } = {};
@@ -31,11 +32,11 @@ export default {
 						const clonedItem = clone(item);
 						const proxyItem = R.items[clonedItem.id];
 						if (proxyItem) {
-							// lodash.merge - мутирует прокси, что нам и нужно, т.к. заменять прокси нельзя, потеряем точечную реактивность.
+							// merge - мутирует прокси, что нам и нужно, т.к. заменять прокси нельзя, потеряем точечную реактивность.
 							// Нам не нужен history в item.
-							merge(proxyItem, omit(clonedItem, ['history']));
+							merge(proxyItem, omit(clonedItem, ['history']), true); // Пропустим удаление, т.к. в item схемы только новые данные.
 							// Удалим ключи. Это работает и для конструкции - someArray[0].someField
-							if (scheme.deleteFields?.length) for (const deleteField of scheme.deleteFields) unset(proxyItem, deleteField);
+							if (item.deleteFields?.length) item.deleteFields.map((i) => unset(proxyItem, i));
 							// Отправим в useData все items всех схем, если в них указан scope.
 							if (scheme.scope) {
 								proxyItem.roots.forEach((rootId) => R.libs.just.set(scopeUpdate, [rootId, clonedItem.id], scheme.scope));

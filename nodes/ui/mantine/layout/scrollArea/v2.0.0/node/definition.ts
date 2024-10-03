@@ -6,6 +6,7 @@ export type Props = BaseReactProps & { autosize: boolean; toScrollPosition?: num
 import Comp from '../component/ScrollArea';
 
 export default {
+	hashTag: '#expreimental',
 	module: { static: Comp },
 	inputs: [
 		getPortDef({ name: 'autosize', displayName: 'Autosize', group: 'Dimensions', type: 'boolean', default: false }),

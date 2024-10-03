@@ -2,6 +2,8 @@
 	"name": "mantine",
 	"dependencies": {
 		"@nodes/mantine-v2.0.0": "workspace:*",
+		"@nodes/button-v2.0.0": "workspace:*",
+		"@nodes/unstyled-button-v2.0.0": "workspace:*",
 		"@nodes/table-v2.0.0": "workspace:*",
 		"@nodes/table-filter-v0.1.0": "workspace:*",
 		"@nodes/notification-v2.0.0": "workspace:*",
@@ -11,7 +13,11 @@
 		"@nodes/rich-text-v0.1.0": "workspace:*",
 		"@nodes/transition-v0.1.0": "workspace:*",
 		"@nodes/anchor-v2.0.0": "workspace:*",
+		"@nodes/popover-v2.0.0": "workspace:*",
+		"@nodes/popover-dropdown-v2.0.0": "workspace:*",
+		"@nodes/popover-target-v2.0.0": "workspace:*",
 		"@nodes/tooltip-v0.1.0": "workspace:*",
-		"@nodes/text-v2.0.0": "workspace:*"
+		"@nodes/text-v2.0.0": "workspace:*",
+		"@nodes/title-v2.0.0": "workspace:*"
 	}
 }

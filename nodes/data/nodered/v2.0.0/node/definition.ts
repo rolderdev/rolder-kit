@@ -104,7 +104,6 @@ export default {
 		}),
 	],
 	transform: async (p: Props, portDefs) => {
-		console.log('nodered transform');
 		// Получаем из nodered сервисы, и держим их в props
 		// Внутри дожидаемся подключения к Kuzzle
 		if (!p?.services) p.services = await getServices();

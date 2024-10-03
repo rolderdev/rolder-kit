@@ -26,7 +26,7 @@ export const handleNodePorts = async (
 	if (!versions[model.parameters.version].disableCustomProps) model.portDefsCache.inputs.push(getCustomPropsPortDef());
 	model.portDefsCache.outputs = R.libs.just.clone(nodeDef.outputs || []);
 
-	prepareParameters(model, context, versions);
+	prepareParameters(model, context);
 	setNodePorts(model, context);
 	if (hasWarnings(model, 'convert') || hasWarnings(model, 'type')) return;
 	validateParameterValues(model, context, versions);
@@ -57,7 +57,7 @@ const setNodePorts = (model: GraphModelNode, context: NodeContext) => {
 				if (!inputDef.dependsOn(model.parametersCache)) {
 					delete model.parametersCache[inputDef.name];
 					// Тригернем для registerInputIfNeeded, но установим состояние в stop, чтобы parameterUpdated не зациклился.
-					// Значение меняется с чего то на undefined, это триенрит registerInputIfNeeded.
+					// Значение меняется с чего то на undefined, это тригерит registerInputIfNeeded.
 					model.setParameter(inputDef.name, undefined, 'stop');
 					filtered = true;
 					// Нужно пропустить порты с подключений, иначе при смене параметров в редакторе они стираются.

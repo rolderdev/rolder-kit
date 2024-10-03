@@ -8,12 +8,12 @@ import node from './src/node';
 import create from './src/create';
 import update from './src/update';
 import deleteN from './src/delete';
-import search from './src/search';
+//import search from './src/search';
 import useData from './src/useData';
 import logout from './src/logout';
 import nodered from './src/nodered';
 
-const jsPackages = [item, node, create, update, deleteN, search, useData, logout, nodered];
+const jsPackages = [item, node, create, update, deleteN, useData, logout, nodered];
 
 set(
 	window,

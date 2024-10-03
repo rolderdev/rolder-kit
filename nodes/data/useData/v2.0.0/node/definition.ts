@@ -94,12 +94,12 @@ export default {
 		getPortDef({ name: 'data', displayName: 'Data', group: 'Data', type: 'object' }),
 		getPortDef({ name: 'rootId', displayName: 'Root node id', group: 'Data', type: 'string' }),
 		getPortDef({ name: 'rootNode', displayName: 'Root node', group: 'Data', type: 'object' }),
-		getPortDef({ name: 'schemes', displayName: 'Schemes', group: 'Data', type: 'array' }),
+		getPortDef({ name: 'schemesData', displayName: 'Schemes data', group: 'Data', type: 'array' }),
 		getPortDef({ name: 'singleSelectionChanged', displayName: 'Single selection changed', group: 'Signals', type: 'signal' }),
 		getPortDef({ name: 'multiSelectionChanged', displayName: 'Multi selection changed', group: 'Signals', type: 'signal' }),
 		getPortDef({ name: 'expansionChanged', displayName: 'Expansion changed', group: 'Signals', type: 'signal' }),
 	],
-	transform: (p: Props, portDefs) => {
+	transform: async (p: Props, portDefs) => {
 		// Пересоздание outputDbClasses
 		const dbClasses = p.outputDbClasses;
 		portDefs.outputs = portDefs.outputs.filter((i) => !i.group?.includes('Data:'));

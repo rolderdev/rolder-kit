@@ -2,7 +2,7 @@ import type { ResultPortDef } from '@shared/port-v1.0.0';
 import type { GraphModelNode, JsNodeVersions, NodeContext, ReactNodeVersions } from '../../main';
 import { clearWarning, hasWarnings, sendWarning } from './warning';
 
-export const prepareParameters = (model: GraphModelNode, context: NodeContext, versions: JsNodeVersions | ReactNodeVersions) => {
+export const prepareParameters = (model: GraphModelNode, context: NodeContext) => {
 	const inputDefs = model.portDefsCache.inputs;
 	// Простые инпуты, не требующие конвертации.
 	const literalInputDefs = inputDefs.filter((i) =>
@@ -62,49 +62,47 @@ export const validateType = (model: GraphModelNode, context: NodeContext, inputD
 
 	const value: unknown = model.parametersCache[inputDef.name];
 
+	// eval порты могут содержать закомментированные примеры, из-за чего convertProp получает value с данными и выдает undefined.
+	// Если не убрать эти undefined, сравнение по типу будет не корректным.
 	if (value !== undefined) {
 		const defType = inputDef.type;
 		const valueType = R.libs.just.typeOf(value);
 
-		// eval порты могут содержать закомментированные примеры, из-за чего convertProp получает value с данными и выдает undefined.
-		// Если не убрать эти undefined, сравнение по типу будет не корректным.
-		if (value !== undefined) {
-			// Все кроме enum.
-			if (typeof defType === 'string') {
-				// Исключим, что нет смысла проверять.
-				if (['*', 'component', 'proplist', 'signal'].includes(defType)) return;
+		// Все кроме enum.
+		if (typeof defType === 'string') {
+			// Исключим, что нет смысла проверять.
+			if (['*', 'component', 'proplist', 'signal'].includes(defType)) return;
 
-				// Для funcEval нужно заменить тип в сообщении, чтобы слово eval не смущало разработчика.
-				if (defType === 'funcEval') {
-					if (valueType !== 'function') sendTypeWarning('function', valueType);
-					else clearWarning(model, context, 'type', inputDef.displayName);
-					return;
-				}
-
-				// Для objectEval не стандартное сообщение.
-				if (defType === 'objectEval') {
-					if (valueType !== 'object')
-						sendWarning(
-							model,
-							context,
-							'type',
-							inputDef.displayName,
-							`Input "${inputDef.displayName}" type error:<br/>Must be function with "object" return type, got "${valueType}" return type.`
-						);
-					else clearWarning(model, context, 'type', inputDef.displayName);
-					return;
-				}
-
-				// Здесь все литералы.
-				if (defType !== valueType) sendTypeWarning(defType, valueType);
+			// Для funcEval нужно заменить тип в сообщении, чтобы слово eval не смущало разработчика.
+			if (defType === 'funcEval') {
+				if (valueType !== 'function') sendTypeWarning('function', valueType);
 				else clearWarning(model, context, 'type', inputDef.displayName);
+				return;
 			}
 
-			// enum. Здесь жуе выбранный из enum value, который должен быть текстом.
-			if (Array.isArray(defType)) {
-				if (valueType !== 'string') sendTypeWarning('string', valueType);
+			// Для objectEval не стандартное сообщение.
+			if (defType === 'objectEval') {
+				if (valueType !== 'object')
+					sendWarning(
+						model,
+						context,
+						'type',
+						inputDef.displayName,
+						`Input "${inputDef.displayName}" type error:<br/>Must be function with "object" return type, got "${valueType}" return type.`
+					);
 				else clearWarning(model, context, 'type', inputDef.displayName);
+				return;
 			}
+
+			// Здесь все литералы.
+			if (defType !== valueType) sendTypeWarning(defType, valueType);
+			else clearWarning(model, context, 'type', inputDef.displayName);
+		}
+
+		// enum. Здесь жуе выбранный из enum value, который должен быть текстом.
+		if (Array.isArray(defType)) {
+			if (valueType !== 'string') sendTypeWarning('string', valueType);
+			else clearWarning(model, context, 'type', inputDef.displayName);
 		}
 	}
 };

@@ -20,6 +20,7 @@ import { getNodeInputDefs, handleNodePorts } from './editorModels/nodePort';
 import { hasWarnings } from './editorModels/warning';
 import scheduleRun from './runtimeModels/scheduleRun';
 import { validatePropType, validatePropValue } from './runtimeModels/prop';
+import { getConvertedParameter } from './editorModels/parameter';
 
 const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersions, docs?: string) =>
 	({
@@ -63,9 +64,9 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 									if (hasWarnings(this.model)) return;
 								}
 							} else {
-								// Значение пришло с редактора. Не отрабатывает дефолты редактора.
 								//console.log('from editor', nodeName, inputName, value, this.props.noodlNode);
-								this.props[inputName] = this.model.parametersCache[inputName];
+								// Значение пришло с редактора. Не отрабатывает дефолты редактора, это дклает scheduleRun.
+								this.props[inputName] = getConvertedParameter(this.model, this.context, inputDef);
 							}
 
 							// Отсановим, если есть ошибки во время разработки.

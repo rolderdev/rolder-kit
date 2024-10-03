@@ -1,0 +1,5 @@
+{
+	"name": "@nodes/popover-v2.0.0",
+	"main": "node/definition.ts",
+	"type": "module"
+}

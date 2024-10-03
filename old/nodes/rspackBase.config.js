@@ -11,7 +11,7 @@ module.exports = function (nodeName, context, outputBuildPath, developer, projec
 		const projectsJson = require(`../../developers/${developer}.json`);
 		const projectConf = projectsJson[project];
 		if (projectConf?.rolderKit?.includes(nodeName))
-			outputPath = path.resolve(__dirname, `${projectConf.projectDir}/noodl_modules/old_${nodeName}`);
+			outputPath = path.resolve(__dirname, `${projectConf.projectDir}/noodl_modules/${nodeName}`);
 	}
 
 	return {

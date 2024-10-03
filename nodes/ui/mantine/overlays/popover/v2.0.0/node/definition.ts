@@ -3,42 +3,46 @@ import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
 import type { TooltipProps } from '@mantine/core';
 
 export type Props = BaseReactProps & {
-	label: string;
 	useCustomOffset: boolean;
 	numberOffset?: number;
 	customOffset?: TooltipProps['offset'];
-	hoverEvent: boolean;
-	focusEvent: boolean;
-	touchEvent: boolean;
-	floating: boolean;
+	dropdownProps?: any;
 };
 
 const positions = [
-	{ label: 'Top', value: 'top' },
-	{ label: 'Top start', value: 'top-start' },
-	{ label: 'Top end', value: 'top-end' },
-	{ label: 'Right', value: 'right' },
-	{ label: 'Right start', value: 'right-start' },
-	{ label: 'Right end', value: 'right-end' },
 	{ label: 'Bottom', value: 'bottom' },
 	{ label: 'Bottom start', value: 'bottom-start' },
 	{ label: 'Bottom end', value: 'bottom-end' },
 	{ label: 'Left', value: 'left' },
 	{ label: 'Left start', value: 'left-start' },
 	{ label: 'Left end', value: 'left-end' },
+	{ label: 'Right', value: 'right' },
+	{ label: 'Right start', value: 'right-start' },
+	{ label: 'Right end', value: 'right-end' },
+	{ label: 'Top', value: 'top' },
+	{ label: 'Top start', value: 'top-start' },
+	{ label: 'Top end', value: 'top-end' },
 ];
 
-import Comp from '../component/Tooltip';
+import Comp from '../component/Popover';
 
 export default {
+	hashTag: '#pre-release',
 	module: { static: Comp },
 	inputs: [
 		getPortDef({
-			name: 'label',
-			displayName: 'Label',
+			name: 'trapFocus',
+			displayName: 'Trap focus',
 			group: 'Params',
-			type: 'string',
-			validate: (p: Props) => (p.label ? true : false),
+			type: 'boolean',
+			default: false,
+		}),
+		getPortDef({
+			name: 'closeOnClickOutside',
+			displayName: 'Close on click outside',
+			group: 'Params',
+			type: 'boolean',
+			default: true,
 		}),
 		getPortDef({
 			name: 'position',
@@ -48,66 +52,44 @@ export default {
 			default: 'top',
 		}),
 		getPortDef({
-			name: 'multiline',
-			displayName: 'Multiline',
-			group: 'Layout',
-			type: 'boolean',
-			default: false,
-		}),
-		getPortDef({
-			name: 'floating',
-			displayName: 'Floating',
-			group: 'Layout',
-			type: 'boolean',
-			default: false,
-		}),
-		getPortDef({
-			name: 'inline',
-			displayName: 'Inline',
-			group: 'Layout',
-			default: 'top',
-			type: positions,
-		}),
-		getPortDef({
 			name: 'useCustomOffset',
 			displayName: 'Custom offset',
 			group: 'Layout',
 			type: 'boolean',
 			default: false,
-			dependsOn: (p: Props) => !p.floating && !p.useCustomOffset,
 		}),
 		getPortDef({
 			name: 'numberOffset',
 			displayName: 'Offset',
 			group: 'Layout',
 			type: 'number',
-			default: 5,
-			dependsOn: (p: Props) => p.useCustomOffset,
+			default: 8,
+			dependsOn: (p: Props) => !p.useCustomOffset,
 		}),
 		getPortDef({
 			name: 'customOffset',
 			displayName: 'Offset',
 			group: 'Layout',
 			type: 'objectEval',
-			default: `//() => { mainAxis: 5, crossAxis: 0 }`,
-			dependsOn: (p: Props) => !p.floating && p.useCustomOffset,
+			default: `//() => ({ mainAxis: 5, crossAxis: 0 })`,
+			dependsOn: (p: Props) => p.useCustomOffset,
 		}),
 		getPortDef({
 			name: 'w',
 			displayName: 'Width',
 			group: 'Dimensions',
 			type: 'string',
-			dependsOn: (p) => p.multiline,
-		}),
-		getPortDef({
-			name: 'color',
-			displayName: 'Color',
-			group: 'Styles',
-			type: 'string',
 		}),
 		getPortDef({
 			name: 'radius',
 			displayName: 'Radius',
+			group: 'Styles',
+			type: sizes,
+			default: 'md',
+		}),
+		getPortDef({
+			name: 'shadow',
+			displayName: 'Shadow',
 			group: 'Styles',
 			type: sizes,
 			default: 'md',
@@ -127,7 +109,7 @@ export default {
 			customGroup: 'Arrow',
 			type: [
 				{ label: 'Center', value: 'center' },
-				{ label: 'Dide', value: 'side' },
+				{ label: 'Side', value: 'side' },
 			],
 			default: 'center',
 			dependsOn: (p) => p.withArrow,
@@ -143,11 +125,11 @@ export default {
 		}),
 		getPortDef({
 			name: 'arrowSize',
-			displayName: 'Szie',
+			displayName: 'Size',
 			group: 'Custom',
 			customGroup: 'Arrow',
 			type: 'number',
-			default: 4,
+			default: 7,
 			dependsOn: (p) => p.withArrow,
 		}),
 		getPortDef({
@@ -160,28 +142,41 @@ export default {
 			dependsOn: (p) => p.withArrow,
 		}),
 		getPortDef({
-			name: 'hoverEvent',
-			displayName: 'Hover',
-			group: 'Custom',
-			customGroup: 'Events',
-			type: 'boolean',
-			default: true,
-		}),
-		getPortDef({
-			name: 'focusEvent',
-			displayName: 'Focus',
-			group: 'Custom',
-			customGroup: 'Events',
+			name: 'disabled',
+			displayName: 'Disabled',
+			group: 'States',
 			type: 'boolean',
 			default: false,
 		}),
 		getPortDef({
-			name: 'touchEvent',
-			displayName: 'Touch',
-			group: 'Custom',
-			customGroup: 'Events',
-			type: 'boolean',
-			default: false,
+			name: 'dropdownProps',
+			displayName: 'Dropdown props',
+			group: 'Advanced',
+			type: 'objectEval',
+			codeComment: `//() => ({ p: 0 })`,
 		}),
+		getPortDef({
+			name: 'middlewares',
+			displayName: 'Middlewares',
+			group: 'Advanced',
+			type: 'objectEval',
+			codeComment: `//() => ({ flip: true, shift: true, inline: true })`,
+		}),
+		getPortDef({
+			name: 'clickOutsideEvents',
+			displayName: 'Click outside events',
+			group: 'Advanced',
+			type: 'array',
+			codeComment: `//['mouseup', 'touchend']`,
+			dependsOn: (p) => p.closeOnClickOutside,
+		}),
+		getPortDef({ name: 'open', displayName: 'Open', group: 'Signals', type: 'signal' }),
+		getPortDef({ name: 'close', displayName: 'Close', group: 'Signals', type: 'signal' }),
+		getPortDef({ name: 'toggle', displayName: 'Toggle', group: 'Signals', type: 'signal' }),
+	],
+	outputs: [
+		getPortDef({ name: 'opened', displayName: 'Opened', group: 'States', type: 'boolean' }),
+		getPortDef({ name: 'closed', displayName: 'Closed', group: 'Signals', type: 'signal' }),
+		getPortDef({ name: 'state', displayName: 'State', group: 'States', type: 'boolean' }),
 	],
 } satisfies ReactNodeDef;

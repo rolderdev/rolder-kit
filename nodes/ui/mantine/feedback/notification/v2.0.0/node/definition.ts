@@ -12,6 +12,7 @@ export type Props = BaseJsProps & {
 import Comp from '../component/notification';
 
 export default {
+	hashTag: '#pre-release',
 	module: { static: Comp },
 	inputs: [
 		getPortDef({ name: 'title', displayName: 'Title', group: 'Params', type: 'string' }),

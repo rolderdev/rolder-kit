@@ -5,8 +5,8 @@ import type { Props } from '../node/definition';
 import handleDataChanges from './handleDataChanges';
 import type { NoodlNode } from '@shared/node-v1.0.0';
 import type { DocumentNotification } from '@nodes/app-v2.0.0';
-import getIem from './getIem';
 import fetchBySub from './fetchBySub';
+import setItem from './setItem';
 
 export type Notification = DocumentNotification & { result: { _updatedFields: string[] } };
 
@@ -15,17 +15,19 @@ export type Notification = DocumentNotification & { result: { _updatedFields: st
 // Если хеш есть в подписках, но нет в данных, значит старая схема изменилась - отписываемся.
 // Если хеша нет в подписках, но есть в данных, значит это новая схема - подписываемся.
 export const handleSubscribe = async (p: Props, noodlNode: NoodlNode) => {
-	const schemes = p.store.schemes;
+	// Нужно убрать дубли, чтобы не повторять подписки.
+	const schemesData = R.libs.remeda.uniqueWith(p.store.schemesData, (a, b) => a.schemeHash === b.schemeHash);
 	const subscribes = p.store.subscribes;
 
 	// Отписка от больше не существующих схем.
 	subscribes.forEach((_, schemeHash) => {
-		if (!schemes.has(schemeHash)) unSubscribeFromScheme(p, schemeHash);
+		if (!schemesData.find((i) => i.schemeHash === schemeHash)) unSubscribeFromScheme(p, schemeHash);
 	});
 
 	// Подписка на новые схемы.
-	schemes.forEach(async (schemeData, schemeHash) => {
-		if (schemeData.channel && !subscribes.has(schemeHash)) subscribeOnScheme(p, noodlNode, schemeHash, schemeData.channel);
+	schemesData.forEach(async (schemeData) => {
+		if (schemeData.channel && !subscribes.has(schemeData.schemeHash))
+			subscribeOnScheme(p, noodlNode, schemeData.schemeHash, schemeData.channel);
 	});
 };
 
@@ -38,7 +40,7 @@ const subscribeOnScheme = async (p: Props, noodlNode: NoodlNode, schemeHash: str
 	const K = await getKuzzle();
 	if (!K) return;
 
-	const scheme = p.store.schemes.get(schemeHash)?.scheme;
+	const scheme = p.store.schemesData.find((i) => i.schemeHash === schemeHash)?.scheme;
 	if (scheme) {
 		const dbClassName = getDbClassName(scheme.dbClass);
 		const dbClassV = getVersionedDbClass(scheme.dbClass);
@@ -46,7 +48,6 @@ const subscribeOnScheme = async (p: Props, noodlNode: NoodlNode, schemeHash: str
 		if (dbClassV) {
 			const notify = (notif: Notification) => {
 				//console.log('server notif', schemeHash, notif);
-
 				if (notif.type !== 'document') return;
 				handleNotification(p, noodlNode, schemeHash, notif);
 
@@ -80,57 +81,46 @@ const unSubscribeFromScheme = async (p: Props, schemeHash: string) => {
 // Поскольку подписки идут по всем схемам, можно обрабатывать item найденный в этой схеме. Дубли отработает тригер другой схемы.
 export const handleNotification = async (p: Props, noodlNode: NoodlNode, schemeHash: string, notif: Notification) => {
 	const sort = R.libs.sort;
-	const { get, set } = R.libs.just;
+	const { get } = R.libs.just;
 
-	const schemeData = p.store.schemes.get(schemeHash);
+	const schemesData = p.store.schemesData.filter((i) => i.schemeHash === schemeHash);
 	const itemId = notif.result._id;
 
-	if (schemeData) {
+	if (schemesData?.length) {
+		const rawItem = {
+			...notif.result._source,
+			dbClass: getDbClassName(schemesData[0].scheme.dbClass),
+			id: itemId,
+		} as Item;
+
 		if (notif.scope === 'in') {
 			// Обновление существующего item.
-			if (schemeData.itemIds.includes(itemId)) {
+			if (schemesData[0].itemIds.includes(itemId)) {
 				const item = R.items[itemId];
 
-				// Здесь кастомное решение, т.к. Kuzzle не отправляет, что удалил.
-				if (item) {
-					// Если было удаление ключей.
-					if (notif.volatile.deleteFields) notif.volatile.deleteFields.forEach((i: string) => R.libs.lodash.unset(item, i));
-					notif.result._updatedFields?.map((field) => set(item, field, get(notif.result._source, field)));
-				}
+				if (item) setItem(rawItem, p.store.rootId);
 
 				// Нужно сменить сортировку в itemIds.
-				const sorts = schemeData.scheme.sorts;
+				const sorts = schemesData[0].scheme.sorts;
 				if (sorts) {
-					let items = schemeData.itemIds.map((id) => R.items[id]).filter((i) => i !== undefined);
+					let items = schemesData[0].itemIds.map((id) => R.items[id]).filter((i) => i !== undefined);
 					items = sort(items).by(sorts.map((s) => ({ [Object.values(s)[0]]: (i: any) => get(i, Object.keys(s)[0]) } as any)));
-					schemeData.itemIds = items.map((i) => i.id);
+					schemesData.forEach((d) => (d.itemIds = items.map((i) => i.id)));
 				}
 			} else {
 				// Добавление нового item.
-				const newRawItem = getIem(
-					{
-						...notif.result._source,
-						dbClass: getDbClassName(schemeData.scheme.dbClass),
-						id: itemId,
-					} as Item,
-					p.store.rootId
-				);
-
-				const item = R.items[itemId];
-				if (!item) R.items[newRawItem.id] = newRawItem;
-				else R.libs.lodash.merge(item, newRawItem);
-
-				schemeData.itemIds.push(newRawItem.id);
+				setItem(rawItem, p.store.rootId);
+				schemesData.forEach((d) => d.itemIds.push(rawItem.id));
 
 				// Нужно сменить сортировку в itemIds.
-				const sorts = schemeData.scheme.sorts;
+				const sorts = schemesData[0].scheme.sorts;
 				if (sorts) {
-					let items = schemeData.itemIds.map((id) => R.items[id]).filter((i) => i !== undefined);
+					let items = schemesData[0].itemIds.map((id) => R.items[id]).filter((i) => i !== undefined);
 					items = sort(items).by(sorts.map((s) => ({ [Object.values(s)[0]]: (i: any) => get(i, Object.keys(s)[0]) } as any)));
-					schemeData.itemIds = items.map((i) => i.id);
+					schemesData.forEach((d) => (d.itemIds = items.map((i) => i.id)));
 				}
-				schemeData.fetched++;
-				schemeData.total++;
+				schemesData.forEach((d) => d.fetched++);
+				schemesData.forEach((d) => d.total++);
 
 				// Костылечег. При добавлении нужно создать новую серверную схему и подписаться на нее.
 				// При этом, не понятно как это сделать точечно. Поэтому делаем простую перезагрузку, но без тригеров и обновления выходов.
@@ -142,9 +132,9 @@ export const handleNotification = async (p: Props, noodlNode: NoodlNode, schemeH
 
 		// Удаление существующего item.
 		if (notif.scope === 'out') {
-			schemeData.itemIds = schemeData.itemIds.filter((id) => id !== itemId);
-			schemeData.fetched--;
-			schemeData.total--;
+			schemesData.forEach((d) => (d.itemIds = d.itemIds.filter((id) => id !== itemId)));
+			schemesData.forEach((d) => d.fetched++);
+			schemesData.forEach((d) => d.total++);
 		}
 	}
 

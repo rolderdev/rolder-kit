@@ -1,0 +1,5 @@
+{
+	"name": "@shared/item-v0.1.0",
+	"main": "item.ts",
+	"type": "module"
+}

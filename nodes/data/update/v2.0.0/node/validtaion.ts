@@ -6,7 +6,7 @@ import type { InferOutput } from 'shared/src/libs/valibot';
 import type { Item } from '@shared/types-v0.1.0';
 
 type UpdateSchemeSchema = InferOutput<ReturnType<typeof getTypedUpdateScheme>>;
-export type UpdateScheme = (Omit<UpdateSchemeSchema[number], 'items'> & { items: Item[] })[];
+export type UpdateScheme = (Omit<UpdateSchemeSchema[number], 'items'> & { items: (Item & { deleteFields?: string[] })[] })[];
 
 const getTypedUpdateScheme = () => {
 	const { unique, typeOf } = R.libs.just;
@@ -51,10 +51,18 @@ const getTypedUpdateScheme = () => {
 						check(
 							(item: any) => (item.history ? (item.history === true || typeof item.history === 'object' ? true : false) : true),
 							'"history" at item must be "true" or "object".'
+						),
+						check(
+							(item: any) =>
+								item.deleteFields
+									? Array.isArray(item.deleteFields) && !item.deleteFields.some((i: unknown) => typeof i !== 'string')
+										? true
+										: false
+									: true,
+							'"deleteFields" at item must be array of strings.'
 						)
 					)
 				),
-				deleteFields: optional(array(string())),
 				scope: optional(picklist(['in', 'out'])),
 			})
 		),

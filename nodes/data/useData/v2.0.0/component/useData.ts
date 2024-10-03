@@ -44,7 +44,7 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 			// Перестроение иерархии.
 			Noodl.Events.on(`${p.store.rootId}_handleHierarchy`, (itemsScope) => {
 				if (itemsScope) {
-					p.store.schemes.forEach((schemeData) => {
+					p.store.schemesData.forEach((schemeData) => {
 						if (schemeData.itemIds.some((id) => Object.keys(itemsScope).includes(id))) {
 							R.libs.just.map(itemsScope, (itemId, scope) => {
 								if (itemId !== 'fetch' && scope === 'out') {

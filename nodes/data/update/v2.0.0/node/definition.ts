@@ -8,7 +8,7 @@ import initState from '@shared/init-state-v0.1.0';
 export type Props = BaseJsProps & { apiVersion: 'v1'; updateScheme?: UpdateScheme; optimistic: boolean };
 
 export default {
-	hashTag: '#expreimental',
+	hashTag: '#pre-release',
 	module: { dynamic: import('../component/update') },
 	inputs: [
 		getPortDef({
