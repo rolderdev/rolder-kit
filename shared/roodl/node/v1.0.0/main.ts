@@ -9,7 +9,7 @@ export { jsNode, reactNode } from './src/node';
 export type BaseJsProps = BaseProps;
 export type JsNodeVersions = { [key: string]: JsNodeDef };
 export type JsRoodlNode = RoodlNode & { color?: NodeColor };
-export type JsNodeDef = NodeDef & { afterNode: { triggerOnInputs?(p: { [x: string]: any }): string[] } };
+export type JsNodeDef = NodeDef & { afterNode?: { triggerOnInputs?(p: { [x: string]: any }): string[] } };
 export type JsComponent = { reactive?: (p: unknown, noodlNode: NoodlNode) => void | Promise<void> } & {
 	[signal: string]: (p: unknown, noodlNode: NoodlNode) => void | Promise<void>;
 };

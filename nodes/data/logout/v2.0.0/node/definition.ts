@@ -5,7 +5,6 @@ import initState from '@shared/init-state-v0.1.0';
 export type Props = BaseJsProps;
 
 export default {
-	hashTag: '#pre-release',
 	module: { dynamic: import('../component/logout') },
 	inNode: { inputs: [getPortDef({ name: 'logout', displayName: 'Logout', group: 'Signals', type: 'signal' })] },
 	beforeComponent: {

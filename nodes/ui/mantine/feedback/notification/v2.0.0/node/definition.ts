@@ -12,7 +12,6 @@ export type Props = BaseJsProps & {
 import Comp from '../component/notification';
 
 export default {
-	hashTag: '#pre-release',
 	module: { static: Comp },
 	inNode: {
 		inputs: [

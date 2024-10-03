@@ -1,12 +1,13 @@
 import { getPortDef, sizes } from '@shared/port-v1.0.0';
 import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import { lazy } from 'react';
 
 export type Props = BaseReactProps & { defaultValue?: string | number };
 
+import Comp from '../component/NumberInput';
+
 export default {
 	hashTag: '#expreimental',
-	module: { dynamic: lazy(() => import('../component/NumberInput')) },
+	module: { static: Comp },
 	inNode: {
 		inputs: [
 			getPortDef({ name: 'label', displayName: 'Label', group: 'Params', type: 'string' }),

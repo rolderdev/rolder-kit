@@ -8,7 +8,6 @@ import initState from '@shared/init-state-v0.1.0';
 export type Props = BaseJsProps & { node: Node; unsub?: () => void };
 
 export default {
-	hashTag: '#pre-release',
 	module: { dynamic: import('../component/node') },
 	inNode: {
 		outputs: [

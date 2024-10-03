@@ -12,7 +12,6 @@ export type Props = BaseReactProps & {
 import Comp from '../component/Text';
 
 export default {
-	hashTag: '#pre-release',
 	module: { static: Comp },
 	inNode: {
 		inputs: [

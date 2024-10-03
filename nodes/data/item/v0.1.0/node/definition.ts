@@ -23,7 +23,6 @@ export type Store = {
 };
 
 export default {
-	hashTag: '#pre-release',
 	module: { dynamic: import('../component/item') },
 	inNode: {
 		inputs: [

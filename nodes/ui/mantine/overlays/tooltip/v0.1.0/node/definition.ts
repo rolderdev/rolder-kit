@@ -31,7 +31,6 @@ const positions = [
 import Comp from '../component/Tooltip';
 
 export default {
-	hashTag: '#pre-release',
 	module: { static: Comp },
 	inNode: {
 		inputs: [

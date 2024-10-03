@@ -41,13 +41,7 @@ export default {
 				type: 'number',
 				dependsOn: (p: Props) => p.type === 'number',
 			}),
-			getPortDef({
-				name: 'href',
-				displayName: 'Link',
-				group: 'Data',
-				type: 'string',
-				multiline: true,
-			}),
+			getPortDef({ name: 'href', displayName: 'Link', group: 'Data', type: 'string', multiline: true }),
 			getPortDef({
 				name: 'tt',
 				displayName: 'Transform',

@@ -6,7 +6,6 @@ export type Props = BaseReactProps & { automount: boolean };
 import Comp from '../component/Transition';
 
 export default {
-	hashTag: '#pre-release',
 	module: { static: Comp },
 	inNode: {
 		inputs: [

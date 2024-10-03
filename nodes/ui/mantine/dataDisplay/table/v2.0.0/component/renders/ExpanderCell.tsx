@@ -16,7 +16,7 @@ export default memo((p: { columnIdx: string; id: string }) => {
 	const snap = useSnapshot(store);
 
 	const onRowClick = store.tableProps.onRowClick;
-	const ChevronIcon = R.libs.icons['IconChevronRight'];
+	const ChevronIcon = R.libs.icons.IconChevronRight;
 
 	const itemSnap = useItem(p.id, 'snap');
 
