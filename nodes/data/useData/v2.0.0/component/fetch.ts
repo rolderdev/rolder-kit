@@ -22,6 +22,7 @@ export type ItemsHistory = Record<string, HistoryItem[]>;
 export type HistoryItem = {
 	timestamp: number;
 	item: Item;
+	metaData?: any;
 };
 
 export const fetch = async (p: Props, noodlNode: NoodlNode) => {
@@ -37,7 +38,7 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 		return;
 	}
 
-	const { map } = R.libs.just;
+	const { map, clone } = R.libs.just;
 	const fetchScheme = p.store.fetchScheme;
 
 	if (!fetchScheme) return;
@@ -88,13 +89,13 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 	// Обновим историю items.
 	map(data.itemsHistory, (itemId, historyItems) => {
 		const itemHistoryProxy = R.itemsHistory[itemId];
-		if (!itemHistoryProxy) R.itemsHistory[itemId] = historyItems;
+		if (!itemHistoryProxy) R.itemsHistory[itemId] = clone(historyItems);
 		// Нужно учесть, что в истории могут быть совпадения, значит нужно обновлять их.
 		// Сортировать не нужно, т.к. сервер это сделал. При добавлении новых, массив отработает в нужном порядке и push положит как надо.
 		else
 			historyItems.forEach((i, idx) => {
-				if (!itemHistoryProxy.map((i) => i.item.id).includes(i.item.id)) itemHistoryProxy.push(i);
-				else itemHistoryProxy[idx] = i;
+				if (!itemHistoryProxy.map((i) => i.item.id).includes(i.item.id)) itemHistoryProxy.push(clone(i));
+				else itemHistoryProxy[idx] = clone(i);
 			});
 	});
 

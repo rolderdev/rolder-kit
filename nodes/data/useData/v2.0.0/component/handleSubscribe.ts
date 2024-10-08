@@ -47,7 +47,6 @@ const subscribeOnScheme = async (p: Props, noodlNode: NoodlNode, schemeHash: str
 
 		if (dbClassV) {
 			const notify = (notif: Notification) => {
-				//console.log('server notif', schemeHash, notif);
 				if (notif.type !== 'document') return;
 				handleNotification(p, noodlNode, schemeHash, notif);
 

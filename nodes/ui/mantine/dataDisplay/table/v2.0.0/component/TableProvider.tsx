@@ -69,7 +69,7 @@ export default forwardRef(function (p: Props, ref) {
 		setTableProps(p, s);
 
 		// Дефолтная сортировка. Нужно обращаться к store, т.к. snap батчится.
-		if (s.tableProps.sort.enabled && s.tableProps.sort.defaultState && !s.sortState)
+		if (s.tableProps.sort.enabled && s.tableProps.sort.defaultState && !s.sortState && p.items)
 			setSortState(s, s.tableProps.sort.defaultState, true);
 
 		// Инициализация фильтрации.
@@ -89,9 +89,9 @@ export default forwardRef(function (p: Props, ref) {
 	}, [p]);
 
 	// Подписка на изменение выбранного item в иерархии.
-	useHierarhySingleSelection(s);
+	useHierarhySingleSelection(s, snap as any);
 	// Подписка на изменение значений фильтров.
-	useFiltersValue(s, p.items || []);
+	useFiltersValue(s);
 
 	// Входящие сигналы.
 	useImperativeHandle(

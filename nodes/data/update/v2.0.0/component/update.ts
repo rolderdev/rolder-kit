@@ -27,16 +27,17 @@ export default {
 
 				let scopeUpdate: { [rootId: string]: Record<string, 'in' | 'out'> } = {};
 				for (const scheme of p.updateScheme) {
-					for (const item of scheme.items) {
+					for (const schemeItem of scheme.items) {
 						// Нужно клонировать перед мутацией, т.к. разарботчик может положить части прокси в item, что мутирует его и запишет не верно в БД.
-						const clonedItem = clone(item);
+						const clonedItem = clone(schemeItem);
 						const proxyItem = R.items[clonedItem.id];
 						if (proxyItem) {
 							// merge - мутирует прокси, что нам и нужно, т.к. заменять прокси нельзя, потеряем точечную реактивность.
 							// Нам не нужен history в item.
-							merge(proxyItem, omit(clonedItem, ['history']), true); // Пропустим удаление, т.к. в item схемы только новые данные.
+							// Пропустим удаление в merge, т.к. в item схемы только новые данные.
+							merge({ object: proxyItem, proxyObject: omit(clonedItem, ['history', 'deleteFields']), skipDelete: true });
 							// Удалим ключи. Это работает и для конструкции - someArray[0].someField
-							if (item.deleteFields?.length) item.deleteFields.map((i) => unset(proxyItem, i));
+							if (schemeItem.deleteFields?.length) schemeItem.deleteFields.map((i) => unset(proxyItem, i));
 							// Отправим в useData все items всех схем, если в них указан scope.
 							if (scheme.scope) {
 								proxyItem.roots.forEach((rootId) => R.libs.just.set(scopeUpdate, [rootId, clonedItem.id], scheme.scope));
@@ -48,6 +49,24 @@ export default {
 				R.libs.just.map(scopeUpdate, (rootId, itemsScope) => {
 					Noodl.Events.emit(`${rootId}_handleHierarchy`, itemsScope);
 				});
+			}
+
+			// Обновление истории.
+			for (const scheme of p.updateScheme) {
+				for (const schemeItem of scheme.items) {
+					if (schemeItem.history) {
+						const itemHistoryProxy = R.itemsHistory[schemeItem.id];
+						const proxyItem = R.items[schemeItem.id];
+						const newHistoryItem = R.libs.just.clone({
+							item: proxyItem,
+							timestamp: R.libs.dayjs().valueOf(),
+							metaData: schemeItem.history,
+						});
+						if (!itemHistoryProxy && proxyItem) R.itemsHistory[schemeItem.id] = [newHistoryItem];
+						// Нужно класть в начало массива, как это делает бек при загрузке истории.
+						if (itemHistoryProxy && proxyItem) R.itemsHistory[schemeItem.id].unshift(newHistoryItem);
+					}
+				}
 			}
 
 			sendOutput(noodlNode, 'updating', true);

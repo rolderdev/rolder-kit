@@ -7,8 +7,8 @@ import Comp from '../component/PopoverDropdown';
 export default {
 	hashTag: '#pre-release',
 	module: { static: Comp },
-	beforeNode: {
-		validate: async (model) => {
+	afterNode: {
+		validate: async (p, model) => {
 			const parentNodeName = model.parent?.type.split('.')[2];
 			if (parentNodeName === 'Popover') return true;
 			else return `Parent of "PopoverDropdown" must be "Popover", got "${parentNodeName}".`;

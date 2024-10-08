@@ -13,6 +13,8 @@ import { table, tableFilter } from './dataDisplay/table';
 import notification from './feedback/notification';
 // inputs
 import numberInput from './inputs/numberInput';
+import { checkbox, checkboxGroup, checkboxCard, checkboxIndicator } from './inputs/checkbox';
+import { radio, radioGroup, radioCard, radioIndicator } from './inputs/radio';
 // layout
 import stack from './layout/stack';
 import scrollArea from './layout/scrollArea';
@@ -40,6 +42,14 @@ const reactPackages = [
 	table,
 	// inputs
 	numberInput,
+	checkbox,
+	checkboxGroup,
+	checkboxCard,
+	checkboxIndicator,
+	radio,
+	radioGroup,
+	radioCard,
+	radioIndicator,
 	// layout
 	stack,
 	scrollArea,
@@ -94,10 +104,18 @@ set(
 						/* 'rolder-kit.api-v1.Title', */ 'rolder-kit.api-v1.Text' /* 'rolder-kit.api-v1.Highlight', 'rolder-kit.api-v1.List' */,
 					],
 				},
-				/* {
+				{
 					name: 'Inputs',
 					items: [
-						'rolder-kit.api-v1.TextInput',
+						'rolder-kit.api-v1.Checkbox',
+						'rolder-kit.api-v1.CheckboxGroup',
+						'rolder-kit.api-v1.CheckboxCard',
+						'rolder-kit.api-v1.CheckboxIndicator',
+						'rolder-kit.api-v1.Radio',
+						'rolder-kit.api-v1.RadioGroup',
+						'rolder-kit.api-v1.RadioCard',
+						'rolder-kit.api-v1.RadioIndicator',
+						/* 'rolder-kit.api-v1.TextInput',
 						'rolder-kit.api-v1.NumberInput',
 						'rolder-kit.api-v1.MaskedInput',
 						'rolder-kit.api-v1.PasswordInput',
@@ -109,9 +127,9 @@ set(
 						'rolder-kit.api-v1.SegmentedControl',
 						'rolder-kit.api-v1.DatePickerInput',
 						'rolder-kit.api-v1.DateTimePicker',
-						'rolder-kit.api-v1.Switch',
+						'rolder-kit.api-v1.Switch', */
 					],
-				}, */
+				},
 				/* {
 					name: 'Buttons',
 					items: [

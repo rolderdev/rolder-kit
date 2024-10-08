@@ -1,6 +1,6 @@
 {
 	"name": "rolder-kit",
-	"version": "v1.0.0-rc20",
+	"version": "v1.0.0-rc21",
 	"private": true,
 	"devDependencies": {
 		"@types/react": "^18.3.11",

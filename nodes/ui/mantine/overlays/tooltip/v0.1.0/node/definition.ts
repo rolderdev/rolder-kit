@@ -42,6 +42,20 @@ export default {
 				validate: (p: Props) => (p.label ? true : false),
 			}),
 			getPortDef({
+				name: 'openDelay',
+				displayName: 'Open delay',
+				group: 'Params',
+				type: 'number',
+				default: 0,
+			}),
+			getPortDef({
+				name: 'closeDelay',
+				displayName: 'Close delay',
+				group: 'Params',
+				type: 'number',
+				default: 0,
+			}),
+			getPortDef({
 				name: 'position',
 				displayName: 'Position',
 				group: 'Layout',

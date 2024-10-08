@@ -1,4 +1,13 @@
-import { Box, createTheme, DEFAULT_THEME, MantineProvider, Transition } from '@mantine/core';
+import {
+	Box,
+	createTheme,
+	DEFAULT_THEME,
+	getThemeColor,
+	MantineProvider,
+	Transition,
+	useMantineTheme,
+	type MantineColor,
+} from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { Notifications } from '@mantine/notifications';
 import { forwardRef, useEffect, useState } from 'react';
@@ -26,9 +35,18 @@ export default forwardRef(function (p: Props) {
 		fontFamily: `IBM Plex Sans, ${DEFAULT_THEME.fontFamily}`,
 		headings: { fontFamily: `IBM Plex Sans, ${DEFAULT_THEME.fontFamily}` },
 	});
+
+	const Scripts = () => {
+		// Для возможности вычислять цвет в Roodl.
+		const theme = useMantineTheme();
+		R.libs.mantine.getThemeColor = (color: MantineColor) => getThemeColor(color, theme);
+		return null;
+	};
+
 	return (
 		<>
 			<MantineProvider theme={theme} colorSchemeManager={colorSchemeManager}>
+				<Scripts />
 				<Notifications position={notificationsPosition} />
 				<DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 1 }}>
 					<Transition mounted={mounted} transition="fade" duration={400} timingFunction="ease">

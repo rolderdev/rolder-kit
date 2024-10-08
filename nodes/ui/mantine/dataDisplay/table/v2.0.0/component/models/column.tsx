@@ -9,6 +9,7 @@ import Cell from '../renders/Cell';
 import ExpanderCell from '../renders/ExpanderCell';
 import { FilterComponent, type Filter } from './filter';
 import type { Snap, Store } from '../store';
+import type { Sort } from './sort';
 
 // Наш тип данных декларации колонки.
 export type ColumnDefinition = Partial<DataTableColumn<TableRecord>> & {
@@ -20,8 +21,7 @@ export type ColumnDefinition = Partial<DataTableColumn<TableRecord>> & {
 		nodeSub: Node | undefined
 	) => { watchItems: Item[]; getValue: ColumnDefinition['getValue'] };
 	template?: string;
-	sort?: true | 'asc' | 'desc';
-	sortPath: string;
+	sort?: Sort;
 	filter?: Filter;
 };
 export type ColumnsDefinition = Record<string, ColumnDefinition>;
@@ -45,7 +45,7 @@ export const getColumns = (snap: Snap) =>
 					...i,
 					idx: `${idx}`,
 					// Нужно установить sortPath, когда включена сортировка, т.к. библиотека не хранит в состоянии сортировки номер колонки.
-					accessor: i.accessor || i.sortPath || `${idx}`,
+					accessor: i.accessor || i.sort?.sortPath || `${idx}`,
 					sortable: i.sort ? true : false,
 				} satisfies Column)
 		)
@@ -53,6 +53,22 @@ export const getColumns = (snap: Snap) =>
 			(i) =>
 				({
 					...i,
+					// Вымученная хитроть с разделителем. Добавляет разделитель только последней таблице в равернутой ветке ирерахии. Работает так:
+					// 	В классе row полностью отключается разделитель для expansion ячейки.
+					//  Таблица убирает разделитель под последней строкой, мы его возвращаем но с такими условиями:
+					//  	Для рутовой таблицы ничего не меняем, для детей:
+					//			Expansion выключен. Обычно это вторая таблица с каким то товарами, на это ставка. Рисуем разделитель.
+					//			Expansion включен. Если последняя строка не развернута - рисуем, иначе нет.
+					cellsStyle: () => {
+						const style = {
+							borderBottom: 'calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-datatable-row-border-color)',
+						};
+						if (snap.hierarchy.isChild && snap.libProps.withRowBorders) {
+							if (snap.tableProps.expansion.enabled) return style;
+							else if (!snap.expandedIds[R.libs.just.last(snap.records.map((i) => i.id))]) return style;
+						}
+						return;
+					},
 					render: (record) =>
 						snap.tableProps.expansion.enabled && i.idx === '0' ? (
 							<ExpanderCell columnIdx={i.idx} id={record.id} />

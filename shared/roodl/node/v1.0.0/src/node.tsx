@@ -56,7 +56,10 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 							// Значение пришло через подключение.
 							if (this._hasInputBeenSetFromAConnection(inputName)) {
 								//console.log('from connection', nodeName, inputName, value);
-								this.props[inputName] = value;
+								// Нужно клонировать сложные типы, чтобы сравнение в компонентах работало, т.к. разработчик может мутировать.
+								if (value && typeof inputDef.type === 'string' && ['array', 'objectEval', 'funcEval'].includes(inputDef.type)) {
+									this.props[inputName] = R.libs.just.clone(value);
+								} else this.props[inputName] = value;
 								// Валидириуем тип и значение в runtime, если не задеплоено.
 								if (!Noodl.deployed) {
 									validatePropType(this, inputDef, value);
