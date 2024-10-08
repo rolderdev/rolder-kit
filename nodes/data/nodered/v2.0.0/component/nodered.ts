@@ -5,10 +5,9 @@ import type { NoodlNode } from '@shared/node-v1.0.0';
 
 export default {
 	async execute(p: Props, noodlNode: NoodlNode) {
-		const { project, backendVersions, environment, dbName } = R.env;
+		const { project, environment, dbName } = R.env;
 		const { flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion } = p;
 
-		const backendVersion = backendVersions?.app;
 		if (!dbName) {
 			R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`);
 			log.error('No dbName', R.env);
@@ -37,7 +36,7 @@ export default {
 						log.error('Не удалось получить параметры сервисов!');
 					}
 				} else {
-					nodeRedUrl = `https://${project}.nodered.${backendVersion}.rolder.app/${flowEndpoint}`;
+					nodeRedUrl = `https://${project}.nodered.${environment}.rolder.app/${flowEndpoint}`;
 				}
 
 				const formData = new FormData();
@@ -48,7 +47,7 @@ export default {
 							JSON.stringify({
 								// Так как запрос будет идти к сервисам, добавляем информацию о среде проекта
 								project,
-								backendVersion: environment || backendVersion,
+								environment: environment,
 								...flowData.params,
 							})
 						);
