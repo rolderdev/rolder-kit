@@ -42,4 +42,5 @@ export type FetchScheme = {
 	dbClass: SchemeDbClass;
 	filters?: {};
 	sorts: readonly { [path: string]: 'asc' | 'desc' }[];
+	history?: number;
 };

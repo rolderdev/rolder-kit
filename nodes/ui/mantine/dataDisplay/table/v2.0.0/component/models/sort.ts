@@ -3,6 +3,16 @@ import type { DataTableSortStatus } from 'mantine-datatable';
 import type { TableRecord } from './record';
 import type { Store } from '../store';
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
+import { getFilteredIds } from './filter';
+import type { Item } from '@shared/types-v0.1.0';
+import { getColumns } from './column';
+import useItem from '../funcs/useItem';
+
+export type Sort = {
+	defaultDirection?: 'asc' | 'desc';
+	sortPath?: string;
+	func?: (state: 'asc' | 'desc', items: Item[], node?: any) => Item[] | undefined;
+};
 
 export const setSortState = (s: Store, sortState: DataTableSortStatus<TableRecord>, firstTime?: boolean) => {
 	s.sortState = sortState;
@@ -10,12 +20,28 @@ export const setSortState = (s: Store, sortState: DataTableSortStatus<TableRecor
 	// Отсортируем items, если включена фронтовая сортировка.
 	const sort = s.tableProps.sort;
 	if (sort.enabled && sort.type === 'frontend') {
-		let items = s.records.map((i) => R.items[i.id]).filter((i) => !!i);
-		items = R.utils.naturalSort.v1(items, s.sortState.columnAccessor, s.sortState.direction);
-		s.records = items.map((i) => ({ id: i.id }));
+		const sortedIds = getSortedIds(s).filter((id) => getFilteredIds(s).includes(id));
+		s.records = sortedIds.map((id) => ({ id }));
 	}
 
 	// Отправим состояние сортировки в формате удобном для useData.
 	sendOutput(s.noodlNode, 'sortState', { [sortState.columnAccessor]: sortState.direction });
 	if (!firstTime) sendSignal(s.noodlNode, 'sortStateChanged');
+};
+
+export const getSortedIds = (s: Store) => {
+	const sortState = s.sortState;
+
+	const items = s.originalIds.map((id) => useItem(id, 'snap')).filter((i) => !!i);
+	if (sortState) {
+		const sortColumnDef = getColumns(s).find((i) => i.accessor === sortState?.columnAccessor);
+		if (sortColumnDef?.sort?.func) {
+			const sortedItems = sortColumnDef?.sort?.func(
+				sortState.direction,
+				items,
+				s.hierarchy.tableNode ? R.libs.valtio.snapshot(s.hierarchy.tableNode) : undefined
+			);
+			return sortedItems?.map((i) => i.id) || items.map((i) => i.id);
+		} else return R.utils.naturalSort.v1(items, sortState.columnAccessor, sortState.direction).map((i) => i.id as string);
+	} else return items.map((i) => i.id);
 };

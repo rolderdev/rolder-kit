@@ -1,17 +1,19 @@
 /* Модель фильтрации. */
 
 import { memo, useContext, useEffect, useState } from 'react';
+import { useShallowEffect } from '@mantine/hooks';
 import { TableContext } from '../TableProvider';
 import getRoodlReactNode from '../funcs/getRoodlReactNode';
 import type { Store } from '../store';
 import type { FilterState } from '@nodes/table-filter-v0.1.0';
 import type { Item } from '@shared/types-v0.1.0';
 import useItem from '../funcs/useItem';
+import { getSortedIds } from './sort';
 
 export type Filter = {
 	template: string;
 	defaultState?: FilterState;
-	func?: (state: FilterState, items: Item[]) => Item[] | undefined;
+	func?: (state: FilterState, items: Item[], node?: any) => Item[] | undefined;
 };
 
 // Подготовка хранилища.
@@ -31,36 +33,61 @@ export const setInitialFiltersState = (s: Store, items: Item[]) => {
 			if (defaultState?.enabled && definition.filter) {
 				const filterResult = definition.filter.func?.(
 					R.libs.valtio.snapshot(defaultState),
-					items.map((i) => useItem(i.id, 'snap')).filter((i) => !!i)
+					items.map((i) => useItem(i.id, 'snap')).filter((i) => !!i),
+					s.hierarchy.tableNode ? R.libs.valtio.snapshot(s.hierarchy.tableNode) : undefined
 				);
-				if (filterResult) s.records = filterResult.map((i) => ({ id: i.id }));
+
+				if (filterResult) {
+					s.filtersState[idx].ids = filterResult.map((i) => i.id);
+					s.records = getSortedIds(s)
+						.filter((id) => getFilteredIds(s).includes(id))
+						.map((id) => ({ id }));
+				}
 			}
 		}
 	});
 };
 
 // Хук подписки на изменение значений фильтров.
-export const useFiltersValue = (s: Store, items: Item[]) => {
-	useEffect(() => {
-		const { subscribeKey, snapshot } = R.libs.valtio;
+export const useFiltersValue = (s: Store) => {
+	const [unsubs, setUnsubs] = useState<Record<string, (() => void) | undefined>>({});
 
-		let unsubs: Record<string, (() => void) | undefined> = {};
-
+	useShallowEffect(() => {
 		R.libs.just.map(s.columnsDefinition, (idx, definition) => {
-			if (s.filtersState)
-				unsubs[idx] = subscribeKey(s.filtersState[idx], 'value', () => {
-					if (s.filtersState) {
+			if (s.filtersState) {
+				const unsub = R.libs.valtio.subscribeKey(s.filtersState[idx], 'value', () => {
+					if (s.filtersState?.[idx]) {
 						const filterResult = definition.filter?.func?.(
-							snapshot(s.filtersState[idx]),
-							items.map((i) => useItem(i.id, 'snap')).filter((i) => !!i)
+							R.libs.valtio.snapshot(s.filtersState[idx]),
+							s.originalIds.map((id) => useItem(id, 'snap')).filter((i) => !!i)
 						);
-						if (filterResult) s.records = filterResult.map((i) => ({ id: i.id }));
+
+						if (filterResult) {
+							s.filtersState[idx].ids = filterResult.map((i) => i.id);
+							s.records = getSortedIds(s)
+								.filter((id) => getFilteredIds(s).includes(id))
+								.map((id) => ({ id }));
+						}
 					}
 				});
+				setUnsubs({ ...unsubs, [idx]: unsub });
+			}
 		});
-
-		return () => Object.values(unsubs).forEach((u) => u?.());
 	}, []);
+
+	// Отписка при демонтировании таблицы.
+	useEffect(() => {
+		() => Object.values(unsubs).forEach((u) => u?.());
+	}, []);
+};
+
+export const getFilteredIds = (s: Store) => {
+	let ids: string[] = s.originalIds;
+	if (s.filtersState)
+		Object.values(s.filtersState).forEach((filterState) => {
+			if (filterState.enabled && filterState.ids) ids = filterState.ids.filter((id) => ids.includes(id));
+		});
+	return ids;
 };
 
 // Компонента фильтрации.

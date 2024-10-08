@@ -4,9 +4,12 @@ import '@shared/types-v0.1.0';
 import type { Props } from '../node/definition';
 import type { InferOutput } from 'shared/src/libs/valibot';
 import type { Item } from '@shared/types-v0.1.0';
+import type { HistoryItem } from '../../../useData/v2.0.0/component/fetch';
 
 type CreateSchemeSchema = InferOutput<ReturnType<typeof getTypedCreateScheme>>;
-export type CreateScheme = (Omit<CreateSchemeSchema[number], 'items'> & { items: Item[] })[];
+export type CreateScheme = (Omit<CreateSchemeSchema[number], 'items'> & {
+	items: (Item & { history?: HistoryItem['metaData'] })[];
+})[];
 
 const getTypedCreateScheme = () => {
 	const { unique, typeOf } = R.libs.just;

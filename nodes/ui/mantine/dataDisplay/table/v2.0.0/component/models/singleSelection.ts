@@ -1,7 +1,7 @@
 /* Модель единичного выбора. */
 
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
-import type { Store } from '../store';
+import type { Snap, Store } from '../store';
 import useNode from '../funcs/useNode';
 import useItem from '../funcs/useItem';
 import { useEffect } from 'react';
@@ -20,10 +20,10 @@ export const setSelectedId = (s: Store, selectedId: string, isDefault?: boolean)
 			s.selectedId = selectedId;
 		} else s.selectedId = null;
 
-		setHierarhySingleSelection(s, selectedId);
+		setHierarhySingleSelection(s);
 
 		sendOutput(s.noodlNode, 'selectedItem', s.selectedId ? R.items[s.selectedId] : null);
-		sendOutput(s.noodlNode, 'selectedNode', nodeSnap);
+		sendOutput(s.noodlNode, 'selectedNode', nodeSnap || null);
 		if (!isDefault) sendSignal(s.noodlNode, 'selectedItemChanged');
 	}
 };
@@ -40,7 +40,7 @@ export const resetSelectedId = (s: Store) => {
 };
 
 // Метод установки состояния иерархии.
-const setHierarhySingleSelection = (s: Store, selectedId?: string) => {
+const setHierarhySingleSelection = (s: Store) => {
 	if (s.tableProps.useSingleSelectionHierarchy) {
 		if (s.hierarchy.tableNode) {
 			const rootNode = s.hierarchy.tableNode.rootNode();
@@ -55,15 +55,23 @@ const setHierarhySingleSelection = (s: Store, selectedId?: string) => {
 	}
 };
 
-// Хук пописки на изменение выбора в иерархии.
-export const useHierarhySingleSelection = (s: Store) => {
+// Хук подписки на изменение выбора в иерархии.
+export const useHierarhySingleSelection = (s: Store, snap: Snap) => {
 	useEffect(() => {
 		let unsub: (() => void) | undefined;
 		if (s.hierarchy.tableNode) {
 			unsub = R.libs.valtio.subscribe(s.hierarchy.tableNode.states.singleSelection, () => {
-				s.selectedId = s.hierarchy.tableNode?.states.singleSelection.value || null;
+				// Не будем тригерить повторно выходы, если это событие произошло по нажатию в этой таблице.
+				const newSelectedId = s.hierarchy.tableNode?.states.singleSelection.value || null;
+				if (s.selectedId !== newSelectedId) {
+					s.selectedId = newSelectedId;
+
+					sendOutput(s.noodlNode, 'selectedItem', newSelectedId ? R.items[newSelectedId] : null);
+					sendOutput(s.noodlNode, 'selectedNode', newSelectedId ? useNode(s, newSelectedId, 'snap') : null);
+					sendSignal(s.noodlNode, 'selectedItemChanged');
+				}
 			});
 		}
 		return () => unsub?.();
-	}, []);
+	}, [snap.hierarchy.tableNodePath]); // Нужен snap, чтобы рутовая таблица дождалась rootNodeId при загрузке данных в useData.
 };

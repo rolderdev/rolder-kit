@@ -9,13 +9,13 @@ export default forwardRef(function (p: Props) {
 	const children: any = p.children;
 
 	const leftSection = Array.isArray(children)
-		? children.filter((i) => i.props.noodlNode.model?.type.split('.')[2] === 'ButtonLeftSection')?.[0]
+		? children.filter((i) => i?.props.noodlNode.model?.type.split('.')[2] === 'ButtonLeftSection')?.[0]
 		: children?.props.noodlNode.model?.type.split('.')[2] === 'ButtonLeftSection'
 		? children
 		: null;
 
 	const rightSection = Array.isArray(children)
-		? children.filter((i) => i.props.noodlNode.model?.type.split('.')[2] === 'ButtonRightSection')?.[0]
+		? children.filter((i) => i?.props.noodlNode.model?.type.split('.')[2] === 'ButtonRightSection')?.[0]
 		: children?.props.noodlNode.model?.type.split('.')[2] === 'ButtonRightSection'
 		? children
 		: null;

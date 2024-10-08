@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import type { MantineTheme, MantineColorScheme } from '@mantine/core';
+import type { MantineTheme, MantineColorScheme, MantineColor } from '@mantine/core';
 import { type NotificationsProps, notifications } from '@mantine/notifications';
 import { useInterval } from '@mantine/hooks';
 import { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField } from '@mantine/form';
@@ -17,7 +17,7 @@ export const mantine = {
 	form: { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField },
 	hooks: { useInterval },
 };
-export type Mantine = typeof mantine;
+export type Mantine = typeof mantine & { getThemeColor: (color: MantineColor) => string };
 
 export type Props = BaseReactProps & {
 	notificationsPosition: NotificationsProps['position'];

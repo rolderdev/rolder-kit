@@ -7,8 +7,8 @@ import Comp from '../component/ButtonRightSection';
 export default {
 	hashTag: '#expreimental',
 	module: { static: Comp },
-	beforeNode: {
-		validate: async (model) => {
+	afterNode: {
+		validate: async (p, model) => {
 			const parentNodeName = model.parent?.type.split('.')[2];
 			if (parentNodeName === 'Button') return true;
 			else return `Parent of "ButtonRightSection" must be "Button", got "${parentNodeName}".`;

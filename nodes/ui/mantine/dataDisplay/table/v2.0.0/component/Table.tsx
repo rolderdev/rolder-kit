@@ -22,24 +22,18 @@ export default memo(() => {
 	// Состояние чекбоксов и реактивность на изменения выбора в иерархии.
 	useHierarchySelection(s);
 
-	//console.log('Table render', snap.noodlNode.id);
+	//console.log('Table render', snap.sortState);
 	return (
 		<DataTable<TableRecord>
 			// Base
+			style={() => ({ popover: { radius: 32 } })}
 			fetching={snap.fetching}
 			columns={getColumns(snap as any)}
 			records={snap.fetching ? [] : snap.records}
 			onRowClick={getRowClickHandler(s)}
 			// Row styles
-			className={
-				`${rowClasses.row}` +
-				(snap.hierarchy.isChild
-					? ` ${rowClasses['expansion-without-border']}`
-					: snap.libProps.withRowBorders
-					? ''
-					: ` ${rowClasses['expansion-disabled-border-top']} ${rowClasses['expansion-disabled-border-bottom']}`)
-			}
-			rowStyle={(record) => ({ cursor: getCursorState(s, record.id) })} // Управление состоянием курсора.
+			className={rowClasses.row}
+			rowStyle={(record) => ({ cursor: getCursorState(s, record.id), '&td': { borderBottom: '4px solid' } })} // Управление состоянием курсора.
 			rowBackgroundColor={(record) => getRowBgColor(s, record.id)}
 			getRecordSelectionCheckboxProps={(record) => get(snap.checkboxes, ['props', record.id])}
 			// Multi selection

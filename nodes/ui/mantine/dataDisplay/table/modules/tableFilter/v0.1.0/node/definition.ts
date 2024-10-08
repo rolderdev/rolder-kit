@@ -5,7 +5,7 @@ import initState from '@shared/init-state-v0.1.0';
 import { subscribe } from '../component/tableFilter';
 
 export type Props = BaseJsProps & { columnIdx?: string; filterState?: FilterState; unsub?: () => void };
-export type FilterState = { enabled: boolean; value?: any; defaultValue?: any };
+export type FilterState = { enabled: boolean; value?: any; defaultValue?: any; ids?: readonly string[] };
 
 export default {
 	hashTag: '#pre-release',
@@ -48,10 +48,7 @@ export default {
 			if (noodlNode.nodeScope.componentOwner._forEachNode)
 				noodlNode.nodeScope.componentOwner._forEachNode.reactComponentRef.componentWillUnmount = () => p.unsub?.();
 			// Отпишемся, когда удален.
-			noodlNode._onNodeDeleted = () => {
-				console.log('_onNodeDeleted', p.filterState);
-				p.unsub?.();
-			};
+			noodlNode._onNodeDeleted = () => p.unsub?.();
 		},
 	},
 	disableCustomProps: true,

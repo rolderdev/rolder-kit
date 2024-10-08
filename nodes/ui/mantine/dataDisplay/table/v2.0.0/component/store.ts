@@ -20,6 +20,7 @@ export default (noodlNode: NoodlNode) => {
 		tableProps: {} as TableProps,
 		columnsDefinition: {},
 		records: [],
+		originalIds: [],
 		selectedId: null,
 		selectedIds: {},
 		checkboxes: { unsubs: {}, props: {}, hasChildren: {} },
@@ -41,6 +42,7 @@ export type Store = {
 	tableProps: TableProps;
 	columnsDefinition: ColumnsDefinition;
 	records: TableRecord[];
+	originalIds: string[];
 	selectedId: string | null;
 	selectedIds: Record<string, boolean>;
 	checkboxes: {

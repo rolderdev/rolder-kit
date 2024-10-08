@@ -6,6 +6,8 @@ import handleDataChanges from './handleDataChanges';
 import { unsubscribe } from './handleSubscribe';
 
 const reactive = async (p: Props, noodlNode: NoodlNode) => {
+	const { compare, map } = R.libs.just;
+
 	// Обработаем измения инпутов
 	if (p.store.apiVersion !== p.apiVersion) {
 		p.store.apiVersion = p.apiVersion;
@@ -17,7 +19,7 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 		p.store.controlled = p.controlled;
 	}
 	// Сравним схему.
-	if (!R.libs.just.compare(p.store.fetchScheme, p.fetchScheme)) {
+	if (!compare(p.store.fetchScheme, p.fetchScheme)) {
 		p.store.fetchScheme = p.fetchScheme;
 		if (!p.controlled) await fetch(p, noodlNode);
 	}
@@ -46,7 +48,7 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 				if (itemsScope) {
 					p.store.schemesData.forEach((schemeData) => {
 						if (schemeData.itemIds.some((id) => Object.keys(itemsScope).includes(id))) {
-							R.libs.just.map(itemsScope, (itemId, scope) => {
+							map(itemsScope, (itemId, scope) => {
 								if (itemId !== 'fetch' && scope === 'out') {
 									schemeData.itemIds = schemeData.itemIds.filter((id) => id !== itemId);
 									if (!p.store.subscribe) {

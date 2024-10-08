@@ -208,7 +208,7 @@ export default class Node {
 	}
 
 	singleSelected() {
-		const selectedId = this.descendantNodes().find((i) => i.states.singleSelection.value)?.states.singleSelection.value;
+		const selectedId = this.descendantNodes(true).find((i) => i.states.singleSelection.value)?.states.singleSelection.value;
 		return selectedId ? R.items[selectedId] : undefined;
 	}
 
