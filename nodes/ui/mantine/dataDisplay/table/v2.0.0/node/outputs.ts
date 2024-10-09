@@ -40,7 +40,7 @@ export default [
 		name: 'selectedNode',
 		displayName: 'Selected node',
 		group: 'Custom',
-		customGroup: 'Base',
+		customGroup: 'Single selection',
 		type: 'object',
 		dependsOn: (p) => p.onRowClick === 'singleSelection' && p.hierarchy,
 	}),

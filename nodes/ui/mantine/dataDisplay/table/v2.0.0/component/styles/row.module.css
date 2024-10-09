@@ -5,15 +5,10 @@
 	tr[data-selected] :global(.mantine-datatable-row-selector-cell)::before {
 		background: unset;
 	}
-}
-
-.expansion-without-border tr:last-of-type :global(.mantine-datatable-row-expansion-cell-content) {
-	border-bottom: 0;
-}
-
-.expansion-disabled-border-top :global(.mantine-datatable-row-expansion-cell-content) {
-	border-top: 0;
-}
-.expansion-disabled-border-bottom tr:not(:last-of-type) :global(.mantine-datatable-row-expansion-cell-content) {
-	border-bottom: 0;
+	:global(.mantine-datatable-row-expansion-cell-content) {
+		&:not([data-with-row-border]) {
+			border-top: 0 !important;
+			border-bottom: 0 !important;
+		}
+	}
 }

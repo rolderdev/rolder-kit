@@ -41,7 +41,10 @@ const getTypedDeleteScheme = () => {
 						`There is no such version of DB class.`
 					)
 				),
-				ids: array(string('"id" must be string.'), '"ids" is required.'),
+				ids: pipe(
+					array(string('"id" must be string.'), '"ids" is required.'),
+					check((ids) => (ids.length !== unique(ids).length ? false : true), '"ids" must be unique.')
+				),
 			})
 		),
 		check(

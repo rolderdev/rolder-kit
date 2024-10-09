@@ -30,8 +30,13 @@ export const validateColumns = (p: Props) => {
 					getValue: optional(function_('"getValue" must be function.')),
 					template: optional(string('"template" must be string.')),
 					width: optional(union([string(), number()], '"width" must be string or number.'), '100%'), // Дефолт в 100%
-					sort: optional(union([boolean(), picklist(['asc', 'desc'])], '"sort" must be boolean, "asc" or "desc".')),
-					sortPath: optional(string('"sortPath" must be string.')),
+					sort: optional(
+						strictObject({
+							defaultDirection: optional(picklist(['asc', 'desc'], '"sort" must be "asc" or "desc".')),
+							sortPath: optional(string('"sortPath" must be string.')),
+							func: optional(function_('Sort "func" must be function.')),
+						})
+					),
 					filter: optional(
 						strictObject({
 							template: string('Filter "template" must be string.'),
@@ -61,10 +66,13 @@ export const validateColumns = (p: Props) => {
 					(column) => (column.type === 'template' && !column.template ? false : true),
 					'Must be "template" key for template type.'
 				),
-				check(
-					(column) => (p.sort && p.sortType === 'frontend' && column.sort ? (column.sortPath ? true : false) : true),
-					'Must be "sortPath" key for "Frontend" sort type.'
-				)
+				check((column) => {
+					const sort = column.sort;
+					if (!sort) return true;
+					else if (!p.sort && p.sortType !== 'frontend') return true;
+					else if (!sort.sortPath && column.type !== 'accessor') return false;
+					else return true;
+				}, '"sortPath" can by empty only with "accessor" column type or backend sort.')
 			)
 		),
 		check(

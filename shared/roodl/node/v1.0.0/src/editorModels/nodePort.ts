@@ -6,7 +6,7 @@ import { getCustomPropsPortDef } from './customProps';
 import { getVersionPortDef } from './version';
 import { getConvertedParameter, prepareParameters, validateParameterValues, validateType } from './parameter';
 import { hasWarnings } from './warning';
-import { validateAfterNode, validateBeforNode } from './node';
+import { validateAfterNode } from './node';
 
 export const getNodeInputDefs = (nodeDef: NodeDef, versions: JsNodeVersions | ReactNodeVersions) => [
 	getVersionPortDef(versions),
@@ -26,7 +26,6 @@ export const handleNodePorts = async (
 	if (!versions[model.parameters.version].disableCustomProps) model.portDefsCache.inputs.push(getCustomPropsPortDef());
 	model.portDefsCache.outputs = R.libs.just.clone(nodeDef.inNode?.outputs || []);
 
-	validateBeforNode(model, context, versions);
 	if (hasWarnings(model, 'globalBefore')) return;
 
 	prepareParameters(model, context);

@@ -6,7 +6,7 @@
 	"dependencies": {
 		"@emotion/styled": "11.11.0",
 		"@packages/is-empty": "workspace:@packages/is-empty-v0.1.0@^",
-		"pdfjs-dist": "^4.6.82",
+		"pdfjs-dist": "^4.7.76",
 		"react-pdf": "^9.1.1"
 	}
 }

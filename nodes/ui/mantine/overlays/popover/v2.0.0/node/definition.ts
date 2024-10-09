@@ -31,6 +31,10 @@ export default {
 	module: { static: Comp },
 	inNode: {
 		inputs: [
+			// Сигналы в начале, удобнне при разработке.
+			getPortDef({ name: 'open', displayName: 'Open', group: 'Signals', type: 'signal' }),
+			getPortDef({ name: 'close', displayName: 'Close', group: 'Signals', type: 'signal' }),
+			getPortDef({ name: 'toggle', displayName: 'Toggle', group: 'Signals', type: 'signal' }),
 			getPortDef({
 				name: 'trapFocus',
 				displayName: 'Trap focus',
@@ -171,9 +175,6 @@ export default {
 				codeComment: `//['mouseup', 'touchend']`,
 				dependsOn: (p) => p.closeOnClickOutside,
 			}),
-			getPortDef({ name: 'open', displayName: 'Open', group: 'Signals', type: 'signal' }),
-			getPortDef({ name: 'close', displayName: 'Close', group: 'Signals', type: 'signal' }),
-			getPortDef({ name: 'toggle', displayName: 'Toggle', group: 'Signals', type: 'signal' }),
 		],
 		outputs: [
 			getPortDef({ name: 'opened', displayName: 'Opened', group: 'States', type: 'boolean' }),

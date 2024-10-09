@@ -1,5 +1,5 @@
 import { memo, useContext, useEffect, useState } from 'react';
-import { Box } from '@mantine/core';
+import { Box, Text } from '@mantine/core';
 import { TableContext } from '../TableProvider';
 import useNode from '../funcs/useNode';
 import useItem from '../funcs/useItem';
@@ -11,12 +11,12 @@ export default memo((p: { id: string; columnIdx: string }) => {
 
 	const [value, setValue] = useState<string | number | undefined>();
 
+	const column: Column = R.libs.just.get(store, ['columnsDefinition', p.columnIdx]);
 	const itemSnap = useItem(p.id, 'snap');
 
 	useEffect(() => {
 		let unsub: (() => void) | undefined;
 
-		const column: Column = R.libs.just.get(store, ['columnsDefinition', p.columnIdx]);
 		const custom = column.custom;
 		if (itemSnap && custom) {
 			const itemsSnap = store.records.map((i) => useItem(i.id, 'snap')).filter((i) => i !== undefined);
@@ -72,5 +72,11 @@ export default memo((p: { id: string; columnIdx: string }) => {
 	const pl = store.tableProps.paddingLeftFunc?.(level, itemSnap);
 
 	//console.log('CustomCell render', value); // Считаем рендеры пока разрабатываем
-	return <Box pl={paddingLeftPostion === 'cell' && p.columnIdx === '0' ? pl : undefined}>{value}</Box>;
+	return (
+		<Box pl={paddingLeftPostion === 'cell' && p.columnIdx === '0' ? pl : undefined}>
+			<Text truncate={column.ellipsis ? 'end' : undefined} fz={store.libProps.fz}>
+				{value}
+			</Text>
+		</Box>
+	);
 });

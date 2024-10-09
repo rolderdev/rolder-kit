@@ -43,9 +43,6 @@ export type NodeDef = {
 	hashTag?: HashTag;
 	module: { static?: any; dynamic?: any };
 	// Процесс.
-	beforeNode?: {
-		validate?(model: GraphModelNode): Promise<boolean | string>;
-	};
 	inNode?: {
 		inputs?: ResultPortDef[];
 		outputs?: ResultPortDef[];

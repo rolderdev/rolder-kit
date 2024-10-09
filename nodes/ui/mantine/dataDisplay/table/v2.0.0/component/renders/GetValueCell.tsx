@@ -1,5 +1,5 @@
 import { memo, useContext, useState } from 'react';
-import { Box } from '@mantine/core';
+import { Box, Text } from '@mantine/core';
 import { TableContext } from '../TableProvider';
 import useNode from '../funcs/useNode';
 import useItem from '../funcs/useItem';
@@ -45,5 +45,11 @@ export default memo((p: { id: string; columnIdx: string }) => {
 	const pl = store.tableProps.paddingLeftFunc?.(level, itemSnap);
 
 	//console.log('GetValueCell render', value); // Считаем рендеры пока разрабатываем
-	return <Box pl={paddingLeftPostion === 'cell' && p.columnIdx === '0' ? pl : undefined}>{value}</Box>;
+	return (
+		<Box pl={paddingLeftPostion === 'cell' && p.columnIdx === '0' ? pl : undefined}>
+			<Text truncate={column.ellipsis ? 'end' : undefined} fz={store.libProps.fz}>
+				{value}
+			</Text>
+		</Box>
+	);
 });

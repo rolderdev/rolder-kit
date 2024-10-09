@@ -2,6 +2,7 @@ import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
 import type { Props } from '../node/definition';
 import kCreate, { type BackendData } from './kCreate';
 import type { JsComponent } from '@shared/node-v1.0.0';
+import { getDbClassName } from '@shared/db-class';
 
 export default {
 	create: async (p: Props, noodlNode) => {
@@ -24,6 +25,23 @@ export default {
 			sendOutput(noodlNode, 'data', data);
 			sendOutput(noodlNode, 'creating', false);
 			sendSignal(noodlNode, 'created');
+
+			// Создание истории.
+			for (const scheme of p.createScheme) {
+				scheme.items.forEach((schemeItem, idx) => {
+					if (schemeItem.history) {
+						const backendItem = data?.[getDbClassName(scheme.dbClass)].items[idx];
+						if (backendItem)
+							R.itemsHistory[backendItem.id] = R.libs.just.clone([
+								{
+									item: backendItem,
+									timestamp: R.libs.dayjs().valueOf(),
+									metaData: schemeItem.history === true ? undefined : schemeItem.history,
+								},
+							]);
+					}
+				});
+			}
 		}
 	},
 } as JsComponent;

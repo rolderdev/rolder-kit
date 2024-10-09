@@ -4,9 +4,12 @@ import '@shared/types-v0.1.0';
 import type { Props } from '../node/definition';
 import type { InferOutput } from 'shared/src/libs/valibot';
 import type { Item } from '@shared/types-v0.1.0';
+import type { HistoryItem } from '../../../useData/v2.0.0/component/fetch';
 
 type UpdateSchemeSchema = InferOutput<ReturnType<typeof getTypedUpdateScheme>>;
-export type UpdateScheme = (Omit<UpdateSchemeSchema[number], 'items'> & { items: (Item & { deleteFields?: string[] })[] })[];
+export type UpdateScheme = (Omit<UpdateSchemeSchema[number], 'items'> & {
+	items: (Item & { deleteFields?: string[]; history?: HistoryItem['metaData'] })[];
+})[];
 
 const getTypedUpdateScheme = () => {
 	const { unique, typeOf } = R.libs.just;
@@ -43,24 +46,30 @@ const getTypedUpdateScheme = () => {
 						`There is no such version of DB class.`
 					)
 				),
-				items: array(
-					pipe(
-						unknown(),
-						check((item) => typeOf(item) === 'object' || !item, '"item" must be object.'),
-						check((item: any) => (!item.id ? false : true), '"item" must have "id".'),
-						check(
-							(item: any) => (item.history ? (item.history === true || typeof item.history === 'object' ? true : false) : true),
-							'"history" at item must be "true" or "object".'
-						),
-						check(
-							(item: any) =>
-								item.deleteFields
-									? Array.isArray(item.deleteFields) && !item.deleteFields.some((i: unknown) => typeof i !== 'string')
-										? true
-										: false
-									: true,
-							'"deleteFields" at item must be array of strings.'
+				items: pipe(
+					array(
+						pipe(
+							unknown(),
+							check((item) => typeOf(item) === 'object' || !item, '"item" must be object.'),
+							check((item: any) => (!item.id ? false : true), '"item" must have "id".'),
+							check(
+								(item: any) => (item.history ? (item.history === true || typeof item.history === 'object' ? true : false) : true),
+								'"history" at item must be "true" or "object".'
+							),
+							check(
+								(item: any) =>
+									item.deleteFields
+										? Array.isArray(item.deleteFields) && !item.deleteFields.some((i: unknown) => typeof i !== 'string')
+											? true
+											: false
+										: true,
+								'"deleteFields" at item must be array of strings.'
+							)
 						)
+					),
+					check(
+						(items) => (items.length !== unique(items.map((i) => i.id)).length ? false : true),
+						'"items" must have unique ids.'
 					)
 				),
 				scope: optional(picklist(['in', 'out'])),

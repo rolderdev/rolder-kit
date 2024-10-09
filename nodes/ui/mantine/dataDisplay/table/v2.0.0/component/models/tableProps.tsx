@@ -9,7 +9,8 @@ export type TableProps = ReturnType<typeof setTableProps>;
 
 // Устанавливает наши специфичные настройки таблицы.
 export const setTableProps = (p: Props, s: Store) => {
-	const defaultSortColumnDef = p.columnsDefinition?.find((i) => typeof i.sort === 'string');
+	const defaultSortColumnDef = p.columnsDefinition?.find((i) => i.sort?.defaultDirection);
+	const defaultSortColumnIdx = defaultSortColumnDef ? p.columnsDefinition?.indexOf(defaultSortColumnDef) : undefined;
 
 	const tableProps = {
 		...R.libs.just.pick(p, [
@@ -49,10 +50,11 @@ export const setTableProps = (p: Props, s: Store) => {
 			enabled: p.sort,
 			type: p.sortType,
 			defaultState:
-				typeof defaultSortColumnDef?.sort === 'string'
+				defaultSortColumnDef?.sort?.defaultDirection && defaultSortColumnIdx !== undefined
 					? ({
-							columnAccessor: defaultSortColumnDef.accessor || defaultSortColumnDef.sortPath,
-							direction: defaultSortColumnDef.sort,
+							columnAccessor:
+								defaultSortColumnDef.accessor || defaultSortColumnDef.sort?.sortPath || defaultSortColumnIdx.toString(),
+							direction: defaultSortColumnDef.sort?.defaultDirection,
 					  } satisfies DataTableSortStatus<TableRecord>)
 					: undefined,
 		},

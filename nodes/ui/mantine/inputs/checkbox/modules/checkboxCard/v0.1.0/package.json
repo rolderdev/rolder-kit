@@ -1,0 +1,5 @@
+{
+	"name": "@nodes/checkbox-card-v0.1.0",
+	"main": "node/definition.ts",
+	"type": "module"
+}
