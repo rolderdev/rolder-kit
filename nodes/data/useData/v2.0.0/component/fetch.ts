@@ -33,7 +33,7 @@ export const fetch = async (p: Props, noodlNode: NoodlNode) => {
 
 	const { dbName } = R.env
 	if (!dbName) {
-		MantineError?.('Системная ошибка!', `No dbName at R.env`)
+		MantineError?.('Системная ошибка!', 'No dbName at R.env')
 		log.error('No dbName', R.env)
 		return
 	}

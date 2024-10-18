@@ -10,10 +10,11 @@ export default (item: Item, rootId: string) => {
 		{
 			getRef: (dbClass: string) => {
 				const globalItem = R.items[item.id]
-				if (globalItem && globalItem[dbClass]) {
+				if (globalItem?.[dbClass]) {
 					if (Array.isArray(globalItem[dbClass])) return globalItem[dbClass].map((i) => R.items[i.id]).filter((i) => !!i)
-					else return R.items[globalItem[dbClass].id]
-				} else return undefined
+					return R.items[globalItem[dbClass].id]
+				}
+				return undefined
 			},
 			getBackRef: (dbClass: string) => {
 				let resultRefItem: Item | undefined

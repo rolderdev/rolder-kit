@@ -16,7 +16,7 @@ export default (p: Props, noodlNode: NoodlNode) => {
 	const data: { [dbClass: string]: SchemeData & { items: Item[] } } = {}
 
 	// В data выдаем только родительские схемы.
-	p.store.schemesData.forEach((schemeData) => {
+	for (const schemeData of p.store.schemesData) {
 		const dbClassName = getDbClassName(schemeData.scheme.dbClass)
 
 		if (schemeData.path === 'root') {
@@ -36,7 +36,7 @@ export default (p: Props, noodlNode: NoodlNode) => {
 				sendOutput(noodlNode, `${dbClassName}Aggregations`, schemeData.aggregations)
 			}
 		}
-	})
+	}
 
 	sendOutput(noodlNode, 'data', data)
 	sendOutput(noodlNode, 'rootId', p.store.rootId)

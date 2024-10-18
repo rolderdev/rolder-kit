@@ -29,7 +29,7 @@ export default async () => {
 								userData: JSON.stringify(authState.user),
 								userEmail: authState.user.id,
 							})
-						HyperDX = HyperDX.default as any
+						window.HyperDX = HyperDX.default
 					}
 				})
 			} else window.HyperDX = undefined

@@ -3,7 +3,7 @@ import { forwardRef, memo, useImperativeHandle } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import type { Props } from '../node/definition'
 
-function FallbackComponent({ error }: any) {
+function FallbackComponent({ error }: { error: Error }) {
 	return (
 		<div
 			style={{
@@ -17,6 +17,7 @@ function FallbackComponent({ error }: any) {
 			<h3>{error.message}</h3>
 			<img
 				src="error.jpg"
+				alt="Error illustration"
 				style={{
 					display: 'block',
 					marginLeft: 'auto',

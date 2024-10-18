@@ -40,7 +40,7 @@ export type SchemeData = {
 export type FetchScheme = {
 	dbName?: string
 	dbClass: SchemeDbClass
-	filters?: {}
+	filters?: Record<string, unknown>
 	sorts: readonly { [path: string]: 'asc' | 'desc' }[]
 	history?: number
 }

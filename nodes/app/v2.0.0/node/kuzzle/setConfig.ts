@@ -6,7 +6,7 @@ export default async function (kuzzle: Kuzzle, online: boolean) {
 	const configState = await R.db?.addState('config')
 
 	if (!online && !configState.dbClasses) {
-		R.libs.mantine?.MantineError?.('Системная ошибка!', `Нужно быть в сети для первого запуска приложения`)
+		R.libs.mantine?.MantineError?.('Системная ошибка!', 'Нужно быть в сети для первого запуска приложения')
 		return
 	}
 

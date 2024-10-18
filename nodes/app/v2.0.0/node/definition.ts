@@ -34,7 +34,6 @@ export type { RxDatabase } from 'rxdb'
 
 // Поскольку HyperDX не используется в коде с этого статичного импорта, он не попадает в этот файл.
 import type HyperDX from '@hyperdx/browser'
-type HyperDX = typeof HyperDX
 export type { HyperDX }
 
 import Comp from '../component/App'
@@ -69,8 +68,8 @@ export default {
 				customGroup: 'Backend',
 				type: 'string',
 				visibleAt: 'editor',
-				dependsOn: (p: Props) => p.useBackend,
-				validate: (p: Props) => (p.useBackend ? (p.dbName ? true : false) : true),
+				dependsOn: (p: Props) => !!p.useBackend,
+				validate: (p: Props) => (p.useBackend ? !!p.dbName : true),
 			}),
 			getPortDef({
 				name: 'backendDevMode',
@@ -80,7 +79,7 @@ export default {
 				type: 'boolean',
 				default: false,
 				visibleAt: 'editor',
-				dependsOn: (p: Props) => p.useBackend,
+				dependsOn: (p: Props) => !!p.useBackend,
 			}),
 			getPortDef({
 				name: 'backendUrl',
@@ -90,8 +89,8 @@ export default {
 				type: 'string',
 				default: 'localhost',
 				visibleAt: 'editor',
-				dependsOn: (p: Props) => (p.backendDevMode ? true : false),
-				validate: (p: Props) => (p.useBackend && p.backendDevMode ? (p.backendUrl ? true : false) : true),
+				dependsOn: (p: Props) => !!p.backendDevMode,
+				validate: (p: Props) => (p.useBackend && p.backendDevMode ? !!p.backendUrl : true),
 			}),
 			getPortDef({
 				name: 'backendPort',
@@ -100,8 +99,8 @@ export default {
 				customGroup: 'Backend',
 				type: 'number',
 				default: 7512,
-				dependsOn: (p: Props) => (p.backendDevMode ? true : false),
-				validate: (p: Props) => (p.useBackend && p.backendDevMode ? (p.backendPort ? true : false) : true),
+				dependsOn: (p: Props) => !!p.backendDevMode,
+				validate: (p: Props) => (p.useBackend && p.backendDevMode ? !!p.backendPort : true),
 			}),
 			getPortDef({
 				name: 'useAuth',
@@ -111,7 +110,7 @@ export default {
 				type: 'boolean',
 				visibleAt: 'editor',
 				default: true,
-				dependsOn: (p: Props) => (p.useBackend ? true : false),
+				dependsOn: (p: Props) => !!p.useBackend,
 			}),
 			getPortDef({
 				name: 'sessionTimeout',
@@ -121,7 +120,7 @@ export default {
 				type: 'string',
 				default: '5d',
 				visibleAt: 'editor',
-				dependsOn: (p: Props) => (p.useAuth ? true : false),
+				dependsOn: (p: Props) => !!p.useAuth,
 				validate: (p: Props) =>
 					p.backendDevMode && p.useAuth
 						? p.sessionTimeout && ms(p.sessionTimeout) >= 360000
@@ -136,7 +135,7 @@ export default {
 				customGroup: 'Auth',
 				type: 'string',
 				visibleAt: 'connection',
-				dependsOn: (p: Props) => (p.useAuth ? true : false),
+				dependsOn: (p: Props) => !!p.useAuth,
 			}),
 			getPortDef({
 				name: 'password',
@@ -145,7 +144,7 @@ export default {
 				customGroup: 'Auth',
 				type: 'string',
 				visibleAt: 'connection',
-				dependsOn: (p: Props) => (p.useAuth ? true : false),
+				dependsOn: (p: Props) => !!p.useAuth,
 			}),
 			getPortDef({ name: 'signIn', displayName: 'Sign in', group: 'Custom', customGroup: 'Auth', type: 'signal' }),
 		],
@@ -165,7 +164,7 @@ export default {
 		],
 	},
 	afterNode: {
-		getInspectInfo: (p, outProps, noodlNode) => {
+		getInspectInfo: (p, _, noodlNode) => {
 			const inspectInfo: InspectInfo[] = []
 			if (noodlNode._internal.connected)
 				inspectInfo.push({ type: 'value', value: `Network connected: ${noodlNode._internal.connected}` })
@@ -196,7 +195,7 @@ export default {
 			set(R, ['env', 'project'], project)
 			set(R, ['env', 'projectVersion'], projectVersion)
 			try {
-				if (projectDefaults) set(R, ['params', 'defaults'], eval(projectDefaults))
+				if (projectDefaults) set(R, ['params', 'defaults'], Function(`return ${projectDefaults}`)())
 			} catch (error) {
 				log.error('Project defaults error:', error)
 			}

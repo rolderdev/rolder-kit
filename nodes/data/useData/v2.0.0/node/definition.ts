@@ -58,14 +58,14 @@ export default {
 				type: 'boolean',
 				default: true,
 				visibleAt: 'editor',
-				dependsOn: (p: Props) => (p.controlled ? false : true),
+				dependsOn: (p: Props) => !p.controlled,
 			}),
 			getPortDef({
 				name: 'fetch',
 				displayName: 'Fetch',
 				group: 'Signals',
 				type: 'signal',
-				dependsOn: (p: Props) => (p.controlled ? true : false),
+				dependsOn: (p: Props) => p.controlled,
 			}),
 			getPortDef({
 				name: 'outputDbClasses',
@@ -76,9 +76,9 @@ export default {
 				validate: (p: Props) => {
 					if (R.dbClasses) {
 						const notExistsDbClasses: string[] = []
-						p.outputDbClasses?.forEach((i) => {
+						for (const i of p.outputDbClasses ?? []) {
 							if (!R.dbClasses?.[i]) notExistsDbClasses.push(i)
-						})
+						}
 						if (notExistsDbClasses.length) return `There is no such DB classes as "${notExistsDbClasses.join('", "')}"`
 					}
 					return true
@@ -149,7 +149,7 @@ export default {
 		},
 		getInspectInfo: (p: Props) => [
 			{ type: 'text', value: `API ${p.apiVersion}` },
-			{ type: 'text', value: `=== Scheme ===` },
+			{ type: 'text', value: '=== Scheme ===' },
 			{ type: 'value', value: p.fetchScheme },
 		],
 	},

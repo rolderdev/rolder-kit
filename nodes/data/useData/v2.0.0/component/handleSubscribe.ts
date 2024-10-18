@@ -25,10 +25,11 @@ export const handleSubscribe = async (p: Props, noodlNode: NoodlNode) => {
 	})
 
 	// Подписка на новые схемы.
-	schemesData.forEach(async (schemeData) => {
-		if (schemeData.channel && !subscribes.has(schemeData.schemeHash))
-			subscribeOnScheme(p, noodlNode, schemeData.schemeHash, schemeData.channel)
-	})
+	for (const schemeData of schemesData) {
+		if (schemeData.channel && !subscribes.has(schemeData.schemeHash)) {
+			await subscribeOnScheme(p, noodlNode, schemeData.schemeHash, schemeData.channel)
+		}
+	}
 }
 
 export const unsubscribe = (p: Props) => p.store.subscribes.forEach((_, schemeHash) => unSubscribeFromScheme(p, schemeHash))
@@ -104,22 +105,22 @@ export const handleNotification = async (p: Props, noodlNode: NoodlNode, schemeH
 				if (sorts) {
 					let items = schemesData[0].itemIds.map((id) => R.items[id]).filter((i) => i !== undefined)
 					items = sort(items).by(sorts.map((s) => ({ [Object.values(s)[0]]: (i: any) => get(i, Object.keys(s)[0]) }) as any))
-					schemesData.forEach((d) => (d.itemIds = items.map((i) => i.id)))
+					for (const d of schemesData) d.itemIds = items.map((i) => i.id)
 				}
 			} else {
 				// Добавление нового item.
 				setItem(rawItem, p.store.rootId)
-				schemesData.forEach((d) => d.itemIds.push(rawItem.id))
+				for (const d of schemesData) d.itemIds.push(rawItem.id)
 
 				// Нужно сменить сортировку в itemIds.
 				const sorts = schemesData[0].scheme.sorts
 				if (sorts) {
 					let items = schemesData[0].itemIds.map((id) => R.items[id]).filter((i) => i !== undefined)
 					items = sort(items).by(sorts.map((s) => ({ [Object.values(s)[0]]: (i: any) => get(i, Object.keys(s)[0]) }) as any))
-					schemesData.forEach((d) => (d.itemIds = items.map((i) => i.id)))
+					for (const d of schemesData) d.itemIds = items.map((i) => i.id)
 				}
-				schemesData.forEach((d) => d.fetched++)
-				schemesData.forEach((d) => d.total++)
+				for (const d of schemesData) d.fetched++
+				for (const d of schemesData) d.total++
 
 				// Костылечег. При добавлении нужно создать новую серверную схему и подписаться на нее.
 				// При этом, не понятно как это сделать точечно. Поэтому делаем простую перезагрузку, но без тригеров и обновления выходов.
@@ -131,9 +132,9 @@ export const handleNotification = async (p: Props, noodlNode: NoodlNode, schemeH
 
 		// Удаление существующего item.
 		if (notif.scope === 'out') {
-			schemesData.forEach((d) => (d.itemIds = d.itemIds.filter((id) => id !== itemId)))
-			schemesData.forEach((d) => d.fetched++)
-			schemesData.forEach((d) => d.total++)
+			for (const d of schemesData) d.itemIds = d.itemIds.filter((id) => id !== itemId)
+			for (const d of schemesData) d.fetched++
+			for (const d of schemesData) d.total++
 		}
 	}
 

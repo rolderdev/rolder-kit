@@ -25,22 +25,19 @@ const getTypedFetchScheme = () => {
 							}),
 						]),
 						check(
-							(dbClass) => (typeof dbClass === 'string' && R.dbClasses ? (!R.dbClasses[dbClass] ? false : true) : true),
-							`There is no such DB class.`
+							(dbClass): boolean => (typeof dbClass === 'string' && R.dbClasses ? !!R.dbClasses[dbClass] : true),
+							'There is no such DB class.'
 						),
 						check(
-							(dbClassObj) =>
-								typeof dbClassObj === 'object' && R.dbClasses ? (!R.dbClasses[dbClassObj.name] ? false : true) : true,
-							`There is no such DB class.`
+							(dbClassObj): boolean => (typeof dbClassObj === 'object' && R.dbClasses ? !!R.dbClasses[dbClassObj.name] : true),
+							'There is no such DB class.'
 						),
 						check(
 							(dbClassObj) =>
 								typeof dbClassObj === 'object' && R.dbClasses
-									? !R.dbClasses[dbClassObj.name]?.versions?.includes(dbClassObj.version)
-										? false
-										: true
+									? R.dbClasses[dbClassObj.name]?.versions?.includes(dbClassObj.version)
 									: true,
-							`There is no such version of DB class.`
+							'There is no such version of DB class.'
 						)
 					),
 					order: optional(
@@ -72,7 +69,7 @@ const getTypedFetchScheme = () => {
 								if (!Array.isArray(sorts)) isValid = false
 								else {
 									for (const sort of sorts) {
-										if (typeOf(sort as Object) === 'object') {
+										if (typeOf(sort as Record<string, unknown>) === 'object') {
 											if (!Number.isNaN(Number.parseInt(Object.keys(sort as any)[0]))) isValid = false
 											else if (!['asc', 'desc'].includes(Object.values(sort as any)[0] as any)) isValid = false
 										} else isValid = false
@@ -97,15 +94,12 @@ const getTypedFetchScheme = () => {
 						)
 					),
 				}),
-				check(
-					(scheme) => (scheme.filters && scheme.filtersFunc ? false : true),
-					'Must be "filters" or "filtersFunc", choose one.'
-				),
+				check((scheme) => !(scheme.filters && scheme.filtersFunc), 'Must be "filters" or "filtersFunc", choose one.'),
 				check((scheme) => {
 					let isValid = true
 					if (scheme.filtersFunc)
 						try {
-							eval(scheme.filtersFunc)
+							Function(scheme.filtersFunc)
 						} catch (e: any) {
 							log.error(e)
 							isValid = false
@@ -116,7 +110,7 @@ const getTypedFetchScheme = () => {
 					let isValid = true
 					if (scheme.childrenFunc)
 						try {
-							eval(scheme.childrenFunc)
+							Function(scheme.childrenFunc)
 						} catch (e: any) {
 							log.error(e)
 							isValid = false
@@ -127,7 +121,7 @@ const getTypedFetchScheme = () => {
 					let isValid = true
 					if (scheme.recursionFunc)
 						try {
-							eval(scheme.recursionFunc)
+							Function(scheme.recursionFunc)
 						} catch (e: any) {
 							log.error(e)
 							isValid = false
@@ -136,10 +130,7 @@ const getTypedFetchScheme = () => {
 				}, '"recursionFunc" eval error. Details at the console.')
 			)
 		),
-		check(
-			(schemes) => (schemes.length !== unique(schemes.map((i) => i.dbClass)).length ? false : true),
-			'dbClass must be unique.'
-		)
+		check((schemes) => schemes.length === unique(schemes.map((i) => i.dbClass)).length, 'dbClass must be unique.')
 	)
 }
 

@@ -60,10 +60,10 @@ export default class Node {
 		const rootChildIds = rootSchemesData.flatMap((i) => i.itemIds)
 
 		const aggregations: Aggregations = {}
-		rootSchemesData.forEach((i) => {
+		for (const i of rootSchemesData) {
 			const dbClassName = getDbClassName(i.scheme.dbClass)
 			if (i.aggregations) aggregations[dbClassName] = i.aggregations
-		})
+		}
 
 		flatNodes.push(
 			new Node(
@@ -77,27 +77,27 @@ export default class Node {
 			)
 		)
 
-		this.createChildren(p, rootSchemesData, rootId, 0, flatNodes)
+		Node.createChildren(p, rootSchemesData, rootId, 0, flatNodes)
 	}
 
 	static createChildren(p: Props, schemesData: SchemeData[], parentPath: string, level: number, flatNodes: Node[]) {
-		schemesData.forEach((thisNodeSchemeData) => {
+		for (const thisNodeSchemeData of schemesData) {
 			const thisNodeIds = thisNodeSchemeData.itemIds
 
-			thisNodeIds.forEach((thisNodeItemId) => {
+			for (const thisNodeItemId of thisNodeIds) {
 				let thisNodeChildIds: string[] = []
-				p.store.schemesData.forEach((childSchemeData) => {
+				for (const childSchemeData of p.store.schemesData) {
 					if (childSchemeData.path === `${thisNodeItemId}.${thisNodeSchemeData.path}`) {
 						thisNodeChildIds = thisNodeChildIds.concat(childSchemeData.itemIds)
 					}
-				})
+				}
 
 				const aggregations: Aggregations = {}
-				p.store.schemesData.forEach((childSchemeData) => {
+				for (const childSchemeData of p.store.schemesData) {
 					const dbClassName = getDbClassName(childSchemeData.scheme.dbClass)
 					if (childSchemeData.path === `${thisNodeItemId}.${thisNodeSchemeData.path}` && childSchemeData.aggregations)
 						aggregations[dbClassName] = childSchemeData.aggregations
-				})
+				}
 
 				flatNodes.push(
 					new Node(
@@ -115,9 +115,9 @@ export default class Node {
 				)
 
 				const childSchemesData = p.store.schemesData.filter((i) => i.path === `${thisNodeItemId}.${thisNodeSchemeData.path}`)
-				this.createChildren(p, childSchemesData, `${thisNodeItemId}.${parentPath}`, level + 1, flatNodes)
-			})
-		})
+				Node.createChildren(p, childSchemesData, `${thisNodeItemId}.${parentPath}`, level + 1, flatNodes)
+			}
+		}
 	}
 
 	static setNodesProxy(p: Props, flatNodes: Node[]) {
@@ -129,9 +129,11 @@ export default class Node {
 			else R.nodes[node.path] = node
 		}
 
-		Object.values(R.nodes)
-			.filter((node) => node.rootId === p.store.rootId && !flatNodes.map((i) => i.path).includes(node.path))
-			.forEach((i) => delete R.nodes[i.path])
+		for (const node of Object.values(R.nodes).filter(
+			(node) => node.rootId === p.store.rootId && !flatNodes.map((i) => i.path).includes(node.path)
+		)) {
+			delete R.nodes[node.path]
+		}
 	}
 
 	//// Методы для разработчика.

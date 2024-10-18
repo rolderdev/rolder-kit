@@ -46,7 +46,7 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 			// Перестроение иерархии.
 			Noodl.Events.on(`${p.store.rootId}_handleHierarchy`, (itemsScope) => {
 				if (itemsScope) {
-					p.store.schemesData.forEach((schemeData) => {
+					for (const schemeData of p.store.schemesData) {
 						if (schemeData.itemIds.some((id) => Object.keys(itemsScope).includes(id))) {
 							map(itemsScope, (itemId, scope) => {
 								if (itemId !== 'fetch' && scope === 'out') {
@@ -58,7 +58,7 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 								}
 							})
 						}
-					})
+					}
 
 					handleDataChanges(p, noodlNode)
 				}
@@ -80,33 +80,26 @@ export default {
 	reactive,
 	fetch: async (p: Props, noodlNode) => fetch(p, noodlNode),
 	resetSingleSelection: (p: Props, noodlNode) => {
-		Object.values(R.nodes)
-			.filter((i) => i.rootId === p.store.rootId)
-			.forEach((i) => (i.states.singleSelection.value = null))
+		for (const i of Object.values(R.nodes).filter((i) => i.rootId === p.store.rootId)) i.states.singleSelection.value = null
 
 		sendSignal(noodlNode, 'singleSelectionChanged')
 		if (!p.controlled) reactive(p, noodlNode)
 	},
 	resetMultiSelection: (p: Props, noodlNode) => {
-		Object.values(R.nodes)
-			.filter((i) => i.rootId === p.store.rootId)
-			.forEach((i) => (i.states.multiSelection.value = 'notSelected'))
+		for (const i of Object.values(R.nodes).filter((i) => i.rootId === p.store.rootId))
+			i.states.multiSelection.value = 'notSelected'
 
 		sendSignal(noodlNode, 'multiSelectionChanged')
 		if (!p.controlled) reactive(p, noodlNode)
 	},
 	expandAll: (p: Props, noodlNode) => {
-		Object.values(R.nodes)
-			.filter((i) => i.rootId === p.store.rootId)
-			.forEach((i) => (i.states.expansion.value = true))
+		for (const i of Object.values(R.nodes).filter((i) => i.rootId === p.store.rootId)) i.states.expansion.value = true
 
 		sendSignal(noodlNode, 'expansionChanged')
 		if (!p.controlled) reactive(p, noodlNode)
 	},
 	collapseAll: (p: Props, noodlNode) => {
-		Object.values(R.nodes)
-			.filter((i) => i.rootId === p.store.rootId)
-			.forEach((i) => (i.states.expansion.value = false))
+		for (const i of Object.values(R.nodes).filter((i) => i.rootId === p.store.rootId)) i.states.expansion.value = false
 
 		sendSignal(noodlNode, 'expansionChanged')
 		if (!p.controlled) reactive(p, noodlNode)
