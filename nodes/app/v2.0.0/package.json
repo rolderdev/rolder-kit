@@ -10,8 +10,8 @@
 		"@shared/system-loader-animation-v0.2.0": "workspace:*",
 		"kuzzle-sdk": "^7.13.0",
 		"ms": "^2.1.3",
-		"react-error-boundary": "^4.0.13",
-		"rxdb": "^15.34.1"
+		"react-error-boundary": "^4.1.1",
+		"rxdb": "^15.36.1"
 	},
 	"devDependencies": {
 		"@types/ms": "^0.7.34"

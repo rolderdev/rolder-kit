@@ -1,7 +1,7 @@
 {
 	"name": "old_app",
 	"dependencies": {
-		"@mantine/form": "^7.13.2",
+		"@mantine/form": "^7.13.3",
 		"@packages/add-css-to-html-head": "workspace:@packages/add-css-to-html-head-v0.1.0@^",
 		"@packages/app-v1.4.0": "workspace:*",
 		"@packages/get-formated-date-v0.2.0": "workspace:*",

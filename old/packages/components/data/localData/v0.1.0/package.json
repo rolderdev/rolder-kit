@@ -12,7 +12,7 @@
 		"just-last": "^3.2.0",
 		"just-map-object": "^2.3.0",
 		"kuzzle-sdk": "^7.13.0",
-		"rxdb": "^15.34.1",
+		"rxdb": "^15.36.1",
 		"rxjs": "^7.8.1"
 	},
 	"devDependencies": {

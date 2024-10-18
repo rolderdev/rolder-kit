@@ -1,10 +1,14 @@
 {
 	"name": "rolder-kit",
-	"version": "v1.0.0-rc21",
+	"version": "v1.0.0-rc22",
 	"private": true,
 	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
 		"@types/react": "^18.3.11",
-		"@types/react-dom": "^18.3.0",
-		"typescript": "^5.6.2"
+		"@types/react-dom": "^18.3.1",
+		"typescript": "^5.6.3"
+	},
+	"scripts": {
+		"check": "biome check --write ."
 	}
 }

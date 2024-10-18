@@ -36,9 +36,9 @@
 		"nanoid": "^5.0.7",
 		"numbro": "^2.5.0",
 		"omgopass": "^3.2.1",
-		"remeda": "^2.15.0",
+		"remeda": "^2.15.2",
 		"valibot": "1.0.0-beta.0",
-		"valtio": "^2.0.0"
+		"valtio": "^2.1.0"
 	},
 	"devDependencies": {
 		"@types/lodash.merge": "^4.6.9",
