@@ -19,7 +19,6 @@ export type Store = BaseProps & {
 	inited: boolean
 	schemesData: SchemeData[]
 	subscribes: Subscribes
-	socket?: WebSocket
 }
 
 type Subscribes = Map<string, { channel: string; notify: (notif: Notification) => void }>

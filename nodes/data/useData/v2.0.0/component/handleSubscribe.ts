@@ -110,7 +110,7 @@ export const handleNotification = async (p: Props, noodlNode: NoodlNode, schemeH
 			} else {
 				// Добавление нового item.
 				setItem(rawItem, p.store.rootId)
-				for (const d of schemesData) d.itemIds.push(rawItem.id)
+				for (const schemeData of schemesData) schemeData.itemIds.push(rawItem.id)
 
 				// Нужно сменить сортировку в itemIds.
 				const sorts = schemesData[0].scheme.sorts
@@ -133,8 +133,8 @@ export const handleNotification = async (p: Props, noodlNode: NoodlNode, schemeH
 		// Удаление существующего item.
 		if (notif.scope === 'out') {
 			for (const d of schemesData) d.itemIds = d.itemIds.filter((id) => id !== itemId)
-			for (const d of schemesData) d.fetched++
-			for (const d of schemesData) d.total++
+			for (const d of schemesData) d.fetched--
+			for (const d of schemesData) d.total--
 		}
 	}
 

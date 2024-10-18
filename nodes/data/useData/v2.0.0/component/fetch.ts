@@ -18,7 +18,6 @@ export type BackendData = {
 }
 
 export type ItemsHistory = Record<string, HistoryItem[]>
-
 export type HistoryItem = {
 	timestamp: number
 	item: Item
