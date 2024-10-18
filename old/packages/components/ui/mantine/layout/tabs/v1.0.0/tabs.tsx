@@ -1,7 +1,7 @@
-import { forwardRef, useEffect, useState } from 'react'
-import type { Props } from './types'
 import { Tabs } from '@mantine/core'
 import { getCompProps } from '@packages/get-comp-props'
+import { forwardRef, useEffect, useState } from 'react'
+import type { Props } from './types'
 
 export default forwardRef((props: Props) => {
 	const p = { ...getCompProps(props) } as Props

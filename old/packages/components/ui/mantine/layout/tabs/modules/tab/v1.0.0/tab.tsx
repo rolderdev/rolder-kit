@@ -1,9 +1,9 @@
-import { forwardRef } from 'react'
-import type { Props } from './types'
 import { Tabs } from '@mantine/core'
 import convertColor from '@packages/convert-color'
 import { getCompProps } from '@packages/get-comp-props'
 import { sendSignal } from '@packages/port-send'
+import { forwardRef } from 'react'
+import type { Props } from './types'
 
 export default forwardRef((props: Props) => {
 	const p = { ...getCompProps(props) } as Props

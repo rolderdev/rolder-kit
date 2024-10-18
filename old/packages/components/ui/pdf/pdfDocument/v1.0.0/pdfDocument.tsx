@@ -1,7 +1,7 @@
+import { sendOutput, sendSignal } from '@packages/port-send'
 import { Document, Font, pdf } from '@react-pdf/renderer'
 import { createElement, forwardRef, useImperativeHandle } from 'react'
 import type { Props } from './types'
-import { sendOutput, sendSignal } from '@packages/port-send'
 
 const PdfDocument = (props: Props) => {
 	const ch = props.children as any

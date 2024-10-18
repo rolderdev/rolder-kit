@@ -1,6 +1,6 @@
+import { Grid } from '@mantine/core'
 import { forwardRef } from 'react'
 import type { Props } from './types'
-import { Grid } from '@mantine/core'
 
 export default forwardRef((props: Props) => {
 	function Columns(p: { childIsRepeater?: boolean; children: any; gridColumnsScheme: any }) {

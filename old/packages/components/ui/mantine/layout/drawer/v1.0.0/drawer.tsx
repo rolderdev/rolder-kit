@@ -1,8 +1,8 @@
-import { forwardRef, useImperativeHandle } from 'react'
-import type { Props } from './types'
 import { Drawer, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { sendSignal } from '@packages/port-send'
+import { forwardRef, useImperativeHandle } from 'react'
+import type { Props } from './types'
 
 export default forwardRef((props: Props, ref) => {
 	const [opened, { open, close }] = useDisclosure(false)

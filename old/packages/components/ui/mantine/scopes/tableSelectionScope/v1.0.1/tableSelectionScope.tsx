@@ -1,7 +1,5 @@
-import { sendOutput, sendSignal } from '@packages/port-send'
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
-import type { Props } from './types'
 import { useForceUpdate } from '@mantine/hooks'
+import { sendOutput, sendSignal } from '@packages/port-send'
 import {
 	tableHandlerAtom,
 	tableSelectionScopeAtom,
@@ -9,6 +7,8 @@ import {
 	tableselectionByDBClassAtom,
 } from '@packages/scope'
 import { Provider as JotaiProvider, useAtom } from 'jotai'
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
+import type { Props } from './types'
 
 const HandlerTableSelectionScope = forwardRef((props: Props, ref) => {
 	// Хука дял получения и перезаписывания атома

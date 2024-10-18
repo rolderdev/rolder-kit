@@ -1,6 +1,5 @@
 import type { NodePort } from '../../port'
 import { getCustomEnumType, getType } from '../funcs/getType'
-
 ;[
 	{ value: 'item', label: 'Item' },
 	{ value: 'value', label: 'Value' },
