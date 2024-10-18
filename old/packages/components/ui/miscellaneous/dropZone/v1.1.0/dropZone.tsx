@@ -1,37 +1,37 @@
-import { forwardRef } from 'react'; //
-import { Group, Stack, Text } from '@mantine/core';
-import { Dropzone, type DropzoneProps } from '@mantine/dropzone';
-import type { Props } from './types';
-import { sendOutput, sendSignal } from '@packages/port-send';
+import { Group, Stack, Text } from '@mantine/core'
+import { Dropzone, type DropzoneProps } from '@mantine/dropzone'
+import { sendOutput, sendSignal } from '@packages/port-send'
+import { forwardRef } from 'react' //
+import type { Props } from './types'
 
-export default forwardRef(function (props: Props) {
-	const AcceptIcon = props.acceptIconName && R.libs.icons[props.acceptIconName];
-	const RejectIcon = props.rejectIconName && R.libs.icons[props.rejectIconName];
-	const IdleIcon = props.idleIconName && R.libs.icons[props.idleIconName];
-	const dropZoneTitle = props.dropZoneTitle;
+export default forwardRef((props: Props) => {
+	const AcceptIcon = props.acceptIconName && R.libs.icons[props.acceptIconName]
+	const RejectIcon = props.rejectIconName && R.libs.icons[props.rejectIconName]
+	const IdleIcon = props.idleIconName && R.libs.icons[props.idleIconName]
+	const dropZoneTitle = props.dropZoneTitle
 
 	function handleFileType(acceptedType: Props['acceptedType']): DropzoneProps['accept'] {
 		// Типы файлов подаются через запятую.
 		// Выделим их в массив
-		const acceptedTypeList = acceptedType.split(', ');
+		const acceptedTypeList = acceptedType.split(', ')
 
 		// И сформируем словарь для определения типа
-		const selectedTypes: { [key: string]: any } = {};
+		const selectedTypes: { [key: string]: any } = {}
 
 		for (const iType of acceptedTypeList) {
 			if (iType === '.pdf') {
-				selectedTypes['application/pdf'] = ['.pdf'];
+				selectedTypes['application/pdf'] = ['.pdf']
 			}
 			if (['.xlsx', '.xls', '.ods'].includes(iType)) {
-				selectedTypes['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'] = ['.xlsx'];
-				selectedTypes['application/vnd.ms-excel'] = ['.xls'];
+				selectedTypes['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'] = ['.xlsx']
+				selectedTypes['application/vnd.ms-excel'] = ['.xls']
 				// selectedTypes["application/vnd.oasis.opendocument.spreadsheet"] = [".ods"]ы
 			}
 			if (['.png', '.jpg', '.jpeg'].includes(iType)) {
-				selectedTypes['image/*'] = [];
+				selectedTypes['image/*'] = []
 			}
 		}
-		return selectedTypes;
+		return selectedTypes
 	}
 
 	return (
@@ -39,17 +39,17 @@ export default forwardRef(function (props: Props) {
 			onDrop={(files) => {
 				// Принятие файла
 				// @ts-ignore
-				sendOutput(props.noodlNode, 'file', files[0]);
-				sendOutput(props.noodlNode, 'fileName', files[0].name);
+				sendOutput(props.noodlNode, 'file', files[0])
+				sendOutput(props.noodlNode, 'fileName', files[0].name)
 				// @ts-ignore
-				sendSignal(props.noodlNode, 'loaded');
-				log.info('accepted files by DropZone', files[0]); // логи от Rolder-Kit
+				sendSignal(props.noodlNode, 'loaded')
+				log.info('accepted files by DropZone', files[0]) // логи от Rolder-Kit
 			}}
 			onReject={(files) => {
 				// Отвержение файла
 				// @ts-ignore
-				sendSignal(props.noodlNode, 'rejected');
-				log.info('rejected files by DropZone', files);
+				sendSignal(props.noodlNode, 'rejected')
+				log.info('rejected files by DropZone', files)
 			}}
 			maxSize={20 * 1024 ** 2} // Размер файла в байтах
 			accept={handleFileType(props.acceptedType)} // Тип принимаемого файла
@@ -88,5 +88,5 @@ export default forwardRef(function (props: Props) {
 				</Dropzone.Reject>
 			</Group>
 		</Dropzone>
-	);
-});
+	)
+})

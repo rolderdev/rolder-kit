@@ -1,10 +1,10 @@
-import { reactNode } from '@packages/node';
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-const justifies = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around'];
-const aligns = ['stretch', 'center', 'flex-start', 'flex-end'];
+const justifies = ['flex-start', 'flex-end', 'center', 'space-between', 'space-around']
+const aligns = ['stretch', 'center', 'flex-start', 'flex-end']
 
-import v100 from '@packages/grid-v1.0.0';
+import v100 from '@packages/grid-v1.0.0'
 
 export default reactNode(
 	'Grid',
@@ -21,7 +21,7 @@ export default reactNode(
 					displayName: 'Columns scheme',
 					group: 'Params',
 					type: 'array',
-					customs: { required: 'connection' }
+					customs: { required: 'connection' },
 				}),
 				getPort({
 					plug: 'input',
@@ -30,7 +30,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'md',
 					type: getEnumType(enums.sizes),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -39,7 +39,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 12,
 					type: 'number',
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -48,7 +48,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'flex-start',
 					type: getCustomEnumType(justifies),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -57,7 +57,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'stretch',
 					type: getCustomEnumType(aligns),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -65,10 +65,10 @@ export default reactNode(
 					displayName: 'Child is repeater',
 					group: 'Params',
 					default: false,
-					type: 'boolean'
-				})
-			]
-		}
+					type: 'boolean',
+				}),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

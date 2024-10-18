@@ -1,6 +1,6 @@
-import { reactNode } from '@shared/node-v1.0.0';
+import { reactNode } from '@shared/node-v1.0.0'
 
-import v200 from '@nodes/button-v2.0.0';
+import v200 from '@nodes/button-v2.0.0'
 
 const button = reactNode(
 	'Button',
@@ -8,9 +8,9 @@ const button = reactNode(
 		'v2.0.0': v200,
 	},
 	{ allowChildren: true, docs: '' }
-);
+)
 
-import lsV010 from '@nodes/button-left-section-v0.1.0';
+import lsV010 from '@nodes/button-left-section-v0.1.0'
 
 const buttonLeftSection = reactNode(
 	'ButtonLeftSection',
@@ -18,9 +18,9 @@ const buttonLeftSection = reactNode(
 		'v0.1.0': lsV010,
 	},
 	{ allowChildren: true, docs: '' }
-);
+)
 
-import rsV010 from '@nodes/button-right-section-v0.1.0';
+import rsV010 from '@nodes/button-right-section-v0.1.0'
 
 const buttonRightSection = reactNode(
 	'ButtonRightSection',
@@ -28,6 +28,6 @@ const buttonRightSection = reactNode(
 		'v0.1.0': rsV010,
 	},
 	{ allowChildren: true, docs: '' }
-);
+)
 
-export { button, buttonLeftSection, buttonRightSection };
+export { button, buttonLeftSection, buttonRightSection }

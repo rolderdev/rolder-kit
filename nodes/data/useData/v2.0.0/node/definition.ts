@@ -1,26 +1,26 @@
-import type { BaseJsProps } from '@shared/node-v1.0.0';
-import type { JsNodeDef } from '@shared/node-v1.0.0';
-import { getPortDef } from '@shared/port-v1.0.0';
-import getStore from './store';
-import { validateFetchScheme } from './validtaion';
-import type { FetchScheme } from './validtaion';
-import type { Store } from './store';
-import type { Nodes, NodeMultiSelection, NodeSingleSelection, NodeExpansion, MultiSelection } from '../component/Node';
-import type { HistoryItem, ItemsHistory } from '../component/fetch';
-import { unsubscribe } from '../component/handleSubscribe';
-import initState from '@shared/init-state-v0.1.0';
+import initState from '@shared/init-state-v0.1.0'
+import type { BaseJsProps } from '@shared/node-v1.0.0'
+import type { JsNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
+import type { MultiSelection, NodeExpansion, NodeMultiSelection, NodeSingleSelection, Nodes } from '../component/Node'
+import type { HistoryItem, ItemsHistory } from '../component/fetch'
+import { unsubscribe } from '../component/handleSubscribe'
+import getStore from './store'
+import type { Store } from './store'
+import { validateFetchScheme } from './validtaion'
+import type { FetchScheme } from './validtaion'
 
-export type Props = BaseJsProps & BaseProps & { store: Store };
+export type Props = BaseJsProps & BaseProps & { store: Store }
 
 export type BaseProps = {
-	apiVersion: 'v2';
-	fetchScheme?: FetchScheme;
-	outputDbClasses?: string[];
-	controlled: boolean;
-	subscribe: boolean;
-};
+	apiVersion: 'v2'
+	fetchScheme?: FetchScheme
+	outputDbClasses?: string[]
+	controlled: boolean
+	subscribe: boolean
+}
 
-export type { Nodes, NodeMultiSelection, NodeSingleSelection, NodeExpansion, MultiSelection, HistoryItem, ItemsHistory };
+export type { Nodes, NodeMultiSelection, NodeSingleSelection, NodeExpansion, MultiSelection, HistoryItem, ItemsHistory }
 
 export default {
 	hashTag: '#pre-release',
@@ -75,13 +75,13 @@ export default {
 				type: 'proplist',
 				validate: (p: Props) => {
 					if (R.dbClasses) {
-						let notExistsDbClasses: string[] = [];
+						const notExistsDbClasses: string[] = []
 						p.outputDbClasses?.forEach((i) => {
-							if (!R.dbClasses?.[i]) notExistsDbClasses.push(i);
-						});
-						if (notExistsDbClasses.length) return `There is no such DB classes as "${notExistsDbClasses.join('", "')}"`;
+							if (!R.dbClasses?.[i]) notExistsDbClasses.push(i)
+						})
+						if (notExistsDbClasses.length) return `There is no such DB classes as "${notExistsDbClasses.join('", "')}"`
 					}
-					return true;
+					return true
 				},
 			}),
 			getPortDef({ name: 'resetSingleSelection', displayName: 'Reset single selection', group: 'Signals', type: 'signal' }),
@@ -105,8 +105,8 @@ export default {
 		triggerOnInputs: () => ['apiVersion', 'fetchScheme', 'controlled', 'subscribe'],
 		transformPorts: async (p: Props, portDefs) => {
 			// Пересоздание outputDbClasses
-			const dbClasses = p.outputDbClasses;
-			portDefs.outputs = portDefs.outputs.filter((i) => !i.group?.includes('Data:'));
+			const dbClasses = p.outputDbClasses
+			portDefs.outputs = portDefs.outputs.filter((i) => !i.group?.includes('Data:'))
 			if (dbClasses)
 				dbClasses.map((dbClass) => {
 					portDefs.outputs.push(
@@ -117,7 +117,7 @@ export default {
 							type: 'array',
 							displayName: `${dbClass} Items`,
 						})
-					);
+					)
 					portDefs.outputs.push(
 						getPortDef({
 							name: `${dbClass}Fetched`,
@@ -126,7 +126,7 @@ export default {
 							type: 'number',
 							displayName: `${dbClass} Fetched`,
 						})
-					);
+					)
 					portDefs.outputs.push(
 						getPortDef({
 							name: `${dbClass}Total`,
@@ -135,7 +135,7 @@ export default {
 							type: 'number',
 							displayName: `${dbClass} Total`,
 						})
-					);
+					)
 					portDefs.outputs.push(
 						getPortDef({
 							name: `${dbClass}Aggregations`,
@@ -144,8 +144,8 @@ export default {
 							type: 'object',
 							displayName: `${dbClass} Aggregations`,
 						})
-					);
-				});
+					)
+				})
 		},
 		getInspectInfo: (p: Props) => [
 			{ type: 'text', value: `API ${p.apiVersion}` },
@@ -155,15 +155,15 @@ export default {
 	},
 	beforeComponent: {
 		initialize: async (p: Props, noodlNode) => {
-			await initState('initialized');
-			p.store = getStore(p);
+			await initState('initialized')
+			p.store = getStore(p)
 
 			// Отпишемся, когда родитель отмонтировался. Родитель может быть страницей, в таком случае пропустим.
 			if (noodlNode.nodeScope.componentOwner.parent?.innerReactComponentRef)
-				noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => unsubscribe(p);
+				noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => unsubscribe(p)
 			// Отпишемся, когда удален.
-			noodlNode._onNodeDeleted = () => unsubscribe(p);
+			noodlNode._onNodeDeleted = () => unsubscribe(p)
 		},
 	},
 	disableCustomProps: true,
-} satisfies JsNodeDef;
+} satisfies JsNodeDef

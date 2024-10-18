@@ -1,45 +1,45 @@
-import { StyleSheet, Styles, View } from "@react-pdf/renderer";;
-import Cell from "./cell";
-import { Row } from "../types";
-import utils from "./utils";
+import { StyleSheet, type Styles, View } from '@react-pdf/renderer'
+import { Row } from '../types'
+import Cell from './cell'
+import utils from './utils'
 
 const styles = StyleSheet.create({
-    row: {
-        display: 'flex',
-        flexDirection: 'row',
-        borderBottom: 1,
-        borderTop: 0,
-        borderStyle: "solid",
-        borderColor: '#bfbfbf',
-    }
+	row: {
+		display: 'flex',
+		flexDirection: 'row',
+		borderBottom: 1,
+		borderTop: 0,
+		borderStyle: 'solid',
+		borderColor: '#bfbfbf',
+	},
 })
 
 const Row = (props: Row) => {
-    const { width, height, style, isFirst, isFixed } = props
-    let prepStyle: Styles['string'] = {}
+	const { width, height, style, isFirst, isFixed } = props
+	let prepStyle: Styles['string'] = {}
 
-    if (width) prepStyle.width = width + "%"
-    else prepStyle.width = "auto"
-    if (height) prepStyle.height = height + "px"
-    else prepStyle.height = "auto"
-    if (isFirst) prepStyle.borderTop = 1
+	if (width) prepStyle.width = width + '%'
+	else prepStyle.width = 'auto'
+	if (height) prepStyle.height = height + 'px'
+	else prepStyle.height = 'auto'
+	if (isFirst) prepStyle.borderTop = 1
 
-    prepStyle = utils.combineStyles(styles.row, prepStyle)
-    prepStyle = utils.combineStyles(prepStyle, style)
+	prepStyle = utils.combineStyles(styles.row, prepStyle)
+	prepStyle = utils.combineStyles(prepStyle, style)
 
-    let widthArray = React.Children.map(props.children, (child: any) => child?.props.width || 0)
+	const widthArray = React.Children.map(props.children, (child: any) => child?.props.width || 0)
 
-    const renderChildren = React.Children.map(props.children, (child, idx) => {
-        if (child.type === Cell) {
-            return React.cloneElement(
-                child, { totalElements: React.Children.count(props.children), widthArray, isFirst: idx === 0 }
-            )
-        }
-    })
+	const renderChildren = React.Children.map(props.children, (child, idx) => {
+		if (child.type === Cell) {
+			return React.cloneElement(child, { totalElements: React.Children.count(props.children), widthArray, isFirst: idx === 0 })
+		}
+	})
 
-    return <View style={prepStyle} wrap={false} fixed={isFixed}>
-        {renderChildren}
-    </View>
+	return (
+		<View style={prepStyle} wrap={false} fixed={isFixed}>
+			{renderChildren}
+		</View>
+	)
 }
 
 export default Row

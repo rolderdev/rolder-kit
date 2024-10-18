@@ -1,32 +1,32 @@
-import type { Props } from "./types";
-import { useState, useRef, forwardRef } from 'react'
+import { sendOutput } from '@packages/port-send'
+import { forwardRef, useRef, useState } from 'react'
 import { Controlled } from 'react-codemirror2'
-import { sendOutput } from "@packages/port-send";
+import type { Props } from './types'
 
-export default forwardRef(function (props: Props) {
-    const codeMirrorRef = useRef<any>();
+export default forwardRef((props: Props) => {
+	const codeMirrorRef = useRef<any>()
 
-    // дефолтной темой является dracula
-    const [theme, setTheme] = useState('dracula')
+	// дефолтной темой является dracula
+	const [theme, setTheme] = useState('dracula')
 
-    // const handleMarkdown = (editor, data, value) => {
-    //     sendOutput(props.noodlNode, 'markdown', value)
-    // }
+	// const handleMarkdown = (editor, data, value) => {
+	//     sendOutput(props.noodlNode, 'markdown', value)
+	// }
 
-    // useEffect(() => {
-    //     codeMirrorRef.current.editor.setOption('theme', theme);
-    // }, [theme])
+	// useEffect(() => {
+	//     codeMirrorRef.current.editor.setOption('theme', theme);
+	// }, [theme])
 
-    return (
-        <Controlled
-            value={value}
-            options={{
-                mode: 'markdown',
-                theme: theme,
-                lineNumbers: true
-            }}
-        />
-    )
+	return (
+		<Controlled
+			value={value}
+			options={{
+				mode: 'markdown',
+				theme: theme,
+				lineNumbers: true,
+			}}
+		/>
+	)
 })
 
 // onBeforeChange={(editor, data, value) => {

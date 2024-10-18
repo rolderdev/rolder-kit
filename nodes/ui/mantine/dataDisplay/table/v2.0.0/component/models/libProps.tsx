@@ -1,9 +1,9 @@
 /* Модель настроек библиотеки. */
 
-import type { Props } from '../../node/definition';
-import type { Store } from '../store';
+import type { Props } from '../../node/definition'
+import type { Store } from '../store'
 
-export type LibProps = ReturnType<typeof setLibProps>;
+export type LibProps = ReturnType<typeof setLibProps>
 
 // Устанавливает настройки библиотеки.
 export const setLibProps = (p: Props, s: Store) => {
@@ -42,8 +42,8 @@ export const setLibProps = (p: Props, s: Store) => {
 		allRecordsSelectionCheckboxPropsDev: p.customProps?.allRecordsSelectionCheckboxProps,
 		// Позволим разработчику рискнуть.
 		...p.customProps,
-	};
+	}
 
-	s.libProps = libProps;
-	return libProps; // Только для типизации.
-};
+	s.libProps = libProps
+	return libProps // Только для типизации.
+}

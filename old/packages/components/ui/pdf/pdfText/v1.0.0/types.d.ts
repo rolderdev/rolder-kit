@@ -1,8 +1,8 @@
-import ReactPDF = require("@react-pdf/renderer");
-import { BaseReactProps } from "@packages/node";
+import ReactPDF = require('@react-pdf/renderer')
+import type { BaseReactProps } from '@packages/node'
 
 export type Props = BaseReactProps & {
-  wrap: boolean;
-  fixed: boolean;
-  text?: string;
-};
+	wrap: boolean
+	fixed: boolean
+	text?: string
+}

@@ -1,8 +1,8 @@
-import { reactNode } from '@packages/node';
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/checkbox-group-v1.0.0';
-import v101 from '@packages/checkbox-group-v1.0.1';
+import v100 from '@packages/checkbox-group-v1.0.0'
+import v101 from '@packages/checkbox-group-v1.0.1'
 
 export default reactNode('CheckboxGroup', {
 	'v1.0.0': {
@@ -21,7 +21,7 @@ export default reactNode('CheckboxGroup', {
 				'label',
 				'withAsterisk',
 				'grow',
-				'resetSelected'
+				'resetSelected',
 			]),
 			getPort({
 				plug: 'input',
@@ -29,7 +29,7 @@ export default reactNode('CheckboxGroup', {
 				displayName: 'Orientation',
 				group: 'Layout',
 				default: 'horizontal',
-				type: getEnumType(enums.orientations)
+				type: getEnumType(enums.orientations),
 			}),
 			getPort({
 				plug: 'input',
@@ -37,7 +37,7 @@ export default reactNode('CheckboxGroup', {
 				displayName: 'Font size',
 				group: 'Checkbox',
 				default: 'sm',
-				type: getEnumType(enums.sizes)
+				type: getEnumType(enums.sizes),
 			}),
 			getPort({ plug: 'input', name: 'checkboxColor', displayName: 'Color', group: 'Checkbox', type: 'string' }),
 			getPort({
@@ -50,12 +50,12 @@ export default reactNode('CheckboxGroup', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
-			})
+						return p.useScope ? true : false
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['selected', 'selectedItems'])
+		outputs: getPorts('output', ['selected', 'selectedItems']),
 	},
 	'v1.0.1': {
 		module: { static: v101 },
@@ -73,7 +73,7 @@ export default reactNode('CheckboxGroup', {
 				'label',
 				'withAsterisk',
 				'grow',
-				'resetSelected'
+				'resetSelected',
 			]),
 			getPort({
 				plug: 'input',
@@ -81,7 +81,7 @@ export default reactNode('CheckboxGroup', {
 				displayName: 'Orientation',
 				group: 'Layout',
 				default: 'horizontal',
-				type: getEnumType(enums.orientations)
+				type: getEnumType(enums.orientations),
 			}),
 			getPort({
 				plug: 'input',
@@ -89,7 +89,7 @@ export default reactNode('CheckboxGroup', {
 				displayName: 'Font size',
 				group: 'Checkbox',
 				default: 'sm',
-				type: getEnumType(enums.sizes)
+				type: getEnumType(enums.sizes),
 			}),
 			getPort({ plug: 'input', name: 'checkboxColor', displayName: 'Color', group: 'Checkbox', type: 'string' }),
 			getPort({
@@ -102,11 +102,11 @@ export default reactNode('CheckboxGroup', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
-			})
+						return p.useScope ? true : false
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['selected', 'selectedItems'])
-	}
-});
+		outputs: getPorts('output', ['selected', 'selectedItems']),
+	},
+})

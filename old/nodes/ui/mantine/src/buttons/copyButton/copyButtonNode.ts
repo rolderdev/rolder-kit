@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v010 from '@packages/copy-button-v0.1.0';
+import v010 from '@packages/copy-button-v0.1.0'
 
 export default reactNode(
 	'CopyButton',
@@ -50,7 +50,7 @@ export default reactNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.useScope ? true : false;
+							return p.useScope ? true : false
 						},
 					},
 				}),
@@ -89,4 +89,4 @@ export default reactNode(
 		},
 	},
 	{ docs: 'https://docs.rolder.app/#/copybutton' }
-);
+)

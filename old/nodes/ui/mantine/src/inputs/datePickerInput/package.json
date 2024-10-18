@@ -1,14 +1,14 @@
 {
-  "name": "@nodes/date-picker-input",
-  "main": "datePickerInputNode.ts",
-  "types": "datePickerInputNode.ts",
-  "dependencies": {
-    "@packages/date-picker-input-v1.0.0": "workspace:*",
-    "@packages/date-picker-input-v1.0.1": "workspace:*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@^",
-    "@packages/port": "workspace:@packages/port-v0.6.0@^"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@nodes/date-picker-input",
+	"main": "datePickerInputNode.ts",
+	"types": "datePickerInputNode.ts",
+	"dependencies": {
+		"@packages/date-picker-input-v1.0.0": "workspace:*",
+		"@packages/date-picker-input-v1.0.1": "workspace:*",
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"@packages/port": "workspace:@packages/port-v0.6.0@^"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }

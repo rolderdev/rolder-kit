@@ -1,26 +1,26 @@
-import { memo, useContext } from 'react';
-import { DataTable } from 'mantine-datatable';
-import type { TableRecord } from './models/record';
-import { TableContext } from './TableProvider';
-import { getColumns } from './models/column';
-import getRowClickHandler from './funcs/getRowClickHandler';
-import getCursorState from './funcs/getCursorState';
-import getRowBgColor from './funcs/getRowBgColor';
-import { handleRecordSelection, setSelectedIds, useHierarchySelection } from './models/multiSelection';
-import ExpansionRow from './renders/ExpansionRow';
-import { setSortState } from './models/sort';
+import { DataTable } from 'mantine-datatable'
+import { memo, useContext } from 'react'
+import { TableContext } from './TableProvider'
+import getCursorState from './funcs/getCursorState'
+import getRowBgColor from './funcs/getRowBgColor'
+import getRowClickHandler from './funcs/getRowClickHandler'
+import { getColumns } from './models/column'
+import { handleRecordSelection, setSelectedIds, useHierarchySelection } from './models/multiSelection'
+import type { TableRecord } from './models/record'
+import { setSortState } from './models/sort'
+import ExpansionRow from './renders/ExpansionRow'
 
-import rowClasses from './styles/row.module.css';
+import rowClasses from './styles/row.module.css'
 
 export default memo(() => {
-	const { get } = R.libs.just;
-	const { useSnapshot } = R.libs.valtio;
+	const { get } = R.libs.just
+	const { useSnapshot } = R.libs.valtio
 
-	const s = useContext(TableContext);
-	const snap = useSnapshot(s);
+	const s = useContext(TableContext)
+	const snap = useSnapshot(s)
 
 	// Состояние чекбоксов и реактивность на изменения выбора в иерархии.
-	useHierarchySelection(s);
+	useHierarchySelection(s)
 
 	//console.log('Table render', snap.sortState);
 	return (
@@ -74,10 +74,10 @@ export default memo(() => {
 							expanded: { recordIds: Object.keys(snap.expandedIds).filter((id) => snap.expandedIds[id]) },
 							content: ({ record, collapse }) => {
 								// Добавляем функцию collapse прямо в объект, чтбы разработчик мог запустить ее и свернуть вручную.
-								Noodl.Objects[record.id].collapse = collapse;
-								return <ExpansionRow id={record.id} />;
+								Noodl.Objects[record.id].collapse = collapse
+								return <ExpansionRow id={record.id} />
 							},
-					  }
+						}
 					: undefined
 			}
 			// Sort
@@ -85,5 +85,5 @@ export default memo(() => {
 			onSortStatusChange={(sortState) => setSortState(s, sortState)}
 			{...(snap.libProps as any)}
 		/>
-	);
-});
+	)
+})

@@ -1,7 +1,7 @@
 /* Модель настроек библиотеки. */
 
-import { z } from 'zod';
-import type { Props } from '../../types';
+import { z } from 'zod'
+import type { Props } from '../../types'
 
 // Схема задает типы данных и их дефолты.
 const libPropsSchema = z.object({
@@ -30,12 +30,12 @@ const libPropsSchema = z.object({
 	loaderSize: z.string().default('lg'),
 	loaderType: z.string().default('dots'),
 	loaderColor: z.string().default('blue'),
-	loaderBackgroundBlur: z.number().default(0.5)
-});
+	loaderBackgroundBlur: z.number().default(0.5),
+})
 
-type LibProps = z.infer<typeof libPropsSchema>;
+type LibProps = z.infer<typeof libPropsSchema>
 
 // Функция проверяет прилетевшие знаяения с портов и восстаналвивает дефолты, если значение не прилетело.
-const getLibProps = (p: Props) => libPropsSchema.parse(p);
+const getLibProps = (p: Props) => libPropsSchema.parse(p)
 
-export { getLibProps, type LibProps };
+export { getLibProps, type LibProps }

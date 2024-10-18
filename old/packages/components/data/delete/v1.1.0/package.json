@@ -1,14 +1,14 @@
 {
-  "name": "@packages/delete-v1.1.0",
-  "main": "delete.ts",
-  "types": "delete.ts",
-  "type": "module",
-  "dependencies": {
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
-    "just-clone": "6.2.0"
-  },
-  "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@^",
-    "types": "workspace:*"
-  }
+	"name": "@packages/delete-v1.1.0",
+	"main": "delete.ts",
+	"types": "delete.ts",
+	"type": "module",
+	"dependencies": {
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
+		"just-clone": "6.2.0"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"types": "workspace:*"
+	}
 }

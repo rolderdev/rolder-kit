@@ -1,16 +1,16 @@
 {
-  "name": "@packages/delete-v0.3.0",
-  "main": "delete.ts",
-  "types": "delete.ts",
-  "type": "module",
-  "dependencies": {
-    "@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@^",
-    "@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@^",
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@^"
-  },
-  "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@^",
-    "kuzzle-sdk": "^7.13.0",
-    "types": "workspace:*"
-  }
+	"name": "@packages/delete-v0.3.0",
+	"main": "delete.ts",
+	"types": "delete.ts",
+	"type": "module",
+	"dependencies": {
+		"@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@^",
+		"@packages/get-kuzzle": "workspace:@packages/get-kuzzle-v0.1.0@^",
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@^"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"kuzzle-sdk": "^7.13.0",
+		"types": "workspace:*"
+	}
 }

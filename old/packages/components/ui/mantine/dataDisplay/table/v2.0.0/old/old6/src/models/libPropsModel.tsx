@@ -1,13 +1,13 @@
 /* Модель настроек библиотеки. */
 
-import { z } from 'zod';
-import isEqual from 'lodash.isequal';
-import type { DataTableProps } from 'mantine-datatable';
-import type { CheckboxProps } from '@mantine/core';
-import type { Item } from 'types';
-import type { Props } from '../../types';
-import type { Store } from '../store';
-import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs';
+import type { CheckboxProps } from '@mantine/core'
+import isEqual from 'lodash.isequal'
+import type { DataTableProps } from 'mantine-datatable'
+import type { Item } from 'types'
+import { z } from 'zod'
+import type { Props } from '../../types'
+import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs'
+import type { Store } from '../store'
 
 // Схема задает типы данных и их дефолты.
 const libPropsSchema = z.object({
@@ -50,9 +50,9 @@ const libPropsSchema = z.object({
 		.optional(),
 	// Sort
 	sortIcons: z.object({ sorted: z.any(), unsorted: z.any() }).optional(),
-});
+})
 
-export type LibProps = z.infer<typeof libPropsSchema>;
+export type LibProps = z.infer<typeof libPropsSchema>
 
 // Метод проверяет прилетевшие знаяения с портов и восстаналвивает дефолты, если значение не прилетело.
 export const getLibProps = (p: Props, isChild: boolean) =>
@@ -62,20 +62,20 @@ export const getLibProps = (p: Props, isChild: boolean) =>
 		borderRadius: isChild ? '0px' : p.borderRadius || 'md', // округление.
 		//style: isChild ? { width: 'inherit' } : undefined, // Нужно для сценария когда таблица в развернутой строке.
 		sortIcons: (() => {
-			const SortedIcon = R.libs.icons[p.sortedIcon || 'IconArrowUp'];
-			const UnsortedIcon = R.libs.icons[p.unsortedIcon || 'IconSelector'];
+			const SortedIcon = R.libs.icons[p.sortedIcon || 'IconArrowUp']
+			const UnsortedIcon = R.libs.icons[p.unsortedIcon || 'IconSelector']
 			return {
 				sorted: SortedIcon && <SortedIcon size={14} {...p.customProps?.sortedIcon} />,
 				unsorted: UnsortedIcon && <UnsortedIcon size={14} {...p.customProps?.unsortedIcon} />,
-			};
+			}
 		})(),
 		...p.customProps?.lib, // Дадим разработчику рулить.
 		...p.customProps, // Остальные настройки, которые проверит Zod.
-	});
+	})
 
 // Метод обновляет состояние настроек.
 export const setLibProps = (store: Store, p: Props) => {
-	const newProps = getLibProps(p, store.isChild.get());
+	const newProps = getLibProps(p, store.isChild.get())
 
 	// Подменим параметры чекбокса, если используется TableScope.
 	// Такой же финт ушами, но для чекбокса в заголовке делается в useHeaderCheckboxProps.
@@ -83,22 +83,22 @@ export const setLibProps = (store: Store, p: Props) => {
 	if (store.scope.get()) {
 		const getRecordSelectionCheckboxProps: DataTableProps<Item>['getRecordSelectionCheckboxProps'] = (record, idx) => {
 			// Запустим функцию разработчика, чтобы записать indeterminate поверх.
-			const checkBoxProps: CheckboxProps = p.customProps?.getRecordSelectionCheckboxProps?.(record, idx) || {};
+			const checkBoxProps: CheckboxProps = p.customProps?.getRecordSelectionCheckboxProps?.(record, idx) || {}
 			// Реактивность только на строку.
-			const indeterminate = store.scope.get()?.indeterminated.use((s) => s[record.id]);
-			checkBoxProps.indeterminate = indeterminate;
+			const indeterminate = store.scope.get()?.indeterminated.use((s) => s[record.id])
+			checkBoxProps.indeterminate = indeterminate
 			// Установим оступ, если в развернутой строке.
-			const paddingLeft = store.tableProps.expansion.paddingLeft.use();
-			const level = store.level.use();
-			checkBoxProps.pl = paddingLeft.position === 'checkbox' ? paddingLeft.value * level : undefined;
+			const paddingLeft = store.tableProps.expansion.paddingLeft.use()
+			const level = store.level.use()
+			checkBoxProps.pl = paddingLeft.position === 'checkbox' ? paddingLeft.value * level : undefined
 
-			return checkBoxProps;
-		};
+			return checkBoxProps
+		}
 
-		newProps.getRecordSelectionCheckboxProps = getRecordSelectionCheckboxProps as any;
+		newProps.getRecordSelectionCheckboxProps = getRecordSelectionCheckboxProps as any
 		// Нужно сохранить функцию разработчика, чтобы обновлять ее при изменениях.
-		newProps.getRecordSelectionCheckboxPropsDev = p.customProps?.getRecordSelectionCheckboxProps as any;
+		newProps.getRecordSelectionCheckboxPropsDev = p.customProps?.getRecordSelectionCheckboxProps as any
 	}
 
-	if (!isEqual(stringifyObjectFuncs(store.libProps.get()), stringifyObjectFuncs(newProps))) store.libProps.assign(newProps);
-};
+	if (!isEqual(stringifyObjectFuncs(store.libProps.get()), stringifyObjectFuncs(newProps))) store.libProps.assign(newProps)
+}

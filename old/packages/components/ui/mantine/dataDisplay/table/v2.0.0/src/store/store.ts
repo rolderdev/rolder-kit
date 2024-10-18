@@ -1,31 +1,31 @@
-import { store, createStoreContext } from '@davstack/store';
-import type { DataTableColumn, DataTableSortStatus } from 'mantine-datatable';
-import type { NoodlNode } from '@packages/node';
-import { sendOutput } from '@packages/port-send';
-import type { TabelScopeStore } from '@packages/table-scope-v0.1.0/src/store';
-import type { Item } from 'types';
-import type { Props } from '../../types';
-import handleItemsChange from './handleItemsChange';
-import handleItemsContentChange from './handleItemsContentChange';
-import handleStateChange from './handleStateChange';
-import { libPropsChanged, setLibProps, type LibProps } from '../models/libPropsModel';
-import { setTableProps, tablePropsChanged, type TableProps } from '../models/tablePropsModel';
-import { columnsDefinitionChanged, setColumnsDefinition, type Column } from '../models/columnModel';
-import { itemsChanged, itemsContentChanged, setItems } from '../models/itemModel';
-import { setDefaultSelectedItem } from '../models/singleSelectionModel';
-import { setDefaultSelectedItems } from '../models/multiSelectionModel';
-import { setDefaultExpandedItems, setExpansion } from '../models/expansionModel';
-import { setDefaultSortState } from '../models/sortModel';
+import { createStoreContext, store } from '@davstack/store'
+import type { NoodlNode } from '@packages/node'
+import { sendOutput } from '@packages/port-send'
+import type { TabelScopeStore } from '@packages/table-scope-v0.1.0/src/store'
+import type { DataTableColumn, DataTableSortStatus } from 'mantine-datatable'
+import type { Item } from 'types'
+import type { Props } from '../../types'
+import { type Column, columnsDefinitionChanged, setColumnsDefinition } from '../models/columnModel'
+import { setDefaultExpandedItems, setExpansion } from '../models/expansionModel'
+import { itemsChanged, itemsContentChanged, setItems } from '../models/itemModel'
+import { type LibProps, libPropsChanged, setLibProps } from '../models/libPropsModel'
+import { setDefaultSelectedItems } from '../models/multiSelectionModel'
+import { setDefaultSelectedItem } from '../models/singleSelectionModel'
+import { setDefaultSortState } from '../models/sortModel'
+import { type TableProps, setTableProps, tablePropsChanged } from '../models/tablePropsModel'
+import handleItemsChange from './handleItemsChange'
+import handleItemsContentChange from './handleItemsContentChange'
+import handleStateChange from './handleStateChange'
 
 export type ChangeState = {
-	libProps: boolean;
-	tableProps: boolean;
-	columns: boolean;
-	items: boolean;
-	itemsContent: boolean;
-	selectedItems: boolean;
-	expandedItems: boolean;
-};
+	libProps: boolean
+	tableProps: boolean
+	columns: boolean
+	items: boolean
+	itemsContent: boolean
+	selectedItems: boolean
+	expandedItems: boolean
+}
 
 const tableStore = store({
 	// Базовые статичные настройки
@@ -82,44 +82,44 @@ const tableStore = store({
 				columns: columnsDefinitionChanged(s as any, p),
 				items: itemsChanged(s as any, p.items),
 				itemsContent: itemsContentChanged(s as any, p.items || []),
-			} as ChangeState;
+			} as ChangeState
 
 			// Запишем базовые изменения.
-			if (changeState.libProps) setLibProps(s as any, p);
-			if (changeState.tableProps) setTableProps(s as any, p);
-			if (changeState.columns) setColumnsDefinition(s as any, p);
-			if (changeState.items || changeState.itemsContent) setItems(s as any, p);
+			if (changeState.libProps) setLibProps(s as any, p)
+			if (changeState.tableProps) setTableProps(s as any, p)
+			if (changeState.columns) setColumnsDefinition(s as any, p)
+			if (changeState.items || changeState.itemsContent) setItems(s as any, p)
 
 			//// Этап зависимых данных.
 			// Зафиксируем дефолты.
-			setDefaultSelectedItem(s as any, p.defaultSelectedItem);
-			setDefaultSelectedItems(s as any, changeState, p.defaultSelectedItems);
-			setDefaultExpandedItems(s as any, changeState, p.defaultExpandedItems);
-			if (changeState.columns) setDefaultSortState(s as any);
+			setDefaultSelectedItem(s as any, p.defaultSelectedItem)
+			setDefaultSelectedItems(s as any, changeState, p.defaultSelectedItems)
+			setDefaultExpandedItems(s as any, changeState, p.defaultExpandedItems)
+			if (changeState.columns) setDefaultSortState(s as any)
 
 			// Зафиксируем изначально выбранные, прилетевшие из TableScope.
-			if (s.scopeStore.get() && !s.inited.get() && s.cold.selectedItems.get().length) changeState.selectedItems = true;
+			if (s.scopeStore.get() && !s.inited.get() && s.cold.selectedItems.get().length) changeState.selectedItems = true
 
 			// Запишем зависимые изменения.
 			// Изменения, которые нужно делать при смене содержания items.
 			// Важно выполнить до handleItemsChange, т.к. здесь пересоздается иерархия.
-			if (changeState.itemsContent) await handleItemsContentChange(s as any);
+			if (changeState.itemsContent) await handleItemsContentChange(s as any)
 			// Изменения, которые нужно делать при смене состава items.
-			if (changeState.items) await handleItemsChange(s as any, p);
+			if (changeState.items) await handleItemsChange(s as any, p)
 			// Изменения, которые нужно делать при смене настроек. Решение об изменении принимается внтури каждой функции.
-			await setExpansion(s as any, changeState);
+			await setExpansion(s as any, changeState)
 
-			s.changeState.set(changeState);
-		};
+			s.changeState.set(changeState)
+		}
 
-		return { updateColdState };
+		return { updateColdState }
 	})
 	.effects((s) => ({
 		// Запускаем каждый раз при смене changeState. Внутри функция проверит на то есть ли изменения.
 		stateChganged: () => s.changeState.onChange((changeState) => handleStateChange(s as any, changeState)),
 		levelChanged: () => s.level.onChange(() => sendOutput(s.noodlNode.get(), 'level', s.level.get()), { fireImmediately: true }),
-	}));
+	}))
 
-export type Store = typeof tableStore;
+export type Store = typeof tableStore
 
-export const { useStore, Provider } = createStoreContext(tableStore);
+export const { useStore, Provider } = createStoreContext(tableStore)

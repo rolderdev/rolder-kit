@@ -1,8 +1,8 @@
 /* Модель колонки. */
 
-import { z } from 'zod';
-import type { Store } from '../store/store';
-import isArrObjEquals from '../funcs/isArrayEquals';
+import { z } from 'zod'
+import isArrObjEquals from '../funcs/isArrayEquals'
+import type { Store } from '../store/store'
 
 // Схема задает типы данных и их дефолты.
 const columnSchema = z.object({
@@ -28,9 +28,9 @@ const columnSchema = z.object({
 				.optional(),
 		})
 		.optional(),
-});
+})
 
-export type Column = z.infer<typeof columnSchema>;
+export type Column = z.infer<typeof columnSchema>
 
 // Метод преобразует схемы колонок.
 export const getColumns = (columnsDefinition: Column[]) => {
@@ -38,20 +38,20 @@ export const getColumns = (columnsDefinition: Column[]) => {
 	return columnsDefinition.map((i, idx) =>
 		// Нужно подставить accessor, если его нет. Библиотека использует его как id, а у нас он опционален.
 		columnSchema.parse({ ...i, accessor: `${i.accessor || i.idx}`, idx, libColumn: { ...i, sortable: i.sort ? true : false } })
-	);
-};
+	)
+}
 
 // Метод обновляет состояние колонок.
 export const setColumns = (store: Store, columnsDefinition: Column[]) =>
 	store.setState((s) => {
 		// Сравниваем схемы колонок, чтобы запускать рендер только при изменениях.
-		const newColumns = getColumns(columnsDefinition);
+		const newColumns = getColumns(columnsDefinition)
 		if (
 			!isArrObjEquals(
 				s.columns.map((i) => i.libColumn),
 				newColumns.map((i) => i.libColumn)
 			)
 		) {
-			return { columns: newColumns };
-		} else return s;
-	});
+			return { columns: newColumns }
+		} else return s
+	})

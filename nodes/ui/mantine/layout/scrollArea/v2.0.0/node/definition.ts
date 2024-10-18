@@ -1,9 +1,9 @@
-import { getPortDef, margins, paddings } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, margins, paddings } from '@shared/port-v1.0.0'
 
-export type Props = BaseReactProps & { autosize: boolean; toScrollPosition?: number };
+export type Props = BaseReactProps & { autosize: boolean; toScrollPosition?: number }
 
-import Comp from '../component/ScrollArea';
+import Comp from '../component/ScrollArea'
 
 export default {
 	hashTag: '#expreimental',
@@ -84,4 +84,4 @@ export default {
 		],
 	},
 	afterNode: { getInspectInfo: (p: Props, outPtops, noodlNode) => [{ type: 'value', value: noodlNode._internal.pos }] },
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

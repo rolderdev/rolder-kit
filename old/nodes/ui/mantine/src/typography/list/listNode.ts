@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPorts, getPort, getCustomEnumType, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/list-v1.0.0';
+import v100 from '@packages/list-v1.0.0'
 
 export default reactNode('List', {
 	'v1.0.0': {
@@ -19,9 +19,9 @@ export default reactNode('List', {
 				customs: {
 					required: 'connection',
 					dependsOn(props) {
-						return props.useScope ? true : false;
-					}
-				}
+						return props.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -29,7 +29,7 @@ export default reactNode('List', {
 				displayName: 'Scheme',
 				group: 'Params',
 				type: 'array',
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -38,7 +38,7 @@ export default reactNode('List', {
 				group: 'Params',
 				type: getCustomEnumType(['unordered', 'ordered']),
 				default: 'unordered',
-				customs: { required: 'both' }
+				customs: { required: 'both' },
 			}),
 			getPort({
 				plug: 'input',
@@ -46,8 +46,8 @@ export default reactNode('List', {
 				displayName: 'With padding',
 				group: 'Layout',
 				type: 'boolean',
-				default: false
-			})
-		]
-	}
-});
+				default: false,
+			}),
+		],
+	},
+})

@@ -1,10 +1,10 @@
 /* Модель настроек библиотеки. */
 
-import { z } from 'zod';
-import isEqual from 'lodash.isequal';
-import type { Props } from '../../types';
-import type { Store } from '../store/store';
-import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs';
+import isEqual from 'lodash.isequal'
+import { z } from 'zod'
+import type { Props } from '../../types'
+import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs'
+import type { Store } from '../store/store'
 
 // Схема задает типы данных и их дефолты.
 const libPropsSchema = z.object({
@@ -41,9 +41,9 @@ const libPropsSchema = z.object({
 	isRecordSelectable: z.function().optional(),
 	// Sort
 	sortIcons: z.object({ sorted: z.any(), unsorted: z.any() }).optional(),
-});
+})
 
-export type LibProps = z.infer<typeof libPropsSchema>;
+export type LibProps = z.infer<typeof libPropsSchema>
 
 // Метод проверяет прилетевшие знаяения с портов и восстаналвивает дефолты, если значение не прилетело.
 export const getLibProps = (p: Props) =>
@@ -52,22 +52,22 @@ export const getLibProps = (p: Props) =>
 		shadow: p.isParentTable ? 'none' : p.shadow || 'sm', // Если таблица дочерняя, убираем тень
 		borderRadius: p.isParentTable ? '0px' : p.borderRadius || 'md', // и округление.
 		sortIcons: (() => {
-			const SortedIcon = R.libs.icons[p.sortedIcon || 'IconArrowUp'];
-			const UnsortedIcon = R.libs.icons[p.unsortedIcon || 'IconSelector'];
+			const SortedIcon = R.libs.icons[p.sortedIcon || 'IconArrowUp']
+			const UnsortedIcon = R.libs.icons[p.unsortedIcon || 'IconSelector']
 			return {
 				sorted: SortedIcon && <SortedIcon size={14} {...p.customProps?.sortedIcon} />,
 				unsorted: UnsortedIcon && <UnsortedIcon size={14} {...p.customProps?.unsortedIcon} />,
-			};
+			}
 		})(),
 		...p.customProps?.lib, // Дадим разработчику рулить.
 		...p.customProps, // Остальные настройки, которые проверит Zod.
-	});
+	})
 
 // Метод обновляет состояние настроек.
 export const setLibProps = (store: Store, p: Props) =>
 	store.setState((s) => {
 		// Сравниваем праметры, включая функции и вложенный customProps.
-		const newProps = getLibProps(p);
-		if (!isEqual(stringifyObjectFuncs(s.libProps), stringifyObjectFuncs(newProps))) return { libProps: newProps };
-		else return s;
-	});
+		const newProps = getLibProps(p)
+		if (!isEqual(stringifyObjectFuncs(s.libProps), stringifyObjectFuncs(newProps))) return { libProps: newProps }
+		else return s
+	})

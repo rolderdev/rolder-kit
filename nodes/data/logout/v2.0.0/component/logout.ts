@@ -1,15 +1,15 @@
-import type { JsComponent } from '@shared/node-v1.0.0';
-import { getKuzzle } from '@shared/get-kuzzle';
+import { getKuzzle } from '@shared/get-kuzzle'
+import type { JsComponent } from '@shared/node-v1.0.0'
 
 export default {
 	async logout() {
-		const K = await getKuzzle();
+		const K = await getKuzzle()
 		if (!K) {
-			return;
+			return
 		}
 
-		if (R.libs.Kuzzle) R.libs.Kuzzle.jwt = undefined;
-		await R.db.states.auth?.set('signedIn', () => false);
-		return;
+		if (R.libs.Kuzzle) R.libs.Kuzzle.jwt = undefined
+		await R.db.states.auth?.set('signedIn', () => false)
+		return
 	},
-} as JsComponent;
+} as JsComponent

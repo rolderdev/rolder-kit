@@ -1,5 +1,5 @@
-import { jsNode } from '@packages/node';
-import { getPort } from '@packages/port';
+import { jsNode } from '@packages/node'
+import { getPort } from '@packages/port'
 
 export default jsNode(
 	'logout',
@@ -18,4 +18,4 @@ export default jsNode(
 		},
 	},
 	{ color: 'purple' }
-);
+)

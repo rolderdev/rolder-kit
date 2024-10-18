@@ -1,21 +1,22 @@
-import { jsNode } from '@packages/node';
-import { getPort, getPorts } from '@packages/port';
+import { jsNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
 export default jsNode(
 	'updateByQuery',
 	{
-		'v1.0.0': { // Vezdexod
+		'v1.0.0': {
+			// Vezdexod
 			module: {
-				dynamic: import("@packages/update-by-query-v1.0.0")
+				dynamic: import('@packages/update-by-query-v1.0.0'),
 			},
 			inputs: [
 				// ...getPorts('input', ['update']),
-				getPort({ 
-					plug: 'input', 
-					name: 'updateByQuery', 
-					displayName: 'updateByQuery', 
-					group: 'Signals', 
-					type: 'signal' 
+				getPort({
+					plug: 'input',
+					name: 'updateByQuery',
+					displayName: 'updateByQuery',
+					group: 'Signals',
+					type: 'signal',
 				}),
 				getPort({
 					plug: 'input',
@@ -45,7 +46,7 @@ export default jsNode(
 					displayName: 'Optimistic',
 					group: 'Params',
 					type: 'boolean',
-					default: false
+					default: false,
 				}),
 				getPort({
 					plug: 'input',
@@ -53,8 +54,8 @@ export default jsNode(
 					displayName: 'Silent',
 					group: 'Params',
 					type: 'boolean',
-					default: false
-				})
+					default: false,
+				}),
 			],
 			outputs: [
 				...getPorts('output', ['updated', 'updating', 'data']),
@@ -66,12 +67,12 @@ export default jsNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.optimistic ? true : false;
-						}
-					}
-				})
-			]
-		}
+							return p.optimistic ? true : false
+						},
+					},
+				}),
+			],
+		},
 	},
 	{ docs: 'https://docs.rolder.app/docs/data/update-by-query.html' }
-);
+)

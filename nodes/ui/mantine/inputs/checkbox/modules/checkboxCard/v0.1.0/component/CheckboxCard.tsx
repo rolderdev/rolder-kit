@@ -1,19 +1,19 @@
-import { forwardRef, useEffect, useState } from 'react';
-import type { Props } from '../node/definition';
-import { CheckboxCard } from '@mantine/core';
-import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
+import { CheckboxCard } from '@mantine/core'
+import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0'
+import { forwardRef, useEffect, useState } from 'react'
+import type { Props } from '../node/definition'
 
-export default forwardRef(function (p: Props) {
-	const [checked, setChecked] = useState(p.checkedProp);
-
-	useEffect(() => {
-		if (p.checkedProp !== checked) setChecked(p.checkedProp);
-	}, [p.checkedProp]);
+export default forwardRef((p: Props) => {
+	const [checked, setChecked] = useState(p.checkedProp)
 
 	useEffect(() => {
-		sendOutput(p.noodlNode, 'checked', checked);
-		sendSignal(p.noodlNode, 'changed');
-	}, [checked]);
+		if (p.checkedProp !== checked) setChecked(p.checkedProp)
+	}, [p.checkedProp])
+
+	useEffect(() => {
+		sendOutput(p.noodlNode, 'checked', checked)
+		sendSignal(p.noodlNode, 'changed')
+	}, [checked])
 
 	return (
 		<CheckboxCard
@@ -24,5 +24,5 @@ export default forwardRef(function (p: Props) {
 		>
 			{p.children}
 		</CheckboxCard>
-	);
-});
+	)
+})

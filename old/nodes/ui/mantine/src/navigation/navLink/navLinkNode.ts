@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/nav-link-v1.0.0';
+import v100 from '@packages/nav-link-v1.0.0'
 
 export default reactNode(
 	'NavLink',
@@ -21,9 +21,9 @@ export default reactNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.useScope ? true : false;
-						}
-					}
+							return p.useScope ? true : false
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -32,18 +32,18 @@ export default reactNode(
 					group: 'Style',
 					type: getCustomEnumType(['light', 'filled', 'outline']),
 					default: 'light',
-					customs: { required: 'connection' }
+					customs: { required: 'connection' },
 				}),
 				getPort({
 					plug: 'input',
 					name: 'activateLabel',
 					displayName: 'Activate label',
 					group: 'States',
-					type: 'string'
-				})
+					type: 'string',
+				}),
 			],
-			outputs: getPorts('output', ['clicked'])
-		}
+			outputs: getPorts('output', ['clicked']),
+		},
 	},
 	{ allowChildren: true }
-);
+)

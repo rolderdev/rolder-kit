@@ -1,29 +1,29 @@
-import ky from 'ky';
-import type { Props } from './types';
-import { sendOutput, sendSignal } from '@packages/port-send';
+import { sendOutput, sendSignal } from '@packages/port-send'
+import ky from 'ky'
+import type { Props } from './types'
 
 export default {
 	async execute(props: Props) {
-		const { project, backendVersion, environment } = window.R.env;
-		const { noodlNode, flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion } = props;
+		const { project, backendVersion, environment } = window.R.env
+		const { noodlNode, flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion } = props
 
-		const { dbName } = R.env;
+		const { dbName } = R.env
 		if (!dbName) {
-			R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`);
-			log.error('No dbName', R.env);
-			return null;
+			R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`)
+			log.error('No dbName', R.env)
+			return null
 		}
 
 		if (flowEndpoint || selectedService) {
-			const startTime = log.start();
+			const startTime = log.start()
 
-			log.info(`Nodered ${flowEndpoint || selectedService} props`, { flowEndpoint, flowData });
+			log.info(`Nodered ${flowEndpoint || selectedService} props`, { flowEndpoint, flowData })
 			//@ts-ignore
-			sendOutput(noodlNode, 'executing', true);
+			sendOutput(noodlNode, 'executing', true)
 
-			const noderedCreds = R.params.creds?.filter((i) => i.name === 'nodered')?.[0].data;
+			const noderedCreds = R.params.creds?.filter((i) => i.name === 'nodered')?.[0].data
 			if (noderedCreds) {
-				let nodeRedUrl = '';
+				let nodeRedUrl = ''
 
 				// Если флаг useServices, то используем ссылку ссответствующего сервиса
 				if (useServices) {
@@ -31,20 +31,20 @@ export default {
 					switch (selectedService) {
 						// Сервис по загрузке файлов
 						case 'upload-files':
-							nodeRedUrl = `https://upload-files.services.${serviceVersion}.rolder.app/uploadFiles`;
-							break;
+							nodeRedUrl = `https://upload-files.services.${serviceVersion}.rolder.app/uploadFiles`
+							break
 						// Сервис по копированию классов
 						case 'copyDBClass':
-							nodeRedUrl = `https://copy-base.services.${serviceVersion}.rolder.app/copyDBClass`;
-							break;
+							nodeRedUrl = `https://copy-base.services.${serviceVersion}.rolder.app/copyDBClass`
+							break
 						// Следующий сервис
 						// ...
 					}
 				} else {
-					nodeRedUrl = `https://${project}.nodered.${backendVersion}.rolder.app/${flowEndpoint}`;
+					nodeRedUrl = `https://${project}.nodered.${backendVersion}.rolder.app/${flowEndpoint}`
 				}
 
-				const formData = new FormData();
+				const formData = new FormData()
 				if (flowData) {
 					if (flowData.params)
 						formData.append(
@@ -55,9 +55,9 @@ export default {
 								backendVersion: environment || backendVersion,
 								...flowData.params,
 							})
-						);
-					if (flowData.data) formData.append('data', JSON.stringify(flowData.data));
-					if (flowData.files) flowData.files.map((i) => formData.append(encodeURIComponent(i.name), i));
+						)
+					if (flowData.data) formData.append('data', JSON.stringify(flowData.data))
+					if (flowData.files) flowData.files.map((i) => formData.append(encodeURIComponent(i.name), i))
 				}
 
 				const jsonResp = await ky
@@ -68,18 +68,18 @@ export default {
 						body: formData,
 						timeout: timeout, // Vezdexod
 					})
-					.json();
+					.json()
 
 				//@ts-ignore
-				sendOutput(noodlNode, 'result', jsonResp);
+				sendOutput(noodlNode, 'result', jsonResp)
 				//@ts-ignore
-				sendOutput(noodlNode, 'executing', false);
+				sendOutput(noodlNode, 'executing', false)
 				//@ts-ignore
-				sendSignal(noodlNode, 'executed');
+				sendSignal(noodlNode, 'executed')
 
-				log.info(`Nodered ${flowEndpoint}`, jsonResp);
-				log.end(`Nodered: ${flowEndpoint}`, startTime);
+				log.info(`Nodered ${flowEndpoint}`, jsonResp)
+				log.end(`Nodered: ${flowEndpoint}`, startTime)
 			}
 		}
 	},
-};
+}

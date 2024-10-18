@@ -3,14 +3,14 @@
 Создается это за счет Reference - куда бы не передавался store, создается только ссылка на него, а не копия.
 Точечная реактивность позвоялет в любом месте использовать actions, изменяя состояние нужной части таблицы. */
 
-import { flow, t, type Instance as TInstance } from 'mobx-state-tree';
-import type { Item } from 'types';
-import { getLibProps, libPropsModel } from './libPropsModel';
-import { getTableProps, tablePropsModel } from './tablePropsModel';
-import { columnModel, type Column } from './columnModel';
-import { recordModel } from './recordModel';
-import type { NoodlNode } from '@packages/node';
-import type { Props } from '../../types';
+import type { NoodlNode } from '@packages/node'
+import { type Instance as TInstance, flow, t } from 'mobx-state-tree'
+import type { Item } from 'types'
+import type { Props } from '../../types'
+import { type Column, columnModel } from './columnModel'
+import { getLibProps, libPropsModel } from './libPropsModel'
+import { recordModel } from './recordModel'
+import { getTableProps, tablePropsModel } from './tablePropsModel'
 
 // Вытягивает тип из модели
 interface Store extends TInstance<typeof storeModel> {}
@@ -23,7 +23,7 @@ const storeModel = t
 		tableProps: tablePropsModel, // наши специфичные настройки
 		// Здесь map, т.к. у колонок нет id. В map ключ и есть id, за счет чего колонки становятся отдельными реактивными объектами.
 		columns: t.map(columnModel),
-		records: t.map(recordModel) // Здесь map для удобстав использования.
+		records: t.map(recordModel), // Здесь map для удобстав использования.
 		//templateCells: templateCellModel // Хранилище кастомных ячеек.
 	})
 	.views((self) => ({
@@ -31,13 +31,13 @@ const storeModel = t
 		get expandedIds() {
 			return Array.from(self.records.values())
 				.filter((i) => i.expanded)
-				.map((i) => i.id);
-		}
+				.map((i) => i.id)
+		},
 	}))
 	.actions((self) => {
 		function setProps(p: Props) {
-			self.libProps = getLibProps(p);
-			self.tableProps = getTableProps(p);
+			self.libProps = getLibProps(p)
+			self.tableProps = getTableProps(p)
 		}
 
 		function setColumns(columnsDefinition: Column[]) {
@@ -46,14 +46,14 @@ const storeModel = t
 				// columnIdx - индекс колонки как ключ в map и как ключ в объекте для удобства разработки.
 				// columnDefinition - оригинальный объект, сюда разработчик кладет стандартные праметры библиотеки. Реактивность на весь объект.
 				self.columns.set(columnIdx, { ...columnDefinition, columnIdx, columnDefinition })
-			);
+			)
 		}
 
 		function setExpandedRows(expandedRowIds: string[]) {
 			Array.from(self.records.values()).map((record) => {
-				if (expandedRowIds.includes(record.id)) record.setExpanded(true);
-				else record.setExpanded(false);
-			});
+				if (expandedRowIds.includes(record.id)) record.setExpanded(true)
+				else record.setExpanded(false)
+			})
 		}
 
 		const setTableState = flow(function* setState(columnsDefinition: Column[], items: Item[]) {
@@ -69,7 +69,7 @@ const storeModel = t
 			// Установка колонок
 			// Здесь мы только добавляем колонки, не делая преобразований как в прошлых версиях. Все кастомные потребности теперь в columnModel.
 			columnsDefinition.map((column, columnIdx) => {
-				self.columns.set(columnIdx, { ...column, columnIdx, columnDefinition: column });
+				self.columns.set(columnIdx, { ...column, columnIdx, columnDefinition: column })
 				// Подготовим кастомные ячейки для одной колонки, если есть. Не страшно, что записываем каждый раз, MobX это разруливает.
 				/* const templateCells = new Map<string, React.ReactNode>();
 				if (column.type === 'template' && column.template && templateCellsItemsStore.size > 0) {
@@ -80,7 +80,7 @@ const storeModel = t
 							?.templateCells.set(itemId, itemColumnsCells.find((i: any) => i.columnIdx === columnIdx).reactNode);
 					}
 				} */
-			});
+			})
 
 			// Добавление и обновление records
 
@@ -105,14 +105,14 @@ const storeModel = t
 			// Удаление records
 			Array.from(self.records.keys()).map((recordId) => {
 				if (!items.map((i) => i.id).includes(recordId)) {
-					self.records.delete(recordId);
+					self.records.delete(recordId)
 				}
-			});
+			})
 
-			self.fetching = false; // Остановим анимацию загрузки
-		});
+			self.fetching = false // Остановим анимацию загрузки
+		})
 
-		return { setProps, setColumns, setExpandedRows, setTableState };
-	});
+		return { setProps, setColumns, setExpandedRows, setTableState }
+	})
 
-export { storeModel, type Store };
+export { storeModel, type Store }

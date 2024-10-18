@@ -1,16 +1,16 @@
-import { Anchor } from '@mantine/core';
-import { forwardRef, useEffect, useState } from 'react';
-import type { Props } from './types';
-import { getCompProps } from '@packages/get-comp-props';
+import { Anchor } from '@mantine/core'
+import { getCompProps } from '@packages/get-comp-props'
+import { forwardRef, useEffect, useState } from 'react'
+import type { Props } from './types'
 
-export default forwardRef(function (props: Props, ref) {
-	const { numbro } = R.libs;
-	const { getValue, getMasked, getFormatedDate } = R.utils;
+export default forwardRef((props: Props, ref) => {
+	const { numbro } = R.libs
+	const { getValue, getMasked, getFormatedDate } = R.utils
 
-	const p = { ...getCompProps(props, props.itemSource) } as Props;
-	const { itemSource } = p;
+	const p = { ...getCompProps(props, props.itemSource) } as Props
+	const { itemSource } = p
 
-	const [value, setValue] = useState('');
+	const [value, setValue] = useState('')
 
 	const valueSource =
 		p.dataSource === 'item'
@@ -18,28 +18,28 @@ export default forwardRef(function (props: Props, ref) {
 				? String(getValue.v8(itemSource, p.sourceField))
 				: getValue.v8(itemSource, p.sourceField)
 			: typeof p.valueSource === 'number'
-			? String(p.valueSource)
-			: p.valueSource;
+				? String(p.valueSource)
+				: p.valueSource
 
-	const link = p.linkFromItem ? getValue.v8(itemSource, p.linkField) : p.link;
+	const link = p.linkFromItem ? getValue.v8(itemSource, p.linkField) : p.link
 
 	useEffect(() => {
 		if (valueSource)
 			switch (p.textFormat) {
 				case 'none':
-					setValue(valueSource);
-					break;
+					setValue(valueSource)
+					break
 				case 'number':
-					setValue(numbro(valueSource || 0).format(p.numberFormat));
-					break;
+					setValue(numbro(valueSource || 0).format(p.numberFormat))
+					break
 				case 'date':
-					setValue(getFormatedDate.v2({ valueSource }, 'valueSource', p.dateFormat) || '');
-					break;
+					setValue(getFormatedDate.v2({ valueSource }, 'valueSource', p.dateFormat) || '')
+					break
 				case 'mask':
-					setValue(getMasked.v2({ type: 'pattern', maskPattern: p.textMask }, valueSource) || '');
-					break;
+					setValue(getMasked.v2({ type: 'pattern', maskPattern: p.textMask }, valueSource) || '')
+					break
 			}
-	}, [valueSource]);
+	}, [valueSource])
 
 	return (
 		<Anchor
@@ -52,5 +52,5 @@ export default forwardRef(function (props: Props, ref) {
 		>
 			{value}
 		</Anchor>
-	);
-});
+	)
+})

@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/checkbox-v1.0.0';
+import v100 from '@packages/checkbox-v1.0.0'
 
 export default reactNode('Checkbox', {
 	'v1.0.0': {
@@ -20,7 +20,7 @@ export default reactNode('Checkbox', {
 				'formField',
 				'radius',
 				'size',
-				'description'
+				'description',
 			]),
 			getPort({
 				plug: 'input',
@@ -29,7 +29,7 @@ export default reactNode('Checkbox', {
 				group: 'Layout',
 				default: 'right',
 				type: getCustomEnumType(['right', 'left']),
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -41,11 +41,11 @@ export default reactNode('Checkbox', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
-			})
+						return p.useScope ? true : false
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['changed', 'checked'])
-	}
-});
+		outputs: getPorts('output', ['changed', 'checked']),
+	},
+})

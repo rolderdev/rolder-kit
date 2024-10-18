@@ -1,87 +1,87 @@
-import type { CollapseProps, LoaderProps, MantineColor, MantineShadow, MantineSize } from '@mantine/core';
-import type { BaseReactProps, NoodlNode } from '@packages/node';
-import type { DataTableColumn, DataTableProps } from 'mantine-datatable';
-import type { Column } from './src/models/columnModel';
-import type { IconProps } from '@tabler/icons-react';
-import type { Item } from 'types';
+import type { CollapseProps, LoaderProps, MantineColor, MantineShadow, MantineSize } from '@mantine/core'
+import type { BaseReactProps, NoodlNode } from '@packages/node'
+import type { IconProps } from '@tabler/icons-react'
+import type { DataTableColumn, DataTableProps } from 'mantine-datatable'
+import type { Item } from 'types'
+import type { Column } from './src/models/columnModel'
 
 export type Props = BaseReactProps & {
 	// Base
 	customProps?: {
-		collapse: CollapseProps;
+		collapse: CollapseProps
 		// Multi selection
-		allRecordsSelectionCheckboxProps: DataTableProps<Item>['allRecordsSelectionCheckboxProps'];
-		selectionCheckboxProps: DataTableProps<Item>['selectionCheckboxProps'];
-		getRecordSelectionCheckboxProps: DataTableProps<Item>['getRecordSelectionCheckboxProps'];
+		allRecordsSelectionCheckboxProps: DataTableProps<Item>['allRecordsSelectionCheckboxProps']
+		selectionCheckboxProps: DataTableProps<Item>['selectionCheckboxProps']
+		getRecordSelectionCheckboxProps: DataTableProps<Item>['getRecordSelectionCheckboxProps']
 		// Sort
-		sortedIcon: IconProps;
-		unsortedIcon: IconProps;
-	};
-	columnsDefinition?: Column[];
-	items?: Item[];
-	onRowClick: 'disabled' | 'signal' | 'function' | 'singleSelection' | 'expansion';
-	clickFilterFunc?: any;
-	textSelectionDisabled?: boolean;
+		sortedIcon: IconProps
+		unsortedIcon: IconProps
+	}
+	columnsDefinition?: Column[]
+	items?: Item[]
+	onRowClick: 'disabled' | 'signal' | 'function' | 'singleSelection' | 'expansion'
+	clickFilterFunc?: any
+	textSelectionDisabled?: boolean
 
 	// Scope
-	scopeDbClass?: string;
+	scopeDbClass?: string
 
 	// States
 	//	fetching?: boolean;
 	//dataFetchError?: boolean;
 
 	// Layout
-	noHeader: boolean;
+	noHeader: boolean
 
 	// Dimensions
-	minHeight?: string;
-	horizontalSpacing?: MantineSize;
-	verticalSpacing?: MantineSize;
-	fz?: MantineSize;
+	minHeight?: string
+	horizontalSpacing?: MantineSize
+	verticalSpacing?: MantineSize
+	fz?: MantineSize
 
 	// Table styles
-	shadow?: MantineShadow;
-	withTableBorder?: boolean;
-	borderRadius?: MantineSize;
-	withColumnBorders?: boolean;
-	loaderColor?: MantineColor;
+	shadow?: MantineShadow
+	withTableBorder?: boolean
+	borderRadius?: MantineSize
+	withColumnBorders?: boolean
+	loaderColor?: MantineColor
 
 	// Row styles
-	rowStyles?: boolean;
-	withRowBorders?: boolean;
-	striped?: boolean;
-	rowBackgroundColor?: MantineColor;
-	stripedColor?: MantineColor;
-	highlightOnHover?: boolean;
-	highlightOnHoverColor?: MantineColor;
-	singleSelectionRowBgColor?: MantineColor;
-	mutliSelectionRowBgColor?: MantineColor;
-	paddingLeftFunc?: any;
+	rowStyles?: boolean
+	withRowBorders?: boolean
+	striped?: boolean
+	rowBackgroundColor?: MantineColor
+	stripedColor?: MantineColor
+	highlightOnHover?: boolean
+	highlightOnHoverColor?: MantineColor
+	singleSelectionRowBgColor?: MantineColor
+	mutliSelectionRowBgColor?: MantineColor
+	paddingLeftFunc?: any
 
 	// Single selection
-	defaultSelectedItem?: Item;
-	selectedItem?: Item;
-	singleSelectionFilterFunc: any;
+	defaultSelectedItem?: Item
+	selectedItem?: Item
+	singleSelectionFilterFunc: any
 
 	// Multi selection
-	multiSelection?: boolean;
-	defaultSelectedItems?: Item[];
-	selectedItems?: Item[];
-	multiSelectionFilterFunc: any;
+	multiSelection?: boolean
+	defaultSelectedItems?: Item[]
+	selectedItems?: Item[]
+	multiSelectionFilterFunc: any
 
 	// Expansion
-	expansion?: boolean;
-	expansionTemplate: string;
-	allowMultiple?: boolean;
-	defaultExpandedItems?: Item[];
-	expandedItems?: Item[];
-	expansionFilterFunc?: any;
+	expansion?: boolean
+	expansionTemplate: string
+	allowMultiple?: boolean
+	defaultExpandedItems?: Item[]
+	expandedItems?: Item[]
+	expansionFilterFunc?: any
 
 	// Sort
-	sort: boolean;
-	sortType: 'frontend' | 'backend';
-	sortedIcon: string;
-	unsortedIcon: string;
+	sort: boolean
+	sortType: 'frontend' | 'backend'
+	sortedIcon: string
+	unsortedIcon: string
 
 	/* 
   
@@ -99,7 +99,7 @@ export type Props = BaseReactProps & {
   
   // Filter
   table2FilterType: "frontend" | "backend";*/
-};
+}
 
 /* export type Store = {
 	noodlNode: NoodlNode;

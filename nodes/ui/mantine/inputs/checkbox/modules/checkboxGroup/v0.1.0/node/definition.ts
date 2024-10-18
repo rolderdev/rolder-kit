@@ -1,10 +1,10 @@
-import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import type { Item } from '@shared/types-v0.1.0';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, sizes } from '@shared/port-v1.0.0'
+import type { Item } from '@shared/types-v0.1.0'
 
-export type Props = BaseReactProps & { defaultValues?: string[]; valuePath: string; items?: Item[] };
+export type Props = BaseReactProps & { defaultValues?: string[]; valuePath: string; items?: Item[] }
 
-import Comp from '../component/CheckboxGroup';
+import Comp from '../component/CheckboxGroup'
 
 export default {
 	hashTag: '#expreimental',
@@ -26,8 +26,8 @@ export default {
 				type: 'array',
 				validate: (p: Props) => {
 					if (p.defaultValues && p.defaultValues.some((i) => typeof i !== 'string'))
-						return `"Default values" must be array of string, got: ${JSON.stringify(p.defaultValues)}`;
-					return true;
+						return `"Default values" must be array of string, got: ${JSON.stringify(p.defaultValues)}`
+					return true
 				},
 			}),
 			getPortDef({ name: 'label', displayName: 'Label', group: 'Params', type: 'string' }),
@@ -49,4 +49,4 @@ export default {
 			getPortDef({ name: 'changed', displayName: 'Changed', group: 'Signals', type: 'signal' }),
 		],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/popover-v1.0.0';
+import v100 from '@packages/popover-v1.0.0'
 
 const positions = [
 	'bottom',
@@ -15,8 +15,8 @@ const positions = [
 	'right-end',
 	'right-start',
 	'top-end',
-	'top-start'
-];
+	'top-start',
+]
 
 export default reactNode(
 	'Popover',
@@ -34,7 +34,7 @@ export default reactNode(
 					group: 'Style',
 					default: true,
 					type: 'boolean',
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -43,11 +43,11 @@ export default reactNode(
 					group: 'Layout',
 					default: 'bottom',
 					type: getCustomEnumType(positions),
-					customs: { required: 'both' }
-				})
+					customs: { required: 'both' },
+				}),
 			],
-			outputs: getPorts('output', ['opened', 'closed'])
-		}
+			outputs: getPorts('output', ['opened', 'closed']),
+		},
 	},
 	{ allowChildren: true }
-);
+)

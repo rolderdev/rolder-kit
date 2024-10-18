@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPort } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getPort } from '@packages/port'
 
-import v010 from '@packages/table-scope-v0.1.0';
+import v010 from '@packages/table-scope-v0.1.0'
 
 export default reactNode(
 	'TableScope',
@@ -33,8 +33,8 @@ export default reactNode(
 									group: 'Data',
 									type: 'array',
 									displayName: `Selected ${i}`,
-								}));
-							else return [];
+								}))
+							else return []
 						},
 					},
 				}),
@@ -51,4 +51,4 @@ export default reactNode(
 		},
 	},
 	{ allowChildren: true }
-);
+)

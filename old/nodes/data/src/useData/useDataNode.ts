@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getEnumType, getPort, getPorts, getType } from '@packages/port';
-import getEnum from '@packages/port/src/funcs/getEnum';
-import { lazy } from 'react';
+import { reactNode } from '@packages/node'
+import { getEnumType, getPort, getPorts, getType } from '@packages/port'
+import getEnum from '@packages/port/src/funcs/getEnum'
+import { lazy } from 'react'
 
 export default reactNode(
 	'UseData',
@@ -27,7 +27,7 @@ export default reactNode(
 								group: 'DB classes',
 								type: 'array',
 								displayName: i,
-							}));
+							}))
 						},
 					},
 				}),
@@ -80,7 +80,7 @@ export default reactNode(
 					type: getType('proplist', 'editor'),
 					customs: {
 						dependsOn(p) {
-							return p.useDataContext === true;
+							return p.useDataContext === true
 						},
 					},
 				}),
@@ -92,7 +92,7 @@ export default reactNode(
 					type: getType('proplist', 'editor'),
 					customs: {
 						dependsOn(p) {
-							return p.useDataContext === true;
+							return p.useDataContext === true
 						},
 					},
 				}),
@@ -140,7 +140,7 @@ export default reactNode(
 					type: getType('proplist', 'editor'),
 					customs: {
 						dependsOn(p) {
-							return p.useDataContext === true;
+							return p.useDataContext === true
 						},
 					},
 				}),
@@ -152,7 +152,7 @@ export default reactNode(
 					type: getType('proplist', 'editor'),
 					customs: {
 						dependsOn(p) {
-							return p.useDataContext === true;
+							return p.useDataContext === true
 						},
 					},
 				}),
@@ -188,30 +188,30 @@ export default reactNode(
 									group: 'Data',
 									type: 'array',
 									displayName: `${i}Items`,
-								}));
+								}))
 								const fetchedOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Fetched`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Fetched`,
-								}));
+								}))
 								const totalOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Total`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Total`,
-								}));
+								}))
 								const aggsOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Aggregations`,
 									group: 'Data',
 									type: 'object',
 									displayName: `${i}Aggregations`,
-								}));
-								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs];
-							} else return [];
+								}))
+								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs]
+							} else return []
 						},
 					},
 				}),
@@ -239,7 +239,7 @@ export default reactNode(
 					type: getType('string', 'connection'),
 					customs: {
 						dependsOn(p) {
-							return p.searchEnabled ? true : false;
+							return p.searchEnabled ? true : false
 						},
 					},
 				}),
@@ -260,7 +260,7 @@ export default reactNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -272,7 +272,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -284,7 +284,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -315,30 +315,30 @@ export default reactNode(
 									group: 'Data',
 									type: 'array',
 									displayName: `${i}Items`,
-								}));
+								}))
 								const fetchedOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Fetched`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Fetched`,
-								}));
+								}))
 								const totalOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Total`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Total`,
-								}));
+								}))
 								const aggsOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Aggregations`,
 									group: 'Data',
 									type: 'object',
 									displayName: `${i}Aggregations`,
-								}));
-								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs];
-							} else return [];
+								}))
+								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs]
+							} else return []
 						},
 					},
 				}),
@@ -366,7 +366,7 @@ export default reactNode(
 					type: getType('string', 'connection'),
 					customs: {
 						dependsOn(p) {
-							return p.searchEnabled ? true : false;
+							return p.searchEnabled ? true : false
 						},
 					},
 				}),
@@ -387,7 +387,7 @@ export default reactNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -399,7 +399,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -411,7 +411,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -444,30 +444,30 @@ export default reactNode(
 									group: 'Data',
 									type: 'array',
 									displayName: `${i}Items`,
-								}));
+								}))
 								const fetchedOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Fetched`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Fetched`,
-								}));
+								}))
 								const totalOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Total`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Total`,
-								}));
+								}))
 								const aggsOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Aggregations`,
 									group: 'Data',
 									type: 'object',
 									displayName: `${i}Aggregations`,
-								}));
-								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs];
-							} else return [];
+								}))
+								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs]
+							} else return []
 						},
 					},
 				}),
@@ -480,21 +480,21 @@ export default reactNode(
 					customs: {
 						required: 'connection',
 						validate(p) {
-							if (!p.fetchScheme) return true;
+							if (!p.fetchScheme) return true
 							else {
-								const sizeDbClasses: string[] = [];
+								const sizeDbClasses: string[] = []
 								p.fetchScheme.map((i: any) => {
-									if (i.size > 1000) sizeDbClasses.push(i.dbClass);
-								});
-								const historyDbClasses: string[] = [];
+									if (i.size > 1000) sizeDbClasses.push(i.dbClass)
+								})
+								const historyDbClasses: string[] = []
 								p.fetchScheme.map((i: any) => {
-									if (i.history > 1000) historyDbClasses.push(i.dbClass);
-								});
+									if (i.history > 1000) historyDbClasses.push(i.dbClass)
+								})
 								if (sizeDbClasses.length) {
-									return `Size should be less or equal 1000. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
+									return `Size should be less or equal 1000. Mismatched DB classes: ${sizeDbClasses.join(', ')}`
 								} else if (historyDbClasses.length) {
-									return `History should be less or equal 1000. Mismatched DB classes: ${historyDbClasses.join(', ')}`;
-								} else return true;
+									return `History should be less or equal 1000. Mismatched DB classes: ${historyDbClasses.join(', ')}`
+								} else return true
 							}
 						},
 					},
@@ -515,7 +515,7 @@ export default reactNode(
 					type: getType('string', 'connection'),
 					customs: {
 						dependsOn(p) {
-							return p.searchEnabled ? true : false;
+							return p.searchEnabled ? true : false
 						},
 					},
 				}),
@@ -536,7 +536,7 @@ export default reactNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -548,7 +548,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -560,7 +560,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -593,30 +593,30 @@ export default reactNode(
 									group: 'Data',
 									type: 'array',
 									displayName: `${i}Items`,
-								}));
+								}))
 								const fetchedOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Fetched`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Fetched`,
-								}));
+								}))
 								const totalOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Total`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Total`,
-								}));
+								}))
 								const aggsOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Aggregations`,
 									group: 'Data',
 									type: 'object',
 									displayName: `${i}Aggregations`,
-								}));
-								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs];
-							} else return [];
+								}))
+								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs]
+							} else return []
 						},
 					},
 				}),
@@ -628,21 +628,21 @@ export default reactNode(
 					type: 'array',
 					customs: {
 						validate(p) {
-							if (!p.fetchScheme) return true;
+							if (!p.fetchScheme) return true
 							else {
-								const sizeDbClasses: string[] = [];
+								const sizeDbClasses: string[] = []
 								p.fetchScheme.map((i: any) => {
-									if (i.size > 1000) sizeDbClasses.push(i.dbClass);
-								});
-								const historyDbClasses: string[] = [];
+									if (i.size > 1000) sizeDbClasses.push(i.dbClass)
+								})
+								const historyDbClasses: string[] = []
 								p.fetchScheme.map((i: any) => {
-									if (i.history > 1000) historyDbClasses.push(i.dbClass);
-								});
+									if (i.history > 1000) historyDbClasses.push(i.dbClass)
+								})
 								if (sizeDbClasses.length) {
-									return `Size should be less or equal 1000. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
+									return `Size should be less or equal 1000. Mismatched DB classes: ${sizeDbClasses.join(', ')}`
 								} else if (historyDbClasses.length) {
-									return `History should be less or equal 1000. Mismatched DB classes: ${historyDbClasses.join(', ')}`;
-								} else return true;
+									return `History should be less or equal 1000. Mismatched DB classes: ${historyDbClasses.join(', ')}`
+								} else return true
 							}
 						},
 					},
@@ -663,7 +663,7 @@ export default reactNode(
 					type: getType('string', 'connection'),
 					customs: {
 						dependsOn(p) {
-							return p.searchEnabled ? true : false;
+							return p.searchEnabled ? true : false
 						},
 					},
 				}),
@@ -684,7 +684,7 @@ export default reactNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -696,7 +696,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -708,7 +708,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -743,30 +743,30 @@ export default reactNode(
 									group: 'Data',
 									type: 'array',
 									displayName: `${i}Items`,
-								}));
+								}))
 								const fetchedOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Fetched`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Fetched`,
-								}));
+								}))
 								const totalOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Total`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Total`,
-								}));
+								}))
 								const aggsOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Aggregations`,
 									group: 'Data',
 									type: 'object',
 									displayName: `${i}Aggregations`,
-								}));
-								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs];
-							} else return [];
+								}))
+								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs]
+							} else return []
 						},
 					},
 				}),
@@ -778,21 +778,21 @@ export default reactNode(
 					type: 'array',
 					customs: {
 						validate(p) {
-							if (!p.fetchScheme) return true;
+							if (!p.fetchScheme) return true
 							else {
-								const sizeDbClasses: string[] = [];
+								const sizeDbClasses: string[] = []
 								p.fetchScheme.map((i: any) => {
-									if (i.size > 1000) sizeDbClasses.push(i.dbClass);
-								});
-								const historyDbClasses: string[] = [];
+									if (i.size > 1000) sizeDbClasses.push(i.dbClass)
+								})
+								const historyDbClasses: string[] = []
 								p.fetchScheme.map((i: any) => {
-									if (i.history > 1000) historyDbClasses.push(i.dbClass);
-								});
+									if (i.history > 1000) historyDbClasses.push(i.dbClass)
+								})
 								if (sizeDbClasses.length) {
-									return `Size should be less or equal 1000. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
+									return `Size should be less or equal 1000. Mismatched DB classes: ${sizeDbClasses.join(', ')}`
 								} else if (historyDbClasses.length) {
-									return `History should be less or equal 1000. Mismatched DB classes: ${historyDbClasses.join(', ')}`;
-								} else return true;
+									return `History should be less or equal 1000. Mismatched DB classes: ${historyDbClasses.join(', ')}`
+								} else return true
 							}
 						},
 					},
@@ -813,7 +813,7 @@ export default reactNode(
 					type: getType('string', 'connection'),
 					customs: {
 						dependsOn(p) {
-							return p.searchEnabled ? true : false;
+							return p.searchEnabled ? true : false
 						},
 					},
 				}),
@@ -834,7 +834,7 @@ export default reactNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -846,7 +846,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -858,7 +858,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -901,30 +901,30 @@ export default reactNode(
 									group: 'Data',
 									type: 'array',
 									displayName: `${i}Items`,
-								}));
+								}))
 								const fetchedOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Fetched`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Fetched`,
-								}));
+								}))
 								const totalOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Total`,
 									group: 'Data',
 									type: 'number',
 									displayName: `${i}Total`,
-								}));
+								}))
 								const aggsOutputs = dbClasses.map((i: any) => ({
 									plug: 'output',
 									name: `${i}Aggregations`,
 									group: 'Data',
 									type: 'object',
 									displayName: `${i}Aggregations`,
-								}));
-								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs];
-							} else return [];
+								}))
+								return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs]
+							} else return []
 						},
 					},
 				}),
@@ -936,21 +936,21 @@ export default reactNode(
 					type: 'array',
 					customs: {
 						validate(p) {
-							if (!p.fetchScheme) return true;
+							if (!p.fetchScheme) return true
 							else {
-								const sizeDbClasses: string[] = [];
+								const sizeDbClasses: string[] = []
 								p.fetchScheme.map((i: any) => {
-									if (i.size > 1000) sizeDbClasses.push(i.dbClass);
-								});
-								const historyDbClasses: string[] = [];
+									if (i.size > 1000) sizeDbClasses.push(i.dbClass)
+								})
+								const historyDbClasses: string[] = []
 								p.fetchScheme.map((i: any) => {
-									if (i.history > 1000) historyDbClasses.push(i.dbClass);
-								});
+									if (i.history > 1000) historyDbClasses.push(i.dbClass)
+								})
 								if (sizeDbClasses.length) {
-									return `Size should be less or equal 1000. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
+									return `Size should be less or equal 1000. Mismatched DB classes: ${sizeDbClasses.join(', ')}`
 								} else if (historyDbClasses.length) {
-									return `History should be less or equal 1000. Mismatched DB classes: ${historyDbClasses.join(', ')}`;
-								} else return true;
+									return `History should be less or equal 1000. Mismatched DB classes: ${historyDbClasses.join(', ')}`
+								} else return true
 							}
 						},
 					},
@@ -971,7 +971,7 @@ export default reactNode(
 					type: getType('string', 'connection'),
 					customs: {
 						dependsOn(p) {
-							return p.searchEnabled ? true : false;
+							return p.searchEnabled ? true : false
 						},
 					},
 				}),
@@ -992,7 +992,7 @@ export default reactNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -1004,7 +1004,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -1016,7 +1016,7 @@ export default reactNode(
 					type: 'signal',
 					customs: {
 						dependsOn(p) {
-							return p.paginationEnabled ? true : false;
+							return p.paginationEnabled ? true : false
 						},
 					},
 				}),
@@ -1031,4 +1031,4 @@ export default reactNode(
 		},
 	},
 	{ docs: 'https://docs.rolder.app/#/usedata' }
-);
+)

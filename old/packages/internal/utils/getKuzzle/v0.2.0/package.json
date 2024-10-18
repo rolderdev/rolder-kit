@@ -1,10 +1,10 @@
 {
-  "name": "@packages/get-kuzzle-v0.2.0",
-  "main": "getKuzzle.ts",
-  "types": "getKuzzle.ts",
-  "type": "module",
-  "dependencies": {},
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@packages/get-kuzzle-v0.2.0",
+	"main": "getKuzzle.ts",
+	"types": "getKuzzle.ts",
+	"type": "module",
+	"dependencies": {},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }

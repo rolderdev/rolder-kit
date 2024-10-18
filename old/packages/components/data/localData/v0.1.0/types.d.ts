@@ -1,19 +1,19 @@
-import { BaseReactProps, NoodlNode } from '@packages/node';
-import type { RxCollectionCreator, RxSchema } from 'rxdb';
-import type { Item } from 'types';
+import { type BaseReactProps, NoodlNode } from '@packages/node'
+import type { RxCollectionCreator, RxSchema } from 'rxdb'
+import type { Item } from 'types'
 
 export type Props = BaseReactProps & {
-	dbName: string;
+	dbName: string
 	collectionsDefinition: Record<
 		string,
 		{
-			order?: number;
-			rxDefinition: RxCollectionCreator<any>;
-			replication?: boolean;
-			fetchScheme?: any;
-			postSave?: (item: Item) => void;
+			order?: number
+			rxDefinition: RxCollectionCreator<any>
+			replication?: boolean
+			fetchScheme?: any
+			postSave?: (item: Item) => void
 		}
-	>;
-	backendDevMode?: boolean;
-	backendHost?: string;
-};
+	>
+	backendDevMode?: boolean
+	backendHost?: string
+}

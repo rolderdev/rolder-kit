@@ -1,18 +1,20 @@
-import { Divider } from "@mantine/core"
-import { forwardRef } from "react"
-import type { Props } from "./types"
-import { getCompProps } from "@packages/get-comp-props"
+import { Divider } from '@mantine/core'
+import { getCompProps } from '@packages/get-comp-props'
+import { forwardRef } from 'react'
+import type { Props } from './types'
 
-export default forwardRef(function (props: Props) {
-    const p = { ...getCompProps(props) } as Props
+export default forwardRef((props: Props) => {
+	const p = { ...getCompProps(props) } as Props
 
-    return <Divider
-        variant={p.dividerVariant}
-        orientation={p.dividerOrientation}
-        labelPosition={p.dividerLabelPosition}
-        {...p}
-        {...p.customProps}
-    >
-        {props.children}
-    </Divider>
+	return (
+		<Divider
+			variant={p.dividerVariant}
+			orientation={p.dividerOrientation}
+			labelPosition={p.dividerLabelPosition}
+			{...p}
+			{...p.customProps}
+		>
+			{props.children}
+		</Divider>
+	)
 })

@@ -1,15 +1,15 @@
 {
-  "name": "@packages/get-qr-code-v1.0.0",
-  "main": "getQrCode.ts",
-  "types": "getQrCode.ts",
-  "type": "module",
-  "dependencies": {
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
-    "qrcode": "1.5.3"
-  },
-  "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@^",
-    "@types/qrcode": "1.5.5",
-    "types": "workspace:*"
-  }
+	"name": "@packages/get-qr-code-v1.0.0",
+	"main": "getQrCode.ts",
+	"types": "getQrCode.ts",
+	"type": "module",
+	"dependencies": {
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
+		"qrcode": "1.5.3"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"@types/qrcode": "1.5.5",
+		"types": "workspace:*"
+	}
 }

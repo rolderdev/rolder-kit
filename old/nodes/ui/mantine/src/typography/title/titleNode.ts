@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPorts, getPort, getCustomEnumType } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/title-v1.0.0';
+import v100 from '@packages/title-v1.0.0'
 
 export default reactNode('Title', {
 	'v1.0.0': {
@@ -23,7 +23,7 @@ export default reactNode('Title', {
 				'dataSource',
 				'itemSource',
 				'sourceField',
-				'valueSource'
+				'valueSource',
 			]),
 			getPort({
 				plug: 'input',
@@ -35,9 +35,9 @@ export default reactNode('Title', {
 				customs: {
 					required: 'connection',
 					dependsOn(props) {
-						return props.useScope ? true : false;
-					}
-				}
+						return props.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -49,9 +49,9 @@ export default reactNode('Title', {
 				customs: {
 					required: 'both',
 					dependsOn(props) {
-						return props.textFormat === 'date';
-					}
-				}
+						return props.textFormat === 'date'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -60,7 +60,7 @@ export default reactNode('Title', {
 				group: 'Font',
 				type: 'number',
 				default: 3,
-				customs: { required: 'both' }
+				customs: { required: 'both' },
 			}),
 			getPort({
 				plug: 'input',
@@ -68,7 +68,7 @@ export default reactNode('Title', {
 				displayName: 'Variant',
 				group: 'Style',
 				type: getCustomEnumType(['text', 'gradient']),
-				default: 'text'
+				default: 'text',
 			}),
 			getPort({
 				plug: 'input',
@@ -78,9 +78,9 @@ export default reactNode('Title', {
 				type: 'string',
 				customs: {
 					dependsOn(p) {
-						return p.variant === 'text';
-					}
-				}
+						return p.variant === 'text'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -91,10 +91,10 @@ export default reactNode('Title', {
 				customs: {
 					isObject: true,
 					dependsOn(p) {
-						return p.variant === 'gradient';
-					}
-				}
-			})
-		]
-	}
-});
+						return p.variant === 'gradient'
+					},
+				},
+			}),
+		],
+	},
+})

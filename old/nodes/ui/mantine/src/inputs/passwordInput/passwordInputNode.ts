@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getMantinePort, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getMantinePort, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/password-input-v1.0.0';
+import v100 from '@packages/password-input-v1.0.0'
 
 export default reactNode('PasswordInput', {
 	'v1.0.0': {
@@ -18,7 +18,7 @@ export default reactNode('PasswordInput', {
 				'w',
 				'inputError',
 				'reset',
-				'focusRightSection'
+				'focusRightSection',
 			]),
 			...inputGroups.Form,
 			getMantinePort('radius', { comp: 'PasswordInput', prop: 'radius' }),
@@ -32,11 +32,11 @@ export default reactNode('PasswordInput', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
-			})
+						return p.useScope ? true : false
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['typedValue', 'reseted'])
-	}
-});
+		outputs: getPorts('output', ['typedValue', 'reseted']),
+	},
+})

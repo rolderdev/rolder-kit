@@ -1,15 +1,15 @@
-import { getPortDef } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
 
 export type Props = BaseReactProps & {
-	type: 'string' | 'number';
-	stringValue?: string;
-	numberValue?: number;
-	orderProp: 'string';
-	variant: 'text' | 'gradient';
-};
+	type: 'string' | 'number'
+	stringValue?: string
+	numberValue?: number
+	orderProp: 'string'
+	variant: 'text' | 'gradient'
+}
 
-import Comp from '../component/Title';
+import Comp from '../component/Title'
 
 export default {
 	hashTag: '#pre-release',
@@ -123,4 +123,4 @@ export default {
 		getInspectInfo: (p: Props) =>
 			p.stringValue || p.numberValue ? [{ type: 'text', value: p.stringValue || p.numberValue }] : [],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

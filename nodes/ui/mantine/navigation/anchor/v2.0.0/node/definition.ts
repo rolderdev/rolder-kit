@@ -1,15 +1,15 @@
-import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, sizes } from '@shared/port-v1.0.0'
 
 export type Props = BaseReactProps & {
-	type: 'string' | 'number';
-	stringValue?: string;
-	numberValue?: number;
-	variant: 'text' | 'gradient';
-	truncateProp: 'disabled' | 'end' | 'start';
-};
+	type: 'string' | 'number'
+	stringValue?: string
+	numberValue?: number
+	variant: 'text' | 'gradient'
+	truncateProp: 'disabled' | 'end' | 'start'
+}
 
-import Comp from '../component/Anchor';
+import Comp from '../component/Anchor'
 
 export default {
 	hashTag: '#pre-release',
@@ -164,4 +164,4 @@ export default {
 		getInspectInfo: (p: Props) =>
 			p.stringValue || p.numberValue ? [{ type: 'text', value: p.stringValue || p.numberValue }] : [],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

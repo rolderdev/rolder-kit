@@ -1,15 +1,15 @@
-import { lazy } from 'react';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import { getPortDef } from '@shared/port-v1.0.0';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
+import { lazy } from 'react'
 
 export type Props = BaseReactProps & {
-	isEditor: boolean;
-	sticky: boolean;
-	stickyOffset?: string;
-	content?: string;
-	height?: string;
-	maxHeight?: string;
-};
+	isEditor: boolean
+	sticky: boolean
+	stickyOffset?: string
+	content?: string
+	height?: string
+	maxHeight?: string
+}
 
 export default {
 	hashTag: '#pre-release',
@@ -53,4 +53,4 @@ export default {
 	afterNode: {
 		getInspectInfo: (p: Props, outProps, noodlNode) => [{ type: 'text', value: `Is editor: ${noodlNode._internal.isEditor}` }],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

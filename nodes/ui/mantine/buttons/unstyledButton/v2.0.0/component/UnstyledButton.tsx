@@ -1,19 +1,17 @@
-import { UnstyledButton } from '@mantine/core';
-import { forwardRef } from 'react';
-import type { Props } from '../node/definition';
-import { sendSignal } from '@shared/port-send-v1.0.0';
+import { UnstyledButton } from '@mantine/core'
+import { sendSignal } from '@shared/port-send-v1.0.0'
+import { forwardRef } from 'react'
+import type { Props } from '../node/definition'
 
-export default forwardRef(function (p: Props) {
-	return (
-		<UnstyledButton
-			onClick={(e) => {
-				e.stopPropagation();
-				sendSignal(p.noodlNode, 'clicked');
-			}}
-			{...p}
-			{...p.customProps}
-		>
-			{p.children}
-		</UnstyledButton>
-	);
-});
+export default forwardRef((p: Props) => (
+	<UnstyledButton
+		onClick={(e) => {
+			e.stopPropagation()
+			sendSignal(p.noodlNode, 'clicked')
+		}}
+		{...p}
+		{...p.customProps}
+	>
+		{p.children}
+	</UnstyledButton>
+))

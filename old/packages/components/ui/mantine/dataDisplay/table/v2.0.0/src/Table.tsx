@@ -1,27 +1,27 @@
 /* Сама таблица. */
 
-import { memo } from 'react';
-import { DataTable } from 'mantine-datatable';
-import type { Item } from 'types';
-import { useStore } from './store/store';
-import onRowClickHandler from './funcs/onRowClickHandler';
-import getCursorState from './funcs/getCursorState';
-import ExpansionRow from './renders/ExpansionRow';
-import { setSelectedItemsFromTable } from './models/multiSelectionModel';
+import { DataTable } from 'mantine-datatable'
+import { memo } from 'react'
+import type { Item } from 'types'
+import getCursorState from './funcs/getCursorState'
+import onRowClickHandler from './funcs/onRowClickHandler'
+import { setSelectedItemsFromTable } from './models/multiSelectionModel'
+import ExpansionRow from './renders/ExpansionRow'
+import { useStore } from './store/store'
 
-import rowClasses from './styles/row.module.css';
-import getRowBgColor from './funcs/getRowBgColor';
-import { frontSortItems, sendSortState } from './models/sortModel';
+import getRowBgColor from './funcs/getRowBgColor'
+import { frontSortItems, sendSortState } from './models/sortModel'
+import rowClasses from './styles/row.module.css'
 
 // memo остановит любой рендер пришедший сверху, кроме изменения fetching.
 export default memo(() => {
-	const s = useStore();
-	if (!s) return;
+	const s = useStore()
+	if (!s) return
 
-	const fetching = s.fetching.use();
+	const fetching = s.fetching.use()
 	// Поскольку обновляем состояние для таблицы разом, норм здесь использовать деструктуризацию.
-	const { libProps, tableProps, columns, items, selectedItems, expandedIds } = s.hot.use();
-	const sortState = s.sortState.use();
+	const { libProps, tableProps, columns, items, selectedItems, expandedIds } = s.hot.use()
+	const sortState = s.sortState.use()
 
 	//console.log('Table render >>>>>', console.log(s.tableId.get(), sortState)); // Считаем рендеры пока разрабатываем
 	return (
@@ -53,11 +53,11 @@ export default memo(() => {
 			allRecordsSelectionCheckboxProps={(() => {
 				// Подпишемся на изменение состояния чекбокса в TableScope. Это хук, но как-то работает прямо здесь.
 				// Это позволяет не реднедрить всю таблицу корня повторно из-за смены состояния чекбокса.
-				const indeterminate = s.scopeStore.get()?.selectionState[s.tableId.get()].use((s) => s === 'indeterminate');
+				const indeterminate = s.scopeStore.get()?.selectionState[s.tableId.get()].use((s) => s === 'indeterminate')
 				// Если разработчки указал свои параметры, сначала применим их.
-				const p = libProps.allRecordsSelectionCheckboxPropsDev || {};
-				if (!s.isChild.get()) p.indeterminate = indeterminate;
-				return p;
+				const p = libProps.allRecordsSelectionCheckboxPropsDev || {}
+				if (!s.isChild.get()) p.indeterminate = indeterminate
+				return p
 			})()}
 			// Expansion
 			rowExpansion={
@@ -71,22 +71,22 @@ export default memo(() => {
 							expanded: { recordIds: expandedIds || [] }, // Развернутые строки.
 							content: ({ record, collapse }) => {
 								// Добавляем функцию collapse прямо в объект, чтбы разработчик мог запустить ее и свернуть вручную
-								Noodl.Objects[record.id].collapse = collapse;
-								return <ExpansionRow itemId={record.id} />;
+								Noodl.Objects[record.id].collapse = collapse
+								return <ExpansionRow itemId={record.id} />
 							},
-					  }
+						}
 					: undefined
 			}
 			// Sort
 			sortStatus={sortState}
 			onSortStatusChange={(state) => {
-				s.sortState.set(state);
-				s.scopeStore.get()?.sortState.set(state);
-				if (tableProps.sort.enabled && tableProps.sort.type === 'frontend') s.hot.items.set(frontSortItems(s));
-				sendSortState(s);
+				s.sortState.set(state)
+				s.scopeStore.get()?.sortState.set(state)
+				if (tableProps.sort.enabled && tableProps.sort.type === 'frontend') s.hot.items.set(frontSortItems(s))
+				sendSortState(s)
 			}}
 			{...(libProps as any)} // Ломает типизацию
 			{...libProps.customProps}
 		/>
-	);
-});
+	)
+})

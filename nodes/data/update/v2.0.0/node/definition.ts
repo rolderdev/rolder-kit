@@ -1,11 +1,11 @@
-import type { BaseJsProps } from '@shared/node-v1.0.0';
-import type { JsNodeDef } from '@shared/node-v1.0.0';
-import { getPortDef } from '@shared/port-v1.0.0';
-import { validateUpdateScheme } from './validtaion';
-import type { UpdateScheme } from './validtaion';
-import initState from '@shared/init-state-v0.1.0';
+import initState from '@shared/init-state-v0.1.0'
+import type { BaseJsProps } from '@shared/node-v1.0.0'
+import type { JsNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
+import { validateUpdateScheme } from './validtaion'
+import type { UpdateScheme } from './validtaion'
 
-export type Props = BaseJsProps & { apiVersion: 'v1'; updateScheme?: UpdateScheme; optimistic: boolean };
+export type Props = BaseJsProps & { apiVersion: 'v1'; updateScheme?: UpdateScheme; optimistic: boolean }
 
 export default {
 	hashTag: '#pre-release',
@@ -58,8 +58,8 @@ export default {
 	},
 	beforeComponent: {
 		initialize: async () => {
-			await initState('initialized');
+			await initState('initialized')
 		},
 	},
 	disableCustomProps: true,
-} satisfies JsNodeDef;
+} satisfies JsNodeDef

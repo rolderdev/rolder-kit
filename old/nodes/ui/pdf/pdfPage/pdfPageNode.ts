@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort } from '@packages/port'
 
-import v100 from '@packages/pdf-page-v1.0.0';
+import v100 from '@packages/pdf-page-v1.0.0'
 
 export default reactNode(
 	'PdfPage',
@@ -16,10 +16,10 @@ export default reactNode(
 					group: 'Params',
 					type: getCustomEnumType(['portrait', 'landscape']),
 					default: 'portrait',
-					customs: { required: 'connection' }
-				})
-			]
-		}
+					customs: { required: 'connection' },
+				}),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

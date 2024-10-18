@@ -1,14 +1,14 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import type { Props } from '../node/definition';
-import { Box, Transition } from '@mantine/core';
-import { sendSignal } from '@shared/port-send-v1.0.0';
+import { Box, Transition } from '@mantine/core'
+import { sendSignal } from '@shared/port-send-v1.0.0'
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+import type { Props } from '../node/definition'
 
-export default forwardRef(function (p: Props, ref) {
-	const [mounted, setMounted] = useState(false);
+export default forwardRef((p: Props, ref) => {
+	const [mounted, setMounted] = useState(false)
 
 	useEffect(() => {
-		if (p.automount) setMounted(true);
-	}, []);
+		if (p.automount) setMounted(true)
+	}, [])
 
 	useImperativeHandle(
 		ref,
@@ -17,7 +17,7 @@ export default forwardRef(function (p: Props, ref) {
 			unmount: () => mounted && setMounted(false),
 		}),
 		[mounted]
-	);
+	)
 
 	return (
 		<Transition
@@ -33,5 +33,5 @@ export default forwardRef(function (p: Props, ref) {
 				</Box>
 			)}
 		</Transition>
-	);
-});
+	)
+})

@@ -4,8 +4,8 @@
 	разворачиваемых строк, но это сильно усложянет код, а сценарий редкий.
 */
 
-import { nanoid } from 'nanoid';
-import type { Props, TableState } from '../../types';
+import { nanoid } from 'nanoid'
+import type { Props, TableState } from '../../types'
 
 export default function (p: Props) {
 	return {
@@ -49,7 +49,7 @@ export default function (p: Props) {
 		withTableBorder: p.withTableBorder || false,
 		borderRadius: p.borderRadius,
 		withColumnBorders: p.withColumnBorders,
-		emptyState: 'Записей не найдено'
+		emptyState: 'Записей не найдено',
 
 		// Base
 		/* columns: [],
@@ -86,5 +86,5 @@ export default function (p: Props) {
   },
 
 */
-	};
+	}
 }

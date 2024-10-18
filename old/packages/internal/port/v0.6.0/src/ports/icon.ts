@@ -1,6 +1,6 @@
-import type { NodePort } from '../../types';
-import { enums } from '../collections/enums';
-import { defaultUnits, getCustomEnumType, getEnumType, getUnitType } from '../funcs/getType';
+import type { NodePort } from '../../types'
+import { enums } from '../collections/enums'
+import { defaultUnits, getCustomEnumType, getEnumType, getUnitType } from '../funcs/getType'
 
 export default [
 	{
@@ -10,9 +10,9 @@ export default [
 		type: 'string',
 		customs: {
 			validate(p) {
-				return p.iconName ? (R.libs.icons[p.iconName] ? true : `There is no "${p.iconName}" at Rolder Kit`) : true;
-			}
-		}
+				return p.iconName ? (R.libs.icons[p.iconName] ? true : `There is no "${p.iconName}" at Rolder Kit`) : true
+			},
+		},
 	},
 	{
 		name: 'iconType',
@@ -20,7 +20,7 @@ export default [
 		type: getCustomEnumType(['icon', 'themeIcon']),
 		displayName: 'Type',
 		default: 'icon',
-		customs: { required: 'both' }
+		customs: { required: 'both' },
 	},
 	{
 		name: 'iconSize',
@@ -31,9 +31,9 @@ export default [
 		customs: {
 			required: 'both',
 			dependsOn(p) {
-				return p.iconType ? p.iconType === 'icon' && p.iconName : p.iconName ? true : false;
-			}
-		}
+				return p.iconType ? p.iconType === 'icon' && p.iconName : p.iconName ? true : false
+			},
+		},
 	},
 	{
 		name: 'iconStroke',
@@ -44,9 +44,9 @@ export default [
 		customs: {
 			required: 'both',
 			dependsOn(p) {
-				return p.iconType ? p.iconType === 'icon' && p.iconName : p.iconName ? true : false;
-			}
-		}
+				return p.iconType ? p.iconType === 'icon' && p.iconName : p.iconName ? true : false
+			},
+		},
 	},
 	{
 		name: 'iconColor',
@@ -55,9 +55,9 @@ export default [
 		type: 'string',
 		customs: {
 			dependsOn(p) {
-				return p.iconType ? p.iconType === 'icon' && p.iconName : p.iconName ? true : false;
-			}
-		}
+				return p.iconType ? p.iconType === 'icon' && p.iconName : p.iconName ? true : false
+			},
+		},
 	},
 	{
 		name: 'themeIconVariant',
@@ -68,9 +68,9 @@ export default [
 		customs: {
 			required: 'both',
 			dependsOn(p) {
-				return p.iconType === 'themeIcon' && p.iconName;
-			}
-		}
+				return p.iconType === 'themeIcon' && p.iconName
+			},
+		},
 	},
 	{
 		name: 'themeIconSize',
@@ -81,9 +81,9 @@ export default [
 		customs: {
 			required: 'both',
 			dependsOn(p) {
-				return p.iconType === 'themeIcon' && p.iconName;
-			}
-		}
+				return p.iconType === 'themeIcon' && p.iconName
+			},
+		},
 	},
 	{
 		name: 'themeIconRadius',
@@ -94,9 +94,9 @@ export default [
 		customs: {
 			required: 'both',
 			dependsOn(p) {
-				return p.iconType === 'themeIcon' && p.iconName;
-			}
-		}
+				return p.iconType === 'themeIcon' && p.iconName
+			},
+		},
 	},
 	{
 		name: 'themeIconColor',
@@ -105,9 +105,9 @@ export default [
 		displayName: 'Theme icon color',
 		customs: {
 			dependsOn(p) {
-				return p.iconType === 'themeIcon' && p.iconName;
-			}
-		}
+				return p.iconType === 'themeIcon' && p.iconName
+			},
+		},
 	},
 	{
 		name: 'themeIconGradient',
@@ -118,8 +118,8 @@ export default [
 			required: 'both',
 			isObject: true,
 			dependsOn(p) {
-				return p.iconType === 'themeIcon' && p.iconName && p.themeIconVariant === 'gradient';
-			}
-		}
-	}
-] as const satisfies readonly NodePort[];
+				return p.iconType === 'themeIcon' && p.iconName && p.themeIconVariant === 'gradient'
+			},
+		},
+	},
+] as const satisfies readonly NodePort[]

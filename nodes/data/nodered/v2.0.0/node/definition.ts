@@ -1,32 +1,32 @@
-import type { BaseJsProps } from '@shared/node-v1.0.0';
-import type { JsNodeDef } from '@shared/node-v1.0.0';
-import { getPortDef } from '@shared/port-v1.0.0';
-import initState from '@shared/init-state-v0.1.0';
-import { getServices, type Services } from './getServices';
+import initState from '@shared/init-state-v0.1.0'
+import type { BaseJsProps } from '@shared/node-v1.0.0'
+import type { JsNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
+import { type Services, getServices } from './getServices'
 
 export type Props = BaseJsProps & {
-	flowEndpoint?: string;
+	flowEndpoint?: string
 	flowData: {
-		data?: any;
-		files?: File[];
-		params?: any;
-	};
-	timeout: number;
-	useServices: boolean;
-	services?: Services;
-	selectedService?: string;
-	serviceVersion?: string;
-};
+		data?: any
+		files?: File[]
+		params?: any
+	}
+	timeout: number
+	useServices: boolean
+	services?: Services
+	selectedService?: string
+	serviceVersion?: string
+}
 
 // Найдем дефолт. Лучше бы это определять в самом Nodered.
 const getDefaultServiceName = (p: Props) => {
-	let defaultServiceName;
+	let defaultServiceName
 
 	for (const serviceName in p.services) {
-		if (p.services[serviceName]?.isDefault === true) defaultServiceName = serviceName;
+		if (p.services[serviceName]?.isDefault === true) defaultServiceName = serviceName
 	}
-	return defaultServiceName as string; // Говорим TS что стопудово будет строка
-};
+	return defaultServiceName as string // Говорим TS что стопудово будет строка
+}
 
 export default {
 	hashTag: '#expreimental',
@@ -109,53 +109,53 @@ export default {
 		transformPorts: async (p: Props, portDefs) => {
 			// Получаем из nodered сервисы, и держим их в props
 			// Внутри дожидаемся подключения к Kuzzle
-			if (!p?.services) p.services = await getServices();
+			if (!p?.services) p.services = await getServices()
 
 			if (p.services) {
 				// Сформируем массив с сервисами
-				const servicesType: { label: string; value: string }[] = [];
+				const servicesType: { label: string; value: string }[] = []
 
 				R.libs.just.map(p.services, (iServiceName, service) => {
 					servicesType.push({
 						label: service.nameForLabel,
 						value: iServiceName,
-					});
-				});
+					})
+				})
 
 				// Находим порт для модификации.
 				// Он уже определен в общем списке, нам он нужен там, чтобы transform в serviceVersion поймал выбранный сервис.
-				const selectedServicePort = portDefs.inputs.find((input) => input.name === 'selectedService');
-				const serviceVersionPort = portDefs.inputs.find((input) => input.name === 'serviceVersion');
+				const selectedServicePort = portDefs.inputs.find((input) => input.name === 'selectedService')
+				const serviceVersionPort = portDefs.inputs.find((input) => input.name === 'serviceVersion')
 				if (selectedServicePort && serviceVersionPort) {
 					// Найдем дефолт. Лучше бы это определять в самом Nodered.
-					const defaultServiceName = getDefaultServiceName(p);
+					const defaultServiceName = getDefaultServiceName(p)
 
 					// Добавим в порт список сервисов для выбора.
-					selectedServicePort.type = servicesType;
+					selectedServicePort.type = servicesType
 					// Установим дефолтный. Нужно учитывать, что его не будет в props пока мы не в runtime.
-					selectedServicePort.default = defaultServiceName;
+					selectedServicePort.default = defaultServiceName
 
 					// Добавим в порт список версий для выбора.
-					serviceVersionPort.type = p.services[p.selectedService || defaultServiceName].serviceVersion;
+					serviceVersionPort.type = p.services[p.selectedService || defaultServiceName].serviceVersion
 					// Установим дефолтную версию.
-					serviceVersionPort.default = p.services[p.selectedService || defaultServiceName].defaultServiceVersion;
+					serviceVersionPort.default = p.services[p.selectedService || defaultServiceName].defaultServiceVersion
 				}
 			} else {
-				log.error('Не удалось получить сервисы!');
+				log.error('Не удалось получить сервисы!')
 			}
 		},
 		validate: async (p: Props) => {
 			// Проверяем, получили ли мы creds из Kuzzle.
 			return R.params.creds?.find((i) => i.name === 'nodered')?.data
 				? true
-				: 'В Kuzzle -> config -> creds нет логина и пароля для доступа к nodeRed!'; //There is no creds for Nodered at backend config.',
+				: 'В Kuzzle -> config -> creds нет логина и пароля для доступа к nodeRed!' //There is no creds for Nodered at backend config.',
 		},
 	},
 	beforeComponent: {
 		initialize: async (p: Props) => {
 			// Ждем, что в R появятся creds для nodered
-			await initState('initialized');
+			await initState('initialized')
 		},
 	},
 	disableCustomProps: false,
-} satisfies JsNodeDef;
+} satisfies JsNodeDef

@@ -1,31 +1,31 @@
-import type { Item } from '@shared/types-v0.1.0';
-import type { Props } from '../node/definition';
-import type { SchemeData } from '../node/store';
-import { getDbClassName } from '@shared/db-class';
+import { getDbClassName } from '@shared/db-class'
+import type { Item } from '@shared/types-v0.1.0'
+import type { Props } from '../node/definition'
+import type { SchemeData } from '../node/store'
 
-export type Nodes = Record<string, Node>;
-export type NodeSingleSelection = { value: string | null }; // Выбранный ребенок.
-export type NodeMultiSelection = { value: MultiSelection };
-export type MultiSelection = 'notSelected' | 'selected' | 'indeterminate';
-export type NodeExpansion = { value: boolean };
-type Aggregations = Record<string, Record<string, any>>;
+export type Nodes = Record<string, Node>
+export type NodeSingleSelection = { value: string | null } // Выбранный ребенок.
+export type NodeMultiSelection = { value: MultiSelection }
+export type MultiSelection = 'notSelected' | 'selected' | 'indeterminate'
+export type NodeExpansion = { value: boolean }
+type Aggregations = Record<string, Record<string, any>>
 
 export default class Node {
-	rootId: string;
-	itemId?: string;
-	dbClass: string;
-	path: string;
-	level: number;
-	parentId?: string;
-	parentPath?: string;
-	childIds: string[];
-	childPathes: string[];
-	aggregations: Aggregations;
+	rootId: string
+	itemId?: string
+	dbClass: string
+	path: string
+	level: number
+	parentId?: string
+	parentPath?: string
+	childIds: string[]
+	childPathes: string[]
+	aggregations: Aggregations
 	states: {
-		singleSelection: NodeSingleSelection; // Выбранный ребенок.
-		multiSelection: NodeMultiSelection;
-		expansion: NodeExpansion;
-	};
+		singleSelection: NodeSingleSelection // Выбранный ребенок.
+		multiSelection: NodeMultiSelection
+		expansion: NodeExpansion
+	}
 
 	constructor(
 		rootId: string,
@@ -39,31 +39,31 @@ export default class Node {
 		parentId?: string,
 		parentPath?: string
 	) {
-		this.rootId = rootId;
-		this.dbClass = dbClass;
-		this.path = path;
-		this.level = level;
-		this.childIds = childIds;
-		this.childPathes = childPathes;
-		this.itemId = itemId;
-		this.parentId = parentId;
-		this.parentPath = parentPath;
-		this.states = { singleSelection: { value: null }, multiSelection: { value: 'notSelected' }, expansion: { value: false } };
-		this.aggregations = aggregations;
+		this.rootId = rootId
+		this.dbClass = dbClass
+		this.path = path
+		this.level = level
+		this.childIds = childIds
+		this.childPathes = childPathes
+		this.itemId = itemId
+		this.parentId = parentId
+		this.parentPath = parentPath
+		this.states = { singleSelection: { value: null }, multiSelection: { value: 'notSelected' }, expansion: { value: false } }
+		this.aggregations = aggregations
 	}
 
 	//// Внутренние методы.
 	static createHierarchy(p: Props, flatNodes: Node[]) {
-		const rootId = p.store.rootId;
-		const rootSchemesData = p.store.schemesData.filter((i) => i.path === 'root');
+		const rootId = p.store.rootId
+		const rootSchemesData = p.store.schemesData.filter((i) => i.path === 'root')
 
-		const rootChildIds = rootSchemesData.flatMap((i) => i.itemIds);
+		const rootChildIds = rootSchemesData.flatMap((i) => i.itemIds)
 
-		const aggregations: Aggregations = {};
+		const aggregations: Aggregations = {}
 		rootSchemesData.forEach((i) => {
-			const dbClassName = getDbClassName(i.scheme.dbClass);
-			if (i.aggregations) aggregations[dbClassName] = i.aggregations;
-		});
+			const dbClassName = getDbClassName(i.scheme.dbClass)
+			if (i.aggregations) aggregations[dbClassName] = i.aggregations
+		})
 
 		flatNodes.push(
 			new Node(
@@ -75,29 +75,29 @@ export default class Node {
 				rootChildIds.map((id) => `${id}.${rootId}`),
 				aggregations
 			)
-		);
+		)
 
-		this.createChildren(p, rootSchemesData, rootId, 0, flatNodes);
+		this.createChildren(p, rootSchemesData, rootId, 0, flatNodes)
 	}
 
 	static createChildren(p: Props, schemesData: SchemeData[], parentPath: string, level: number, flatNodes: Node[]) {
 		schemesData.forEach((thisNodeSchemeData) => {
-			const thisNodeIds = thisNodeSchemeData.itemIds;
+			const thisNodeIds = thisNodeSchemeData.itemIds
 
 			thisNodeIds.forEach((thisNodeItemId) => {
-				let thisNodeChildIds: string[] = [];
+				let thisNodeChildIds: string[] = []
 				p.store.schemesData.forEach((childSchemeData) => {
 					if (childSchemeData.path === `${thisNodeItemId}.${thisNodeSchemeData.path}`) {
-						thisNodeChildIds = thisNodeChildIds.concat(childSchemeData.itemIds);
+						thisNodeChildIds = thisNodeChildIds.concat(childSchemeData.itemIds)
 					}
-				});
+				})
 
-				const aggregations: Aggregations = {};
+				const aggregations: Aggregations = {}
 				p.store.schemesData.forEach((childSchemeData) => {
-					const dbClassName = getDbClassName(childSchemeData.scheme.dbClass);
+					const dbClassName = getDbClassName(childSchemeData.scheme.dbClass)
 					if (childSchemeData.path === `${thisNodeItemId}.${thisNodeSchemeData.path}` && childSchemeData.aggregations)
-						aggregations[dbClassName] = childSchemeData.aggregations;
-				});
+						aggregations[dbClassName] = childSchemeData.aggregations
+				})
 
 				flatNodes.push(
 					new Node(
@@ -112,61 +112,61 @@ export default class Node {
 						thisNodeSchemeData.parentId,
 						parentPath
 					)
-				);
+				)
 
-				const childSchemesData = p.store.schemesData.filter((i) => i.path === `${thisNodeItemId}.${thisNodeSchemeData.path}`);
-				this.createChildren(p, childSchemesData, `${thisNodeItemId}.${parentPath}`, level + 1, flatNodes);
-			});
-		});
+				const childSchemesData = p.store.schemesData.filter((i) => i.path === `${thisNodeItemId}.${thisNodeSchemeData.path}`)
+				this.createChildren(p, childSchemesData, `${thisNodeItemId}.${parentPath}`, level + 1, flatNodes)
+			})
+		})
 	}
 
 	static setNodesProxy(p: Props, flatNodes: Node[]) {
-		const { map, set } = R.libs.just;
+		const { map, set } = R.libs.just
 		// Важно не заменять весь прокси.
 		for (const node of flatNodes) {
-			const nodeProxy = R.nodes[node.path];
-			if (nodeProxy) map(node as any, (k, v) => k !== 'states' && set(nodeProxy, k, v));
-			else R.nodes[node.path] = node;
+			const nodeProxy = R.nodes[node.path]
+			if (nodeProxy) map(node as any, (k, v) => k !== 'states' && set(nodeProxy, k, v))
+			else R.nodes[node.path] = node
 		}
 
 		Object.values(R.nodes)
 			.filter((node) => node.rootId === p.store.rootId && !flatNodes.map((i) => i.path).includes(node.path))
-			.forEach((i) => delete R.nodes[i.path]);
+			.forEach((i) => delete R.nodes[i.path])
 	}
 
 	//// Методы для разработчика.
 	// Методы нод.
 	rootNode() {
-		return R.nodes[this.rootId];
+		return R.nodes[this.rootId]
 	}
 
 	parentNode() {
-		return this.parentPath ? R.nodes[this.parentPath] : undefined;
+		return this.parentPath ? R.nodes[this.parentPath] : undefined
 	}
 
 	childNodes() {
-		return this.childPathes.map((path) => R.nodes[path]).filter((i) => !!i);
+		return this.childPathes.map((path) => R.nodes[path]).filter((i) => !!i)
 	}
 
 	descendantNodes(withSelf?: boolean) {
-		let descendants: Node[] = withSelf ? [this] : [];
-		let children = this.childNodes();
+		let descendants: Node[] = withSelf ? [this] : []
+		let children = this.childNodes()
 
 		while (children.length) {
-			descendants = descendants.concat(children);
-			children = children.flatMap((i) => i.childNodes());
+			descendants = descendants.concat(children)
+			children = children.flatMap((i) => i.childNodes())
 		}
-		return descendants;
+		return descendants
 	}
 
 	ancestorNodes(withSelf?: boolean) {
-		let ancestors: Node[] = withSelf ? [this] : [];
-		let parent = this.parentNode();
+		const ancestors: Node[] = withSelf ? [this] : []
+		let parent = this.parentNode()
 		while (parent) {
-			ancestors.push(parent);
-			parent = parent.parentNode();
+			ancestors.push(parent)
+			parent = parent.parentNode()
 		}
-		return ancestors;
+		return ancestors
 	}
 
 	findNode(itemId?: string) {
@@ -174,61 +174,61 @@ export default class Node {
 			? this.rootNode()
 					.descendantNodes()
 					.find((i) => i.itemId === itemId)
-			: undefined;
+			: undefined
 	}
 
 	// Методы item.
 	item() {
-		return this.itemId ? R.items[this.itemId] : undefined;
+		return this.itemId ? R.items[this.itemId] : undefined
 	}
 
 	parent() {
-		return this.parentNode()?.item();
+		return this.parentNode()?.item()
 	}
 
 	children(dbClass?: string) {
 		return filterDbClass(
 			this.childNodes().map((i) => i.item()),
 			dbClass
-		);
+		)
 	}
 
 	descendants(dbClass?: string, withSelf?: boolean) {
 		return filterDbClass(
 			this.descendantNodes(withSelf).map((i) => i.item()),
 			dbClass
-		);
+		)
 	}
 
 	ancestors(dbClass?: string, withSelf?: boolean) {
 		return filterDbClass(
 			this.ancestorNodes(withSelf).map((i) => i.item()),
 			dbClass
-		);
+		)
 	}
 
 	singleSelected() {
-		const selectedId = this.descendantNodes(true).find((i) => i.states.singleSelection.value)?.states.singleSelection.value;
-		return selectedId ? R.items[selectedId] : undefined;
+		const selectedId = this.descendantNodes(true).find((i) => i.states.singleSelection.value)?.states.singleSelection.value
+		return selectedId ? R.items[selectedId] : undefined
 	}
 
 	multiSelected(dbClass?: string, withIndeterminate?: boolean) {
-		const states = withIndeterminate ? ['selected', 'indeterminate'] : ['selected'];
-		const allSelectedNodes = this.descendantNodes().filter((i) => states.includes(i.states.multiSelection.value));
+		const states = withIndeterminate ? ['selected', 'indeterminate'] : ['selected']
+		const allSelectedNodes = this.descendantNodes().filter((i) => states.includes(i.states.multiSelection.value))
 		const selectedItems = filterDbClass(
 			allSelectedNodes.map((i) => i.item()),
 			dbClass
-		);
+		)
 
-		return R.libs.remeda.uniqueWith(selectedItems, (a, b) => a.id === b.id);
+		return R.libs.remeda.uniqueWith(selectedItems, (a, b) => a.id === b.id)
 	}
 
 	expanded() {
 		return this.descendantNodes()
 			.filter((i) => i.states.expansion.value)
-			.map((i) => i.item());
+			.map((i) => i.item())
 	}
 }
 
 const filterDbClass = (items: (Item | undefined)[], dbClass?: string) =>
-	items.filter((i) => (dbClass ? i?.dbClass === dbClass : true)).filter((i) => !!i);
+	items.filter((i) => (dbClass ? i?.dbClass === dbClass : true)).filter((i) => !!i)

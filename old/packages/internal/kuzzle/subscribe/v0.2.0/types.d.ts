@@ -1,5 +1,5 @@
-import { } from '@packages/types'
+import {} from '@packages/types'
 
 export type FetchScheme = {
-    dbClass?: string    
+	dbClass?: string
 }[]

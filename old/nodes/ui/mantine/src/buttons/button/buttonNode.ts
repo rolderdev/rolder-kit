@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/button-v1.0.0';
+import v100 from '@packages/button-v1.0.0'
 
 export default reactNode('Button', {
 	'v1.0.0': {
@@ -9,7 +9,17 @@ export default reactNode('Button', {
 		inputs: [
 			...inputGroups.Margins,
 			...inputGroups.Icon,
-			...getPorts('input', ['customProps', 'propsFunction', 'useScope', 'label', 'disabled', 'size', 'radius', 'color', 'loading']),
+			...getPorts('input', [
+				'customProps',
+				'propsFunction',
+				'useScope',
+				'label',
+				'disabled',
+				'size',
+				'radius',
+				'color',
+				'loading',
+			]),
 			getPort({
 				plug: 'input',
 				name: 'scope',
@@ -20,9 +30,9 @@ export default reactNode('Button', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
+						return p.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -31,10 +41,16 @@ export default reactNode('Button', {
 				group: 'Style',
 				type: getCustomEnumType(['default', 'filled', 'subtle', 'outline', 'light', 'gradient', 'white']),
 				default: 'filled',
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
-			getPort({ plug: 'input', name: 'buttonType', displayName: 'Button type', group: 'Params', type: getCustomEnumType(['submit']) })
+			getPort({
+				plug: 'input',
+				name: 'buttonType',
+				displayName: 'Button type',
+				group: 'Params',
+				type: getCustomEnumType(['submit']),
+			}),
 		],
-		outputs: getPorts('output', ['clicked'])
-	}
-});
+		outputs: getPorts('output', ['clicked']),
+	},
+})

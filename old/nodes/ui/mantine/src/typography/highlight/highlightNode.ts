@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPorts, getPort, getCustomEnumType } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/highlight-v1.0.0';
+import v100 from '@packages/highlight-v1.0.0'
 
 export default reactNode('Highlight', {
 	'v1.0.0': {
@@ -29,7 +29,7 @@ export default reactNode('Highlight', {
 				'valueSource',
 				'highlight',
 				'highlightColor',
-				'highlightStyles'
+				'highlightStyles',
 			]),
 			getPort({
 				plug: 'input',
@@ -41,9 +41,9 @@ export default reactNode('Highlight', {
 				customs: {
 					required: 'connection',
 					dependsOn(props) {
-						return props.useScope ? true : false;
-					}
-				}
+						return props.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -55,10 +55,10 @@ export default reactNode('Highlight', {
 				customs: {
 					required: 'both',
 					dependsOn(props) {
-						return props.textFormat === 'date';
-					}
-				}
-			})
-		]
-	}
-});
+						return props.textFormat === 'date'
+					},
+				},
+			}),
+		],
+	},
+})

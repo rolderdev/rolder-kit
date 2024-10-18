@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPorts, getPort, getCustomEnumType } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/anchor-v0.1.0';
+import v100 from '@packages/anchor-v0.1.0'
 
 export default reactNode('Anchor', {
 	'v0.1.0': {
@@ -17,7 +17,7 @@ export default reactNode('Anchor', {
 				default: false,
 				customs: {
 					dependsOn(props) {
-						return props.dataSource === 'item';
+						return props.dataSource === 'item'
 					},
 				},
 			}),
@@ -30,7 +30,7 @@ export default reactNode('Anchor', {
 				customs: {
 					required: 'connection',
 					dependsOn(props) {
-						return props.dataSource === 'item' && props.linkFromItem;
+						return props.dataSource === 'item' && props.linkFromItem
 					},
 				},
 			}),
@@ -43,7 +43,7 @@ export default reactNode('Anchor', {
 				customs: {
 					required: 'connection',
 					dependsOn(props) {
-						return !props.linkFromItem;
+						return !props.linkFromItem
 					},
 				},
 			}),
@@ -57,7 +57,7 @@ export default reactNode('Anchor', {
 				customs: {
 					required: 'both',
 					dependsOn(props) {
-						return props.textFormat === 'date';
+						return props.textFormat === 'date'
 					},
 				},
 			}),
@@ -70,7 +70,7 @@ export default reactNode('Anchor', {
 				default: 'hover',
 				customs: {
 					dependsOn(p) {
-						return p.variant === 'text';
+						return p.variant === 'text'
 					},
 				},
 			}),
@@ -91,7 +91,7 @@ export default reactNode('Anchor', {
 				default: 'blue',
 				customs: {
 					dependsOn(p) {
-						return p.variant === 'text';
+						return p.variant === 'text'
 					},
 				},
 			}),
@@ -104,7 +104,7 @@ export default reactNode('Anchor', {
 				customs: {
 					isObject: true,
 					dependsOn(p) {
-						return p.variant === 'gradient';
+						return p.variant === 'gradient'
 					},
 				},
 			}),
@@ -132,4 +132,4 @@ export default reactNode('Anchor', {
 			]),
 		],
 	},
-});
+})

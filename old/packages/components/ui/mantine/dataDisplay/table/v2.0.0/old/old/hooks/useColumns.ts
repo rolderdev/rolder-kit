@@ -6,15 +6,15 @@
 Помимо стандартных настроек библиотеки добавляет наши варианты ячеек. Смотри getColumn.
 */
 
-import type { NoodlNode } from '@packages/node';
-import type { ColumnDefinition } from '../../types';
-import type { Item } from 'types';
-import getColumn from '../funcs/getColumn';
-import { useShallowEffect } from '@mantine/hooks';
-import { useState } from 'react';
+import { useShallowEffect } from '@mantine/hooks'
+import type { NoodlNode } from '@packages/node'
+import { useState } from 'react'
+import type { Item } from 'types'
+import type { ColumnDefinition } from '../../types'
+import getColumn from '../funcs/getColumn'
 
 export default function (noodlNode: NoodlNode, tableId: string, items?: Item[], columnsDefinition?: ColumnDefinition[]) {
-	const [columns, setColumns] = useState<ColumnDefinition[]>([]);
+	const [columns, setColumns] = useState<ColumnDefinition[]>([])
 
 	// Shallow, т.к. схема колонок - массив объектов, который не умеет сравнивать useEffect.
 	useShallowEffect(() => {
@@ -23,9 +23,9 @@ export default function (noodlNode: NoodlNode, tableId: string, items?: Item[], 
 			// Создаем все варианты колонок разом
 			Promise.all(columnsDefinition.map(async (columnDefinition) => getColumn(noodlNode, tableId, columnDefinition, items))).then(
 				setColumns
-			);
+			)
 		}
-	}, [columnsDefinition]);
+	}, [columnsDefinition])
 
-	return columns;
+	return columns
 }

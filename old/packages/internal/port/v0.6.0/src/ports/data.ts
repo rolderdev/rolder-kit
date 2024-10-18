@@ -1,10 +1,10 @@
-import type { NodePort } from '../../port';
-import { getCustomEnumType, getType } from '../funcs/getType';
+import type { NodePort } from '../../port'
+import { getCustomEnumType, getType } from '../funcs/getType'
 
-[
+;[
 	{ value: 'item', label: 'Item' },
-	{ value: 'value', label: 'Value' }
-];
+	{ value: 'value', label: 'Value' },
+]
 
 export default [
 	{ name: 'items', displayName: 'Items', group: 'Data', type: 'array' },
@@ -13,7 +13,7 @@ export default [
 		name: 'typedValue',
 		displayName: 'Typed value',
 		group: 'Data',
-		type: 'string'
+		type: 'string',
 	},
 	{ name: 'blob', displayName: 'Blob', group: 'Data', type: '*' },
 	{
@@ -23,15 +23,15 @@ export default [
 		displayName: 'New value',
 		customs: {
 			dependsOn(p) {
-				return p.creatable ? true : false;
-			}
-		}
+				return p.creatable ? true : false
+			},
+		},
 	},
 	{
 		name: 'selectedItem',
 		displayName: 'Selected item',
 		group: 'Data',
-		type: 'object'
+		type: 'object',
 	},
 	{ name: 'inputItems', displayName: 'Items', group: 'Data', type: 'array' },
 	{
@@ -41,9 +41,9 @@ export default [
 		type: getType('object', 'connection'),
 		customs: {
 			dependsOn(p) {
-				return p.useScope ? false : true;
-			}
-		}
+				return p.useScope ? false : true
+			},
+		},
 	},
 	{
 		name: 'defaultDate',
@@ -52,15 +52,15 @@ export default [
 		type: getType('*', 'connection'),
 		customs: {
 			dependsOn(p) {
-				return p.useScope ? false : true;
-			}
-		}
+				return p.useScope ? false : true
+			},
+		},
 	},
 	{
 		name: 'selectedDate',
 		displayName: 'Selected date',
 		group: 'Data',
-		type: '*'
+		type: '*',
 	},
 	{
 		name: 'defaultItems',
@@ -69,15 +69,15 @@ export default [
 		type: 'array',
 		customs: {
 			dependsOn(p) {
-				return p.useScope ? false : true;
-			}
-		}
+				return p.useScope ? false : true
+			},
+		},
 	},
 	{
 		name: 'selectedItems',
 		displayName: 'Selected items',
 		group: 'Data',
-		type: 'array'
+		type: 'array',
 	},
 	{
 		name: 'dataSource',
@@ -85,7 +85,7 @@ export default [
 		type: getCustomEnumType(['item', 'value']),
 		displayName: 'Data source',
 		default: 'item',
-		customs: { required: 'both' }
+		customs: { required: 'both' },
 	},
 	{
 		name: 'itemSource',
@@ -94,9 +94,9 @@ export default [
 		displayName: 'Item',
 		customs: {
 			dependsOn(p) {
-				return p.dataSource === 'item';
-			}
-		}
+				return p.dataSource === 'item'
+			},
+		},
 	},
 	{
 		name: 'sourceField',
@@ -105,9 +105,9 @@ export default [
 		displayName: 'Field',
 		customs: {
 			dependsOn(p) {
-				return p.dataSource === 'item';
-			}
-		}
+				return p.dataSource === 'item'
+			},
+		},
 	},
 	{
 		name: 'valueSource',
@@ -116,9 +116,9 @@ export default [
 		displayName: 'Value',
 		customs: {
 			dependsOn(p) {
-				return p.dataSource === 'value';
-			}
-		}
+				return p.dataSource === 'value'
+			},
+		},
 	},
 	{ name: 'data', displayName: 'Data', group: 'Data', type: 'object' },
 	{ name: 'value', group: 'Data', type: 'string', displayName: 'Value' },
@@ -127,12 +127,12 @@ export default [
 		name: 'selectionScope',
 		displayName: 'selectionScope',
 		group: 'Data',
-		type: 'object'
+		type: 'object',
 	}, // MD
 	{
 		name: 'selectionByDBClass',
 		displayName: 'selectionByDBClass',
 		group: 'Data',
-		type: 'object'
-	} // MD
-] as const satisfies readonly NodePort[];
+		type: 'object',
+	}, // MD
+] as const satisfies readonly NodePort[]

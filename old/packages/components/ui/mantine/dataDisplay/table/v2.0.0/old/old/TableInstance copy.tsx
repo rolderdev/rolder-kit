@@ -1,20 +1,20 @@
-import { DataTable, type DataTableProps } from 'mantine-datatable';
-import { memo, useState } from 'react';
-import type { ColumnDefinition, TableState } from '../types';
-import type { Item } from 'types';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { expendRows, getExpensionRowReactNode } from '../models/expansionRows';
-import getRowBgColor from './funcs/getRowBgColor';
-import { setSelectedRecord } from './funcs/singleSelection';
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { DataTable, type DataTableProps } from 'mantine-datatable'
+import { memo, useState } from 'react'
+import type { Item } from 'types'
+import { expendRows, getExpensionRowReactNode } from '../models/expansionRows'
+import type { ColumnDefinition, TableState } from '../types'
+import getRowBgColor from './funcs/getRowBgColor'
+import { setSelectedRecord } from './funcs/singleSelection'
 
-import selectionCss from './styles/selection.module.css';
-import useSingleSelection from './hooks/useSingleSelection';
+import useSingleSelection from './hooks/useSingleSelection'
+import selectionCss from './styles/selection.module.css'
 
 // Memo нужен для исключения повторных рендерингов, когда прилетают не измененные параметры.
-export default memo(function (p: TableState) {
+export default memo((p: TableState) => {
 	//const { noodlNode, tableId, customProps, items, onRowClick, onRowClickFunc, tableStyles, rowStyles, selection, expansion } = props
 	//const { noodlNode, tableId, ports, setTableState, columns, items, selection, rowStyles, expendedRowsIds } = tableState
-	const { noodlNode, libState, fetching, columns, items, selection, ...restProps } = p;
+	const { noodlNode, libState, fetching, columns, items, selection, ...restProps } = p
 
 	// Анимация таблицы
 	//const [bodyRef] = useAutoAnimate<HTMLTableSectionElement>();
@@ -36,7 +36,7 @@ export default memo(function (p: TableState) {
 	//     table2ResetFilters() { resetFilters(); forceUpdate() }, */
 	// }), [tableId, items, expansionRows])
 
-	console.log('TableInstance render');
+	console.log('TableInstance render')
 
 	return (
 		<DataTable<Item>
@@ -97,9 +97,9 @@ export default memo(function (p: TableState) {
 			//{...tableState}
 			//{...ports.customProps}
 		/>
-	);
+	)
 	// Основной источник оптимизации. Точечно выбираем из tableState на что должна реагировать таблица
-}); /* , (oldTableState, newTableState) => {
+}) /* , (oldTableState, newTableState) => {
 	let tableStateEquals = true
 	if (oldTableState.fetching !== newTableState.fetching) tableStateEquals = false // Первый рендер
 	console.log(oldTableState.selection.single.selectedItem?.id, newTableState.selection.single.selectedItem?.id)

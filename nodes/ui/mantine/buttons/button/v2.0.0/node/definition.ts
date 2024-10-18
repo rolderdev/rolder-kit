@@ -1,19 +1,19 @@
-import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import type { ButtonVariant } from '@mantine/core';
+import type { ButtonVariant } from '@mantine/core'
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, sizes } from '@shared/port-v1.0.0'
 
 export type Props = BaseReactProps & {
-	label?: string;
-	submitType: boolean;
-	href?: string;
-	sizeProp: string;
-	compact: boolean;
-	fullWidth: boolean;
-	variant: ButtonVariant;
-	disabled: boolean;
-};
+	label?: string
+	submitType: boolean
+	href?: string
+	sizeProp: string
+	compact: boolean
+	fullWidth: boolean
+	variant: ButtonVariant
+	disabled: boolean
+}
 
-import Comp from '../component/Button';
+import Comp from '../component/Button'
 
 export default {
 	hashTag: '#expreimental',
@@ -71,4 +71,4 @@ export default {
 		],
 		outputs: [getPortDef({ name: 'clicked', displayName: 'Clicked', group: 'Signals', type: 'signal' })],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

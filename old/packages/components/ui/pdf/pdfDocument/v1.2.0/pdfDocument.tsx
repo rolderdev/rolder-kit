@@ -1,7 +1,7 @@
-import { createElement, forwardRef, useImperativeHandle } from 'react';
-import { Document, Font, pdf } from '@react-pdf/renderer';
-import type { Props } from './types';
-import { sendOutput, sendSignal } from '@packages/port-send';
+import { sendOutput, sendSignal } from '@packages/port-send'
+import { Document, Font, pdf } from '@react-pdf/renderer'
+import { createElement, forwardRef, useImperativeHandle } from 'react'
+import type { Props } from './types'
 
 const defaultFont = {
 	family: 'Roboto',
@@ -61,55 +61,55 @@ const defaultFont = {
 			fontStyle: 'italic',
 		},
 	],
-};
+}
 
 const PdfDocument = (props: Props) => {
-	const ch = props.children as any;
+	const ch = props.children as any
 	const children = Array.isArray(ch)
 		? ch.filter((i) => i.props.noodlNode.model.type.split('.')[1] === 'PdfPage')
 		: ch?.props.noodlNode.model.type.split('.')[1] === 'PdfPage'
-		? ch
-		: undefined;
+			? ch
+			: undefined
 
 	return (
 		<Document {...props.customProps} style={props.style}>
 			{children}
 		</Document>
-	);
-};
+	)
+}
 
-export default forwardRef(function (props: Props, ref) {
-	const { noodlNode, fonts } = props;
+export default forwardRef((props: Props, ref) => {
+	const { noodlNode, fonts } = props
 
-	Font.register(defaultFont);
-	fonts?.map((font) => Font.register(font));
+	Font.register(defaultFont)
+	fonts?.map((font) => Font.register(font))
 
 	useImperativeHandle(
 		ref,
 		() => ({
 			async create() {
-				sendOutput(noodlNode, 'creating', true);
+				sendOutput(noodlNode, 'creating', true)
 
 				// Закоментил усложения, которые зачем то были нужны. Сейчас работает и без них, значит без 2-й генерации PDF.
 				//const PDF = pdf(createElement(PdfDocument, props));
 				// С переходом на React 18, это строка перестала работать. В Roodl, в react-component-node, срока 662 с пометкой Rolder правит это.
-				const PDF = pdf(<PdfDocument {...props} />);
-				let blob = await PDF.toBlob();
+				const PDF = pdf(<PdfDocument {...props} />)
+				const blob = await PDF.toBlob()
 				//PDF.updateContainer(createElement(PdfDocument, props));
 				//blob = await PDF.toBlob();
-				sendOutput(noodlNode, 'blob', blob);
+				sendOutput(noodlNode, 'blob', blob)
 				setTimeout(() => {
-					sendOutput(noodlNode, 'creating', false);
-					sendSignal(noodlNode, 'created');
-				});
+					sendOutput(noodlNode, 'creating', false)
+					sendSignal(noodlNode, 'created')
+				})
 			},
 			reset() {
-				sendOutput(noodlNode, 'blob', null);
-				sendSignal(noodlNode, 'reseted');
+				sendOutput(noodlNode, 'blob', null)
+				sendSignal(noodlNode, 'reseted')
 			},
 		}),
 		[props]
-	);
+	)
 
-	return null;
-});
+	return null
+})

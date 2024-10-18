@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/date-time-picker-v1.0.0';
+import v100 from '@packages/date-time-picker-v1.0.0'
 
 export default reactNode('DateTimePicker', {
 	'v1.0.0': {
@@ -25,7 +25,7 @@ export default reactNode('DateTimePicker', {
 				'minDateOffset',
 				'defaultDate',
 				'resetSelected',
-				'formField'
+				'formField',
 			]),
 			getPort({
 				plug: 'input',
@@ -34,7 +34,7 @@ export default reactNode('DateTimePicker', {
 				group: 'Params',
 				default: 'YYYY.MM.DD HH:mm',
 				type: 'string',
-				customs: { required: 'connection', projectDefaultKey: 'dateFormat' }
+				customs: { required: 'connection', projectDefaultKey: 'dateFormat' },
 			}),
 			...inputGroups.Icon,
 			getPort({
@@ -47,11 +47,11 @@ export default reactNode('DateTimePicker', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
-			})
+						return p.useScope ? true : false
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['selected', 'selectedDate'])
-	}
-});
+		outputs: getPorts('output', ['selected', 'selectedDate']),
+	},
+})

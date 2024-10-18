@@ -14,21 +14,21 @@
 libProps - стнадартные настройки библиотеки, которые не используются или используются повторно в Table.
 */
 
-import { useMemo } from 'react';
-import type { Props, TableProps } from '../../types';
-import { getCompProps } from '@packages/get-comp-props';
-import { nanoid } from 'nanoid';
-import useColumns from './useColumns';
+import { getCompProps } from '@packages/get-comp-props'
+import { nanoid } from 'nanoid'
+import { useMemo } from 'react'
+import type { Props, TableProps } from '../../types'
+import useColumns from './useColumns'
 
 export default function (props: Props): TableProps {
-	const { customProps } = props;
-	const p = { ...getCompProps(props) } as Props;
+	const { customProps } = props
+	const p = { ...getCompProps(props) } as Props
 
 	// useMemo без зависимостей, чтобы id присваивался только при монтировании
-	const tableId = useMemo(() => nanoid(8), []);
+	const tableId = useMemo(() => nanoid(8), [])
 
 	// Опеределяем колонки здесь, т.к. они меняются только при изменении схемы разработчиком
-	const columns = useColumns(p.noodlNode, tableId, p.items, p.columnsDefinition);
+	const columns = useColumns(p.noodlNode, tableId, p.items, p.columnsDefinition)
 
 	const resultProps: TableProps = {
 		// Base
@@ -69,36 +69,36 @@ export default function (props: Props): TableProps {
 			loaderColor: props.loaderColor || 'blue',
 			loaderBackgroundBlur: props.customProps?.loader?.bgBlur || 0.5,
 			// Multi selection
-			selectionTrigger: p.selectionTrigger
+			selectionTrigger: p.selectionTrigger,
 		},
 		tableStyles: {
 			// Нужно отлкючать анимацию при сворачивании/разворачивании, иначе конфликтует с Collapse, в который обернуты rowExpansion
-			animation: p.expansion ? false : p.animation || true
+			animation: p.expansion ? false : p.animation || true,
 		},
 		rowStyles: {
 			rowBackgroundColor: p.rowBackgroundColor || 'white',
 			singleSelectionRowBgColor: p.singleSelectionRowBgColor || 'white',
-			mutliSelectionRowBgColor: p.mutliSelectionRowBgColor || 'white'
+			mutliSelectionRowBgColor: p.mutliSelectionRowBgColor || 'white',
 		},
 		selection: {
 			single: {
 				enabled: p.singleSelection || false,
 				unselectable: p.unselectable || false,
-				selectedItem: p.selectedItem
+				selectedItem: p.selectedItem,
 			},
 			multi: {
 				enabled: p.multiSelection || false,
-				selectedItems: p.selectedItems || []
-			}
+				selectedItems: p.selectedItems || [],
+			},
 		},
 		expansion: {
 			enabled: p.expansion || false,
 			template: p.expansionTemplate,
 			allowMultiple: p.allowMultiple || false,
 			collapseProps: { transitionDuration: 150, ...customProps?.collapseProps },
-			expandedItems: p.expandedItems || []
-		}
-	};
+			expandedItems: p.expandedItems || [],
+		},
+	}
 
-	return resultProps;
+	return resultProps
 }

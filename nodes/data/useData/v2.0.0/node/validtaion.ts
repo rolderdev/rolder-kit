@@ -1,15 +1,15 @@
 // Проверяет схему и выдает красиво в ошибках.
 
-import '@shared/types-v0.1.0';
-import type { Props } from '../node/definition';
-import type { InferOutput } from 'shared/src/libs/valibot';
+import '@shared/types-v0.1.0'
+import type { InferOutput } from 'shared/src/libs/valibot'
+import type { Props } from '../node/definition'
 
-export type FetchScheme = InferOutput<ReturnType<typeof getTypedFetchScheme>>;
+export type FetchScheme = InferOutput<ReturnType<typeof getTypedFetchScheme>>
 
 const getTypedFetchScheme = () => {
-	const { typeOf, unique } = R.libs.just;
+	const { typeOf, unique } = R.libs.just
 	const { array, check, integer, maxValue, minValue, number, optional, pipe, strictObject, string, unknown, union } =
-		R.libs.valibot;
+		R.libs.valibot
 
 	return pipe(
 		array(
@@ -67,19 +67,19 @@ const getTypedFetchScheme = () => {
 					sorts: pipe(
 						unknown(),
 						check((sorts) => {
-							let isValid = true;
+							let isValid = true
 							if (sorts) {
-								if (!Array.isArray(sorts)) isValid = false;
+								if (!Array.isArray(sorts)) isValid = false
 								else {
 									for (const sort of sorts) {
 										if (typeOf(sort as Object) === 'object') {
-											if (!Number.isNaN(parseInt(Object.keys(sort as any)[0]))) isValid = false;
-											else if (!['asc', 'desc'].includes(Object.values(sort as any)[0] as any)) isValid = false;
-										} else isValid = false;
+											if (!Number.isNaN(Number.parseInt(Object.keys(sort as any)[0]))) isValid = false
+											else if (!['asc', 'desc'].includes(Object.values(sort as any)[0] as any)) isValid = false
+										} else isValid = false
 									}
 								}
 							}
-							return isValid;
+							return isValid
 						}, '"Sorts" must be array of objects with following format <code>{ [path.to.value]: "asc" | "desc" }</code>')
 					),
 					childrenFunc: optional(string('"childrenFunc" must be string to transfer over net.')),
@@ -102,37 +102,37 @@ const getTypedFetchScheme = () => {
 					'Must be "filters" or "filtersFunc", choose one.'
 				),
 				check((scheme) => {
-					let isValid = true;
+					let isValid = true
 					if (scheme.filtersFunc)
 						try {
-							eval(scheme.filtersFunc);
+							eval(scheme.filtersFunc)
 						} catch (e: any) {
-							log.error(e);
-							isValid = false;
+							log.error(e)
+							isValid = false
 						}
-					return isValid;
+					return isValid
 				}, '"filtersFunc" eval error. Details at the console.'),
 				check((scheme) => {
-					let isValid = true;
+					let isValid = true
 					if (scheme.childrenFunc)
 						try {
-							eval(scheme.childrenFunc);
+							eval(scheme.childrenFunc)
 						} catch (e: any) {
-							log.error(e);
-							isValid = false;
+							log.error(e)
+							isValid = false
 						}
-					return isValid;
+					return isValid
 				}, '"childrenFunc" eval error. Details at the console.'),
 				check((scheme) => {
-					let isValid = true;
+					let isValid = true
 					if (scheme.recursionFunc)
 						try {
-							eval(scheme.recursionFunc);
+							eval(scheme.recursionFunc)
 						} catch (e: any) {
-							log.error(e);
-							isValid = false;
+							log.error(e)
+							isValid = false
 						}
-					return isValid;
+					return isValid
 				}, '"recursionFunc" eval error. Details at the console.')
 			)
 		),
@@ -140,28 +140,26 @@ const getTypedFetchScheme = () => {
 			(schemes) => (schemes.length !== unique(schemes.map((i) => i.dbClass)).length ? false : true),
 			'dbClass must be unique.'
 		)
-	);
-};
+	)
+}
 
 export const validateFetchScheme = (p: Props) => {
-	const result = R.libs.valibot.safeParse(getTypedFetchScheme(), p.fetchScheme);
+	const result = R.libs.valibot.safeParse(getTypedFetchScheme(), p.fetchScheme)
 
 	if (!result.success) {
 		// Через forof, т.к. map добовляет запятые.
 		// <pre> делает красоту c JSON.stringify.
-		let html = '<pre><p>Scheme errors:</p>';
+		let html = '<pre><p>Scheme errors:</p>'
 		for (const issue of result.issues) {
 			html += `<hr width="100%" size="0.5px">${
 				issue.type === 'strict_object'
 					? `There is no key "${R.libs.just.last(issue.path || []).key}" at Scheme specification.`
 					: issue.message
-			}<br>${
-				issue.path?.[0].value ? JSON.stringify(issue.path?.[0].value, null, '  ') : JSON.stringify(issue.input, null, '  ')
-			}`;
+			}<br>${issue.path?.[0].value ? JSON.stringify(issue.path?.[0].value, null, '  ') : JSON.stringify(issue.input, null, '  ')}`
 		}
-		html += '<hr width="100%" size="0.5px"></pre>';
+		html += '<hr width="100%" size="0.5px"></pre>'
 
-		return html;
+		return html
 	}
-	return true;
-};
+	return true
+}

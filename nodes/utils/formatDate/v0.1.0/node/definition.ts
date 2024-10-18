@@ -1,15 +1,15 @@
-import type { BaseJsProps } from '@shared/node-v1.0.0';
-import type { JsNodeDef } from '@shared/node-v1.0.0';
-import { getPortDef } from '@shared/port-v1.0.0';
+import type { BaseJsProps } from '@shared/node-v1.0.0'
+import type { JsNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
 
-import initState from '@shared/init-state-v0.1.0';
+import initState from '@shared/init-state-v0.1.0'
 
 export type Props = BaseJsProps & {
-	type: 'number' | 'jsDate';
-	numberDate?: number;
-	jsDate?: Date;
-	format?: string;
-};
+	type: 'number' | 'jsDate'
+	numberDate?: number
+	jsDate?: Date
+	format?: string
+}
 
 export default {
 	hashTag: '#expreimental',
@@ -57,8 +57,8 @@ export default {
 	},
 	beforeComponent: {
 		initialize: async () => {
-			await initState('shared');
+			await initState('shared')
 		},
 	},
 	disableCustomProps: true,
-} satisfies JsNodeDef;
+} satisfies JsNodeDef

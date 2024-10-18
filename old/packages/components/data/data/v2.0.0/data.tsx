@@ -1,13 +1,13 @@
-import { forwardRef } from 'react';
-import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query';
-import type { MutationFnProps, Props } from './types';
-import { getKuzzle } from '@packages/get-kuzzle';
+import { getKuzzle } from '@packages/get-kuzzle'
+import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query'
+import { forwardRef } from 'react'
+import type { MutationFnProps, Props } from './types'
 
-export default forwardRef(function (o: Props) {
+export default forwardRef((o: Props) => {
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
-				staleTime: Infinity,
+				staleTime: Number.POSITIVE_INFINITY,
 				refetchOnMount: 'always',
 			},
 			mutations: {
@@ -15,50 +15,50 @@ export default forwardRef(function (o: Props) {
 				retry: 5,
 			},
 		},
-	});
+	})
 
 	queryClient.setMutationDefaults([], {
 		mutationFn: async (props: MutationFnProps) => {
-			const K = await getKuzzle();
-			if (!K) return;
+			const K = await getKuzzle()
+			if (!K) return
 
-			const { dbName } = R.env;
+			const { dbName } = R.env
 			if (!dbName) {
-				R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`);
-				log.error('No dbName', R.env);
-				return;
+				R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`)
+				log.error('No dbName', R.env)
+				return
 			}
 
-			const r = await K.query({ controller: 'rolder', action: props.action, dbName, scheme: props.scheme, silent: props.silent });
-			const data = r.result;
-			const dataEntries = Object.entries(data);
+			const r = await K.query({ controller: 'rolder', action: props.action, dbName, scheme: props.scheme, silent: props.silent })
+			const data = r.result
+			const dataEntries = Object.entries(data)
 			if (dataEntries.some((i) => i[1].error)) {
 				dataEntries.forEach((entry) => {
 					if (entry[1]?.error) {
-						R.libs.mantine?.MantineError('Системная ошибка!', `${props.action} error at "${entry[0]}": ${entry[1]?.error}`);
-						log.error(`${props.action} error at "${entry[0]}": ${entry[1]?.error}`);
+						R.libs.mantine?.MantineError('Системная ошибка!', `${props.action} error at "${entry[0]}": ${entry[1]?.error}`)
+						log.error(`${props.action} error at "${entry[0]}": ${entry[1]?.error}`)
 					}
-				});
+				})
 			}
 
-			return data;
+			return data
 		},
-	});
+	})
 
 	function Mutation(props: any) {
-		const mutation = useMutation([]);
+		const mutation = useMutation([])
 
 		//@ts-ignore
-		R.libs.mutate = mutation.mutateAsync;
+		R.libs.mutate = mutation.mutateAsync
 
-		return <>{props.children}</>;
+		return <>{props.children}</>
 	}
 
-	R.libs.queryClient = queryClient;
+	R.libs.queryClient = queryClient
 
 	return (
 		<QueryClientProvider client={queryClient}>
 			<Mutation>{o.children}</Mutation>
 		</QueryClientProvider>
-	);
-});
+	)
+})

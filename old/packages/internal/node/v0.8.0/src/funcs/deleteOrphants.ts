@@ -1,16 +1,16 @@
-import type { NodePort } from '@packages/port';
-import type { Props } from '../../types';
-import isEmpty from '@packages/is-empty';
+import isEmpty from '@packages/is-empty'
+import type { NodePort } from '@packages/port'
+import type { Props } from '../../types'
 
 export function deleteOrphantNodeProps(nodeInputs: NodePort[], props: Props): Props {
-	let resultProps: Props = props;
+	const resultProps: Props = props
 
 	Object.keys(props).forEach((propName) => {
-		if (!nodeInputs.map((i) => i.name).includes(propName)) delete resultProps[propName];
-		if (isEmpty(resultProps[propName])) delete resultProps[propName];
-	});
+		if (!nodeInputs.map((i) => i.name).includes(propName)) delete resultProps[propName]
+		if (isEmpty(resultProps[propName])) delete resultProps[propName]
+	})
 
-	return resultProps;
+	return resultProps
 }
 
 const baseProps = [
@@ -22,23 +22,23 @@ const baseProps = [
 	'children',
 	'customProps',
 	'propFunction',
-	'innerProps'
-];
+	'innerProps',
+]
 
 export function deleteOrphantProps(allNodePorts: NodePort[], props: Props): Props {
-	let resultProps: Props = props;
+	const resultProps: Props = props
 
-	let filteredPorts: NodePort[] = [];
+	const filteredPorts: NodePort[] = []
 	allNodePorts.forEach((nodePort) => {
 		if (nodePort.customs?.dependsOn) {
-			if (nodePort.customs.dependsOn(props)) filteredPorts.push(nodePort);
-		} else filteredPorts.push(nodePort);
-	});
+			if (nodePort.customs.dependsOn(props)) filteredPorts.push(nodePort)
+		} else filteredPorts.push(nodePort)
+	})
 
 	Object.keys(props).forEach((propName) => {
-		if (!baseProps.includes(propName) && !filteredPorts.map((i) => i.name).includes(propName)) delete resultProps[propName];
-		if (isEmpty(resultProps[propName])) delete resultProps[propName];
-	});
+		if (!baseProps.includes(propName) && !filteredPorts.map((i) => i.name).includes(propName)) delete resultProps[propName]
+		if (isEmpty(resultProps[propName])) delete resultProps[propName]
+	})
 
-	return resultProps;
+	return resultProps
 }

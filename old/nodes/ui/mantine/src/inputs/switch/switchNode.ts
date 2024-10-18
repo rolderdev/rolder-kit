@@ -1,8 +1,8 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 
-import v010 from '@packages/switch-v0.1.0';
-import v101 from '@packages/switch-v1.0.1';
+import v010 from '@packages/switch-v0.1.0'
+import v101 from '@packages/switch-v1.0.1'
 
 export default reactNode(
 	'Switch',
@@ -24,7 +24,7 @@ export default reactNode(
 					'formField',
 					'radius',
 					'size',
-					'description'
+					'description',
 				]),
 				getPort({
 					plug: 'input',
@@ -32,7 +32,7 @@ export default reactNode(
 					displayName: 'Checked',
 					group: 'States',
 					default: false,
-					type: 'boolean'
+					type: 'boolean',
 				}),
 				getPort({
 					plug: 'input',
@@ -41,7 +41,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'right',
 					type: getCustomEnumType(['right', 'left']),
-					customs: { required: 'connection' }
+					customs: { required: 'connection' },
 				}),
 				getPort({
 					plug: 'input',
@@ -53,12 +53,12 @@ export default reactNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.useScope ? true : false;
-						}
-					}
-				})
+							return p.useScope ? true : false
+						},
+					},
+				}),
 			],
-			outputs: getPorts('output', ['changed', 'checked'])
+			outputs: getPorts('output', ['changed', 'checked']),
 		},
 		'v1.0.1': {
 			module: { static: v101 },
@@ -76,7 +76,7 @@ export default reactNode(
 					'formField',
 					'radius',
 					'size',
-					'description'
+					'description',
 				]),
 				getPort({
 					plug: 'input',
@@ -84,7 +84,7 @@ export default reactNode(
 					displayName: 'Checked',
 					group: 'States',
 					default: false,
-					type: 'boolean'
+					type: 'boolean',
 				}),
 				getPort({
 					plug: 'input',
@@ -93,7 +93,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'right',
 					type: getCustomEnumType(['right', 'left']),
-					customs: { required: 'connection' }
+					customs: { required: 'connection' },
 				}),
 				getPort({
 					plug: 'input',
@@ -105,13 +105,13 @@ export default reactNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.useScope ? true : false;
-						}
-					}
-				})
+							return p.useScope ? true : false
+						},
+					},
+				}),
 			],
-			outputs: getPorts('output', ['changed', 'checked'])
-		}
+			outputs: getPorts('output', ['changed', 'checked']),
+		},
 	},
 	{ docs: 'https://docs.rolder.app/#/switch' }
-);
+)

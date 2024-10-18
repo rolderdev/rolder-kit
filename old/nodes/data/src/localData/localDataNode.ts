@@ -1,6 +1,6 @@
-import { reactNode } from '@packages/node';
-import { getPort, getType } from '@packages/port';
-import { lazy } from 'react';
+import { reactNode } from '@packages/node'
+import { getPort, getType } from '@packages/port'
+import { lazy } from 'react'
 
 export default reactNode(
 	'LocalData',
@@ -8,7 +8,7 @@ export default reactNode(
 		'v0.1.0': {
 			hashTag: '#expreimental',
 			module: {
-				dynamic: lazy(() => import('@packages/local-data-v0.1.0'))
+				dynamic: lazy(() => import('@packages/local-data-v0.1.0')),
 			},
 			inputs: [
 				getPort({
@@ -17,7 +17,7 @@ export default reactNode(
 					displayName: 'DB name',
 					group: 'Params',
 					type: 'string',
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -27,8 +27,8 @@ export default reactNode(
 					type: getType('array', 'connection'),
 					customs: {
 						required: 'connection',
-						isObject: true
-					}
+						isObject: true,
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -36,7 +36,7 @@ export default reactNode(
 					displayName: 'Dev mode',
 					group: 'Params',
 					type: 'boolean',
-					default: false
+					default: false,
 				}),
 				getPort({
 					plug: 'input',
@@ -47,10 +47,10 @@ export default reactNode(
 					default: 'localhost',
 					customs: {
 						dependsOn(p) {
-							return p.backendDevMode ? true : false;
-						}
-					}
-				})
+							return p.backendDevMode ? true : false
+						},
+					},
+				}),
 			],
 			outputs: [
 				getPort({
@@ -59,17 +59,17 @@ export default reactNode(
 					displayName: 'Replicating',
 					group: 'States',
 					type: 'boolean',
-					default: true
+					default: true,
 				}),
 				getPort({
 					plug: 'output',
 					name: 'replicated',
 					displayName: 'Replicated',
 					group: 'Signals',
-					type: 'signal'
-				})
-			]
-		}
+					type: 'signal',
+				}),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

@@ -4,7 +4,7 @@
 	разворачиваемых строк, но это сильно усложянет код, а сценарий редкий.
 */
 
-import type { Props } from '../../types';
+import type { Props } from '../../types'
 
 export default function (p: Props) {
 	return {
@@ -31,7 +31,7 @@ export default function (p: Props) {
 		loaderSize: p.customProps?.loader?.size || 'lg',
 		loaderType: p.customProps?.loader?.type || 'dots',
 		loaderColor: p.loaderColor || 'blue',
-		loaderBackgroundBlur: p.customProps?.loader?.bgBlur || 0.5
+		loaderBackgroundBlur: p.customProps?.loader?.bgBlur || 0.5,
 		// Single selection
 		// Если задана функция, разработчик сам управляет, иначе вкючаем поведение для еденичного выбора
 		//onRowClick: ({ record }) => onRowClickFunc ? onRowClickFunc(record, items) : setSelectedRecord(record),
@@ -41,5 +41,5 @@ export default function (p: Props) {
       // Нужно отлкючать анимацию при сворачивании/разворачивании, иначе конфликтует с Collapse, в который обернуты rowExpansion
       animation: p.expansion ? false : p.animation === undefined ? false : p.animation
   },*/
-	};
+	}
 }

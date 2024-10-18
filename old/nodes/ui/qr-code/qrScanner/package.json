@@ -1,13 +1,13 @@
 {
-  "name": "@nodes/qr-scanner",
-  "main": "qrScannerNode.ts",
-  "types": "qrScannerNode.ts",
-  "dependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@^",
-    "@packages/port": "workspace:@packages/port-v0.6.0@^",
-    "@packages/qr-scanner-v1.0.0": "workspace:*"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@nodes/qr-scanner",
+	"main": "qrScannerNode.ts",
+	"types": "qrScannerNode.ts",
+	"dependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"@packages/port": "workspace:@packages/port-v0.6.0@^",
+		"@packages/qr-scanner-v1.0.0": "workspace:*"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }

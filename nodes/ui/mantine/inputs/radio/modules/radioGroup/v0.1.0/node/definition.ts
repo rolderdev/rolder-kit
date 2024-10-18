@@ -1,10 +1,10 @@
-import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import type { Item } from '@shared/types-v0.1.0';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, sizes } from '@shared/port-v1.0.0'
+import type { Item } from '@shared/types-v0.1.0'
 
-export type Props = BaseReactProps & { defaultValue?: string; valuePath: string; items?: Item[] };
+export type Props = BaseReactProps & { defaultValue?: string; valuePath: string; items?: Item[] }
 
-import Comp from '../component/RadioGroup';
+import Comp from '../component/RadioGroup'
 
 export default {
 	hashTag: '#expreimental',
@@ -39,4 +39,4 @@ export default {
 			getPortDef({ name: 'changed', displayName: 'Changed', group: 'Signals', type: 'signal' }),
 		],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

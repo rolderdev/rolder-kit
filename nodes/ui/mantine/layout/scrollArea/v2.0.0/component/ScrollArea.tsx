@@ -1,14 +1,14 @@
-import { ScrollArea } from '@mantine/core';
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import type { Props } from '../node/definition';
-import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
+import { ScrollArea } from '@mantine/core'
+import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0'
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
+import type { Props } from '../node/definition'
 
-export default forwardRef(function (p: Props, ref) {
-	const viewport = useRef<HTMLDivElement>(null);
+export default forwardRef((p: Props, ref) => {
+	const viewport = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		if (viewport.current?.scrollHeight) sendOutput(p.noodlNode, 'scrollHeight', viewport.current?.scrollHeight);
-	}, [viewport.current?.scrollHeight, p.children]);
+		if (viewport.current?.scrollHeight) sendOutput(p.noodlNode, 'scrollHeight', viewport.current?.scrollHeight)
+	}, [viewport.current?.scrollHeight, p.children])
 
 	useImperativeHandle(
 		ref,
@@ -19,15 +19,15 @@ export default forwardRef(function (p: Props, ref) {
 			getScrollHeight: () => sendOutput(p.noodlNode, 'scrollHeight', viewport.current?.scrollHeight),
 		}),
 		[viewport]
-	);
+	)
 
 	if (!p.autosize)
 		return (
 			<ScrollArea
 				viewportRef={viewport}
 				onScrollPositionChange={(pos) => {
-					sendOutput(p.noodlNode, 'scrollPosition', pos);
-					p.noodlNode._internal.pos = pos;
+					sendOutput(p.noodlNode, 'scrollPosition', pos)
+					p.noodlNode._internal.pos = pos
 				}}
 				onTopReached={() => sendSignal(p.noodlNode, 'topReached')}
 				onBottomReached={() => sendSignal(p.noodlNode, 'bottomReached')}
@@ -36,14 +36,14 @@ export default forwardRef(function (p: Props, ref) {
 			>
 				{p.children}
 			</ScrollArea>
-		);
+		)
 	else
 		return (
 			<ScrollArea.Autosize
 				viewportRef={viewport}
 				onScrollPositionChange={(pos) => {
-					sendOutput(p.noodlNode, 'scrollPosition', pos);
-					p.noodlNode._internal.pos = pos;
+					sendOutput(p.noodlNode, 'scrollPosition', pos)
+					p.noodlNode._internal.pos = pos
 				}}
 				onTopReached={() => sendSignal(p.noodlNode, 'topReached')}
 				onBottomReached={() => sendSignal(p.noodlNode, 'bottomReached')}
@@ -52,5 +52,5 @@ export default forwardRef(function (p: Props, ref) {
 			>
 				{p.children}
 			</ScrollArea.Autosize>
-		);
-});
+		)
+})

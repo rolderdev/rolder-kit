@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { enums, getEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { enums, getEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/header-v1.0.0';
+import v100 from '@packages/header-v1.0.0'
 
 export default reactNode(
 	'Header',
@@ -17,7 +17,7 @@ export default reactNode(
 					displayName: 'With border',
 					group: 'Style',
 					type: 'boolean',
-					default: true
+					default: true,
 				}),
 				getPort({
 					plug: 'input',
@@ -27,8 +27,8 @@ export default reactNode(
 					type: 'array',
 					customs: {
 						required: 'connection',
-						isObject: true
-					}
+						isObject: true,
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -36,10 +36,10 @@ export default reactNode(
 					displayName: 'Burger size',
 					group: 'Dimensions',
 					type: getEnumType(enums.sizes, 'editor'),
-					default: 'sm'
-				})
-			]
-		}
+					default: 'sm',
+				}),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

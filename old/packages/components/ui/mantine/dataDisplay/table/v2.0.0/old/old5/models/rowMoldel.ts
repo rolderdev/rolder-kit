@@ -1,11 +1,11 @@
 /* Модель строки. */
 
-import { z } from 'zod';
-import isEqual from 'lodash.isequal';
-import type { Item } from 'types';
-import type { State, Store } from '../store/store';
-import setRow from '../funcs/setRow';
-import isObjectEqual from '../funcs/isObjectEqual';
+import isEqual from 'lodash.isequal'
+import type { Item } from 'types'
+import { z } from 'zod'
+import isObjectEqual from '../funcs/isObjectEqual'
+import setRow from '../funcs/setRow'
+import type { State, Store } from '../store/store'
 
 const rowSchema = z.object({
 	id: z.string(),
@@ -14,16 +14,16 @@ const rowSchema = z.object({
 	item: z.object({}).passthrough(),
 	templateCells: z.map(z.number(), z.any()).default(new Map()),
 	expansionRow: z.any().optional(),
-});
+})
 
-export type Row = z.infer<typeof rowSchema>;
+export type Row = z.infer<typeof rowSchema>
 
 // Метод подготавливает строки.
 export const getRows = (items: Item[]) => {
-	const rows = new Map<string, Row>();
-	items.map((item) => rows.set(item.id, rowSchema.parse({ id: item.id, item })));
-	return rows;
-};
+	const rows = new Map<string, Row>()
+	items.map((item) => rows.set(item.id, rowSchema.parse({ id: item.id, item })))
+	return rows
+}
 
 // Методы setRows обновляют состояние строк. 2 сценария работы:
 // 1. Функция выдает готовые строки, которые присваиваются при первичном запуске или при обновлении. Это один рендер.
@@ -34,29 +34,29 @@ export const getRows = (items: Item[]) => {
 // Там же и установка ready разом. Так легче добиться одного рендера, т.к. трудно асинхронно принимать решение ready или нет.
 
 export const setRows = (store: Store, newItems: Item[]) => {
-	const newRows = getRows(newItems);
-	const resultRows = new Map<string, Row>(store.getState().rows); // Легче мутировать, чем пересоздавать.
-	let itemsChanged = false;
-	let itemIdsChanged = false;
-	let newState: Partial<State> = {};
+	const newRows = getRows(newItems)
+	const resultRows = new Map<string, Row>(store.getState().rows) // Легче мутировать, чем пересоздавать.
+	let itemsChanged = false
+	let itemIdsChanged = false
+	const newState: Partial<State> = {}
 
 	// Проходим по прилетевшим строкам в их порядке, сравнив существующие, добавив новые.
 	Array.from(newRows.values()).map((newRow) => {
-		const currentRow = resultRows.get(newRow.id);
+		const currentRow = resultRows.get(newRow.id)
 
 		if (currentRow) {
 			// Сравниваем только источник данных - item.
 			if (!isObjectEqual(currentRow.item, newRow.item)) {
-				itemsChanged = true;
-				resultRows.set(newRow.id, setRow(store, newRow));
+				itemsChanged = true
+				resultRows.set(newRow.id, setRow(store, newRow))
 			}
 		} else {
 			// Добавим новую строку, установив в нее кастомные расширения.
-			resultRows.set(newRow.id, setRow(store, newRow));
-			itemsChanged = true;
-			itemIdsChanged = true;
+			resultRows.set(newRow.id, setRow(store, newRow))
+			itemsChanged = true
+			itemIdsChanged = true
 		}
-	});
+	})
 
 	// Удаление.
 	if (
@@ -65,13 +65,13 @@ export const setRows = (store: Store, newItems: Item[]) => {
 			newItems.map((i) => i.id)
 		)
 	) {
-		itemIdsChanged = true;
+		itemIdsChanged = true
 		Array.from(resultRows.values()).map((row) => {
-			if (!newRows.get(row.id)) resultRows.delete(row.id);
-		});
+			if (!newRows.get(row.id)) resultRows.delete(row.id)
+		})
 	}
 
-	if (itemsChanged || itemIdsChanged) newState.rows = resultRows;
-	if (itemIdsChanged) newState.rowIds = newItems.map((i) => i.id);
-	if (itemsChanged || itemIdsChanged) store.setState(newState);
-};
+	if (itemsChanged || itemIdsChanged) newState.rows = resultRows
+	if (itemIdsChanged) newState.rowIds = newItems.map((i) => i.id)
+	if (itemsChanged || itemIdsChanged) store.setState(newState)
+}

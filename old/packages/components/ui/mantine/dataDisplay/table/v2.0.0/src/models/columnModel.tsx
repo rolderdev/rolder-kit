@@ -1,11 +1,11 @@
 /* Модель колонки. */
 
-import { z } from 'zod';
-import type { Store } from '../store/store';
-import type { Props } from '../../types';
-import Render from '../renders/Render';
-import type { Item } from 'types';
-import isArrayEqual from '../funcs/isArrayEqual';
+import type { Item } from 'types'
+import { z } from 'zod'
+import type { Props } from '../../types'
+import isArrayEqual from '../funcs/isArrayEqual'
+import Render from '../renders/Render'
+import type { Store } from '../store/store'
 
 // Схема для проверки колонок и установки типов данных.
 export const columnSchema = z.object({
@@ -26,22 +26,22 @@ export const columnSchema = z.object({
 		.args(z.array(z.object({ id: z.string() }).passthrough()), z.string(), z.string())
 		.returns(z.array(z.object({ id: z.string() }).passthrough()))
 		.optional(),
-});
+})
 
-export type Column = z.infer<typeof columnSchema>;
+export type Column = z.infer<typeof columnSchema>
 
 export const columnsDefinitionChanged = (s: Store, p: Props) => {
-	const newColumnsDefinition = p.columnsDefinition?.map((i, idx) => ({ ...i, idx })) || [];
-	if (!isArrayEqual(s.cold.columnsDefinition.get(), newColumnsDefinition)) return true;
-	else return false;
-};
+	const newColumnsDefinition = p.columnsDefinition?.map((i, idx) => ({ ...i, idx })) || []
+	if (!isArrayEqual(s.cold.columnsDefinition.get(), newColumnsDefinition)) return true
+	else return false
+}
 
 // Сохранение исходной схемы для сравнения.
 export const setColumnsDefinition = (s: Store, p: Props) => {
-	const newColumnsDefinition = p.columnsDefinition?.map((i, idx) => ({ ...i, idx })) || [];
-	newColumnsDefinition.map((i) => columnSchema.parse(i)); // Проверим валидность.
-	s.cold.columnsDefinition.set(newColumnsDefinition);
-};
+	const newColumnsDefinition = p.columnsDefinition?.map((i, idx) => ({ ...i, idx })) || []
+	newColumnsDefinition.map((i) => columnSchema.parse(i)) // Проверим валидность.
+	s.cold.columnsDefinition.set(newColumnsDefinition)
+}
 
 // Колонки для библиотеки.
 export const getHotColumns = (s: Store) =>
@@ -58,4 +58,4 @@ export const getHotColumns = (s: Store) =>
 			render: (item: Item) => (
 				<Render expansionEnabled={s.cold.tableProps.expansion.enabled.get() ? true : false} column={i as Column} item={item} />
 			),
-		}));
+		}))

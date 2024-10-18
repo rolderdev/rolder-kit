@@ -15,16 +15,16 @@
 	единственный мне известный способ делать реактивным конкретные поля не определяя их в модели. Такой же пример с setRecords.
 */
 
-import { t, type Instance } from 'mobx-state-tree';
-import { observable, set, values } from 'mobx';
-import type { NoodlNode } from '@packages/node';
-import type { Item } from 'types';
-import type { Props } from '../../types';
-import type { DataTableColumn } from 'mantine-datatable';
-import { getLibProps, libPropsModel } from './libPropsModel';
-import { getTableProps, tablePropsModel } from './tablePropsModel';
-import { columnDefinitionModel, columnModel, type ColumnDefinitionModel, type ColumnModel } from './columnModel';
-import { recordModel, type RecordModel } from './recordModel';
+import type { NoodlNode } from '@packages/node'
+import type { DataTableColumn } from 'mantine-datatable'
+import { observable, set, values } from 'mobx'
+import { type Instance, t } from 'mobx-state-tree'
+import type { Item } from 'types'
+import type { Props } from '../../types'
+import { type ColumnDefinitionModel, type ColumnModel, columnDefinitionModel, columnModel } from './columnModel'
+import { getLibProps, libPropsModel } from './libPropsModel'
+import { type RecordModel, recordModel } from './recordModel'
+import { getTableProps, tablePropsModel } from './tablePropsModel'
 
 // Вытягивает тип из модели
 interface RootModel extends Instance<typeof rootModel> {}
@@ -37,7 +37,7 @@ const rootModel = t
 		tableProps: tablePropsModel, // Наши специфичные настройки.
 		columnsDefinition: t.map(columnDefinitionModel),
 		columns: t.map(columnModel),
-		records: t.map(recordModel)
+		records: t.map(recordModel),
 	})
 	.views((self) => ({
 		// Подготовим колонки для библиотеки. Преобразуем map в массив и добавим типизацию.
@@ -58,21 +58,21 @@ const rootModel = t
 		}, */
 		// Подготовим records для библиотеки. Преобразуем map в массив и добавим типизацию.
 		get libRecords() {
-			return Array.from(self.records.values()) as RecordModel[]; // Почему то теряется Item из RecordModel.
-		}
+			return Array.from(self.records.values()) as RecordModel[] // Почему то теряется Item из RecordModel.
+		},
 	}))
 	.actions((self) => {
 		function setProps(p: Props) {
-			self.libProps = getLibProps(p);
-			self.tableProps = getTableProps(p);
+			self.libProps = getLibProps(p)
+			self.tableProps = getTableProps(p)
 		}
 		function setColumns(columnsDefinition: ColumnModel[]) {
 			columnsDefinition.map((columnDefinition, columnIdx) => {
 				// Установим ключи модели.
 
-				self.columns.set(columnIdx, columnDefinition);
-				const column = self.columns.get(columnIdx);
-				if (column) set(column, columnDefinition);
+				self.columns.set(columnIdx, columnDefinition)
+				const column = self.columns.get(columnIdx)
+				if (column) set(column, columnDefinition)
 				/*if (!column) {
 					self.columns.set(columnIdx, { ...columnDefinition, columnIdx, definition: columnDefinition });
 					const column = self.columns.get(columnIdx);
@@ -81,7 +81,7 @@ const rootModel = t
 				// Установим дополнительные ключи, не определенные в модели для использования стандартных настроек библиотеки, width, например.
 				//if (column) set(column, columnDefinition);
 				//console.log({ column: column?.definition });
-			});
+			})
 		}
 		function setRecords(columnsDefinition: ColumnModel[], items: Item[]) {
 			items.map((item) => {
@@ -96,10 +96,10 @@ const rootModel = t
 						//if (i.accessors) i.accessors.map((accessor) => set(self.accessors, accessor, getValue(item, accessor)));
 					}
 				}); */
-			});
+			})
 		}
 
-		return { setProps, setColumns, setRecords };
-	});
+		return { setProps, setColumns, setRecords }
+	})
 
-export { rootModel, type RootModel };
+export { rootModel, type RootModel }

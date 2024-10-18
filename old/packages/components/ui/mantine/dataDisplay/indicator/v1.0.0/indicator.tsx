@@ -1,16 +1,15 @@
-import { forwardRef } from "react"
-import type { Props } from "./types"
-import { Indicator } from "@mantine/core"
+import { Indicator } from '@mantine/core'
+import { forwardRef } from 'react'
+import type { Props } from './types'
 
-export default forwardRef(function (props: Props) {
-
-    return <Indicator
-        size={props.sizeUnits}
-        position={props.indicatorPosition}
-        processing={props.indicatorProcessing}
-        {...props}
-        {...props.customProps}
-    >
-        {props.children}
-    </Indicator>
-})
+export default forwardRef((props: Props) => (
+	<Indicator
+		size={props.sizeUnits}
+		position={props.indicatorPosition}
+		processing={props.indicatorProcessing}
+		{...props}
+		{...props.customProps}
+	>
+		{props.children}
+	</Indicator>
+))

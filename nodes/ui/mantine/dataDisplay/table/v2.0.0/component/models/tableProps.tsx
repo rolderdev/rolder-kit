@@ -1,16 +1,16 @@
 /* Модель настроек таблицы. */
 
-import type { DataTableSortStatus } from 'mantine-datatable';
-import type { Props } from '../../node/definition';
-import type { TableRecord } from './record';
-import type { Store } from '../store';
+import type { DataTableSortStatus } from 'mantine-datatable'
+import type { Props } from '../../node/definition'
+import type { Store } from '../store'
+import type { TableRecord } from './record'
 
-export type TableProps = ReturnType<typeof setTableProps>;
+export type TableProps = ReturnType<typeof setTableProps>
 
 // Устанавливает наши специфичные настройки таблицы.
 export const setTableProps = (p: Props, s: Store) => {
-	const defaultSortColumnDef = p.columnsDefinition?.find((i) => i.sort?.defaultDirection);
-	const defaultSortColumnIdx = defaultSortColumnDef ? p.columnsDefinition?.indexOf(defaultSortColumnDef) : undefined;
+	const defaultSortColumnDef = p.columnsDefinition?.find((i) => i.sort?.defaultDirection)
+	const defaultSortColumnIdx = defaultSortColumnDef ? p.columnsDefinition?.indexOf(defaultSortColumnDef) : undefined
 
 	const tableProps = {
 		...R.libs.just.pick(p, [
@@ -55,11 +55,11 @@ export const setTableProps = (p: Props, s: Store) => {
 							columnAccessor:
 								defaultSortColumnDef.accessor || defaultSortColumnDef.sort?.sortPath || defaultSortColumnIdx.toString(),
 							direction: defaultSortColumnDef.sort?.defaultDirection,
-					  } satisfies DataTableSortStatus<TableRecord>)
+						} satisfies DataTableSortStatus<TableRecord>)
 					: undefined,
 		},
-	};
+	}
 
-	s.tableProps = tableProps;
-	return tableProps; // Только для типизации.
-};
+	s.tableProps = tableProps
+	return tableProps // Только для типизации.
+}

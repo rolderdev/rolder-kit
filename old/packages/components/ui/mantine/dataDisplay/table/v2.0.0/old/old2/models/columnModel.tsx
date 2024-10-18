@@ -1,6 +1,6 @@
 /* Модель колонки. Обеспечивает рендер ячеек. */
 
-import { t, type Instance } from 'mobx-state-tree';
+import { type Instance, t } from 'mobx-state-tree'
 
 /* // Оборачиваем ячейку типа accessor для точечной реаткивности.
 // Реактивна на ключ в подготовленном объекте "accessors".
@@ -41,7 +41,7 @@ const columnModel = t
 		template: t.maybe(t.string),
 		// frozen - значет не задана структура и нет реактинвости на внутрянку.
 		//templateCells: t.optional(t.map(t.frozen<React.ReactNode>()), {}),
-		expander: false
+		expander: false,
 	})
 	.views((self) => ({
 		// Реактивная функция для отрисовки ячейки.
@@ -67,6 +67,6 @@ const columnModel = t
 
 			return self.expander ? eCell : cell;
 		} */
-	}));
+	}))
 
-export { columnModel, type Column };
+export { columnModel, type Column }

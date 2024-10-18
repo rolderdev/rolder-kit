@@ -1,28 +1,28 @@
-import { createContext, useEffect, useImperativeHandle, useState } from 'react';
-import { forwardRef } from 'react';
-import type { Props } from '../node/definition';
-import getStore, { type Store } from './store';
-import Table from './Table';
-import { setLibProps } from './models/libProps';
-import { setTableProps } from './models/tableProps';
-import { setColumnsDefinition } from './models/column';
-import { setRecordIds } from './models/record';
-import { resetSelectedId, setSelectedId, useHierarhySingleSelection } from './models/singleSelection';
-import { setSelectedIds } from './models/multiSelection';
-import { setExpandedIds } from './models/expansion';
-import { setSortState } from './models/sort';
-import { setInitialFiltersState, useFiltersValue } from './models/filter';
+import { createContext, useEffect, useImperativeHandle, useState } from 'react'
+import { forwardRef } from 'react'
+import type { Props } from '../node/definition'
+import Table from './Table'
+import { setColumnsDefinition } from './models/column'
+import { setExpandedIds } from './models/expansion'
+import { setInitialFiltersState, useFiltersValue } from './models/filter'
+import { setLibProps } from './models/libProps'
+import { setSelectedIds } from './models/multiSelection'
+import { setRecordIds } from './models/record'
+import { resetSelectedId, setSelectedId, useHierarhySingleSelection } from './models/singleSelection'
+import { setSortState } from './models/sort'
+import { setTableProps } from './models/tableProps'
+import getStore, { type Store } from './store'
 
-import 'mantine-datatable/styles.css';
+import 'mantine-datatable/styles.css'
 
-export const TableContext = createContext<Store>({} as any);
+export const TableContext = createContext<Store>({} as any)
 
-export default forwardRef(function (p: Props, ref) {
-	const { useSnapshot } = R.libs.valtio;
+export default forwardRef((p: Props, ref) => {
+	const { useSnapshot } = R.libs.valtio
 
-	const [s] = useState(getStore(p.noodlNode));
+	const [s] = useState(getStore(p.noodlNode))
 
-	const snap = useSnapshot(s);
+	const snap = useSnapshot(s)
 
 	// Подчистим стостояния таблицы и ее дете в иерархии при демонтировании.
 	useEffect(() => {
@@ -36,62 +36,62 @@ export default forwardRef(function (p: Props, ref) {
 							singleSelection: { value: null },
 							multiSelection: { value: 'notSelected' },
 							expansion: { value: false },
-						};
-					});
-		};
-	}, []);
+						}
+					})
+		}
+	}, [])
 
 	useEffect(() => {
 		// Параметры иерархии.
 		// metaData записывается в родителе, когда тот создает расширяемые строки.
-		const parentMetaData = p.noodlNode.nodeScope.componentOwner.metaData;
+		const parentMetaData = p.noodlNode.nodeScope.componentOwner.metaData
 		if (parentMetaData)
 			s.hierarchy = {
 				isChild: true,
 				level: parentMetaData.level + 1,
 				tableNodePath: parentMetaData.nodePath,
 				tableNode: R.nodes[parentMetaData.nodePath],
-			};
+			}
 		else
 			s.hierarchy = {
 				isChild: false,
 				level: 0,
 				tableNodePath: p.rootNodeId,
 				tableNode: p.rootNodeId ? R.nodes[p.rootNodeId] : undefined,
-			};
-	}, [p.rootNodeId]);
+			}
+	}, [p.rootNodeId])
 
 	// Реактивность на изменение инпутов.
 	useEffect(() => {
-		setColumnsDefinition(p, s);
-		setRecordIds(p, s);
-		setLibProps(p, s);
-		setTableProps(p, s);
+		setColumnsDefinition(p, s)
+		setRecordIds(p, s)
+		setLibProps(p, s)
+		setTableProps(p, s)
 
 		// Дефолтная сортировка. Нужно обращаться к store, т.к. snap батчится.
 		if (s.tableProps.sort.enabled && s.tableProps.sort.defaultState && !s.sortState && p.items)
-			setSortState(s, s.tableProps.sort.defaultState, true);
+			setSortState(s, s.tableProps.sort.defaultState, true)
 
 		// Инициализация фильтрации.
-		if (!s.filtersState) setInitialFiltersState(s, p.items || []);
+		if (!s.filtersState) setInitialFiltersState(s, p.items || [])
 
 		if (!snap.inited) {
 			// Дефолты с входов при монтировании.
-			if (p.defaultSelectedItem?.id) setSelectedId(s, p.defaultSelectedItem?.id, true);
-			const defaultSelectedRecords = p.defaultSelectedItems?.map((item) => ({ id: item.id })) || [];
-			if (defaultSelectedRecords.length) setSelectedIds(s, defaultSelectedRecords, true);
-			const defaultExpandedIds = p.defaultExpandedItems?.map((item) => item.id) || [];
-			if (defaultExpandedIds.length) setExpandedIds(s, defaultExpandedIds, true);
+			if (p.defaultSelectedItem?.id) setSelectedId(s, p.defaultSelectedItem?.id, true)
+			const defaultSelectedRecords = p.defaultSelectedItems?.map((item) => ({ id: item.id })) || []
+			if (defaultSelectedRecords.length) setSelectedIds(s, defaultSelectedRecords, true)
+			const defaultExpandedIds = p.defaultExpandedItems?.map((item) => item.id) || []
+			if (defaultExpandedIds.length) setExpandedIds(s, defaultExpandedIds, true)
 
-			s.inited = true;
+			s.inited = true
 		}
-		s.fetching = !!p.fetching;
-	}, [p]);
+		s.fetching = !!p.fetching
+	}, [p])
 
 	// Подписка на изменение выбранного item в иерархии.
-	useHierarhySingleSelection(s, snap as any);
+	useHierarhySingleSelection(s, snap as any)
 	// Подписка на изменение значений фильтров.
-	useFiltersValue(s);
+	useFiltersValue(s)
 
 	// Входящие сигналы.
 	useImperativeHandle(
@@ -121,12 +121,12 @@ export default forwardRef(function (p: Props, ref) {
 			collapseAll: () => setExpandedIds(s, []),
 		}),
 		[s]
-	);
+	)
 
 	//console.log('Table provider', snap.hierarchy);
 	return snap.inited ? (
 		<TableContext.Provider value={s}>
 			<Table />
 		</TableContext.Provider>
-	) : null;
-});
+	) : null
+})

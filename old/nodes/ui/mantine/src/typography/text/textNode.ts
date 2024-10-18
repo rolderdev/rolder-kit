@@ -1,9 +1,9 @@
-import { reactNode } from '@packages/node';
-import { getPorts, getPort, getCustomEnumType } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/text-v1.0.0';
-import v101 from '@packages/text-v1.0.1';
-import v102 from '@packages/text-v1.0.2';
+import v100 from '@packages/text-v1.0.0'
+import v101 from '@packages/text-v1.0.1'
+import v102 from '@packages/text-v1.0.2'
 
 export default reactNode('Text', {
 	'v1.0.0': {
@@ -27,7 +27,7 @@ export default reactNode('Text', {
 				'dataSource',
 				'itemSource',
 				'sourceField',
-				'valueSource'
+				'valueSource',
 			]),
 			getPort({
 				plug: 'input',
@@ -39,9 +39,9 @@ export default reactNode('Text', {
 				customs: {
 					required: 'connection',
 					dependsOn(props) {
-						return props.useScope ? true : false;
-					}
-				}
+						return props.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -53,9 +53,9 @@ export default reactNode('Text', {
 				customs: {
 					required: 'both',
 					dependsOn(props) {
-						return props.textFormat === 'date';
-					}
-				}
+						return props.textFormat === 'date'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -63,7 +63,7 @@ export default reactNode('Text', {
 				displayName: 'Variant',
 				group: 'Style',
 				type: getCustomEnumType(['text', 'gradient']),
-				default: 'text'
+				default: 'text',
 			}),
 			getPort({
 				plug: 'input',
@@ -73,9 +73,9 @@ export default reactNode('Text', {
 				type: 'string',
 				customs: {
 					dependsOn(p) {
-						return p.variant === 'text';
-					}
-				}
+						return p.variant === 'text'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -86,11 +86,11 @@ export default reactNode('Text', {
 				customs: {
 					isObject: true,
 					dependsOn(p) {
-						return p.variant === 'gradient';
-					}
-				}
-			})
-		]
+						return p.variant === 'gradient'
+					},
+				},
+			}),
+		],
 	},
 	'v1.0.1': {
 		module: { static: v101 },
@@ -113,7 +113,7 @@ export default reactNode('Text', {
 				'dataSource',
 				'itemSource',
 				'sourceField',
-				'valueSource'
+				'valueSource',
 			]),
 			getPort({
 				plug: 'input',
@@ -125,9 +125,9 @@ export default reactNode('Text', {
 				customs: {
 					required: 'connection',
 					dependsOn(props) {
-						return props.useScope ? true : false;
-					}
-				}
+						return props.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -139,9 +139,9 @@ export default reactNode('Text', {
 				customs: {
 					required: 'both',
 					dependsOn(props) {
-						return props.textFormat === 'date';
-					}
-				}
+						return props.textFormat === 'date'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -149,7 +149,7 @@ export default reactNode('Text', {
 				displayName: 'Variant',
 				group: 'Style',
 				type: getCustomEnumType(['text', 'gradient']),
-				default: 'text'
+				default: 'text',
 			}),
 			getPort({
 				plug: 'input',
@@ -159,9 +159,9 @@ export default reactNode('Text', {
 				type: 'string',
 				customs: {
 					dependsOn(p) {
-						return p.variant === 'text';
-					}
-				}
+						return p.variant === 'text'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -172,11 +172,11 @@ export default reactNode('Text', {
 				customs: {
 					isObject: true,
 					dependsOn(p) {
-						return p.variant === 'gradient';
-					}
-				}
-			})
-		]
+						return p.variant === 'gradient'
+					},
+				},
+			}),
+		],
 	},
 	'v1.0.2': {
 		module: { static: v102 },
@@ -199,7 +199,7 @@ export default reactNode('Text', {
 				'dataSource',
 				'itemSource',
 				'sourceField',
-				'valueSource'
+				'valueSource',
 			]),
 			getPort({
 				plug: 'input',
@@ -211,9 +211,9 @@ export default reactNode('Text', {
 				customs: {
 					required: 'connection',
 					dependsOn(props) {
-						return props.useScope ? true : false;
-					}
-				}
+						return props.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -225,9 +225,9 @@ export default reactNode('Text', {
 				customs: {
 					required: 'both',
 					dependsOn(props) {
-						return props.textFormat === 'date';
-					}
-				}
+						return props.textFormat === 'date'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -235,7 +235,7 @@ export default reactNode('Text', {
 				displayName: 'Variant',
 				group: 'Style',
 				type: getCustomEnumType(['text', 'gradient']),
-				default: 'text'
+				default: 'text',
 			}),
 			getPort({
 				plug: 'input',
@@ -245,9 +245,9 @@ export default reactNode('Text', {
 				type: 'string',
 				customs: {
 					dependsOn(p) {
-						return p.variant === 'text';
-					}
-				}
+						return p.variant === 'text'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -258,10 +258,10 @@ export default reactNode('Text', {
 				customs: {
 					isObject: true,
 					dependsOn(p) {
-						return p.variant === 'gradient';
-					}
-				}
-			})
-		]
-	}
-});
+						return p.variant === 'gradient'
+					},
+				},
+			}),
+		],
+	},
+})

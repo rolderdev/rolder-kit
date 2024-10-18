@@ -1,14 +1,14 @@
 {
-  "name": "@nodes/checkbox-group",
-  "main": "checkboxGroupNode.ts",
-  "types": "checkboxGroupNode.ts",
-  "dependencies": {
-    "@packages/checkbox-group-v1.0.0": "workspace:*",
-    "@packages/checkbox-group-v1.0.1": "workspace:*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@^",
-    "@packages/port": "workspace:@packages/port-v0.6.0@^"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@nodes/checkbox-group",
+	"main": "checkboxGroupNode.ts",
+	"types": "checkboxGroupNode.ts",
+	"dependencies": {
+		"@packages/checkbox-group-v1.0.0": "workspace:*",
+		"@packages/checkbox-group-v1.0.1": "workspace:*",
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"@packages/port": "workspace:@packages/port-v0.6.0@^"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }

@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/masked-input-v1.0.0';
+import v100 from '@packages/masked-input-v1.0.0'
 
 export default reactNode('MaskedInput', {
 	'v1.0.0': {
@@ -20,7 +20,7 @@ export default reactNode('MaskedInput', {
 				'reset',
 				'focusRightSection',
 				'debouncedTyping',
-				'typingDelay'
+				'typingDelay',
 			]),
 			...inputGroups.Form,
 			...inputGroups.Icon,
@@ -34,9 +34,9 @@ export default reactNode('MaskedInput', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
+						return p.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -46,9 +46,9 @@ export default reactNode('MaskedInput', {
 				type: '*',
 				customs: {
 					dependsOn(p) {
-						return p.useScope ? false : true;
-					}
-				}
+						return p.useScope ? false : true
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -57,7 +57,7 @@ export default reactNode('MaskedInput', {
 				group: 'Mask params',
 				default: 'pattern',
 				type: getCustomEnumType(['number', 'pattern']),
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -69,9 +69,9 @@ export default reactNode('MaskedInput', {
 				customs: {
 					required: 'both',
 					dependsOn(p) {
-						return p.maskType === 'pattern';
-					}
-				}
+						return p.maskType === 'pattern'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -83,9 +83,9 @@ export default reactNode('MaskedInput', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.maskType === 'pattern';
-					}
-				}
+						return p.maskType === 'pattern'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -97,9 +97,9 @@ export default reactNode('MaskedInput', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.maskType === 'pattern';
-					}
-				}
+						return p.maskType === 'pattern'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -110,9 +110,9 @@ export default reactNode('MaskedInput', {
 				type: 'string',
 				customs: {
 					dependsOn(p) {
-						return p.maskType === 'number';
-					}
-				}
+						return p.maskType === 'number'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -123,9 +123,9 @@ export default reactNode('MaskedInput', {
 				type: 'string',
 				customs: {
 					dependsOn(p) {
-						return p.maskType === 'number';
-					}
-				}
+						return p.maskType === 'number'
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -137,11 +137,11 @@ export default reactNode('MaskedInput', {
 				customs: {
 					required: 'both',
 					dependsOn(p) {
-						return p.maskType === 'number';
-					}
-				}
-			})
+						return p.maskType === 'number'
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['typedValue', 'reseted'])
-	}
-});
+		outputs: getPorts('output', ['typedValue', 'reseted']),
+	},
+})

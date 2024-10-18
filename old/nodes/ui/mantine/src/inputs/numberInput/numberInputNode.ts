@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/number-input-v1.0.0';
+import v100 from '@packages/number-input-v1.0.0'
 
 export default reactNode('NumberInput', {
 	'v1.0.0': {
@@ -26,7 +26,7 @@ export default reactNode('NumberInput', {
 				'step',
 				'reset',
 				'increment',
-				'decrement'
+				'decrement',
 			]),
 			...inputGroups.Form,
 			...inputGroups.Icon,
@@ -40,9 +40,9 @@ export default reactNode('NumberInput', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
+						return p.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -51,7 +51,7 @@ export default reactNode('NumberInput', {
 				group: 'Style',
 				type: getCustomEnumType(['default', 'filled', 'unstyled']),
 				default: 'default',
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -61,14 +61,14 @@ export default reactNode('NumberInput', {
 				type: 'number',
 				customs: {
 					dependsOn(p) {
-						return p.useScope ? false : true;
-					}
-				}
-			})
+						return p.useScope ? false : true
+					},
+				},
+			}),
 		],
 		outputs: [
 			...getPorts('output', ['changed', 'reseted']),
-			getPort({ plug: 'output', name: 'value', displayName: 'Value', group: 'Data', type: 'number' })
-		]
-	}
-});
+			getPort({ plug: 'output', name: 'value', displayName: 'Value', group: 'Data', type: 'number' }),
+		],
+	},
+})

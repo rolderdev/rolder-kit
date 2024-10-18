@@ -1,7 +1,7 @@
 /* Модель настроек библиотеки. */
 
-import { t, type Instance } from 'mobx-state-tree';
-import type { Props } from '../../types';
+import { type Instance, t } from 'mobx-state-tree'
+import type { Props } from '../../types'
 
 interface LibProps extends Instance<typeof libPropsModel> {}
 
@@ -32,8 +32,8 @@ const libPropsModel = t.model('libProps', {
 	loaderSize: 'lg',
 	loaderType: 'dots',
 	loaderColor: 'blue',
-	loaderBackgroundBlur: 0.5
-});
+	loaderBackgroundBlur: 0.5,
+})
 
 // Функция устанавливает прилетевшие с портов значения и восстаналвивает дефолты, если значение не прилетело.
 // Используется функция, а не action, т.к. она нужна еще до инициализации модели
@@ -64,8 +64,8 @@ function getLibProps(p: Props): LibProps {
 		loaderSize: p.customProps?.loader?.size || 'lg',
 		loaderType: p.customProps?.loader?.type || 'dots',
 		loaderColor: p.loaderColor || 'blue',
-		loaderBackgroundBlur: p.customProps?.loader?.bgBlur || 0.5
-	};
+		loaderBackgroundBlur: p.customProps?.loader?.bgBlur || 0.5,
+	}
 }
 
-export { libPropsModel, getLibProps, type LibProps };
+export { libPropsModel, getLibProps, type LibProps }

@@ -1,6 +1,6 @@
-import { getPortDef, sizes, type PortDef } from '@shared/port-v1.0.0';
-import { validateColumns, validateExpandedItems, validateItems } from './validtaion';
-import type { Props } from './definition';
+import { type PortDef, getPortDef, sizes } from '@shared/port-v1.0.0'
+import type { Props } from './definition'
+import { validateColumns, validateExpandedItems, validateItems } from './validtaion'
 // Enablers
 /*    
     "table2FilterEnabled",            
@@ -89,7 +89,7 @@ export default [
 		default: 'disabled',
 		validate: (p: Props) => (p.onRowClick ? true : false),
 		transform: (p: Props, portDef) => {
-			portDef.type = [...(portDef.type as any), { label: 'Expansion', value: 'expansion' }];
+			portDef.type = [...(portDef.type as any), { label: 'Expansion', value: 'expansion' }]
 		},
 	}),
 	getPortDef({
@@ -561,4 +561,4 @@ export default [
 		type: 'signal',
 		dependsOn: (p: Props) => p.sort,
 	}),
-] as PortDef[];
+] as PortDef[]

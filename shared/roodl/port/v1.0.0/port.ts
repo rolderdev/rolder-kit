@@ -1,6 +1,6 @@
-import { getPortDef, type PortDef, type ResultPortDef } from './src/models/portDefinition';
-export { getPortDef, type PortDef, type ResultPortDef };
-export { getNodePort, NodePortSchema, type NodePort } from './src/models/nodePort';
+import { type PortDef, type ResultPortDef, getPortDef } from './src/models/portDefinition'
+export { getPortDef, type PortDef, type ResultPortDef }
+export { getNodePort, NodePortSchema, type NodePort } from './src/models/nodePort'
 
 // Enums
 export const sizes = [
@@ -9,7 +9,7 @@ export const sizes = [
 	{ label: 'md', value: 'md' },
 	{ label: 'lg', value: 'lg' },
 	{ label: 'xl', value: 'xl' },
-];
+]
 
 // Groups
 export const margins: ResultPortDef[] = [
@@ -77,7 +77,7 @@ export const margins: ResultPortDef[] = [
 		displayName: 'Margin left',
 		dependsOn: (p) => p.margins,
 	}),
-];
+]
 
 export const paddings: ResultPortDef[] = [
 	getPortDef({
@@ -144,4 +144,4 @@ export const paddings: ResultPortDef[] = [
 		displayName: 'Padding left',
 		dependsOn: (p) => p.paddings,
 	}),
-];
+]

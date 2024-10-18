@@ -1,7 +1,7 @@
 /* Модель настроек таблицы. */
 
-import { t, type Instance } from 'mobx-state-tree';
-import type { Props } from '../../types';
+import { type Instance, t } from 'mobx-state-tree'
+import type { Props } from '../../types'
 
 interface TableProps extends Instance<typeof tablePropsModel> {}
 
@@ -17,9 +17,9 @@ const tablePropsModel = t.model('Table', {
 		template: '',
 		allowMultiple: false,
 		// Если не настроить здесь реактивность, появится лишний рендер.
-		collapseProps: t.model({ transitionDuration: 150, transitionTimingFunction: 'ease', animateOpacity: true })
-	})
-});
+		collapseProps: t.model({ transitionDuration: 150, transitionTimingFunction: 'ease', animateOpacity: true }),
+	}),
+})
 
 // Функция устанавливает прилетевшие с портов значения и восстаналвивает дефолты, если значение не прилетело.
 // Используется функция, а не action, т.к. она нужна еще до инициализации модели
@@ -34,11 +34,11 @@ function getTableProps(p: Props): TableProps {
 			template: p.expansionTemplate,
 			allowMultiple: p.allowMultiple || false,
 			// Так можно взять дефолт и модели
-			collapseProps: p.customProps?.collapseProps || tablePropsModel.properties.expansion.properties.collapseProps
-		}
-	};
+			collapseProps: p.customProps?.collapseProps || tablePropsModel.properties.expansion.properties.collapseProps,
+		},
+	}
 
-	return tableProps;
+	return tableProps
 }
 
-export { tablePropsModel, getTableProps, type TableProps };
+export { tablePropsModel, getTableProps, type TableProps }

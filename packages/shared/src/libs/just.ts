@@ -1,25 +1,25 @@
-import typeOf from 'just-typeof';
-import compare from 'just-compare';
-import clone from 'just-clone';
-// object
-import has from 'just-has';
-import get from 'just-safe-get';
-import set from 'just-safe-set';
-import map from 'just-map-object';
-import pick from 'just-pick';
-import omit from 'just-omit';
-import template from 'just-template';
-import flush from 'just-flush';
-import isEmpty from 'just-is-empty';
-import extend from 'just-extend';
-// array
-import last from 'just-last';
-import unique from 'just-unique';
-import insert from 'just-insert';
-import range from 'just-range';
-import sortBy from 'just-sort-by';
 // string
-import capitalize from 'just-capitalize';
+import capitalize from 'just-capitalize'
+import clone from 'just-clone'
+import compare from 'just-compare'
+import extend from 'just-extend'
+import flush from 'just-flush'
+// object
+import has from 'just-has'
+import insert from 'just-insert'
+import isEmpty from 'just-is-empty'
+// array
+import last from 'just-last'
+import map from 'just-map-object'
+import omit from 'just-omit'
+import pick from 'just-pick'
+import range from 'just-range'
+import get from 'just-safe-get'
+import set from 'just-safe-set'
+import sortBy from 'just-sort-by'
+import template from 'just-template'
+import typeOf from 'just-typeof'
+import unique from 'just-unique'
 
 const just = {
 	typeOf,
@@ -41,10 +41,10 @@ const just = {
 	range,
 	sortBy,
 	capitalize,
-};
+}
 
-export type Just = typeof just;
-set(window, ['R', 'libs', 'just'], just);
+export type Just = typeof just
+set(window, ['R', 'libs', 'just'], just)
 
 export {
 	typeOf,
@@ -66,4 +66,4 @@ export {
 	range,
 	sortBy,
 	capitalize,
-};
+}

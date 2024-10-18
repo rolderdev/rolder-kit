@@ -1,1 +1,1 @@
-export type DataTableVerticalAlignment = 'top' | 'center' | 'bottom';
+export type DataTableVerticalAlignment = 'top' | 'center' | 'bottom'

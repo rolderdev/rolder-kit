@@ -1,8 +1,8 @@
 /* Модель порта "Version" */
 
-import { getNodePort, getPortDef } from '@shared/port-v1.0.0';
-import type { GraphModelNode, JsNodeVersions, NodeContext, ReactNodeVersions } from '../../main';
-import { clearWarning, sendWarning } from './warning';
+import { getNodePort, getPortDef } from '@shared/port-v1.0.0'
+import type { GraphModelNode, JsNodeVersions, NodeContext, ReactNodeVersions } from '../../main'
+import { clearWarning, sendWarning } from './warning'
 
 export const getVersionPortDef = (versions: JsNodeVersions | ReactNodeVersions) => {
 	return {
@@ -17,14 +17,14 @@ export const getVersionPortDef = (versions: JsNodeVersions | ReactNodeVersions) 
 			visibleAt: 'editor',
 		}),
 		index: 0,
-	};
-};
+	}
+}
 
 export const getVersionPort = (versions: JsNodeVersions | ReactNodeVersions) => {
-	return getNodePort('input', getVersionPortDef(versions));
-};
+	return getNodePort('input', getVersionPortDef(versions))
+}
 
 export const validateVersion = (model: GraphModelNode, context: NodeContext) => {
-	if (!model.parameters.version) sendWarning(model, context, 'value', 'Version', 'Choose version');
-	else clearWarning(model, context, 'value', 'Version');
-};
+	if (!model.parameters.version) sendWarning(model, context, 'value', 'Version', 'Choose version')
+	else clearWarning(model, context, 'value', 'Version')
+}

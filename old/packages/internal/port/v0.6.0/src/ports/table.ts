@@ -1,9 +1,9 @@
-import { enums } from '../collections/enums';
-import { getCustomEnumType, getEnumType, getType } from '../funcs/getType';
-import type { NodePort } from '../../types';
+import type { NodePort } from '../../types'
+import { enums } from '../collections/enums'
+import { getCustomEnumType, getEnumType, getType } from '../funcs/getType'
 
-const units = ['rem', '%', 'px'];
-const heightUnits = ['rem', 'px'];
+const units = ['rem', '%', 'px']
+const heightUnits = ['rem', 'px']
 
 export default [
 	// Enablers
@@ -12,70 +12,70 @@ export default [
 		group: 'Enablers',
 		type: getType('boolean', 'editor'),
 		displayName: 'Single selection',
-		default: false
+		default: false,
 	},
 	{
 		name: 'table2MultiSelection',
 		group: 'Enablers',
 		type: getType('boolean', 'editor'),
 		displayName: 'Multi selection',
-		default: false
+		default: false,
 	},
 	{
 		name: 'table2Sort',
 		group: 'Enablers',
 		type: getType('boolean', 'editor'),
 		displayName: 'Sort',
-		default: false
+		default: false,
 	},
 	{
 		name: 'table2FilterEnabled',
 		group: 'Enablers',
 		type: getType('boolean', 'editor'),
 		displayName: 'Filter',
-		default: false
+		default: false,
 	},
 	{
 		name: 'table2Expansion',
 		group: 'Enablers',
 		type: getType('boolean', 'editor'),
 		displayName: 'Expansion',
-		default: false
+		default: false,
 	},
 	{
 		name: 'table2Layout',
 		group: 'Enablers',
 		type: getType('boolean', 'editor'),
 		displayName: 'Layout',
-		default: false
+		default: false,
 	},
 	{
 		name: 'table2Dimensions',
 		group: 'Enablers',
 		type: getType('boolean', 'editor'),
 		displayName: 'Dimensions',
-		default: false
+		default: false,
 	},
 	{
 		name: 'table2TableStyles',
 		group: 'Enablers',
 		type: getType('boolean', 'editor'),
 		displayName: 'Table styles',
-		default: false
+		default: false,
 	},
 	{
 		name: 'table2RowStyles',
 		group: 'Enablers',
 		type: getType('boolean', 'editor'),
 		displayName: 'Row styles',
-		default: false
+		default: false,
 	},
 	// Params
 	{
 		name: 'table2Columns',
 		group: 'Params',
 		type: 'array',
-		displayName: 'Columns'
+		displayName: 'Columns',
 	},
 	{
 		name: 'table2OnRowClick',
@@ -83,28 +83,28 @@ export default [
 		type: getCustomEnumType(['disabled', 'singleSelection', 'expansion']),
 		displayName: 'On row click',
 		default: 'disabled',
-		customs: { required: 'both' }
+		customs: { required: 'both' },
 	},
 	{
 		name: 'table2TextSelection',
 		group: 'Params',
 		type: 'boolean',
 		displayName: 'Text selection',
-		default: true
+		default: true,
 	},
 	{
 		name: 'table2ColumnIndex',
 		group: 'Params',
 		type: 'number',
 		displayName: 'Column index',
-		customs: { required: 'both' }
+		customs: { required: 'both' },
 	},
 	{
 		name: 'table2Controlled',
 		group: 'Params',
 		type: 'boolean',
 		displayName: 'Controlled',
-		default: false
+		default: false,
 	},
 	// Data
 	{ name: 'table2Items', group: 'Data', type: 'array', displayName: 'Items' },
@@ -113,7 +113,7 @@ export default [
 		name: 'parentTableId',
 		group: 'Data',
 		type: 'string',
-		displayName: 'parentTableId'
+		displayName: 'parentTableId',
 	}, // MD
 	// Single selection
 	{
@@ -123,9 +123,9 @@ export default [
 		displayName: 'Single selected item',
 		customs: {
 			dependsOn(p) {
-				return p.table2SingleSelection ? true : false;
-			}
-		}
+				return p.table2SingleSelection ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2Unselectable',
@@ -135,9 +135,9 @@ export default [
 		default: false,
 		customs: {
 			dependsOn(p) {
-				return p.table2SingleSelection ? true : false;
-			}
-		}
+				return p.table2SingleSelection ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2SingleSelected',
@@ -146,9 +146,9 @@ export default [
 		displayName: 'Single selected',
 		customs: {
 			dependsOn(p) {
-				return p.table2SingleSelection ? true : false;
-			}
-		}
+				return p.table2SingleSelection ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2SingleUnselected',
@@ -157,9 +157,9 @@ export default [
 		displayName: 'Single unselected',
 		customs: {
 			dependsOn(p) {
-				return p.table2SingleSelection && p.table2Unselectable;
-			}
-		}
+				return p.table2SingleSelection && p.table2Unselectable
+			},
+		},
 	},
 	{
 		name: 'table2ResetSingleSelection',
@@ -168,9 +168,9 @@ export default [
 		displayName: 'Reset single selection',
 		customs: {
 			dependsOn(p) {
-				return p.table2SingleSelection ? true : false;
-			}
-		}
+				return p.table2SingleSelection ? true : false
+			},
+		},
 	},
 	// Multi selection
 	{
@@ -180,9 +180,9 @@ export default [
 		displayName: 'Multi selected items',
 		customs: {
 			dependsOn(p) {
-				return p.table2MultiSelection ? true : false;
-			}
-		}
+				return p.table2MultiSelection ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2MultiSelectionChanged',
@@ -191,9 +191,9 @@ export default [
 		displayName: 'Multi selection changed',
 		customs: {
 			dependsOn(p) {
-				return p.table2MultiSelection ? true : false;
-			}
-		}
+				return p.table2MultiSelection ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2ResetMultiSelection',
@@ -202,9 +202,9 @@ export default [
 		displayName: 'Reset multi selection',
 		customs: {
 			dependsOn(p) {
-				return p.table2MultiSelection ? true : false;
-			}
-		}
+				return p.table2MultiSelection ? true : false
+			},
+		},
 	},
 	// Sort
 	{
@@ -215,9 +215,9 @@ export default [
 		default: 'frontend',
 		customs: {
 			dependsOn(p) {
-				return p.table2Sort ? true : false;
-			}
-		}
+				return p.table2Sort ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2SortValue',
@@ -226,9 +226,9 @@ export default [
 		displayName: 'Sort value',
 		customs: {
 			dependsOn(p) {
-				return p.table2Sort ? true : false;
-			}
-		}
+				return p.table2Sort ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2ResetSort',
@@ -237,9 +237,9 @@ export default [
 		displayName: 'Reset sort',
 		customs: {
 			dependsOn(p) {
-				return p.table2Sort ? true : false;
-			}
-		}
+				return p.table2Sort ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2SortedIcon',
@@ -249,9 +249,9 @@ export default [
 		default: 'IconArrowUp',
 		customs: {
 			dependsOn(p) {
-				return p.table2Sort ? true : false;
-			}
-		}
+				return p.table2Sort ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2UnsortedIcon',
@@ -261,9 +261,9 @@ export default [
 		default: 'IconSelector',
 		customs: {
 			dependsOn(p) {
-				return p.table2Sort ? true : false;
-			}
-		}
+				return p.table2Sort ? true : false
+			},
+		},
 	},
 	// Filter
 	{
@@ -274,27 +274,27 @@ export default [
 		default: 'frontend',
 		customs: {
 			dependsOn(p) {
-				return p.table2FilterEnabled ? true : false;
-			}
-		}
+				return p.table2FilterEnabled ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2FilterValue',
 		group: 'Filter',
 		type: '*',
-		displayName: 'Filter value'
+		displayName: 'Filter value',
 	},
 	{
 		name: 'table2SetFilterValue',
 		group: 'Filter',
 		type: 'signal',
-		displayName: 'Set filter value'
+		displayName: 'Set filter value',
 	},
 	{
 		name: 'table2Filter',
 		group: 'Filter',
 		type: 'signal',
-		displayName: 'Filter'
+		displayName: 'Filter',
 	},
 	{
 		name: 'table2ResetFilters',
@@ -303,9 +303,9 @@ export default [
 		displayName: 'Reset filters',
 		customs: {
 			dependsOn(p) {
-				return p.table2FilterEnabled ? true : false;
-			}
-		}
+				return p.table2FilterEnabled ? true : false
+			},
+		},
 	},
 	// Expansion
 	{
@@ -315,9 +315,9 @@ export default [
 		displayName: 'Expanded items',
 		customs: {
 			dependsOn(p) {
-				return p.table2Expansion ? true : false;
-			}
-		}
+				return p.table2Expansion ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2AllowMultiple',
@@ -326,9 +326,9 @@ export default [
 		displayName: 'Allow multiple',
 		customs: {
 			dependsOn(p) {
-				return p.table2Expansion ? true : false;
-			}
-		}
+				return p.table2Expansion ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2ExpansionChanged',
@@ -337,9 +337,9 @@ export default [
 		displayName: 'Expansion changed',
 		customs: {
 			dependsOn(p) {
-				return p.table2Expansion ? true : false;
-			}
-		}
+				return p.table2Expansion ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2ExpandAll',
@@ -348,9 +348,9 @@ export default [
 		displayName: 'Expand all',
 		customs: {
 			dependsOn(p) {
-				return p.table2Expansion && p.table2AllowMultiple;
-			}
-		}
+				return p.table2Expansion && p.table2AllowMultiple
+			},
+		},
 	},
 	{
 		name: 'table2UnexpandAll',
@@ -359,9 +359,9 @@ export default [
 		displayName: 'Unexpand all',
 		customs: {
 			dependsOn(p) {
-				return p.table2Expansion && p.table2AllowMultiple;
-			}
-		}
+				return p.table2Expansion && p.table2AllowMultiple
+			},
+		},
 	},
 	// Layout
 	{
@@ -372,9 +372,9 @@ export default [
 		default: false,
 		customs: {
 			dependsOn(p) {
-				return p.table2Layout ? true : false;
-			}
-		}
+				return p.table2Layout ? true : false
+			},
+		},
 	},
 	// Dimensions
 	{
@@ -384,9 +384,9 @@ export default [
 		displayName: 'Width',
 		customs: {
 			dependsOn(p) {
-				return p.table2Dimensions ? true : false;
-			}
-		}
+				return p.table2Dimensions ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2MinHeight',
@@ -396,9 +396,9 @@ export default [
 		displayName: 'Min height',
 		customs: {
 			dependsOn(p) {
-				return p.table2Dimensions ? true : false;
-			}
-		}
+				return p.table2Dimensions ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2DynamicHeight',
@@ -408,9 +408,9 @@ export default [
 		default: false,
 		customs: {
 			dependsOn(p) {
-				return p.table2Dimensions ? true : false;
-			}
-		}
+				return p.table2Dimensions ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2Height',
@@ -419,9 +419,9 @@ export default [
 		displayName: 'Height',
 		customs: {
 			dependsOn(p) {
-				return !p.table2DynamicHeight && p.table2Dimensions;
-			}
-		}
+				return !p.table2DynamicHeight && p.table2Dimensions
+			},
+		},
 	},
 	{
 		name: 'table2ViewportBOffset',
@@ -431,9 +431,9 @@ export default [
 		default: 0,
 		customs: {
 			dependsOn(p) {
-				return p.table2DynamicHeight && p.table2Dimensions;
-			}
-		}
+				return p.table2DynamicHeight && p.table2Dimensions
+			},
+		},
 	},
 	{
 		name: 'table2HorizontalSpacing',
@@ -443,9 +443,9 @@ export default [
 		default: 'sm',
 		customs: {
 			dependsOn(p) {
-				return p.table2Dimensions ? true : false;
-			}
-		}
+				return p.table2Dimensions ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2VerticalSpacing',
@@ -455,9 +455,9 @@ export default [
 		default: 'xs',
 		customs: {
 			dependsOn(p) {
-				return p.table2Dimensions ? true : false;
-			}
-		}
+				return p.table2Dimensions ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2FontSize',
@@ -467,9 +467,9 @@ export default [
 		default: 'sm',
 		customs: {
 			dependsOn(p) {
-				return p.table2Dimensions ? true : false;
-			}
-		}
+				return p.table2Dimensions ? true : false
+			},
+		},
 	},
 	// Table styles
 	{
@@ -480,9 +480,9 @@ export default [
 		default: 'sm',
 		customs: {
 			dependsOn(p) {
-				return p.table2TableStyles ? true : false;
-			}
-		}
+				return p.table2TableStyles ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2WithBorder',
@@ -492,9 +492,9 @@ export default [
 		default: false,
 		customs: {
 			dependsOn(p) {
-				return p.table2TableStyles ? true : false;
-			}
-		}
+				return p.table2TableStyles ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2BorderRadius',
@@ -504,9 +504,9 @@ export default [
 		default: 'md',
 		customs: {
 			dependsOn(p) {
-				return p.table2TableStyles ? true : false;
-			}
-		}
+				return p.table2TableStyles ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2ColumnBorders',
@@ -516,9 +516,9 @@ export default [
 		default: false,
 		customs: {
 			dependsOn(p) {
-				return p.table2TableStyles ? true : false;
-			}
-		}
+				return p.table2TableStyles ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2Animation',
@@ -528,9 +528,9 @@ export default [
 		default: true,
 		customs: {
 			dependsOn(p) {
-				return p.table2TableStyles && !p.table2Expansion;
-			}
-		}
+				return p.table2TableStyles && !p.table2Expansion
+			},
+		},
 	},
 	{
 		name: 'table2LoaderColor',
@@ -539,9 +539,9 @@ export default [
 		displayName: 'Loader color',
 		customs: {
 			dependsOn(p) {
-				return p.table2TableStyles ? true : false;
-			}
-		}
+				return p.table2TableStyles ? true : false
+			},
+		},
 	},
 	// Row styles
 	{
@@ -552,9 +552,9 @@ export default [
 		default: true,
 		customs: {
 			dependsOn(p) {
-				return p.table2RowStyles ? true : false;
-			}
-		}
+				return p.table2RowStyles ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2Striped',
@@ -564,9 +564,9 @@ export default [
 		default: false,
 		customs: {
 			dependsOn(p) {
-				return p.table2RowStyles ? true : false;
-			}
-		}
+				return p.table2RowStyles ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2OddBgColor',
@@ -575,9 +575,9 @@ export default [
 		displayName: 'Odd bg color',
 		customs: {
 			dependsOn(p) {
-				return p.table2RowStyles && p.table2Striped;
-			}
-		}
+				return p.table2RowStyles && p.table2Striped
+			},
+		},
 	},
 	{
 		name: 'table2EvenBgColor',
@@ -586,9 +586,9 @@ export default [
 		displayName: 'Even bg color',
 		customs: {
 			dependsOn(p) {
-				return p.table2RowStyles && p.table2Striped;
-			}
-		}
+				return p.table2RowStyles && p.table2Striped
+			},
+		},
 	},
 	{
 		name: 'table2RowBgColor',
@@ -597,9 +597,9 @@ export default [
 		displayName: 'Bg color',
 		customs: {
 			dependsOn(p) {
-				return p.table2RowStyles && p.table2Striped;
-			}
-		}
+				return p.table2RowStyles && p.table2Striped
+			},
+		},
 	},
 	{
 		name: 'table2HighlightOnHover',
@@ -609,9 +609,9 @@ export default [
 		default: false,
 		customs: {
 			dependsOn(p) {
-				return p.table2RowStyles ? true : false;
-			}
-		}
+				return p.table2RowStyles ? true : false
+			},
+		},
 	},
 	{
 		name: 'table2OnHoverBgColor',
@@ -620,9 +620,9 @@ export default [
 		displayName: 'On hover bg color',
 		customs: {
 			dependsOn(p) {
-				return p.table2RowStyles && p.table2HighlightOnHover;
-			}
-		}
+				return p.table2RowStyles && p.table2HighlightOnHover
+			},
+		},
 	},
 	{
 		name: 'table2SingleSelectedRowBgColor',
@@ -631,9 +631,9 @@ export default [
 		displayName: 'Single selection bg color',
 		customs: {
 			dependsOn(p) {
-				return p.table2RowStyles && p.table2SingleSelection;
-			}
-		}
+				return p.table2RowStyles && p.table2SingleSelection
+			},
+		},
 	},
 	{
 		name: 'table2MutliSelectedRowBgColor',
@@ -642,9 +642,9 @@ export default [
 		displayName: 'Mutli selection bg color',
 		customs: {
 			dependsOn(p) {
-				return p.table2RowStyles && p.table2MultiSelection;
-			}
-		}
+				return p.table2RowStyles && p.table2MultiSelection
+			},
+		},
 	},
 	// States
 	{
@@ -652,6 +652,6 @@ export default [
 		group: 'States',
 		type: 'boolean',
 		displayName: 'Fetching',
-		default: true
-	}
-] as const satisfies readonly NodePort[];
+		default: true,
+	},
+] as const satisfies readonly NodePort[]

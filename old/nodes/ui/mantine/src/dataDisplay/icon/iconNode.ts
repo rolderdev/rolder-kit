@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPorts, getPort, getCustomEnumType } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/icon-v1.0.0';
+import v100 from '@packages/icon-v1.0.0'
 
 export default reactNode('Icon', {
 	'v1.0.0': {
@@ -20,7 +20,7 @@ export default reactNode('Icon', {
 				'themeIconSize',
 				'themeIconRadius',
 				'themeIconColor',
-				'themeIconGradient'
+				'themeIconGradient',
 			]),
 			getPort({
 				plug: 'input',
@@ -32,10 +32,10 @@ export default reactNode('Icon', {
 				customs: {
 					required: 'connection',
 					dependsOn(props) {
-						return props.useScope ? true : false;
-					}
-				}
-			})
-		]
-	}
-});
+						return props.useScope ? true : false
+					},
+				},
+			}),
+		],
+	},
+})

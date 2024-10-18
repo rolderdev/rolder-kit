@@ -1,17 +1,17 @@
 /**
  * @type {import('@rspack/cli').Configuration}
  */
-const { RsdoctorRspackPlugin } = require('@rsdoctor/rspack-plugin');
-const manifestPlugin = require('rspack-manifest-plugin').WebpackManifestPlugin;
-var path = require('path');
+const { RsdoctorRspackPlugin } = require('@rsdoctor/rspack-plugin')
+const manifestPlugin = require('rspack-manifest-plugin').WebpackManifestPlugin
+var path = require('path')
 
-module.exports = function (nodeName, context, outputBuildPath, developer, project) {
-	var outputPath = outputBuildPath;
+module.exports = (nodeName, context, outputBuildPath, developer, project) => {
+	var outputPath = outputBuildPath
 	if (developer && project) {
-		const projectsJson = require(`../developers/${developer}.json`);
-		const projectConf = projectsJson[project];
+		const projectsJson = require(`../developers/${developer}.json`)
+		const projectConf = projectsJson[project]
 		if (projectConf?.rolderKit?.includes(nodeName))
-			outputPath = path.resolve(__dirname, `${projectConf.projectDir}/noodl_modules/old_${nodeName}`);
+			outputPath = path.resolve(__dirname, `${projectConf.projectDir}/noodl_modules/old_${nodeName}`)
 	}
 
 	return {
@@ -36,9 +36,9 @@ module.exports = function (nodeName, context, outputBuildPath, developer, projec
 			new manifestPlugin({
 				writeToFileEmit: true,
 				generate(_, files) {
-					const file = files.find((i) => i.name === `${nodeName}.js`);
-					if (file?.path) var fileName = file.path.replace('auto/', '');
-					return { main: fileName };
+					const file = files.find((i) => i.name === `${nodeName}.js`)
+					if (file?.path) var fileName = file.path.replace('auto/', '')
+					return { main: fileName }
 				},
 			}),
 			process.env.RSDOCTOR && new RsdoctorRspackPlugin({ generateTileGraph: true }),
@@ -78,5 +78,5 @@ module.exports = function (nodeName, context, outputBuildPath, developer, projec
 				},
 			],
 		},
-	};
-};
+	}
+}

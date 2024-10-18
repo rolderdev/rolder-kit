@@ -1,29 +1,29 @@
-import { lazy } from 'react';
-import type { MantineTheme, MantineColorScheme, MantineColor } from '@mantine/core';
-import { type NotificationsProps, notifications } from '@mantine/notifications';
-import { useInterval } from '@mantine/hooks';
-import { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField } from '@mantine/form';
-import type { BaseReactProps } from '@shared/node-v1.0.0';
-import { getPortDef } from '@shared/port-v1.0.0';
-import type { ReactNodeDef } from '@shared/node-v1.0.0';
-import validate from './validate';
-import initState from '@shared/init-state-v0.1.0';
+import type { MantineColor, MantineColorScheme, MantineTheme } from '@mantine/core'
+import { hasLength, isEmail, isInRange, isNotEmpty, matches, matchesField } from '@mantine/form'
+import { useInterval } from '@mantine/hooks'
+import { type NotificationsProps, notifications } from '@mantine/notifications'
+import initState from '@shared/init-state-v0.1.0'
+import type { BaseReactProps } from '@shared/node-v1.0.0'
+import type { ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
+import { lazy } from 'react'
+import validate from './validate'
 
 function MantineError(title: string, message?: string, autoClose?: boolean | number): void {
-	notifications.show({ title, message, color: 'red', autoClose: autoClose ? autoClose : false });
+	notifications.show({ title, message, color: 'red', autoClose: autoClose ? autoClose : false })
 }
 export const mantine = {
 	MantineError,
 	form: { isNotEmpty, isEmail, matches, isInRange, hasLength, matchesField },
 	hooks: { useInterval },
-};
-export type Mantine = typeof mantine & { getThemeColor: (color: MantineColor) => string };
+}
+export type Mantine = typeof mantine & { getThemeColor: (color: MantineColor) => string }
 
 export type Props = BaseReactProps & {
-	notificationsPosition: NotificationsProps['position'];
-	defaultColorScheme: MantineColorScheme;
-	mantineTheme: MantineTheme;
-};
+	notificationsPosition: NotificationsProps['position']
+	defaultColorScheme: MantineColorScheme
+	mantineTheme: MantineTheme
+}
 
 export default {
 	module: { dynamic: lazy(() => import('../component/Mantine')) }, // Обязательно динамика, т.к. при статике RsPack ругается на CSS.
@@ -74,8 +74,8 @@ export default {
 	},
 	beforeComponent: {
 		initialize: async (p: Props) => {
-			await initState('initialized');
+			await initState('initialized')
 		},
 	},
 	disableCustomProps: true,
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

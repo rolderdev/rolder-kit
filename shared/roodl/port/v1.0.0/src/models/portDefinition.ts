@@ -1,13 +1,13 @@
 // Модель порта. Определяет схему порта, по которой они добавляются в схему ноды.
 
-import '@shared/types-v0.1.0';
+import '@shared/types-v0.1.0'
 import {
+	type InferOutput,
 	any,
 	array,
 	boolean,
 	check,
 	function_,
-	type InferOutput,
 	number,
 	object,
 	optional,
@@ -17,7 +17,7 @@ import {
 	string,
 	transform,
 	union,
-} from 'shared/src/libs/valibot';
+} from 'shared/src/libs/valibot'
 
 // Задаим схему порта в удобном для определения виде.
 export const PortDef = pipe(
@@ -68,28 +68,28 @@ export const PortDef = pipe(
 	check((i) => (i.group === 'Custom' ? (i.customGroup ? true : false) : true), 'Custom group is not defined'),
 	// Заменим группу кастомной, если указана, чтобы не делать проверок потом.
 	transform((i) => {
-		if (i.group === 'Custom' && i.customGroup) i.group = i.customGroup as any;
-		delete i.customGroup;
+		if (i.group === 'Custom' && i.customGroup) i.group = i.customGroup as any
+		delete i.customGroup
 		// Установим пример-комментарий для типов с кодом и удалим default, чтобы не дать разработчику накосячить.
 		if (typeof i.type === 'string' && ['array', 'objectEval', 'funcEval'].includes(i.type)) {
-			if (i.codeComment) i.default = i.codeComment;
-			else delete i.default;
-			delete i.codeComment;
+			if (i.codeComment) i.default = i.codeComment
+			else delete i.default
+			delete i.codeComment
 		}
 
-		return i;
+		return i
 	})
-);
+)
 
 // Обрати внимание, что тип и схема называются одинаково. Это рекомендованная конвенция valibot.
 // Не разобрался как типизировать функции с ValiBot, поэтому тут типизирую вручную.
 export type PortDef = Omit<InferOutput<typeof PortDef>, 'dependsOn' | 'validate' | 'transform'> & {
-	dependsOn?(p: { [key: string]: any }): boolean;
-	validate?(p: { [key: string]: any }): boolean | string;
-	transform?(p: { [key: string]: any }, portDef: ResultPortDef): void;
-};
+	dependsOn?(p: { [key: string]: any }): boolean
+	validate?(p: { [key: string]: any }): boolean | string
+	transform?(p: { [key: string]: any }, portDef: ResultPortDef): void
+}
 
 // Тип после трансформации Valibot. Нужен, чтобы избежать путанницы с группой - она может быть любой из-за Custom.
-export type ResultPortDef = Omit<PortDef, 'group' | 'customGroup'> & { group: string };
+export type ResultPortDef = Omit<PortDef, 'group' | 'customGroup'> & { group: string }
 
-export const getPortDef = (portDef: PortDef) => parse(PortDef, portDef) as ResultPortDef;
+export const getPortDef = (portDef: PortDef) => parse(PortDef, portDef) as ResultPortDef

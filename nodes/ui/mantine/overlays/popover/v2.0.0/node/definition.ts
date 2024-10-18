@@ -1,13 +1,13 @@
-import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import type { TooltipProps } from '@mantine/core';
+import type { TooltipProps } from '@mantine/core'
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, sizes } from '@shared/port-v1.0.0'
 
 export type Props = BaseReactProps & {
-	useCustomOffset: boolean;
-	numberOffset?: number;
-	customOffset?: TooltipProps['offset'];
-	dropdownProps?: any;
-};
+	useCustomOffset: boolean
+	numberOffset?: number
+	customOffset?: TooltipProps['offset']
+	dropdownProps?: any
+}
 
 const positions = [
 	{ label: 'Bottom', value: 'bottom' },
@@ -22,9 +22,9 @@ const positions = [
 	{ label: 'Top', value: 'top' },
 	{ label: 'Top start', value: 'top-start' },
 	{ label: 'Top end', value: 'top-end' },
-];
+]
 
-import Comp from '../component/Popover';
+import Comp from '../component/Popover'
 
 export default {
 	hashTag: '#pre-release',
@@ -182,4 +182,4 @@ export default {
 			getPortDef({ name: 'state', displayName: 'State', group: 'States', type: 'boolean' }),
 		],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef
