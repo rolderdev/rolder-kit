@@ -40,7 +40,7 @@ export default async (multiInstance?: boolean) => {
 		window.location.reload()
 	}
 
-	const defaults = projectDefaults && eval(projectDefaults)?.[0]
+	const defaults = projectDefaults && JSON.parse(projectDefaults)[0]
 	if (defaults) await params.set('defaults', () => defaults)
 
 	log.info('Local DB initialized', params.get())

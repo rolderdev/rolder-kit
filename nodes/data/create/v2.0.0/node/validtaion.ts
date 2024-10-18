@@ -28,22 +28,19 @@ const getTypedCreateScheme = () => {
 						}),
 					]),
 					check(
-						(dbClass) => (typeof dbClass === 'string' && R.dbClasses ? (!R.dbClasses[dbClass] ? false : true) : true),
-						`There is no such DB class.`
+						(dbClass) => (typeof dbClass === 'string' && R.dbClasses ? !!R.dbClasses[dbClass] : true),
+						'There is no such DB class.'
 					),
 					check(
-						(dbClassObj) =>
-							typeof dbClassObj === 'object' && R.dbClasses ? (!R.dbClasses[dbClassObj.name] ? false : true) : true,
-						`There is no such DB class.`
+						(dbClassObj) => (typeof dbClassObj === 'object' && R.dbClasses ? !!R.dbClasses[dbClassObj.name] : true),
+						'There is no such DB class.'
 					),
 					check(
 						(dbClassObj) =>
 							typeof dbClassObj === 'object' && R.dbClasses
-								? !R.dbClasses[dbClassObj.name]?.versions?.includes(dbClassObj.version)
-									? false
-									: true
+								? R.dbClasses[dbClassObj.name]?.versions?.includes(dbClassObj.version)
 								: true,
-						`There is no such version of DB class.`
+						'There is no such version of DB class.'
 					)
 				),
 				items: array(
@@ -51,7 +48,7 @@ const getTypedCreateScheme = () => {
 						unknown(),
 						check((item) => typeOf(item) === 'object' || !item, '"item" must be object.'),
 						check(
-							(item: any) => (item.history ? (item.history === true || typeof item.history === 'object' ? true : false) : true),
+							(item: any) => !item.history || item.history === true || typeof item.history === 'object',
 							'"history" at item must be "true" or "object".'
 						)
 					),
@@ -59,10 +56,7 @@ const getTypedCreateScheme = () => {
 				),
 			})
 		),
-		check(
-			(schemes) => (schemes.length !== unique(schemes.map((i) => i.dbClass)).length ? false : true),
-			'dbClass must be unique.'
-		)
+		check((schemes) => schemes.length === unique(schemes.map((i) => i.dbClass)).length, 'dbClass must be unique.')
 	)
 }
 

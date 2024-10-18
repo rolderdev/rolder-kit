@@ -105,7 +105,7 @@ const getTypedFetchScheme = () => {
 							isValid = false
 						}
 					return isValid
-				}, '"filtersFunc" eval error. Details at the console.'),
+				}, '"filtersFunc" syntax error. Details at the console.'),
 				check((scheme) => {
 					let isValid = true
 					if (scheme.childrenFunc)
@@ -116,7 +116,7 @@ const getTypedFetchScheme = () => {
 							isValid = false
 						}
 					return isValid
-				}, '"childrenFunc" eval error. Details at the console.'),
+				}, '"childrenFunc" syntax error. Details at the console.'),
 				check((scheme) => {
 					let isValid = true
 					if (scheme.recursionFunc)
@@ -127,7 +127,7 @@ const getTypedFetchScheme = () => {
 							isValid = false
 						}
 					return isValid
-				}, '"recursionFunc" eval error. Details at the console.')
+				}, '"recursionFunc" syntax error. Details at the console.')
 			)
 		),
 		check((schemes) => schemes.length === unique(schemes.map((i) => i.dbClass)).length, 'dbClass must be unique.')

@@ -76,9 +76,7 @@ export default {
 				validate: (p: Props) => {
 					if (R.dbClasses) {
 						const notExistsDbClasses: string[] = []
-						for (const i of p.outputDbClasses ?? []) {
-							if (!R.dbClasses?.[i]) notExistsDbClasses.push(i)
-						}
+						for (const i of p.outputDbClasses ?? []) if (!R.dbClasses?.[i]) notExistsDbClasses.push(i)
 						if (notExistsDbClasses.length) return `There is no such DB classes as "${notExistsDbClasses.join('", "')}"`
 					}
 					return true
@@ -124,7 +122,7 @@ export default {
 							group: 'Custom',
 							customGroup: `Data: ${dbClass}`,
 							type: 'number',
-							displayName: `${dbClass} Fetched`,
+							displayName: `${dbClass} Fetched count`,
 						})
 					)
 					portDefs.outputs.push(
@@ -133,7 +131,7 @@ export default {
 							group: 'Custom',
 							customGroup: `Data: ${dbClass}`,
 							type: 'number',
-							displayName: `${dbClass} Total`,
+							displayName: `${dbClass} Total count`,
 						})
 					)
 					portDefs.outputs.push(
