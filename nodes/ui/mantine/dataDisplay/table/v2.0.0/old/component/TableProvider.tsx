@@ -4,12 +4,12 @@ import type { Props } from '../node/definition'
 import Table from './Table'
 import { setColumnsDefinition } from './models/column'
 import { setExpandedIds } from './models/expansion'
-import { setInitialFiltersState, useFiltersValue } from './models/filter'
+import { setInitialFiltersState, useFiltersValue, useHierarchyFiltersValue } from './models/filter'
 import { setLibProps } from './models/libProps'
 import { setSelectedIds } from './models/multiSelection'
 import { setRecordIds } from './models/record'
 import { resetSelectedId, setSelectedId, useHierarhySingleSelection } from './models/singleSelection'
-import { setSortState } from './models/sort'
+import { setSortState, useHierarchySortState } from './models/sort'
 import { setTableProps } from './models/tableProps'
 import getStore, { type Store } from './store'
 
@@ -25,19 +25,19 @@ export default forwardRef((p: Props, ref) => {
 	const snap = useSnapshot(s)
 
 	// Подчистим стостояния таблицы и ее дете в иерархии при демонтировании.
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		return () => {
 			if (!s.hierarchy.isChild && s.hierarchy.tableNode)
-				s.hierarchy.tableNode
-					.rootNode()
-					.descendantNodes()
-					.forEach((node) => {
-						node.states = {
-							singleSelection: { value: null },
-							multiSelection: { value: 'notSelected' },
-							expansion: { value: false },
-						}
-					})
+				for (const node of s.hierarchy.tableNode.rootNode().descendantNodes()) {
+					node.states = {
+						singleSelection: { value: null },
+						multiSelection: { value: 'notSelected' },
+						expansion: { value: false },
+						sort: { value: { direction: 'asc' } },
+						filters: { value: {} },
+					}
+				}
 		}
 	}, [])
 
@@ -59,7 +59,7 @@ export default forwardRef((p: Props, ref) => {
 				tableNodePath: p.rootNodeId,
 				tableNode: p.rootNodeId ? R.nodes[p.rootNodeId] : undefined,
 			}
-	}, [p.rootNodeId])
+	}, [s, p.rootNodeId, p.noodlNode.nodeScope.componentOwner.metaData])
 
 	// Реактивность на изменение инпутов.
 	useEffect(() => {
@@ -68,12 +68,10 @@ export default forwardRef((p: Props, ref) => {
 		setLibProps(p, s)
 		setTableProps(p, s)
 
-		// Дефолтная сортировка. Нужно обращаться к store, т.к. snap батчится.
-		if (s.tableProps.sort.enabled && s.tableProps.sort.defaultState && !s.sortState && p.items)
-			setSortState(s, s.tableProps.sort.defaultState, true)
-
 		// Инициализация фильтрации.
-		if (!s.filtersState) setInitialFiltersState(s, p.items || [])
+
+		setInitialFiltersState(s, p.items || [])
+		//if (!s.filters.state) setInitialFiltersState(s, p.items || [])
 
 		if (!snap.inited) {
 			// Дефолты с входов при монтировании.
@@ -85,13 +83,21 @@ export default forwardRef((p: Props, ref) => {
 
 			s.inited = true
 		}
-		s.fetching = !!p.fetching
-	}, [p])
+
+		// Дефолтная сортировка. Нужно обращаться к store, т.к. snap батчится.
+		if (s.tableProps.sort.enabled && s.tableProps.sort.defaultState && p.items?.length)
+			setSortState(s, s.sort.state || s.tableProps.sort.defaultState, true)
+
+		s.fetching = p.fetching
+	}, [p, s, snap.inited, p.fetching])
 
 	// Подписка на изменение выбранного item в иерархии.
-	useHierarhySingleSelection(s, snap as any)
+	useHierarhySingleSelection(s)
+	// Подписка на состояние сортировки в иерархии.
+	useHierarchySortState(s)
 	// Подписка на изменение значений фильтров.
 	useFiltersValue(s)
+	useHierarchyFiltersValue(s)
 
 	// Входящие сигналы.
 	useImperativeHandle(
@@ -120,7 +126,7 @@ export default forwardRef((p: Props, ref) => {
 				),
 			collapseAll: () => setExpandedIds(s, []),
 		}),
-		[s]
+		[s, p]
 	)
 
 	//console.log('Table provider', snap.hierarchy);

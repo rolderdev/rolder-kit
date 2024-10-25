@@ -13,16 +13,16 @@ export const prepareParameters = (model: GraphModelNode, context: NodeContext) =
 	// Подготовим параметры. Все, еще не конвертируя и не валидируя.
 	setParameters(model, inputDefs)
 	// Сконвертируем простые типы.
-	literalInputDefs.forEach((inputDef) => (model.parametersCache[inputDef.name] = getConvertedParameter(model, context, inputDef)))
+	for (const inputDef of literalInputDefs) model.parametersCache[inputDef.name] = getConvertedParameter(model, context, inputDef)
 	if (hasWarnings(model, 'convert')) return
 	// Валидируем простые типы.
-	literalInputDefs.forEach((inputDef) => validateType(model, context, inputDef))
+	for (const inputDef of literalInputDefs) validateType(model, context, inputDef)
 	if (hasWarnings(model, 'type')) return
 	// Сконвертируем сложные типы.
-	complexInputDefs.forEach((inputDef) => (model.parametersCache[inputDef.name] = getConvertedParameter(model, context, inputDef)))
+	for (const inputDef of complexInputDefs) model.parametersCache[inputDef.name] = getConvertedParameter(model, context, inputDef)
 	if (hasWarnings(model, 'convert')) return
 	// Валидируем сложные типы.
-	complexInputDefs.forEach((inputDef) => validateType(model, context, inputDef))
+	for (const inputDef of complexInputDefs) validateType(model, context, inputDef)
 	if (hasWarnings(model, 'type')) return
 }
 
@@ -113,11 +113,17 @@ export const getConvertedParameter = (model: GraphModelNode, context: NodeContex
 			let evalFunc: any
 			// trycatch из-за того, что ничто не мешает разработчику сохранить ошибку в редакторе.
 			try {
-				evalFunc = eval(value as string)
+				// Если функция указана в таком формате "(level, item) => level * 16", то Roodl пересоздает компаненту. Хз почему.
+				// Поэтому, скажем разработчику, что нужно использовать return.
+				if (!Noodl.deployed && ['objectEval', 'funcEval'].includes(inputDef.type) && value && !(value as any).includes('return'))
+					sendWarning(model, context, 'convert', inputDef.displayName, `Function at "${inputDef.displayName}" must have return.`)
+				else clearWarning(model, context, 'convert', inputDef.displayName)
+
+				evalFunc = Function(`return ${value}`)()
 				// evalFunc - функция, то просто возвращаем. Если объект, то нужно выполнить функцию, проверить, что вернулся объект и вернуть его.
 				if (inputDef.type === 'objectEval') evalFunc = evalFunc?.(model.parametersCache)
 				// Исключим для runtime.
-				if (!Noodl.deployed) clearWarning(model, context, 'convert', inputDef.displayName)
+				//if (!Noodl.deployed) clearWarning(model, context, 'convert', inputDef.displayName)
 			} catch (error) {
 				// Исключим для runtime.
 				if (!Noodl.deployed)
@@ -127,12 +133,16 @@ export const getConvertedParameter = (model: GraphModelNode, context: NodeContex
 			}
 
 			return evalFunc
+		}
 
-			// Преобразуем proplist в обычный массив.
-		} else if (inputDef.type == 'proplist') {
+		if (inputDef.type === 'proplist') {
 			return (value as { label: string }[])?.map((i) => i.label)
-		} else return value
-	} else return value
+		}
+
+		return value
+	}
+
+	return value
 }
 
 export const validateParameterValues = (

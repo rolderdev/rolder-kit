@@ -1,36 +1,28 @@
-import { Box, Skeleton } from '@mantine/core'
-import { memo, useContext, useEffect, useState } from 'react'
-import { TableContext } from '../TableProvider'
-import getRoodlReactNode from '../funcs/getRoodlReactNode'
-import useItem from '../funcs/useItem'
+import { Box } from '@mantine/core'
+import { memo, useEffect, useState } from 'react'
+import getRoodlReactNode from '../shared/getRoodlReactNode'
+import { useStore } from '../store'
 
-export default memo((p: { id: string; columnIdx: string }) => {
-	const store = useContext(TableContext)
+export default memo((p: { tableId: string; id: string; columnIdx: string }) => {
+	const s = useStore(p.tableId)
 
 	// Кастомный Suspense.
 	const [templateCell, setTemplateCell] = useState<React.ReactNode | undefined>(undefined)
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		const nodePath = store.hierarchy.tableNode?.childNodes().find((i) => i.itemId === p.id)?.path
-		getRoodlReactNode(store, p.id, R.libs.just.get(store.columnsDefinition, [p.columnIdx, 'template']), {
+		const nodePath = s.hierarchy?.tableNode?.childNodes().find((i) => i.itemId === p.id)?.path
+		getRoodlReactNode(s, p.id, R.libs.just.get(s.columns, [p.columnIdx, 'template']), {
 			itemId: p.id,
-			level: store.hierarchy.level,
+			level: s.hierarchy?.level || 0,
 			nodePath,
-		}).then((reactNode) => setTemplateCell(reactNode))
+		}).then(setTemplateCell)
 	}, [])
 
-	// snapshot без подписки для передачи в функции.
-	const itemSnap = useItem(p.id, 'snap')
-
-	// Расчет отсупа функцией разработчика.
-	const paddingLeftPostion = store.tableProps.rowStyles.paddingLeftPostion
-	const level = store.hierarchy.level
-	const pl = store.tableProps.paddingLeftFunc?.(level, itemSnap)
-
 	//console.log('TemplateCell render', p.id); // Считаем рендеры пока разрабатываем
-	// Проба пера - будет ли симпатичнее с Skeleton? Размер автоматически коректен.
 	return (
-		<Skeleton visible={!templateCell}>
-			<Box pl={paddingLeftPostion === 'cell' && p.columnIdx === '0' ? pl : undefined}>{templateCell}</Box>
-		</Skeleton>
+		<Box pl={s.tableProps.rowStyles.paddingLeftPostion === 'cell' && p.columnIdx === '0' ? s.rows[p.id].props?.pl : undefined}>
+			{templateCell}
+		</Box>
 	)
 })

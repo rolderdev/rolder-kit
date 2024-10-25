@@ -17,7 +17,7 @@
 	},
 	"playground": {
 		"projectDir": "/home/decard/projects/playground",
-		"rolderKit": ["shared", "utils", "app", "mantine", "data", "old_mantine"]
+		"rolderKit": ["shared", "utils", "app", "mantine", "data", "old_mantine", "test"]
 	},
 	"avas-desktop": {
 		"projectDir": "/home/decard/projects/clients/avas/noodl/desktop",

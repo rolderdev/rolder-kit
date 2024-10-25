@@ -39,7 +39,7 @@ export default {
 				displayName: 'Label',
 				group: 'Params',
 				type: 'string',
-				validate: (p: Props) => (p.label ? true : false),
+				validate: (p: Props) => Boolean(p.label),
 			}),
 			getPortDef({
 				name: 'openDelay',
@@ -104,7 +104,7 @@ export default {
 				displayName: 'Offset',
 				group: 'Layout',
 				type: 'objectEval',
-				codeComment: `//() => ({ mainAxis: 5, crossAxis: 0 })`,
+				codeComment: '//() => { return { mainAxis: 5, crossAxis: 0 } }',
 				dependsOn: (p: Props) => !p.floating && p.useCustomOffset,
 			}),
 			getPortDef({

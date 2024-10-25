@@ -1,25 +1,24 @@
 import { Box } from '@mantine/core'
-import { memo, useContext } from 'react'
-import { TableContext } from '../TableProvider'
-import useItem from '../funcs/useItem'
+import { memo } from 'react'
 
-export default memo((p: { id: string; columnIdx: string }) => {
+import useItem from '../shared/useItem'
+import { useStore } from '../store'
+
+export default memo((p: { tableId: string; id: string; columnIdx: string }) => {
 	const { get } = R.libs.just
 
-	const store = useContext(TableContext)
-	const itemSnap = useItem(p.id, 'snap')
+	const s = useStore(p.tableId)
 	const itemSub = useItem(p.id, 'sub')
 
 	// Без подписки, заменится при смене схемы колонок.
-	const accessor = get(store, ['columnsDefinition', p.columnIdx, 'accessor'])
+	const accessor = get(s.columns, [p.columnIdx, 'accessor'])
 	// Точечная подписка на значение.
 	const value = itemSub ? get(itemSub, accessor) : undefined
 
-	// Расчет отсупа функцией разработчика.
-	const paddingLeftPostion = store.tableProps.rowStyles.paddingLeftPostion
-	const level = store.hierarchy.level
-	const pl = store.tableProps.paddingLeftFunc?.(level, itemSnap)
-
-	//console.log('AccessorCell render', value); // Считаем рендеры пока разрабатываем
-	return <Box pl={paddingLeftPostion === 'cell' && p.columnIdx === '0' ? pl : undefined}>{value}</Box>
+	//console.log('AccessorCell render', value) // Считаем рендеры пока разрабатываем
+	return (
+		<Box pl={s.tableProps.rowStyles.paddingLeftPostion === 'cell' && p.columnIdx === '0' ? s.rows[p.id].props?.pl : undefined}>
+			{value}
+		</Box>
+	)
 })

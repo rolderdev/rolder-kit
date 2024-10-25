@@ -4,7 +4,7 @@ import type { Item } from '@shared/types-v0.1.0'
 import type { DataTableProps } from 'mantine-datatable'
 import { lazy } from 'react'
 import type { IconProps } from 'shared/src/icons'
-import type { MetaData } from '../component/funcs/getRoodlReactNode'
+import type { MetaData } from '../component/shared/getRoodlReactNode'
 import type { ColumnDefinition } from '../component/models/column'
 import type { TableRecord } from '../component/models/record'
 import type { Store } from '../component/store'
@@ -34,7 +34,7 @@ export type Props = BaseReactProps & {
 	onRowClick: 'disabled' | 'signal' | 'singleSelection' | 'expansion'
 	clickFilterFunc?: any
 	textSelectionDisabled: boolean
-	fetching?: boolean
+	fetching: boolean
 
 	// Layout
 	noHeader: boolean
@@ -42,7 +42,7 @@ export type Props = BaseReactProps & {
 	// Dimensions
 	minHeight?: string
 	horizontalSpacing?: MantineSize
-	verticalSpacing?: MantineSize
+	verticalSpacing?: MantineSize | 'xxs'
 	fz?: MantineSize
 
 	// Table styles
@@ -67,7 +67,7 @@ export type Props = BaseReactProps & {
 	// Single selection
 	defaultSelectedItem?: Item
 	selectedItem?: Item
-	singleSelectionFilterFunc: any
+	singleSelectionFilterFunc?: any
 	useSingleSelectionHierarchy?: boolean
 
 	// Multi selection
@@ -96,14 +96,14 @@ export type Props = BaseReactProps & {
 
 export default {
 	hashTag: '#pre-release',
-	module: { dynamic: lazy(() => import('../component/TableProvider')) },
+	module: { dynamic: lazy(() => import('../component/TableWrapper')) },
 	inNode: {
 		inputs,
 		outputs,
 	},
 	afterNode: {
 		getInspectInfo: (p: Props) => [
-			{ type: 'text', value: `=== Columns ===` },
+			{ type: 'text', value: '=== Columns ===' },
 			{ type: 'value', value: p.columnsDefinition },
 		],
 	},

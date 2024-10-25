@@ -4,19 +4,18 @@ import type { MultiSelection } from '@nodes/use-data-v2.0.0'
 import type Node from '@nodes/use-data-v2.0.0/component/Node'
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0'
 import { useEffect } from 'react'
-import useItem from '../funcs/useItem'
-import useNode from '../funcs/useNode'
-import type { Snap, Store } from '../store'
+import useItem from '../shared/useItem'
+import useNode from '../shared/useNode'
+import type { Store } from '../store'
 import type { TableRecord } from './record'
 
 export const setSelectedIds = (s: Store, newSelectedRecords: TableRecord[], isDefault?: boolean) => {
-	const { compare } = R.libs.just
 	const newSelectedIds = newSelectedRecords.map((i) => i.id)
 	const selectedIds = Object.keys(s.selectedIds).filter((id) => s.selectedIds[id])
 
-	if (!compare(selectedIds.sort(), newSelectedIds.sort())) {
+	if (!R.libs.just.compare(selectedIds.sort(), newSelectedIds.sort())) {
 		s.selectedIds = {}
-		newSelectedIds.map((id) => (s.selectedIds[id] = true))
+		for (const id of newSelectedIds) s.selectedIds[id] = true
 
 		if (s.tableProps.multiSelection.useHierarchy) setSelectionHierarchy(s, newSelectedIds)
 
@@ -59,7 +58,7 @@ const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 	}
 
 	// Возьмем всех предков ноды таблицы, включая ее саму.
-	const tableNode = s.hierarchy.tableNode
+	const tableNode = s.hierarchy?.tableNode
 	if (tableNode) {
 		for (const ancestorNode of tableNode.ancestorNodes(true)) {
 			const ancestorState = ancestorNode.states.multiSelection
@@ -88,13 +87,13 @@ const setSelectionHierarchy = (s: Store, selectedIds: string[]) => {
 
 // Подменим параметры чекбокса и сделаем выбор в иерархии реактивным.
 export const useHierarchySelection = (s: Store) => {
-	const { get, set } = R.libs.just
-	const { subscribeKey } = R.libs.valtio
-
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
+		const { get, set } = R.libs.just
+		const { subscribeKey } = R.libs.valtio
 		// Реактивность состояния чекбокса в заголовке.
-		if (!s.hierarchy.isChild && !get(s.checkboxes, ['unsubs', 'header'])) {
-			const tableNode = s.hierarchy.tableNode
+		if (!s.hierarchy?.isChild && !get(s.checkboxes, ['unsubs', 'header'])) {
+			const tableNode = s.hierarchy?.tableNode
 			if (tableNode) {
 				const unsub = subscribeKey(tableNode.states.multiSelection, 'value', (selection) => {
 					let newCheckBoxProps = s.libProps.allRecordsSelectionCheckboxPropsDev || {}
@@ -107,7 +106,7 @@ export const useHierarchySelection = (s: Store) => {
 		}
 
 		// Реактивность состояния чекбоксов строк.
-		s.records.map((record, idx) => {
+		s.records.forEach((record, idx) => {
 			const node = useNode(s, record.id, 'store')
 			if (node && !get(s.checkboxes, ['unsubs', record.id])) {
 				setRowSelection(s, record.id, idx)
@@ -116,11 +115,14 @@ export const useHierarchySelection = (s: Store) => {
 				set(s.checkboxes, ['unsubs', record.id], unsub)
 			}
 		})
-	}, [s.records.map((i) => i.id)])
+	}, [s.records])
 
 	// Отписка при демонтировании таблицы.
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		;() => Object.values(s.checkboxes.unsubs).forEach((i) => i())
+		return () => {
+			for (const unsub of Object.values(s.checkboxes.hierarchyUnsubs)) unsub()
+		}
 	}, [])
 }
 
@@ -131,25 +133,9 @@ const setRowSelection = (s: Store, id: string, idx: number) => {
 		const selection = nodeSnap?.states.multiSelection.value
 
 		if (nodeSnap && itemSnap) {
-			let newCheckBoxProps = s.libProps.getRecordSelectionCheckboxProps?.(itemSnap, idx) || {}
-
-			// Расчет отсупа функцией разработчика.
-			try {
-				const paddingLeftPostion = s.tableProps.rowStyles.paddingLeftPostion
-				const level = s.hierarchy.level
-				const pl = s.tableProps.paddingLeftFunc?.(level, itemSnap)
-				if (paddingLeftPostion === 'checkbox') newCheckBoxProps.pl = pl
-			} catch (e: any) {
-				log.error('paddingLeftFunc error', e)
-				R.libs.mantine?.MantineError?.('Системная ошибка!', `paddingLeftFunc error. ${e.message}`)
-			}
-
-			newCheckBoxProps = { ...newCheckBoxProps, indeterminate: nodeSnap.states.multiSelection.value === 'indeterminate' }
-			R.libs.just.set(s.checkboxes, ['props', id], newCheckBoxProps)
-
 			// Реактивность на измение выбора в иерархии.
 			try {
-				const filterFunc = s.tableProps.multiSelection.filterFunc
+				const filterFunc = s.funcs.multiSelectionFilterFunc
 				const selectedIds = s.selectedIds
 
 				if (!selectedIds[itemSnap.id] && selection === 'selected') {
@@ -174,10 +160,10 @@ const setRowSelection = (s: Store, id: string, idx: number) => {
 	}
 }
 
-export const handleRecordSelection = (s: Store, snap: Snap, recordId: string) => {
-	const filterFunc = s.tableProps.multiSelection.filterFunc
+export const handleRecordSelection = (s: Store, recordId: string) => {
+	const filterFunc = s.funcs.multiSelectionFilterFunc
 	if (filterFunc) {
-		snap.checkboxes.hasChildren[recordId] // Тригер для варианта, когда дети появились.
+		s.checkboxes.hasChildren[recordId] // Тригер для варианта, когда дети появились.
 		const isSelectable = filterFunc(useItem(recordId, 'snap'), useNode(s, recordId, 'snap'))
 		if (!isSelectable && s.selectedIds[recordId]) {
 			const selectedRecords = Object.keys(s.selectedIds)

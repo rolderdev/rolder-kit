@@ -7,7 +7,7 @@ import type { TableRecord } from './record'
 
 export type TableProps = ReturnType<typeof setTableProps>
 
-// Устанавливает наши специфичные настройки таблицы.
+// Устанавливает наши специфичные настройки таблицы. В итоговых данных не должно быть функций.
 export const setTableProps = (p: Props, s: Store) => {
 	const defaultSortColumnDef = p.columnsDefinition?.find((i) => i.sort?.defaultDirection)
 	const defaultSortColumnIdx = defaultSortColumnDef ? p.columnsDefinition?.indexOf(defaultSortColumnDef) : undefined
@@ -16,10 +16,7 @@ export const setTableProps = (p: Props, s: Store) => {
 		...R.libs.just.pick(p, [
 			// Base
 			'onRowClick',
-			'clickFilterFunc',
-			'singleSelectionFilterFunc',
 			'useSingleSelectionHierarchy',
-			'paddingLeftFunc',
 		]),
 		rowStyles: {
 			rowBackgroundColor: p.rowBackgroundColor || 'white',
@@ -30,14 +27,12 @@ export const setTableProps = (p: Props, s: Store) => {
 		multiSelection: {
 			enabled: p.multiSelection,
 			useHierarchy: p.useMultiSelectionHierarchy,
-			filterFunc: p.multiSelectionFilterFunc,
 		},
 		expansion: {
 			enabled: p.expansion,
 			allowMultiple: p.allowMultiple,
 			template: p.expansionTemplate,
 			useHierarchy: p.useExpansionHierarchy,
-			filterFunc: p.expansionFilterFunc,
 			animationChildrenCount: p.animationChildrenCount || 25,
 			collapseProps: {
 				transitionDuration: 150,
@@ -61,5 +56,6 @@ export const setTableProps = (p: Props, s: Store) => {
 	}
 
 	s.tableProps = tableProps
+
 	return tableProps // Только для типизации.
 }

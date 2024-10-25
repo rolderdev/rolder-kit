@@ -4,6 +4,7 @@ import { Suspense, forwardRef } from 'react'
 import type {
 	GraphModel,
 	GraphModelNode,
+	InspectInfo,
 	JsNodeVersions,
 	JsRoodlNode,
 	NodeColor,
@@ -25,7 +26,7 @@ import scheduleRun from './runtimeModels/scheduleRun'
 const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersions, docs?: string) =>
 	({
 		name: `rolder-kit.api-v1.${nodeName}`,
-		displayName: '*' + nodeName,
+		displayName: `*${nodeName}`,
 		docs,
 		initialize: function () {
 			this.firstRun = true
@@ -36,7 +37,7 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 		// Выдадим над нодой короткую информацию о праметрах.
 		getInspectInfo() {
 			const version = this._inputValues?.version
-			let output
+			let output: InspectInfo | InspectInfo[] | undefined
 			const getInspectInfo = versions[version]?.afterNode?.getInspectInfo
 			if (getInspectInfo) output = getInspectInfo(this.props || {}, this.outputPropValues || {}, this as any)
 			return output
@@ -106,13 +107,13 @@ const getShared = (nodeName: string, versions: JsNodeVersions | ReactNodeVersion
 				} else await handleNodePorts(model, context, versions)
 
 				model.on('parameterUpdated', async (port) => {
-					if (port.state !== 'stop') {
-						if (port.name === 'version') {
-							validateVersion(model, context)
-							if (port.value === undefined) context.editorConnection.sendDynamicPorts(model.id, [versionPort])
-							else await handleNodePorts(model, context, versions)
-						} else await handleNodePorts(model, context, versions)
-					}
+					//if (port.state !== 'stop') {
+					if (port.name === 'version') {
+						validateVersion(model, context)
+						if (port.value === undefined) context.editorConnection.sendDynamicPorts(model.id, [versionPort])
+						else await handleNodePorts(model, context, versions)
+					} else await handleNodePorts(model, context, versions)
+					//}
 				})
 			})
 		},
@@ -132,23 +133,18 @@ export const reactNode = (nodeName: string, versions: JsNodeVersions, params?: {
 		...getShared(nodeName, versions, params?.docs),
 		getReactComponent() {
 			return forwardRef((p: Props, ref) => {
-				// Не будем выдавать компоненту пока не выбрана версия.
 				if (p.noodlNode.firstRun) return null
-				else {
-					//console.log('forwardRef', p);
-					const ReactComponent = getModule(versions[p.version])
-					// Если ошибка в импорте, вернем null.
-					if (!ReactComponent) return null
-					else {
-						// Передадим готовые props и поднимем выше ref, чтобы родители могли управлять.
-						// Обернем в Suspense, чтобы не разруливать вручную динамичный и статичный импорты.
-						return (
-							<Suspense fallback={null}>
-								<ReactComponent {...p} ref={ref} />
-							</Suspense>
-						)
-					}
-				}
+
+				const ReactComponent = getModule(versions[p.version])
+				if (!ReactComponent) return null
+
+				// Передадим готовые props и поднимем выше ref, чтобы родители могли управлять.
+				// Обернем в Suspense, чтобы не разруливать вручную динамичный и статичный импорты.
+				return (
+					<Suspense fallback={null}>
+						<ReactComponent {...p} ref={ref} />
+					</Suspense>
+				)
 			})
 		},
 	} as ReactRoodlNode

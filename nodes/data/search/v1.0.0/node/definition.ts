@@ -21,9 +21,9 @@ export default {
 				displayName: 'Fields',
 				group: 'Params',
 				type: 'array',
-				tooltip: `Fields to search`,
+				tooltip: 'Fields to search',
 				validate(p) {
-					return p.fields?.length ? true : false
+					return Boolean(p.fields?.length)
 				},
 			}),
 			getPortDef({
@@ -41,8 +41,8 @@ export default {
 				displayName: 'Custom options',
 				group: 'Params',
 				type: 'objectEval',
-				codeComment: '// (props) => ({ isCaseSensitive: true })',
-				tooltip: `Fuse search options`,
+				codeComment: '// (props) => { return { isCaseSensitive: true } }',
+				tooltip: 'Fuse search options',
 			}),
 			getPortDef({
 				name: 'searchString',

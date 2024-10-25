@@ -58,7 +58,7 @@ export default {
 				displayName: 'Custom icons',
 				group: 'Advanced',
 				type: 'objectEval',
-				codeComment: `//() => ({ checked: 'IconX', indeterminate: 'IconRocket' })`,
+				codeComment: `//() => { return { checked: 'IconX', indeterminate: 'IconRocket' } }`,
 				validate: (p: Props) => {
 					if (p.customIcons && (!p.customIcons.checked || !p.customIcons.indeterminate))
 						return `Wrong "Custom icons" format. Expect { checked: 'IconName', indeterminate: 'IconName' }, got: ${JSON.stringify(

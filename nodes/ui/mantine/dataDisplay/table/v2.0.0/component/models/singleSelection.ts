@@ -2,9 +2,9 @@
 
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0'
 import { useEffect } from 'react'
-import useItem from '../funcs/useItem'
-import useNode from '../funcs/useNode'
-import type { Snap, Store } from '../store'
+import useItem from '../shared/useItem'
+import useNode from '../shared/useNode'
+import type { Store } from '../store'
 
 // Метод установки выбора. Фильтрует по items.
 // Устанавливает новый выбор, если новый не совпадает со старым.
@@ -15,7 +15,7 @@ export const setSelectedId = (s: Store, selectedId: string, isDefault?: boolean)
 
 	if (selectedItemSnap) {
 		if (s.selectedId !== selectedId) {
-			const filterFunc = s.tableProps.singleSelectionFilterFunc
+			const filterFunc = s.funcs.singleSelectionFilterFunc
 			if (filterFunc && !filterFunc(selectedItemSnap, nodeSnap)) return
 			s.selectedId = selectedId
 		} else s.selectedId = null
@@ -42,13 +42,13 @@ export const resetSelectedId = (s: Store) => {
 // Метод установки состояния иерархии.
 const setHierarhySingleSelection = (s: Store) => {
 	if (s.tableProps.useSingleSelectionHierarchy) {
-		if (s.hierarchy.tableNode) {
+		if (s.hierarchy?.tableNode) {
 			const rootNode = s.hierarchy.tableNode.rootNode()
 			if (rootNode) {
-				rootNode.descendantNodes(true).forEach((node) => {
+				for (const node of rootNode.descendantNodes(true)) {
 					if (node.path === s.hierarchy.tableNode?.path) node.states.singleSelection.value = s.selectedId
 					else node.states.singleSelection.value = null
-				})
+				}
 				Noodl.Events.emit(`${rootNode.path}_singleSelectionChanged`)
 			}
 		}
@@ -56,13 +56,13 @@ const setHierarhySingleSelection = (s: Store) => {
 }
 
 // Хук подписки на изменение выбора в иерархии.
-export const useHierarhySingleSelection = (s: Store, snap: Snap) => {
+export const useHierarhySingleSelection = (s: Store) => {
 	useEffect(() => {
 		let unsub: (() => void) | undefined
-		if (s.hierarchy.tableNode) {
+		if (s.hierarchy?.tableNode) {
 			unsub = R.libs.valtio.subscribe(s.hierarchy.tableNode.states.singleSelection, () => {
 				// Не будем тригерить повторно выходы, если это событие произошло по нажатию в этой таблице.
-				const newSelectedId = s.hierarchy.tableNode?.states.singleSelection.value || null
+				const newSelectedId = s.hierarchy?.tableNode?.states.singleSelection.value || null
 				if (s.selectedId !== newSelectedId) {
 					s.selectedId = newSelectedId
 
@@ -73,5 +73,5 @@ export const useHierarhySingleSelection = (s: Store, snap: Snap) => {
 			})
 		}
 		return () => unsub?.()
-	}, [snap.hierarchy.tableNodePath]) // Нужен snap, чтобы рутовая таблица дождалась rootNodeId при загрузке данных в useData.
+	}, [s, s.hierarchy?.tableNode, s.hierarchy?.tableNode?.states.singleSelection, s.noodlNode, s.selectedId])
 }

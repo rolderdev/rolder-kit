@@ -76,7 +76,7 @@ export default {
 				displayName: 'Offset',
 				group: 'Layout',
 				type: 'objectEval',
-				codeComment: `//() => ({ mainAxis: 5, crossAxis: 0 })`,
+				codeComment: '//() => { return { mainAxis: 5, crossAxis: 0 } }',
 				dependsOn: (p: Props) => p.useCustomOffset,
 			}),
 			getPortDef({
@@ -158,14 +158,14 @@ export default {
 				displayName: 'Dropdown props',
 				group: 'Advanced',
 				type: 'objectEval',
-				codeComment: `//() => ({ p: 0 })`,
+				codeComment: '//() => { return { p: 0 } }',
 			}),
 			getPortDef({
 				name: 'middlewares',
 				displayName: 'Middlewares',
 				group: 'Advanced',
 				type: 'objectEval',
-				codeComment: `//() => ({ flip: true, shift: true, inline: true })`,
+				codeComment: '//() => { return { flip: true, shift: true, inline: true } }',
 			}),
 			getPortDef({
 				name: 'clickOutsideEvents',

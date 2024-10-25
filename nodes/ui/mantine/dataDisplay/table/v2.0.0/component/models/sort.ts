@@ -1,12 +1,13 @@
+/* Модель сортировки. */
+
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0'
 import type { Item } from '@shared/types-v0.1.0'
-/* Модель сортировки. */
 import type { DataTableSortStatus } from 'mantine-datatable'
-import useItem from '../funcs/useItem'
+import useItem from '../shared/useItem'
 import type { Store } from '../store'
-import { getColumns } from './column'
 import { getFilteredIds } from './filter'
 import type { TableRecord } from './record'
+import { useEffect } from 'react'
 
 export type Sort = {
 	defaultDirection?: 'asc' | 'desc'
@@ -15,7 +16,14 @@ export type Sort = {
 }
 
 export const setSortState = (s: Store, sortState: DataTableSortStatus<TableRecord>, firstTime?: boolean) => {
-	s.sortState = sortState
+	s.sort.state = sortState
+
+	// Добавим сосотояние сортировки в иерархию.
+	if (!s.hierarchy?.isChild) {
+		const tableNode = s.hierarchy?.tableNode
+		const sortColumnDef = Object.values(s.columns).find((i) => i.accessor === sortState?.columnAccessor)
+		if (tableNode && sortColumnDef) tableNode.states.sort.value = { direction: sortState.direction, idx: sortColumnDef.idx }
+	}
 
 	// Отсортируем items, если включена фронтовая сортировка.
 	const sort = s.tableProps.sort
@@ -30,18 +38,49 @@ export const setSortState = (s: Store, sortState: DataTableSortStatus<TableRecor
 }
 
 export const getSortedIds = (s: Store) => {
-	const sortState = s.sortState
+	const sortState = s.sort.state
 
 	const items = s.originalIds.map((id) => useItem(id, 'snap')).filter((i) => !!i)
 	if (sortState) {
-		const sortColumnDef = getColumns(s).find((i) => i.accessor === sortState?.columnAccessor)
-		if (sortColumnDef?.sort?.func) {
-			const sortedItems = sortColumnDef?.sort?.func(
+		const sortColumn = Object.values(s.columns).find((i) => i.accessor === sortState?.columnAccessor)
+		if (sortColumn?.sort?.func) {
+			const sortedItems = sortColumn?.sort?.func(
 				sortState.direction,
 				items,
-				s.hierarchy.tableNode ? R.libs.valtio.snapshot(s.hierarchy.tableNode) : undefined
+				s.hierarchy?.tableNode ? R.libs.valtio.snapshot(s.hierarchy.tableNode) : undefined
 			)
 			return sortedItems?.map((i) => i.id) || items.map((i) => i.id)
-		} else return R.utils.naturalSort.v1(items, sortState.columnAccessor, sortState.direction).map((i) => i.id as string)
-	} else return items.map((i) => i.id)
+		}
+		return R.utils.naturalSort.v1(items, sortState.columnAccessor, sortState.direction).map((i) => i.id as string)
+	}
+	return items.map((i) => i.id)
+}
+
+export const useHierarchySortState = (s: Store) => {
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		const rootNode = s.hierarchy?.tableNode?.rootNode()
+
+		if (s.hierarchy?.isChild && rootNode?.states.sort && !s.sort.hierarchyUnsub) {
+			const state = rootNode.states.sort.value
+			if (state.idx) {
+				const columnAccessor = Object.values(s.columns).find((i) => i.idx === state.idx)?.accessor
+				if (columnAccessor) setSortState(s, { direction: state.direction, columnAccessor })
+			}
+			const unsub = R.libs.valtio.subscribe(rootNode.states.sort, () => {
+				const state = rootNode.states.sort.value
+				if (state.idx) {
+					const columnAccessor = Object.values(s.columns).find((i) => i.idx === state.idx)?.accessor
+					if (columnAccessor) setSortState(s, { direction: state.direction, columnAccessor })
+				}
+			})
+
+			s.sort.hierarchyUnsub = unsub
+		}
+	}, [Boolean(s.hierarchy?.tableNode)])
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		return () => s.sort.hierarchyUnsub?.()
+	}, [])
 }

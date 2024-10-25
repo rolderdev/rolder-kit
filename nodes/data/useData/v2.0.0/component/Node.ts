@@ -8,6 +8,8 @@ export type NodeSingleSelection = { value: string | null } // Выбранный
 export type NodeMultiSelection = { value: MultiSelection }
 export type MultiSelection = 'notSelected' | 'selected' | 'indeterminate'
 export type NodeExpansion = { value: boolean }
+export type Sort = { value: { direction: 'asc' | 'desc'; idx?: string } }
+export type Filters = { value: Record<string, { enabled: boolean; value?: any; defaultValue?: any }> }
 type Aggregations = Record<string, Record<string, any>>
 
 export default class Node {
@@ -25,6 +27,8 @@ export default class Node {
 		singleSelection: NodeSingleSelection // Выбранный ребенок.
 		multiSelection: NodeMultiSelection
 		expansion: NodeExpansion
+		sort: Sort
+		filters: Filters
 	}
 
 	constructor(
@@ -48,7 +52,13 @@ export default class Node {
 		this.itemId = itemId
 		this.parentId = parentId
 		this.parentPath = parentPath
-		this.states = { singleSelection: { value: null }, multiSelection: { value: 'notSelected' }, expansion: { value: false } }
+		this.states = {
+			singleSelection: { value: null },
+			multiSelection: { value: 'notSelected' },
+			expansion: { value: false },
+			sort: { value: { direction: 'asc' } },
+			filters: { value: {} },
+		}
 		this.aggregations = aggregations
 	}
 

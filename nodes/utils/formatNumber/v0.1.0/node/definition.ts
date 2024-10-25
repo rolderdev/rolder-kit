@@ -27,11 +27,13 @@ export default {
 				group: 'Params',
 				type: 'objectEval',
 				dependsOn: (p: Props) => p.custom,
-				codeComment: `/*() => ({
-	thousandSeparated: true,
-	negative: 'parenthesis',
-	mantissa: 4
-})*/`,
+				codeComment: `/*() => {
+	return {
+	  thousandSeparated: true,
+		negative: 'parenthesis',
+		mantissa: 4
+	}
+}*/`,
 			}),
 			getPortDef({
 				name: 'mantissa',

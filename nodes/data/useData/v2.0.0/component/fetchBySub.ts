@@ -4,6 +4,7 @@ import type { NoodlNode } from '@shared/node-v1.0.0'
 import type { Props } from '../node/definition'
 import type { BackendData } from './fetch'
 import { handleSubscribe } from './handleSubscribe'
+import handleDataChanges from './handleDataChanges'
 
 export default async (p: Props, noodlNode: NoodlNode) => {
 	const K = await getKuzzle()
@@ -39,4 +40,7 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 
 	// Запустим подписку на схемы.
 	if (p.subscribe) handleSubscribe(p, noodlNode)
+
+	// Подготовим и отправим данные.
+	handleDataChanges(p, noodlNode)
 }

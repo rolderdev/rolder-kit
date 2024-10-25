@@ -150,7 +150,7 @@ export default {
 				group: 'Styles',
 				type: 'objectEval',
 				dependsOn: (p: Props) => p.variant === 'gradient',
-				codeComment: `//(props) => ({ from: 'blue', to: 'cyan', deg: 90 })`,
+				codeComment: `//(props) => { return { from: 'blue', to: 'cyan', deg: 90 } }`,
 			}),
 			getPortDef({
 				name: 'td',

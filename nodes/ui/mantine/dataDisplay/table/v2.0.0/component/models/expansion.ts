@@ -1,8 +1,8 @@
 /* Модель расширяемых строк. */
 
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0'
-import useItem from '../funcs/useItem'
-import useNode from '../funcs/useNode'
+import useItem from '../shared/useItem'
+import useNode from '../shared/useNode'
 import type { Store } from '../store'
 
 export type ExpansionRows = Record<string, React.ReactNode>
@@ -11,12 +11,18 @@ export type ExpansionRows = Record<string, React.ReactNode>
 export const toggleRowExpansion = (s: Store, id: string) => {
 	const toggle = !s.expandedIds[id]
 
-	if (!s.tableProps.expansion.useHierarchy) s.expandedIds[id] = toggle
-	else {
+	s.expandedIds[id] = toggle
+	s.expandedIdsArr = Object.keys(s.expandedIds).filter((id) => s.expandedIds[id])
+
+	if (s.tableProps.expansion.useHierarchy) {
 		const nodeStore = useNode(s, id, 'store')
 		if (nodeStore) {
 			nodeStore.states.expansion.value = toggle
-			if (toggle) nodeStore.childNodes().forEach((n) => (n.states.expansion.value = false))
+			if (toggle) {
+				for (const n of nodeStore.childNodes()) {
+					n.states.expansion.value = false
+				}
+			}
 			const rootNode = nodeStore.rootNode()
 			if (rootNode) Noodl.Events.emit(`${rootNode.path}_expansionChanged`)
 		}
@@ -41,13 +47,18 @@ export const setExpandedIds = (s: Store, expandedIds: string[], isDefault?: bool
 
 	if (!compare(expendedIds.sort(), newExpandedIds.sort())) {
 		s.expandedIds = {}
-		newExpandedIds.forEach((id) => (s.expandedIds[id] = true))
+		for (const id of newExpandedIds) {
+			s.expandedIds[id] = true
+		}
+		s.expandedIdsArr = newExpandedIds
 
 		if (s.tableProps.expansion.useHierarchy) {
-			if (s.hierarchy.tableNode) {
-				s.hierarchy.tableNode?.childNodes().forEach((childNode) => {
-					if (childNode.itemId) childNode.states.expansion.value = s.expandedIds[childNode.itemId]
-				})
+			if (s.hierarchy?.tableNode) {
+				for (const childNode of s.hierarchy.tableNode.childNodes()) {
+					if (childNode.itemId) {
+						childNode.states.expansion.value = s.expandedIds[childNode.itemId]
+					}
+				}
 
 				const rootNode = s.hierarchy.tableNode.rootNode()
 				if (rootNode) Noodl.Events.emit(`${rootNode.path}_expansionChanged`)
@@ -67,7 +78,7 @@ export const setExpandedIds = (s: Store, expandedIds: string[], isDefault?: bool
 export const expansionFiltered = (s: Store, id: string) => {
 	let filter = false
 	try {
-		const filterFunc = s.tableProps.expansion.filterFunc
+		const filterFunc = s.funcs.expansionFilterFunc
 		const itemSnap = useItem(id, 'snap')
 		filter = itemSnap && filterFunc ? !filterFunc(itemSnap, useNode(s, id, 'snap')) : false
 	} catch (e: any) {

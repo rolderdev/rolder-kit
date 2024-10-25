@@ -126,7 +126,7 @@ export const handleNotification = async (p: Props, noodlNode: NoodlNode, schemeH
 				// При этом, не понятно как это сделать точечно. Поэтому делаем простую перезагрузку, но без тригеров и обновления выходов.
 				// Так сервер подпишет на новые схемы, которые породил новый item.
 				// Хоть и костыль, но без тормозов, т.к. весь код выше уже все сделал для фронта, а handleDataChanges тригернул все, что нужно.
-				fetchBySub(p, noodlNode)
+				//setTimeout(async () => await fetchBySub(p, noodlNode), 1000)
 			}
 		}
 
@@ -138,5 +138,7 @@ export const handleNotification = async (p: Props, noodlNode: NoodlNode, schemeH
 		}
 	}
 
+	// Сдался :(
+	setTimeout(() => fetchBySub(p, noodlNode), 1000)
 	handleDataChanges(p, noodlNode)
 }

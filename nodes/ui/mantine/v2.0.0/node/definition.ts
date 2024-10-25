@@ -60,11 +60,13 @@ export default {
 				group: 'Styles',
 				type: 'objectEval',
 				codeComment: `/* Тема Mantine. Смотри документацию - https://mantine.dev/theming/theme-object/
-	() => ({
-		components: {
-			Image: { defaultProps: { radius: 'md' } }
+	() => {
+	  return {
+			components: {
+			  Image: { defaultProps: { radius: 'md' } }
+			}
 		}
-	})*/`,
+	}*/`,
 			}),
 		],
 	},

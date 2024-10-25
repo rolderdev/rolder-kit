@@ -20,6 +20,13 @@ import '@mantine/notifications/styles.css'
 import './body.module.css'
 import './fonts.module.css'
 
+const Scripts = () => {
+	// Для возможности вычислять цвет в Roodl.
+	const theme = useMantineTheme()
+	R.libs.mantine.getThemeColor = (color: MantineColor) => getThemeColor(color, theme)
+	return null
+}
+
 export default forwardRef((p: Props) => {
 	const { notificationsPosition, defaultColorScheme, mantineTheme } = p
 
@@ -35,13 +42,6 @@ export default forwardRef((p: Props) => {
 		fontFamily: `IBM Plex Sans, ${DEFAULT_THEME.fontFamily}`,
 		headings: { fontFamily: `IBM Plex Sans, ${DEFAULT_THEME.fontFamily}` },
 	})
-
-	const Scripts = () => {
-		// Для возможности вычислять цвет в Roodl.
-		const theme = useMantineTheme()
-		R.libs.mantine.getThemeColor = (color: MantineColor) => getThemeColor(color, theme)
-		return null
-	}
 
 	return (
 		<>

@@ -35,14 +35,14 @@ export const runJsFunc = async (nodeDef: JsNodeDef, noodlNode: NoodlNode, signal
 }
 
 // Функция для проверки корректности импорта.
-export const getModule = (nodeDef: JsNodeDef) => {
+export const getModule = (nodeDef: JsNodeDef | ReactNodeDef) => {
 	try {
 		const module = nodeDef.module.dynamic || nodeDef.module.static
-		if (module) return module
-		else {
-			log.error(`getModule error: no module found`, { nodeDef })
+		if (!module) {
+			log.error('getModule error: no module found', { nodeDef })
 			return null
 		}
+		return module
 	} catch (e) {
 		log.error('Error at getModule', e)
 		return null

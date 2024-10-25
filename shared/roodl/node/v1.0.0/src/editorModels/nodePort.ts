@@ -57,16 +57,17 @@ const setNodePorts = (model: GraphModelNode, context: NodeContext) => {
 			// Но чистим в parametersCache, чтобы в компоненту не прилетало лишнее.
 			if (inputDef.dependsOn) {
 				if (!inputDef.dependsOn(model.parametersCache)) {
-					delete model.parametersCache[inputDef.name]
+					model.parametersCache[inputDef.name] = undefined
 					// Тригернем для registerInputIfNeeded, но установим состояние в stop, чтобы parameterUpdated не зациклился.
 					// Значение меняется с чего то на undefined, это тригерит registerInputIfNeeded.
-					model.setParameter(inputDef.name, undefined, 'stop')
+					model.parameters[inputDef.name] = undefined
+					//model.setParameter(inputDef.name, undefined, 'stop')
 					filtered = true
 					// Нужно пропустить порты с подключений, иначе при смене параметров в редакторе они стираются.
 				} else if (!model.component.connections.find((i: any) => i.targetId === model.id && i.targetPort === inputDef.name)) {
 					// Нужно зпустить дважды, т.к. тригериться только при смене значения.
-					model.setParameter(inputDef.name, undefined, 'stop')
-					model.setParameter(inputDef.name, model.parameters[inputDef.name], 'stop')
+					//model.setParameter(inputDef.name, undefined, 'stop')
+					//model.setParameter(inputDef.name, model.parameters[inputDef.name], 'stop')
 				}
 			}
 			// Трансформация.
