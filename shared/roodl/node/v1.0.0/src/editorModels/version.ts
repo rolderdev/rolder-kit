@@ -12,7 +12,7 @@ export const getVersionPortDef = (versions: JsNodeVersions | ReactNodeVersions) 
 			group: 'Version',
 			type: Object.keys(versions).map((i) => ({
 				value: i,
-				label: i + (versions[i]?.hashTag ? ' ' + versions[i]?.hashTag : ''),
+				label: `${i}${versions[i]?.hashTag ? ` ${versions[i]?.hashTag}` : ''}`,
 			})),
 			visibleAt: 'editor',
 		}),

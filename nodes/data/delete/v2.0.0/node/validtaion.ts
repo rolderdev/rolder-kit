@@ -23,34 +23,28 @@ const getTypedDeleteScheme = () => {
 						}),
 					]),
 					check(
-						(dbClass) => (typeof dbClass === 'string' && R.dbClasses ? (!R.dbClasses[dbClass] ? false : true) : true),
-						`There is no such DB class.`
+						(dbClass) => (typeof dbClass === 'string' && R.dbClasses ? !!R.dbClasses[dbClass] : true),
+						'There is no such DB class.'
 					),
 					check(
-						(dbClassObj) =>
-							typeof dbClassObj === 'object' && R.dbClasses ? (!R.dbClasses[dbClassObj.name] ? false : true) : true,
-						`There is no such DB class.`
+						(dbClassObj) => (typeof dbClassObj === 'object' && R.dbClasses ? !!R.dbClasses[dbClassObj.name] : true),
+						'There is no such DB class.'
 					),
 					check(
 						(dbClassObj) =>
 							typeof dbClassObj === 'object' && R.dbClasses
-								? !R.dbClasses[dbClassObj.name]?.versions?.includes(dbClassObj.version)
-									? false
-									: true
+								? !!R.dbClasses[dbClassObj.name]?.versions?.includes(dbClassObj.version)
 								: true,
-						`There is no such version of DB class.`
+						'There is no such version of DB class.'
 					)
 				),
 				ids: pipe(
 					array(string('"id" must be string.'), '"ids" is required.'),
-					check((ids) => (ids.length !== unique(ids).length ? false : true), '"ids" must be unique.')
+					check((ids) => ids.length === unique(ids).length, '"ids" must be unique.')
 				),
 			})
 		),
-		check(
-			(schemes) => (schemes.length !== unique(schemes.map((i) => i.dbClass)).length ? false : true),
-			'dbClass must be unique.'
-		)
+		check((schemes) => schemes.length === unique(schemes.map((i) => i.dbClass)).length, 'dbClass must be unique.')
 	)
 }
 

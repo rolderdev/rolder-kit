@@ -6,6 +6,7 @@ import type { Props } from '../node/definition'
 export default forwardRef((p: Props) => {
 	const [values, setValues] = useState<string[]>(p.defaultValues || [])
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		sendOutput(p.noodlNode, 'selectedValues', values)
 		sendOutput(p.noodlNode, 'selectedItem', p.items?.find((i) => values.includes(R.libs.just.get(i, p.valuePath))) || [])

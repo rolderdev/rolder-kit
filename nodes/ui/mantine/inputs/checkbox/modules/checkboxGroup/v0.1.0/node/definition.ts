@@ -17,7 +17,7 @@ export default {
 				group: 'Params',
 				type: 'string',
 				default: 'id',
-				validate: (p: Props) => (p.valuePath ? true : false),
+				validate: (p: Props) => Boolean(p.valuePath),
 			}),
 			getPortDef({
 				name: 'defaultValues',
@@ -25,7 +25,7 @@ export default {
 				group: 'Params',
 				type: 'array',
 				validate: (p: Props) => {
-					if (p.defaultValues && p.defaultValues.some((i) => typeof i !== 'string'))
+					if (p.defaultValues?.some((i) => typeof i !== 'string'))
 						return `"Default values" must be array of string, got: ${JSON.stringify(p.defaultValues)}`
 					return true
 				},
@@ -38,7 +38,7 @@ export default {
 				displayName: 'Items',
 				group: 'Data',
 				type: 'array',
-				validate: (p: Props) => (p.items ? true : false),
+				validate: (p: Props) => Boolean(p.items),
 			}),
 			getPortDef({ name: 'size', displayName: 'Size', group: 'Dimensions', type: sizes, default: 'sm' }),
 			getPortDef({ name: 'withAsterisk', displayName: 'With asterisk', group: 'Styles', type: 'boolean', default: false }),

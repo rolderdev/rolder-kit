@@ -35,7 +35,11 @@ export default {
 				itemId = repeaterItemId
 				break
 			default:
-				p.itemId ? (itemId = p.itemId) : (itemId = repeaterItemId)
+				if (p.itemId) {
+					itemId = p.itemId
+				} else {
+					itemId = repeaterItemId
+				}
 		}
 
 		if (itemId) {

@@ -114,4 +114,3 @@ export default (p: Props & { editor: any }) => {
 		</RichTextEditor.Toolbar>
 	)
 }
-//<span style="color: rgb(240, 62, 62)"><sup>#experimental</sup></span>

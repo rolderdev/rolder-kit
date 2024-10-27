@@ -60,25 +60,28 @@ export default forwardRef((p: Props, ref) => {
 		editable: isEditor,
 	})
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (editor && !isEditor && p.content) editor.commands.setContent(p.content)
 	}, [p.content])
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		p.noodlNode._internal.isEditor = isEditor
 		sendOutput(p.noodlNode, 'isEditor', isEditor)
 	}, [isEditor])
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useImperativeHandle(
 		ref,
 		() => ({
 			toggleEditor: () => setIsEditor(!isEditor),
-			restore: (p: Props) => editor && editor.commands.setContent(p.content || ''),
+			restore: (p: Props) => editor?.commands.setContent(p.content || ''),
 			restoreAndToggle: () => {
 				setIsEditor(!isEditor)
-				editor && editor.commands.setContent(p.content || '')
+				editor?.commands.setContent(p.content || '')
 			},
-			clear: (p: Props) => editor && editor.commands.clearContent(),
+			clear: () => editor?.commands.clearContent(),
 		}),
 		[isEditor, editor]
 	)

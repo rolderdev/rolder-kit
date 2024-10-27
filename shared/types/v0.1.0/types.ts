@@ -1,4 +1,4 @@
-import type { HyperDX, Kuzzle, RxDatabase, Rxdb } from '@nodes/app-v2.0.0'
+import type { Kuzzle, RxDatabase, Rxdb } from '@nodes/app-v2.0.0'
 import type { Mantine } from '@nodes/mantine-v2.0.0'
 import type { HistoryItem, ItemsHistory, Nodes } from '@nodes/use-data-v2.0.0'
 import type { InitState } from '@shared/init-state-v0.1.0'
@@ -119,7 +119,6 @@ export type User = {
 declare global {
 	var R: Rolder
 	var Noodl: NoodlNode
-	var HyperDX: HyperDX | undefined
 	var log: {
 		start(): number
 		end(title: string, startTime: number): void

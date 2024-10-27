@@ -21,7 +21,7 @@ export default {
 				displayName: 'Message',
 				group: 'Params',
 				type: 'string',
-				validate: (p: Props) => (p.message ? true : false),
+				validate: (p: Props) => !!p.message,
 			}),
 			getPortDef({ name: 'autoClose', displayName: 'Auto close', group: 'Params', type: 'boolean', default: true }),
 			getPortDef({
@@ -30,7 +30,7 @@ export default {
 				group: 'Params',
 				type: 'number',
 				default: 2000,
-				dependsOn: (p: Props) => (p.autoClose ? true : false),
+				dependsOn: (p: Props) => !!p.autoClose,
 			}),
 			getPortDef({
 				name: 'color',

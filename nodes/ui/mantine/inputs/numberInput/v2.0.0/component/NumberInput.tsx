@@ -9,15 +9,18 @@ export default forwardRef((p: Props, ref) => {
 	const [value, setValue] = useState<string | number>('')
 	const handlers = useRef<NumberInputHandlers>()
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		sendOutput(p.noodlNode, 'value', value)
 		sendSignal(p.noodlNode, 'changed')
 	}, [value])
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (p.defaultValue) setValue(p.defaultValue)
 	}, [])
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useImperativeHandle(
 		ref,
 		() => ({

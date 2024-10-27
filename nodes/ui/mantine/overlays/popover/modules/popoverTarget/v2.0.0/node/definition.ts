@@ -8,10 +8,10 @@ export default {
 	hashTag: '#pre-release',
 	module: { static: Comp },
 	afterNode: {
-		validate: async (p, model) => {
+		validate: async (_, model) => {
 			const parentNodeName = model.parent?.type.split('.')[2]
 			if (parentNodeName === 'Popover') return true
-			else return `Parent of "PopoverTarget" must be "Popover", got "${parentNodeName}".`
+			return `Parent of "PopoverTarget" must be "Popover", got "${parentNodeName}".`
 		},
 	},
 	disableCustomProps: true,

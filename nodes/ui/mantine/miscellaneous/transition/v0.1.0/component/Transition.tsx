@@ -6,6 +6,7 @@ import type { Props } from '../node/definition'
 export default forwardRef((p: Props, ref) => {
 	const [mounted, setMounted] = useState(false)
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (p.automount) setMounted(true)
 	}, [])

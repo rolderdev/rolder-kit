@@ -29,11 +29,11 @@ export const PortDef = pipe(
 		customGroup: optional(string()), // Но оставим возможность задавать кастомную группу.
 		/* Зададим тип так, чтобы было удобно его определять. Оставим только список строгих литералов и массив enum.
 			Варианты objectEval и funcEval  - это наш специальный тип для передачи объекта или функции из редактора. Roodl в редакторе включает
-		JS только для массивов. Объект просто не открывается в редакторе, его можно передать только через подключение. А нам нужно давать 
+		JS только для массивов. Объект просто не открывается в редакторе, его можно передать только через подключение. А нам нужно давать
 		разработчику возможность задавать параметры через объект или передавать функцию. При это все это хранится для каждой ноды в project.json,
 		а значит любой JS-код - это текст, поэтому названия с eval (тобишь мы потом будем его конверировать через eval).
-			Решение - уславливаемся, что eval, всегда функция, говорим Roodl, что это массив (чтобы можно было открыть редактор), разработчик 
-			игнорирует (ну, он и не знает) массив и просто задает функцию, обрабатываем через eval, проверяя что тип функция. Для funcEval 
+			Решение - уславливаемся, что eval, всегда функция, говорим Roodl, что это массив (чтобы можно было открыть редактор), разработчик
+			игнорирует (ну, он и не знает) массив и просто задает функцию, обрабатываем через eval, проверяя что тип функция. Для funcEval
 			просто сохраняем функцию (ее как то мы применяем в каждой ноде), а для objectEval выполняем ее, чтобы передать в ноду результат. */
 		type: optional(
 			union([
@@ -65,19 +65,19 @@ export const PortDef = pipe(
 		transform: optional(any()),
 	}),
 	// Ругаемся, если группа указана кастомная, но не определена.
-	check((i) => (i.group === 'Custom' ? (i.customGroup ? true : false) : true), 'Custom group is not defined'),
+	check((i) => (i.group === 'Custom' ? !!i.customGroup : true), 'Custom group is not defined'),
 	// Заменим группу кастомной, если указана, чтобы не делать проверок потом.
 	transform((i) => {
-		if (i.group === 'Custom' && i.customGroup) i.group = i.customGroup as any
-		delete i.customGroup
+		const result = { ...i }
+		if (result.group === 'Custom' && result.customGroup) result.group = result.customGroup as any
+		result.customGroup = undefined
 		// Установим пример-комментарий для типов с кодом и удалим default, чтобы не дать разработчику накосячить.
-		if (typeof i.type === 'string' && ['array', 'objectEval', 'funcEval'].includes(i.type)) {
-			if (i.codeComment) i.default = i.codeComment
-			else delete i.default
-			delete i.codeComment
+		if (typeof result.type === 'string' && ['array', 'objectEval', 'funcEval'].includes(result.type)) {
+			if (result.codeComment) result.default = result.codeComment
+			else result.default = undefined
+			result.codeComment = undefined
 		}
-
-		return i
+		return result
 	})
 )
 

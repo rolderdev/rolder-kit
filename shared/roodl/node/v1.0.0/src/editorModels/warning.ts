@@ -32,6 +32,8 @@ export function clearWarning(model: GraphModelNode, context: NodeContext, type: 
 }
 
 export const hasWarnings = (model: GraphModelNode, type?: WarningType) => {
-	if (!type) return model.warnings.size > 0
-	else return Array.from(model.warnings.values()).filter((i) => i === type).length > 0
+	if (!type) {
+		return model.warnings.size > 0
+	}
+	return Array.from(model.warnings.values()).filter((i) => i === type).length > 0
 }
