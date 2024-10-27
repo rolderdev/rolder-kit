@@ -1,15 +1,15 @@
-import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import type { Icons } from 'shared';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, sizes } from '@shared/port-v1.0.0'
+import type { Icons } from 'shared'
 
 export type Props = BaseReactProps & {
-	inCard: boolean;
-	checkedProp?: boolean;
-	indeterminateProp?: boolean;
-	customIcons: { checked: keyof Icons; indeterminate: keyof Icons };
-};
+	inCard: boolean
+	checkedProp?: boolean
+	indeterminateProp?: boolean
+	customIcons: { checked: keyof Icons; indeterminate: keyof Icons }
+}
 
-import Comp from '../component/CheckboxIndicator';
+import Comp from '../component/CheckboxIndicator'
 
 export default {
 	hashTag: '#expreimental',
@@ -58,15 +58,15 @@ export default {
 				displayName: 'Custom icons',
 				group: 'Advanced',
 				type: 'objectEval',
-				codeComment: `//() => ({ checked: 'IconX', indeterminate: 'IconRocket' })`,
+				codeComment: `//() => { return { checked: 'IconX', indeterminate: 'IconRocket' } }`,
 				validate: (p: Props) => {
 					if (p.customIcons && (!p.customIcons.checked || !p.customIcons.indeterminate))
 						return `Wrong "Custom icons" format. Expect { checked: 'IconName', indeterminate: 'IconName' }, got: ${JSON.stringify(
 							p.customIcons
-						)}`;
-					return true;
+						)}`
+					return true
 				},
 			}),
 		],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

@@ -6,7 +6,7 @@
 		}
 	],
 	"extensions": {
-		"recommendations": ["EditorConfig.EditorConfig", "esbenp.prettier-vscode", "eamodio.gitlens"]
+		"recommendations": ["EditorConfig.EditorConfig", "esbenp.prettier-vscode", "biomejs.biome", "eamodio.gitlens"]
 	},
 	"settings": {
 		"files.eol": "\r\n",
@@ -22,46 +22,46 @@
 			"**/bundles": true,
 			"**/assets/lib": true
 		},
-		"cssVariables.lookupFiles": ["**/*.css", "**/*.scss", "**/*.sass", "**/*.less", "node_modules/@mantine/core/styles.css"],
+		//"cssVariables.lookupFiles": ["**/*.css", "**/*.scss", "**/*.sass", "**/*.less", "node_modules/@mantine/core/styles.css"],
 		"[markdown]": {
 			"editor.formatOnSave": true,
 			"editor.defaultFormatter": "esbenp.prettier-vscode"
 		},
 		"[css]": {
 			"editor.formatOnSave": true,
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "biomejs.biome"
 		},
 		"[scss]": {
 			"editor.formatOnSave": true,
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "biomejs.biome"
 		},
 		"[javascript]": {
 			"editor.formatOnSave": true,
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "biomejs.biome"
 		},
 		"[javascriptreact]": {
 			"editor.formatOnSave": true,
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "biomejs.biome"
 		},
 		"[typescript]": {
 			"editor.formatOnSave": true,
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "biomejs.biome"
 		},
 		"[typescriptreact]": {
 			"editor.formatOnSave": true,
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "biomejs.biome"
 		},
 		"[json]": {
 			"editor.formatOnSave": true,
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "biomejs.biome"
 		},
 		"[jsonc]": {
 			"editor.formatOnSave": true,
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "biomejs.biome"
 		},
 		"[jsonl]": {
 			"editor.formatOnSave": true,
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "biomejs.biome"
 		}
 	}
 }

@@ -1,10 +1,10 @@
 {
-  "name": "@packages/get-comp-props-v0.1.0",
-  "main": "getCompProps.ts",
-  "types": "getCompProps.ts",
-  "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@^",
-    "@packages/port": "workspace:@packages/port-v0.6.0@^",
-    "types": "workspace:*"
-  }
+	"name": "@packages/get-comp-props-v0.1.0",
+	"main": "getCompProps.ts",
+	"types": "getCompProps.ts",
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"@packages/port": "workspace:@packages/port-v0.6.0@^",
+		"types": "workspace:*"
+	}
 }

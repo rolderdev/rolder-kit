@@ -1,9 +1,9 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, getType, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, getType, inputGroups } from '@packages/port'
 
-import v100 from '@packages/select-v1.0.0';
-import v110 from '@packages/select-v1.1.0';
-import v120 from '@packages/select-v1.2.0';
+import v100 from '@packages/select-v1.0.0'
+import v110 from '@packages/select-v1.1.0'
+import v120 from '@packages/select-v1.2.0'
 
 export default reactNode('Select', {
 	'v1.0.0': {
@@ -32,7 +32,7 @@ export default reactNode('Select', {
 				'maxDropdownHeight',
 				'dropdownPosition',
 				'size',
-				'resetSelected'
+				'resetSelected',
 			]),
 			...inputGroups.Icon,
 			getPort({
@@ -45,12 +45,12 @@ export default reactNode('Select', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
-			})
+						return p.useScope ? true : false
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['selected', 'newValueSubmited', 'selectedItem', 'newValue', 'reseted'])
+		outputs: getPorts('output', ['selected', 'newValueSubmited', 'selectedItem', 'newValue', 'reseted']),
 	},
 	'v1.1.0': {
 		module: { static: v110 },
@@ -76,7 +76,7 @@ export default reactNode('Select', {
 				'maxDropdownHeight',
 				'dropdownPosition',
 				'size',
-				'resetSelected'
+				'resetSelected',
 			]),
 			...inputGroups.Icon,
 			getPort({
@@ -89,9 +89,9 @@ export default reactNode('Select', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
+						return p.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -101,9 +101,9 @@ export default reactNode('Select', {
 				type: getType('object', 'connection'),
 				customs: {
 					dependsOn(p) {
-						return p.useScope ? false : true;
-					}
-				}
+						return p.useScope ? false : true
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -113,12 +113,12 @@ export default reactNode('Select', {
 				type: 'signal',
 				customs: {
 					dependsOn(p) {
-						return p.useScope ? false : true;
-					}
-				}
-			})
+						return p.useScope ? false : true
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['selected', 'newValueSubmited', 'selectedItem', 'newValue', 'reseted'])
+		outputs: getPorts('output', ['selected', 'newValueSubmited', 'selectedItem', 'newValue', 'reseted']),
 	},
 	'v1.2.0': {
 		hashTag: '#pre-release',
@@ -145,7 +145,7 @@ export default reactNode('Select', {
 				'maxDropdownHeight',
 				'dropdownPosition',
 				'size',
-				'resetSelected'
+				'resetSelected',
 			]),
 			...inputGroups.Icon,
 			getPort({
@@ -158,9 +158,9 @@ export default reactNode('Select', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
+						return p.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -170,9 +170,9 @@ export default reactNode('Select', {
 				type: getType('object', 'connection'),
 				customs: {
 					dependsOn(p) {
-						return p.useScope ? false : true;
-					}
-				}
+						return p.useScope ? false : true
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -182,11 +182,11 @@ export default reactNode('Select', {
 				type: 'signal',
 				customs: {
 					dependsOn(p) {
-						return p.useScope ? false : true;
-					}
-				}
-			})
+						return p.useScope ? false : true
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['selected', 'newValueSubmited', 'selectedItem', 'newValue', 'reseted', 'changed'])
-	}
-});
+		outputs: getPorts('output', ['selected', 'newValueSubmited', 'selectedItem', 'newValue', 'reseted', 'changed']),
+	},
+})

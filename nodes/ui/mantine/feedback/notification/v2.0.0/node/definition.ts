@@ -1,15 +1,15 @@
-import { getPortDef } from '@shared/port-v1.0.0';
-import type { JsNodeDef, BaseJsProps } from '@shared/node-v1.0.0';
+import type { BaseJsProps, JsNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
 
 export type Props = BaseJsProps & {
-	title?: string;
-	message: string;
-	color?: string;
-	autoClose?: boolean;
-	autoCloseTimeout?: number;
-};
+	title?: string
+	message: string
+	color?: string
+	autoClose?: boolean
+	autoCloseTimeout?: number
+}
 
-import Comp from '../component/notification';
+import Comp from '../component/notification'
 
 export default {
 	module: { static: Comp },
@@ -49,4 +49,4 @@ export default {
 		],
 	},
 	disableCustomProps: true,
-} satisfies JsNodeDef;
+} satisfies JsNodeDef

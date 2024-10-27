@@ -1,29 +1,29 @@
 /* Управляющая компонента. Управляет состояние дочерней TableInstance. */
 
-import { createContext, forwardRef, useEffect, useMemo, useRef } from 'react';
-import { proxy, ref, useSnapshot } from 'valtio';
-import { proxyMap } from 'valtio/utils';
-import { nanoid } from 'nanoid';
-import { getCompProps } from '@packages/get-comp-props';
-import type { Props, Store } from './types';
-import { getLibProps } from './src/models/libPropsModel';
-import TableInstance from './src/TableInstance';
+import { getCompProps } from '@packages/get-comp-props'
+import { nanoid } from 'nanoid'
+import { createContext, forwardRef, useEffect, useMemo, useRef } from 'react'
+import { proxy, ref, useSnapshot } from 'valtio'
+import { proxyMap } from 'valtio/utils'
+import TableInstance from './src/TableInstance'
+import { getLibProps } from './src/models/libPropsModel'
+import type { Props, Store } from './types'
 
 // Стили загружаем здесь, чтобы разные TableInstance загржунный css.
-import '@mantine/core/styles/Table.css';
-import 'mantine-datatable/styles.css';
-import { getTableProps } from './src/models/tablePropsModel';
-import { getColumns, setColumns } from './src/models/columnModel';
-import { getRecords, setRecords } from './src/models/recordMoldel';
-import getTemplateCell from './src/funcs/getTemplateCell';
+import '@mantine/core/styles/Table.css'
+import 'mantine-datatable/styles.css'
+import getTemplateCell from './src/funcs/getTemplateCell'
+import { getColumns, setColumns } from './src/models/columnModel'
+import { getRecords, setRecords } from './src/models/recordMoldel'
+import { getTableProps } from './src/models/tablePropsModel'
 
 // Создадим контекст для разделения нескольких таблиц.
-const TableContext = createContext({ tableId: '' });
-export { TableContext };
+const TableContext = createContext({ tableId: '' })
+export { TableContext }
 
 export default forwardRef((props: Props) => {
 	// Даем разработчику извращаться, если он смелый.
-	const p: Props = getCompProps(props);
+	const p: Props = getCompProps(props)
 
 	// useRef - так Valtio разделяет состояние по контекстам.
 	const store = useRef(
@@ -36,7 +36,7 @@ export default forwardRef((props: Props) => {
 			libProps: useMemo(() => getLibProps(p), []),
 			tableProps: useMemo(() => getTableProps(p), []),
 			columns: useMemo(() => getColumns(p.columnsDefinition), []),
-			records: proxyMap(useMemo(() => getRecords(p.noodlNode, p.items || [], getColumns(p.columnsDefinition)), []))
+			records: proxyMap(useMemo(() => getRecords(p.noodlNode, p.items || [], getColumns(p.columnsDefinition)), [])),
 			/* templateCells: proxyMap(async () => {
 				const cellsMap = new Map<string, Map<number, React.ReactNode>>();
 				await Promise.all(
@@ -54,26 +54,26 @@ export default forwardRef((props: Props) => {
 				return cellsMap;
 			}) */
 		})
-	).current;
+	).current
 
 	// Реактивность на изменение настроек.
 	useEffect(() => {
-		store.libProps = getLibProps(p);
-		store.tableProps = getTableProps(p);
-	}, [p]);
+		store.libProps = getLibProps(p)
+		store.tableProps = getTableProps(p)
+	}, [p])
 
 	// Реактивность на изменение схемы колонок.
-	useEffect(() => setColumns(store, p.columnsDefinition), [p.columnsDefinition]);
+	useEffect(() => setColumns(store, p.columnsDefinition), [p.columnsDefinition])
 
 	// Реактивность на изменение схемы колонок.
 	useEffect(() => {
-		if (p.items) setRecords(store, p.items);
-	}, [p.items]);
+		if (p.items) setRecords(store, p.items)
+	}, [p.items])
 
-	console.log('Table run', store.tableId); // Считаем запуски пока разрабатываем
+	console.log('Table run', store.tableId) // Считаем запуски пока разрабатываем
 	return (
 		<TableContext.Provider value={store}>
 			<TableInstance />
 		</TableContext.Provider>
-	);
-});
+	)
+})

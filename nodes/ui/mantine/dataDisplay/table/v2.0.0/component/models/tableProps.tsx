@@ -1,25 +1,21 @@
 /* Модель настроек таблицы. */
 
-import type { DataTableSortStatus } from 'mantine-datatable';
-import type { Props } from '../../node/definition';
-import type { TableRecord } from './record';
-import type { Store } from '../store';
+import type { DataTableSortStatus } from 'mantine-datatable'
+import type { Props } from '../../node/definition'
+import type { Store } from '../store'
+import type { TableRecord } from './record'
 
-export type TableProps = ReturnType<typeof setTableProps>;
+export type TableProps = ReturnType<typeof setTableProps>
 
-// Устанавливает наши специфичные настройки таблицы.
+// Устанавливает наши специфичные настройки таблицы. В итоговых данных не должно быть функций.
 export const setTableProps = (p: Props, s: Store) => {
-	const defaultSortColumnDef = p.columnsDefinition?.find((i) => i.sort?.defaultDirection);
-	const defaultSortColumnIdx = defaultSortColumnDef ? p.columnsDefinition?.indexOf(defaultSortColumnDef) : undefined;
+	const defaultSortColumnDef = p.columnsDefinition?.find((i) => i.sort?.defaultDirection)
 
 	const tableProps = {
 		...R.libs.just.pick(p, [
 			// Base
 			'onRowClick',
-			'clickFilterFunc',
-			'singleSelectionFilterFunc',
 			'useSingleSelectionHierarchy',
-			'paddingLeftFunc',
 		]),
 		rowStyles: {
 			rowBackgroundColor: p.rowBackgroundColor || 'white',
@@ -30,14 +26,13 @@ export const setTableProps = (p: Props, s: Store) => {
 		multiSelection: {
 			enabled: p.multiSelection,
 			useHierarchy: p.useMultiSelectionHierarchy,
-			filterFunc: p.multiSelectionFilterFunc,
+			classes: p.multiSelectionClasses,
 		},
 		expansion: {
 			enabled: p.expansion,
 			allowMultiple: p.allowMultiple,
 			template: p.expansionTemplate,
 			useHierarchy: p.useExpansionHierarchy,
-			filterFunc: p.expansionFilterFunc,
 			animationChildrenCount: p.animationChildrenCount || 25,
 			collapseProps: {
 				transitionDuration: 150,
@@ -49,17 +44,17 @@ export const setTableProps = (p: Props, s: Store) => {
 		sort: {
 			enabled: p.sort,
 			type: p.sortType,
-			defaultState:
-				defaultSortColumnDef?.sort?.defaultDirection && defaultSortColumnIdx !== undefined
-					? ({
-							columnAccessor:
-								defaultSortColumnDef.accessor || defaultSortColumnDef.sort?.sortPath || defaultSortColumnIdx.toString(),
-							direction: defaultSortColumnDef.sort?.defaultDirection,
-					  } satisfies DataTableSortStatus<TableRecord>)
-					: undefined,
+			defaultState: defaultSortColumnDef?.sort?.defaultDirection
+				? ({
+						columnAccessor:
+							defaultSortColumnDef.accessor || defaultSortColumnDef.sort?.sortPath || defaultSortColumnDef.id.toString(),
+						direction: defaultSortColumnDef.sort?.defaultDirection,
+					} satisfies DataTableSortStatus<TableRecord>)
+				: undefined,
 		},
-	};
+	}
 
-	s.tableProps = tableProps;
-	return tableProps; // Только для типизации.
-};
+	s.tableProps = tableProps
+
+	return tableProps // Только для типизации.
+}

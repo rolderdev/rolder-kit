@@ -1,12 +1,12 @@
-import { reactNode } from '@packages/node';
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/flex-v1.0.0';
+import v100 from '@packages/flex-v1.0.0'
 
-const aligns = ['flex-start', 'center', 'flex-end'];
-const justifies = ['flex-start', 'center', 'flex-end', 'space-between'];
-const directions = ['row', 'column', 'row-reverse', 'column-reverse'];
-const wraps = ['wrap', 'nowrap', 'wrap-reverse'];
+const aligns = ['flex-start', 'center', 'flex-end']
+const justifies = ['flex-start', 'center', 'flex-end', 'space-between']
+const directions = ['row', 'column', 'row-reverse', 'column-reverse']
+const wraps = ['wrap', 'nowrap', 'wrap-reverse']
 
 export default reactNode(
 	'Flex',
@@ -23,7 +23,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'md',
 					type: getEnumType(enums.sizes),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -32,7 +32,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'md',
 					type: getEnumType(enums.sizes),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -41,7 +41,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'md',
 					type: getEnumType(enums.sizes),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -50,7 +50,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'flex-start',
 					type: getCustomEnumType(aligns),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -59,7 +59,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'flex-start',
 					type: getCustomEnumType(justifies),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -68,7 +68,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'row',
 					type: getCustomEnumType(directions),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -77,11 +77,11 @@ export default reactNode(
 					group: 'Layout',
 					default: 'wrap',
 					type: getCustomEnumType(wraps),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
-				...getPorts('input', ['customProps', 'w', 'h', 'opacity'])
-			]
-		}
+				...getPorts('input', ['customProps', 'w', 'h', 'opacity']),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

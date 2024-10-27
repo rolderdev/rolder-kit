@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { defaultUnits, enums, getEnumType, getPort, getPorts, getUnitType } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { defaultUnits, enums, getEnumType, getPort, getPorts, getUnitType } from '@packages/port'
 
-import v100 from '@packages/modal-v1.0.0';
+import v100 from '@packages/modal-v1.0.0'
 
 export default reactNode(
 	'Modal',
@@ -16,14 +16,14 @@ export default reactNode(
 					displayName: 'Size',
 					group: 'Dimensions',
 					default: 'sm',
-					type: getEnumType(enums.sizes)
+					type: getEnumType(enums.sizes),
 				}),
 				getPort({
 					plug: 'input',
 					name: 'sizeUnits',
 					displayName: 'Size (units)',
 					group: 'Dimensions',
-					type: getUnitType(defaultUnits, 'rem')
+					type: getUnitType(defaultUnits, 'rem'),
 				}),
 				getPort({
 					plug: 'input',
@@ -31,7 +31,7 @@ export default reactNode(
 					displayName: 'Header',
 					group: 'Params',
 					default: false,
-					type: 'boolean'
+					type: 'boolean',
 				}),
 				getPort({
 					plug: 'input',
@@ -41,9 +41,9 @@ export default reactNode(
 					type: 'string',
 					customs: {
 						dependsOn(p) {
-							return p.modalHeaderEnabled ? true : false;
-						}
-					}
+							return p.modalHeaderEnabled ? true : false
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -54,9 +54,9 @@ export default reactNode(
 					type: 'boolean',
 					customs: {
 						dependsOn(p) {
-							return p.modalHeaderEnabled ? true : false;
-						}
-					}
+							return p.modalHeaderEnabled ? true : false
+						},
+					},
 				}),
 				getPort({ plug: 'input', name: 'modalOpacity', displayName: 'Opacity', group: 'Style', default: 0.6, type: 'number' }),
 				getPort({ plug: 'input', name: 'modalBlur', displayName: 'Blur', group: 'Style', default: 2, type: 'number' }),
@@ -69,9 +69,9 @@ export default reactNode(
 					type: 'number',
 					customs: {
 						dependsOn(p) {
-							return p.modalHeaderEnabled ? true : false;
-						}
-					}
+							return p.modalHeaderEnabled ? true : false
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -79,7 +79,7 @@ export default reactNode(
 					displayName: 'Fullscreen',
 					group: 'Layout',
 					default: false,
-					type: 'boolean'
+					type: 'boolean',
 				}),
 				getPort({ plug: 'input', name: 'trapFocus', displayName: 'Trap focus', group: 'Params', default: true, type: 'boolean' }),
 				getPort({
@@ -88,7 +88,7 @@ export default reactNode(
 					displayName: 'Return focus',
 					group: 'Params',
 					default: true,
-					type: 'boolean'
+					type: 'boolean',
 				}),
 				getPort({
 					plug: 'input',
@@ -96,7 +96,7 @@ export default reactNode(
 					displayName: 'Close on escape',
 					group: 'Params',
 					default: false,
-					type: 'boolean'
+					type: 'boolean',
 				}),
 				getPort({
 					plug: 'input',
@@ -104,11 +104,11 @@ export default reactNode(
 					displayName: 'Close on click outside',
 					group: 'Params',
 					default: false,
-					type: 'boolean'
-				})
+					type: 'boolean',
+				}),
 			],
-			outputs: getPorts('output', ['closed'])
-		}
+			outputs: getPorts('output', ['closed']),
+		},
 	},
 	{ allowChildren: true }
-);
+)

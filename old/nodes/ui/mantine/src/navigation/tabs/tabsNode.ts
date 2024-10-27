@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/tabs-v1.0.0';
+import v100 from '@packages/tabs-v1.0.0'
 
 export default reactNode(
 	'Tabs',
@@ -19,7 +19,7 @@ export default reactNode(
 					group: 'Style',
 					type: getCustomEnumType(['default', 'outline', 'pills']),
 					default: 'default',
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -27,7 +27,7 @@ export default reactNode(
 					displayName: 'Unstyled',
 					group: 'Style',
 					type: 'boolean',
-					default: false
+					default: false,
 				}),
 				getPort({
 					plug: 'input',
@@ -35,7 +35,7 @@ export default reactNode(
 					displayName: 'Position',
 					group: 'Layout',
 					type: getCustomEnumType(['left', 'right', 'center', 'apart']),
-					default: 'left'
+					default: 'left',
 				}),
 				getPort({
 					plug: 'input',
@@ -43,10 +43,10 @@ export default reactNode(
 					displayName: 'Orientation',
 					group: 'Layout',
 					type: getCustomEnumType(['horizontal', 'vertical']),
-					default: 'horizontal'
-				})
-			]
-		}
+					default: 'horizontal',
+				}),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

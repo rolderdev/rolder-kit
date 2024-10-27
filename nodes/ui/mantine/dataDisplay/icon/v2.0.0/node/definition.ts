@@ -1,21 +1,21 @@
-import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import type { ThemeIconVariant } from '@mantine/core';
-import type { Icons } from 'shared';
+import type { ThemeIconVariant } from '@mantine/core'
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, sizes } from '@shared/port-v1.0.0'
+import type { Icons } from 'shared'
 
 export type Props = BaseReactProps & {
-	type: 'icon' | 'themeIcon';
-	name?: keyof Icons;
-	variant: ThemeIconVariant;
-	stroke?: number;
-	iconSize?: number;
-	iconThemeSize?: number;
-	iconColor?: string;
-	themeColor?: string;
-	disabled: boolean;
-};
+	type: 'icon' | 'themeIcon'
+	name?: keyof Icons
+	variant: ThemeIconVariant
+	stroke?: number
+	iconSize?: number
+	iconThemeSize?: number
+	iconColor?: string
+	themeColor?: string
+	disabled: boolean
+}
 
-import Comp from '../component/Icon';
+import Comp from '../component/Icon'
 
 export default {
 	hashTag: '#expreimental',
@@ -78,7 +78,7 @@ export default {
 				group: 'Styles',
 				type: 'objectEval',
 				dependsOn: (p: Props) => p.variant === 'gradient',
-				codeComment: `//(props) => ({ from: 'blue', to: 'cyan', deg: 90 })`,
+				codeComment: `//(props) => { return { from: 'blue', to: 'cyan', deg: 90 } }`,
 			}),
 			getPortDef({
 				name: 'radius',
@@ -108,4 +108,4 @@ export default {
 		],
 	},
 	disableCustomProps: true,
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

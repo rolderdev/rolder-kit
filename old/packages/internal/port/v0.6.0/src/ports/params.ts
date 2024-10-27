@@ -1,5 +1,5 @@
-import type { NodePort } from '../../port';
-import { getType } from '../funcs/getType';
+import type { NodePort } from '../../port'
+import { getType } from '../funcs/getType'
 
 export default [
 	{ name: 'dbClass', displayName: 'DB class', group: 'Query params', type: 'string', customs: { required: 'both' } },
@@ -11,7 +11,7 @@ export default [
 		group: 'Query params',
 		type: 'number',
 		default: 10,
-		customs: { required: 'connection' }
+		customs: { required: 'connection' },
 	},
 	{ name: 'getUsers', displayName: 'Get users', group: 'Query params', type: 'boolean', default: false },
 	{ name: 'aggQuery', displayName: 'Aggregations', group: 'Query params', type: 'array', customs: { isObject: true } },
@@ -27,9 +27,9 @@ export default [
 		default: false,
 		customs: {
 			dependsOn(p) {
-				return p.useScope ? false : true;
-			}
-		}
+				return p.useScope ? false : true
+			},
+		},
 	},
 	{ name: 'debouncedTyping', displayName: 'Debounced', group: 'Params', type: 'boolean', default: false },
 	{
@@ -40,9 +40,9 @@ export default [
 		default: 350,
 		customs: {
 			dependsOn(p) {
-				return p.debouncedTyping ? true : false;
-			}
-		}
+				return p.debouncedTyping ? true : false
+			},
+		},
 	},
 	{ name: 'focusRightSection', displayName: 'Focus right section', group: 'Params', type: 'boolean', default: false },
 	{
@@ -51,7 +51,7 @@ export default [
 		group: 'Params',
 		type: 'string',
 		default: 'label',
-		customs: { required: 'connection' }
+		customs: { required: 'connection' },
 	},
 	{ name: 'searchable', displayName: 'Searchable', group: 'Params', type: 'boolean', default: true },
 	{ name: 'clearable', displayName: 'Clearable', group: 'Params', type: 'boolean', default: true },
@@ -66,9 +66,9 @@ export default [
 		customs: {
 			required: 'both',
 			dependsOn(p) {
-				return p.limitMinDate ? true : false;
-			}
-		}
+				return p.limitMinDate ? true : false
+			},
+		},
 	},
 	{ name: 'description', displayName: 'Description', group: 'Params', type: 'string' },
 	{
@@ -77,11 +77,11 @@ export default [
 		type: 'boolean',
 		displayName: 'Hide controls',
 		default: false,
-		customs: { required: 'both' }
+		customs: { required: 'both' },
 	},
 	{ name: 'min', group: 'Params', type: 'number', displayName: 'Min' },
 	{ name: 'max', group: 'Params', type: 'number', displayName: 'Max' },
 	{ name: 'step', group: 'Params', type: 'number', displayName: 'Step', default: 1, customs: { required: 'connection' } },
 	{ name: 'fileName', group: 'Params', type: 'string', displayName: 'File name', customs: { required: 'connection' } },
-	{ name: 'scheme', displayName: 'Scheme', group: 'Params', type: 'array', customs: { required: 'connection' } }
-] as const satisfies readonly NodePort[];
+	{ name: 'scheme', displayName: 'Scheme', group: 'Params', type: 'array', customs: { required: 'connection' } },
+] as const satisfies readonly NodePort[]

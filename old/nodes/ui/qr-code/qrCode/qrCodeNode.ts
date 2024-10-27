@@ -1,18 +1,18 @@
-import { reactNode } from '@packages/node';
-import { getPorts, getPort, getCustomEnumType, getEnumType } from '@packages/port';
-import { lazy } from 'react';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getEnumType, getPort, getPorts } from '@packages/port'
+import { lazy } from 'react'
 
 const qrLevels = [
 	{ value: 'L', label: 'Lowest' },
 	{ value: 'M', label: 'Medium' },
 	{ value: 'Q', label: 'Quality' },
-	{ value: 'H', label: 'Highest' }
-];
+	{ value: 'H', label: 'Highest' },
+]
 
 export default reactNode('QRCode', {
 	'v1.0.0': {
 		module: {
-			dynamic: lazy(() => import('@packages/qr-code-v1.0.0'))
+			dynamic: lazy(() => import('@packages/qr-code-v1.0.0')),
 		},
 		inputs: [
 			...getPorts('input', ['customProps', 'propsFunction', 'useScope']),
@@ -26,9 +26,9 @@ export default reactNode('QRCode', {
 				customs: {
 					required: 'connection',
 					dependsOn(props) {
-						return props.useScope ? true : false;
-					}
-				}
+						return props.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -36,7 +36,7 @@ export default reactNode('QRCode', {
 				displayName: 'Value',
 				group: 'Data',
 				type: 'string',
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -45,7 +45,7 @@ export default reactNode('QRCode', {
 				group: 'Dimensions',
 				type: 'number',
 				default: 64,
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -54,8 +54,8 @@ export default reactNode('QRCode', {
 				group: 'Params',
 				type: getEnumType(qrLevels),
 				default: 'M',
-				customs: { required: 'connection' }
-			})
-		]
-	}
-});
+				customs: { required: 'connection' },
+			}),
+		],
+	},
+})

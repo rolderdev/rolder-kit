@@ -1,11 +1,11 @@
 {
-  "name": "@packages/get-masked-v0.2.0",
-  "main": "getMasked.ts",
-  "types": "getMasked.ts",
-  "dependencies": {
-    "imask": "7.5.0"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@packages/get-masked-v0.2.0",
+	"main": "getMasked.ts",
+	"types": "getMasked.ts",
+	"dependencies": {
+		"imask": "7.5.0"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }

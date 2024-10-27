@@ -1,15 +1,15 @@
-import { getPortDef } from '@shared/port-v1.0.0';
-import type { JsNodeDef, BaseJsProps } from '@shared/node-v1.0.0';
-import type { Item } from '@shared/types-v0.1.0';
-import type { IFuseOptions } from 'fuse.js';
+import type { BaseJsProps, JsNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
+import type { Item } from '@shared/types-v0.1.0'
+import type { IFuseOptions } from 'fuse.js'
 
 export type Props = BaseJsProps & {
-	fields?: string[];
-	minMatchCharLength?: number;
-	searchString?: string;
-	customOptions?: IFuseOptions<Item>;
-	items?: Item[];
-};
+	fields?: string[]
+	minMatchCharLength?: number
+	searchString?: string
+	customOptions?: IFuseOptions<Item>
+	items?: Item[]
+}
 
 export default {
 	hashTag: '#expreimental',
@@ -21,9 +21,9 @@ export default {
 				displayName: 'Fields',
 				group: 'Params',
 				type: 'array',
-				tooltip: `Fields to search`,
+				tooltip: 'Fields to search',
 				validate(p) {
-					return p.fields?.length ? true : false;
+					return Boolean(p.fields?.length)
 				},
 			}),
 			getPortDef({
@@ -33,7 +33,7 @@ export default {
 				type: 'number',
 				default: 2,
 				validate(p) {
-					return p.minMatchCharLength === 0 ? 'Min length must be 1 or greater.' : true;
+					return p.minMatchCharLength === 0 ? 'Min length must be 1 or greater.' : true
 				},
 			}),
 			getPortDef({
@@ -41,8 +41,8 @@ export default {
 				displayName: 'Custom options',
 				group: 'Params',
 				type: 'objectEval',
-				codeComment: '// (props) => ({ isCaseSensitive: true })',
-				tooltip: `Fuse search options`,
+				codeComment: '// (props) => { return { isCaseSensitive: true } }',
+				tooltip: 'Fuse search options',
 			}),
 			getPortDef({
 				name: 'searchString',
@@ -65,8 +65,8 @@ export default {
 				? [
 						{ type: 'text', value: 'Search fields' },
 						{ type: 'value', value: p.fields },
-				  ]
+					]
 				: [],
 	},
 	disableCustomProps: true,
-} satisfies JsNodeDef;
+} satisfies JsNodeDef

@@ -1,14 +1,14 @@
-import { getKuzzle } from '@packages/get-kuzzle';
+import { getKuzzle } from '@packages/get-kuzzle'
 
 export default {
 	async logout() {
-		const K = await getKuzzle();
+		const K = await getKuzzle()
 		if (!K) {
-			return;
+			return
 		}
 
-		await R.db?.states.auth?.set('signedIn', () => false);
-		if (R.libs.Kuzzle) R.libs.Kuzzle.jwt = undefined;
-		return;
+		await R.db?.states.auth?.set('signedIn', () => false)
+		if (R.libs.Kuzzle) R.libs.Kuzzle.jwt = undefined
+		return
 	},
-};
+}

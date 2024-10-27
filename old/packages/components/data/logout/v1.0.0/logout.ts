@@ -1,13 +1,13 @@
-import { getKuzzle } from '@packages/get-kuzzle';
+import { getKuzzle } from '@packages/get-kuzzle'
 
 export default {
 	async logout() {
-		const K = await getKuzzle();
+		const K = await getKuzzle()
 		if (!K) {
-			return;
+			return
 		}
 
-		K.auth.logout().then(() => window.location.replace(window.location.origin));
-		return;
+		K.auth.logout().then(() => window.location.replace(window.location.origin))
+		return
 	},
-};
+}

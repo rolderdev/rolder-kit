@@ -1,7 +1,7 @@
-import { GroupPosition, SpacingValue } from '@mantine/core'
-import { BaseReactProps } from '@packages/node'
+import type { GroupPosition, SpacingValue } from '@mantine/core'
+import type { BaseReactProps } from '@packages/node'
 
 export type Props = BaseReactProps & {
-    groupPosition: GroupPosition
-    groupSpacing: SpacingValue
+	groupPosition: GroupPosition
+	groupSpacing: SpacingValue
 }

@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPort } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getPort } from '@packages/port'
 
-import v100 from '@packages/pdf-image-v1.0.0';
+import v100 from '@packages/pdf-image-v1.0.0'
 
 export default reactNode('PdfImage', {
 	'v1.0.0': {
@@ -13,8 +13,8 @@ export default reactNode('PdfImage', {
 				displayName: 'Image source',
 				group: 'Data',
 				type: 'string',
-				customs: { required: 'connection' }
-			})
-		]
-	}
-});
+				customs: { required: 'connection' },
+			}),
+		],
+	},
+})

@@ -1,37 +1,32 @@
-import { memo, useContext, useEffect, useState } from 'react';
-import { Box, Center, Loader } from '@mantine/core';
-import { TableContext } from '../TableProvider';
-import getRoodlReactNode from '../funcs/getRoodlReactNode';
-import useNode from '../funcs/useNode';
+import { Box, Center, Loader } from '@mantine/core'
+import { memo, useEffect, useState } from 'react'
+import getRoodlReactNode from '../shared/getRoodlReactNode'
+import useNode from '../shared/useNode'
+import { useStore } from '../store'
 
-export default memo((p: { id: string }) => {
-	const store = useContext(TableContext);
+export default memo((p: { tableId: string; id: string }) => {
+	const s = useStore(p.tableId)
 
-	const [expansionRow, setExpansionRow] = useState<React.ReactNode | undefined>(undefined);
+	const [expansionRow, setExpansionRow] = useState<React.ReactNode | undefined>(undefined)
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		const nodeSnap = useNode(store, p.id, 'snap');
+		const nodeSnap = useNode(s, p.id, 'snap')
 		if (nodeSnap)
-			getRoodlReactNode(store, p.id, store.tableProps.expansion.template, {
+			getRoodlReactNode(s, p.id, s.tableProps.expansion.template, {
 				itemId: p.id,
-				level: store.hierarchy.level,
+				level: s.hierarchy?.level || 0,
 				nodePath: nodeSnap.path,
-			}).then(
-				(reactNode) => setTimeout(() => setExpansionRow(reactNode), 200) /* {
-				if (nodeSnap.childIds.length >= store.tableProps.expansion.animationChildrenCount)
-					setTimeout(() => setExpansionRow(reactNode), 200);
-				else setExpansionRow(reactNode);
-			} */
-			);
-	}, []);
+			}).then((reactNode) => setTimeout(() => setExpansionRow(reactNode), 200))
+	}, [])
 
 	const LoaderAnimation = () => (
 		<Center>
-			<Loader size={store.libProps.loaderSize} color={store.libProps.loaderColor} type={store.libProps.loaderType} />
+			<Loader size={s.libProps.loaderSize} color={s.libProps.loaderColor} type={s.libProps.loaderType} />
 		</Center>
-	);
+	)
 
 	//console.log('ExpansionRow render', expansionRow); // Считаем рендеры пока разрабатываем
 	// Уберем изменение цвета при наведении.
-	return <Box style={{ background: 'white' }}>{expansionRow || <LoaderAnimation />}</Box>;
-});
+	return <Box style={{ background: 'white' }}>{expansionRow || <LoaderAnimation />}</Box>
+})

@@ -1,4 +1,4 @@
-import { getPortDef } from '@shared/port-v1.0.0';
+import { getPortDef } from '@shared/port-v1.0.0'
 
 export const getCustomPropsPortDef = () => {
 	return {
@@ -14,5 +14,5 @@ export const getCustomPropsPortDef = () => {
 }*/`,
 		}),
 		index: 1000,
-	};
-};
+	}
+}

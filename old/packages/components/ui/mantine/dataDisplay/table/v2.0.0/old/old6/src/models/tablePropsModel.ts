@@ -1,10 +1,10 @@
 /* Модель настроек таблицы. */
 
-import { z } from 'zod';
-import isEqual from 'lodash.isequal';
-import type { Props } from '../../types';
-import type { Store } from '../store';
-import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs';
+import isEqual from 'lodash.isequal'
+import { z } from 'zod'
+import type { Props } from '../../types'
+import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs'
+import type { Store } from '../store'
 
 // Схема задает типы данных и их дефолты.
 const tablePropsSchema = z.object({
@@ -61,9 +61,9 @@ const tablePropsSchema = z.object({
 		enabled: z.boolean().default(false),
 		type: z.enum(['frontend', 'backend']).optional(),
 	}),
-});
+})
 
-export type TableProps = z.infer<typeof tablePropsSchema>;
+export type TableProps = z.infer<typeof tablePropsSchema>
 
 // Функция проверяет прилетевшие знаяения с портов и восстаналвивает дефолты, если значение не прилетело.
 export const getTableProps = (p: Props) =>
@@ -85,10 +85,10 @@ export const getTableProps = (p: Props) =>
 		},
 		multiSelection: p.multiSelection,
 		sort: { enabled: p.sort, type: p.sortType },
-	} as TableProps);
+	} as TableProps)
 
 // Метод обновляет состояние настроек.
 export const setTableProps = (store: Store, p: Props) => {
-	const newProps = getTableProps(p);
-	if (!isEqual(stringifyObjectFuncs(store.tableProps.get()), stringifyObjectFuncs(newProps))) store.tableProps.assign(newProps);
-};
+	const newProps = getTableProps(p)
+	if (!isEqual(stringifyObjectFuncs(store.tableProps.get()), stringifyObjectFuncs(newProps))) store.tableProps.assign(newProps)
+}

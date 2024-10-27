@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { defaultUnits, enums, getCustomEnumType, getEnumType, getPort, getPorts, getUnitType } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { defaultUnits, enums, getCustomEnumType, getEnumType, getPort, getPorts, getUnitType } from '@packages/port'
 
-import v100 from '@packages/app-shell-v1.0.0';
+import v100 from '@packages/app-shell-v1.0.0'
 
 export default reactNode(
 	'AppShell',
@@ -16,7 +16,7 @@ export default reactNode(
 					displayName: 'Layout',
 					group: 'Layout',
 					type: getCustomEnumType(['default', 'alt'], false, 'editor'),
-					default: 'default'
+					default: 'default',
 				}),
 				getPort({
 					plug: 'input',
@@ -24,7 +24,7 @@ export default reactNode(
 					displayName: 'Hidden',
 					group: 'Layout',
 					type: 'boolean',
-					default: false
+					default: false,
 				}),
 				getPort({
 					plug: 'input',
@@ -35,19 +35,19 @@ export default reactNode(
 					default: 'md',
 					customs: {
 						dependsOn(p) {
-							return p.appShellCustomPadding ? false : true;
-						}
-					}
+							return p.appShellCustomPadding ? false : true
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
 					name: 'appShellCustomPadding',
 					displayName: 'Custom padding',
 					group: 'Dimensions',
-					type: getUnitType(defaultUnits, 'rem')
-				})
-			]
-		}
+					type: getUnitType(defaultUnits, 'rem'),
+				}),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

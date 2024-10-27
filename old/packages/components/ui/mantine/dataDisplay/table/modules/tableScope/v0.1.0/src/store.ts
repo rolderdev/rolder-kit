@@ -1,17 +1,17 @@
-import { store, createStoreContext } from '@davstack/store';
-import type { HierarchyNode } from 'd3-hierarchy';
-import type { DataTableSortStatus } from 'mantine-datatable';
-import type { NoodlNode } from '@packages/node';
-import type { Item } from 'types';
-import setHierarchy from './setHierarchy';
-import setMultiSelection from './setMultiSelection';
-import { sendOutput } from '@packages/port-send';
+import { createStoreContext, store } from '@davstack/store'
+import type { NoodlNode } from '@packages/node'
+import { sendOutput } from '@packages/port-send'
+import type { HierarchyNode } from 'd3-hierarchy'
+import type { DataTableSortStatus } from 'mantine-datatable'
+import type { Item } from 'types'
+import setHierarchy from './setHierarchy'
+import setMultiSelection from './setMultiSelection'
 
-export type Selection = 'selected' | 'notSelected' | 'indeterminate';
-type ItemState = { id: string; fid?: string; dbClass: string; item: Item };
-type Hierarchy = HierarchyNode<ItemState>;
-type SelectionState = Record<string, Selection>; // {[itemId]: SelectionState}
-export type MultiSelectionFilterFunc = (item: Item) => boolean;
+export type Selection = 'selected' | 'notSelected' | 'indeterminate'
+type ItemState = { id: string; fid?: string; dbClass: string; item: Item }
+type Hierarchy = HierarchyNode<ItemState>
+type SelectionState = Record<string, Selection> // {[itemId]: SelectionState}
+export type MultiSelectionFilterFunc = (item: Item) => boolean
 
 const tableScopeStore = store({
 	noodlNode: {} as NoodlNode,
@@ -42,18 +42,18 @@ const tableScopeStore = store({
 						.get()
 						?.descendants()
 						.filter((i) => i.data.dbClass === dbClass && selectionState[i.data.id] === 'selected')
-						.map((i) => i.data.item);
-					sendOutput(s.noodlNode.get(), dbClass, selectedItems || []);
+						.map((i) => i.data.item)
+					sendOutput(s.noodlNode.get(), dbClass, selectedItems || [])
 				}
 			}),
-	}));
+	}))
 
-export type TabelScopeStore = typeof tableScopeStore;
-export const { useStore, Provider } = createStoreContext(tableScopeStore);
+export type TabelScopeStore = typeof tableScopeStore
+export const { useStore, Provider } = createStoreContext(tableScopeStore)
 export const useTableScopeStore = () => {
 	try {
-		return useStore();
+		return useStore()
 	} catch (e) {
-		return undefined;
+		return undefined
 	}
-};
+}

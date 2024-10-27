@@ -1,34 +1,34 @@
-import { set } from 'shared/src/libs/just';
 //@ts-ignore
-import { defineNode } from '@noodl/noodl-sdk';
+import { defineNode } from '@noodl/noodl-sdk'
+import { set } from 'shared/src/libs/just'
 
-import mantine from './src/mantine';
 // buttons
-import { button, buttonLeftSection, buttonRightSection } from './buttons/button';
-import unstyledButton from './buttons/unstyledButton';
+import { button, buttonLeftSection, buttonRightSection } from './buttons/button'
+import unstyledButton from './buttons/unstyledButton'
 // dataDispaly
-import icon from './dataDisplay/icon';
-import { table, tableFilter } from './dataDisplay/table';
+import icon from './dataDisplay/icon'
+import { table, tableFilter } from './dataDisplay/table'
 // feedback
-import notification from './feedback/notification';
+import notification from './feedback/notification'
+import { checkbox, checkboxCard, checkboxGroup, checkboxIndicator } from './inputs/checkbox'
 // inputs
-import numberInput from './inputs/numberInput';
-import { checkbox, checkboxGroup, checkboxCard, checkboxIndicator } from './inputs/checkbox';
-import { radio, radioGroup, radioCard, radioIndicator } from './inputs/radio';
+import numberInput from './inputs/numberInput'
+import { radio, radioCard, radioGroup, radioIndicator } from './inputs/radio'
+import scrollArea from './layout/scrollArea'
 // layout
-import stack from './layout/stack';
-import scrollArea from './layout/scrollArea';
+import stack from './layout/stack'
 // miscellaneous
-import richText from './miscellaneous/richText';
-import transition from './miscellaneous/transition';
+import richText from './miscellaneous/richText'
+import transition from './miscellaneous/transition'
 // navigation
-import anchor from './navigation/anchor';
+import anchor from './navigation/anchor'
+import { popover, popoverDropdown, popoverTarget } from './overlays/popover'
 // overlays
-import tooltip from './overlays/tooltip';
-import { popover, popoverDropdown, popoverTarget } from './overlays/popover';
+import tooltip from './overlays/tooltip'
+import mantine from './src/mantine'
 // typography
-import text from './typography/text';
-import title from './typography/title';
+import text from './typography/text'
+import title from './typography/title'
 
 const reactPackages = [
 	mantine,
@@ -66,8 +66,8 @@ const reactPackages = [
 	// typography
 	text,
 	title,
-];
-const jsPackages = [notification, tableFilter];
+]
+const jsPackages = [notification, tableFilter]
 
 set(
 	window,
@@ -186,6 +186,6 @@ set(
 			],
 		},
 	]
-);
+)
 
-Noodl.defineModule({ name: 'mantine', reactNodes: reactPackages, nodes: jsPackages.map(defineNode) });
+Noodl.defineModule({ name: 'mantine', reactNodes: reactPackages, nodes: jsPackages.map(defineNode) })

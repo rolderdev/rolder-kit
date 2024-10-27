@@ -1,10 +1,10 @@
-import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import type { RadioVariant } from '@mantine/core';
+import type { RadioVariant } from '@mantine/core'
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, sizes } from '@shared/port-v1.0.0'
 
-export type Props = BaseReactProps & { inGroup: boolean; checkedProp: boolean; variant: RadioVariant; checkIcon: boolean };
+export type Props = BaseReactProps & { inGroup: boolean; checkedProp: boolean; variant: RadioVariant; checkIcon: boolean }
 
-import Comp from '../component/Radio';
+import Comp from '../component/Radio'
 
 export default {
 	hashTag: '#expreimental',
@@ -86,4 +86,4 @@ export default {
 			}),
 		],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

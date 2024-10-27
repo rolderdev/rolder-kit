@@ -1,9 +1,9 @@
-import { reactNode } from '@packages/node';
-import { getPorts, getPort, getCustomEnumType, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-const variants = ['light', 'filled', 'outline', 'dot', 'gradient'];
+const variants = ['light', 'filled', 'outline', 'dot', 'gradient']
 
-import v100 from '@packages/badge-v1.0.0';
+import v100 from '@packages/badge-v1.0.0'
 
 export default reactNode('Badge', {
 	'v1.0.0': {
@@ -21,9 +21,9 @@ export default reactNode('Badge', {
 				customs: {
 					required: 'both',
 					dependsOn(props) {
-						return props.useScope ? true : false;
-					}
-				}
+						return props.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -32,7 +32,7 @@ export default reactNode('Badge', {
 				group: 'Style',
 				type: getCustomEnumType(variants),
 				default: 'light',
-				customs: { required: 'both' }
+				customs: { required: 'both' },
 			}),
 			getPort({
 				plug: 'input',
@@ -43,10 +43,10 @@ export default reactNode('Badge', {
 				customs: {
 					required: 'both',
 					dependsOn(props) {
-						return props.badgeVariant === 'gradient';
-					}
-				}
-			})
-		]
-	}
-});
+						return props.badgeVariant === 'gradient'
+					},
+				},
+			}),
+		],
+	},
+})

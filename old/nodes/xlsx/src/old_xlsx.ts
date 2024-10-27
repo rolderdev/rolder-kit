@@ -1,12 +1,12 @@
-import { jsNode } from '@packages/node';
-import { getPort, getPorts } from '@packages/port';
+import { jsNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
 const createXlsxNode = jsNode(
 	'createXlsx',
 	{
 		'v1.0.0': {
 			module: {
-				dynamic: import('@packages/create-xlsx-v1.0.0')
+				dynamic: import('@packages/create-xlsx-v1.0.0'),
 			},
 			inputs: [
 				...getPorts('input', ['items', 'fileName']),
@@ -30,7 +30,7 @@ const createXlsxNode = jsNode(
 							header: 'Юр. лицо',
 							size: 80
 						}
-					]*/`
+					]*/`,
 				}),
 				getPort({
 					plug: 'input',
@@ -38,14 +38,14 @@ const createXlsxNode = jsNode(
 					displayName: 'Compression',
 					group: 'Params',
 					type: 'boolean',
-					default: true
-				})
+					default: true,
+				}),
 			],
-			outputs: getPorts('output', ['creating', 'created'])
+			outputs: getPorts('output', ['creating', 'created']),
 		},
 		'v1.1.0': {
 			module: {
-				dynamic: import('@packages/create-xlsx-v1.1.0')
+				dynamic: import('@packages/create-xlsx-v1.1.0'),
 			},
 			inputs: [
 				...getPorts('input', ['items', 'fileName']),
@@ -69,7 +69,7 @@ const createXlsxNode = jsNode(
 							header: 'Юр. лицо',
 							size: 80
 						}
-					]*/`
+					]*/`,
 				}),
 				getPort({
 					plug: 'input',
@@ -77,19 +77,19 @@ const createXlsxNode = jsNode(
 					displayName: 'Compression',
 					group: 'Params',
 					type: 'boolean',
-					default: true
-				})
+					default: true,
+				}),
 			],
-			outputs: getPorts('output', ['creating', 'created'])
-		}
+			outputs: getPorts('output', ['creating', 'created']),
+		},
 	},
 	{ color: 'purple' }
-);
+)
 
 //===================================================================
 //@ts-ignore
-import { defineNode } from '@noodl/noodl-sdk';
+import { defineNode } from '@noodl/noodl-sdk'
 
-const nodes = [createXlsxNode];
+const nodes = [createXlsxNode]
 
-Noodl.defineModule({ nodes: nodes.map((i) => defineNode(i)) });
+Noodl.defineModule({ nodes: nodes.map((i) => defineNode(i)) })

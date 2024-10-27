@@ -1,4 +1,4 @@
 {
 	"extends": "@shared/types-v0.1.0",
-	"include": ["**/*"]
+	"include": ["**/*", "../../types/**/*"]
 }

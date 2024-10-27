@@ -1,47 +1,47 @@
 import {
 	Box,
-	createTheme,
 	DEFAULT_THEME,
-	getThemeColor,
+	type MantineColor,
 	MantineProvider,
 	Transition,
+	createTheme,
+	getThemeColor,
 	useMantineTheme,
-	type MantineColor,
-} from '@mantine/core';
-import { DatesProvider } from '@mantine/dates';
-import { Notifications } from '@mantine/notifications';
-import { forwardRef, useEffect, useState } from 'react';
-import type { Props } from '../node/definition';
-import colorSchemeManager from './colorSchemeManager';
+} from '@mantine/core'
+import { DatesProvider } from '@mantine/dates'
+import { Notifications } from '@mantine/notifications'
+import { forwardRef, useEffect, useState } from 'react'
+import type { Props } from '../node/definition'
+import colorSchemeManager from './colorSchemeManager'
 
-import '@mantine/core/styles.css';
-import '@mantine/dates/styles.css';
-import '@mantine/notifications/styles.css';
-import './body.module.css';
-import './fonts.module.css';
+import '@mantine/core/styles.css'
+import '@mantine/dates/styles.css'
+import '@mantine/notifications/styles.css'
+import './body.module.css'
+import './fonts.module.css'
 
-export default forwardRef(function (p: Props) {
-	const { notificationsPosition, defaultColorScheme, mantineTheme } = p;
+const Scripts = () => {
+	// Для возможности вычислять цвет в Roodl.
+	const theme = useMantineTheme()
+	R.libs.mantine.getThemeColor = (color: MantineColor) => getThemeColor(color, theme)
+	return null
+}
 
-	const [mounted, setMounted] = useState(false);
-	useEffect(() => setMounted(true), []);
+export default forwardRef((p: Props) => {
+	const { notificationsPosition, defaultColorScheme, mantineTheme } = p
+
+	const [mounted, setMounted] = useState(false)
+	useEffect(() => setMounted(true), [])
 
 	useEffect(() => {
-		R.db?.states.params.set('colorScheme', () => defaultColorScheme);
-	}, [defaultColorScheme]);
+		R.db?.states.params.set('colorScheme', () => defaultColorScheme)
+	}, [defaultColorScheme])
 
 	const theme = createTheme({
 		...mantineTheme,
 		fontFamily: `IBM Plex Sans, ${DEFAULT_THEME.fontFamily}`,
 		headings: { fontFamily: `IBM Plex Sans, ${DEFAULT_THEME.fontFamily}` },
-	});
-
-	const Scripts = () => {
-		// Для возможности вычислять цвет в Roodl.
-		const theme = useMantineTheme();
-		R.libs.mantine.getThemeColor = (color: MantineColor) => getThemeColor(color, theme);
-		return null;
-	};
+	})
 
 	return (
 		<>
@@ -59,5 +59,5 @@ export default forwardRef(function (p: Props) {
 				</DatesProvider>
 			</MantineProvider>
 		</>
-	);
-});
+	)
+})

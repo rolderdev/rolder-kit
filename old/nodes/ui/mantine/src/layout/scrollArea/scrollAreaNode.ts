@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/scroll-area-v1.0.0';
+import v100 from '@packages/scroll-area-v1.0.0'
 
 export default reactNode(
 	'ScrollArea',
@@ -17,7 +17,7 @@ export default reactNode(
 					group: 'Layout',
 					type: 'number',
 					default: 0,
-					customs: { required: 'connection' }
+					customs: { required: 'connection' },
 				}),
 				getPort({
 					plug: 'input',
@@ -25,7 +25,7 @@ export default reactNode(
 					displayName: 'Offset scrollbars',
 					group: 'Layout',
 					type: 'boolean',
-					default: false
+					default: false,
 				}),
 				getPort({
 					plug: 'input',
@@ -34,7 +34,7 @@ export default reactNode(
 					group: 'Params',
 					type: 'number',
 					default: 1,
-					customs: { required: 'connection' }
+					customs: { required: 'connection' },
 				}),
 				getPort({
 					plug: 'input',
@@ -43,11 +43,11 @@ export default reactNode(
 					group: 'Params',
 					default: 'smooth',
 					type: getCustomEnumType(['smooth', 'instant', 'auto']),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
-				getPort({ plug: 'input', name: 'scroll', displayName: 'Scroll', group: 'Signals', type: 'signal' })
-			]
-		}
+				getPort({ plug: 'input', name: 'scroll', displayName: 'Scroll', group: 'Signals', type: 'signal' }),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

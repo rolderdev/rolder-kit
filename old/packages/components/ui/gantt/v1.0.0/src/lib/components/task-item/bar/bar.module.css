@@ -1,21 +1,21 @@
 .barWrapper {
-  cursor: pointer;
-  outline: none;
+	cursor: pointer;
+	outline: none;
 }
 
 .barWrapper:hover .barHandle {
-  visibility: visible;
-  opacity: 1;
+	visibility: visible;
+	opacity: 1;
 }
 
 .barHandle {
-  fill: #ddd;
-  cursor: ew-resize;
-  opacity: 0;
-  visibility: hidden;
+	fill: #ddd;
+	cursor: ew-resize;
+	opacity: 0;
+	visibility: hidden;
 }
 
 .barBackground {
-  user-select: none;
-  stroke-width: 0;
+	user-select: none;
+	stroke-width: 0;
 }

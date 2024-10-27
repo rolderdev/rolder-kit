@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/multi-select-v1.0.0';
+import v100 from '@packages/multi-select-v1.0.0'
 
 export default reactNode('MultiSelect', {
 	'v1.0.0': {
@@ -27,7 +27,7 @@ export default reactNode('MultiSelect', {
 				'creatable',
 				'maxDropdownHeight',
 				'dropdownPosition',
-				'defaultItems'
+				'defaultItems',
 			]),
 			...inputGroups.Icon,
 			getPort({
@@ -40,11 +40,11 @@ export default reactNode('MultiSelect', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
-			})
+						return p.useScope ? true : false
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['selected', 'newValueSubmited', 'selectedItems', 'newValue', 'reseted', 'closed'])
-	}
-});
+		outputs: getPorts('output', ['selected', 'newValueSubmited', 'selectedItems', 'newValue', 'reseted', 'closed']),
+	},
+})

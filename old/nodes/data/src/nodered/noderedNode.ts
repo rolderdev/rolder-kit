@@ -1,5 +1,5 @@
-import { jsNode } from '@packages/node';
-import { getCustomEnumType, getPort } from '@packages/port';
+import { jsNode } from '@packages/node'
+import { getCustomEnumType, getPort } from '@packages/port'
 
 export default jsNode(
 	'nodered',
@@ -138,9 +138,10 @@ export default jsNode(
 				getPort({ plug: 'output', name: 'result', displayName: 'Result', group: 'Data', type: '*' }),
 			],
 		},
-		'v1.2.0': { // Vezdexod
+		'v1.2.0': {
+			// Vezdexod
 			module: {
-				dynamic: import('@packages/nodered-v1.2.0')
+				dynamic: import('@packages/nodered-v1.2.0'),
 			},
 			inputs: [
 				getPort({ plug: 'input', name: 'execute', displayName: 'Execute', group: 'Signals', type: 'signal' }),
@@ -154,25 +155,27 @@ export default jsNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.useServices ? false : true;
-						}
-					}
+							return p.useServices ? false : true
+						},
+					},
 				}),
-				getPort({ 							// Vezdexod
+				getPort({
+					// Vezdexod
 					plug: 'input',
 					name: 'timeout',
 					displayName: 'timeout',
 					group: 'Params',
 					type: 'number',
-					default: 10000
+					default: 10000,
 				}),
-				getPort({ 							// Vezdexod
+				getPort({
+					// Vezdexod
 					plug: 'input',
 					name: 'useServices',
 					displayName: 'Use Services',
 					group: 'Services',
 					type: 'boolean',
-					default: false
+					default: false,
 				}),
 				getPort({
 					plug: 'input',
@@ -184,9 +187,9 @@ export default jsNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.useServices ? true : false;
-						}
-					}
+							return p.useServices ? true : false
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -198,21 +201,29 @@ export default jsNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.useServices ? true : false;
-						}
-					}
+							return p.useServices ? true : false
+						},
+					},
 				}),
-				getPort({ plug: 'input', name: 'flowData', displayName: 'Flow data', group: 'Data', type: '*' })
+				getPort({ plug: 'input', name: 'flowData', displayName: 'Flow data', group: 'Data', type: '*' }),
 			],
 			outputs: [
-				getPort({ plug: 'output', name: 'executing', displayName: 'Executing', group: 'States', type: 'boolean', default: false }),
+				getPort({
+					plug: 'output',
+					name: 'executing',
+					displayName: 'Executing',
+					group: 'States',
+					type: 'boolean',
+					default: false,
+				}),
 				getPort({ plug: 'output', name: 'executed', displayName: 'Executed', group: 'Signals', type: 'signal' }),
-				getPort({ plug: 'output', name: 'result', displayName: 'Result', group: 'Data', type: '*' })
-			]
+				getPort({ plug: 'output', name: 'result', displayName: 'Result', group: 'Data', type: '*' }),
+			],
 		},
-		'v1.3.0': { // Vezdexod
+		'v1.3.0': {
+			// Vezdexod
 			module: {
-				dynamic: import('@packages/nodered-v1.3.0')
+				dynamic: import('@packages/nodered-v1.3.0'),
 			},
 			inputs: [
 				getPort({ plug: 'input', name: 'execute', displayName: 'Execute', group: 'Signals', type: 'signal' }),
@@ -226,25 +237,27 @@ export default jsNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.useServices ? false : true;
-						}
-					}
+							return p.useServices ? false : true
+						},
+					},
 				}),
-				getPort({ 							// Vezdexod
+				getPort({
+					// Vezdexod
 					plug: 'input',
 					name: 'timeout',
 					displayName: 'timeout',
 					group: 'Params',
 					type: 'number',
-					default: 10000
+					default: 10000,
 				}),
-				getPort({ 							// Vezdexod
+				getPort({
+					// Vezdexod
 					plug: 'input',
 					name: 'useServices',
 					displayName: 'Use Services',
 					group: 'Services',
 					type: 'boolean',
-					default: false
+					default: false,
 				}),
 				getPort({
 					plug: 'input',
@@ -256,9 +269,9 @@ export default jsNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.useServices ? true : false;
-						}
-					}
+							return p.useServices ? true : false
+						},
+					},
 				}),
 				getPort({
 					plug: 'input',
@@ -270,18 +283,25 @@ export default jsNode(
 					customs: {
 						required: 'connection',
 						dependsOn(p) {
-							return p.useServices ? true : false;
-						}
-					}
+							return p.useServices ? true : false
+						},
+					},
 				}),
-				getPort({ plug: 'input', name: 'flowData', displayName: 'Flow data', group: 'Data', type: '*' })
+				getPort({ plug: 'input', name: 'flowData', displayName: 'Flow data', group: 'Data', type: '*' }),
 			],
 			outputs: [
-				getPort({ plug: 'output', name: 'executing', displayName: 'Executing', group: 'States', type: 'boolean', default: false }),
+				getPort({
+					plug: 'output',
+					name: 'executing',
+					displayName: 'Executing',
+					group: 'States',
+					type: 'boolean',
+					default: false,
+				}),
 				getPort({ plug: 'output', name: 'executed', displayName: 'Executed', group: 'Signals', type: 'signal' }),
-				getPort({ plug: 'output', name: 'result', displayName: 'Result', group: 'Data', type: '*' })
-			]
-		}
+				getPort({ plug: 'output', name: 'result', displayName: 'Result', group: 'Data', type: '*' }),
+			],
+		},
 	},
 	{ color: 'purple' }
-);
+)

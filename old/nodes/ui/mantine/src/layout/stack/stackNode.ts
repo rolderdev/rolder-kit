@@ -1,10 +1,10 @@
-import { reactNode } from '@packages/node';
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-const aligns = ['stretch', 'center', 'flex-start', 'flex-end'];
-const justifies = ['center', 'flex-start', 'flex-end', 'space-between', 'space-around'];
+const aligns = ['stretch', 'center', 'flex-start', 'flex-end']
+const justifies = ['center', 'flex-start', 'flex-end', 'space-between', 'space-around']
 
-import v100 from '@packages/stack-v1.0.0';
+import v100 from '@packages/stack-v1.0.0'
 
 export default reactNode(
 	'Stack',
@@ -46,4 +46,4 @@ export default reactNode(
 		},
 	},
 	{ allowChildren: true }
-);
+)

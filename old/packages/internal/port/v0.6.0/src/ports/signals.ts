@@ -1,4 +1,4 @@
-import type { NodePort } from '../../port';
+import type { NodePort } from '../../port'
 
 export default [
 	{ name: 'fetch', displayName: 'Fetch', group: 'Signals', type: 'signal' },
@@ -23,5 +23,5 @@ export default [
 	{ name: 'clicked', displayName: 'Clicked', group: 'Signals', type: 'signal' },
 	{ name: 'increment', displayName: 'Increment', group: 'Signals', type: 'signal' },
 	{ name: 'decrement', displayName: 'Decrement', group: 'Signals', type: 'signal' },
-	{ name: 'doubleClicked', displayName: 'Double clicked', group: 'Signals', type: 'signal' }
-] as const satisfies readonly NodePort[];
+	{ name: 'doubleClicked', displayName: 'Double clicked', group: 'Signals', type: 'signal' },
+] as const satisfies readonly NodePort[]

@@ -1,9 +1,9 @@
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import { getPortDef } from '@shared/port-v1.0.0';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
 
-export type Props = BaseReactProps & { automount: boolean };
+export type Props = BaseReactProps & { automount: boolean }
 
-import Comp from '../component/Transition';
+import Comp from '../component/Transition'
 
 export default {
 	module: { static: Comp },
@@ -52,4 +52,4 @@ export default {
 			getPortDef({ name: 'transitionExited', displayName: 'Transition exited', group: 'Signals', type: 'signal' }),
 		],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

@@ -1,6 +1,6 @@
-import { createStyles } from '@mantine/core';
-import type { TableProps } from '../../types';
-import convertColor from '@packages/convert-color';
+import { createStyles } from '@mantine/core'
+import convertColor from '@packages/convert-color'
+import type { TableProps } from '../../types'
 
 export default createStyles(
 	(
@@ -13,25 +13,25 @@ export default createStyles(
 			rowBgColor,
 			onHoverBgColor,
 			singleSelectedRowBgColor,
-			mutliSelectedRowBgColor
+			mutliSelectedRowBgColor,
 		}: TableProps['rowStyles']
 	) => ({
 		row: {
 			'&&': {
 				backgroundColor: striped ? undefined : convertColor(rowBgColor),
 				'&& td': { borderTop: rowBorders ? undefined : 'unset' },
-				'&&': { '&&:hover': { backgroundColor: convertColor(onHoverBgColor) } }
-			}
+				'&&': { '&&:hover': { backgroundColor: convertColor(onHoverBgColor) } },
+			},
 		},
 		striped: {
 			'&&': {
 				'&&:nth-of-type(odd)': { backgroundColor: convertColor(oddBgColor) },
-				'&:nth-of-type(even)': { backgroundColor: convertColor(evenBgColor) }
-			}
+				'&:nth-of-type(even)': { backgroundColor: convertColor(evenBgColor) },
+			},
 		},
 		multiSelected: { '&&': { '&&': { '&&': { backgroundColor: convertColor(mutliSelectedRowBgColor) } } } },
 		singleSelected: { '&&': { '&&': { '&&': { backgroundColor: convertColor(singleSelectedRowBgColor) } } } },
 		expandIcon: { transition: 'transform 0.2s ease' },
-		expandIconRotated: { transform: 'rotate(90deg)' }
+		expandIconRotated: { transform: 'rotate(90deg)' },
 	})
-);
+)

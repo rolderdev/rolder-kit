@@ -1,12 +1,12 @@
-import '@shared/types-v0.1.0';
-import { set } from 'shared/src/libs/just';
-import { reactNode } from '@shared/node-v1.0.0';
+import '@shared/types-v0.1.0'
+import { reactNode } from '@shared/node-v1.0.0'
+import { set } from 'shared/src/libs/just'
 
-import systemLoaderAnimation from '@shared/system-loader-animation-v0.2.0';
-import '@shared/system-loader-animation-v0.2.0/loader.css';
-systemLoaderAnimation.start();
+import systemLoaderAnimation from '@shared/system-loader-animation-v0.2.0'
+import '@shared/system-loader-animation-v0.2.0/loader.css'
+systemLoaderAnimation.start()
 
-import v200 from '@nodes/app-v2.0.0';
+import v200 from '@nodes/app-v2.0.0'
 
 const app = reactNode(
 	'App',
@@ -14,7 +14,7 @@ const app = reactNode(
 		'v2.0.0': v200,
 	},
 	{ allowChildren: true, docs: '' }
-);
+)
 
 set(
 	window,
@@ -31,7 +31,7 @@ set(
 			],
 		},
 	]
-);
+)
 
 Noodl.defineModule({
 	name: 'app',
@@ -71,4 +71,4 @@ Noodl.defineModule({
 			group: 'Rolder',
 		},
 	],
-});
+})

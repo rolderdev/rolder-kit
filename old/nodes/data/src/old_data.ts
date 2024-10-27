@@ -1,6 +1,6 @@
-import { reactNode } from '@packages/node';
-import { getPort } from '@packages/port';
-import { lazy } from 'react';
+import { reactNode } from '@packages/node'
+import { getPort } from '@packages/port'
+import { lazy } from 'react'
 
 const dataNode = reactNode(
 	'Data',
@@ -50,7 +50,7 @@ const dataNode = reactNode(
 					customs: {
 						required: 'both',
 						dependsOn(p) {
-							return p.backendDevMode ? true : false;
+							return p.backendDevMode ? true : false
 						},
 					},
 				}),
@@ -64,7 +64,7 @@ const dataNode = reactNode(
 					customs: {
 						required: 'both',
 						dependsOn(p) {
-							return p.backendDevMode ? true : false;
+							return p.backendDevMode ? true : false
 						},
 					},
 				}),
@@ -87,7 +87,7 @@ const dataNode = reactNode(
 					customs: {
 						required: 'both',
 						dependsOn(p) {
-							return p.detectOffline;
+							return p.detectOffline
 						},
 					},
 				}),
@@ -101,7 +101,7 @@ const dataNode = reactNode(
 					customs: {
 						required: 'both',
 						dependsOn(p) {
-							return p.detectOffline;
+							return p.detectOffline
 						},
 					},
 				}),
@@ -115,7 +115,7 @@ const dataNode = reactNode(
 					customs: {
 						required: 'both',
 						dependsOn(p) {
-							return p.detectOffline;
+							return p.detectOffline
 						},
 					},
 				}),
@@ -129,7 +129,7 @@ const dataNode = reactNode(
 					customs: {
 						required: 'both',
 						dependsOn(p) {
-							return p.detectOffline;
+							return p.detectOffline
 						},
 					},
 				}),
@@ -169,7 +169,7 @@ const dataNode = reactNode(
 					customs: {
 						required: 'both',
 						dependsOn(p) {
-							return p.backendDevMode ? true : false;
+							return p.backendDevMode ? true : false
 						},
 					},
 				}),
@@ -183,7 +183,7 @@ const dataNode = reactNode(
 					customs: {
 						required: 'both',
 						dependsOn(p) {
-							return p.backendDevMode ? true : false;
+							return p.backendDevMode ? true : false
 						},
 					},
 				}),
@@ -242,28 +242,28 @@ const dataNode = reactNode(
 		},
 	},
 	{ allowChildren: true }
-);
+)
 
 //===================================================================
 //@ts-ignore
-import { defineNode } from '@noodl/noodl-sdk';
+import { defineNode } from '@noodl/noodl-sdk'
 
-import authNode from '@nodes/auth';
-import dataContext from '@nodes/data-context';
-import UseDataNode from '@old-nodes/use-data';
-import localDataNode from '@nodes/local-data';
+import authNode from '@nodes/auth'
+import dataContext from '@nodes/data-context'
+import localDataNode from '@nodes/local-data'
+import UseDataNode from '@old-nodes/use-data'
 
-const reactNodes = [authNode, dataNode, localDataNode, dataContext, UseDataNode];
+const reactNodes = [authNode, dataNode, localDataNode, dataContext, UseDataNode]
 
-import getDataNode from '@nodes/get-data';
-import logoutNode from '@nodes/logout';
-import noderedNode from '@nodes/nodered';
-import saveAsNode from '@nodes/save-as';
-import createNode from '@nodes/create';
-import updateNode from '@nodes/update';
-import updateByQueryNode from '@nodes/update-by-query'; // Vezdexod
-import deleteNode from '@nodes/delete';
+import createNode from '@nodes/create'
+import deleteNode from '@nodes/delete'
+import getDataNode from '@nodes/get-data'
+import logoutNode from '@nodes/logout'
+import noderedNode from '@nodes/nodered'
+import saveAsNode from '@nodes/save-as'
+import updateNode from '@nodes/update'
+import updateByQueryNode from '@nodes/update-by-query' // Vezdexod
 
-const nodes = [getDataNode, logoutNode, noderedNode, saveAsNode, createNode, updateNode, updateByQueryNode, deleteNode];
+const nodes = [getDataNode, logoutNode, noderedNode, saveAsNode, createNode, updateNode, updateByQueryNode, deleteNode]
 
-Noodl.defineModule({ reactNodes, nodes: nodes.map((i) => defineNode(i)) });
+Noodl.defineModule({ reactNodes, nodes: nodes.map((i) => defineNode(i)) })

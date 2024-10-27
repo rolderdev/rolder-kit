@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react';
-import type { Item } from 'types';
-import type { TableProps } from '../../types';
-import { sendOutput, sendSignal } from '@packages/port-send';
-import type { NoodlNode } from '@packages/node';
+import type { NoodlNode } from '@packages/node'
+import { sendOutput, sendSignal } from '@packages/port-send'
+import { useEffect, useState } from 'react'
+import type { Item } from 'types'
+import type { TableProps } from '../../types'
 
 export default function (noodlNode: NoodlNode, singlSelection: TableProps['selection']['single'], items: Item[]) {
-	const [selectedRecord, setSelectedRecordState] = useState<Item | undefined>();
+	const [selectedRecord, setSelectedRecordState] = useState<Item | undefined>()
 
 	function setSelectedRecord(record: Item) {
 		if (singlSelection.unselectable && record.id === selectedRecord?.id) {
-			setSelectedRecordState(undefined);
+			setSelectedRecordState(undefined)
 			// Noodl не переваривает undefined
-			sendOutput(noodlNode, 'selectedItem', null);
+			sendOutput(noodlNode, 'selectedItem', null)
 			// Сиганл уйдет с задержкой в 1 мс
-			sendSignal(noodlNode, 'singleUnselected');
+			sendSignal(noodlNode, 'singleUnselected')
 		} else {
-			setSelectedRecordState(record);
-			sendOutput(noodlNode, 'selectedItem', record);
-			sendSignal(noodlNode, 'singleSelected');
+			setSelectedRecordState(record)
+			sendOutput(noodlNode, 'selectedItem', record)
+			sendSignal(noodlNode, 'singleSelected')
 		}
 	}
 
 	function resetSelectedRecord() {
 		// Проверим, чтобы не тригерить лишнего рендеринга
 		if (selectedRecord) {
-			setSelectedRecordState(undefined);
-			sendOutput(noodlNode, 'selectedItem', null);
-			sendSignal(noodlNode, 'singleUnselected');
+			setSelectedRecordState(undefined)
+			sendOutput(noodlNode, 'selectedItem', null)
+			sendSignal(noodlNode, 'singleUnselected')
 		}
 	}
 
@@ -34,9 +34,9 @@ export default function (noodlNode: NoodlNode, singlSelection: TableProps['selec
 		// Нужна проверка на то, не собрался ли воткнуть разработчик сюда items, не принадлежащие к этой таблице
 		// Берем item с порта только, если он существует в таблице
 		if (singlSelection.selectedItem && items.map((i) => i.id).includes(singlSelection.selectedItem.id)) {
-			setSelectedRecordState(singlSelection.selectedItem);
+			setSelectedRecordState(singlSelection.selectedItem)
 		}
-	}, [singlSelection.selectedItem]);
+	}, [singlSelection.selectedItem])
 
-	return { selectedRecord, setSelectedRecord, resetSelectedRecord };
+	return { selectedRecord, setSelectedRecord, resetSelectedRecord }
 }

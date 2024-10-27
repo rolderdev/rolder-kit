@@ -1,23 +1,23 @@
 /* Функция добавляет шеврон к ячейке.
 Шеврон - иконка, если onRowClick = expansion, actionIcon, если onRowClick !== expansion. */
 
-import { ActionIcon, Box } from '@mantine/core';
-import { IconChevronRight } from '@tabler/icons-react';
-import clsx from 'clsx';
-import { memo, useContext } from 'react';
-import { useStore } from 'zustand';
-import { TableContext } from '../store/store';
+import { ActionIcon, Box } from '@mantine/core'
+import { IconChevronRight } from '@tabler/icons-react'
+import clsx from 'clsx'
+import { memo, useContext } from 'react'
+import { useStore } from 'zustand'
+import { TableContext } from '../store/store'
 
-import classes from '../styles/expansionCell.module.css';
+import classes from '../styles/expansionCell.module.css'
 
 export default memo((p: { cell: React.ReactNode; rowId: string }) => {
-	const store = useContext(TableContext);
-	if (!store) return;
+	const store = useContext(TableContext)
+	if (!store) return
 
-	const onRowClick = useStore(store, (s) => s.tableProps.onRowClick);
+	const onRowClick = useStore(store, (s) => s.tableProps.onRowClick)
 
 	// Вытягиваем реактивное состояние развернутости для анимации шеврона.
-	const expanded = useStore(store, (s) => s.expandedRowIds.includes(p.rowId));
+	const expanded = useStore(store, (s) => s.expandedRowIds.includes(p.rowId))
 
 	if (onRowClick === 'expansion')
 		return (
@@ -29,7 +29,7 @@ export default memo((p: { cell: React.ReactNode; rowId: string }) => {
 				/>
 				{p.cell}
 			</Box>
-		);
+		)
 	else
 		return (
 			<Box style={{ display: 'flex', flexDirection: 'row' }}>
@@ -48,5 +48,5 @@ export default memo((p: { cell: React.ReactNode; rowId: string }) => {
 				</ActionIcon>
 				{p.cell}
 			</Box>
-		);
-});
+		)
+})

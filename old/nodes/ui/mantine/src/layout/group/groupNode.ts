@@ -1,9 +1,9 @@
-import { reactNode } from '@packages/node';
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-const positions = ['left', 'center', 'right', 'apart'];
+const positions = ['left', 'center', 'right', 'apart']
 
-import v100 from '@packages/group-v1.0.0';
+import v100 from '@packages/group-v1.0.0'
 
 export default reactNode(
 	'Group',
@@ -21,7 +21,7 @@ export default reactNode(
 					group: 'Layout',
 					default: 'left',
 					type: getCustomEnumType(positions),
-					customs: { required: 'both' }
+					customs: { required: 'both' },
 				}),
 				getPort({
 					plug: 'input',
@@ -30,10 +30,10 @@ export default reactNode(
 					group: 'Layout',
 					default: 'md',
 					type: getEnumType(enums.sizes),
-					customs: { required: 'both' }
-				})
-			]
-		}
+					customs: { required: 'both' },
+				}),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

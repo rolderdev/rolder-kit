@@ -1,8 +1,8 @@
 /* Модель колонки. */
 
-import { z } from 'zod';
-import type { Store } from '../store';
-import isArrayEqual from '../funcs/isArrayEqual';
+import { z } from 'zod'
+import isArrayEqual from '../funcs/isArrayEqual'
+import type { Store } from '../store'
 
 // Схема задает типы данных и их дефолты.
 export const columnSchema = z.object({
@@ -20,9 +20,9 @@ export const columnSchema = z.object({
 	expander: z.boolean().default(false),
 	width: z.union([z.string(), z.number()]).optional(),
 	sort: z.union([z.boolean(), z.enum(['asc', 'desc'])]).optional(),
-});
+})
 
-export type Column = z.infer<typeof columnSchema>;
+export type Column = z.infer<typeof columnSchema>
 
 // Метод преобразует схемы колонок.
 export const getColumns = (columnsDefinition: Column[]) => {
@@ -35,20 +35,20 @@ export const getColumns = (columnsDefinition: Column[]) => {
 			accessor: `${i.accessor || i.idx}`,
 			libColumn: { ...i, width: i.width || '100%', sortable: i.sort ? true : false },
 		})
-	);
-};
+	)
+}
 
 // Метод обновляет состояние колонок.
 export const setColumns = (store: Store, columnsDefinition?: Column[]) => {
 	if (columnsDefinition) {
-		const newColumns = getColumns(columnsDefinition);
+		const newColumns = getColumns(columnsDefinition)
 		if (
 			!isArrayEqual(
 				store.columns.get().map((i) => i.libColumn),
 				newColumns.map((i) => i.libColumn)
 			)
 		) {
-			store.columns.assign(newColumns);
+			store.columns.assign(newColumns)
 		}
 	}
-};
+}

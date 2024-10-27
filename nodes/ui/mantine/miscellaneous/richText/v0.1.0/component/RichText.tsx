@@ -1,39 +1,39 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { sendOutput } from '@shared/port-send-v1.0.0';
-import type { Props } from '../node/definition';
-import { getTaskListExtension, Link, RichTextEditor } from '@mantine/tiptap';
-import { useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import Underline from '@tiptap/extension-underline';
-import Superscript from '@tiptap/extension-superscript';
-import Subscript from '@tiptap/extension-subscript';
-import Highlight from '@tiptap/extension-highlight';
-import TextAlign from '@tiptap/extension-text-align';
-import TextStyle from '@tiptap/extension-text-style';
-import Color from '@tiptap/extension-color';
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import { createLowlight } from 'lowlight';
-import js from 'highlight.js/lib/languages/javascript';
-import ts from 'highlight.js/lib/languages/typescript';
-import json from 'highlight.js/lib/languages/json';
-import TipTapTaskList from '@tiptap/extension-task-list';
-import TaskItem from '@tiptap/extension-task-item';
-import Toolbar from './Toolbar';
+import { Link, RichTextEditor, getTaskListExtension } from '@mantine/tiptap'
+import { sendOutput } from '@shared/port-send-v1.0.0'
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import Color from '@tiptap/extension-color'
+import Highlight from '@tiptap/extension-highlight'
+import Subscript from '@tiptap/extension-subscript'
+import Superscript from '@tiptap/extension-superscript'
+import TaskItem from '@tiptap/extension-task-item'
+import TipTapTaskList from '@tiptap/extension-task-list'
+import TextAlign from '@tiptap/extension-text-align'
+import TextStyle from '@tiptap/extension-text-style'
+import Underline from '@tiptap/extension-underline'
+import { useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import js from 'highlight.js/lib/languages/javascript'
+import json from 'highlight.js/lib/languages/json'
+import ts from 'highlight.js/lib/languages/typescript'
+import { createLowlight } from 'lowlight'
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+import type { Props } from '../node/definition'
+import Toolbar from './Toolbar'
 
-import '@mantine/tiptap/styles.css';
-import classes from './code.module.css';
-import IndentHandler from './IndentHandler';
+import '@mantine/tiptap/styles.css'
+import IndentHandler from './IndentHandler'
+import classes from './code.module.css'
 
-const lowlight = createLowlight();
-lowlight.register({ js, ts, json });
+const lowlight = createLowlight()
+lowlight.register({ js, ts, json })
 
 const debounceContent = R.libs.remeda.debounce((p: Props, editor: any) => sendOutput(p.noodlNode, 'html', editor.getHTML()), {
 	timing: 'trailing',
 	waitMs: 500,
-});
+})
 
-export default forwardRef(function (p: Props, ref) {
-	const [isEditor, setIsEditor] = useState(p.isEditor);
+export default forwardRef((p: Props, ref) => {
+	const [isEditor, setIsEditor] = useState(p.isEditor)
 
 	const editor = useEditor({
 		extensions: [
@@ -54,20 +54,20 @@ export default forwardRef(function (p: Props, ref) {
 		content: p.content,
 		onCreate: ({ editor }) => {
 			// Нужно проверить на пустой контент на случай, если он подан не сразу на вход.
-			if (editor.getHTML() !== '<p></p>') sendOutput(p.noodlNode, 'html', editor.getHTML());
+			if (editor.getHTML() !== '<p></p>') sendOutput(p.noodlNode, 'html', editor.getHTML())
 		},
 		onUpdate: ({ editor }) => debounceContent.call(p, editor),
 		editable: isEditor,
-	});
+	})
 
 	useEffect(() => {
-		if (editor && !isEditor && p.content) editor.commands.setContent(p.content);
-	}, [p.content]);
+		if (editor && !isEditor && p.content) editor.commands.setContent(p.content)
+	}, [p.content])
 
 	useEffect(() => {
-		p.noodlNode._internal.isEditor = isEditor;
-		sendOutput(p.noodlNode, 'isEditor', isEditor);
-	}, [isEditor]);
+		p.noodlNode._internal.isEditor = isEditor
+		sendOutput(p.noodlNode, 'isEditor', isEditor)
+	}, [isEditor])
 
 	useImperativeHandle(
 		ref,
@@ -75,13 +75,13 @@ export default forwardRef(function (p: Props, ref) {
 			toggleEditor: () => setIsEditor(!isEditor),
 			restore: (p: Props) => editor && editor.commands.setContent(p.content || ''),
 			restoreAndToggle: () => {
-				setIsEditor(!isEditor);
-				editor && editor.commands.setContent(p.content || '');
+				setIsEditor(!isEditor)
+				editor && editor.commands.setContent(p.content || '')
 			},
 			clear: (p: Props) => editor && editor.commands.clearContent(),
 		}),
 		[isEditor, editor]
-	);
+	)
 
 	return (
 		<RichTextEditor
@@ -96,5 +96,5 @@ export default forwardRef(function (p: Props, ref) {
 
 			<RichTextEditor.Content />
 		</RichTextEditor>
-	);
-});
+	)
+})

@@ -1,10 +1,10 @@
-import { jsNode } from '@packages/node';
-import { getPort, getPorts } from '@packages/port';
+import { jsNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
 export default jsNode('getData', {
 	'v1.0.0': {
 		module: {
-			dynamic: import('@packages/get-data-v1.0.0')
+			dynamic: import('@packages/get-data-v1.0.0'),
 		},
 		inputs: [
 			getPort({
@@ -21,33 +21,33 @@ export default jsNode('getData', {
 								name: `${i}Items`,
 								group: 'Data',
 								type: 'array',
-								displayName: `${i}Items`
-							}));
+								displayName: `${i}Items`,
+							}))
 							const fetchedOutputs = dbClasses.map((i: any) => ({
 								plug: 'output',
 								name: `${i}Fetched`,
 								group: 'Data',
 								type: 'number',
-								displayName: `${i}Fetched`
-							}));
+								displayName: `${i}Fetched`,
+							}))
 							const totalOutputs = dbClasses.map((i: any) => ({
 								plug: 'output',
 								name: `${i}Total`,
 								group: 'Data',
 								type: 'number',
-								displayName: `${i}Total`
-							}));
+								displayName: `${i}Total`,
+							}))
 							const aggsOutputs = dbClasses.map((i: any) => ({
 								plug: 'output',
 								name: `${i}Aggregations`,
 								group: 'Data',
 								type: 'object',
-								displayName: `${i}Aggregations`
-							}));
-							return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs];
-						} else return [];
-					}
-				}
+								displayName: `${i}Aggregations`,
+							}))
+							return [...itemsOutputs, ...fetchedOutputs, ...totalOutputs, ...aggsOutputs]
+						} else return []
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -55,13 +55,13 @@ export default jsNode('getData', {
 				displayName: 'Scheme',
 				group: 'Params',
 				type: 'array',
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
-			getPort({ plug: 'input', name: 'getData', displayName: 'Get data', group: 'Signals', type: 'signal' })
+			getPort({ plug: 'input', name: 'getData', displayName: 'Get data', group: 'Signals', type: 'signal' }),
 		],
 		outputs: [
 			...getPorts('output', ['fetching', 'fetched']),
-			getPort({ plug: 'output', name: 'data', displayName: 'Data', group: 'Data', type: 'object' })
-		]
-	}
-});
+			getPort({ plug: 'output', name: 'data', displayName: 'Data', group: 'Data', type: 'object' }),
+		],
+	},
+})

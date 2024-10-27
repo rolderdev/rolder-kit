@@ -1,13 +1,13 @@
 /* Модель настроек библиотеки. */
 
-import { z } from 'zod';
-import isEqual from 'lodash.isequal';
-import type { DataTableProps } from 'mantine-datatable';
-import type { CheckboxProps } from '@mantine/core';
-import type { Item } from 'types';
-import type { Props } from '../../types';
-import type { Store } from '../store/store';
-import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs';
+import type { CheckboxProps } from '@mantine/core'
+import isEqual from 'lodash.isequal'
+import type { DataTableProps } from 'mantine-datatable'
+import type { Item } from 'types'
+import { z } from 'zod'
+import type { Props } from '../../types'
+import stringifyObjectFuncs from '../funcs/stringifyObjectFuncs'
+import type { Store } from '../store/store'
 
 // Схема задает типы данных и их дефолты.
 const libPropsSchema = z.object({
@@ -52,9 +52,9 @@ const libPropsSchema = z.object({
 		.optional(),
 	// Sort
 	sortIcons: z.object({ sorted: z.any(), unsorted: z.any() }).optional(),
-});
+})
 
-export type LibProps = z.infer<typeof libPropsSchema>;
+export type LibProps = z.infer<typeof libPropsSchema>
 
 // Метод проверяет прилетевшие значения с портов и восстаналвивает дефолты, если значение не прилетело.
 export const getLibProps = (s: Store, p: Props) => {
@@ -75,14 +75,14 @@ export const getLibProps = (s: Store, p: Props) => {
 		// Удалим ее из стандартного набора параметров библиотеки.
 		allRecordsSelectionCheckboxProps: undefined,
 		sortIcons: (() => {
-			const SortedIcon = R.libs.icons[p.sortedIcon || 'IconArrowUp'];
-			const UnsortedIcon = R.libs.icons[p.unsortedIcon || 'IconSelector'];
+			const SortedIcon = R.libs.icons[p.sortedIcon || 'IconArrowUp']
+			const UnsortedIcon = R.libs.icons[p.unsortedIcon || 'IconSelector']
 			return {
 				sorted: SortedIcon && <SortedIcon size={14} {...p.customProps?.sortedIcon} />,
 				unsorted: UnsortedIcon && <UnsortedIcon size={14} {...p.customProps?.unsortedIcon} />,
-			};
+			}
 		})(),
-	});
+	})
 
 	// Подменим параметры чекбокса, если используется TableScope.
 	// Такой же финт ушами, но для чекбокса в заголовке делается в useHeaderCheckboxProps.
@@ -90,38 +90,38 @@ export const getLibProps = (s: Store, p: Props) => {
 	if (s.scopeStore.get()) {
 		const getRecordSelectionCheckboxProps: DataTableProps<Item>['getRecordSelectionCheckboxProps'] = (record, idx) => {
 			// Запустим функцию разработчика, чтобы записать indeterminate поверх.
-			const checkBoxProps: CheckboxProps = p.customProps?.getRecordSelectionCheckboxProps?.(record, idx) || {};
+			const checkBoxProps: CheckboxProps = p.customProps?.getRecordSelectionCheckboxProps?.(record, idx) || {}
 			// Реактивность только на строку.
-			const indeterminate = s.scopeStore.get()?.selectionState[record.id].use((s) => s === 'indeterminate');
-			checkBoxProps.indeterminate = indeterminate;
+			const indeterminate = s.scopeStore.get()?.selectionState[record.id].use((s) => s === 'indeterminate')
+			checkBoxProps.indeterminate = indeterminate
 			// Расчет отсупа функцией разработчика.
-			const paddingLeftPostion = s.hot.tableProps.rowStyles.paddingLeftPostion.use();
-			const level = s.level.use();
+			const paddingLeftPostion = s.hot.tableProps.rowStyles.paddingLeftPostion.use()
+			const level = s.level.use()
 			const pl = s.hot.tableProps.use((state) =>
 				state.paddingLeftFunc?.(
 					level,
 					s.hot.items.get((i) => i.find((i) => i.id === record.id))
 				)
-			);
-			checkBoxProps.pl = paddingLeftPostion === 'checkbox' ? pl : undefined;
+			)
+			checkBoxProps.pl = paddingLeftPostion === 'checkbox' ? pl : undefined
 
-			return checkBoxProps;
-		};
+			return checkBoxProps
+		}
 
-		libProps.getRecordSelectionCheckboxProps = getRecordSelectionCheckboxProps as any;
+		libProps.getRecordSelectionCheckboxProps = getRecordSelectionCheckboxProps as any
 	}
 
-	return libProps;
-};
+	return libProps
+}
 
 export const libPropsChanged = (s: Store, p: Props) => {
-	const newProps = getLibProps(s, p);
+	const newProps = getLibProps(s, p)
 	// Сравним вручную, т.к. store не может это делать для функций.
-	if (!isEqual(stringifyObjectFuncs(s.cold.libProps.get()), stringifyObjectFuncs(newProps))) return true;
-	else return false;
-};
+	if (!isEqual(stringifyObjectFuncs(s.cold.libProps.get()), stringifyObjectFuncs(newProps))) return true
+	else return false
+}
 
 export const setLibProps = (s: Store, p: Props) => {
-	const newProps = getLibProps(s, p);
-	s.cold.libProps.set(newProps);
-};
+	const newProps = getLibProps(s, p)
+	s.cold.libProps.set(newProps)
+}

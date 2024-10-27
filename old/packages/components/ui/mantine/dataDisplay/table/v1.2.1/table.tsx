@@ -1,41 +1,41 @@
-import { cloneElement, forwardRef, useEffect, useImperativeHandle, useMemo, useState } from 'react';
-import { Box } from '@mantine/core';
-import type { Props } from './types';
-import { DataTable } from './src/lib';
-import { getCompProps } from '@packages/get-comp-props';
-import useProps from './src/hooks/useProps';
-import type { Item } from 'types';
-import React from 'react';
-import useSingleSelection from './src/hooks/useSingleSelection';
-import useMultiSelection from './src/hooks/useMultiSelection';
-import useRowStyles from './src/hooks/useRowStyles';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { sendOutput, sendSignal } from '@packages/port-send';
-import { Expander } from './src/components/expander';
-import useSort from './src/hooks/useSort';
-import getRecords from './src/funcs/getRecords';
-import { ScopeProvider } from 'bunshi/react';
-import { useForceUpdate, useId } from '@mantine/hooks';
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { Box } from '@mantine/core'
+import { useForceUpdate, useId } from '@mantine/hooks'
+import { getCompProps } from '@packages/get-comp-props'
+import { sendOutput, sendSignal } from '@packages/port-send'
+import { ScopeProvider } from 'bunshi/react'
+import { cloneElement, forwardRef, useEffect, useImperativeHandle, useMemo, useState } from 'react'
+import React from 'react'
+import type { Item } from 'types'
+import { Expander } from './src/components/expander'
+import getRecords from './src/funcs/getRecords'
+import useMultiSelection from './src/hooks/useMultiSelection'
+import useProps from './src/hooks/useProps'
+import useRowStyles from './src/hooks/useRowStyles'
+import useSingleSelection from './src/hooks/useSingleSelection'
+import useSort from './src/hooks/useSort'
+import { DataTable } from './src/lib'
+import type { Props } from './types'
 
-import { useStore } from 'jotai'; // useAtom, read as readJotaiAtom, , useAtomValue, useSetAtom
 import {
-	type TableSelectionScopeValues,
 	type TableSelectionChildIdsByParentId,
 	type TableSelectionScopeInternal,
-	tableSelectionScopeAtom,
-	tableSelectionClickItemIdAtom,
+	type TableSelectionScopeValues,
+	tableHandlerAtom,
 	tableSelectionChildIdsByParentIdAtom,
+	tableSelectionClickItemIdAtom,
+	tableSelectionScopeAtom,
 	// tableselectionByDBClassAtom,
 	tableSelectionScopeInternalAtom,
-	tableHandlerAtom,
-} from '@packages/scope';
+} from '@packages/scope'
+import { useStore } from 'jotai' // useAtom, read as readJotaiAtom, , useAtomValue, useSetAtom
 
 // Импортируем созданные нами scope из @packages/scope
-import { TableFilterScope, useTableCellScope, useTableFilterScope } from '@packages/scope';
+import { TableFilterScope, useTableCellScope, useTableFilterScope } from '@packages/scope'
 
-export default forwardRef(function (props: Props, ref) {
-	const { noodlNode, customProps, children } = props;
-	const p = { ...getCompProps(props) } as Props;
+export default forwardRef((props: Props, ref) => {
+	const { noodlNode, customProps, children } = props
+	const p = { ...getCompProps(props) } as Props
 
 	const {
 		libProps,
@@ -50,24 +50,24 @@ export default forwardRef(function (props: Props, ref) {
 		selection,
 		expansion,
 		fetching,
-	} = useProps(p);
+	} = useProps(p)
 
-	const forceUpdate = useForceUpdate();
+	const forceUpdate = useForceUpdate()
 
 	// ColumnCell repeater render hack
 	useEffect(() => {
 		// Если это не разворачиваемая строка с множественным выбором,то хакаем
 		if (!expansion.enabled && !selection.multi.enabled) {
-			setTimeout(() => forceUpdate());
+			setTimeout(() => forceUpdate())
 		}
-	}, [items]);
+	}, [items])
 
-	const tableId = useId();
+	const tableId = useId()
 
 	// Single selection
-	const { selectedRecord, setSelectedRecord } = useSingleSelection(noodlNode, tableId, selection.single, items);
+	const { selectedRecord, setSelectedRecord } = useSingleSelection(noodlNode, tableId, selection.single, items)
 	// Multi selection
-	const { selectedRecords, setSelectedRecords } = useMultiSelection(noodlNode, tableId, selection.multi, items);
+	const { selectedRecords, setSelectedRecords } = useMultiSelection(noodlNode, tableId, selection.multi, items)
 
 	//========scopeMultiSelection============================================================
 	// СТРУКТУРА
@@ -77,84 +77,84 @@ export default forwardRef(function (props: Props, ref) {
 
 	//====Хуки, которые понядобятся при работе с tableSelectionScope====
 	// Молекула с родительским item
-	const tableCellMol = useTableCellScope();
+	const tableCellMol = useTableCellScope()
 
 	// Получаем store из своего provider
-	const selectionScopeStore = useStore();
+	const selectionScopeStore = useStore()
 
 	// Получаем значения атомов из store без подписки на их изменения
-	const tableSelectionScopeValue = selectionScopeStore.get(tableSelectionScopeAtom);
-	const tableSelectionChildIdsByParentIdValue = selectionScopeStore.get(tableSelectionChildIdsByParentIdAtom); // setTableSelectionChildIdsByParentIdValue
-	const tableSelectionClickItemIdValue = selectionScopeStore.get(tableSelectionClickItemIdAtom);
+	const tableSelectionScopeValue = selectionScopeStore.get(tableSelectionScopeAtom)
+	const tableSelectionChildIdsByParentIdValue = selectionScopeStore.get(tableSelectionChildIdsByParentIdAtom) // setTableSelectionChildIdsByParentIdValue
+	const tableSelectionClickItemIdValue = selectionScopeStore.get(tableSelectionClickItemIdAtom)
 	// const tableSelectionByDBClassValue = selectionScopeStore.get(tableselectionByDBClassAtom) // , setTableSelectionByDBClassValue
-	const tableSelectionScopeInternalValue = selectionScopeStore.get(tableSelectionScopeInternalAtom);
-	const tableHandlerAtomValue = selectionScopeStore.get(tableHandlerAtom);
+	const tableSelectionScopeInternalValue = selectionScopeStore.get(tableSelectionScopeInternalAtom)
+	const tableHandlerAtomValue = selectionScopeStore.get(tableHandlerAtom)
 
 	// Задаем функции, по перезаписыванию значений в атомах данного store
 	const setTableSelectionScopeValue = (value: TableSelectionScopeValues) => {
-		selectionScopeStore.set(tableSelectionScopeAtom, value);
-	};
+		selectionScopeStore.set(tableSelectionScopeAtom, value)
+	}
 	const setTableSelectionChildIdsByParentIdValue = (value: TableSelectionChildIdsByParentId) => {
-		selectionScopeStore.set(tableSelectionChildIdsByParentIdAtom, value);
-	};
+		selectionScopeStore.set(tableSelectionChildIdsByParentIdAtom, value)
+	}
 	const setTableSelectionClickItemIdValue = (value: string[]) => {
-		selectionScopeStore.set(tableSelectionClickItemIdAtom, value);
-	};
+		selectionScopeStore.set(tableSelectionClickItemIdAtom, value)
+	}
 	const setTableSelectionScopeInternalValue = (value: TableSelectionScopeInternal) => {
-		selectionScopeStore.set(tableSelectionScopeInternalAtom, value);
-	};
+		selectionScopeStore.set(tableSelectionScopeInternalAtom, value)
+	}
 	const setTableHandlerAtomValue = (value: { [tableId: string]: () => void }) => {
-		selectionScopeStore.set(tableHandlerAtom, value);
-	};
+		selectionScopeStore.set(tableHandlerAtom, value)
+	}
 
 	// Функция для запуска перерендера tableSelectionScope
 	function runTableSelectionScope() {
 		// Вызываем перерендер tableSelectionScope, чтобы он пересчитал
 		// статусы связанных записей и обновил необходимые таблицы
 		try {
-			tableHandlerAtomValue['selectionScope']();
+			tableHandlerAtomValue['selectionScope']()
 		} catch (e) {
-			console.error('У таблиц включен expension и multiselect, но они не оборнуты в selectionScope!');
-			console.error('Разместите иерархичные таблицы под нодой tableSelectionScope!!!');
-			console.error(e);
+			console.error('У таблиц включен expension и multiselect, но они не оборнуты в selectionScope!')
+			console.error('Разместите иерархичные таблицы под нодой tableSelectionScope!!!')
+			console.error(e)
 		}
 	}
 
 	// id родительской записи, а для 1 уровня - root
-	const parentTableItemId = tableCellMol?.id || 'root';
+	const parentTableItemId = tableCellMol?.id || 'root'
 
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// Самая важная часть - если useScopeStates: false, то модули ниже, не отрабатывают
 	// Флаг о том, что состояния берем из scope
-	const useScopeStates = expansion.enabled && selection.multi.enabled;
+	const useScopeStates = expansion.enabled && selection.multi.enabled
 
 	// Отрабатывает при присвоении tableId
 	useEffect(() => {
 		if (useScopeStates && tableId !== '' && tableId !== undefined) {
 			if (!tableSelectionScopeInternalValue['allTableIdList'].includes(tableId)) {
-				tableSelectionScopeInternalValue['allTableIdList'].push(tableId);
+				tableSelectionScopeInternalValue['allTableIdList'].push(tableId)
 			}
 			// Сохраняем функцию ререндер в атом, под своим tableId
 			const forceUpdateThisTable = () => {
-				forceUpdate();
-			};
+				forceUpdate()
+			}
 			if (tableHandlerAtomValue[tableId] === undefined && tableId) {
-				tableHandlerAtomValue[tableId] = forceUpdateThisTable;
-				setTableHandlerAtomValue(tableHandlerAtomValue);
+				tableHandlerAtomValue[tableId] = forceUpdateThisTable
+				setTableHandlerAtomValue(tableHandlerAtomValue)
 			}
 		}
-		sendOutput(props.noodlNode, 'tableId', tableId);
+		sendOutput(props.noodlNode, 'tableId', tableId)
 
 		return () => {
 			if (useScopeStates) {
 				// При размонтировании (сворачивании) таблицы, удаляем её id из scope
 				tableSelectionScopeInternalValue['allTableIdList'] = tableSelectionScopeInternalValue['allTableIdList'].filter(
 					(iTableId) => iTableId !== tableId
-				);
-				setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue);
+				)
+				setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
 			}
-		};
-	}, [tableId]);
+		}
+	}, [tableId])
 
 	useEffect(() => {
 		if (useScopeStates && tableId !== '' && tableId !== undefined) {
@@ -162,19 +162,19 @@ export default forwardRef(function (props: Props, ref) {
 			// Если запись с родителем отсутсвует, то создаем пустой массив
 			// а если будет, то добавим информацию к данным с братской таблицы
 			if (!tableSelectionChildIdsByParentIdValue[parentTableItemId]) {
-				tableSelectionChildIdsByParentIdValue[parentTableItemId] = [];
+				tableSelectionChildIdsByParentIdValue[parentTableItemId] = []
 			}
 			items?.forEach((item) => {
 				if (item?.id) {
-					tableSelectionChildIdsByParentIdValue[parentTableItemId]?.push(item.id);
-					tableSelectionScopeInternalValue['tableIdByItemId'][item.id] = tableId;
+					tableSelectionChildIdsByParentIdValue[parentTableItemId]?.push(item.id)
+					tableSelectionScopeInternalValue['tableIdByItemId'][item.id] = tableId
 				}
-			});
-			setTableSelectionChildIdsByParentIdValue(tableSelectionChildIdsByParentIdValue);
-			setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue);
+			})
+			setTableSelectionChildIdsByParentIdValue(tableSelectionChildIdsByParentIdValue)
+			setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
 		}
 		// }
-	}, [items]);
+	}, [items])
 
 	// Отрабатывает при получении items
 	// useEffect(() => {
@@ -183,17 +183,17 @@ export default forwardRef(function (props: Props, ref) {
 		// Функция, которая изменяет массивы выбранных и indeterminated на основании scope
 		const refreshScopeValuesBySelect = () => {
 			// Копируем имеющиеся выделенные записи, чтобы перезаписывать отфильтрованный результат
-			let newSelectedRecords = [...selectedRecords];
+			let newSelectedRecords = [...selectedRecords]
 
-			let changedSelection = false;
+			let changedSelection = false
 			// Перебираем элементы текущей таблицы
 			items?.forEach((item) => {
 				// Если статус selected, то добавляем в массив выьранных
 				if (tableSelectionScopeValue[item.id] === 'selected') {
 					// Если item ещё не в массиве выбранных, то добавляем
 					if (!newSelectedRecords.find((sItem) => sItem.id === item.id)) {
-						newSelectedRecords.push(item);
-						changedSelection = true;
+						newSelectedRecords.push(item)
+						changedSelection = true
 					}
 				}
 				// А иначе удаляем из массива
@@ -201,17 +201,17 @@ export default forwardRef(function (props: Props, ref) {
 					// Если item в массиве выбранных, то удаляем
 					// А без этой проверки будет бесконечныфй цикл
 					if (newSelectedRecords.find((sItem) => sItem.id === item.id)) {
-						newSelectedRecords = newSelectedRecords.filter((record) => record.id !== item.id);
-						changedSelection = true;
+						newSelectedRecords = newSelectedRecords.filter((record) => record.id !== item.id)
+						changedSelection = true
 					}
 				}
-			});
+			})
 
 			// Если есть изменения в массиве выбранных, то обновляем
 			if (changedSelection) {
-				setSelectedRecords(tableId, newSelectedRecords);
+				setSelectedRecords(tableId, newSelectedRecords)
 			}
-		};
+		}
 
 		// После раскрытия таблицы, items появляются не сразу, поэтому при их изменении, добавляем их в scope
 		if (items.length > 0 && tableSelectionScopeValue[items[0]?.id] === undefined) {
@@ -223,14 +223,14 @@ export default forwardRef(function (props: Props, ref) {
 					if (tableSelectionScopeValue[item.id] === undefined && tableSelectionScopeValue[parentTableItemId] !== undefined) {
 						// Если статус родителя не indeterminated, то наследуем
 						if (tableSelectionScopeValue[parentTableItemId] !== 'indeterminated') {
-							tableSelectionScopeValue[item.id] = tableSelectionScopeValue[parentTableItemId];
+							tableSelectionScopeValue[item.id] = tableSelectionScopeValue[parentTableItemId]
 						}
 						// А если родительский item indeterminated, и нет записи в scope
 						// а она может быть при повторном разворачивании
 						// то - notSelected
 						else {
 							if (tableSelectionScopeValue[item.id] === undefined) {
-								tableSelectionScopeValue[item.id] = 'notSelected';
+								tableSelectionScopeValue[item.id] = 'notSelected'
 							}
 						}
 					}
@@ -238,30 +238,30 @@ export default forwardRef(function (props: Props, ref) {
 					else {
 						// И нет записи в scope
 						if (tableSelectionScopeValue[item.id] === undefined) {
-							tableSelectionScopeValue[item.id] = 'notSelected';
+							tableSelectionScopeValue[item.id] = 'notSelected'
 						}
 					}
 				}
-			});
+			})
 
 			// Обновляем статусы записей
-			setTableSelectionScopeValue(tableSelectionScopeValue);
+			setTableSelectionScopeValue(tableSelectionScopeValue)
 			// Обновляем словарь с братьями
-			setTableSelectionChildIdsByParentIdValue(tableSelectionChildIdsByParentIdValue);
+			setTableSelectionChildIdsByParentIdValue(tableSelectionChildIdsByParentIdValue)
 
 			// После того, как перезаписали значения, перерендерим таблицу, так как только что её открыли
 			// forceUpdate()
 			// Добавляем батька на обработку
 			// setTableSelectionClickItemIdValue([parentTableItemId])
 			// После обработки статусов, запускаем функцию, добавляющую выбранные записи в массив выбранных
-			refreshScopeValuesBySelect();
+			refreshScopeValuesBySelect()
 			// Запускаем tableSelectionScope, так как в него только что
 			// добавились записи, и их нужно подать на выход ноды
-			runTableSelectionScope();
+			runTableSelectionScope()
 		}
 		// А если записи уже есть в scope, и таблицу мы открыли не только что
 		else {
-			refreshScopeValuesBySelect();
+			refreshScopeValuesBySelect()
 		}
 
 		// runTableSelectionScope()
@@ -275,120 +275,120 @@ export default forwardRef(function (props: Props, ref) {
 			// кроме нужной таблицы
 			// Если хоть один элемент есть в массиве выбранных
 			// то это та таблица, которой меняем статус
-			let arrayForThisTable = false;
+			let arrayForThisTable = false
 			items?.forEach((item) => {
 				if (selection.multi.selectedItems?.find((fItem) => fItem.id === item.id)) {
-					arrayForThisTable = true;
+					arrayForThisTable = true
 				}
-			});
+			})
 
 			if (arrayForThisTable) {
 				items?.forEach((item) => {
 					if (selection.multi.selectedItems?.find((fItem) => fItem.id === item.id)) {
-						tableSelectionScopeValue[item.id] = 'selected';
+						tableSelectionScopeValue[item.id] = 'selected'
 					} else {
-						tableSelectionScopeValue[item.id] = 'notSelected';
+						tableSelectionScopeValue[item.id] = 'notSelected'
 					}
 					// Имитируем нажатие на item, если там ещё нет
 					if (!tableSelectionClickItemIdValue.includes(item.id)) {
-						tableSelectionClickItemIdValue.push(item.id);
+						tableSelectionClickItemIdValue.push(item.id)
 					}
-					setTableSelectionScopeValue(tableSelectionScopeValue);
-					setTableSelectionClickItemIdValue(tableSelectionClickItemIdValue);
-					setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue);
-				});
+					setTableSelectionScopeValue(tableSelectionScopeValue)
+					setTableSelectionClickItemIdValue(tableSelectionClickItemIdValue)
+					setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
+				})
 
 				// Запускаем tableSelectionScope
-				runTableSelectionScope();
+				runTableSelectionScope()
 			}
 		}
-	}, [selection.multi.selectedItems]);
+	}, [selection.multi.selectedItems])
 
 	//========scopeMultiSelection============================================================
 
 	// Filter
-	const { filters, getColumnFilter, resetFilters, setFilterFunc, runFilterFunc } = useTableFilterScope(tableId);
+	const { filters, getColumnFilter, resetFilters, setFilterFunc, runFilterFunc } = useTableFilterScope(tableId)
 
 	// Expansion
-	const [expandedRecordIds, setExpandedRecordIds] = useState<string[]>([]);
+	const [expandedRecordIds, setExpandedRecordIds] = useState<string[]>([])
 
 	useEffect(() => {
 		sendOutput(
 			noodlNode,
 			'table2ExpandedItems',
 			items?.filter((i) => expandedRecordIds.includes(i.id))
-		);
-		sendSignal(noodlNode, 'table2ExpansionChanged');
-	}, [expandedRecordIds]);
+		)
+		sendSignal(noodlNode, 'table2ExpansionChanged')
+	}, [expandedRecordIds])
 	const expansionRow = useMemo(() => {
-		const ch: any = children;
+		const ch: any = children
 		return Array.isArray(ch)
 			? ch.filter((i) => i.props.noodlNode.model?.type.split('.')[1] === 'ExpansionRow')?.[0]
 			: ch?.props.noodlNode.model?.type.split('.')[1] === 'ExpansionRow'
-			? ch
-			: null;
-	}, []);
+				? ch
+				: null
+	}, [])
 
 	// Columns
 	const columns = useMemo(() => {
-		const ch: any = children;
+		const ch: any = children
 		// ColumnCell
 		const columnCells = Array.isArray(ch)
 			? ch.filter((i) => i.props.noodlNode.model?.type.split('.')[1] === 'ColumnCell')
 			: ch?.props.noodlNode.model?.type.split('.')[1] === 'ColumnCell'
-			? [ch]
-			: [];
+				? [ch]
+				: []
 
 		// ColumnFilter
 		const columnFilters = Array.isArray(ch)
 			? ch.filter((i) => i.props.noodlNode.model?.type.split('.')[1] === 'ColumnFilter')
 			: ch?.props.noodlNode.model?.type.split('.')[1] === 'ColumnFilter'
-			? [ch]
-			: null;
+				? [ch]
+				: null
 
 		return columnsDef.map((column, columnIdx) => {
-			if (!column.accessor) column.accessor = `${columnIdx}`;
+			if (!column.accessor) column.accessor = `${columnIdx}`
 
-			const columnCell = columnCells?.find((i) => i.props.noodlNode.props.table2ColumnIndex === columnIdx);
+			const columnCell = columnCells?.find((i) => i.props.noodlNode.props.table2ColumnIndex === columnIdx)
 
 			// Sort
 			if (!sort.enabled) {
-				delete column.sortable;
-				delete column.sort;
+				delete column.sortable
+				delete column.sort
 			} else {
-				if (sort.type === 'backend') delete column.sort?.func;
-				if (column.sort) column.sortable = true;
+				if (sort.type === 'backend') delete column.sort?.func
+				if (column.sort) column.sortable = true
 			}
 
 			// Filter
 			if (!filter.enabled) {
-				delete column.filter;
-				delete column.filterFunc;
-				delete column.filtering;
+				delete column.filter
+				delete column.filterFunc
+				delete column.filtering
 			} else {
-				if (filter.type === 'backend') delete column.filterFunc;
+				if (filter.type === 'backend') delete column.filterFunc
 
-				const columnFilter = columnFilters?.find((i) => i.props.noodlNode.props.table2ColumnIndex === columnIdx);
+				const columnFilter = columnFilters?.find((i) => i.props.noodlNode.props.table2ColumnIndex === columnIdx)
 				if (columnFilter) {
-					columnFilter.props.noodlNode.props.innerProps = { tableId };
-					if (filter.type === 'frontend') setFilterFunc(columnIdx, column.filterFunc);
+					columnFilter.props.noodlNode.props.innerProps = { tableId }
+					if (filter.type === 'frontend') setFilterFunc(columnIdx, column.filterFunc)
 
-					columnFilter.props.noodlNode.props.innerProps.forceUpdate = forceUpdate;
+					columnFilter.props.noodlNode.props.innerProps.forceUpdate = forceUpdate
 					column.filter = ({ close }: { close: () => void }) => {
-						columnFilter.props.noodlNode.props.innerProps.close = close;
-						return columnFilter;
-					};
-					column.filtering = getColumnFilter(columnIdx)?.state;
+						columnFilter.props.noodlNode.props.innerProps.close = close
+						return columnFilter
+					}
+					column.filtering = getColumnFilter(columnIdx)?.state
 				}
 			}
 
 			column.render = (record) => {
-				const value = column.getValue ? column.getValue(record) : window.R.utils.getValue.v8(record, column.accessor);
+				const value = column.getValue ? column.getValue(record) : window.R.utils.getValue.v8(record, column.accessor)
 
-				const boxProps = typeof column.boxProps === 'function' ? column.boxProps(record) : column.boxProps;
+				const boxProps = typeof column.boxProps === 'function' ? column.boxProps(record) : column.boxProps
 
 				if (columnCell) {
-					columnCell.props.noodlNode.props.record = record;
+					columnCell.props.noodlNode.props.record = record
 					return expansion.enabled && column.expander ? (
 						<Box {...boxProps}>
 							{Expander(
@@ -406,7 +406,7 @@ export default forwardRef(function (props: Props, ref) {
 						</Box>
 					) : (
 						<Box {...boxProps}>{cloneElement(columnCell, { innerProps: { record } })}</Box>
-					);
+					)
 				} else {
 					return expansion.enabled && column.expander ? (
 						<Box {...boxProps}>
@@ -425,62 +425,62 @@ export default forwardRef(function (props: Props, ref) {
 						</Box>
 					) : (
 						<Box {...boxProps}>{value}</Box>
-					);
+					)
 				}
-			};
+			}
 
-			return column;
-		});
-	}, [columnsDef, expandedRecordIds, filters]);
+			return column
+		})
+	}, [columnsDef, expandedRecordIds, filters])
 
 	// Sort
-	const { sortStatus, setSortStatus } = useSort(noodlNode, sort, columns);
-	const SortedIcon = R.libs.icons[sort.sortedIcon || 'IconArrowUp'];
-	const UnsortedIcon = R.libs.icons[sort.unsortedIcon || 'IconSelector'];
+	const { sortStatus, setSortStatus } = useSort(noodlNode, sort, columns)
+	const SortedIcon = R.libs.icons[sort.sortedIcon || 'IconArrowUp']
+	const UnsortedIcon = R.libs.icons[sort.unsortedIcon || 'IconSelector']
 
 	// Input signals
 	useImperativeHandle(
 		ref,
 		() => ({
 			table2ResetSingleSelection() {
-				setSelectedRecord(tableId, undefined);
+				setSelectedRecord(tableId, undefined)
 			},
 			table2ResetMultiSelection() {
 				// Записываем в scope, что все items: "notSelected"
 				items.forEach((item) => {
-					tableSelectionScopeValue[item.id] = 'notSelected';
-				});
-				setTableSelectionScopeValue(tableSelectionScopeValue);
+					tableSelectionScopeValue[item.id] = 'notSelected'
+				})
+				setTableSelectionScopeValue(tableSelectionScopeValue)
 				// setTableSelectionByDBClassValue(tableSelectionByDBClassValue)
-				setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue);
-				setSelectedRecords(tableId, []);
+				setTableSelectionScopeInternalValue(tableSelectionScopeInternalValue)
+				setSelectedRecords(tableId, [])
 			},
 			table2ResetSort() {
-				setSortStatus(undefined);
+				setSortStatus(undefined)
 			},
 			table2ResetFilters() {
-				resetFilters();
-				forceUpdate();
+				resetFilters()
+				forceUpdate()
 			},
 			table2ExpandAll() {
-				setExpandedRecordIds(items?.map((i) => i.id) || []);
+				setExpandedRecordIds(items?.map((i) => i.id) || [])
 			},
 			table2UnexpandAll() {
-				setExpandedRecordIds([]);
+				setExpandedRecordIds([])
 			},
 		}),
 		[tableId, items]
-	);
+	)
 
 	// Table styles
-	const [bodyRef] = useAutoAnimate<HTMLTableSectionElement>();
-	const [animation, setAnimation] = useState(false);
+	const [bodyRef] = useAutoAnimate<HTMLTableSectionElement>()
+	const [animation, setAnimation] = useState(false)
 	useEffect(() => {
-		if (!fetching && !animation && tableStyles.animation) setTimeout(() => setAnimation(true), 100);
-	}, [fetching]);
+		if (!fetching && !animation && tableStyles.animation) setTimeout(() => setAnimation(true), 100)
+	}, [fetching])
 
 	// Row styles
-	const { classes, cx } = useRowStyles(rowStyles);
+	const { classes, cx } = useRowStyles(rowStyles)
 
 	// Ошибки с выводом в таблицу
 	// emptyState: <Text color={props.dataFetchError || props.dataScopeError ? 'red' : 'dimmed'} size="sm">
@@ -498,9 +498,9 @@ export default forwardRef(function (props: Props, ref) {
 						// Single selection
 						selection.single.enabled && onRowClick === 'singleSelection'
 							? (item) => {
-									if (selectedRecord?.id === item.id && selection.single.unselectable) setSelectedRecord(tableId, undefined);
-									else setSelectedRecord(tableId, item);
-							  }
+									if (selectedRecord?.id === item.id && selection.single.unselectable) setSelectedRecord(tableId, undefined)
+									else setSelectedRecord(tableId, item)
+								}
 							: undefined
 					}
 					// Multi selection
@@ -521,11 +521,11 @@ export default forwardRef(function (props: Props, ref) {
 									trigger: onRowClick === 'expansion' ? 'click' : 'never',
 									expanded: { recordIds: expandedRecordIds, onRecordIdsChange: setExpandedRecordIds },
 									content: ({ record }) => {
-										if (expansionRow) expansionRow.props.noodlNode.props.innerProps = { record, tableId }; // MD add tableId
-										return expansionRow;
+										if (expansionRow) expansionRow.props.noodlNode.props.innerProps = { record, tableId } // MD add tableId
+										return expansionRow
 									},
 									collapseProps: { transitionDuration: 50, ...customProps?.collapseProps },
-							  }
+								}
 							: undefined
 					}
 					// Table styles
@@ -552,5 +552,5 @@ export default forwardRef(function (props: Props, ref) {
 				/>
 			</Box>
 		</ScopeProvider>
-	);
-});
+	)
+})

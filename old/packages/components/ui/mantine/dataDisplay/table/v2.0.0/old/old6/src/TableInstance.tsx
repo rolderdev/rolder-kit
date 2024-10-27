@@ -1,41 +1,41 @@
 /* Сама таблица */
 
-import { memo } from 'react';
-import { DataTable } from 'mantine-datatable';
-import type { Item } from 'types';
-import { useStore } from './store';
-import ExpansionRow from './renders/ExpansionRow';
-import getRowBgColor from './funcs/getRowBgColor';
-import onRowClickHandler from './funcs/onRowClickHandler';
+import { DataTable } from 'mantine-datatable'
+import { memo } from 'react'
+import type { Item } from 'types'
+import getRowBgColor from './funcs/getRowBgColor'
+import onRowClickHandler from './funcs/onRowClickHandler'
+import ExpansionRow from './renders/ExpansionRow'
+import { useStore } from './store'
 
-import rowClasses from './styles/row.module.css';
-import getCursorState from './funcs/getCursorState';
-import render from './renders/render';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import getCursorState from './funcs/getCursorState'
+import render from './renders/render'
+import rowClasses from './styles/row.module.css'
 
 // memo остановит любой рендер пришедший сверху, кроме изменения fetching.
 export default memo((p: { fetching: boolean }) => {
-	const store = useStore();
-	if (!store) return;
+	const store = useStore()
+	if (!store) return
 
 	// Берем состояние по частям для точечной реактивности.
-	const libProps = store.libProps.use();
-	const columns = store.columns.use();
-	const items = store.items.use();
+	const libProps = store.libProps.use()
+	const columns = store.columns.use()
+	const items = store.items.use()
 
-	const onRowClick = store.tableProps.onRowClick.use();
-	const multiSelection = store.tableProps.multiSelection.use();
-	const selectedItems = store.selectedItems.use();
+	const onRowClick = store.tableProps.onRowClick.use()
+	const multiSelection = store.tableProps.multiSelection.use()
+	const selectedItems = store.selectedItems.use()
 
-	const expansion = store.tableProps.expansion.use();
-	const expandedIds = store.expandedIds.use();
-	const withRowBorders = store.libProps.withRowBorders.get();
+	const expansion = store.tableProps.expansion.use()
+	const expandedIds = store.expandedIds.use()
+	const withRowBorders = store.libProps.withRowBorders.get()
 
-	const sortState = store.sortState.use();
+	const sortState = store.sortState.use()
 
 	// Анимация
-	const animation = store.tableProps.animation?.use();
-	const [bodyRef] = useAutoAnimate<HTMLTableSectionElement>();
+	const animation = store.tableProps.animation?.use()
+	const [bodyRef] = useAutoAnimate<HTMLTableSectionElement>()
 
 	//console.log('Table render', expansion.enabled, withRowBorders); // Считаем рендеры пока разрабатываем
 	return (
@@ -74,11 +74,11 @@ export default memo((p: { fetching: boolean }) => {
 			// Это место заставило передавать весь item в таблицу, чтобы можно было использовать функции встроенную в библиотеку.
 			selectedRecords={multiSelection ? selectedItems : undefined}
 			onSelectedRecordsChange={(selectedItems) => {
-				store.setSelectedItems(selectedItems);
+				store.setSelectedItems(selectedItems)
 				// Установим состояние выбора для всей иерархии, если есть TableScope.
 				// Здесь мы устанавливаем TableScope, а useSelectedItems в TableController использует TableScope.
-				const scopeDbClass = store.tableProps.scope?.get((s) => s?.dbClass);
-				if (scopeDbClass) store.scope.get()?.setMultiSelection(store.tableId.get(), scopeDbClass, selectedItems);
+				const scopeDbClass = store.tableProps.scope?.get((s) => s?.dbClass)
+				if (scopeDbClass) store.scope.get()?.setMultiSelection(store.tableId.get(), scopeDbClass, selectedItems)
 			}}
 			// Expansion
 			//@ts-ignore Не разобрался с типизацией
@@ -96,10 +96,10 @@ export default memo((p: { fetching: boolean }) => {
 							},
 							content: ({ record, collapse }) => {
 								// Добавляем функцию collapse прямо в объект, чтбы разработчик мог запустить ее и свернуть вручную
-								Noodl.Objects[record.id].collapse = collapse;
-								return <ExpansionRow itemId={record.id} />;
+								Noodl.Objects[record.id].collapse = collapse
+								return <ExpansionRow itemId={record.id} />
 							},
-					  }
+						}
 					: undefined
 			}
 			// Sort
@@ -107,5 +107,5 @@ export default memo((p: { fetching: boolean }) => {
 			onSortStatusChange={(state) => store.sortState.set(state)}
 			{...libProps}
 		/>
-	);
-});
+	)
+})

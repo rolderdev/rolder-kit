@@ -1,7 +1,7 @@
 {
 	"name": "old_app",
 	"dependencies": {
-		"@mantine/form": "^7.13.2",
+		"@mantine/form": "^7.13.4",
 		"@packages/add-css-to-html-head": "workspace:@packages/add-css-to-html-head-v0.1.0@^",
 		"@packages/app-v1.4.0": "workspace:*",
 		"@packages/get-formated-date-v0.2.0": "workspace:*",
@@ -12,7 +12,7 @@
 		"@packages/node": "workspace:@packages/node-v0.8.0@^",
 		"@packages/port": "workspace:@packages/port-v0.6.0@^",
 		"@packages/system-loader-animation": "workspace:@packages/system-loader-animation-v0.1.0@^",
-		"@tabler/icons-react": "^3.19.0",
+		"@tabler/icons-react": "^3.20.0",
 		"consola": "^3.2.3",
 		"dayjs": "^1.11.13",
 		"fast-deep-equal": "^3.1.3",

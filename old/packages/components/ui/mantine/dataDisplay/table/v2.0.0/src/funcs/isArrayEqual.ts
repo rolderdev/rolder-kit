@@ -2,15 +2,15 @@
 Если в объекте есть функции на первом уровне, они так же буду проверены.
 Глубже сравнение функций работать не будет и будет возвращаться false. */
 
-import isEqual from 'lodash.isequal';
-import stringifyObjectFuncs from './stringifyObjectFuncs';
+import isEqual from 'lodash.isequal'
+import stringifyObjectFuncs from './stringifyObjectFuncs'
 
 export default function (source: any[], traget: any[]): boolean {
-	let parsedSourceArr: any[] = [];
-	source.map((s) => parsedSourceArr.push(stringifyObjectFuncs(s)));
+	const parsedSourceArr: any[] = []
+	source.map((s) => parsedSourceArr.push(stringifyObjectFuncs(s)))
 
-	let parsedTargetArr: any[] = [];
-	traget.map((t) => parsedTargetArr.push(stringifyObjectFuncs(t)));
+	const parsedTargetArr: any[] = []
+	traget.map((t) => parsedTargetArr.push(stringifyObjectFuncs(t)))
 
-	return isEqual(parsedSourceArr, parsedTargetArr);
+	return isEqual(parsedSourceArr, parsedTargetArr)
 }

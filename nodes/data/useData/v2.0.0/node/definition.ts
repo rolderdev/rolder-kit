@@ -1,26 +1,26 @@
-import type { BaseJsProps } from '@shared/node-v1.0.0';
-import type { JsNodeDef } from '@shared/node-v1.0.0';
-import { getPortDef } from '@shared/port-v1.0.0';
-import getStore from './store';
-import { validateFetchScheme } from './validtaion';
-import type { FetchScheme } from './validtaion';
-import type { Store } from './store';
-import type { Nodes, NodeMultiSelection, NodeSingleSelection, NodeExpansion, MultiSelection } from '../component/Node';
-import type { HistoryItem, ItemsHistory } from '../component/fetch';
-import { unsubscribe } from '../component/handleSubscribe';
-import initState from '@shared/init-state-v0.1.0';
+import initState from '@shared/init-state-v0.1.0'
+import type { BaseJsProps } from '@shared/node-v1.0.0'
+import type { JsNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
+import type { MultiSelection, NodeExpansion, NodeMultiSelection, NodeSingleSelection, Nodes } from '../component/Node'
+import type { HistoryItem, ItemsHistory } from '../component/fetch'
+import { unsubscribe } from '../component/handleSubscribe'
+import getStore from './store'
+import type { Store } from './store'
+import { validateFetchScheme } from './validtaion'
+import type { FetchScheme } from './validtaion'
 
-export type Props = BaseJsProps & BaseProps & { store: Store };
+export type Props = BaseJsProps & BaseProps & { store: Store }
 
 export type BaseProps = {
-	apiVersion: 'v2';
-	fetchScheme?: FetchScheme;
-	outputDbClasses?: string[];
-	controlled: boolean;
-	subscribe: boolean;
-};
+	apiVersion: 'v2'
+	fetchScheme?: FetchScheme
+	outputDbClasses?: string[]
+	controlled: boolean
+	subscribe: boolean
+}
 
-export type { Nodes, NodeMultiSelection, NodeSingleSelection, NodeExpansion, MultiSelection, HistoryItem, ItemsHistory };
+export type { Nodes, NodeMultiSelection, NodeSingleSelection, NodeExpansion, MultiSelection, HistoryItem, ItemsHistory }
 
 export default {
 	hashTag: '#pre-release',
@@ -58,14 +58,14 @@ export default {
 				type: 'boolean',
 				default: true,
 				visibleAt: 'editor',
-				dependsOn: (p: Props) => (p.controlled ? false : true),
+				dependsOn: (p: Props) => !p.controlled,
 			}),
 			getPortDef({
 				name: 'fetch',
 				displayName: 'Fetch',
 				group: 'Signals',
 				type: 'signal',
-				dependsOn: (p: Props) => (p.controlled ? true : false),
+				dependsOn: (p: Props) => p.controlled,
 			}),
 			getPortDef({
 				name: 'outputDbClasses',
@@ -75,13 +75,11 @@ export default {
 				type: 'proplist',
 				validate: (p: Props) => {
 					if (R.dbClasses) {
-						let notExistsDbClasses: string[] = [];
-						p.outputDbClasses?.forEach((i) => {
-							if (!R.dbClasses?.[i]) notExistsDbClasses.push(i);
-						});
-						if (notExistsDbClasses.length) return `There is no such DB classes as "${notExistsDbClasses.join('", "')}"`;
+						const notExistsDbClasses: string[] = []
+						for (const i of p.outputDbClasses ?? []) if (!R.dbClasses?.[i]) notExistsDbClasses.push(i)
+						if (notExistsDbClasses.length) return `There is no such DB classes as "${notExistsDbClasses.join('", "')}"`
 					}
-					return true;
+					return true
 				},
 			}),
 			getPortDef({ name: 'resetSingleSelection', displayName: 'Reset single selection', group: 'Signals', type: 'signal' }),
@@ -105,8 +103,8 @@ export default {
 		triggerOnInputs: () => ['apiVersion', 'fetchScheme', 'controlled', 'subscribe'],
 		transformPorts: async (p: Props, portDefs) => {
 			// Пересоздание outputDbClasses
-			const dbClasses = p.outputDbClasses;
-			portDefs.outputs = portDefs.outputs.filter((i) => !i.group?.includes('Data:'));
+			const dbClasses = p.outputDbClasses
+			portDefs.outputs = portDefs.outputs.filter((i) => !i.group?.includes('Data:'))
 			if (dbClasses)
 				dbClasses.map((dbClass) => {
 					portDefs.outputs.push(
@@ -117,25 +115,25 @@ export default {
 							type: 'array',
 							displayName: `${dbClass} Items`,
 						})
-					);
+					)
 					portDefs.outputs.push(
 						getPortDef({
 							name: `${dbClass}Fetched`,
 							group: 'Custom',
 							customGroup: `Data: ${dbClass}`,
 							type: 'number',
-							displayName: `${dbClass} Fetched`,
+							displayName: `${dbClass} Fetched count`,
 						})
-					);
+					)
 					portDefs.outputs.push(
 						getPortDef({
 							name: `${dbClass}Total`,
 							group: 'Custom',
 							customGroup: `Data: ${dbClass}`,
 							type: 'number',
-							displayName: `${dbClass} Total`,
+							displayName: `${dbClass} Total count`,
 						})
-					);
+					)
 					portDefs.outputs.push(
 						getPortDef({
 							name: `${dbClass}Aggregations`,
@@ -144,26 +142,26 @@ export default {
 							type: 'object',
 							displayName: `${dbClass} Aggregations`,
 						})
-					);
-				});
+					)
+				})
 		},
 		getInspectInfo: (p: Props) => [
 			{ type: 'text', value: `API ${p.apiVersion}` },
-			{ type: 'text', value: `=== Scheme ===` },
+			{ type: 'text', value: '=== Scheme ===' },
 			{ type: 'value', value: p.fetchScheme },
 		],
 	},
 	beforeComponent: {
 		initialize: async (p: Props, noodlNode) => {
-			await initState('initialized');
-			p.store = getStore(p);
+			await initState('initialized')
+			p.store = getStore(p)
 
 			// Отпишемся, когда родитель отмонтировался. Родитель может быть страницей, в таком случае пропустим.
 			if (noodlNode.nodeScope.componentOwner.parent?.innerReactComponentRef)
-				noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => unsubscribe(p);
+				noodlNode.nodeScope.componentOwner.parent.innerReactComponentRef.componentWillUnmount = () => unsubscribe(p)
 			// Отпишемся, когда удален.
-			noodlNode._onNodeDeleted = () => unsubscribe(p);
+			noodlNode._onNodeDeleted = () => unsubscribe(p)
 		},
 	},
 	disableCustomProps: true,
-} satisfies JsNodeDef;
+} satisfies JsNodeDef

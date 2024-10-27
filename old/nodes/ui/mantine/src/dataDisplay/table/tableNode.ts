@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPort, getPorts, getType } from '@packages/port';
-import { lazy } from 'react';
-import ports200 from './ports/v2.0.0';
+import { reactNode } from '@packages/node'
+import { getPort, getPorts, getType } from '@packages/port'
+import { lazy } from 'react'
+import ports200 from './ports/v2.0.0'
 
 export default reactNode(
 	'Table',
@@ -782,4 +782,4 @@ export default reactNode(
 		allowChildren: true,
 		docs: 'https://docs.rolder.app/#/table',
 	}
-);
+)

@@ -1,11 +1,5 @@
-import { forwardRef } from "react"
-import type { Props } from "./types"
-import { Loader } from "@mantine/core"
+import { Loader } from '@mantine/core'
+import { forwardRef } from 'react'
+import type { Props } from './types'
 
-export default forwardRef(function (props: Props) {
-    return <Loader
-        variant={props.loaderVariant}
-        {...props}
-        {...props.customProps}
-    />
-})
+export default forwardRef((props: Props) => <Loader variant={props.loaderVariant} {...props} {...props.customProps} />)

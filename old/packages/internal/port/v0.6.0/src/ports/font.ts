@@ -1,12 +1,12 @@
-import type { NodePort } from '../../types';
-import { enums } from '../collections/enums';
-import { getCustomEnumType, getEnumType } from '../funcs/getType';
+import type { NodePort } from '../../types'
+import { enums } from '../collections/enums'
+import { getCustomEnumType, getEnumType } from '../funcs/getType'
 
 const weights = [
 	{ value: '400', label: 'Normal' },
 	{ value: '600', label: 'Medium' },
 	{ value: '700', label: 'Bold' },
-];
+]
 
 export default [
 	{
@@ -81,7 +81,7 @@ export default [
 		default: '{8} (000) 000-00-00',
 		customs: {
 			dependsOn(p) {
-				return p.textFormat === 'mask';
+				return p.textFormat === 'mask'
 			},
 			required: 'both',
 		},
@@ -93,10 +93,10 @@ export default [
 		displayName: 'Number format',
 		customs: {
 			dependsOn(p) {
-				return p.textFormat === 'number';
+				return p.textFormat === 'number'
 			},
 			required: 'both',
 			isObject: true,
 		},
 	},
-] as const satisfies readonly NodePort[];
+] as const satisfies readonly NodePort[]

@@ -1,19 +1,19 @@
-import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
-import type { ButtonVariant } from '@mantine/core';
+import type { ButtonVariant } from '@mantine/core'
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, sizes } from '@shared/port-v1.0.0'
 
 export type Props = BaseReactProps & {
-	label?: string;
-	submitType: boolean;
-	href?: string;
-	sizeProp: string;
-	compact: boolean;
-	fullWidth: boolean;
-	variant: ButtonVariant;
-	disabled: boolean;
-};
+	label?: string
+	submitType: boolean
+	href?: string
+	sizeProp: string
+	compact: boolean
+	fullWidth: boolean
+	variant: ButtonVariant
+	disabled: boolean
+}
 
-import Comp from '../component/Button';
+import Comp from '../component/Button'
 
 export default {
 	hashTag: '#expreimental',
@@ -48,7 +48,7 @@ export default {
 				group: 'Styles',
 				type: 'objectEval',
 				dependsOn: (p: Props) => p.variant === 'gradient',
-				codeComment: `//(props) => ({ from: 'blue', to: 'cyan', deg: 90 })`,
+				codeComment: `//(props) => { return { from: 'blue', to: 'cyan', deg: 90 } }`,
 			}),
 			getPortDef({ name: 'radius', displayName: 'Radius', group: 'Styles', type: sizes, default: 'md' }),
 			getPortDef({ name: 'color', displayName: 'Color', group: 'Styles', type: 'string', default: 'blue' }),
@@ -57,7 +57,7 @@ export default {
 				displayName: 'Loader props',
 				group: 'Styles',
 				type: 'objectEval',
-				codeComment: `//(props) => ({ type: 'dots' })`,
+				codeComment: `//(props) => { return { type: 'dots' } }`,
 			}),
 			getPortDef({ name: 'disabled', displayName: 'Disabled', group: 'States', type: 'boolean', default: false }),
 			getPortDef({ name: 'loading', displayName: 'Loading', group: 'States', type: 'boolean', default: false }),
@@ -71,4 +71,4 @@ export default {
 		],
 		outputs: [getPortDef({ name: 'clicked', displayName: 'Clicked', group: 'Signals', type: 'signal' })],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

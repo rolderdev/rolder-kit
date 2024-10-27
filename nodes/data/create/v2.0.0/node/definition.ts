@@ -1,11 +1,11 @@
-import type { BaseJsProps } from '@shared/node-v1.0.0';
-import type { JsNodeDef } from '@shared/node-v1.0.0';
-import { getPortDef } from '@shared/port-v1.0.0';
-import { validateCreateScheme } from './validtaion';
-import type { CreateScheme } from './validtaion';
-import initState from '@shared/init-state-v0.1.0';
+import initState from '@shared/init-state-v0.1.0'
+import type { BaseJsProps } from '@shared/node-v1.0.0'
+import type { JsNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
+import { validateCreateScheme } from './validtaion'
+import type { CreateScheme } from './validtaion'
 
-export type Props = BaseJsProps & { apiVersion: 'v1'; createScheme?: CreateScheme };
+export type Props = BaseJsProps & { apiVersion: 'v1'; createScheme?: CreateScheme }
 
 export default {
 	hashTag: '#pre-release',
@@ -43,16 +43,16 @@ export default {
 	afterNode: {
 		getInspectInfo: (p: Props, outProps) => [
 			{ type: 'text', value: `API ${p.apiVersion}` },
-			{ type: 'text', value: `=== Scheme ===` },
+			{ type: 'text', value: '=== Scheme ===' },
 			{ type: 'value', value: p.createScheme },
-			outProps.data && { type: 'text', value: `=== Data ===` },
+			outProps.data && { type: 'text', value: '=== Data ===' },
 			outProps.data && { type: 'value', value: outProps.data },
 		],
 	},
 	beforeComponent: {
 		initialize: async () => {
-			await initState('initialized');
+			await initState('initialized')
 		},
 	},
 	disableCustomProps: true,
-} satisfies JsNodeDef;
+} satisfies JsNodeDef

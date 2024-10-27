@@ -1,26 +1,26 @@
-import { createContext } from 'react';
-import { createStore } from 'zustand';
-import { nanoid } from 'nanoid';
-import type { NoodlNode } from '@packages/node';
-import type { Item } from 'types';
-import type { Props } from '../../types';
-import { getLibProps, type LibProps } from '../models/libPropsModel';
-import { getTableProps, type TableProps } from '../models/tablePropsModel';
-import { getColumns, type Column } from '../models/columnModel';
-import type { Row } from '../models/rowMoldel';
-import isEqual from 'lodash.isequal';
-import type { DataTableSortStatus } from 'mantine-datatable';
+import type { NoodlNode } from '@packages/node'
+import isEqual from 'lodash.isequal'
+import type { DataTableSortStatus } from 'mantine-datatable'
+import { nanoid } from 'nanoid'
+import { createContext } from 'react'
+import type { Item } from 'types'
+import { createStore } from 'zustand'
+import type { Props } from '../../types'
+import { type Column, getColumns } from '../models/columnModel'
+import { type LibProps, getLibProps } from '../models/libPropsModel'
+import type { Row } from '../models/rowMoldel'
+import { type TableProps, getTableProps } from '../models/tablePropsModel'
 
 export type State = {
-	noodlNode: NoodlNode;
-	tableId: string;
-	fetching: boolean;
-	libProps: LibProps;
-	tableProps: TableProps;
-	columns: Column[]; // С колонками удобнее работаь через простой массив.
-	rows: Map<string, Row>; // Map - удобнее записывать и брать, забивая на порядок.
-	items: Item[];
-	rowIds: string[]; // Массив id, чтобы не передавать часто меняющиеся items в таблицу и управлять порядком строк.
+	noodlNode: NoodlNode
+	tableId: string
+	fetching: boolean
+	libProps: LibProps
+	tableProps: TableProps
+	columns: Column[] // С колонками удобнее работаь через простой массив.
+	rows: Map<string, Row> // Map - удобнее записывать и брать, забивая на порядок.
+	items: Item[]
+	rowIds: string[] // Массив id, чтобы не передавать часто меняющиеся items в таблицу и управлять порядком строк.
 	/* selectedRowId?: string;
 	selectedRowFirstRun: boolean;
 	selectedRowIds: string[];
@@ -33,10 +33,10 @@ export type State = {
 			direction: 'asc' | 'desc';
 		};
 	}; */
-	startTime: number;
-};
+	startTime: number
+}
 
-export type Store = ReturnType<typeof createTableStore>;
+export type Store = ReturnType<typeof createTableStore>
 
 export const createTableStore = (p: Props) =>
 	createStore<State>()(() => ({
@@ -66,9 +66,9 @@ export const createTableStore = (p: Props) =>
 			})() as DataTableSortStatus<Item> | undefined,
 		}, */
 		startTime: performance.now(),
-	}));
+	}))
 
-export const TableContext = createContext<Store | null>(null);
+export const TableContext = createContext<Store | null>(null)
 
 // Метод для выбора строки. itemIds нужны для первичной проврке, когда еще нет rows.
 /* export const setSelectedRowId = (store: Store, itemIds: string[], selectedId?: string) => {

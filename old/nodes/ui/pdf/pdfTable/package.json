@@ -1,16 +1,16 @@
 {
-  "name": "@nodes/pdf-table",
-  "main": "pdfTableNode.ts",
-  "types": "pdfTableNode.ts",
-  "dependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@^",
-    "@packages/pdf-table-v1.0.0": "workspace:*",
-    "@packages/pdf-table-v1.1.0": "workspace:*",
-    "@packages/pdf-table-v1.2.0": "workspace:*",
-    "@packages/pdf-table-v1.3.0": "workspace:*",
-    "@packages/port": "workspace:@packages/port-v0.6.0@^"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@nodes/pdf-table",
+	"main": "pdfTableNode.ts",
+	"types": "pdfTableNode.ts",
+	"dependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"@packages/pdf-table-v1.0.0": "workspace:*",
+		"@packages/pdf-table-v1.1.0": "workspace:*",
+		"@packages/pdf-table-v1.2.0": "workspace:*",
+		"@packages/pdf-table-v1.3.0": "workspace:*",
+		"@packages/port": "workspace:@packages/port-v0.6.0@^"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }

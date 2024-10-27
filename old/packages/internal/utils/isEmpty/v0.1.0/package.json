@@ -1,12 +1,12 @@
 {
-  "name": "@packages/is-empty-v0.1.0",
-  "main": "isEmpty.ts",
-  "types": "isEmpty.ts",
-  "dependencies": {
-    "just-is-empty": "3.4.1",
-    "just-typeof": "3.2.0"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@packages/is-empty-v0.1.0",
+	"main": "isEmpty.ts",
+	"types": "isEmpty.ts",
+	"dependencies": {
+		"just-is-empty": "3.4.1",
+		"just-typeof": "3.2.0"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }

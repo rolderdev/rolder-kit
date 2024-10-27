@@ -1,8 +1,8 @@
-import { BaseReactProps } from "@packages/node";
-import type { AsideProps, MantineSize } from "@mantine/core";
+import type { AsideProps, MantineSize } from '@mantine/core'
+import type { BaseReactProps } from '@packages/node'
 
 export type Props = BaseReactProps & {
-  asideWithBorder?: boolean;
-  asideWidth: AsideProps["width"];
-  asideHiddenBreakpoint?: MantineSize;
-};
+	asideWithBorder?: boolean
+	asideWidth: AsideProps['width']
+	asideHiddenBreakpoint?: MantineSize
+}

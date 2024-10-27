@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPorts, getPort, getCustomEnumType } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/loader-v1.0.0';
+import v100 from '@packages/loader-v1.0.0'
 
 export default reactNode('Loader', {
 	'v1.0.0': {
@@ -14,8 +14,8 @@ export default reactNode('Loader', {
 				displayName: 'Variant',
 				group: 'Style',
 				default: 'oval',
-				type: getCustomEnumType(['oval', 'bars', 'dots'])
-			})
-		]
-	}
-});
+				type: getCustomEnumType(['oval', 'bars', 'dots']),
+			}),
+		],
+	},
+})

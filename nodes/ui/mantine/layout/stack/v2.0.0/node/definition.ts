@@ -1,9 +1,9 @@
-import { getPortDef, margins, paddings, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, margins, paddings, sizes } from '@shared/port-v1.0.0'
 
-export type Props = BaseReactProps & {};
+export type Props = BaseReactProps & {}
 
-import Comp from '../component/Stack';
+import Comp from '../component/Stack'
 
 export default {
 	module: { static: Comp },
@@ -48,4 +48,4 @@ export default {
 			...paddings,
 		],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

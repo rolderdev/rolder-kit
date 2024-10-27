@@ -1,46 +1,49 @@
-import { memo, useContext } from 'react';
-import { DataTable } from 'mantine-datatable';
-import type { TableRecord } from './models/record';
-import { TableContext } from './TableProvider';
-import { getColumns } from './models/column';
-import getRowClickHandler from './funcs/getRowClickHandler';
-import getCursorState from './funcs/getCursorState';
-import getRowBgColor from './funcs/getRowBgColor';
-import { handleRecordSelection, setSelectedIds, useHierarchySelection } from './models/multiSelection';
-import ExpansionRow from './renders/ExpansionRow';
-import { setSortState } from './models/sort';
+import { DataTable } from 'mantine-datatable'
+import { memo } from 'react'
+import { isRecordSelectable, setSelectedIds } from './models/multiSelection'
+import type { TableRecord } from './models/record'
+import { getCursorState, getRowBgColor, getRowClickHandler } from './models/row'
+import { setSortState } from './models/sort'
+import ExpansionRow from './renders/ExpansionRow'
+import { useStore } from './store'
 
-import rowClasses from './styles/row.module.css';
+import rowClasses from './styles/row.module.css'
 
-export default memo(() => {
-	const { get } = R.libs.just;
-	const { useSnapshot } = R.libs.valtio;
+export default memo((p: { tableId: string }) => {
+	const s = useStore(p.tableId)
+	const sn = R.libs.valtio.useSnapshot(s)
 
-	const s = useContext(TableContext);
-	const snap = useSnapshot(s);
-
-	// Состояние чекбоксов и реактивность на изменения выбора в иерархии.
-	useHierarchySelection(s);
-
-	//console.log('Table render', snap.sortState);
+	//console.log('Table render', p.tableId)
 	return (
 		<DataTable<TableRecord>
 			// Base
-			style={() => ({ popover: { radius: 32 } })}
-			fetching={snap.fetching}
-			columns={getColumns(snap as any)}
-			records={snap.fetching ? [] : snap.records}
-			onRowClick={getRowClickHandler(s)}
+			columns={Object.values(sn.columns as any)}
+			fetching={sn.fetching}
+			records={sn.fetching ? undefined : (sn.records as any)}
+			// style={() => ({ popover: { radius: 32 } })}
+			onRowClick={getRowClickHandler(s, sn.tableProps.onRowClick, sn.funcs.clickFilterFunc)}
 			// Row styles
 			className={rowClasses.row}
-			rowStyle={(record) => ({ cursor: getCursorState(s, record.id), '&td': { borderBottom: '4px solid' } })} // Управление состоянием курсора.
-			rowBackgroundColor={(record) => getRowBgColor(s, record.id)}
-			getRecordSelectionCheckboxProps={(record) => get(snap.checkboxes, ['props', record.id])}
+			// Управление состоянием курсора.
+			rowStyle={(record) => ({
+				cursor: getCursorState(
+					s,
+					record.id,
+					sn.tableProps.onRowClick,
+					sn.funcs.clickFilterFunc,
+					sn.funcs.singleSelectionFilterFunc,
+					sn.funcs.expansionFilterFunc
+				),
+				'&td': { borderBottom: '4px solid' },
+			})}
+			rowBackgroundColor={(record) => getRowBgColor(s, record.id, sn.selectedId, sn.selectedIds, sn.tableProps.rowStyles)}
 			// Multi selection
+			// Добавим настройки чекбокса поверх заданного разработчиком - отступ и indeterminate.
+			getRecordSelectionCheckboxProps={(record) => R.libs.just.get(sn.rows, [record.id, 'checkBoxProps'])}
 			selectedRecords={
 				s.tableProps.multiSelection.enabled
-					? Object.keys(snap.selectedIds)
-							.filter((id) => snap.selectedIds[id])
+					? Object.keys(sn.selectedIds)
+							.filter((id) => sn.selectedIds[id])
 							.map((id) => ({ id }))
 					: undefined
 			}
@@ -49,41 +52,48 @@ export default memo(() => {
 			}
 			// Заменим встроенную функцию запрета выбора своей.
 			isRecordSelectable={(record) =>
-				s.tableProps.multiSelection.enabled ? handleRecordSelection(s, snap as any, record.id) : true
+				s.tableProps.multiSelection.enabled ? isRecordSelectable(s, record.id, sn.funcs.multiSelectionFilterFunc) : true
 			}
-			// Заменим стандартные параметры чекбокса в заголовке.
-			// Нам это нужно из-за варианта, когда в корне нет ни отдного selected, но есть 'indeterminate'.
-			allRecordsSelectionCheckboxProps={get(snap.checkboxes, ['props', 'header'])}
 			// Уберем прилипание колоник с чекбоксом, если таблица часть иерархии.
 			// Почему то этот код тригерит рендер, если прилетает с libprops.
 			selectionColumnStyle={
-				snap.tableProps.expansion.enabled || snap.hierarchy?.isChild
-					? { position: 'relative', '--mantine-datatable-shadow-background-left': 'none', borderLeft: 'unset' }
-					: undefined
-			}
-			// Expansion
-			rowExpansion={
-				snap.tableProps.expansion.enabled
+				sn.tableProps.expansion.enabled || sn.hierarchy?.isChild
 					? {
-							allowMultiple: snap.tableProps.expansion.allowMultiple,
-							// Мы сами управляем событием клика, т.к. накладываем на него фильтрацию.
-							// См. onRowClickHandler, ExpanderCell и getCursorState.
-							trigger: 'never',
-							collapseProps: snap.tableProps.expansion.collapseProps,
-							// Развернутые строки.
-							expanded: { recordIds: Object.keys(snap.expandedIds).filter((id) => snap.expandedIds[id]) },
-							content: ({ record, collapse }) => {
-								// Добавляем функцию collapse прямо в объект, чтбы разработчик мог запустить ее и свернуть вручную.
-								Noodl.Objects[record.id].collapse = collapse;
-								return <ExpansionRow id={record.id} />;
-							},
-					  }
+							position: 'relative',
+							'--mantine-datatable-shadow-background-left': 'none',
+							borderLeft: 'unset',
+							// Для всех ячеек разделитель ставится в модели колонки, здесь для ячейки с чекбоксом.
+							borderBottom:
+								sn.libProps.withRowBorders &&
+								(sn.tableProps.expansion.enabled || !sn.expandedIds[R.libs.just.last(sn.records.map((i) => i.id))]
+									? 'calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-datatable-row-border-color)'
+									: undefined),
+						}
 					: undefined
 			}
 			// Sort
-			sortStatus={snap.sortState}
+			sortStatus={sn.sort.state}
 			onSortStatusChange={(sortState) => setSortState(s, sortState)}
-			{...(snap.libProps as any)}
+			// Expansion
+			rowExpansion={
+				sn.tableProps.expansion.enabled
+					? {
+							allowMultiple: sn.tableProps.expansion.allowMultiple,
+							// Мы сами управляем событием клика, т.к. накладываем на него фильтрацию.
+							// См. onRowClickHandler, ExpanderCell и getCursorState.
+							trigger: 'never',
+							collapseProps: sn.tableProps.expansion.collapseProps,
+							// Развернутые строки.
+							expanded: { recordIds: sn.expandedIdsArr },
+							content: ({ record, collapse }) => {
+								// Добавляем функцию collapse прямо в объект, чтбы разработчик мог запустить ее и свернуть вручную.
+								Noodl.Objects[record.id].collapse = collapse
+								return <ExpansionRow tableId={p.tableId} id={record.id} />
+							},
+						}
+					: undefined
+			}
+			{...(sn.libProps as any)}
 		/>
-	);
-});
+	)
+})

@@ -1,31 +1,31 @@
-import { isMantineColorScheme, type MantineColorScheme, type MantineColorSchemeManager } from '@mantine/core';
+import { type MantineColorScheme, type MantineColorSchemeManager, isMantineColorScheme } from '@mantine/core'
 
 export default {
 	get: (defaultValue) => {
 		if (typeof window === 'undefined') {
-			return defaultValue;
+			return defaultValue
 		}
 
 		try {
-			return (R.db?.states.params.colorScheme as MantineColorScheme) || defaultValue;
+			return (R.db?.states.params.colorScheme as MantineColorScheme) || defaultValue
 		} catch {
-			return defaultValue;
+			return defaultValue
 		}
 	},
 
 	set: async (value) => {
 		try {
-			await R.db?.states.params.set('colorScheme', () => value);
+			await R.db?.states.params.set('colorScheme', () => value)
 		} catch (error) {
 			// eslint-disable-next-line no-console
-			console.warn('[@mantine/core] Local storage color scheme manager was unable to save color scheme.', error);
+			console.warn('[@mantine/core] Local storage color scheme manager was unable to save color scheme.', error)
 		}
 	},
 
 	subscribe: (onUpdate) => {
 		R.db?.states.params.colorScheme$.subscribe((colorScheme: MantineColorScheme) => {
-			isMantineColorScheme(colorScheme) && onUpdate(colorScheme);
-		});
+			isMantineColorScheme(colorScheme) && onUpdate(colorScheme)
+		})
 	},
 
 	unsubscribe: () => {
@@ -33,6 +33,6 @@ export default {
 	},
 
 	clear: async () => {
-		await R.db?.states.params.set('colorScheme', () => undefined);
+		await R.db?.states.params.set('colorScheme', () => undefined)
 	},
-} as MantineColorSchemeManager;
+} as MantineColorSchemeManager

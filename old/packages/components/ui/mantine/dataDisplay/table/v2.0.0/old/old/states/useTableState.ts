@@ -1,17 +1,17 @@
-import { nanoid } from 'nanoid';
-import type { Props, TableState } from '../../types';
-import getColumn from '../funcs/getColumn';
-import { useEffect, useMemo, useState } from 'react';
-import getLibState from './getLibState';
-import { useShallowEffect } from '@mantine/hooks';
+import { useShallowEffect } from '@mantine/hooks'
+import { nanoid } from 'nanoid'
+import { useEffect, useMemo, useState } from 'react'
+import type { Props, TableState } from '../../types'
+import getColumn from '../funcs/getColumn'
+import getLibState from './getLibState'
 
 export default function (p: Props) {
 	// useMemo с пустыми зависимостями создаст tableId один раз.
-	const tableId = useMemo(() => nanoid(8), []);
+	const tableId = useMemo(() => nanoid(8), [])
 	// Разберем props
-	const { noodlNode, columnsDefinition, items } = p;
+	const { noodlNode, columnsDefinition, items } = p
 	// Подготовим дефолты, обработав входящие порты. Оптимизируем, не вычисляя дефолты, когда порты не изменились.
-	const libState = useMemo(() => getLibState(p), [p]);
+	const libState = useMemo(() => getLibState(p), [p])
 	// Создадим состояние таблицы, задав первичное состояние, которое сразу вернется в Table для первого рендера.
 	// Это состояние принимает параметры, которые заданы с монтированием.
 	const [tableState, setTableState] = useState<TableState>({
@@ -24,13 +24,13 @@ export default function (p: Props) {
 		onRowClickFunc: p.onRowClickFunc,
 		selection: {
 			single: { enabled: p.singleSelection || false, unselectable: p.unselectable || false, selectedItem: p.selectedItem },
-			multi: { enabled: p.multiSelection || false, selectedItems: p.selectedItems || [] }
-		}
-	});
+			multi: { enabled: p.multiSelection || false, selectedItems: p.selectedItems || [] },
+		},
+	})
 
 	// Реактивность на порты
 	useShallowEffect(() => {
-		console.log('useShallowEffect');
+		console.log('useShallowEffect')
 		// Ждем, когда параметры придут с портов. Это место задает паттерн - пока разработчик не подал items и схему колонок,
 		// таблица показывает анимацию загрузки.
 		if (items && columnsDefinition) {
@@ -46,12 +46,12 @@ export default function (p: Props) {
 					items,
 					selection: {
 						single: { enabled: p.singleSelection || false, unselectable: p.unselectable || false, selectedItem: p.selectedItem },
-						multi: { enabled: p.multiSelection || false, selectedItems: p.selectedItems || [] }
-					}
-				}));
-			});
+						multi: { enabled: p.multiSelection || false, selectedItems: p.selectedItems || [] },
+					},
+				}))
+			})
 		}
-	}, [columnsDefinition, items]);
+	}, [columnsDefinition, items])
 
 	// if (items && columnsDefinition) {
 	// 	Promise.all(
@@ -96,5 +96,5 @@ export default function (p: Props) {
 	// 	});
 	// }
 
-	return tableState;
+	return tableState
 }

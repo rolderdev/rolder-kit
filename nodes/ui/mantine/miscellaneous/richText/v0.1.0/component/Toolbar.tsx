@@ -1,8 +1,8 @@
-import { RichTextEditor } from '@mantine/tiptap';
-import type { Props } from '../node/definition';
+import { RichTextEditor } from '@mantine/tiptap'
+import type { Props } from '../node/definition'
 
 export default (p: Props & { editor: any }) => {
-	const { IconSourceCode, IconFlask, IconRocket, IconCheck, IconBan } = R.libs.icons;
+	const { IconSourceCode, IconFlask, IconRocket, IconCheck, IconBan } = R.libs.icons
 
 	return (
 		<RichTextEditor.Toolbar sticky={p.sticky} stickyOffset={p.stickyOffset}>
@@ -112,6 +112,6 @@ export default (p: Props & { editor: any }) => {
 				<RichTextEditor.Redo />
 			</RichTextEditor.ControlsGroup>
 		</RichTextEditor.Toolbar>
-	);
-};
+	)
+}
 //<span style="color: rgb(240, 62, 62)"><sup>#experimental</sup></span>

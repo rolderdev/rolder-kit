@@ -1,11 +1,11 @@
-import { reactNode } from '@packages/node';
-import { defaultUnits, getCustomEnumType, getPort, getPorts, getUnitType, inputGroups } from '@packages/port';
-import { lazy } from 'react';
+import { reactNode } from '@packages/node'
+import { defaultUnits, getCustomEnumType, getPort, getPorts, getUnitType, inputGroups } from '@packages/port'
+import { lazy } from 'react'
 
 export default reactNode('DropZone', {
 	'v1.0.0': {
 		module: {
-			dynamic: lazy(() => import('@packages/drop-zone-v1.0.0'))
+			dynamic: lazy(() => import('@packages/drop-zone-v1.0.0')),
 		},
 		inputs: [
 			...getPorts('input', ['customProps', 'disabled', 'radius', 'w', 'h', 'loading', 'reset']),
@@ -18,7 +18,7 @@ export default reactNode('DropZone', {
 				displayName: 'Title',
 				group: 'Params',
 				type: 'string',
-				default: 'Внесите файл или нажмите, чтобы открыть в папке.'
+				default: 'Внесите файл или нажмите, чтобы открыть в папке.',
 			}),
 			getPort({
 				plug: 'input',
@@ -27,7 +27,7 @@ export default reactNode('DropZone', {
 				group: 'Params',
 				default: '*',
 				type: getCustomEnumType(['*', 'pdf', 'excel', 'image']),
-				customs: { required: 'both' }
+				customs: { required: 'both' },
 			}),
 			getPort({
 				plug: 'input',
@@ -36,7 +36,7 @@ export default reactNode('DropZone', {
 				group: 'Icons',
 				type: 'string',
 				default: 'IconDownload',
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -45,7 +45,7 @@ export default reactNode('DropZone', {
 				group: 'Icons',
 				type: 'string',
 				default: 'IconX',
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -54,7 +54,7 @@ export default reactNode('DropZone', {
 				group: 'Icons',
 				type: 'string',
 				default: 'IconFolder',
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -63,7 +63,7 @@ export default reactNode('DropZone', {
 				group: 'Icons',
 				type: getUnitType(defaultUnits, 'px'),
 				default: 24,
-				customs: { required: 'both' }
+				customs: { required: 'both' },
 			}),
 			getPort({
 				plug: 'input',
@@ -72,19 +72,19 @@ export default reactNode('DropZone', {
 				group: 'Icons',
 				type: 'number',
 				default: 2,
-				customs: { required: 'both' }
-			})
+				customs: { required: 'both' },
+			}),
 		],
 		outputs: [
 			getPort({ plug: 'output', name: 'fileName', displayName: 'fileName', group: 'Data', type: 'object' }),
 			getPort({ plug: 'output', name: 'file', displayName: 'file', group: 'Data', type: 'object' }),
 			getPort({ plug: 'output', name: 'loaded', displayName: 'loaded', group: 'Signals', type: 'signal' }),
-			getPort({ plug: 'output', name: 'rejected', displayName: 'rejected', group: 'Signals', type: 'signal' })
-		]
+			getPort({ plug: 'output', name: 'rejected', displayName: 'rejected', group: 'Signals', type: 'signal' }),
+		],
 	},
 	'v1.1.0': {
 		module: {
-			dynamic: lazy(() => import('@packages/drop-zone-v1.1.0'))
+			dynamic: lazy(() => import('@packages/drop-zone-v1.1.0')),
 		},
 		inputs: [
 			...getPorts('input', ['customProps', 'disabled', 'radius', 'w', 'h', 'loading', 'reset']),
@@ -97,7 +97,7 @@ export default reactNode('DropZone', {
 				displayName: 'Title',
 				group: 'Params',
 				type: 'string',
-				default: 'Внесите файл или нажмите, чтобы открыть в папке.'
+				default: 'Внесите файл или нажмите, чтобы открыть в папке.',
 			}),
 			getPort({
 				plug: 'input',
@@ -106,7 +106,7 @@ export default reactNode('DropZone', {
 				group: 'Params',
 				default: '*',
 				type: getCustomEnumType(['*', 'pdf', 'excel', 'image']),
-				customs: { required: 'both' }
+				customs: { required: 'both' },
 			}),
 			getPort({
 				plug: 'input',
@@ -115,7 +115,7 @@ export default reactNode('DropZone', {
 				group: 'Icons',
 				type: 'string',
 				default: 'IconDownload',
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -124,7 +124,7 @@ export default reactNode('DropZone', {
 				group: 'Icons',
 				type: 'string',
 				default: 'IconX',
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -133,7 +133,7 @@ export default reactNode('DropZone', {
 				group: 'Icons',
 				type: 'string',
 				default: 'IconFolder',
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -142,7 +142,7 @@ export default reactNode('DropZone', {
 				group: 'Icons',
 				type: getUnitType(defaultUnits, 'px'),
 				default: 24,
-				customs: { required: 'both' }
+				customs: { required: 'both' },
 			}),
 			getPort({
 				plug: 'input',
@@ -151,14 +151,14 @@ export default reactNode('DropZone', {
 				group: 'Icons',
 				type: 'number',
 				default: 2,
-				customs: { required: 'both' }
-			})
+				customs: { required: 'both' },
+			}),
 		],
 		outputs: [
 			getPort({ plug: 'output', name: 'fileName', displayName: 'fileName', group: 'Data', type: 'object' }),
 			getPort({ plug: 'output', name: 'file', displayName: 'file', group: 'Data', type: 'object' }),
 			getPort({ plug: 'output', name: 'loaded', displayName: 'loaded', group: 'Signals', type: 'signal' }),
-			getPort({ plug: 'output', name: 'rejected', displayName: 'rejected', group: 'Signals', type: 'signal' })
-		]
-	}
-});
+			getPort({ plug: 'output', name: 'rejected', displayName: 'rejected', group: 'Signals', type: 'signal' }),
+		],
+	},
+})

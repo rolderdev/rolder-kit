@@ -1,6 +1,6 @@
-import type { NodePort } from '../../port';
-import { defaultUnits, getEnumType, getUnitType } from '../funcs/getType';
-import { enums } from '../collections/enums';
+import type { NodePort } from '../../port'
+import { enums } from '../collections/enums'
+import { defaultUnits, getEnumType, getUnitType } from '../funcs/getType'
 
 export default [
 	{ name: 'maw', displayName: 'Max width', group: 'Dimensions', type: getUnitType(defaultUnits, '%') },
@@ -21,9 +21,9 @@ export default [
 		displayName: 'Margins',
 		customs: {
 			dependsOn(p) {
-				return p.margins ? true : false;
-			}
-		}
+				return p.margins ? true : false
+			},
+		},
 	},
 	{
 		name: 'mx',
@@ -32,9 +32,9 @@ export default [
 		displayName: 'Margin x-axis',
 		customs: {
 			dependsOn(p) {
-				return p.margins ? true : false;
-			}
-		}
+				return p.margins ? true : false
+			},
+		},
 	},
 	{
 		name: 'my',
@@ -43,9 +43,9 @@ export default [
 		displayName: 'Margin y-axis',
 		customs: {
 			dependsOn(p) {
-				return p.margins ? true : false;
-			}
-		}
+				return p.margins ? true : false
+			},
+		},
 	},
 	{
 		name: 'mt',
@@ -54,9 +54,9 @@ export default [
 		displayName: 'Margin top',
 		customs: {
 			dependsOn(p) {
-				return p.margins ? true : false;
-			}
-		}
+				return p.margins ? true : false
+			},
+		},
 	},
 	{
 		name: 'mr',
@@ -65,9 +65,9 @@ export default [
 		displayName: 'Margin right',
 		customs: {
 			dependsOn(p) {
-				return p.margins ? true : false;
-			}
-		}
+				return p.margins ? true : false
+			},
+		},
 	},
 	{
 		name: 'mb',
@@ -76,9 +76,9 @@ export default [
 		displayName: 'Margin bottom',
 		customs: {
 			dependsOn(p) {
-				return p.margins ? true : false;
-			}
-		}
+				return p.margins ? true : false
+			},
+		},
 	},
 	{
 		name: 'ml',
@@ -87,9 +87,9 @@ export default [
 		displayName: 'Margin left',
 		customs: {
 			dependsOn(p) {
-				return p.margins ? true : false;
-			}
-		}
+				return p.margins ? true : false
+			},
+		},
 	},
 	// Paddings
 	{ name: 'paddings', group: 'Paddings', type: 'boolean', displayName: 'Paddings', default: false },
@@ -100,9 +100,9 @@ export default [
 		displayName: 'Padding',
 		customs: {
 			dependsOn(p) {
-				return p.paddings ? true : false;
-			}
-		}
+				return p.paddings ? true : false
+			},
+		},
 	},
 	{
 		name: 'px',
@@ -111,9 +111,9 @@ export default [
 		displayName: 'Padding x-axis',
 		customs: {
 			dependsOn(p) {
-				return p.paddings ? true : false;
-			}
-		}
+				return p.paddings ? true : false
+			},
+		},
 	},
 	{
 		name: 'py',
@@ -122,9 +122,9 @@ export default [
 		displayName: 'Padding y-axis',
 		customs: {
 			dependsOn(p) {
-				return p.paddings ? true : false;
-			}
-		}
+				return p.paddings ? true : false
+			},
+		},
 	},
 	{
 		name: 'pt',
@@ -133,9 +133,9 @@ export default [
 		displayName: 'Padding top',
 		customs: {
 			dependsOn(p) {
-				return p.paddings ? true : false;
-			}
-		}
+				return p.paddings ? true : false
+			},
+		},
 	},
 	{
 		name: 'pr',
@@ -144,9 +144,9 @@ export default [
 		displayName: 'Padding right',
 		customs: {
 			dependsOn(p) {
-				return p.paddings ? true : false;
-			}
-		}
+				return p.paddings ? true : false
+			},
+		},
 	},
 	{
 		name: 'pb',
@@ -155,9 +155,9 @@ export default [
 		displayName: 'Padding bottom',
 		customs: {
 			dependsOn(p) {
-				return p.paddings ? true : false;
-			}
-		}
+				return p.paddings ? true : false
+			},
+		},
 	},
 	{
 		name: 'pl',
@@ -166,8 +166,8 @@ export default [
 		displayName: 'Padding left',
 		customs: {
 			dependsOn(p) {
-				return p.paddings ? true : false;
-			}
-		}
-	}
-] as const satisfies readonly NodePort[];
+				return p.paddings ? true : false
+			},
+		},
+	},
+] as const satisfies readonly NodePort[]

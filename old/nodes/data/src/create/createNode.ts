@@ -1,5 +1,5 @@
-import { jsNode } from '@packages/node';
-import { getPort, getPorts } from '@packages/port';
+import { jsNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
 export default jsNode('create', {
 	'v0.4.0': {
@@ -40,15 +40,15 @@ export default jsNode('create', {
 				customs: {
 					required: 'connection',
 					validate(p) {
-						if (!p.scheme) return true;
+						if (!p.scheme) return true
 						else {
-							const sizeDbClasses: string[] = [];
+							const sizeDbClasses: string[] = []
 							p.scheme.map((i: any) => {
-								if (i.items?.length > 20000) sizeDbClasses.push(i.dbClass);
-							});
+								if (i.items?.length > 20000) sizeDbClasses.push(i.dbClass)
+							})
 							if (sizeDbClasses.length) {
-								return `You can update 20000 or less documents per request. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
-							} else return true;
+								return `You can update 20000 or less documents per request. Mismatched DB classes: ${sizeDbClasses.join(', ')}`
+							} else return true
 						}
 					},
 				},
@@ -117,15 +117,15 @@ export default jsNode('create', {
 				customs: {
 					required: 'connection',
 					validate(p) {
-						if (!p.scheme) return true;
+						if (!p.scheme) return true
 						else {
-							const sizeDbClasses: string[] = [];
+							const sizeDbClasses: string[] = []
 							p.scheme.map((i: any) => {
-								if (i.items?.length > 20000) sizeDbClasses.push(i.dbClass);
-							});
+								if (i.items?.length > 20000) sizeDbClasses.push(i.dbClass)
+							})
 							if (sizeDbClasses.length) {
-								return `You can update 20000 or less documents per request. Mismatched DB classes: ${sizeDbClasses.join(', ')}`;
-							} else return true;
+								return `You can update 20000 or less documents per request. Mismatched DB classes: ${sizeDbClasses.join(', ')}`
+							} else return true
 						}
 					},
 				},
@@ -141,4 +141,4 @@ export default jsNode('create', {
 		],
 		outputs: getPorts('output', ['created', 'creating', 'data']),
 	},
-});
+})

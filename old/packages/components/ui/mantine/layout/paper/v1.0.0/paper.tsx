@@ -1,13 +1,9 @@
-import { forwardRef } from "react"
-import type { Props } from "./types";;
-import { Paper } from "@mantine/core";
+import { Paper } from '@mantine/core'
+import { forwardRef } from 'react'
+import type { Props } from './types'
 
-export default forwardRef(function (props: Props) {
-
-    return <Paper
-        {...props}
-        {...props.customProps}
-    >
-        {props.children}
-    </Paper>
-})
+export default forwardRef((props: Props) => (
+	<Paper {...props} {...props.customProps}>
+		{props.children}
+	</Paper>
+))

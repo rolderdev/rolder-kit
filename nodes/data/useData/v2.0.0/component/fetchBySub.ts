@@ -1,22 +1,23 @@
-import { getKuzzle } from '@shared/get-kuzzle';
-import type { JSONObject, ResponsePayload } from '@nodes/app-v2.0.0';
-import type { Props } from '../node/definition';
-import type { NoodlNode } from '@shared/node-v1.0.0';
-import { handleSubscribe } from './handleSubscribe';
-import type { BackendData } from './fetch';
+import type { JSONObject, ResponsePayload } from '@nodes/app-v2.0.0'
+import { getKuzzle } from '@shared/get-kuzzle'
+import type { NoodlNode } from '@shared/node-v1.0.0'
+import type { Props } from '../node/definition'
+import type { BackendData } from './fetch'
+import { handleSubscribe } from './handleSubscribe'
+import handleDataChanges from './handleDataChanges'
 
 export default async (p: Props, noodlNode: NoodlNode) => {
-	const K = await getKuzzle();
-	if (!K) return;
+	const K = await getKuzzle()
+	if (!K) return
 
-	const { dbName } = R.env;
-	if (!dbName) return;
+	const { dbName } = R.env
+	if (!dbName) return
 
-	const fetchScheme = p.store.fetchScheme;
+	const fetchScheme = p.store.fetchScheme
 
-	if (!fetchScheme) return;
+	if (!fetchScheme) return
 
-	let response: ResponsePayload<JSONObject> | undefined;
+	let response: ResponsePayload<JSONObject> | undefined
 
 	try {
 		response = await K.query({
@@ -25,18 +26,21 @@ export default async (p: Props, noodlNode: NoodlNode) => {
 			dbName,
 			fetchScheme,
 			subscribe: p.subscribe,
-		});
+		})
 	} catch (e: any) {
-		log.error('useData fetch error.', e);
-		return;
+		log.error('useData fetch error.', e)
+		return
 	}
 
-	const data = response?.result as BackendData;
+	const data = response?.result as BackendData
 
-	if (data.error) log.error('Kuzzle error.', data.error);
+	if (data.error) log.error('Kuzzle error.', data.error)
 
-	p.store.schemesData = data.fetchResults;
+	p.store.schemesData = data.fetchResults
 
 	// Запустим подписку на схемы.
-	if (p.subscribe) handleSubscribe(p, noodlNode);
-};
+	if (p.subscribe) handleSubscribe(p, noodlNode)
+
+	// Подготовим и отправим данные.
+	handleDataChanges(p, noodlNode)
+}

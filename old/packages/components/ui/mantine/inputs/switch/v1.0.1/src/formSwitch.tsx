@@ -1,34 +1,38 @@
-import { forwardRef, useEffect, useImperativeHandle } from "react"
-import { Switch } from "@mantine/core"
-import type { Props } from "../types"
+import { Switch } from '@mantine/core'
+import { sendOutput, sendSignal } from '@packages/port-send'
 //import convertColor from "@packages/convert-color"
-import { useFormScope } from "@packages/scope"
-import { sendOutput, sendSignal } from "@packages/port-send"
-import React from "react"
+import { useFormScope } from '@packages/scope'
+import { forwardRef, useEffect, useImperativeHandle } from 'react'
+import React from 'react'
+import type { Props } from '../types'
 
-export default forwardRef(function (props: Props, ref) {
-    //const Icon = props.iconName && R.libs.icons[props.iconName]
-    const formHook = useFormScope()
+export default forwardRef((props: Props, ref) => {
+	//const Icon = props.iconName && R.libs.icons[props.iconName]
+	const formHook = useFormScope()
 
-    const value = formHook?.values?.[props.formField]
-    useEffect(() => {
-        sendOutput(props.noodlNode, 'checked', value)
-        sendSignal(props.noodlNode, 'changed')
-    }, [value])
+	const value = formHook?.values?.[props.formField]
+	useEffect(() => {
+		sendOutput(props.noodlNode, 'checked', value)
+		sendSignal(props.noodlNode, 'changed')
+	}, [value])
 
-    useImperativeHandle(ref, () => ({
-        reset() {
-            formHook?.setFieldValue(props.formField, false)
-            sendOutput(props.noodlNode, 'checked', false)
-        }
-    }), [])
+	useImperativeHandle(
+		ref,
+		() => ({
+			reset() {
+				formHook?.setFieldValue(props.formField, false)
+				sendOutput(props.noodlNode, 'checked', false)
+			},
+		}),
+		[]
+	)
 
-    return (
-        <Switch
-            //icon={Icon && <Icon size={props.iconSize} stroke={props.iconStroke} color={convertColor(props.iconColor)} />}
-            {...props}
-            {...props.customProps}
-            {...formHook?.getInputProps(props.formField, { type: 'checkbox' })}
-        />
-    )
+	return (
+		<Switch
+			//icon={Icon && <Icon size={props.iconSize} stroke={props.iconStroke} color={convertColor(props.iconColor)} />}
+			{...props}
+			{...props.customProps}
+			{...formHook?.getInputProps(props.formField, { type: 'checkbox' })}
+		/>
+	)
 })

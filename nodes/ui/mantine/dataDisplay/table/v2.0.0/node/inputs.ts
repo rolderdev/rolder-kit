@@ -1,13 +1,6 @@
-import { getPortDef, sizes, type PortDef } from '@shared/port-v1.0.0';
-import { validateColumns, validateExpandedItems, validateItems } from './validtaion';
-import type { Props } from './definition';
-// Enablers
-/*    
-    "table2FilterEnabled",            
-    // Filter
-    "table2FilterType",
-    "table2ResetFilters",
-    */
+import { type PortDef, getPortDef, sizes } from '@shared/port-v1.0.0'
+import type { Props } from './definition'
+import { validateColumns, validateExpandedItems, validateItems } from './validtaion'
 
 export default [
 	// Base
@@ -28,7 +21,7 @@ export default [
 		type: 'getValue',
 		getValue: (item, items, node) => item.content.houseCount * item.content.areaCount,
 		width: 120
-	}	
+	}
 ]*/
 `,
 		validate: (p: Props) => (p.columnsDefinition ? validateColumns(p) : true),
@@ -87,9 +80,9 @@ export default [
 			{ label: 'Single selection', value: 'singleSelection' },
 		],
 		default: 'disabled',
-		validate: (p: Props) => (p.onRowClick ? true : false),
-		transform: (p: Props, portDef) => {
-			portDef.type = [...(portDef.type as any), { label: 'Expansion', value: 'expansion' }];
+		validate: (p: Props) => !!p.onRowClick,
+		transform: (_p: Props, portDef) => {
+			portDef.type = [...(portDef.type as any), { label: 'Expansion', value: 'expansion' }]
 		},
 	}),
 	getPortDef({
@@ -99,7 +92,7 @@ export default [
 		customGroup: 'Base',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.onRowClick === 'signal',
-		codeComment: `//(item, node) => item.states.flow !== 'closed'`,
+		codeComment: '//(item, node) => { return Boolean(node?.childIds) }',
 	}),
 	getPortDef({
 		name: 'singleSelectionFilterFunc',
@@ -108,7 +101,7 @@ export default [
 		customGroup: 'Base',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.onRowClick === 'singleSelection',
-		codeComment: `//(item, node) => item.states.flow !== 'closed'`,
+		codeComment: `//(item, node) => { return item.states.flow !== 'closed' }`,
 	}),
 	getPortDef({
 		name: 'useSingleSelectionHierarchy',
@@ -155,7 +148,7 @@ export default [
 		name: 'verticalSpacing',
 		displayName: 'Vertical spacing',
 		group: 'Dimensions',
-		type: sizes,
+		type: [{ value: 'xxs', label: 'xxs' }, ...sizes],
 		default: 'xs',
 		dependsOn: (p) => p.dimensions,
 	}),
@@ -309,7 +302,7 @@ export default [
 		customGroup: 'Row styles',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.rowStyles,
-		codeComment: `//(level, item) => level * 16`,
+		codeComment: '//(level, item) => { return level * 16 }',
 	}),
 	// Single selection
 	getPortDef({
@@ -360,7 +353,7 @@ export default [
 		customGroup: 'Multi selection',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.multiSelection,
-		codeComment: `//(item, node) => item.states.flow !== 'closed'`,
+		codeComment: `//(item, node) => { return item.states.flow !== 'closed' }`,
 	}),
 	getPortDef({
 		name: 'useMultiSelectionHierarchy',
@@ -370,6 +363,15 @@ export default [
 		type: 'boolean',
 		default: false,
 		dependsOn: (p: Props) => p.multiSelection && p.hierarchy,
+	}),
+	getPortDef({
+		name: 'multiSelectionClasses',
+		displayName: 'Classes',
+		group: 'Custom',
+		customGroup: 'Multi selection',
+		type: 'array',
+		dependsOn: (p: Props) => p.multiSelection && p.hierarchy,
+		codeComment: `//['first-class', 'second-class']`,
 	}),
 	getPortDef({
 		name: 'defaultSelectedItems',
@@ -421,7 +423,7 @@ export default [
 		customGroup: 'Expansion',
 		type: 'component',
 		dependsOn: (p: Props) => p.expansion,
-		validate: (p: Props) => (p.expansion ? (p.expansionTemplate ? true : false) : true),
+		validate: (p: Props) => (p.expansion ? !!p.expansionTemplate : true),
 	}),
 	getPortDef({
 		name: 'allowMultiple',
@@ -439,7 +441,7 @@ export default [
 		customGroup: 'Expansion',
 		type: 'funcEval',
 		dependsOn: (p: Props) => p.expansion,
-		codeComment: `//(item, node) => item.states.flow !== 'closed'`,
+		codeComment: `//(item, node) => { return item.states.flow !== 'closed' }`,
 	}),
 	getPortDef({
 		name: 'useExpansionHierarchy',
@@ -450,16 +452,6 @@ export default [
 		default: false,
 		dependsOn: (p: Props) => p.expansion && p.hierarchy,
 	}),
-	/* 	getPortDef({
-		name: 'animationChildrenCount',
-		displayName: 'Animation children count',
-		group: 'Custom',
-		customGroup: 'Expansion',
-		type: 'number',
-		default: 25,
-		tooltip: 'Enable animation loader on expansion when row children count is reached.',
-		dependsOn: (p: Props) => p.expansion,
-	}), */
 	getPortDef({
 		name: 'defaultExpandedItems',
 		displayName: 'Default expanded items',
@@ -533,7 +525,7 @@ export default [
 		type: 'string',
 		default: 'IconArrowUp',
 		dependsOn: (p: Props) => p.sort,
-		validate: (p: Props) => (p.sort ? (p.sortedIcon ? true : false) : true),
+		validate: (p: Props) => (p.sort ? !!p.sortedIcon : true),
 	}),
 	getPortDef({
 		name: 'unsortedIcon',
@@ -543,7 +535,7 @@ export default [
 		type: 'string',
 		default: 'IconSelector',
 		dependsOn: (p: Props) => p.sort,
-		validate: (p: Props) => (p.sort ? (p.unsortedIcon ? true : false) : true),
+		validate: (p: Props) => (p.sort ? !!p.unsortedIcon : true),
 	}),
 	getPortDef({
 		name: 'resetSort',
@@ -561,4 +553,4 @@ export default [
 		type: 'signal',
 		dependsOn: (p: Props) => p.sort,
 	}),
-] as PortDef[];
+] as PortDef[]

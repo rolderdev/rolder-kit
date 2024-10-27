@@ -1,15 +1,15 @@
 /**
  * @type {import('@rspack/cli').Configuration}
  */
-var path = require('path');
-const pJson = require('./package.json');
-const rspackBaseConfig = require('../../rspackBase.config');
+var path = require('path')
+const pJson = require('./package.json')
+const rspackBaseConfig = require('../../rspackBase.config')
 
-const nodeName = pJson.name;
-var outputBuildPath = path.resolve(__dirname, `../../../../build/${nodeName}`);
+const nodeName = pJson.name
+var outputBuildPath = path.resolve(__dirname, `../../../../build/${nodeName}`)
 
-module.exports = function (env) {
-	const config = rspackBaseConfig(nodeName, __dirname, outputBuildPath, env.developer, env.project);
+module.exports = (env) => {
+	const config = rspackBaseConfig(nodeName, __dirname, outputBuildPath, env.developer, env.project)
 
 	// postcss
 	config.module.rules.push({
@@ -21,7 +21,7 @@ module.exports = function (env) {
 			},
 		],
 		type: 'css/auto',
-	});
+	})
 
-	return config;
-};
+	return config
+}

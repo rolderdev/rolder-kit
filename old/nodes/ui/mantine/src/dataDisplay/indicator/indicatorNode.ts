@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPorts, getPort, getUnitType, defaultUnits, getCustomEnumType } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { defaultUnits, getCustomEnumType, getPort, getPorts, getUnitType } from '@packages/port'
 
-import v100 from '@packages/indicator-v1.0.0';
+import v100 from '@packages/indicator-v1.0.0'
 
 const positions = [
 	'bottom-end',
@@ -12,8 +12,8 @@ const positions = [
 	'top-center',
 	'middle-center',
 	'middle-end',
-	'middle-center'
-];
+	'middle-center',
+]
 
 export default reactNode(
 	'Indicator',
@@ -27,7 +27,7 @@ export default reactNode(
 					name: 'sizeUnits',
 					displayName: 'Size',
 					group: 'Dimensions',
-					type: getUnitType(defaultUnits, 'rem')
+					type: getUnitType(defaultUnits, 'rem'),
 				}),
 				getPort({
 					plug: 'input',
@@ -35,7 +35,7 @@ export default reactNode(
 					displayName: 'Position',
 					group: 'Layout',
 					default: 'top-end',
-					type: getCustomEnumType(positions)
+					type: getCustomEnumType(positions),
 				}),
 				getPort({
 					plug: 'input',
@@ -43,10 +43,10 @@ export default reactNode(
 					displayName: 'Processing',
 					group: 'States',
 					type: 'boolean',
-					default: false
-				})
-			]
-		}
+					default: false,
+				}),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

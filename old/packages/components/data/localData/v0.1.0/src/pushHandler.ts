@@ -1,17 +1,17 @@
-import { getKuzzle } from '@packages/get-kuzzle';
-import type { RxReplicationWriteToMasterRow } from 'rxdb';
+import { getKuzzle } from '@packages/get-kuzzle'
+import type { RxReplicationWriteToMasterRow } from 'rxdb'
 
 export default async function pushHandler(dbClass: string, changeRows: RxReplicationWriteToMasterRow<any>[]) {
-	const K = await getKuzzle();
+	const K = await getKuzzle()
 	if (!K) {
-		return Promise.reject();
+		return Promise.reject()
 	}
 
-	const { dbName } = R.env;
+	const { dbName } = R.env
 	if (!dbName) {
-		R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`);
-		log.error('No dbName', R.env);
-		return Promise.reject();
+		R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`)
+		log.error('No dbName', R.env)
+		return Promise.reject()
 	}
 
 	const response = await K.query({
@@ -20,17 +20,17 @@ export default async function pushHandler(dbClass: string, changeRows: RxReplica
 		dbName,
 		dbClass,
 		changeItems: changeRows,
-	});
+	})
 
-	const conflicts = response.result as any[];
+	const conflicts = response.result as any[]
 
 	if (conflicts.length) {
 		HyperDX?.addAction('RxDb Push conflicts', {
 			conflicts: JSON.stringify(conflicts),
-		});
+		})
 
-		log.info('Push conflicts', conflicts);
+		log.info('Push conflicts', conflicts)
 	}
 
-	return conflicts;
+	return conflicts
 }

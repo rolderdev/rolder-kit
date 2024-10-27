@@ -1,4 +1,4 @@
-import type { NodePort } from '../../port';
+import type { NodePort } from '../../port'
 
 export default [
 	{ name: 'fetching', displayName: 'Fetching', group: 'States', type: 'boolean', default: false },
@@ -9,5 +9,5 @@ export default [
 	{ name: 'loading', displayName: 'Loading', group: 'States', type: 'boolean', default: false },
 	{ name: 'active', displayName: 'Active', group: 'States', type: 'boolean', default: false },
 	{ name: 'opened', displayName: 'Opened', group: 'States', type: 'boolean', default: false },
-	{ name: 'checked', displayName: 'Checked', group: 'States', type: 'boolean', default: false }
-] as const satisfies readonly NodePort[];
+	{ name: 'checked', displayName: 'Checked', group: 'States', type: 'boolean', default: false },
+] as const satisfies readonly NodePort[]

@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/footer-v1.0.0';
+import v100 from '@packages/footer-v1.0.0'
 
 export default reactNode(
 	'Footer',
@@ -17,7 +17,7 @@ export default reactNode(
 					displayName: 'With border',
 					group: 'Style',
 					type: 'boolean',
-					default: true
+					default: true,
 				}),
 				getPort({
 					plug: 'input',
@@ -27,11 +27,11 @@ export default reactNode(
 					type: 'array',
 					customs: {
 						required: 'connection',
-						isObject: true
-					}
-				})
-			]
-		}
+						isObject: true,
+					},
+				}),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

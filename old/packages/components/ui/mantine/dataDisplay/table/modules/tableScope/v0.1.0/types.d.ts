@@ -1,7 +1,7 @@
-import { BaseReactProps } from '@packages/node';
-import type { MultiSelectionFilterFunc } from './src/store';
+import type { BaseReactProps } from '@packages/node'
+import type { MultiSelectionFilterFunc } from './src/store'
 
 export type Props = BaseReactProps & {
-	selectionDbClasses?: string[];
-	multiSelectionFilterFunc: MultiSelectionFilterFunc | undefined;
-};
+	selectionDbClasses?: string[]
+	multiSelectionFilterFunc: MultiSelectionFilterFunc | undefined
+}

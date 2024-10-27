@@ -1,22 +1,22 @@
-import { createStyles } from '@mantine/core';
-import React from 'react';
+import { createStyles } from '@mantine/core'
+import React from 'react'
 
 const useStyles = createStyles({
-  root: {
-    '&&': {
-      background: 'transparent',
-      ':last-of-type td': {
-        borderBottom: 'none',
-      },
-    },
-  },
-});
+	root: {
+		'&&': {
+			background: 'transparent',
+			':last-of-type td': {
+				borderBottom: 'none',
+			},
+		},
+	},
+})
 
 export default function DataTableEmptyRow() {
-  const { classes } = useStyles();
-  return (
-    <tr className={classes.root}>
-      <td />
-    </tr>
-  );
+	const { classes } = useStyles()
+	return (
+		<tr className={classes.root}>
+			<td />
+		</tr>
+	)
 }

@@ -1,31 +1,31 @@
-import { set } from './just';
+import { set } from './just'
 
 import {
-	parse,
-	safeParse,
+	type InferOutput,
 	any,
 	array,
 	boolean,
+	brand,
 	check,
 	function_,
+	integer,
+	looseObject,
+	maxValue,
+	minValue,
 	number,
 	object,
-	strictObject,
-	looseObject,
 	optional,
+	parse,
+	pick,
 	picklist,
 	pipe,
+	safeParse,
+	strictObject,
 	string,
 	transform,
 	union,
-	brand,
-	pick,
-	integer,
-	maxValue,
-	minValue,
 	unknown,
-	type InferOutput,
-} from 'valibot';
+} from 'valibot'
 
 const valibot = {
 	parse,
@@ -51,9 +51,9 @@ const valibot = {
 	maxValue,
 	minValue,
 	unknown,
-};
-type Valibot = typeof valibot;
-set(window, ['R', 'libs', 'valibot'], valibot);
+}
+type Valibot = typeof valibot
+set(window, ['R', 'libs', 'valibot'], valibot)
 
 export {
 	parse,
@@ -79,5 +79,5 @@ export {
 	maxValue,
 	minValue,
 	unknown,
-};
-export type { InferOutput, Valibot };
+}
+export type { InferOutput, Valibot }

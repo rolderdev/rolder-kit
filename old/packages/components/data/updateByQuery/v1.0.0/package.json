@@ -1,17 +1,17 @@
 {
-  "name": "@packages/update-by-query-v1.0.0",
-  "main": "updateByQuery.ts",
-  "types": "updateByQuery.ts",
-  "type": "module",
-  "dependencies": {
-    "@packages/deep-merge": "workspace:@packages/deep-merge-v0.1.0@^",
-    "@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@^",
-    "@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
-    "@tanstack/react-query": "4.36.1",
-    "just-clone": "6.2.0"
-  },
-  "devDependencies": {
-    "@packages/node": "workspace:@packages/node-v0.8.0@^",
-    "types": "workspace:*"
-  }
+	"name": "@packages/update-by-query-v1.0.0",
+	"main": "updateByQuery.ts",
+	"types": "updateByQuery.ts",
+	"type": "module",
+	"dependencies": {
+		"@packages/deep-merge": "workspace:@packages/deep-merge-v0.1.0@^",
+		"@packages/get-dbclass-version": "workspace:@packages/get-dbclass-version-v0.6.0@^",
+		"@packages/port-send": "workspace:@packages/port-send-v0.3.0@^",
+		"@tanstack/react-query": "4.36.1",
+		"just-clone": "6.2.0"
+	},
+	"devDependencies": {
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"types": "workspace:*"
+	}
 }

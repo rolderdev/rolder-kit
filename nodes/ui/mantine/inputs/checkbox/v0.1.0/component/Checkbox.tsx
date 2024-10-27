@@ -1,28 +1,28 @@
-import { forwardRef, useEffect, useState } from 'react';
-import type { Props } from '../node/definition';
-import { Checkbox, type CheckboxProps } from '@mantine/core';
-import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0';
+import { Checkbox, type CheckboxProps } from '@mantine/core'
+import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0'
+import { forwardRef, useEffect, useState } from 'react'
+import type { Props } from '../node/definition'
 
-export default forwardRef(function (p: Props) {
+export default forwardRef((p: Props) => {
 	const Icon: CheckboxProps['icon'] = ({ indeterminate, ...others }) => {
-		const Icon = indeterminate ? R.libs.icons[p.customIcons.indeterminate] : R.libs.icons[p.customIcons.checked];
+		const Icon = indeterminate ? R.libs.icons[p.customIcons.indeterminate] : R.libs.icons[p.customIcons.checked]
 
-		return Icon ? <Icon {...others} /> : undefined;
-	};
+		return Icon ? <Icon {...others} /> : undefined
+	}
 
-	const [checked, setChecked] = useState(p.checkedProp);
-	const [indeterminate, setIndeterminate] = useState(p.indeterminateProp);
-
-	useEffect(() => {
-		if (p.checkedProp !== checked) setChecked(p.checkedProp);
-		if (p.indeterminateProp !== indeterminate) setIndeterminate(p.indeterminateProp);
-	}, [p.checkedProp, p.indeterminateProp]);
+	const [checked, setChecked] = useState(p.checkedProp)
+	const [indeterminate, setIndeterminate] = useState(p.indeterminateProp)
 
 	useEffect(() => {
-		sendOutput(p.noodlNode, 'checked', checked);
-		sendOutput(p.noodlNode, 'indeterminate', indeterminate);
-		sendSignal(p.noodlNode, 'changed');
-	}, [checked, indeterminate]);
+		if (p.checkedProp !== checked) setChecked(p.checkedProp)
+		if (p.indeterminateProp !== indeterminate) setIndeterminate(p.indeterminateProp)
+	}, [p.checkedProp, p.indeterminateProp])
+
+	useEffect(() => {
+		sendOutput(p.noodlNode, 'checked', checked)
+		sendOutput(p.noodlNode, 'indeterminate', indeterminate)
+		sendSignal(p.noodlNode, 'changed')
+	}, [checked, indeterminate])
 
 	return (
 		<Checkbox
@@ -33,5 +33,5 @@ export default forwardRef(function (p: Props) {
 			{...p}
 			{...p.customProps}
 		/>
-	);
-});
+	)
+})

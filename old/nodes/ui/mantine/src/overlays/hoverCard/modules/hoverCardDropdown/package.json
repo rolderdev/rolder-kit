@@ -1,13 +1,13 @@
 {
-  "name": "@nodes/hover-card-dropdown",
-  "main": "hoverCardDropdownNode.ts",
-  "types": "hoverCardDropdownNode.ts",
-  "dependencies": {
-    "@packages/hover-card-dropdown-v1.0.0": "workspace:*",
-    "@packages/node": "workspace:@packages/node-v0.8.0@^",
-    "@packages/port": "workspace:@packages/port-v0.6.0@^"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@nodes/hover-card-dropdown",
+	"main": "hoverCardDropdownNode.ts",
+	"types": "hoverCardDropdownNode.ts",
+	"dependencies": {
+		"@packages/hover-card-dropdown-v1.0.0": "workspace:*",
+		"@packages/node": "workspace:@packages/node-v0.8.0@^",
+		"@packages/port": "workspace:@packages/port-v0.6.0@^"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }

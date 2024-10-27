@@ -1,11 +1,11 @@
 {
-  "name": "@packages/deep-merge-v0.1.0",
-  "main": "deepMerge.ts",
-  "types": "deepMerge.ts",
-  "dependencies": {
-    "just-clone": "6.2.0"
-  },
-  "devDependencies": {
-    "types": "workspace:*"
-  }
+	"name": "@packages/deep-merge-v0.1.0",
+	"main": "deepMerge.ts",
+	"types": "deepMerge.ts",
+	"dependencies": {
+		"just-clone": "6.2.0"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
 }

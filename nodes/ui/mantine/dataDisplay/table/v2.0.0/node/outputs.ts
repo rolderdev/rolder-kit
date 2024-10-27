@@ -1,5 +1,5 @@
-import { getPortDef, type PortDef } from '@shared/port-v1.0.0';
-import type { Props } from './definition';
+import { type PortDef, getPortDef } from '@shared/port-v1.0.0'
+import type { Props } from './definition'
 
 export default [
 	// Base
@@ -103,4 +103,4 @@ export default [
 		type: 'signal',
 		dependsOn: (p: Props) => p.sort,
 	}),
-] as PortDef[];
+] as PortDef[]

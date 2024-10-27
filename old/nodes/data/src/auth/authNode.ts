@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPort, getType } from '@packages/port';
-import { lazy } from 'react';
-import ms from 'ms';
+import { reactNode } from '@packages/node'
+import { getPort, getType } from '@packages/port'
+import ms from 'ms'
+import { lazy } from 'react'
 
 export default reactNode(
 	'Auth',
@@ -19,7 +19,7 @@ export default reactNode(
 					customs: {
 						required: 'both',
 						validate(p) {
-							return ms(p.sessionTimeout as string) >= 360000 ? true : 'Session timeout must 1 hour or greater';
+							return ms(p.sessionTimeout as string) >= 360000 ? true : 'Session timeout must 1 hour or greater'
 						},
 					},
 				}),
@@ -90,4 +90,4 @@ export default reactNode(
 		}, */
 	},
 	{ allowChildren: true }
-);
+)

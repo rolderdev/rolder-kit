@@ -1,6 +1,6 @@
-import { getPort, getPorts, getType } from '@packages/port';
-import { reactNode } from '@packages/node';
-import { lazy } from 'react';
+import { reactNode } from '@packages/node'
+import { getPort, getPorts, getType } from '@packages/port'
+import { lazy } from 'react'
 
 const CodeEditorNode = reactNode('CodeEditor', {
 	'v0.1.0': {
@@ -38,8 +38,8 @@ const CodeEditorNode = reactNode('CodeEditor', {
 			...getPorts('input', ['doubleClicked']),
 		],
 	},
-});
+})
 
 //===================================================================
 
-Noodl.defineModule({ reactNodes: [CodeEditorNode] });
+Noodl.defineModule({ reactNodes: [CodeEditorNode] })

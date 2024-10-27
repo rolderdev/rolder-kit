@@ -1,18 +1,18 @@
-import type { BaseJsProps } from '@shared/node-v1.0.0';
-import type { JsNodeDef } from '@shared/node-v1.0.0';
-import { getPortDef } from '@shared/port-v1.0.0';
+import type { BaseJsProps } from '@shared/node-v1.0.0'
+import type { JsNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef } from '@shared/port-v1.0.0'
 
-import initState from '@shared/init-state-v0.1.0';
+import initState from '@shared/init-state-v0.1.0'
 
 export type Props = BaseJsProps & {
-	number?: number;
-	custom: boolean;
-	customFormat?: any;
-	mantissa?: number;
-	thousandSeparated?: boolean;
-	currency?: boolean;
-	spaceSeparated?: boolean;
-};
+	number?: number
+	custom: boolean
+	customFormat?: any
+	mantissa?: number
+	thousandSeparated?: boolean
+	currency?: boolean
+	spaceSeparated?: boolean
+}
 
 export default {
 	hashTag: '#expreimental',
@@ -27,11 +27,13 @@ export default {
 				group: 'Params',
 				type: 'objectEval',
 				dependsOn: (p: Props) => p.custom,
-				codeComment: `/*() => ({
-	thousandSeparated: true,
-	negative: 'parenthesis',
-	mantissa: 4
-})*/`,
+				codeComment: `/*() => {
+	return {
+	  thousandSeparated: true,
+		negative: 'parenthesis',
+		mantissa: 4
+	}
+}*/`,
 			}),
 			getPortDef({
 				name: 'mantissa',
@@ -74,8 +76,8 @@ export default {
 	},
 	beforeComponent: {
 		initialize: async () => {
-			await initState('shared');
+			await initState('shared')
 		},
 	},
 	disableCustomProps: true,
-} satisfies JsNodeDef;
+} satisfies JsNodeDef

@@ -1,13 +1,9 @@
-import { forwardRef } from "react"
-import type { Props } from "./types";;
-import { Box } from "@mantine/core";
+import { Box } from '@mantine/core'
+import { forwardRef } from 'react'
+import type { Props } from './types'
 
-export default forwardRef(function (props: Props) {
-
-    return <Box
-        {...props}
-        {...props.customProps}
-    >
-        {props.children}
-    </Box>
-})
+export default forwardRef((props: Props) => (
+	<Box {...props} {...props.customProps}>
+		{props.children}
+	</Box>
+))

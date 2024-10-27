@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/divider-v1.0.0';
+import v100 from '@packages/divider-v1.0.0'
 
 export default reactNode('Divider', {
 	'v1.0.0': {
@@ -16,7 +16,7 @@ export default reactNode('Divider', {
 				group: 'Style',
 				type: getCustomEnumType(['solid', 'dashed', 'dotted']),
 				default: 'solid',
-				customs: { required: 'both' }
+				customs: { required: 'both' },
 			}),
 			getPort({
 				plug: 'input',
@@ -25,7 +25,7 @@ export default reactNode('Divider', {
 				group: 'Layout',
 				type: getCustomEnumType(['horizontal', 'vertical']),
 				default: 'horizontal',
-				customs: { required: 'both' }
+				customs: { required: 'both' },
 			}),
 			getPort({
 				plug: 'input',
@@ -34,8 +34,8 @@ export default reactNode('Divider', {
 				group: 'Layout',
 				type: getCustomEnumType(['left', 'right', 'center']),
 				default: 'left',
-				customs: { required: 'both' }
-			})
-		]
-	}
-});
+				customs: { required: 'both' },
+			}),
+		],
+	},
+})

@@ -1,36 +1,36 @@
 /* Функция добавляет шеврон к ячейке.
 Шеврон - иконка, если onRowClick = expansion, actionIcon, если onRowClick !== expansion. */
 
-import { memo } from 'react';
-import { ActionIcon, Box, Group } from '@mantine/core';
-import { IconChevronRight } from '@tabler/icons-react';
-import clsx from 'clsx';
+import { ActionIcon, Box, Group } from '@mantine/core'
+import { IconChevronRight } from '@tabler/icons-react'
+import clsx from 'clsx'
+import { memo } from 'react'
 
-import classes from '../styles/expansionCell.module.css';
-import { useStore } from '../store';
+import { useStore } from '../store'
+import classes from '../styles/expansionCell.module.css'
 
 export default memo((p: { cell: React.ReactNode; itemId: string }) => {
-	const store = useStore();
-	if (!store) return;
+	const store = useStore()
+	if (!store) return
 
 	const getExpandedIds = () => {
-		const allowMultiple = store.tableProps.expansion.allowMultiple.get();
-		if (expanded) return allowMultiple ? store.expandedIds.get().filter((i) => i !== p.itemId) : [];
-		else return allowMultiple ? [...store.expandedIds.get(), p.itemId] : [p.itemId];
-	};
+		const allowMultiple = store.tableProps.expansion.allowMultiple.get()
+		if (expanded) return allowMultiple ? store.expandedIds.get().filter((i) => i !== p.itemId) : []
+		else return allowMultiple ? [...store.expandedIds.get(), p.itemId] : [p.itemId]
+	}
 
-	const onRowClick = store.tableProps.onRowClick.use();
+	const onRowClick = store.tableProps.onRowClick.use()
 
 	// Вытягиваем реактивное состояние развернутости для анимации шеврона.
-	const expanded = store.expandedIds.use((expandedIds) => expandedIds.includes(p.itemId));
+	const expanded = store.expandedIds.use((expandedIds) => expandedIds.includes(p.itemId))
 
 	// Определим, исключена ли строка из развертывния разработчиком.
-	const filterFunc = store.tableProps.expansion.filterFunc?.get();
-	const item = store.items.get((items) => items.find((i) => i.id === p.itemId));
-	const disabled = item && filterFunc ? !filterFunc(item) : false;
+	const filterFunc = store.tableProps.expansion.filterFunc?.get()
+	const item = store.items.get((items) => items.find((i) => i.id === p.itemId))
+	const disabled = item && filterFunc ? !filterFunc(item) : false
 
-	const paddingLeft = store.tableProps.expansion.paddingLeft.use();
-	const level = store.level.use();
+	const paddingLeft = store.tableProps.expansion.paddingLeft.use()
+	const level = store.level.use()
 
 	if (onRowClick === 'expansion')
 		return (
@@ -45,7 +45,7 @@ export default memo((p: { cell: React.ReactNode; itemId: string }) => {
 				</Box>
 				{p.cell}
 			</Group>
-		);
+		)
 	else
 		return (
 			<Group pl={paddingLeft.position === 'expander' ? paddingLeft.value * level : undefined} wrap="nowrap" gap={6}>
@@ -56,8 +56,8 @@ export default memo((p: { cell: React.ReactNode; itemId: string }) => {
 					ml={-5.5}
 					mr={3.5}
 					onClick={(e) => {
-						e.stopPropagation();
-						store.expandedIds.set(getExpandedIds());
+						e.stopPropagation()
+						store.expandedIds.set(getExpandedIds())
 					}}
 					disabled={disabled}
 					style={{ background: disabled ? 'transparent' : undefined }}
@@ -70,5 +70,5 @@ export default memo((p: { cell: React.ReactNode; itemId: string }) => {
 				</ActionIcon>
 				{p.cell}
 			</Group>
-		);
-});
+		)
+})

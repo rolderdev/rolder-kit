@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/paper-v1.0.0';
+import v100 from '@packages/paper-v1.0.0'
 
 export default reactNode(
 	'Paper',
@@ -17,4 +17,4 @@ export default reactNode(
 		},
 	},
 	{ allowChildren: true }
-);
+)

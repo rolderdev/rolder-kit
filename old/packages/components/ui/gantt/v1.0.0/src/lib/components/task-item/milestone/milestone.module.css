@@ -1,8 +1,8 @@
 .milestoneWrapper {
-  cursor: pointer;
-  outline: none;
+	cursor: pointer;
+	outline: none;
 }
 
 .milestoneBackground {
-  user-select: none;
+	user-select: none;
 }

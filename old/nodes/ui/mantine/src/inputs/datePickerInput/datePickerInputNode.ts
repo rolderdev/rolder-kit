@@ -1,8 +1,8 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/date-picker-input-v1.0.0';
-import v101 from '@packages/date-picker-input-v1.0.1';
+import v100 from '@packages/date-picker-input-v1.0.0'
+import v101 from '@packages/date-picker-input-v1.0.1'
 
 export default reactNode('DatePickerInput', {
 	'v1.0.0': {
@@ -25,7 +25,7 @@ export default reactNode('DatePickerInput', {
 				'limitMinDate',
 				'minDateOffset',
 				'formField',
-				'dropdownType'
+				'dropdownType',
 			]),
 			getPort({
 				plug: 'input',
@@ -34,7 +34,7 @@ export default reactNode('DatePickerInput', {
 				group: 'Params',
 				default: 'YYYY.MM.DD HH:mm',
 				type: 'string',
-				customs: { required: 'connection', projectDefaultKey: 'dateFormat' }
+				customs: { required: 'connection', projectDefaultKey: 'dateFormat' },
 			}),
 			getPort({ plug: 'input', name: 'dateValue', displayName: 'Date value', group: 'Data', type: '*' }),
 			getPort({
@@ -44,7 +44,7 @@ export default reactNode('DatePickerInput', {
 				group: 'Params',
 				default: 'default',
 				type: getCustomEnumType(['default', 'range', 'multiple']),
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			...inputGroups.Icon,
 			getPort({
@@ -57,15 +57,15 @@ export default reactNode('DatePickerInput', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
-			})
+						return p.useScope ? true : false
+					},
+				},
+			}),
 		],
 		outputs: [
 			...getPorts('output', ['changed', 'reseted']),
-			getPort({ plug: 'output', name: 'dateValue', displayName: 'Date value', group: 'Data', type: '*' })
-		]
+			getPort({ plug: 'output', name: 'dateValue', displayName: 'Date value', group: 'Data', type: '*' }),
+		],
 	},
 	'v1.0.1': {
 		module: { static: v101 },
@@ -86,7 +86,7 @@ export default reactNode('DatePickerInput', {
 				'limitMinDate',
 				'minDateOffset',
 				'formField',
-				'dropdownType'
+				'dropdownType',
 			]),
 			getPort({
 				plug: 'input',
@@ -95,7 +95,7 @@ export default reactNode('DatePickerInput', {
 				group: 'Params',
 				default: 'YYYY.MM.DD HH:mm',
 				type: 'string',
-				customs: { required: 'connection', projectDefaultKey: 'dateFormat' }
+				customs: { required: 'connection', projectDefaultKey: 'dateFormat' },
 			}),
 			getPort({ plug: 'input', name: 'dateValue', displayName: 'Date value', group: 'Data', type: '*' }),
 			getPort({
@@ -105,7 +105,7 @@ export default reactNode('DatePickerInput', {
 				group: 'Params',
 				default: 'default',
 				type: getCustomEnumType(['default', 'range', 'multiple']),
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			...inputGroups.Icon,
 			getPort({
@@ -118,14 +118,14 @@ export default reactNode('DatePickerInput', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
-			})
+						return p.useScope ? true : false
+					},
+				},
+			}),
 		],
 		outputs: [
 			...getPorts('output', ['changed', 'reseted']),
-			getPort({ plug: 'output', name: 'dateValue', displayName: 'Date value', group: 'Data', type: '*' })
-		]
-	}
-});
+			getPort({ plug: 'output', name: 'dateValue', displayName: 'Date value', group: 'Data', type: '*' }),
+		],
+	},
+})

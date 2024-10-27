@@ -1,19 +1,19 @@
-import { store, createStoreContext } from '@davstack/store';
-import type { NoodlNode } from '@packages/node';
-import type { Item } from 'types';
-import type { Props } from '../types';
-import { setLibProps, type LibProps } from './models/libPropsModel';
-import { setTableProps, type TableProps } from './models/tablePropsModel';
-import { type Column, setColumns } from './models/columnModel';
-import { setItems } from './models/itemModel';
-import { sendSelectedItem, setSelectedItem } from './models/singleSelectionModel';
-import { sendSelectedItems, setSelectedItems } from './models/multiSelectionModel';
-import { setExpansionRows } from './models/expansionModel';
-import { setTemplateCells } from './models/templateCellModel';
-import type { TabelScopeStore } from '@packages/table-scope-v0.1.0/src/store';
-import type { DataTableSortStatus } from 'mantine-datatable';
-import get from 'just-safe-get';
-import { sendOutput } from '@packages/port-send';
+import { createStoreContext, store } from '@davstack/store'
+import type { NoodlNode } from '@packages/node'
+import { sendOutput } from '@packages/port-send'
+import type { TabelScopeStore } from '@packages/table-scope-v0.1.0/src/store'
+import get from 'just-safe-get'
+import type { DataTableSortStatus } from 'mantine-datatable'
+import type { Item } from 'types'
+import type { Props } from '../types'
+import { type Column, setColumns } from './models/columnModel'
+import { setExpansionRows } from './models/expansionModel'
+import { setItems } from './models/itemModel'
+import { type LibProps, setLibProps } from './models/libPropsModel'
+import { sendSelectedItems, setSelectedItems } from './models/multiSelectionModel'
+import { sendSelectedItem, setSelectedItem } from './models/singleSelectionModel'
+import { type TableProps, setTableProps } from './models/tablePropsModel'
+import { setTemplateCells } from './models/templateCellModel'
 
 const tableStore = store({
 	noodlNode: {} as NoodlNode,
@@ -57,10 +57,10 @@ const tableStore = store({
 		itemsChanged: () =>
 			store.selectedItem.onChange((newSelectedItem) => {
 				if (store.tableProps.sort.type?.get() === 'frontend') {
-					const sortState = store.sortState.get();
+					const sortState = store.sortState.get()
 					store.items.set(
 						R.libs.sort(store.items.get()).by([{ [sortState.direction]: (i: any) => get(i, sortState.columnAccessor) }])
-					);
+					)
 				}
 			}),
 		selectedItemChanged: () =>
@@ -77,16 +77,16 @@ const tableStore = store({
 					if (store.tableProps.sort.type?.get() === 'frontend') {
 						store.items.set(
 							R.libs.sort(store.items.get()).by([{ [newSortState.direction]: (i: any) => get(i, newSortState.columnAccessor) }])
-						);
+						)
 					}
-					sendOutput(store.noodlNode.get(), 'sortValue', { [newSortState.columnAccessor]: newSortState.direction });
+					sendOutput(store.noodlNode.get(), 'sortValue', { [newSortState.columnAccessor]: newSortState.direction })
 				},
 				{
 					fireImmediately: true,
 				}
 			),
-	}));
+	}))
 
-export type Store = typeof tableStore;
+export type Store = typeof tableStore
 
-export const { useStore, Provider } = createStoreContext(tableStore);
+export const { useStore, Provider } = createStoreContext(tableStore)

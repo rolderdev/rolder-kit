@@ -1,5 +1,5 @@
-import { jsNode } from '@packages/node';
-import { getPort, getPorts } from '@packages/port';
+import { jsNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
 export default jsNode(
 	'saveAs',
@@ -14,11 +14,11 @@ export default jsNode(
 					displayName: 'Blob',
 					group: 'Data',
 					type: '*',
-					customs: { required: 'connection' }
+					customs: { required: 'connection' },
 				}),
-				...getPorts('input', ['fileName'])
-			]
-		}
+				...getPorts('input', ['fileName']),
+			],
+		},
 	},
 	{ color: 'purple' }
-);
+)

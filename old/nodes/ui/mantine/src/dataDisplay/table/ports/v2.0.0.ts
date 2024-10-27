@@ -1,4 +1,4 @@
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts, getType } from '@packages/port';
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts, getType } from '@packages/port'
 
 export default {
 	inputs: [
@@ -50,23 +50,23 @@ export default {
 			customs: {
 				validate(p) {
 					if (p.columnsDefinition) {
-						const noTypeErrorColumn = p.columnsDefinition?.find((i: any) => !i.type);
+						const noTypeErrorColumn = p.columnsDefinition?.find((i: any) => !i.type)
 						if (noTypeErrorColumn)
-							return `Column must have the type. </br>Column: ${JSON.stringify(noTypeErrorColumn, null, '</br>')}`;
-						const typeErrorColumn = p.columnsDefinition?.find((i: any) => !i[i.type]);
+							return `Column must have the type. </br>Column: ${JSON.stringify(noTypeErrorColumn, null, '</br>')}`
+						const typeErrorColumn = p.columnsDefinition?.find((i: any) => !i[i.type])
 						if (typeErrorColumn)
 							return `Column type "${typeErrorColumn.type}" must have  "${
 								typeErrorColumn.type
-							}" field. </br>Column: ${JSON.stringify(typeErrorColumn, null, '</br>')}`;
-						const noSortAccessorErrorColumn = p.columnsDefinition?.find((i: any) => i.sort && !i.accessor);
+							}" field. </br>Column: ${JSON.stringify(typeErrorColumn, null, '</br>')}`
+						const noSortAccessorErrorColumn = p.columnsDefinition?.find((i: any) => i.sort && !i.accessor)
 						if (p.sortType === 'frontend' && noSortAccessorErrorColumn)
 							return `Column with "sort" must have accessor. </br>Column: ${JSON.stringify(
 								noSortAccessorErrorColumn,
 								null,
 								'</br>'
-							)}`;
+							)}`
 					}
-					return true;
+					return true
 				},
 			},
 		}),
@@ -87,7 +87,7 @@ export default {
 			default: 'disabled',
 			customs: {
 				dependsOn(p) {
-					return !p.expansion;
+					return !p.expansion
 				},
 			},
 		}),
@@ -100,7 +100,7 @@ export default {
 			default: 'disabled',
 			customs: {
 				dependsOn(p) {
-					return p.expansion;
+					return p.expansion
 				},
 			},
 		}),
@@ -113,7 +113,7 @@ export default {
 			customs: {
 				isObject: true,
 				dependsOn(p) {
-					return p.onRowClick === 'function';
+					return p.onRowClick === 'function'
 				},
 			},
 		}),
@@ -126,7 +126,7 @@ export default {
 			customs: {
 				isObject: true,
 				dependsOn(p) {
-					return ['function', 'signal'].includes(p.onRowClick);
+					return ['function', 'signal'].includes(p.onRowClick)
 				},
 			},
 		}),
@@ -139,7 +139,7 @@ export default {
 			customs: {
 				isObject: true,
 				dependsOn(p) {
-					return p.onRowClick === 'singleSelection';
+					return p.onRowClick === 'singleSelection'
 				},
 			},
 		}),
@@ -169,7 +169,7 @@ export default {
 			customs: {
 				required: 'connection',
 				dependsOn(p) {
-					return p.scope ? true : false;
+					return p.scope ? true : false
 				},
 			},
 		}),
@@ -191,7 +191,7 @@ export default {
 			default: false,
 			customs: {
 				dependsOn(p) {
-					return p.layout ? true : false;
+					return p.layout ? true : false
 				},
 			},
 		}),
@@ -213,7 +213,7 @@ export default {
 			displayName: 'Min height',
 			customs: {
 				dependsOn(p) {
-					return p.dimensions ? true : false;
+					return p.dimensions ? true : false
 				},
 			},
 		}),
@@ -226,7 +226,7 @@ export default {
 			default: 'sm',
 			customs: {
 				dependsOn(p) {
-					return p.dimensions ? true : false;
+					return p.dimensions ? true : false
 				},
 			},
 		}),
@@ -239,7 +239,7 @@ export default {
 			default: 'xs',
 			customs: {
 				dependsOn(p) {
-					return p.dimensions ? true : false;
+					return p.dimensions ? true : false
 				},
 			},
 		}),
@@ -252,7 +252,7 @@ export default {
 			default: 'sm',
 			customs: {
 				dependsOn(p) {
-					return p.dimensions ? true : false;
+					return p.dimensions ? true : false
 				},
 			},
 		}),
@@ -274,7 +274,7 @@ export default {
 			default: 'sm',
 			customs: {
 				dependsOn(p) {
-					return p.tableStyles && !p.isParentTable;
+					return p.tableStyles && !p.isParentTable
 				},
 			},
 		}),
@@ -287,7 +287,7 @@ export default {
 			default: false,
 			customs: {
 				dependsOn(p) {
-					return p.tableStyles ? true : false;
+					return p.tableStyles ? true : false
 				},
 			},
 		}),
@@ -300,7 +300,7 @@ export default {
 			default: 'md',
 			customs: {
 				dependsOn(p) {
-					return p.tableStyles && !p.isParentTable;
+					return p.tableStyles && !p.isParentTable
 				},
 			},
 		}),
@@ -313,7 +313,7 @@ export default {
 			default: false,
 			customs: {
 				dependsOn(p) {
-					return p.tableStyles ? true : false;
+					return p.tableStyles ? true : false
 				},
 			},
 		}),
@@ -326,7 +326,7 @@ export default {
 			default: 'blue',
 			customs: {
 				dependsOn(p) {
-					return p.tableStyles ? true : false;
+					return p.tableStyles ? true : false
 				},
 			},
 		}),
@@ -348,7 +348,7 @@ export default {
 			default: true,
 			customs: {
 				dependsOn(p) {
-					return p.rowStyles ? true : false;
+					return p.rowStyles ? true : false
 				},
 			},
 		}),
@@ -361,7 +361,7 @@ export default {
 			default: false,
 			customs: {
 				dependsOn(p) {
-					return p.rowStyles ? true : false;
+					return p.rowStyles ? true : false
 				},
 			},
 		}),
@@ -374,7 +374,7 @@ export default {
 			displayName: 'Row bg color',
 			customs: {
 				dependsOn(p) {
-					return p.rowStyles && !p.striped;
+					return p.rowStyles && !p.striped
 				},
 			},
 		}),
@@ -387,7 +387,7 @@ export default {
 			displayName: 'Striped bg color',
 			customs: {
 				dependsOn(p) {
-					return p.rowStyles && p.striped;
+					return p.rowStyles && p.striped
 				},
 			},
 		}),
@@ -400,7 +400,7 @@ export default {
 			default: false,
 			customs: {
 				dependsOn(p) {
-					return p.rowStyles ? true : false;
+					return p.rowStyles ? true : false
 				},
 			},
 		}),
@@ -413,7 +413,7 @@ export default {
 			displayName: 'On hover bg color',
 			customs: {
 				dependsOn(p) {
-					return p.rowStyles && p.highlightOnHover;
+					return p.rowStyles && p.highlightOnHover
 				},
 			},
 		}),
@@ -426,7 +426,7 @@ export default {
 			displayName: 'Single selection bg color',
 			customs: {
 				dependsOn(p) {
-					return p.rowStyles && p.onRowClick === 'singleSelection';
+					return p.rowStyles && p.onRowClick === 'singleSelection'
 				},
 			},
 		}),
@@ -439,7 +439,7 @@ export default {
 			displayName: 'Mutli selection bg color',
 			customs: {
 				dependsOn(p) {
-					return p.rowStyles && p.multiSelection;
+					return p.rowStyles && p.multiSelection
 				},
 			},
 		}),
@@ -452,7 +452,7 @@ export default {
 			customs: {
 				isObject: true,
 				dependsOn(p) {
-					return p.rowStyles ? true : false;
+					return p.rowStyles ? true : false
 				},
 			},
 		}),
@@ -465,7 +465,7 @@ export default {
 			type: 'object',
 			customs: {
 				dependsOn(p) {
-					return p.onRowClick === 'singleSelection';
+					return p.onRowClick === 'singleSelection'
 				},
 			},
 		}),
@@ -477,7 +477,7 @@ export default {
 			type: 'object',
 			customs: {
 				dependsOn(p) {
-					return p.onRowClick === 'singleSelection';
+					return p.onRowClick === 'singleSelection'
 				},
 			},
 		}),
@@ -489,7 +489,7 @@ export default {
 			type: 'signal',
 			customs: {
 				dependsOn(p) {
-					return p.onRowClick === 'singleSelection';
+					return p.onRowClick === 'singleSelection'
 				},
 			},
 		}),
@@ -501,7 +501,7 @@ export default {
 			type: 'signal',
 			customs: {
 				dependsOn(p) {
-					return p.onRowClick === 'singleSelection';
+					return p.onRowClick === 'singleSelection'
 				},
 			},
 		}),
@@ -523,7 +523,7 @@ export default {
 			customs: {
 				isObject: true,
 				dependsOn(p) {
-					return p.multiSelection ? true : false;
+					return p.multiSelection ? true : false
 				},
 			},
 		}),
@@ -535,7 +535,7 @@ export default {
 			type: getType('array', 'connection'),
 			customs: {
 				dependsOn(p) {
-					return p.multiSelection ? true : false;
+					return p.multiSelection ? true : false
 				},
 			},
 		}),
@@ -547,7 +547,7 @@ export default {
 			type: getType('array', 'connection'),
 			customs: {
 				dependsOn(p) {
-					return p.multiSelection ? true : false;
+					return p.multiSelection ? true : false
 				},
 			},
 		}),
@@ -559,7 +559,7 @@ export default {
 			type: 'signal',
 			customs: {
 				dependsOn(p) {
-					return p.multiSelection ? true : false;
+					return p.multiSelection ? true : false
 				},
 			},
 		}),
@@ -571,7 +571,7 @@ export default {
 			type: 'signal',
 			customs: {
 				dependsOn(p) {
-					return p.multiSelection ? true : false;
+					return p.multiSelection ? true : false
 				},
 			},
 		}),
@@ -593,7 +593,7 @@ export default {
 			customs: {
 				required: 'both',
 				dependsOn(p) {
-					return p.expansion ? true : false;
+					return p.expansion ? true : false
 				},
 			},
 		}),
@@ -606,7 +606,7 @@ export default {
 			default: false,
 			customs: {
 				dependsOn(p) {
-					return p.expansion ? true : false;
+					return p.expansion ? true : false
 				},
 			},
 		}),
@@ -619,7 +619,7 @@ export default {
 			customs: {
 				isObject: true,
 				dependsOn(p) {
-					return p.expansion ? true : false;
+					return p.expansion ? true : false
 				},
 			},
 		}),
@@ -631,7 +631,7 @@ export default {
 			displayName: 'Default expanded items',
 			customs: {
 				dependsOn(p) {
-					return p.expansion ? true : false;
+					return p.expansion ? true : false
 				},
 			},
 		}),
@@ -643,7 +643,7 @@ export default {
 			displayName: 'Set expanded items',
 			customs: {
 				dependsOn(p) {
-					return p.expansion && p.allowMultiple;
+					return p.expansion && p.allowMultiple
 				},
 			},
 		}),
@@ -655,7 +655,7 @@ export default {
 			displayName: 'Expanded items',
 			customs: {
 				dependsOn(p) {
-					return p.expansion ? true : false;
+					return p.expansion ? true : false
 				},
 			},
 		}),
@@ -667,7 +667,7 @@ export default {
 			displayName: 'Expand all',
 			customs: {
 				dependsOn(p) {
-					return p.expansion && p.allowMultiple;
+					return p.expansion && p.allowMultiple
 				},
 			},
 		}),
@@ -679,7 +679,7 @@ export default {
 			displayName: 'Unexpand all',
 			customs: {
 				dependsOn(p) {
-					return p.expansion && p.allowMultiple;
+					return p.expansion && p.allowMultiple
 				},
 			},
 		}),
@@ -701,7 +701,7 @@ export default {
 			default: 'frontend',
 			customs: {
 				dependsOn(p) {
-					return p.sort ? true : false;
+					return p.sort ? true : false
 				},
 			},
 		}),
@@ -715,7 +715,7 @@ export default {
 			customs: {
 				required: 'both',
 				dependsOn(p) {
-					return p.sort ? true : false;
+					return p.sort ? true : false
 				},
 			},
 		}),
@@ -729,7 +729,7 @@ export default {
 			customs: {
 				required: 'both',
 				dependsOn(p) {
-					return p.sort ? true : false;
+					return p.sort ? true : false
 				},
 			},
 		}),
@@ -741,7 +741,7 @@ export default {
 			displayName: 'Reset sort',
 			customs: {
 				dependsOn(p) {
-					return p.sort ? true : false;
+					return p.sort ? true : false
 				},
 			},
 		}),
@@ -753,7 +753,7 @@ export default {
 			displayName: 'Restore default',
 			customs: {
 				dependsOn(p) {
-					return p.sort ? true : false;
+					return p.sort ? true : false
 				},
 			},
 		}),
@@ -779,7 +779,7 @@ export default {
 			displayName: 'Clicked item',
 			customs: {
 				dependsOn(p) {
-					return p.onRowClick === 'signal';
+					return p.onRowClick === 'signal'
 				},
 			},
 		}),
@@ -791,7 +791,7 @@ export default {
 			displayName: 'Row clicked',
 			customs: {
 				dependsOn(p) {
-					return p.onRowClick === 'signal';
+					return p.onRowClick === 'signal'
 				},
 			},
 		}),
@@ -804,7 +804,7 @@ export default {
 			displayName: 'Selected item',
 			customs: {
 				dependsOn(p) {
-					return p.onRowClick === 'singleSelection';
+					return p.onRowClick === 'singleSelection'
 				},
 			},
 		}),
@@ -816,7 +816,7 @@ export default {
 			displayName: 'Selected item changed',
 			customs: {
 				dependsOn(p) {
-					return p.onRowClick === 'singleSelection';
+					return p.onRowClick === 'singleSelection'
 				},
 			},
 		}),
@@ -829,7 +829,7 @@ export default {
 			displayName: 'Selected items',
 			customs: {
 				dependsOn(p) {
-					return p.multiSelection ? true : false;
+					return p.multiSelection ? true : false
 				},
 			},
 		}),
@@ -841,7 +841,7 @@ export default {
 			displayName: 'Selected items changed',
 			customs: {
 				dependsOn(p) {
-					return p.multiSelection ? true : false;
+					return p.multiSelection ? true : false
 				},
 			},
 		}),
@@ -854,7 +854,7 @@ export default {
 			displayName: 'Expanded items',
 			customs: {
 				dependsOn(p) {
-					return p.expansion ? true : false;
+					return p.expansion ? true : false
 				},
 			},
 		}),
@@ -866,7 +866,7 @@ export default {
 			displayName: 'Expanded items changed',
 			customs: {
 				dependsOn(p) {
-					return p.expansion ? true : false;
+					return p.expansion ? true : false
 				},
 			},
 		}),
@@ -879,7 +879,7 @@ export default {
 			displayName: 'Sort state',
 			customs: {
 				dependsOn(p) {
-					return p.sort ? true : false;
+					return p.sort ? true : false
 				},
 			},
 		}),
@@ -891,9 +891,9 @@ export default {
 			displayName: 'Sort state changed',
 			customs: {
 				dependsOn(p) {
-					return p.sort ? true : false;
+					return p.sort ? true : false
 				},
 			},
 		}),
 	],
-};
+}

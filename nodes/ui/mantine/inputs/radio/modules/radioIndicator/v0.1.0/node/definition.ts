@@ -1,9 +1,9 @@
-import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, sizes } from '@shared/port-v1.0.0'
 
-export type Props = BaseReactProps & { inCard: boolean; checkedProp?: boolean };
+export type Props = BaseReactProps & { inCard: boolean; checkedProp?: boolean }
 
-import Comp from '../component/RadioIndicator';
+import Comp from '../component/RadioIndicator'
 
 export default {
 	hashTag: '#expreimental',
@@ -41,4 +41,4 @@ export default {
 			}),
 		],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

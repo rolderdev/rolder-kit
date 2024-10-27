@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/action-icon-v1.0.0';
+import v100 from '@packages/action-icon-v1.0.0'
 
 export default reactNode('ActionIcon', {
 	'v1.0.0': {
@@ -20,9 +20,9 @@ export default reactNode('ActionIcon', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
+						return p.useScope ? true : false
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -31,9 +31,9 @@ export default reactNode('ActionIcon', {
 				group: 'Style',
 				type: getCustomEnumType(['transparent', 'subtle', 'light', 'filled', 'outline', 'default']),
 				default: 'subtle',
-				customs: { required: 'connection' }
-			})
+				customs: { required: 'connection' },
+			}),
 		],
-		outputs: getPorts('output', ['clicked'])
-	}
-});
+		outputs: getPorts('output', ['clicked']),
+	},
+})

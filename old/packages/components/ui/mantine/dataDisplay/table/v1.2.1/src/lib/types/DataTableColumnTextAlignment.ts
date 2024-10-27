@@ -1,1 +1,1 @@
-export type DataTableColumnTextAlignment = 'left' | 'center' | 'right';
+export type DataTableColumnTextAlignment = 'left' | 'center' | 'right'

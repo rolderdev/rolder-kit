@@ -1,42 +1,42 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import type { Props } from './types';
-import { Box, Popover } from '@mantine/core';
-import { sendOutput, sendSignal } from '@packages/port-send';
+import { Box, Popover } from '@mantine/core'
+import { sendOutput, sendSignal } from '@packages/port-send'
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+import type { Props } from './types'
 
-const Target = forwardRef((props, ref: any) => <Box ref={ref} {...props} w="fit-content" />);
+const Target = forwardRef((props, ref: any) => <Box ref={ref} {...props} w="fit-content" />)
 
-export default forwardRef(function (props: Props, ref) {
-	const children: any = props.children;
+export default forwardRef((props: Props, ref) => {
+	const children: any = props.children
 
 	const target = Array.isArray(children)
 		? children.filter((i) => i.props.noodlNode.model?.type.split('.')[1] === 'PopoverTarget')?.[0]
 		: children?.props.noodlNode.model?.type.split('.')[1] === 'PopoverTarget'
-		? children
-		: null;
+			? children
+			: null
 
 	const dropdown = Array.isArray(children)
 		? children.filter((i) => i.props.noodlNode.model?.type.split('.')[1] === 'PopoverDropdown')?.[0]
 		: children?.props.noodlNode.model?.type.split('.')[1] === 'PopoverDropdown'
-		? children
-		: null;
+			? children
+			: null
 
-	const [opened, setOpened] = useState(false);
+	const [opened, setOpened] = useState(false)
 	useImperativeHandle(
 		ref,
 		() => ({
 			open() {
-				setOpened(true);
+				setOpened(true)
 			},
 			close() {
-				setOpened(false);
+				setOpened(false)
 			},
 		}),
 		[]
-	);
+	)
 	useEffect(() => {
-		sendOutput(props.noodlNode, 'opened', opened);
-		if (!opened) sendSignal(props.noodlNode, 'closed');
-	}, [opened]);
+		sendOutput(props.noodlNode, 'opened', opened)
+		if (!opened) sendSignal(props.noodlNode, 'closed')
+	}, [opened])
 
 	return target ? (
 		<Popover opened={opened} onChange={setOpened} {...props} {...props.customProps}>
@@ -48,5 +48,5 @@ export default forwardRef(function (props: Props, ref) {
 			</Popover.Target>
 			<Popover.Dropdown {...props.customProps?.dropdown}>{dropdown}</Popover.Dropdown>
 		</Popover>
-	) : null;
-});
+	) : null
+})

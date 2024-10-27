@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react';
-import type { Item } from 'types';
-import type { TableState } from '../../types';
-import { sendOutput, sendSignal } from '@packages/port-send';
-import type { NoodlNode } from '@packages/node';
+import type { NoodlNode } from '@packages/node'
+import { sendOutput, sendSignal } from '@packages/port-send'
+import { useEffect, useState } from 'react'
+import type { Item } from 'types'
+import type { TableState } from '../../types'
 
 export default function (noodlNode: NoodlNode, singlSelection: TableState['selection']['single'], items: Item[]) {
-	const [selectedRecord, setSelectedRecordState] = useState<Item | undefined>(singlSelection.selectedItem);
+	const [selectedRecord, setSelectedRecordState] = useState<Item | undefined>(singlSelection.selectedItem)
 
 	function setSelectedRecord(record: Item) {
 		if (singlSelection.unselectable && record.id === selectedRecord?.id) {
-			setSelectedRecordState(undefined);
+			setSelectedRecordState(undefined)
 			// Noodl не переваривает undefined
-			sendOutput(noodlNode, 'selectedItem', null);
+			sendOutput(noodlNode, 'selectedItem', null)
 			// Сиганл уйдет с задержкой в 1 мс
-			sendSignal(noodlNode, 'singleUnselected');
+			sendSignal(noodlNode, 'singleUnselected')
 		} else {
-			setSelectedRecordState(record);
-			sendOutput(noodlNode, 'selectedItem', record);
-			sendSignal(noodlNode, 'singleSelected');
+			setSelectedRecordState(record)
+			sendOutput(noodlNode, 'selectedItem', record)
+			sendSignal(noodlNode, 'singleSelected')
 		}
 	}
 
 	function resetSelectedRecord() {
 		// Проверим, чтобы не тригерить лишнего рендеринга
 		if (selectedRecord) {
-			setSelectedRecordState(undefined);
-			sendOutput(noodlNode, 'selectedItem', null);
-			sendSignal(noodlNode, 'singleUnselected');
+			setSelectedRecordState(undefined)
+			sendOutput(noodlNode, 'selectedItem', null)
+			sendSignal(noodlNode, 'singleUnselected')
 		}
 	}
 
@@ -38,5 +38,5 @@ export default function (noodlNode: NoodlNode, singlSelection: TableState['selec
 		}
 	}, [singlSelection.selectedItem]); */
 
-	return { selectedRecord, setSelectedRecord, resetSelectedRecord };
+	return { selectedRecord, setSelectedRecord, resetSelectedRecord }
 }

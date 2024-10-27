@@ -1,9 +1,9 @@
-import { getPortDef, margins, paddings, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, margins, paddings, sizes } from '@shared/port-v1.0.0'
 
-export type Props = BaseReactProps & { inGroup: boolean; checkedProp: boolean };
+export type Props = BaseReactProps & { inGroup: boolean; checkedProp: boolean }
 
-import Comp from '../component/RadioCard';
+import Comp from '../component/RadioCard'
 
 export default {
 	hashTag: '#expreimental',
@@ -49,4 +49,4 @@ export default {
 			}),
 		],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef

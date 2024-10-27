@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { enums, getCustomEnumType, getEnumType, getPort, getPorts } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { enums, getCustomEnumType, getEnumType, getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/segmented-control-v1.0.0';
+import v100 from '@packages/segmented-control-v1.0.0'
 
 export default reactNode('SegmentedControl', {
 	'v1.0.0': {
@@ -19,7 +19,7 @@ export default reactNode('SegmentedControl', {
 				'inputItems',
 				'defaultItem',
 				'fullWidth',
-				'size'
+				'size',
 			]),
 			getPort({
 				plug: 'input',
@@ -27,7 +27,7 @@ export default reactNode('SegmentedControl', {
 				displayName: 'Orientation',
 				group: 'Layout',
 				default: 'horizontal',
-				type: getEnumType(enums.orientations)
+				type: getEnumType(enums.orientations),
 			}),
 			getPort({
 				plug: 'input',
@@ -39,11 +39,11 @@ export default reactNode('SegmentedControl', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
-			})
+						return p.useScope ? true : false
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['selected', 'selectedItem'])
-	}
-});
+		outputs: getPorts('output', ['selected', 'selectedItem']),
+	},
+})

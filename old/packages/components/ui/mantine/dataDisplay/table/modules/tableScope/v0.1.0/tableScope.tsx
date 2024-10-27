@@ -1,17 +1,15 @@
-import { forwardRef } from 'react';
-import type { Props } from './types';
-import { Provider } from './src/store';
+import { forwardRef } from 'react'
+import { Provider } from './src/store'
+import type { Props } from './types'
 
-export default forwardRef(function (props: Props) {
-	return (
-		<Provider
-			initialState={{
-				noodlNode: props.noodlNode,
-				selectionDbClasses: props.selectionDbClasses || [],
-				multiSelectionFilterFunc: props.multiSelectionFilterFunc,
-			}}
-		>
-			{props.children}
-		</Provider>
-	);
-});
+export default forwardRef((props: Props) => (
+	<Provider
+		initialState={{
+			noodlNode: props.noodlNode,
+			selectionDbClasses: props.selectionDbClasses || [],
+			multiSelectionFilterFunc: props.multiSelectionFilterFunc,
+		}}
+	>
+		{props.children}
+	</Provider>
+))

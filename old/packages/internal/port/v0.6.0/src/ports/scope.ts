@@ -1,5 +1,5 @@
-import type { NodePort } from '../../types';
-import { getCustomEnumType } from '../funcs/getType';
+import type { NodePort } from '../../types'
+import { getCustomEnumType } from '../funcs/getType'
 
 export default [
 	{ name: 'useScope', displayName: 'Use scope', group: 'Scope', type: 'boolean', default: false },
@@ -11,9 +11,9 @@ export default [
 		customs: {
 			required: 'both',
 			dependsOn(p) {
-				return p.useScope && p.scope === 'form';
-			}
-		}
+				return p.useScope && p.scope === 'form'
+			},
+		},
 	},
 	{
 		name: 'validationType',
@@ -24,9 +24,9 @@ export default [
 		customs: {
 			required: 'connection',
 			dependsOn(p) {
-				return p.useScope && p.scope === 'form';
-			}
-		}
+				return p.useScope && p.scope === 'form'
+			},
+		},
 	},
 	{
 		name: 'debouncedValidation',
@@ -37,9 +37,9 @@ export default [
 		customs: {
 			required: 'connection',
 			dependsOn(p) {
-				return p.useScope && p.scope === 'form' && p.validationType === 'onChange';
-			}
-		}
+				return p.useScope && p.scope === 'form' && p.validationType === 'onChange'
+			},
+		},
 	},
 	{
 		name: 'validationDelay',
@@ -50,8 +50,8 @@ export default [
 		customs: {
 			required: 'both',
 			dependsOn(p) {
-				return p.useScope && p.scope === 'form' && p.validationType === 'onChange' && p.debouncedValidation === true;
-			}
-		}
-	}
-] as const satisfies readonly NodePort[];
+				return p.useScope && p.scope === 'form' && p.validationType === 'onChange' && p.debouncedValidation === true
+			},
+		},
+	},
+] as const satisfies readonly NodePort[]

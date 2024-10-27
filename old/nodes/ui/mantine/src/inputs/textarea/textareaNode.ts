@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts, inputGroups } from '@packages/port'
 
-import v100 from '@packages/textarea-v1.0.0';
+import v100 from '@packages/textarea-v1.0.0'
 
 export default reactNode('Textarea', {
 	'v1.0.0': {
@@ -23,7 +23,7 @@ export default reactNode('Textarea', {
 				'typingDelay',
 				'radius',
 				'size',
-				'autosize'
+				'autosize',
 			]),
 			getPort({
 				plug: 'input',
@@ -33,9 +33,9 @@ export default reactNode('Textarea', {
 				type: 'string',
 				customs: {
 					dependsOn(p) {
-						return p.useScope ? false : true;
-					}
-				}
+						return p.useScope ? false : true
+					},
+				},
 			}),
 			getPort({
 				plug: 'input',
@@ -44,7 +44,7 @@ export default reactNode('Textarea', {
 				group: 'Style',
 				default: 'default',
 				type: getCustomEnumType(['default', 'filled', 'unstyled']),
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			...inputGroups.Form,
 			...inputGroups.Icon,
@@ -58,11 +58,11 @@ export default reactNode('Textarea', {
 				customs: {
 					required: 'connection',
 					dependsOn(p) {
-						return p.useScope ? true : false;
-					}
-				}
-			})
+						return p.useScope ? true : false
+					},
+				},
+			}),
 		],
-		outputs: getPorts('output', ['typedValue', 'reseted'])
-	}
-});
+		outputs: getPorts('output', ['typedValue', 'reseted']),
+	},
+})

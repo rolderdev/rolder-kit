@@ -1,6 +1,6 @@
-import {  MantineTheme } from '@mantine/core'
-import { BaseReactProps } from '@packages/node'
+import { MantineTheme } from '@mantine/core'
+import type { BaseReactProps } from '@packages/node'
 
 export type Props = BaseReactProps & {
-  loaderVariant?: any
+	loaderVariant?: any
 }

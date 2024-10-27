@@ -1,7 +1,7 @@
-import { jsNode } from '@packages/node';
-import { getPort, getPorts } from '@packages/port';
+import { jsNode } from '@packages/node'
+import { getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/notification-v1.0.0';
+import v100 from '@packages/notification-v1.0.0'
 
 export default jsNode(
 	'notification',
@@ -30,7 +30,7 @@ export default jsNode(
 					default: 2000,
 					customs: {
 						dependsOn(p) {
-							return p.autoClose ? true : false;
+							return p.autoClose ? true : false
 						},
 					},
 				}),
@@ -38,4 +38,4 @@ export default jsNode(
 		},
 	},
 	{ color: 'purple' }
-);
+)

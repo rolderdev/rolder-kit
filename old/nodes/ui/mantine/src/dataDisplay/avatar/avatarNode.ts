@@ -1,7 +1,7 @@
-import { reactNode } from '@packages/node';
-import { getCustomEnumType, getPort, getPorts } from '@packages/port';
+import { reactNode } from '@packages/node'
+import { getCustomEnumType, getPort, getPorts } from '@packages/port'
 
-import v100 from '@packages/avatar-v1.0.0';
+import v100 from '@packages/avatar-v1.0.0'
 
 export default reactNode(
 	'Avatar',
@@ -16,10 +16,10 @@ export default reactNode(
 					displayName: 'Variant',
 					group: 'Style',
 					default: 'light',
-					type: getCustomEnumType(['light', 'filled', 'outline', 'gradient'])
-				})
-			]
-		}
+					type: getCustomEnumType(['light', 'filled', 'outline', 'gradient']),
+				}),
+			],
+		},
 	},
 	{ allowChildren: true }
-);
+)

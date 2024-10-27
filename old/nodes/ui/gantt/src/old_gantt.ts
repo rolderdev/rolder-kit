@@ -1,6 +1,6 @@
-import { getEnumType, getPort, getPorts, getType } from '@packages/port';
-import { reactNode } from '@packages/node';
-import { lazy } from 'react';
+import { reactNode } from '@packages/node'
+import { getEnumType, getPort, getPorts, getType } from '@packages/port'
+import { lazy } from 'react'
 
 const ganttViewModes = [
 	{ value: 'Hour', label: 'Час' },
@@ -10,8 +10,8 @@ const ganttViewModes = [
 	{ value: 'Week', label: 'Неделя' },
 	{ value: 'Month', label: 'Месяц' },
 	{ value: 'QuarterYear', label: 'Квартал' },
-	{ value: 'Year', label: 'Год' }
-];
+	{ value: 'Year', label: 'Год' },
+]
 
 const GanttNode = reactNode('Gantt', {
 	'v1.0.0': {
@@ -26,7 +26,7 @@ const GanttNode = reactNode('Gantt', {
 				group: 'Params',
 				default: 'Day',
 				type: getEnumType(ganttViewModes),
-				customs: { required: 'connection' }
+				customs: { required: 'connection' },
 			}),
 			getPort({
 				plug: 'input',
@@ -34,9 +34,16 @@ const GanttNode = reactNode('Gantt', {
 				displayName: 'Show task list',
 				group: 'Params',
 				type: 'boolean',
-				default: false
+				default: false,
 			}),
-			getPort({ plug: 'input', name: 'ganttHeight', displayName: 'Height', group: 'Dimensions', type: 'boolean', default: false })
+			getPort({
+				plug: 'input',
+				name: 'ganttHeight',
+				displayName: 'Height',
+				group: 'Dimensions',
+				type: 'boolean',
+				default: false,
+			}),
 		],
 		outputs: [
 			getPort({ plug: 'output', name: 'ganttChangedTask', displayName: 'Changed task', group: 'Data', type: 'object' }),
@@ -51,13 +58,13 @@ const GanttNode = reactNode('Gantt', {
 				name: 'ganttTaskProgressChanged',
 				displayName: 'Task progress changed',
 				group: 'Signals',
-				type: 'signal'
+				type: 'signal',
 			}),
-			...getPorts('input', ['doubleClicked'])
-		]
-	}
-});
+			...getPorts('input', ['doubleClicked']),
+		],
+	},
+})
 
 //===================================================================
 
-Noodl.defineModule({ reactNodes: [GanttNode] });
+Noodl.defineModule({ reactNodes: [GanttNode] })

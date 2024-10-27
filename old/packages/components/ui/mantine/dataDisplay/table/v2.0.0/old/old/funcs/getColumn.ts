@@ -11,8 +11,8 @@ column.render - функция библиотеки, позволяющая от
 	Поэтому используется useMemo для оптимизации.
 */
 
-import type { NoodlNode } from '@packages/node';
-import type { Store } from '../models/storeModel';
+import type { NoodlNode } from '@packages/node'
+import type { Store } from '../models/storeModel'
 //import type { ColumnDefinition } from '../models/columnModel';
 
 // Используем items, т.к. records еще нет
@@ -53,5 +53,5 @@ export default async function getColumn(
 	}
 
 	// Стандартная ячейка
-	return columnDefinition;
+	return columnDefinition
 }

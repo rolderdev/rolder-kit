@@ -1,9 +1,9 @@
-import { getPortDef, sizes } from '@shared/port-v1.0.0';
-import type { ReactNodeDef, BaseReactProps } from '@shared/node-v1.0.0';
+import type { BaseReactProps, ReactNodeDef } from '@shared/node-v1.0.0'
+import { getPortDef, sizes } from '@shared/port-v1.0.0'
 
-export type Props = BaseReactProps & { defaultValue?: string | number };
+export type Props = BaseReactProps & { defaultValue?: string | number }
 
-import Comp from '../component/NumberInput';
+import Comp from '../component/NumberInput'
 
 export default {
 	hashTag: '#expreimental',
@@ -49,4 +49,4 @@ export default {
 			getPortDef({ name: 'reseted', displayName: 'Reseted', group: 'Signals', type: 'signal' }),
 		],
 	},
-} satisfies ReactNodeDef;
+} satisfies ReactNodeDef
