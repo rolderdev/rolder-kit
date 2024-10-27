@@ -7,7 +7,7 @@ export type MetaData = {
 	itemId: string
 	nodePath?: string
 	level: number
-	columnIdx?: string
+	columnId?: string
 	filterState?: FilterState
 	close?: () => void
 }

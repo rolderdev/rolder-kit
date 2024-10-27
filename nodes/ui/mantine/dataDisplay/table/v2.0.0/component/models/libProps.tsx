@@ -40,9 +40,9 @@ export const setLibProps = (p: Props, s: Store) => {
 		loaderColor: p.loaderColor || 'blue',
 		loaderBackgroundBlur: 0.5,
 		// Multi selection
-		allRecordsSelectionCheckboxPropsDev: p.customProps?.allRecordsSelectionCheckboxProps,
-		// Позволим разработчику рискнуть.
-		...p.customProps,
+		allRecordsSelectionCheckboxProps: p.customProps?.allRecordsSelectionCheckboxProps,
+		// Позволим разработчику рискнуть, но уберем функции, чтобы хранилище оставлось точечно реактивным.
+		...(p.customProps ? R.libs.just.omit(p.customProps, ['getRecordSelectionCheckboxProps']) : {}),
 	}
 
 	s.libProps = libProps

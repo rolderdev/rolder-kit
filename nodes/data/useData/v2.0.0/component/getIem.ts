@@ -4,8 +4,6 @@ import type { HistoryItem } from './fetch'
 type RefItem = Item & { [dbClass: string]: { id: string } }
 
 export default (rawItem: Item, rootId: string) => {
-	const roots: string[] = [...(rawItem.roots || []), rootId]
-
 	const prototype = Object.create(
 		{
 			getRef: (dbClass: string) => {
@@ -34,7 +32,6 @@ export default (rawItem: Item, rootId: string) => {
 					: []
 			},
 			getDbClassState: (statePath: string) => R.libs.just.get(R.dbClasses, `${rawItem.dbClass}.states.${statePath}`),
-			roots,
 		},
 		{
 			id: { enumerable: true, writable: false, configurable: false, value: rawItem.id },

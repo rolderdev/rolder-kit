@@ -8,7 +8,7 @@ export type NodeSingleSelection = { value: string | null } // Выбранный
 export type NodeMultiSelection = { value: MultiSelection }
 export type MultiSelection = 'notSelected' | 'selected' | 'indeterminate'
 export type NodeExpansion = { value: boolean }
-export type Sort = { value: { direction: 'asc' | 'desc'; idx?: string } }
+export type Sort = { value: { direction: 'asc' | 'desc'; id?: number } }
 export type Filters = { value: Record<string, { enabled: boolean; value?: any; defaultValue?: any }> }
 type Aggregations = Record<string, Record<string, any>>
 

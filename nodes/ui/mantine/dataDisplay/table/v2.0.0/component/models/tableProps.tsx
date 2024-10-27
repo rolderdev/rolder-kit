@@ -10,7 +10,6 @@ export type TableProps = ReturnType<typeof setTableProps>
 // Устанавливает наши специфичные настройки таблицы. В итоговых данных не должно быть функций.
 export const setTableProps = (p: Props, s: Store) => {
 	const defaultSortColumnDef = p.columnsDefinition?.find((i) => i.sort?.defaultDirection)
-	const defaultSortColumnIdx = defaultSortColumnDef ? p.columnsDefinition?.indexOf(defaultSortColumnDef) : undefined
 
 	const tableProps = {
 		...R.libs.just.pick(p, [
@@ -27,6 +26,7 @@ export const setTableProps = (p: Props, s: Store) => {
 		multiSelection: {
 			enabled: p.multiSelection,
 			useHierarchy: p.useMultiSelectionHierarchy,
+			classes: p.multiSelectionClasses,
 		},
 		expansion: {
 			enabled: p.expansion,
@@ -44,14 +44,13 @@ export const setTableProps = (p: Props, s: Store) => {
 		sort: {
 			enabled: p.sort,
 			type: p.sortType,
-			defaultState:
-				defaultSortColumnDef?.sort?.defaultDirection && defaultSortColumnIdx !== undefined
-					? ({
-							columnAccessor:
-								defaultSortColumnDef.accessor || defaultSortColumnDef.sort?.sortPath || defaultSortColumnIdx.toString(),
-							direction: defaultSortColumnDef.sort?.defaultDirection,
-						} satisfies DataTableSortStatus<TableRecord>)
-					: undefined,
+			defaultState: defaultSortColumnDef?.sort?.defaultDirection
+				? ({
+						columnAccessor:
+							defaultSortColumnDef.accessor || defaultSortColumnDef.sort?.sortPath || defaultSortColumnDef.id.toString(),
+						direction: defaultSortColumnDef.sort?.defaultDirection,
+					} satisfies DataTableSortStatus<TableRecord>)
+				: undefined,
 		},
 	}
 

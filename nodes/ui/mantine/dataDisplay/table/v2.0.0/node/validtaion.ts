@@ -24,6 +24,7 @@ export const validateColumns = (p: Props) => {
 		array(
 			pipe(
 				looseObject({
+					id: string('"id" must be string.'),
 					title: optional(string('"title" must be string.')),
 					type: picklist(
 						['accessor', 'getValue', 'custom', 'template', 'empty'],
@@ -71,6 +72,10 @@ export const validateColumns = (p: Props) => {
 					return Boolean(sort.sortPath || column.type === 'accessor')
 				}, '"sortPath" can by empty only with "accessor" column type or backend sort.')
 			)
+		),
+		check(
+			(columns) => R.libs.remeda.uniqueWith(columns, (a, b) => a.id === b.id).length === columns.length,
+			'Columns must have unique ids.'
 		),
 		check((columns) => !p.sort || columns.some((i) => i.sort), 'Columns must have at least one "sort" key with "Sort" enabled.')
 	)

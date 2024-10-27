@@ -42,32 +42,6 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 			Noodl.Events.on(`${rootNode.path}_singleSelectionChanged`, () => sendSignal(noodlNode, 'singleSelectionChanged'))
 			Noodl.Events.on(`${rootNode.path}_multiSelectionChanged`, () => sendSignal(noodlNode, 'multiSelectionChanged'))
 			Noodl.Events.on(`${rootNode.path}_expansionChanged`, () => sendSignal(noodlNode, 'expansionChanged'))
-
-			// Перестроение иерархии.
-			Noodl.Events.on(`${p.store.rootId}_handleHierarchy`, (itemsScope) => {
-				if (itemsScope) {
-					for (const schemeData of p.store.schemesData) {
-						if (schemeData.itemIds.some((id) => Object.keys(itemsScope).includes(id))) {
-							map(itemsScope, (itemId, scope) => {
-								if (itemId !== 'fetch' && scope === 'out') {
-									schemeData.itemIds = schemeData.itemIds.filter((id) => id !== itemId)
-									if (!p.store.subscribe) {
-										schemeData.fetched--
-										schemeData.total--
-									}
-								}
-							})
-						}
-					}
-
-					handleDataChanges(p, noodlNode)
-				}
-			})
-
-			// Принудительная загрузка при удалении и подписке.
-			Noodl.Events.on(`${p.store.rootId}_fetch`, () => {
-				if (p.store.subscribe) fetch(p, noodlNode)
-			})
 		}
 
 		p.store.inited = true

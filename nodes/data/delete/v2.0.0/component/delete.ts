@@ -11,21 +11,6 @@ export default {
 			sendOutput(noodlNode, 'data', data)
 			sendOutput(noodlNode, 'deleting', false)
 			sendSignal(noodlNode, 'deleted')
-
-			// Форсируем загрузку всех useData.
-			const roots: string[] = []
-
-			for (const scheme of p.deleteScheme) {
-				for (const id of scheme.ids) {
-					const proxyItem = R.items[id]
-					if (proxyItem)
-						proxyItem.roots.forEach((rootId) => {
-							if (!roots.includes(rootId)) roots.push(rootId)
-						})
-				}
-			}
-
-			roots.forEach((rootId) => Noodl.Events.emit(`${rootId}_fetch`))
 		}
 	},
 } as JsComponent

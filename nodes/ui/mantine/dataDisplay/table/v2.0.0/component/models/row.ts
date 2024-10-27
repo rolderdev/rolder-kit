@@ -1,15 +1,18 @@
+import type { CheckboxProps } from '@mantine/core'
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0'
+import type { Props } from '../../node/definition'
 import { toggleRowExpansion } from '../models/expansion'
 import type { TableRecord } from '../models/record'
 import { setSelectedId } from '../models/singleSelection'
-import type { Funcs, Store } from '../store'
 import useItem from '../shared/useItem'
 import useNode from '../shared/useNode'
-import type { Props } from '../../node/definition'
+import type { Funcs, Store } from '../store'
 import type { TableProps } from './tableProps'
 
 export type Row = {
 	props?: { pl?: number }
+	checkBoxProps?: CheckboxProps
+	hierarchyUnsub?: () => void
 }
 
 // Возвращает функцию обработки нажатия на строку в зависиимости от установленного параметра.
@@ -95,9 +98,9 @@ export const getRowBgColor = (
 }
 
 // Расчет отступа функцией разработчика.
-export const setRowPaddingLeft = (p: Props, s: Store, idsChanged: boolean) => {
-	if (!R.libs.just.compare(p.paddingLeftFunc, s.funcs.paddingLeftFunc) || idsChanged) {
-		for (const [idx, id] of s.originalIds.entries()) {
+export const setRowPaddingLeft = (p: Props, s: Store, idsChanged: boolean, checkBoxPropsChanged?: boolean) => {
+	if (!R.libs.just.compare(p.paddingLeftFunc, s.funcs.paddingLeftFunc) || idsChanged || checkBoxPropsChanged) {
+		for (const id of s.originalIds) {
 			const itemSnap = useItem(id, 'snap')
 
 			try {
@@ -106,15 +109,10 @@ export const setRowPaddingLeft = (p: Props, s: Store, idsChanged: boolean) => {
 					const pl = p.paddingLeftFunc?.(level, itemSnap)
 					R.libs.just.set(s.rows, [id, 'props', 'pl'], pl)
 
-					try {
-						if (s.tableProps.rowStyles.paddingLeftPostion === 'checkbox') {
-							const checkBoxProps = s.libProps.getRecordSelectionCheckboxProps?.(itemSnap, idx) || {}
-							checkBoxProps.pl = pl
-							R.libs.just.set(s.checkboxes, ['props', id], checkBoxProps)
-						}
-					} catch (e: any) {
-						log.error('getRecordSelectionCheckboxProps error', e)
-						R.libs.mantine?.MantineError?.('Системная ошибка!', `getRecordSelectionCheckboxProps error. ${e.message}`)
+					if (s.tableProps.multiSelection.enabled) {
+						const checkBoxProps = R.libs.just.get(s.rows, [id, 'checkBoxProps']) || {}
+						checkBoxProps.pl = pl
+						R.libs.just.set(s.rows, [id, 'checkBoxProps'], checkBoxProps)
 					}
 				}
 			} catch (e: any) {

@@ -1,11 +1,11 @@
-import { memo } from 'react'
-import { useStore } from './store'
 import { DataTable } from 'mantine-datatable'
+import { memo } from 'react'
+import { isRecordSelectable, setSelectedIds } from './models/multiSelection'
 import type { TableRecord } from './models/record'
-import { setSortState } from './models/sort'
 import { getCursorState, getRowBgColor, getRowClickHandler } from './models/row'
+import { setSortState } from './models/sort'
 import ExpansionRow from './renders/ExpansionRow'
-import { handleRecordSelection, setSelectedIds } from './models/multiSelection'
+import { useStore } from './store'
 
 import rowClasses from './styles/row.module.css'
 
@@ -13,7 +13,7 @@ export default memo((p: { tableId: string }) => {
 	const s = useStore(p.tableId)
 	const sn = R.libs.valtio.useSnapshot(s)
 
-	console.log('Table render', p.tableId)
+	//console.log('Table render', p.tableId)
 	return (
 		<DataTable<TableRecord>
 			// Base
@@ -38,7 +38,8 @@ export default memo((p: { tableId: string }) => {
 			})}
 			rowBackgroundColor={(record) => getRowBgColor(s, record.id, sn.selectedId, sn.selectedIds, sn.tableProps.rowStyles)}
 			// Multi selection
-			getRecordSelectionCheckboxProps={(record) => R.libs.just.get(sn.checkboxes, ['props', record.id])}
+			// Добавим настройки чекбокса поверх заданного разработчиком - отступ и indeterminate.
+			getRecordSelectionCheckboxProps={(record) => R.libs.just.get(sn.rows, [record.id, 'checkBoxProps'])}
 			selectedRecords={
 				s.tableProps.multiSelection.enabled
 					? Object.keys(sn.selectedIds)
@@ -50,10 +51,9 @@ export default memo((p: { tableId: string }) => {
 				s.tableProps.multiSelection.enabled ? (selectedRecords) => setSelectedIds(s, selectedRecords) : undefined
 			}
 			// Заменим встроенную функцию запрета выбора своей.
-			isRecordSelectable={(record) => (s.tableProps.multiSelection.enabled ? handleRecordSelection(s, record.id) : true)}
-			// Заменим стандартные параметры чекбокса в заголовке.
-			// Нам это нужно из-за варианта, когда в корне нет ни отдного selected, но есть 'indeterminate'.
-			allRecordsSelectionCheckboxProps={R.libs.just.get(sn.checkboxes, ['props', 'header'])}
+			isRecordSelectable={(record) =>
+				s.tableProps.multiSelection.enabled ? isRecordSelectable(s, record.id, sn.funcs.multiSelectionFilterFunc) : true
+			}
 			// Уберем прилипание колоник с чекбоксом, если таблица часть иерархии.
 			// Почему то этот код тригерит рендер, если прилетает с libprops.
 			selectionColumnStyle={

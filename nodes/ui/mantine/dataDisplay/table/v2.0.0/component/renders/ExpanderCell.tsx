@@ -1,15 +1,14 @@
 import { ActionIcon, Box, Group } from '@mantine/core'
 import clsx from 'clsx'
-import { memo } from 'react'
-import { useStore } from '../store'
-import useItem from '../shared/useItem'
-import useNode from '../shared/useNode'
+import { memo, useEffect } from 'react'
 import { expansionFiltered, toggleRowExpansion } from '../models/expansion'
+import useNode from '../shared/useNode'
+import { useStore } from '../store'
 import Cell from './Cell'
 
 import classes from '../styles/expansionCell.module.css'
 
-export default memo((p: { tableId: string; columnIdx: string; id: string }) => {
+export default memo((p: { tableId: string; id: string; columnId: string }) => {
 	const { useSnapshot } = R.libs.valtio
 
 	const s = useStore(p.tableId)
@@ -22,25 +21,25 @@ export default memo((p: { tableId: string; columnIdx: string; id: string }) => {
 	const expanded = sn.expandedIds[p.id]
 
 	// Определим, исключена ли строка из развертывния разработчиком.
-	const disabled = expansionFiltered(s, p.id)
+	const disabled = expansionFiltered(s, p.id, sn.funcs.expansionFilterFunc)
 
 	// Реактивность на изменение ноды.
-	const nodeStore = useNode(s, p.id, 'store')
+
 	const nodeSub = useNode(s, p.id, 'sub')
-	if (nodeStore && nodeSub) {
-		// Не большая хитрость. Мы не можем доверять детям, т.к. там могут быть дети не участвующие в иерархии таблиц.
-		// Но нам нужно подписаться на изменение их количества. nodeSub.childIds - так нельзя, тригерит все ячейки.
-		nodeSub.childIds.length
-		// Свернем строку, если она отфильтрована разработчиком.
-		if (expansionFiltered(s, p.id)) {
-			// Именно в этом порядке. Иначе ошибка 300 React.
-			nodeStore.states.expansion.value = false
-			s.expandedIds[p.id] = false
-			// Установим новое состояние, если оно изменилось в иерархии и если не отфильтровано разработчиком.
-		} else s.expandedIds[p.id] = nodeSub.states.expansion.value
-		// Добавим состояне для чекбокса.
-		s.checkboxes.hasChildren[p.id] = s.expandedIds[p.id]
-	}
+
+	useEffect(() => {
+		if (nodeSub) {
+			// Свернем строку, если она отфильтрована разработчиком.
+			if (expansionFiltered(s, p.id, sn.funcs.expansionFilterFunc)) {
+				const nodeStore = useNode(s, p.id, 'store')
+				// Именно в этом порядке. Иначе ошибка 300 React.
+				if (nodeStore) nodeStore.states.expansion.value = false
+				s.expandedIds[p.id] = false
+				// Установим новое состояние, если оно изменилось в иерархии и если не отфильтровано разработчиком.
+			} else s.expandedIds[p.id] = nodeSub.states.expansion.value
+			s.expandedIdsArr = Object.keys(s.expandedIds).filter((id) => s.expandedIds[id])
+		}
+	}, [s, nodeSub, p.id, sn.funcs.expansionFilterFunc])
 
 	//console.log('Expander render', paddingLeftPostion, pl)
 	if (onRowClick === 'expansion')
@@ -58,7 +57,7 @@ export default memo((p: { tableId: string; columnIdx: string; id: string }) => {
 						})}
 					/>
 				</Box>
-				<Cell tableId={p.tableId} columnIdx={p.columnIdx} id={p.id} />
+				<Cell tableId={p.tableId} columnId={p.columnId} id={p.id} isFirst={true} />
 			</Group>
 		)
 
@@ -87,7 +86,7 @@ export default memo((p: { tableId: string; columnIdx: string; id: string }) => {
 					})}
 				/>
 			</ActionIcon>
-			<Cell tableId={p.tableId} columnIdx={p.columnIdx} id={p.id} />
+			<Cell tableId={p.tableId} columnId={p.columnId} id={p.id} isFirst={true} />
 		</Group>
 	)
 })

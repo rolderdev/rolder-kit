@@ -11,12 +11,30 @@ export type ExpansionRows = Record<string, React.ReactNode>
 export const toggleRowExpansion = (s: Store, id: string) => {
 	const toggle = !s.expandedIds[id]
 
+	if (!s.tableProps.expansion.allowMultiple)
+		for (const expId of Object.keys(s.expandedIds)) {
+			if (expId !== id) s.expandedIds[expId] = false
+		}
 	s.expandedIds[id] = toggle
 	s.expandedIdsArr = Object.keys(s.expandedIds).filter((id) => s.expandedIds[id])
 
 	if (s.tableProps.expansion.useHierarchy) {
 		const nodeStore = useNode(s, id, 'store')
 		if (nodeStore) {
+			if (!s.tableProps.expansion.allowMultiple)
+				for (const expId of Object.keys(s.expandedIds)) {
+					if (expId !== id) {
+						const nodeStore = useNode(s, expId, 'store')
+						if (nodeStore) {
+							nodeStore.states.expansion.value = false
+							if (toggle) {
+								for (const n of nodeStore.childNodes()) {
+									n.states.expansion.value = false
+								}
+							}
+						}
+					}
+				}
 			nodeStore.states.expansion.value = toggle
 			if (toggle) {
 				for (const n of nodeStore.childNodes()) {
@@ -42,14 +60,14 @@ export const setExpandedIds = (s: Store, expandedIds: string[], isDefault?: bool
 	const { compare } = R.libs.just
 
 	// Отфильтруем по items этой таблицы и функцией разработчика.
-	const newExpandedIds = expandedIds.filter((id) => s.records.map((i) => i.id).includes(id) && !expansionFiltered(s, id))
+	const newExpandedIds = expandedIds.filter(
+		(id) => s.records.map((i) => i.id).includes(id) && !expansionFiltered(s, id, s.funcs.expansionFilterFunc)
+	)
 	const expendedIds = Object.keys(s.expandedIds).filter((id) => s.expandedIds[id])
 
 	if (!compare(expendedIds.sort(), newExpandedIds.sort())) {
 		s.expandedIds = {}
-		for (const id of newExpandedIds) {
-			s.expandedIds[id] = true
-		}
+		for (const id of newExpandedIds) s.expandedIds[id] = true
 		s.expandedIdsArr = newExpandedIds
 
 		if (s.tableProps.expansion.useHierarchy) {
@@ -75,16 +93,15 @@ export const setExpandedIds = (s: Store, expandedIds: string[], isDefault?: bool
 }
 
 // Метод фильтрации.
-export const expansionFiltered = (s: Store, id: string) => {
-	let filter = false
+export const expansionFiltered = (s: Store, id: string, expansionFilterFuncSnap: any) => {
+	let filtered = false
 	try {
-		const filterFunc = s.funcs.expansionFilterFunc
 		const itemSnap = useItem(id, 'snap')
-		filter = itemSnap && filterFunc ? !filterFunc(itemSnap, useNode(s, id, 'snap')) : false
+		filtered = itemSnap && expansionFilterFuncSnap ? !expansionFilterFuncSnap(itemSnap, useNode(s, id, 'snap')) : false
 	} catch (e: any) {
 		log.error('expansion filterFunc error', e)
 		R.libs.mantine?.MantineError?.('Системная ошибка!', `expansion filterFunc error. ${e.message}`)
 	}
 
-	return filter
+	return filtered
 }

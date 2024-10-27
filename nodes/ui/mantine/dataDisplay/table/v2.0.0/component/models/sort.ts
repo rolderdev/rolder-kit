@@ -3,11 +3,11 @@
 import { sendOutput, sendSignal } from '@shared/port-send-v1.0.0'
 import type { Item } from '@shared/types-v0.1.0'
 import type { DataTableSortStatus } from 'mantine-datatable'
+import { useEffect } from 'react'
 import useItem from '../shared/useItem'
 import type { Store } from '../store'
 import { getFilteredIds } from './filter'
 import type { TableRecord } from './record'
-import { useEffect } from 'react'
 
 export type Sort = {
 	defaultDirection?: 'asc' | 'desc'
@@ -22,7 +22,7 @@ export const setSortState = (s: Store, sortState: DataTableSortStatus<TableRecor
 	if (!s.hierarchy?.isChild) {
 		const tableNode = s.hierarchy?.tableNode
 		const sortColumnDef = Object.values(s.columns).find((i) => i.accessor === sortState?.columnAccessor)
-		if (tableNode && sortColumnDef) tableNode.states.sort.value = { direction: sortState.direction, idx: sortColumnDef.idx }
+		if (tableNode && sortColumnDef) tableNode.states.sort.value = { direction: sortState.direction, id: sortColumnDef.id }
 	}
 
 	// Отсортируем items, если включена фронтовая сортировка.
@@ -63,14 +63,14 @@ export const useHierarchySortState = (s: Store) => {
 
 		if (s.hierarchy?.isChild && rootNode?.states.sort && !s.sort.hierarchyUnsub) {
 			const state = rootNode.states.sort.value
-			if (state.idx) {
-				const columnAccessor = Object.values(s.columns).find((i) => i.idx === state.idx)?.accessor
+			if (state.id) {
+				const columnAccessor = Object.values(s.columns).find((i) => i.id === state.id)?.accessor
 				if (columnAccessor) setSortState(s, { direction: state.direction, columnAccessor })
 			}
 			const unsub = R.libs.valtio.subscribe(rootNode.states.sort, () => {
 				const state = rootNode.states.sort.value
-				if (state.idx) {
-					const columnAccessor = Object.values(s.columns).find((i) => i.idx === state.idx)?.accessor
+				if (state.id) {
+					const columnAccessor = Object.values(s.columns).find((i) => i.id === state.id)?.accessor
 					if (columnAccessor) setSortState(s, { direction: state.direction, columnAccessor })
 				}
 			})

@@ -76,6 +76,7 @@ export type Props = BaseReactProps & {
 	defaultSelectedItems?: Item[]
 	selectedItems?: Item[]
 	multiSelectionFilterFunc?: any
+	multiSelectionClasses?: string[]
 
 	// Expansion
 	expansion: boolean

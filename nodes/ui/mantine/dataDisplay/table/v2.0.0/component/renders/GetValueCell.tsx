@@ -4,8 +4,9 @@ import useItem from '../shared/useItem'
 import useNode from '../shared/useNode'
 import { useStore } from '../store'
 
-export default memo((p: { tableId: string; id: string; columnIdx: string }) => {
+export default memo((p: { tableId: string; id: string; columnId: string; isFirst: boolean }) => {
 	const s = useStore(p.tableId)
+	const sn = R.libs.valtio.useSnapshot(s)
 
 	const [value, setValue] = useState<string | number | undefined>()
 
@@ -15,7 +16,7 @@ export default memo((p: { tableId: string; id: string; columnIdx: string }) => {
 	const itemsSnap = s.records.map((i) => useItem(i.id, 'snap')).filter((i) => i !== undefined)
 	const nodeSub = useNode(s, p.id, 'sub')
 	// Без подписки, заменится при смене схемы колонок.
-	const column = s.columns[p.columnIdx]
+	const column = sn.columns[p.columnId]
 	const getValue = column.getValue
 
 	try {
@@ -27,8 +28,8 @@ export default memo((p: { tableId: string; id: string; columnIdx: string }) => {
 			log.error(`getValue cell error. Wrong return type, expect "string", "number" or "undefined", got ${typeof v}`, column)
 			R.libs.mantine?.MantineError?.(
 				'Системная ошибка!',
-				`getValue cell error. Wrong return type, expect "string", "number" or "undefined", got ${typeof v}. Column idx: ${
-					column.idx
+				`getValue cell error. Wrong return type, expect "string", "number" or "undefined", got ${typeof v}. Column id: ${
+					column.id
 				}`
 			)
 		}
@@ -37,10 +38,10 @@ export default memo((p: { tableId: string; id: string; columnIdx: string }) => {
 		R.libs.mantine?.MantineError?.('Системная ошибка!', `getValue error. ${e.message}`)
 	}
 
-	//console.log('GetValueCell render', value); // Считаем рендеры пока разрабатываем
+	//console.log('GetValueCell render', value) // Считаем рендеры пока разрабатываем
 	return (
-		<Box pl={s.tableProps.rowStyles.paddingLeftPostion === 'cell' && p.columnIdx === '0' ? s.rows[p.id].props?.pl : undefined}>
-			<Text truncate={column.ellipsis ? 'end' : undefined} fz={s.libProps.fz}>
+		<Box pl={s.tableProps.rowStyles.paddingLeftPostion === 'cell' && p.isFirst ? s.rows[p.id].props?.pl : undefined}>
+			<Text truncate={column.ellipsis ? 'end' : undefined} fz={sn.libProps.fz}>
 				{value}
 			</Text>
 		</Box>

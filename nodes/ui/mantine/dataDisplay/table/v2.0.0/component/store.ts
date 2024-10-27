@@ -1,38 +1,18 @@
-import type { NoodlNode } from '@shared/node-v1.0.0'
-import type { Props } from '../node/definition'
-import { setLibProps, type LibProps } from './models/libProps'
-import { setTableProps, type TableProps } from './models/tableProps'
-import { setColumns, type Column } from './models/column'
-import { itemIdsChanged, itemsOrderChanged, setOriginalIds, setRecordIds, type TableRecord } from './models/record'
-import type { DataTableSortStatus } from 'mantine-datatable'
-import { setHierarchyState, type HierarchyState } from './models/hierarchy'
-import type { CheckboxProps } from '@mantine/core'
 import type { FilterState } from '@nodes/table-filter-v0.1.0'
+import type { NoodlNode } from '@shared/node-v1.0.0'
+import type { DataTableProps, DataTableSortStatus } from 'mantine-datatable'
+import type { Props } from '../node/definition'
+import { type Column, setColumns } from './models/column'
+import { setExpandedIds } from './models/expansion'
+import { handleFilters, setInitialFiltersState } from './models/filter'
+import { type HierarchyState, setHierarchyState } from './models/hierarchy'
+import { type LibProps, setLibProps } from './models/libProps'
+import { setCheckboxProps, setSelectedIds } from './models/multiSelection'
+import { type TableRecord, itemIdsChanged, itemsOrderChanged, setOriginalIds, setRecordIds } from './models/record'
+import { type Row, setRowPaddingLeft } from './models/row'
+import { setSelectedId } from './models/singleSelection'
 import { setSortState } from './models/sort'
-import { setSelectedIds } from './models/multiSelection'
-import { setRowPaddingLeft, type Row } from './models/row'
-
-// export default (noodlNode: NoodlNode) => {
-// 	const { proxy, ref } = R.libs.valtio
-
-// 	return proxy<Store>({
-// 		noodlNode: ref(noodlNode),
-// 		inited: false,
-// 		//hierarchy: { isChild: false, level: 0 },
-// 		fetching: true,
-// 		// libProps: {} as LibProps,
-// 		// tableProps: {} as TableProps,
-// 		// columnsDefinition: {},
-// 		// records: [],
-// 		// originalIds: [],
-// 		// selectedId: null,
-// 		// selectedIds: {},
-// 		// checkboxes: { unsubs: {}, props: {}, hasChildren: {} },
-// 		// expandedIds: {},
-// 		// sort: {},
-// 		// filters: {},
-// 	})
-// }
+import { type TableProps, setTableProps } from './models/tableProps'
 
 export type Store = {
 	// Base
@@ -45,27 +25,22 @@ export type Store = {
 	libProps: LibProps
 	tableProps: TableProps
 	funcs: Funcs
+	header: Row
 	rows: Record<string, Row>
 	selectedId: string | null
 	selectedIds: Record<string, boolean>
-	checkboxes: {
-		hierarchyUnsubs: { [id: string]: () => void }
-		props: { [id: string]: CheckboxProps }
-		hasChildren: { [id: string]: boolean }
-	}
 	sort: { state?: DataTableSortStatus<TableRecord>; hierarchyUnsub?: () => void }
-	filters: { state?: Record<string, FilterState>; hierarchyUnsub?: () => void }
+	filters: { states: Record<string, FilterState>; inited: Record<string, boolean> }
 	expandedIds: Record<string, boolean>
 	expandedIdsArr: string[]
 	hierarchy?: HierarchyState
+	usedDefsults: { singleSelection?: boolean; multiSelection?: boolean; expansion?: boolean }
 }
 
 export type Funcs = Pick<
 	Props,
 	'clickFilterFunc' | 'paddingLeftFunc' | 'singleSelectionFilterFunc' | 'multiSelectionFilterFunc' | 'expansionFilterFunc'
->
-
-//export type Snap = Readonly<Store>
+> & { getRecordSelectionCheckboxProps?: DataTableProps<TableRecord>['getRecordSelectionCheckboxProps'] }
 
 // Просто глобальное хранилище, отличабщее одну таблицу от другой по id.
 const stores: Record<string, Store> = {}
@@ -87,14 +62,15 @@ export const handleStore = (p: Props, tableId: string) => {
 			libProps: {} as LibProps,
 			tableProps: {} as TableProps,
 			funcs: {},
+			header: {},
 			rows: {},
 			selectedId: null,
 			selectedIds: {},
-			checkboxes: { hierarchyUnsubs: {}, props: {}, hasChildren: {} },
 			sort: {},
-			filters: {},
+			filters: { states: {}, inited: {} },
 			expandedIds: {},
 			expandedIdsArr: [],
+			usedDefsults: {},
 		})
 	}
 
@@ -114,7 +90,10 @@ export const handleStore = (p: Props, tableId: string) => {
 	const orderChanged = itemsOrderChanged(p, s)
 
 	// Запись кеша - originalIds для последующих фронтовых сортировок и фильтраций.
-	if (idsChanged || orderChanged) setOriginalIds(p, s)
+	if (idsChanged || orderChanged) {
+		setOriginalIds(p, s)
+		handleFilters(s)
+	}
 
 	// Функции нужно обрабатывать отедльно, т.к. Valtio не умеет их сравнивать.
 	const compare = R.libs.just.compare
@@ -126,17 +105,48 @@ export const handleStore = (p: Props, tableId: string) => {
 	if (!compare(p.expansionFilterFunc, s.funcs.expansionFilterFunc)) s.funcs.expansionFilterFunc = p.expansionFilterFunc
 
 	// Дефолты.
+	// Единичный выбор.
+	if (!s.usedDefsults.singleSelection && p.items?.length) {
+		const defaultSelectedItemId = p.defaultSelectedItem?.id || s.hierarchy?.tableNode?.states.singleSelection.value
+		if (defaultSelectedItemId) setSelectedId(s, defaultSelectedItemId, true)
+	}
+
 	// Мультивыбор.
-	// const defaultSelectedRecords = p.defaultSelectedItems?.map((item) => ({ id: item.id })) || []
-	// if (defaultSelectedRecords.length) setSelectedIds(s, defaultSelectedRecords, true)
+	if (!s.usedDefsults.multiSelection && p.items?.length) {
+		// В дефолт тянем сначал подданные прямо, потом из иерархии (иначе useHierarchySelection проставляет выделение после отрисовки таблицы).
+		const defaultSelectedRecords =
+			p.defaultSelectedItems?.map((item) => ({ id: item.id })) || s.hierarchy?.tableNode?.multiSelected() || []
+		if (defaultSelectedRecords.length) setSelectedIds(s, defaultSelectedRecords)
+	}
+
 	// Сортировка.
 	if (s.tableProps.sort.enabled && s.tableProps.sort.defaultState && p.items?.length)
 		setSortState(s, s.sort.state || s.tableProps.sort.defaultState, true)
 
+	// Фильтрация.
+	if (idsChanged) setInitialFiltersState(s)
+
+	// Разворачивание.
+	if (!s.usedDefsults.expansion && p.items?.length) {
+		const defaultExpandedIds =
+			p.defaultExpandedItems?.map((item) => item.id) ||
+			s.hierarchy?.tableNode
+				?.expanded()
+				.filter((i) => !!i)
+				.map((i) => i.id) ||
+			[]
+		if (defaultExpandedIds.length) setExpandedIds(s, defaultExpandedIds, true)
+	}
+
+	// Настройки строк. Заполняется реактивное хранилище s.rows, которое потом испольуется точечно - для каждой строки.
+	// Установка настроек чекбоксов.
+	const checkBoxPropsChanged = setCheckboxProps(p, s, idsChanged)
 	// Установка отступа функцией разработчика.
-	setRowPaddingLeft(p, s, idsChanged)
+	setRowPaddingLeft(p, s, idsChanged, checkBoxPropsChanged)
 
 	s.fetching = p.fetching // В конце, чтобы анимация загрузки исчезала после полной готовности.
+
+	return s
 }
 
 // Обертка, для удобного вытягивания хранилища по id таблицы.

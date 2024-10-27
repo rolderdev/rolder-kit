@@ -4,7 +4,7 @@ import type { FilterState, Props } from '../node/definition'
 
 export default {
 	close: (p: Props, noodlNode: NoodlNode) => {
-		const close = noodlNode.nodeScope.componentOwner.metaData.close as () => void | undefined
+		const close = noodlNode.nodeScope.componentOwner.metaData.close as undefined | (() => void)
 		close?.()
 	},
 }
@@ -15,7 +15,7 @@ export const subscribe = async (p: Props, noodlNode: NoodlNode) => {
 	const filterState = noodlNode.nodeScope.componentOwner.metaData.filterState as FilterState | undefined
 
 	if (filterState) {
-		p.columnIdx = noodlNode.nodeScope.componentOwner.metaData.columnIdx as string | undefined
+		p.columnId = noodlNode.nodeScope.componentOwner.metaData.columnId as number | undefined
 		p.filterState = filterState
 
 		sendOutput(noodlNode, 'state', filterState)

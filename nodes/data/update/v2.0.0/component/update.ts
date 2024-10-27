@@ -25,7 +25,6 @@ export default {
 				const { unset } = R.libs.lodash
 				const { omit, clone } = R.libs.just
 
-				const scopeUpdate: { [rootId: string]: Record<string, 'in' | 'out'> } = {}
 				for (const scheme of p.updateScheme) {
 					for (const schemeItem of scheme.items) {
 						// Нужно клонировать перед мутацией, т.к. разарботчик может положить части прокси в item, что мутирует его и запишет не верно в БД.
@@ -38,17 +37,9 @@ export default {
 							merge({ object: proxyItem, proxyObject: omit(clonedItem, ['history', 'deleteFields']), skipDelete: true })
 							// Удалим ключи. Это работает и для конструкции - someArray[0].someField
 							if (schemeItem.deleteFields?.length) schemeItem.deleteFields.map((i) => unset(proxyItem, i))
-							// Отправим в useData все items всех схем, если в них указан scope.
-							if (scheme.scope) {
-								proxyItem.roots.forEach((rootId) => R.libs.just.set(scopeUpdate, [rootId, clonedItem.id], scheme.scope))
-							}
 						}
 					}
 				}
-
-				R.libs.just.map(scopeUpdate, (rootId, itemsScope) => {
-					Noodl.Events.emit(`${rootId}_handleHierarchy`, itemsScope)
-				})
 			}
 
 			// Обновление истории.

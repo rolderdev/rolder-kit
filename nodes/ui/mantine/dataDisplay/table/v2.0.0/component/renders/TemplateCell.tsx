@@ -3,7 +3,7 @@ import { memo, useEffect, useState } from 'react'
 import getRoodlReactNode from '../shared/getRoodlReactNode'
 import { useStore } from '../store'
 
-export default memo((p: { tableId: string; id: string; columnIdx: string }) => {
+export default memo((p: { tableId: string; id: string; columnId: string; isFirst: boolean }) => {
 	const s = useStore(p.tableId)
 
 	// Кастомный Suspense.
@@ -12,7 +12,8 @@ export default memo((p: { tableId: string; id: string; columnIdx: string }) => {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		const nodePath = s.hierarchy?.tableNode?.childNodes().find((i) => i.itemId === p.id)?.path
-		getRoodlReactNode(s, p.id, R.libs.just.get(s.columns, [p.columnIdx, 'template']), {
+		// Создание ноды занимает около 250мс первый раз. Поэтому бессмысленно батчить это.
+		getRoodlReactNode(s, p.id, R.libs.just.get(s.columns, [p.columnId, 'template']), {
 			itemId: p.id,
 			level: s.hierarchy?.level || 0,
 			nodePath,
@@ -21,7 +22,7 @@ export default memo((p: { tableId: string; id: string; columnIdx: string }) => {
 
 	//console.log('TemplateCell render', p.id); // Считаем рендеры пока разрабатываем
 	return (
-		<Box pl={s.tableProps.rowStyles.paddingLeftPostion === 'cell' && p.columnIdx === '0' ? s.rows[p.id].props?.pl : undefined}>
+		<Box pl={s.tableProps.rowStyles.paddingLeftPostion === 'cell' && p.isFirst ? s.rows[p.id].props?.pl : undefined}>
 			{templateCell}
 		</Box>
 	)

@@ -4,7 +4,7 @@ import { clearWarning, sendWarning } from '@shared/node-v1.0.0/src/editorModels/
 import { getPortDef } from '@shared/port-v1.0.0'
 import { subscribe } from '../component/tableFilter'
 
-export type Props = BaseJsProps & { columnIdx?: string; filterState?: FilterState; unsub?: () => void }
+export type Props = BaseJsProps & { columnId?: number; filterState?: FilterState; unsub?: () => void }
 export type FilterState = { enabled: boolean; value?: any; defaultValue?: any; ids?: readonly string[] }
 
 export default {
@@ -22,9 +22,9 @@ export default {
 	},
 	afterNode: {
 		getInspectInfo: (p: Props) =>
-			p.columnIdx && p.filterState
+			p.columnId && p.filterState
 				? [
-						{ type: 'text', value: `Column idx: ${p.columnIdx}` },
+						{ type: 'text', value: `Column id: ${p.columnId}` },
 						{ type: 'value', value: p.filterState },
 					]
 				: [],

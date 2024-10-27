@@ -365,6 +365,15 @@ export default [
 		dependsOn: (p: Props) => p.multiSelection && p.hierarchy,
 	}),
 	getPortDef({
+		name: 'multiSelectionClasses',
+		displayName: 'Classes',
+		group: 'Custom',
+		customGroup: 'Multi selection',
+		type: 'array',
+		dependsOn: (p: Props) => p.multiSelection && p.hierarchy,
+		codeComment: `//['first-class', 'second-class']`,
+	}),
+	getPortDef({
 		name: 'defaultSelectedItems',
 		displayName: 'Default selected items',
 		group: 'Custom',
