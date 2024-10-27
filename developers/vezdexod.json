@@ -5,10 +5,10 @@
 	},
 	"tex-desktop": {
 		"projectDir": "/home/vezdexod/programsVezdexod/Roodl/Projects/tex-desktop",
-		"rolderKit": ["shared", "app", "mantine", "data", "pdf", "xlsx"]
+		"rolderKit": ["shared", "app", "mantine", "old_mantine", "data", "old_data", "old_xlsx", "old_pdf", "utils"]
 	},
 	"playground": {
 		"projectDir": "/home/vezdexod/programsVezdexod/Roodl/Projects/playground",
-		"rolderKit": ["shared", "app", "mantine", "data", "pdf", "xlsx"]
+		"rolderKit": ["shared", "app", "mantine", "old_mantine", "data", "old_data", "old_xlsx", "old_pdf", "utils"]
 	}
 }
