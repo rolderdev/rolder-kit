@@ -9,7 +9,7 @@ export default {
 		const { flowEndpoint, flowData, timeout, useServices, selectedService, serviceVersion } = p
 
 		if (!dbName) {
-			R.libs.mantine?.MantineError?.('Системная ошибка!', `No dbName at R.env`)
+			R.libs.mantine?.MantineError?.('Системная ошибка!', 'No dbName at R.env')
 			log.error('No dbName', R.env)
 			return
 		}
@@ -59,7 +59,7 @@ export default {
 					const jsonResp = await ky
 						.post(nodeRedUrl, {
 							headers: {
-								Authorization: 'Basic ' + btoa(`${noderedCreds.username}:${noderedCreds.password}`),
+								Authorization: `Basic ${btoa(`${noderedCreds.username}:${noderedCreds.password}`)}`,
 							},
 							body: formData,
 							timeout: timeout,
@@ -71,7 +71,7 @@ export default {
 					log.info(`nodered ${flowEndpoint}`, jsonResp)
 					log.end(`nodered: ${flowEndpoint}`, startTime)
 				} catch (e: any) {
-					log.error(`nodered error`, e)
+					log.error('nodered error', e)
 					R.libs.mantine?.MantineError?.('Системная ошибка!', `nodered error: ${e.message}`)
 				}
 			}

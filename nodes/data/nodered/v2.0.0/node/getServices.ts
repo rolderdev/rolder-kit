@@ -27,7 +27,7 @@ export const getServices = async () => {
 	return ky
 		.post(servicesUrl, {
 			headers: {
-				Authorization: 'Basic ' + btoa(`${noderedCreds.username}:${noderedCreds.password}`),
+				Authorization: `Basic ${btoa(`${noderedCreds.username}:${noderedCreds.password}`)}`,
 			},
 			body: null,
 		})

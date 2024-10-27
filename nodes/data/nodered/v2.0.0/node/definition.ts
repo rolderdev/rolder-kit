@@ -19,12 +19,13 @@ export type Props = BaseJsProps & {
 }
 
 // Найдем дефолт. Лучше бы это определять в самом Nodered.
-const getDefaultServiceName = (p: Props) => {
-	let defaultServiceName
+const getDefaultServiceName = (p: Props): string => {
+	let defaultServiceName: string | undefined
 
 	for (const serviceName in p.services) {
 		if (p.services[serviceName]?.isDefault === true) defaultServiceName = serviceName
 	}
+
 	return defaultServiceName as string // Говорим TS что стопудово будет строка
 }
 
