@@ -21,6 +21,8 @@ export default async function (p: { fetchScheme: FetchScheme; props: Props }) {
 
 	let response = {} as { result: Data }
 
+	console.log('Улетает в kuzzle query', { controller: 'rolder', action: 'search', dbName, searchString, fetchScheme })
+
 	if (searchEnabled && searchString) {
 		response = await K.query({ controller: 'rolder', action: 'search', dbName, searchString, fetchScheme })
 		log.info(`UseData founded ${fetchScheme.map((i) => i.dbClass).join(', ')}`, response.result)
