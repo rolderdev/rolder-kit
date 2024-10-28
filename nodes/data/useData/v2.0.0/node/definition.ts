@@ -23,7 +23,6 @@ export type BaseProps = {
 export type { Nodes, NodeMultiSelection, NodeSingleSelection, NodeExpansion, MultiSelection, HistoryItem, ItemsHistory }
 
 export default {
-	hashTag: '#pre-release',
 	module: { dynamic: import('../component/useData') },
 	inNode: {
 		inputs: [

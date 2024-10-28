@@ -34,7 +34,7 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 		// Первичная загрузка реактивного режима.
 		if (!p.controlled) await fetch(p, noodlNode)
 
-		// Тригеры.
+		// Тригеры. Для реактивного режима, т.к. в контроллируемом еще нет rootNode. Для контроллируемого в сигнале fetch.
 		const rootNode = R.nodes[p.store.rootId]
 		if (rootNode) {
 			// Смена состояний.
@@ -51,7 +51,23 @@ const reactive = async (p: Props, noodlNode: NoodlNode) => {
 
 export default {
 	reactive,
-	fetch: async (p: Props, noodlNode) => fetch(p, noodlNode),
+	fetch: async (p: Props, noodlNode) => {
+		await fetch(p, noodlNode)
+
+		// Первый проход.
+		if (!p.store.signalsInited) {
+			// Тригеры. Для контроллируемого режима. Для реактивного в reactive.
+			const rootNode = R.nodes[p.store.rootId]
+			if (rootNode) {
+				// Смена состояний.
+				Noodl.Events.on(`${rootNode.path}_singleSelectionChanged`, () => sendSignal(noodlNode, 'singleSelectionChanged'))
+				Noodl.Events.on(`${rootNode.path}_multiSelectionChanged`, () => sendSignal(noodlNode, 'multiSelectionChanged'))
+				Noodl.Events.on(`${rootNode.path}_expansionChanged`, () => sendSignal(noodlNode, 'expansionChanged'))
+			}
+
+			p.store.signalsInited = true
+		}
+	},
 	resetSingleSelection: (p: Props, noodlNode) => {
 		for (const i of Object.values(R.nodes).filter((i) => i.rootId === p.store.rootId)) i.states.singleSelection.value = null
 

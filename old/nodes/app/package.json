@@ -32,7 +32,7 @@
 		"just-template": "^2.2.0",
 		"just-typeof": "^3.2.0",
 		"just-unique": "^4.2.0",
-		"nanoid": "^5.0.7",
+		"nanoid": "^5.0.8",
 		"numbro": "^2.5.0",
 		"omgopass": "^3.2.1"
 	},

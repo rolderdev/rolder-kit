@@ -6,6 +6,7 @@ export default (p: Props) =>
 	({
 		rootId: R.libs.nanoid(8),
 		inited: false,
+		signalsInited: false,
 		apiVersion: p.apiVersion,
 		fetchScheme: p.fetchScheme,
 		controlled: p.controlled,
@@ -17,6 +18,7 @@ export default (p: Props) =>
 export type Store = BaseProps & {
 	rootId: string
 	inited: boolean
+	signalsInited: boolean
 	schemesData: SchemeData[]
 	subscribes: Subscribes
 }
