@@ -3,16 +3,16 @@
 	"main": "TableProvider.tsx",
 	"types": "TableProvider.tsx",
 	"dependencies": {
-		"@packages/table-scope-v0.1.0": "workspace:*",
-		"nanoid": "^5.0.7",
-		"clsx": "^2.1.1",
-		"zod": "^3.23.8",
 		"@davstack/store": "^1.4.6",
+		"@packages/table-scope-v0.1.0": "workspace:*",
+		"clsx": "^2.1.1",
+		"just-map-object": "^2.3.0",
 		"just-safe-get": "^4.2.0",
 		"just-safe-set": "^4.2.1",
-		"just-map-object": "^2.3.0",
 		"lodash.isequal": "^4.5.0",
-		"lodash.isfunction": "^3.0.9"
+		"lodash.isfunction": "^3.0.9",
+		"nanoid": "^5.0.8",
+		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@types/lodash.isequal": "^4.5.8",

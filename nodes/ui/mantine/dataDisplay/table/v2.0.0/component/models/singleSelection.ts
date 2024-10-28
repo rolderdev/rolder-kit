@@ -10,6 +10,9 @@ import type { Store } from '../store'
 // Устанавливает новый выбор, если новый не совпадает со старым.
 // Сбрасывает выбор, если новый совпадает со старым.
 export const setSelectedId = (s: Store, selectedId: string) => {
+	// Отменим, если в этой таблице нет такого item.
+	if (!s.records.some((i) => i.id === selectedId)) return
+
 	const selectedItemSnap = useItem(selectedId, 'snap')
 	const nodeSnap = useNode(s, selectedId, 'snap')
 
@@ -44,16 +47,14 @@ export const resetSelectedId = (s: Store) => {
 
 // Метод установки состояния иерархии.
 const setHierarhySingleSelection = (s: Store) => {
-	if (s.tableProps.useSingleSelectionHierarchy) {
-		if (s.hierarchy?.tableNode) {
-			const rootNode = s.hierarchy.tableNode.rootNode()
-			if (rootNode) {
-				for (const node of rootNode.descendantNodes(true)) {
-					if (node.path === s.hierarchy.tableNode?.path) node.states.singleSelection.value = s.selectedId
-					else node.states.singleSelection.value = null
-				}
-				Noodl.Events.emit(`${rootNode.path}_singleSelectionChanged`)
+	if (s.tableProps.onRowClick === 'singleSelection' && s.tableProps.useSingleSelectionHierarchy && s.hierarchy?.tableNode) {
+		const rootNode = s.hierarchy.tableNode.rootNode()
+		if (rootNode) {
+			for (const node of rootNode.descendantNodes(true)) {
+				if (node.path === s.hierarchy.tableNode?.path) node.states.singleSelection.value = s.selectedId
+				else node.states.singleSelection.value = null
 			}
+			Noodl.Events.emit(`${rootNode.path}_singleSelectionChanged`)
 		}
 	}
 }
@@ -64,20 +65,17 @@ export const useHierarhySingleSelection = (s: Store) => {
 	useEffect(() => {
 		let unsub: (() => void) | undefined
 
-		if (s.hierarchy?.tableNode) {
+		if (s.tableProps.onRowClick === 'singleSelection' && s.tableProps.useSingleSelectionHierarchy && s.hierarchy?.tableNode) {
 			unsub = R.libs.valtio.subscribe(s.hierarchy.tableNode.states.singleSelection, () => {
-				// Не будем тригерить повторно выходы, если это событие произошло по нажатию в этой таблице.
-				const newSelectedId = s.hierarchy?.tableNode?.states.singleSelection.value || null
-				if (s.selectedId !== newSelectedId) {
-					s.selectedId = newSelectedId
-
-					sendOutput(s.noodlNode, 'selectedItem', newSelectedId ? R.items[newSelectedId] : null)
-					sendOutput(s.noodlNode, 'selectedNode', newSelectedId ? useNode(s, newSelectedId, 'snap') : null)
-					sendSignal(s.noodlNode, 'selectedItemChanged')
-				}
+				let newSelectedId = s.hierarchy?.tableNode?.states.singleSelection.value
+				if (!s.records.some((i) => i.id === newSelectedId)) newSelectedId = null
+				if (newSelectedId !== undefined) s.selectedId = newSelectedId
+				sendOutput(s.noodlNode, 'selectedItem', newSelectedId ? R.items[newSelectedId] : null)
+				sendOutput(s.noodlNode, 'selectedNode', newSelectedId ? useNode(s, newSelectedId, 'snap') : null)
+				sendSignal(s.noodlNode, 'selectedItemChanged')
 			})
 		}
 
 		return () => unsub?.()
-	}, [])
+	}, [s.hierarchy?.tableNodePath])
 }
