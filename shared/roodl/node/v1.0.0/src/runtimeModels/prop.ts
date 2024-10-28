@@ -21,7 +21,7 @@ const getConvertedDefault = (noodlNode: NoodlNode, inputDef: ResultPortDef, valu
 			let evalFunc: any
 			// trycatch из-за того, что ничто не мешает разработчику сохранить ошибку в редакторе.
 			try {
-				evalFunc = Function(`"use strict";return (${value})`)()
+				evalFunc = Function(`return ${value}`)()
 				// evalFunc - функция, то просто возвращаем. Если объект, то нужно выполнить функцию, проверить, что вернулся объект и вернуть его.
 				if (inputDef.type === 'objectEval') evalFunc = evalFunc?.(noodlNode.props)
 			} catch (e) {

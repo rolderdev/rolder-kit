@@ -9,7 +9,7 @@ import type { Store } from '../store'
 // Метод установки выбора. Фильтрует по items.
 // Устанавливает новый выбор, если новый не совпадает со старым.
 // Сбрасывает выбор, если новый совпадает со старым.
-export const setSelectedId = (s: Store, selectedId: string, isDefault?: boolean) => {
+export const setSelectedId = (s: Store, selectedId: string) => {
 	const selectedItemSnap = useItem(selectedId, 'snap')
 	const nodeSnap = useNode(s, selectedId, 'snap')
 
@@ -24,7 +24,10 @@ export const setSelectedId = (s: Store, selectedId: string, isDefault?: boolean)
 
 		sendOutput(s.noodlNode, 'selectedItem', s.selectedId ? R.items[s.selectedId] : null)
 		sendOutput(s.noodlNode, 'selectedNode', nodeSnap || null)
-		if (!isDefault) sendSignal(s.noodlNode, 'selectedItemChanged')
+		if (!s.usedDefsults.singleSelection) {
+			sendSignal(s.noodlNode, 'selectedItemChanged')
+			s.usedDefsults.singleSelection = true
+		}
 	}
 }
 
@@ -57,8 +60,10 @@ const setHierarhySingleSelection = (s: Store) => {
 
 // Хук подписки на изменение выбора в иерархии.
 export const useHierarhySingleSelection = (s: Store) => {
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		let unsub: (() => void) | undefined
+
 		if (s.hierarchy?.tableNode) {
 			unsub = R.libs.valtio.subscribe(s.hierarchy.tableNode.states.singleSelection, () => {
 				// Не будем тригерить повторно выходы, если это событие произошло по нажатию в этой таблице.
@@ -72,6 +77,7 @@ export const useHierarhySingleSelection = (s: Store) => {
 				}
 			})
 		}
+
 		return () => unsub?.()
-	}, [s, s.hierarchy?.tableNode, s.hierarchy?.tableNode?.states.singleSelection, s.noodlNode, s.selectedId])
+	}, [])
 }

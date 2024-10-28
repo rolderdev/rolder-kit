@@ -108,7 +108,7 @@ export const handleStore = (p: Props, tableId: string) => {
 	// Единичный выбор.
 	if (!s.usedDefsults.singleSelection && p.items?.length) {
 		const defaultSelectedItemId = p.defaultSelectedItem?.id || s.hierarchy?.tableNode?.states.singleSelection.value
-		if (defaultSelectedItemId) setSelectedId(s, defaultSelectedItemId, true)
+		if (defaultSelectedItemId) setSelectedId(s, defaultSelectedItemId)
 	}
 
 	// Мультивыбор.

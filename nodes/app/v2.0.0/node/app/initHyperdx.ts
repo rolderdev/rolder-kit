@@ -29,18 +29,18 @@ export default async () => {
 								userData: JSON.stringify(authState.user),
 								userEmail: authState.user.id,
 							})
-						window.HyperDX = HyperDX.default
+						;(window as any).HyperDX = HyperDX.default
 					}
 				})
-			} else window.HyperDX = undefined
+			} else (window as any).HyperDX = undefined
 		}
 	})
 
 	// Добавим информацию о пользователе в логи после авторизации.
 	const authState = await R.db.addState('auth')
 	authState.$.subscribe((authState: any) => {
-		if (authState.signedIn && authState.user && window.HyperDX)
-			HyperDX?.setGlobalAttributes({
+		if (authState.signedIn && authState.user && (window as any).HyperDX)
+			(window as any).HyperDX?.setGlobalAttributes({
 				userId: authState.user.id,
 				userData: JSON.stringify(authState.user),
 				userEmail: authState.user.id,

@@ -13,7 +13,7 @@ export default memo((p: { tableId: string }) => {
 	const s = useStore(p.tableId)
 	const sn = R.libs.valtio.useSnapshot(s)
 
-	//console.log('Table render', p.tableId)
+	//console.log('Table render', p.tableId, s.selectedId)
 	return (
 		<DataTable<TableRecord>
 			// Base
