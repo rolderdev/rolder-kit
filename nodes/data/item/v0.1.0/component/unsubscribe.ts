@@ -1,6 +1,6 @@
 import type { Props } from '../node/definition'
 
 export default (p: Props) => {
-	p.propsStore.unsubs.forEach((i) => i?.())
-	p.propsStore.deriveUnsubs.forEach((i) => R.libs.valtio.underive(i))
+	for (const i of p.propsStore.unsubs) i?.()
+	for (const i of p.propsStore.deriveUnsubs) R.libs.valtio.underive(i)
 }

@@ -32,10 +32,6 @@ type Rxdb = { createBlob: typeof createBlob }
 export type { Rxdb }
 export type { RxDatabase } from 'rxdb'
 
-// Поскольку HyperDX не используется в коде с этого статичного импорта, он не попадает в этот файл.
-import type HyperDX from '@hyperdx/browser'
-export type { HyperDX }
-
 import Comp from '../component/App'
 
 export default {

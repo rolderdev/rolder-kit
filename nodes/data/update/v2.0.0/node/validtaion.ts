@@ -28,22 +28,21 @@ const getTypedUpdateScheme = () => {
 						}),
 					]),
 					check(
-						(dbClass) => (typeof dbClass === 'string' && R.dbClasses ? (!R.dbClasses[dbClass] ? false : true) : true),
-						`There is no such DB class.`
+						(dbClass) => !(typeof dbClass === 'string' && R.dbClasses && !R.dbClasses[dbClass]),
+						'There is no such DB class.'
+					),
+					check(
+						(dbClassObj) => !(typeof dbClassObj === 'object' && R.dbClasses && !R.dbClasses[dbClassObj.name]),
+						'There is no such DB class.'
 					),
 					check(
 						(dbClassObj) =>
-							typeof dbClassObj === 'object' && R.dbClasses ? (!R.dbClasses[dbClassObj.name] ? false : true) : true,
-						`There is no such DB class.`
-					),
-					check(
-						(dbClassObj) =>
-							typeof dbClassObj === 'object' && R.dbClasses
-								? !R.dbClasses[dbClassObj.name]?.versions?.includes(dbClassObj.version)
-									? false
-									: true
-								: true,
-						`There is no such version of DB class.`
+							!(
+								typeof dbClassObj === 'object' &&
+								R.dbClasses &&
+								!R.dbClasses[dbClassObj.name]?.versions?.includes(dbClassObj.version)
+							),
+						'There is no such version of DB class.'
 					)
 				),
 				items: pipe(
@@ -51,34 +50,25 @@ const getTypedUpdateScheme = () => {
 						pipe(
 							unknown(),
 							check((item) => typeOf(item) === 'object' || !item, '"item" must be object.'),
-							check((item: any) => (!item.id ? false : true), '"item" must have "id".'),
+							check((item: any) => !!item.id, '"item" must have "id".'),
 							check(
-								(item: any) => (item.history ? (item.history === true || typeof item.history === 'object' ? true : false) : true),
+								(item: any) => !item.history || item.history === true || typeof item.history === 'object',
 								'"history" at item must be "true" or "object".'
 							),
 							check(
 								(item: any) =>
-									item.deleteFields
-										? Array.isArray(item.deleteFields) && !item.deleteFields.some((i: unknown) => typeof i !== 'string')
-											? true
-											: false
-										: true,
+									!item.deleteFields ||
+									(Array.isArray(item.deleteFields) && !item.deleteFields.some((i: unknown) => typeof i !== 'string')),
 								'"deleteFields" at item must be array of strings.'
 							)
 						)
 					),
-					check(
-						(items) => (items.length !== unique(items.map((i) => i.id)).length ? false : true),
-						'"items" must have unique ids.'
-					)
+					check((items) => items.length === unique(items.map((i) => i.id)).length, '"items" must have unique ids.')
 				),
 				scope: optional(picklist(['in', 'out'])),
 			})
 		),
-		check(
-			(schemes) => (schemes.length !== unique(schemes.map((i) => i.dbClass)).length ? false : true),
-			'dbClass must be unique.'
-		)
+		check((schemes) => schemes.length === unique(schemes.map((i) => i.dbClass)).length, 'dbClass must be unique.')
 	)
 }
 

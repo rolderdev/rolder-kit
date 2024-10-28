@@ -9,5 +9,5 @@ export default function (value: any): boolean {
 	if (typeof value === 'number') return false
 	// @ts-ignore
 	if (typeOf(value) === 'object' && isEmpty(value)) return true
-	return !Boolean(value)
+	return !value
 }

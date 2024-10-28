@@ -3,8 +3,8 @@ import { getKuzzle } from '@shared/get-kuzzle'
 import type { NoodlNode } from '@shared/node-v1.0.0'
 import type { Props } from '../node/definition'
 import type { BackendData } from './fetch'
-import { handleSubscribe } from './handleSubscribe'
 import handleDataChanges from './handleDataChanges'
+import { handleSubscribe } from './handleSubscribe'
 
 export default async (p: Props, noodlNode: NoodlNode) => {
 	const K = await getKuzzle()

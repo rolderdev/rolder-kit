@@ -50,9 +50,9 @@ export default {
 	afterNode: {
 		getInspectInfo: (p: Props, outProps) => [
 			{ type: 'text', value: `API ${p.apiVersion}` },
-			{ type: 'text', value: `=== Scheme ===` },
+			{ type: 'text', value: '=== Scheme ===' },
 			{ type: 'value', value: p.updateScheme },
-			outProps.data && { type: 'text', value: `=== Data ===` },
+			outProps.data && { type: 'text', value: '=== Data ===' },
 			outProps.data && { type: 'value', value: outProps.data },
 		],
 	},

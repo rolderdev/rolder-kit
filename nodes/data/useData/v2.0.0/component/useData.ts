@@ -2,11 +2,10 @@ import type { JsComponent, NoodlNode } from '@shared/node-v1.0.0'
 import { sendSignal } from '@shared/port-send-v1.0.0'
 import type { Props } from '../node/definition'
 import { fetch } from './fetch'
-import handleDataChanges from './handleDataChanges'
 import { unsubscribe } from './handleSubscribe'
 
 const reactive = async (p: Props, noodlNode: NoodlNode) => {
-	const { compare, map } = R.libs.just
+	const { compare } = R.libs.just
 
 	// Обработаем измения инпутов
 	if (p.store.apiVersion !== p.apiVersion) {

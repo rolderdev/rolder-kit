@@ -20,6 +20,7 @@ export default forwardRef((p: Props, ref) => {
 
 	const [opened, setOpened] = useState(false)
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		sendOutput(p.noodlNode, 'state', opened)
 		if (!opened) sendSignal(p.noodlNode, 'closed')

@@ -13,11 +13,13 @@ export default forwardRef((p: Props) => {
 	const [checked, setChecked] = useState(p.checkedProp)
 	const [indeterminate, setIndeterminate] = useState(p.indeterminateProp)
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (p.checkedProp !== checked) setChecked(p.checkedProp)
 		if (p.indeterminateProp !== indeterminate) setIndeterminate(p.indeterminateProp)
 	}, [p.checkedProp, p.indeterminateProp])
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		sendOutput(p.noodlNode, 'checked', checked)
 		sendOutput(p.noodlNode, 'indeterminate', indeterminate)

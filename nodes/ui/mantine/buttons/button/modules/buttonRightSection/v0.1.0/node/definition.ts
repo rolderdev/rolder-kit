@@ -11,7 +11,7 @@ export default {
 		validate: async (p, model) => {
 			const parentNodeName = model.parent?.type.split('.')[2]
 			if (parentNodeName === 'Button') return true
-			else return `Parent of "ButtonRightSection" must be "Button", got "${parentNodeName}".`
+			return `Parent of "ButtonRightSection" must be "Button", got "${parentNodeName}".`
 		},
 	},
 } satisfies ReactNodeDef

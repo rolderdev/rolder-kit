@@ -66,7 +66,7 @@ export default {
 								name: field,
 								displayName: field,
 								group: 'Custom',
-								customGroup: `Fields`,
+								customGroup: 'Fields',
 								type: '*',
 							})
 						)
@@ -101,7 +101,7 @@ export default {
 		},
 	},
 	beforeComponent: {
-		initialize: async (p: Props, noodlNode, portDefs) => {
+		initialize: async (p: Props, noodlNode) => {
 			await initState('initialized')
 			p.propsStore = initStore(p)
 
